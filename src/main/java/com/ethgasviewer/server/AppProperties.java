@@ -19,4 +19,8 @@ public class AppProperties {
 
     private String ethplorerApiKey = "freekey";
     private String tokenAddress = "0xa0246c9032bC3A600820415aE600c6388619A14D";
+
+    private double priceBigMovePercent = 0.3;
+
+    private String telegramBotToken = "";
 }

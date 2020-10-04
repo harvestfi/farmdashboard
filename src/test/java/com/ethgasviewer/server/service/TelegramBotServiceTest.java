@@ -1,29 +1,29 @@
 package com.ethgasviewer.server.service;
 
 import com.ethgasviewer.server.Application;
-import com.ethgasviewer.server.model.GasModel;
-import junit.framework.TestCase;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.Assert;
 
-import java.io.IOException;
+import java.time.Instant;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @ActiveProfiles("test")
-public class GasServiceTest extends TestCase {
+public class TelegramBotServiceTest {
 
     @Autowired
-    private GasService gasService;
+    private TelegramBotService bot;
 
     @Test
-    public void testGatheringGas() throws IOException {
-        GasModel gas = gasService.grabGasInfo();
-        Assert.notNull(gas, "Return should be not null");
+    @Ignore
+    public void shouldSendMessage() throws InterruptedException {
+        Thread.sleep(10000);
+        bot.sendMessageToAll("test msg " + Instant.now());
+        Thread.sleep(10000);
     }
 }

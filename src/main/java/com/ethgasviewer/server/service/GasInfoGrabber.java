@@ -3,10 +3,12 @@ package com.ethgasviewer.server.service;
 import com.ethgasviewer.server.model.GasModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
+@Profile("!test")
 public class GasInfoGrabber {
     private static final Logger log = LoggerFactory.getLogger(GasInfoGrabber.class);
 
