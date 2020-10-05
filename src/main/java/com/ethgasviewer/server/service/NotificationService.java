@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NotificationService {
-    private static final String PRICE_MSG = "Big move price from %.2f to %.2f (%.1f%%)";
+    private static final String PRICE_MSG = "Price changed from %.2f to %.2f (%.1f%%)";
 
     private final AppProperties properties;
 

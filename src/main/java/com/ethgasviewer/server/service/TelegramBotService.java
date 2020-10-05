@@ -5,23 +5,16 @@ import com.ethgasviewer.server.entity.TgEntity;
 import com.ethgasviewer.server.repositories.TgRepository;
 import com.pengrad.telegrambot.Callback;
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.BaseRequest;
-import com.pengrad.telegrambot.request.GetUpdates;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.BaseResponse;
-import com.pengrad.telegrambot.response.GetUpdatesResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static com.pengrad.telegrambot.UpdatesListener.CONFIRMED_UPDATES_ALL;
@@ -66,7 +59,7 @@ public class TelegramBotService {
     private int updatesListener(List<Update> updates) {
         for (Update u : updates) {
             long chatId = u.message().chat().id();
-            if(!isKnownChatId(chatId)) {
+            if (!isKnownChatId(chatId)) {
                 log.info("Chat added " + chatId);
                 sendMessage(WELCOME_MESSAGE, chatId);
                 tgRepository.save(new TgEntity(chatId));
