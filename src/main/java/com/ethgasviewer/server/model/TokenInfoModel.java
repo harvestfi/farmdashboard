@@ -1,8 +1,10 @@
 package com.ethgasviewer.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TokenInfoModel {
     private String address;
     private String totalSupply;
