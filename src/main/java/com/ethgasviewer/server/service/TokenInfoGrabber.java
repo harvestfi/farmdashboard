@@ -22,7 +22,7 @@ public class TokenInfoGrabber {
         this.notificationService = notificationService;
     }
 
-    @Scheduled(fixedDelayString = "${egv.grab-delay-ms}")
+    @Scheduled(fixedDelayString = "${egv.grab.grab-delay-ms}")
     private void grabTokenInfo() {
         try {
             TokenInfoModel model = tokenInfoService.getTokenInfo();

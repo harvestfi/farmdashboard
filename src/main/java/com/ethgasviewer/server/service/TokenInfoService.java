@@ -1,7 +1,7 @@
 package com.ethgasviewer.server.service;
 
 
-import com.ethgasviewer.server.AppProperties;
+import com.ethgasviewer.server.properties.GrabProperties;
 import com.ethgasviewer.server.entity.TokenEntity;
 import com.ethgasviewer.server.model.TokenEnum;
 import com.ethgasviewer.server.model.TokenInfoModel;
@@ -28,10 +28,10 @@ public class TokenInfoService {
     private static final String URI = "https://api.ethplorer.io/";
     private final String uriTokenInfo;
 
-    private final AppProperties prop;
+    private final GrabProperties prop;
     private final TokenRepository tokenRepository;
 
-    public TokenInfoService(AppProperties prop, TokenRepository tokenRepository) {
+    public TokenInfoService(GrabProperties prop, TokenRepository tokenRepository) {
         this.prop = prop;
         this.tokenRepository = tokenRepository;
         this.uriTokenInfo = URI + "getTokenInfo/" + prop.getTokenAddress() + "?apiKey=" + prop.getEthplorerApiKey();

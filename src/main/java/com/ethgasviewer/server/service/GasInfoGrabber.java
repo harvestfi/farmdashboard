@@ -18,7 +18,7 @@ public class GasInfoGrabber {
         this.gasService = gasService;
     }
 
-    @Scheduled(fixedDelayString = "${egv.price-grab-delay-ms}")
+    @Scheduled(fixedDelayString = "${egv.grab.price-grab-delay-ms}")
     private void grabGasInfo() {
         try {
             log.info("Start gas info grab");

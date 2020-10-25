@@ -1,18 +1,18 @@
 package com.ethgasviewer.server.service;
 
-import com.ethgasviewer.server.AppProperties;
+import com.ethgasviewer.server.properties.GrabProperties;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NotificationService {
     private static final String PRICE_MSG = "Price changed from %.2f to %.2f (%.1f%%)";
 
-    private final AppProperties properties;
+    private final GrabProperties properties;
 
     private double lastPrice = 0.0;
 
 
-    public NotificationService(AppProperties properties) {
+    public NotificationService(GrabProperties properties) {
         this.properties = properties;
     }
 

@@ -1,7 +1,7 @@
 package com.ethgasviewer.server.service;
 
 
-import com.ethgasviewer.server.AppProperties;
+import com.ethgasviewer.server.properties.GrabProperties;
 import com.ethgasviewer.server.entity.GasEntity;
 import com.ethgasviewer.server.model.GasModel;
 import com.ethgasviewer.server.repositories.GasRepository;
@@ -21,14 +21,14 @@ import java.util.List;
 @Service
 public class GasService {
     private static final Logger log = LoggerFactory.getLogger(GasService.class);
-    private final AppProperties prop;
+    private final GrabProperties prop;
 
     private static final ObjectMapper mapper = new ObjectMapper();
     private final String URI;
 
     private final GasRepository gasRepository;
 
-    public GasService(AppProperties prop, GasRepository gasRepository) {
+    public GasService(GrabProperties prop, GasRepository gasRepository) {
         this.prop = prop;
         if(prop.isUseApiKey()) {
             URI = "https://ethgasstation.info/api/ethgasAPI.json?api-key=" + prop.getEthgasstationApi();

@@ -1,6 +1,6 @@
 package com.ethgasviewer.server.service;
 
-import com.ethgasviewer.server.AppProperties;
+import com.ethgasviewer.server.properties.GrabProperties;
 import com.ethgasviewer.server.entity.TgEntity;
 import com.ethgasviewer.server.repositories.TgRepository;
 import com.pengrad.telegrambot.Callback;
@@ -24,7 +24,7 @@ public class TelegramBotService {
     private static final Logger log = LoggerFactory.getLogger(TelegramBotService.class);
     private static final String WELCOME_MESSAGE = "Welcome to ethgasviewer notification bot!";
     private final TgRepository tgRepository;
-    private final TelegramBot bot;
+//    private final TelegramBot bot;
 
     private final Callback callback = new Callback() {
         @Override
@@ -40,20 +40,20 @@ public class TelegramBotService {
         }
     };
 
-    public TelegramBotService(AppProperties properties, TgRepository tgRepository) {
+    public TelegramBotService(GrabProperties properties, TgRepository tgRepository) {
         this.tgRepository = tgRepository;
-        this.bot = new TelegramBot(properties.getTelegramBotToken());
-        bot.setUpdatesListener(this::updatesListener);
+//        this.bot = new TelegramBot(properties.getTelegramBotToken());
+//        bot.setUpdatesListener(this::updatesListener);
     }
 
     public void sendMessageToAll(String message) {
         for (long id : findAllChats()) {
-            bot.execute(new SendMessage(id, message), callback);
+//            bot.execute(new SendMessage(id, message), callback);
         }
     }
 
     public void sendMessage(String message, long chatId) {
-        bot.execute(new SendMessage(chatId, message), callback);
+//        bot.execute(new SendMessage(chatId, message), callback);
     }
 
     private int updatesListener(List<Update> updates) {
