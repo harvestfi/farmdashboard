@@ -1,13 +1,15 @@
 package com.ethgasviewer.server.controllers;
 
 import com.ethgasviewer.server.model.GasModel;
-import com.ethgasviewer.server.service.GasService;
+import com.ethgasviewer.server.grabber.GasService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Profile("grab")
 public class GasController {
 
     private final GasService gasService;

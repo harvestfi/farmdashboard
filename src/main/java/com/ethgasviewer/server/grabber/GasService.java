@@ -1,13 +1,14 @@
-package com.ethgasviewer.server.service;
+package com.ethgasviewer.server.grabber;
 
 
-import com.ethgasviewer.server.AppProperties;
+import com.ethgasviewer.server.properties.GrabProperties;
 import com.ethgasviewer.server.entity.GasEntity;
 import com.ethgasviewer.server.model.GasModel;
 import com.ethgasviewer.server.repositories.GasRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,18 +18,21 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ethgasviewer.server.GrabberApplication.GRAB_PROFILE;
+
 
 @Service
+@Profile({GRAB_PROFILE})
 public class GasService {
     private static final Logger log = LoggerFactory.getLogger(GasService.class);
-    private final AppProperties prop;
+    private final GrabProperties prop;
 
     private static final ObjectMapper mapper = new ObjectMapper();
     private final String URI;
 
     private final GasRepository gasRepository;
 
-    public GasService(AppProperties prop, GasRepository gasRepository) {
+    public GasService(GrabProperties prop, GasRepository gasRepository) {
         this.prop = prop;
         if(prop.isUseApiKey()) {
             URI = "https://ethgasstation.info/api/ethgasAPI.json?api-key=" + prop.getEthgasstationApi();

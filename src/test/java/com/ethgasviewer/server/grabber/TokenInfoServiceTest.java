@@ -1,6 +1,6 @@
-package com.ethgasviewer.server.service;
+package com.ethgasviewer.server.grabber;
 
-import com.ethgasviewer.server.Application;
+import com.ethgasviewer.server.GrabberApplication;
 import com.ethgasviewer.server.model.TokenInfoModel;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = GrabberApplication.class)
 @ActiveProfiles("test")
 public class TokenInfoServiceTest extends TestCase {
     @Autowired

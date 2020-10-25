@@ -1,7 +1,7 @@
-package com.ethgasviewer.server.service;
+package com.ethgasviewer.server.grabber;
 
 
-import com.ethgasviewer.server.AppProperties;
+import com.ethgasviewer.server.properties.GrabProperties;
 import com.ethgasviewer.server.entity.TokenEntity;
 import com.ethgasviewer.server.model.TokenEnum;
 import com.ethgasviewer.server.model.TokenInfoModel;
@@ -10,6 +10,7 @@ import com.ethgasviewer.server.repositories.TokenRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,8 +20,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ethgasviewer.server.GrabberApplication.GRAB_PROFILE;
+
 
 @Service
+@Profile({GRAB_PROFILE})
 public class TokenInfoService {
     private static final Logger log = LoggerFactory.getLogger(TokenInfoService.class);
     private static final RestTemplate REST_TEMPLATE = new RestTemplate();
@@ -28,10 +32,10 @@ public class TokenInfoService {
     private static final String URI = "https://api.ethplorer.io/";
     private final String uriTokenInfo;
 
-    private final AppProperties prop;
+    private final GrabProperties prop;
     private final TokenRepository tokenRepository;
 
-    public TokenInfoService(AppProperties prop, TokenRepository tokenRepository) {
+    public TokenInfoService(GrabProperties prop, TokenRepository tokenRepository) {
         this.prop = prop;
         this.tokenRepository = tokenRepository;
         this.uriTokenInfo = URI + "getTokenInfo/" + prop.getTokenAddress() + "?apiKey=" + prop.getEthplorerApiKey();

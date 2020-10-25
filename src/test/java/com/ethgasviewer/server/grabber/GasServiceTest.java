@@ -1,6 +1,6 @@
-package com.ethgasviewer.server.service;
+package com.ethgasviewer.server.grabber;
 
-import com.ethgasviewer.server.Application;
+import com.ethgasviewer.server.GrabberApplication;
 import com.ethgasviewer.server.model.GasModel;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
 import java.io.IOException;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = GrabberApplication.class)
 @ActiveProfiles("test")
 public class GasServiceTest extends TestCase {
 

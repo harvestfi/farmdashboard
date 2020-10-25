@@ -1,4 +1,4 @@
-package com.ethgasviewer.server;
+package com.ethgasviewer.server.properties;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,11 +7,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
-@ConfigurationProperties(prefix = "egv")
+@ConfigurationProperties(prefix = "egv.grab")
 @Getter
 @Setter
 @ToString
-public class AppProperties {
+public class GrabProperties {
     private String ethgasstationApi = "";
     private boolean useApiKey = false;
     private int provideLastDays = 30;
