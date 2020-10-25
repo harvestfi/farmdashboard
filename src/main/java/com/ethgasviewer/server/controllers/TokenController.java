@@ -1,15 +1,13 @@
 package com.ethgasviewer.server.controllers;
 
 import com.ethgasviewer.server.model.TokenPriceModel;
-import com.ethgasviewer.server.grabber.TokenInfoService;
-import org.springframework.context.annotation.Profile;
+import com.ethgasviewer.server.service.TokenInfoService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Profile("grab")
 public class TokenController {
     private final TokenInfoService tokenInfoService;
 

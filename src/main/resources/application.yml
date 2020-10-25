@@ -33,10 +33,9 @@ server:
     uri-encoding: UTF-8 # Character encoding to use to decode the URI.
 
 egv:
-  grab:
-    ethgasstationApi: test
-    grab-delay-ms: 60000
-    price-grab-delay-ms: 10000
+  ethgasstationApi: test
+  grab-delay-ms: 60000
+  price-grab-delay-ms: 10000
 
 logging:
   level:

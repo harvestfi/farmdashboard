@@ -1,6 +1,6 @@
-package com.ethgasviewer.server.grabber;
+package com.ethgasviewer.server.service;
 
-import com.ethgasviewer.server.properties.GrabProperties;
+import com.ethgasviewer.server.AppProperties;
 import com.ethgasviewer.server.entity.TgEntity;
 import com.ethgasviewer.server.repositories.TgRepository;
 import com.pengrad.telegrambot.Callback;
@@ -11,18 +11,15 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.BaseResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.ethgasviewer.server.GrabberApplication.GRAB_PROFILE;
 import static com.pengrad.telegrambot.UpdatesListener.CONFIRMED_UPDATES_ALL;
 
 @Service
-@Profile({GRAB_PROFILE})
 public class TelegramBotService {
     private static final Logger log = LoggerFactory.getLogger(TelegramBotService.class);
     private static final String WELCOME_MESSAGE = "Welcome to ethgasviewer notification bot!";
@@ -43,7 +40,7 @@ public class TelegramBotService {
         }
     };
 
-    public TelegramBotService(GrabProperties properties, TgRepository tgRepository) {
+    public TelegramBotService(AppProperties properties, TgRepository tgRepository) {
         this.tgRepository = tgRepository;
         this.bot = new TelegramBot(properties.getTelegramBotToken());
         bot.setUpdatesListener(this::updatesListener);

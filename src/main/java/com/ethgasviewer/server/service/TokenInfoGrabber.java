@@ -1,4 +1,4 @@
-package com.ethgasviewer.server.grabber;
+package com.ethgasviewer.server.service;
 
 import com.ethgasviewer.server.model.TokenInfoModel;
 import org.slf4j.Logger;
@@ -7,10 +7,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import static com.ethgasviewer.server.GrabberApplication.GRAB_PROFILE;
-
 @Service
-@Profile({GRAB_PROFILE})
+@Profile("!test")
 public class TokenInfoGrabber {
     private static final Logger log = LoggerFactory.getLogger(TokenInfoGrabber.class);
 
