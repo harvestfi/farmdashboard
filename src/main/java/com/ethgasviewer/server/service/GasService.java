@@ -1,4 +1,4 @@
-package com.ethgasviewer.server.grabber;
+package com.ethgasviewer.server.service;
 
 
 import com.ethgasviewer.server.properties.GrabProperties;
@@ -8,7 +8,6 @@ import com.ethgasviewer.server.repositories.GasRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,11 +17,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ethgasviewer.server.GrabberApplication.GRAB_PROFILE;
-
 
 @Service
-@Profile({GRAB_PROFILE})
 public class GasService {
     private static final Logger log = LoggerFactory.getLogger(GasService.class);
     private final GrabProperties prop;

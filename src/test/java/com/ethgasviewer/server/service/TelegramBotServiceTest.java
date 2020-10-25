@@ -1,6 +1,6 @@
-package com.ethgasviewer.server.grabber;
+package com.ethgasviewer.server.service;
 
-import com.ethgasviewer.server.GrabberApplication;
+import com.ethgasviewer.server.Application;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.Instant;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = GrabberApplication.class)
+@SpringBootTest(classes = Application.class)
 @ActiveProfiles("test")
 public class TelegramBotServiceTest {
 
