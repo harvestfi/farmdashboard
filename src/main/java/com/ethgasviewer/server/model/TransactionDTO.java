@@ -1,11 +1,11 @@
 package com.ethgasviewer.server.model;
 
+import java.math.BigInteger;
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
-import java.math.BigInteger;
 
 @Entity
 @Table(name = "uni_tx", indexes = {
@@ -26,6 +26,7 @@ public class TransactionDTO {
     private boolean confirmed = false;
     private double lastPrice;
     private double lastGas;
+    private long blockDate;
 
     public String getType() {
         return type;
@@ -113,6 +114,14 @@ public class TransactionDTO {
 
     public void setLastGas(double lastGas) {
         this.lastGas = lastGas;
+    }
+
+    public long getBlockDate() {
+        return blockDate;
+    }
+
+    public void setBlockDate(long blockDate) {
+        this.blockDate = blockDate;
     }
 
     public String print() {
