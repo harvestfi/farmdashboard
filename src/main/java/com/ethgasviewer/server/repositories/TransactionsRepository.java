@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface TransactionsRepository extends JpaRepository<TransactionDTO, Long> {
 
-    @Query("select t from TransactionDTO t where t.block > :fromBlock ")
+    @Query("select t from TransactionDTO t where t.block > :fromBlock order by t.block asc")
     List<TransactionDTO> fetchAllFromBlock(@Param("fromBlock") BigInteger fromBlock);
 
 
