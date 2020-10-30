@@ -23,12 +23,13 @@ public interface TokenRepository extends JpaRepository<TokenEntity, Long> {
         "       t.acquired acquired, " +
         "       t.price price, " +
         "       t.volume volume, " +
-        "       DATE_FORMAT(FROM_UNIXTIME(t.acquired/1000), '%Y-%m-%d-%h') gtime " +
+        "       ROUND(t.acquired, -7) grp " +
         "from egv.token t " +
         "where t.name_id = :nameId " +
         "      and t.acquired > :fromDate " +
+        "order by acquired " +
         "    ) agg " +
-        "group by agg.gtime")
+        "group by agg.grp")
     List<TokenEntity> getFromDate(@Param("fromDate") long server, @Param("nameId") int nameId);
 
 }
