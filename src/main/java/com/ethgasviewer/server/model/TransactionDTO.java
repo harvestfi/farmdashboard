@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "uni_tx", indexes = {
-    @Index(name = "idx_uni_tx", columnList = "block")
+    @Index(name = "idx_uni_tx", columnList = "blockDate")
 })
 @Cacheable(false)
 public class TransactionDTO {

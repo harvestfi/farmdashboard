@@ -5,8 +5,10 @@ import com.ethgasviewer.server.repositories.TransactionsRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
+import java.time.Instant;
 import java.util.List;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class TransactionsService {
@@ -20,10 +22,7 @@ public class TransactionsService {
     }
 
     public List<TransactionDTO> fetchAllForLastDay() {
-        TransactionDTO firstDto = transactionsRepository.findFirstByOrderByBlockDesc();
-        if (firstDto != null && firstDto.getBlock() != null) {
-            return transactionsRepository.fetchAllFromBlock(firstDto.getBlock().min(AVERAGE_BLOCK_PER_DAY));
-        }
-        return new ArrayList<>();
+        return transactionsRepository.fetchAllFromBlock(
+            Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
     }
 }
