@@ -12,4 +12,7 @@ public interface HarvestTxRepository extends JpaRepository<HarvestDTO, String> {
 
     @Query("select t from HarvestDTO t where t.blockDate > :fromTs order by t.block asc")
     List<HarvestDTO> fetchAllFromBlock(@Param("fromTs") long fromTs);
+
+    @Query("select t from HarvestDTO t order by t.block asc")
+    List<HarvestDTO> fetchAll();
 }

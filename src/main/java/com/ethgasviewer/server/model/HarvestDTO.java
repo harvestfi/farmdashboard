@@ -35,4 +35,6 @@ public class HarvestDTO{
     private Integer ownerCount;
     private Double sharePrice;
     private Long usdAmount;
+    private String prices;
+    private String lpStat;
 }
