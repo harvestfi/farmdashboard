@@ -11,7 +11,7 @@ spring:
 
   datasource:
     platform: mysql
-    url: jdbc:mysql://localhost:3306/egv?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/harvest?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: belbix
     password: 111111
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -31,15 +31,6 @@ server:
     max-threads: 10 # Maximum amount of worker threads.
     min-spare-threads: 10 # Minimum amount of worker threads.
     uri-encoding: UTF-8 # Character encoding to use to decode the URI.
-
-egv:
-  grab:
-    ethgasstationApi:
-    grab-delay-ms: 60000
-    price-grab-delay-ms: 10000
-    telegramBotToken:
-  web3:
-    apiKey:
 
 logging:
   level:
