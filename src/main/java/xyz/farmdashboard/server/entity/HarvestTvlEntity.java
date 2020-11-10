@@ -1,5 +1,6 @@
 package xyz.farmdashboard.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Cacheable;
@@ -13,16 +14,17 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "harvest_tvl", indexes = {
-    @Index(name = "idx_harvest_tvl", columnList = "calculateTime")
+    @Index(name = "idx_harvest_tvl", columnList = "calculateTime"),
+    @Index(name = "idx_harvest_tvl2", columnList = "calculateHash")
 })
 @Cacheable(false)
 public class HarvestTvlEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @JsonIgnore
+    private String calculateHash;
     private Long calculateTime;
     private Double lastTvl;
     private int lastOwnersCount;
-    private String calculateHash;
+    private Double lastPrice;
 }
