@@ -17,6 +17,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 #http.port: 8080
+redirect-https: 8443
 
 server:
 #  port: 8080

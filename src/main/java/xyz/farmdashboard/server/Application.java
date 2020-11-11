@@ -1,12 +1,15 @@
 package xyz.farmdashboard.server;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -30,9 +33,10 @@ public class Application {
 
     @Configuration
     protected static class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-
+            http.requiresChannel().anyRequest().requiresSecure();
         }
     }
 
@@ -41,6 +45,37 @@ public class Application {
         AppProperties.class
     })
     protected static class WebMvcConfig implements WebMvcConfigurer {
+        @Value("${server.http.port}")
+        private int httpPort;
+        @Value("${redirect-https}")
+        private int httpsPort;
+
+        @Bean
+        public ServletWebServerFactory servletContainer() {
+            TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+                @Override
+                protected void postProcessContext(Context context) {
+                    SecurityConstraint securityConstraint = new SecurityConstraint();
+                    securityConstraint.setUserConstraint("CONFIDENTIAL");
+                    SecurityCollection collection = new SecurityCollection();
+                    collection.addPattern("/*");
+                    securityConstraint.addCollection(collection);
+                    context.addConstraint(securityConstraint);
+                }
+            };
+            tomcat.addAdditionalTomcatConnectors(redirectConnector());
+            return tomcat;
+        }
+
+        private Connector redirectConnector() {
+            Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+            connector.setScheme("http");
+            connector.setPort(httpPort);
+            connector.setSecure(false);
+            connector.setRedirectPort(httpsPort);
+            return connector;
+        }
+
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
