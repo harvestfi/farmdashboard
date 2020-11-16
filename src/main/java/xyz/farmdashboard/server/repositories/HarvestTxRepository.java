@@ -25,7 +25,7 @@ public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, Stri
         "    confirmed as confirmed, " +
         "    null as hash, " +
         "    null as last_gas, " +
-        "    null as last_tvl, " +
+        "    last_tvl as last_tvl, " +
         "    last_usd_tvl as last_usd_tvl, " +
         "    null as method_name, " +
         "    null as owner, " +

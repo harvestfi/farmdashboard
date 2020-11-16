@@ -7,6 +7,7 @@ import xyz.farmdashboard.server.dto.TvlHistoryDTO;
 import xyz.farmdashboard.server.entity.HarvestTxEntity;
 import xyz.farmdashboard.server.repositories.HarvestTxRepository;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +35,23 @@ public class HarvestDBService {
         if (harvestTxEntities == null) {
             return tvlHistoryDTOS;
         }
+        Instant lastDate = null;
         for (HarvestTxEntity harvestTxEntity : harvestTxEntities) {
             try {
+                Instant date = Instant.ofEpochSecond(harvestTxEntity.getBlockDate());
+                if (lastDate != null && Duration.between(lastDate, date).getSeconds() < 60 * 60) {
+                    continue;
+                }
+
                 TvlHistoryDTO tvlHistoryDTO = new TvlHistoryDTO();
                 tvlHistoryDTO.setCalculateTime(harvestTxEntity.getBlockDate());
                 tvlHistoryDTO.setLastTvl(harvestTxEntity.getLastUsdTvl());
+                tvlHistoryDTO.setLastTvlNative(harvestTxEntity.getLastTvl());
                 tvlHistoryDTO.setSharePrice(harvestTxEntity.getSharePrice());
                 tvlHistoryDTO.setLastOwnersCount(harvestTxEntity.getOwnerCount());
+
+                lastDate = date;
+
                 tvlHistoryDTOS.add(tvlHistoryDTO);
             } catch (Exception e) {
                 log.error("Error convert " + harvestTxEntity, e);

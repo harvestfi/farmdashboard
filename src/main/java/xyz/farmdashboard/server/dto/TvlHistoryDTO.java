@@ -8,4 +8,6 @@ public class TvlHistoryDTO {
     private double lastTvl;
     private double sharePrice;
     private int lastOwnersCount;
+    private double lastPrice;
+    private double lastTvlNative;
 }
