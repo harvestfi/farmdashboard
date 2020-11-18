@@ -1,5 +1,6 @@
 package xyz.farmdashboard.server.service;
 
+import xyz.farmdashboard.server.dto.TvlHistoryDTO;
 import xyz.farmdashboard.server.entity.UniswapTxEntity;
 import xyz.farmdashboard.server.repositories.UniswapTxRepository;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,9 @@ public class UniswapDBService {
     public Iterable<UniswapTxRepository.OhlcProjection> ohclUniswapTx() {
         return uniswapTxRepository.fetchOHLCTransactionsFromBlock(
             1, 3600);
+    }
+
+    public List<TvlHistoryDTO> fetchIncome() {
+        return null;
     }
 }

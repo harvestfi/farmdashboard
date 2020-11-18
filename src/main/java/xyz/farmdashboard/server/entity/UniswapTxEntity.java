@@ -32,4 +32,5 @@ public class UniswapTxEntity { //TODO get from ethparser
     private Double lastGas;
     private Long blockDate;
     private Integer ownerCount;
+    private Double psWeekApy;
 }

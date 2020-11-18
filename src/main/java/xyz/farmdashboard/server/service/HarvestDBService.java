@@ -46,7 +46,9 @@ public class HarvestDBService {
                 TvlHistoryDTO tvlHistoryDTO = new TvlHistoryDTO();
                 tvlHistoryDTO.setCalculateTime(harvestTxEntity.getBlockDate());
                 tvlHistoryDTO.setLastTvl(harvestTxEntity.getLastUsdTvl());
-                tvlHistoryDTO.setLastTvlNative(harvestTxEntity.getLastTvl());
+                if (harvestTxEntity.getLastTvl() != null) {
+                    tvlHistoryDTO.setLastTvlNative(harvestTxEntity.getLastTvl());
+                }
                 tvlHistoryDTO.setSharePrice(harvestTxEntity.getSharePrice());
                 tvlHistoryDTO.setLastOwnersCount(harvestTxEntity.getOwnerCount());
 
