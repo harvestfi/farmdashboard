@@ -23,8 +23,13 @@ public class UniswapDBService {
     }
 
     public List<UniswapTxEntity> fetchAllForLastDay() {
-        return uniswapTxRepository.fetchAllLimited(LIMIT_100);
+        return uniswapTxRepository.fetchAllFromBlock(
+            Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
     }
+
+//    public List<UniswapTxEntity> fetchAllForLastDay() {
+//        return uniswapTxRepository.fetchAllLimited(LIMIT_100);
+//    }
 
     public Iterable<UniswapTxRepository.OhlcProjection> ohclUniswapTx() {
         return uniswapTxRepository.fetchOHLCTransactionsFromBlock(

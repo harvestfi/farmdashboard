@@ -2,9 +2,6 @@ package xyz.farmdashboard.server.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import xyz.farmdashboard.server.dto.TvlHistoryDTO;
 import xyz.farmdashboard.server.entity.HarvestTxEntity;
@@ -14,6 +11,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -21,18 +19,26 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class HarvestDBService {
     private static final Logger log = LoggerFactory.getLogger(HarvestDBService.class);
     private final HarvestTxRepository harvestTxRepository;
-    private final static Pageable LIMIT_50 = PageRequest.of(0, 50);
 
     public HarvestDBService(HarvestTxRepository harvestTxRepository) {
         this.harvestTxRepository = harvestTxRepository;
     }
 
     public List<HarvestTxEntity> fetchAllForLastDay() {
-        return harvestTxRepository.fetchAllLimited(LIMIT_50);
+        return harvestTxRepository.fetchAllFromBlock(
+            Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
     }
+
+//    public List<HarvestTxEntity> fetchAllForLastDay() {
+//        return harvestTxRepository.fetchAllLimited(LIMIT_50);
+//    }
 
     public HarvestTxEntity fetchLastTvlByName(String name) {
         return harvestTxRepository.findFirstByVaultOrderByBlockDateDesc(name);
+    }
+
+    public List<HarvestTxEntity> fetchLastTvl() {
+        return harvestTxRepository.fetchLastTvl();
     }
 
     public List<TvlHistoryDTO> fetchTvlByVault(String name) {

@@ -1,10 +1,10 @@
 package xyz.farmdashboard.server.repositories;
 
 import org.springframework.data.domain.Pageable;
-import xyz.farmdashboard.server.entity.HarvestTxEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import xyz.farmdashboard.server.entity.HarvestTxEntity;
 
 import java.util.List;
 
@@ -43,4 +43,28 @@ public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, Stri
         "    null as lp_stat " +
         "from harvest_tx where vault = :vault order by block_date")
     List<HarvestTxEntity> fetchAllTvlForVault(@Param("vault") String vault);
+
+    @Query(nativeQuery = true, value = "" +
+        "select max(id)                                                              id, " +
+        "       null                                                                 hash, " +
+        "       null                                                                 block, " +
+        "       true                                                                 confirmed, " +
+        "       max(block_date)                                                      block_date, " +
+        "       null                                                                 method_name, " +
+        "       null                                                                 owner, " +
+        "       null                                                                 amount, " +
+        "       null                                                                 amount_in, " +
+        "       vault                                                                vault, " +
+        "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', last_gas)), '_', -1)     last_gas, " +
+        "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', last_tvl)), '_', -1)     last_tvl, " +
+        "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', last_usd_tvl)), '_', -1) last_usd_tvl, " +
+        "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', owner_count)), '_', -1)  owner_count, " +
+        "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', share_price)), '_', -1)  share_price, " +
+        "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', usd_amount)), '_', -1)   usd_amount, " +
+        "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', prices)), '_', -1)       prices, " +
+        "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', lp_stat)), '_', -1)      lp_stat " +
+        " " +
+        "from harvest_tx " +
+        "group by vault")
+    List<HarvestTxEntity> fetchLastTvl();
 }

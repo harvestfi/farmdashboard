@@ -17,6 +17,8 @@ import xyz.farmdashboard.server.service.HarvestDBService;
 import xyz.farmdashboard.server.service.IncomeDBService;
 import xyz.farmdashboard.server.service.UniswapDBService;
 
+import java.util.List;
+
 @RestController
 public class ApiController {
     private static final Logger log = LoggerFactory.getLogger(ApiController.class);
@@ -40,11 +42,6 @@ public class ApiController {
     @RequestMapping(value = "api/transactions/history/harvest", method = RequestMethod.GET)
     public Iterable<HarvestTxEntity> harvestHistoryData() {
         return harvestDBService.fetchAllForLastDay();
-    }
-
-    @RequestMapping(value = "api/transactions/last/harvest/{name}", method = RequestMethod.GET)
-    public HarvestTxEntity harvestLastData(@PathVariable("name") String name) {
-        return harvestDBService.fetchLastTvlByName(name);
     }
 
     @RequestMapping(value = "api/transactions/history/alltvl", method = RequestMethod.GET)
@@ -74,5 +71,10 @@ public class ApiController {
     public IncomeDTO lastIncome() {
         log.info("Request income");
         return incomeDBService.fetchLastIncome();
+    }
+
+    @RequestMapping(value = "api/transactions/last/harvest", method = RequestMethod.GET)
+    public List<HarvestTxEntity> lastTvl() {
+        return harvestDBService.fetchLastTvl();
     }
 }
