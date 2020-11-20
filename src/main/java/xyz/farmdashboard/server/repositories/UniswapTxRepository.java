@@ -1,5 +1,6 @@
 package xyz.farmdashboard.server.repositories;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,8 +11,11 @@ import java.util.List;
 
 public interface UniswapTxRepository extends JpaRepository<UniswapTxEntity, String> {
 
-    @Query("select t from UniswapTxEntity t where t.blockDate > :fromTs order by t.block asc")
+    @Query("select t from UniswapTxEntity t where t.blockDate > :fromTs order by t.blockDate asc")
     List<UniswapTxEntity> fetchAllFromBlock(@Param("fromTs") long fromTs);
+
+    @Query("select t from UniswapTxEntity t order by t.blockDate asc")
+    List<UniswapTxEntity> fetchAllLimited(Pageable pageable);
 
 
     UniswapTxEntity findFirstByOrderByBlockDesc();

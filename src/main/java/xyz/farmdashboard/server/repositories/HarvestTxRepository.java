@@ -1,5 +1,6 @@
 package xyz.farmdashboard.server.repositories;
 
+import org.springframework.data.domain.Pageable;
 import xyz.farmdashboard.server.entity.HarvestTxEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,9 @@ public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, Stri
 
     @Query("select t from HarvestTxEntity t where t.blockDate > :fromTs order by t.blockDate asc")
     List<HarvestTxEntity> fetchAllFromBlock(@Param("fromTs") long fromTs);
+
+    @Query("select t from HarvestTxEntity t order by t.blockDate asc")
+    List<HarvestTxEntity> fetchAllLimited(Pageable pageable);
 
     HarvestTxEntity findFirstByVaultOrderByBlockDateDesc(String name);
 
