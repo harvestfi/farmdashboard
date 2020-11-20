@@ -12,6 +12,8 @@ public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, Stri
     @Query("select t from HarvestTxEntity t where t.blockDate > :fromTs order by t.blockDate asc")
     List<HarvestTxEntity> fetchAllFromBlock(@Param("fromTs") long fromTs);
 
+    HarvestTxEntity findFirstByVaultOrderByBlockDateDesc(String name);
+
     @Query("select t from HarvestTxEntity t order by t.blockDate asc")
     List<HarvestTxEntity> fetchAll();
 

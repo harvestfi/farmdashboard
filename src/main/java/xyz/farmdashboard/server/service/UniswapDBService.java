@@ -22,7 +22,7 @@ public class UniswapDBService {
 
     public List<UniswapTxEntity> fetchAllForLastDay() {
         return uniswapTxRepository.fetchAllFromBlock(
-            Instant.now().minus(10, DAYS).toEpochMilli() / 1000);
+            Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
     }
 
     public Iterable<UniswapTxRepository.OhlcProjection> ohclUniswapTx() {

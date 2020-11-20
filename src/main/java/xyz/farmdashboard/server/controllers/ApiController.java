@@ -42,6 +42,11 @@ public class ApiController {
         return harvestDBService.fetchAllForLastDay();
     }
 
+    @RequestMapping(value = "api/transactions/last/harvest/{name}", method = RequestMethod.GET)
+    public HarvestTxEntity harvestLastData(@PathVariable("name") String name) {
+        return harvestDBService.fetchLastTvlByName(name);
+    }
+
     @RequestMapping(value = "api/transactions/history/alltvl", method = RequestMethod.GET)
     public Iterable<HarvestTvlEntity> allTvlHistoryData() {
         log.info("Request allTvlHistoryData");

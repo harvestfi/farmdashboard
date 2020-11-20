@@ -25,7 +25,11 @@ public class HarvestDBService {
 
     public List<HarvestTxEntity> fetchAllForLastDay() {
         return harvestTxRepository.fetchAllFromBlock(
-            Instant.now().minus(10, DAYS).toEpochMilli() / 1000);
+            Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
+    }
+
+    public HarvestTxEntity fetchLastTvlByName(String name) {
+        return harvestTxRepository.findFirstByVaultOrderByBlockDateDesc(name);
     }
 
     public List<TvlHistoryDTO> fetchTvlByVault(String name) {
