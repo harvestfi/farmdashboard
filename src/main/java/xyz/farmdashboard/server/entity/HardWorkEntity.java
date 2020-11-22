@@ -1,0 +1,29 @@
+package xyz.farmdashboard.server.entity;
+
+import lombok.Data;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
+
+@Data
+@Entity
+@Table(name = "hard_work", indexes = {
+    @Index(name = "idx_hard_work", columnList = "blockDate")
+})
+public class HardWorkEntity {
+
+    @Id
+    private String id;
+    private String vault;
+    private long block;
+    private long blockDate;
+    private double shareChange;
+    private double shareChangeUsd;
+    private double shareUsdTotal;
+    private double tvl;
+    private double perc;
+    private double apr;
+
+}

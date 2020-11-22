@@ -35,8 +35,4 @@ public class UniswapDBService {
         return uniswapTxRepository.fetchOHLCTransactionsFromBlock(
             1, 3600);
     }
-
-    public List<TvlHistoryDTO> fetchIncome() {
-        return null;
-    }
 }
