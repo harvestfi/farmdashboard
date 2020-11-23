@@ -18,4 +18,8 @@ public class HardWorkDBService {
     public List<HardWorkEntity> getLastHardWorks() {
         return hardWorkRepository.fetchLatest();
     }
+
+    public List<HardWorkEntity> getHistoryHardWorks() {
+        return hardWorkRepository.findAllByOrderByBlockDate();
+    }
 }

@@ -75,6 +75,11 @@ public class ApiController {
         return incomeDBService.fetchIncome();
     }
 
+    @RequestMapping(value = "api/transactions/history/hardwork", method = RequestMethod.GET)
+    public List<HardWorkEntity> historyHardWork() {
+        return hardWorkDBService.getHistoryHardWorks();
+    }
+
 
     @RequestMapping(value = "api/transactions/last/income", method = RequestMethod.GET)
     public IncomeDTO lastIncome() {

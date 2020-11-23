@@ -23,7 +23,12 @@ public class HardWorkEntity {
     private double shareChangeUsd;
     private double shareUsdTotal;
     private double tvl;
+    private double allProfit;
+    private long periodOfWork;
+    private long psPeriodOfWork;
     private double perc;
     private double apr;
+    private double psTvlUsd;
+    private double psApr;
 
 }

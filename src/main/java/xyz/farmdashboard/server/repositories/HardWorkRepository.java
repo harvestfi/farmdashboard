@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface HardWorkRepository extends JpaRepository<HardWorkEntity, String> {
 
+    List<HardWorkEntity> findAllByOrderByBlockDate();
+
     @Query(nativeQuery = true, value = "" +
         "select " +
         "    max(id) id, " +
@@ -18,7 +20,12 @@ public interface HardWorkRepository extends JpaRepository<HardWorkEntity, String
         "    0.0 share_change_usd, " +
         "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', share_usd_total)), '_', -1)  share_usd_total, " +
         "    0.0 tvl, " +
+        "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', all_profit)), '_', -1) all_profit, " +
+        "    0 period_of_work, " +
+        "    0 ps_period_of_work, " +
         "    0.0 perc, " +
+        "    0.0 ps_tvl_usd, " +
+        "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', ps_apr)), '_', -1)  ps_apr, " +
         "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', apr)), '_', -1) apr " +
         "from hard_work " +
         "group by vault")
