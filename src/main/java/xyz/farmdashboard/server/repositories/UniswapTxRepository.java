@@ -11,14 +11,9 @@ import java.util.List;
 
 public interface UniswapTxRepository extends JpaRepository<UniswapTxEntity, String> {
 
-    @Query("select t from UniswapTxEntity t where t.blockDate > :fromTs order by t.blockDate asc")
-    List<UniswapTxEntity> fetchAllFromBlock(@Param("fromTs") long fromTs);
-
-    @Query("select t from UniswapTxEntity t order by t.blockDate asc")
-    List<UniswapTxEntity> fetchAllLimited(Pageable pageable);
-
-
-    UniswapTxEntity findFirstByOrderByBlockDesc();
+    @Query(nativeQuery = true, value =
+        "select * from uni_tx t where t.block_date > :fromTs order by t.block_date")
+    List<UniswapTxEntity> fetchAllFromBlockDate(@Param("fromTs") long fromTs);
 
     @Query(nativeQuery = true, value = "" +
         "select FLOOR(MIN(block_date)/:period)*:period timestamp,  " +

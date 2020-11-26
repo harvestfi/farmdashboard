@@ -10,16 +10,9 @@ import java.util.List;
 
 public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, String> {
 
-    @Query("select t from HarvestTxEntity t where t.blockDate > :fromTs order by t.blockDate asc")
-    List<HarvestTxEntity> fetchAllFromBlock(@Param("fromTs") long fromTs);
-
-    @Query("select t from HarvestTxEntity t order by t.blockDate asc")
-    List<HarvestTxEntity> fetchAllLimited(Pageable pageable);
-
-    HarvestTxEntity findFirstByVaultOrderByBlockDateDesc(String name);
-
-    @Query("select t from HarvestTxEntity t order by t.blockDate asc")
-    List<HarvestTxEntity> fetchAll();
+    @Query(nativeQuery = true, value =
+        "select * from harvest_tx t where t.block_date > :fromTs order by t.block_date")
+    List<HarvestTxEntity> fetchAllFromBlockDate(@Param("fromTs") long fromTs);
 
     @Query(nativeQuery = true, value = "" +
         "select " +
@@ -40,7 +33,8 @@ public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, Stri
         "    null as usd_amount, " +
         "    null as vault, " +
         "    null as prices, " +
-        "    null as lp_stat " +
+        "    null as lp_stat, " +
+        "    null as last_all_usd_tvl " +
         "from harvest_tx where vault = :vault order by block_date")
     List<HarvestTxEntity> fetchAllTvlForVault(@Param("vault") String vault);
 
@@ -62,7 +56,8 @@ public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, Stri
         "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', share_price)), '_', -1)  share_price, " +
         "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', usd_amount)), '_', -1)   usd_amount, " +
         "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', prices)), '_', -1)       prices, " +
-        "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', lp_stat)), '_', -1)      lp_stat " +
+        "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', lp_stat)), '_', -1)      lp_stat, " +
+        "       null      last_all_usd_tvl " +
         " " +
         "from harvest_tx " +
         "group by vault")

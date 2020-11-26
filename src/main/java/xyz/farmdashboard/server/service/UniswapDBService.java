@@ -2,7 +2,6 @@ package xyz.farmdashboard.server.service;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import xyz.farmdashboard.server.dto.TvlHistoryDTO;
 import xyz.farmdashboard.server.entity.UniswapTxEntity;
 import xyz.farmdashboard.server.repositories.UniswapTxRepository;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class UniswapDBService {
     }
 
     public List<UniswapTxEntity> fetchAllForLastDay() {
-        return uniswapTxRepository.fetchAllFromBlock(
+        return uniswapTxRepository.fetchAllFromBlockDate(
             Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
     }
 

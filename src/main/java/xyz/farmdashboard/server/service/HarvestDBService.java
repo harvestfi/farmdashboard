@@ -11,7 +11,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -25,16 +24,8 @@ public class HarvestDBService {
     }
 
     public List<HarvestTxEntity> fetchAllForLastDay() {
-        return harvestTxRepository.fetchAllFromBlock(
+        return harvestTxRepository.fetchAllFromBlockDate(
             Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
-    }
-
-//    public List<HarvestTxEntity> fetchAllForLastDay() {
-//        return harvestTxRepository.fetchAllLimited(LIMIT_50);
-//    }
-
-    public HarvestTxEntity fetchLastTvlByName(String name) {
-        return harvestTxRepository.findFirstByVaultOrderByBlockDateDesc(name);
     }
 
     public List<HarvestTxEntity> fetchLastTvl() {

@@ -69,9 +69,10 @@ public class ApiController {
         return harvestDBService.fetchTvlByVault(name);
     }
 
+    @Deprecated
     @RequestMapping(value = "api/transactions/history/income", method = RequestMethod.GET)
     public Iterable<IncomeDTO> incomeHistory() {
-        log.info("Request income");
+        log.warn("Request incomeHistory");
         return incomeDBService.fetchIncome();
     }
 
@@ -80,10 +81,15 @@ public class ApiController {
         return hardWorkDBService.getHistoryHardWorks();
     }
 
+    @RequestMapping(value = "api/transactions/history/hardwork/{name}", method = RequestMethod.GET)
+    public List<HardWorkEntity> historyHardWork(@PathVariable("name") String name) {
+        return hardWorkDBService.getHistoryHardWorks(name);
+    }
 
+    @Deprecated
     @RequestMapping(value = "api/transactions/last/income", method = RequestMethod.GET)
     public IncomeDTO lastIncome() {
-        log.info("Request income");
+        log.warn("Request lastIncome");
         return incomeDBService.fetchLastIncome();
     }
 

@@ -39,4 +39,5 @@ public class HarvestTxEntity {
     private Long usdAmount;
     private String prices;
     private String lpStat;
+    private Double lastAllUsdTvl;
 }

@@ -10,6 +10,8 @@ public interface HardWorkRepository extends JpaRepository<HardWorkEntity, String
 
     List<HardWorkEntity> findAllByOrderByBlockDate();
 
+    List<HardWorkEntity> findAllByVaultOrderByBlockDate(String vault);
+
     @Query(nativeQuery = true, value = "" +
         "select " +
         "    max(id) id, " +

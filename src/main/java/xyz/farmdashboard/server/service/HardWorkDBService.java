@@ -22,4 +22,8 @@ public class HardWorkDBService {
     public List<HardWorkEntity> getHistoryHardWorks() {
         return hardWorkRepository.findAllByOrderByBlockDate();
     }
+
+    public List<HardWorkEntity> getHistoryHardWorks(String name) {
+        return hardWorkRepository.findAllByVaultOrderByBlockDate(name);
+    }
 }
