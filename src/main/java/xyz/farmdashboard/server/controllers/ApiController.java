@@ -11,12 +11,14 @@ import xyz.farmdashboard.server.dto.TvlHistoryDTO;
 import xyz.farmdashboard.server.entity.HardWorkEntity;
 import xyz.farmdashboard.server.entity.HarvestTvlEntity;
 import xyz.farmdashboard.server.entity.HarvestTxEntity;
+import xyz.farmdashboard.server.entity.RewardEntity;
 import xyz.farmdashboard.server.entity.UniswapTxEntity;
 import xyz.farmdashboard.server.repositories.HarvestTvlRepository;
 import xyz.farmdashboard.server.repositories.UniswapTxRepository;
 import xyz.farmdashboard.server.service.HardWorkDBService;
 import xyz.farmdashboard.server.service.HarvestDBService;
 import xyz.farmdashboard.server.service.IncomeDBService;
+import xyz.farmdashboard.server.service.RewardDBService;
 import xyz.farmdashboard.server.service.UniswapDBService;
 
 import java.util.List;
@@ -29,17 +31,20 @@ public class ApiController {
     private final HarvestTvlRepository harvestTvlRepository;
     private final IncomeDBService incomeDBService;
     private final HardWorkDBService hardWorkDBService;
+    private final RewardDBService rewardDBService;
 
     public ApiController(UniswapDBService uniswapDBService,
                          HarvestDBService harvestDBService,
                          HarvestTvlRepository harvestTvlRepository,
                          IncomeDBService incomeDBService,
-                         HardWorkDBService hardWorkDBService) {
+                         HardWorkDBService hardWorkDBService,
+                         RewardDBService rewardDBService) {
         this.uniswapDBService = uniswapDBService;
         this.harvestDBService = harvestDBService;
         this.harvestTvlRepository = harvestTvlRepository;
         this.incomeDBService = incomeDBService;
         this.hardWorkDBService = hardWorkDBService;
+        this.rewardDBService = rewardDBService;
     }
 
     @RequestMapping(value = "api/transactions/history/uni", method = RequestMethod.GET)
@@ -101,5 +106,10 @@ public class ApiController {
     @RequestMapping(value = "api/transactions/last/hardwork", method = RequestMethod.GET)
     public List<HardWorkEntity> lastHardWork() {
         return hardWorkDBService.getLastHardWorks();
+    }
+
+    @RequestMapping(value = "api/transactions/last/reward", method = RequestMethod.GET)
+    public List<RewardEntity> lastReward() {
+        return rewardDBService.getAllLastRewards();
     }
 }
