@@ -16,7 +16,6 @@ public class LogController {
     @RequestMapping(value = "api/logs", method = RequestMethod.POST)
     public ResponseEntity<String> postingStatus(@RequestBody WebErrorDTO error) {
         log.info("Web error:" + error);
-
         return ResponseEntity.ok().build();
     }
 }
