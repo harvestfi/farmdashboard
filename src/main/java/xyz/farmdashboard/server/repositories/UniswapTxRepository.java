@@ -1,10 +1,8 @@
 package xyz.farmdashboard.server.repositories;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import xyz.farmdashboard.server.dto.OhlcDTO;
 import xyz.farmdashboard.server.entity.UniswapTxEntity;
 
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.List;
 public interface UniswapTxRepository extends JpaRepository<UniswapTxEntity, String> {
 
     @Query(nativeQuery = true, value =
-        "select * from uni_tx t where t.block_date > :fromTs order by t.block_date")
+        "select * from uni_tx t where t.coin = 'FARM' and t.block_date > :fromTs order by t.block_date")
     List<UniswapTxEntity> fetchAllFromBlockDate(@Param("fromTs") long fromTs);
 
     @Query(nativeQuery = true, value = "" +
@@ -23,7 +21,7 @@ public interface UniswapTxRepository extends JpaRepository<UniswapTxEntity, Stri
         "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', last_price)), '_', -1) close,  " +
         "       sum(amount) volume  " +
         "from uni_tx  " +
-        "where block_date >= :fromTs " +
+        "where coin = 'FARM' and block_date >= :fromTs " +
         "GROUP BY FLOOR(block_date/:period)  " +
         "order by timestamp;")
     List<OhlcProjection> fetchOHLCTransactionsFromBlock(@Param("fromTs") long fromTs, @Param("period") int period);

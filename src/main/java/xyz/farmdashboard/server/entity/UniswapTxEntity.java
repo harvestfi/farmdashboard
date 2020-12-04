@@ -24,7 +24,6 @@ public class UniswapTxEntity { //TODO get from ethparser
     private double amount;
     private String otherCoin;
     private double otherAmount;
-    private Double ethAmount;
     private String hash;
     private BigInteger block;
     private boolean confirmed = false;
