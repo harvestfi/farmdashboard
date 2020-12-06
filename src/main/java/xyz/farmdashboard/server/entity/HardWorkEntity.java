@@ -28,6 +28,7 @@ public class HardWorkEntity {
     private long psPeriodOfWork;
     private double perc;
     private double apr;
+    private double weeklyProfit;
     private double psTvlUsd;
     private double psApr;
 
