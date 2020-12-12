@@ -21,10 +21,13 @@ public interface UniswapTxRepository extends JpaRepository<UniswapTxEntity, Stri
         "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', last_price)), '_', -1) close,  " +
         "       sum(amount) volume  " +
         "from uni_tx  " +
-        "where coin = 'FARM' and block_date >= :fromTs " +
+        "where coin = :coin and block_date >= :fromTs " +
         "GROUP BY FLOOR(block_date/:period)  " +
         "order by timestamp;")
-    List<OhlcProjection> fetchOHLCTransactionsFromBlock(@Param("fromTs") long fromTs, @Param("period") int period);
+    List<OhlcProjection> fetchOHLCTransactionsFromBlock(
+        @Param("coin") String coin,
+        @Param("fromTs") long fromTs,
+        @Param("period") int period);
 
     public static interface OhlcProjection {
         long getTimestamp();

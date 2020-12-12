@@ -63,9 +63,9 @@ public class ApiController {
         return harvestTvlRepository.getHistoryOfAllTvl();
     }
 
-    @RequestMapping(value = "api/transactions/history/uni/ohcl", method = RequestMethod.GET)
-    public Iterable<UniswapTxRepository.OhlcProjection> ohclUniswapTx() {
-        return uniswapDBService.ohclUniswapTx();
+    @RequestMapping(value = "api/transactions/history/uni/ohcl/{name}", method = RequestMethod.GET)
+    public Iterable<UniswapTxRepository.OhlcProjection> ohclUniswapTx(@PathVariable("name") String name) {
+        return uniswapDBService.ohclUniswapTx(name);
     }
 
     @RequestMapping(value = "api/transactions/history/tvl/{name}", method = RequestMethod.GET)

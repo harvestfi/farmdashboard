@@ -30,8 +30,8 @@ public class UniswapDBService {
 //        return uniswapTxRepository.fetchAllLimited(LIMIT_100);
 //    }
 
-    public Iterable<UniswapTxRepository.OhlcProjection> ohclUniswapTx() {
+    public Iterable<UniswapTxRepository.OhlcProjection> ohclUniswapTx(String name) {
         return uniswapTxRepository.fetchOHLCTransactionsFromBlock(
-            1, 3600);
+            name, 1, 3600);
     }
 }
