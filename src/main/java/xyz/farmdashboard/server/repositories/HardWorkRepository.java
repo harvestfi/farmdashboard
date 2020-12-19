@@ -30,7 +30,9 @@ public interface HardWorkRepository extends JpaRepository<HardWorkEntity, String
         "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', ps_apr)), '_', -1)  ps_apr, " +
         "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', apr)), '_', -1) apr, " +
         "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', weekly_profit)), '_', -1) weekly_profit, " +
-        "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', weekly_all_profit)), '_', -1) weekly_all_profit " +
+        "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', weekly_all_profit)), '_', -1) weekly_all_profit, " +
+        "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', farm_buyback)), '_', -1) farm_buyback, " +
+        "    SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', farm_buyback_sum)), '_', -1) farm_buyback_sum " +
         "from hard_work " +
         "group by vault")
     List<HardWorkEntity> fetchLatest();

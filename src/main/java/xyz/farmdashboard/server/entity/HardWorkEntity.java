@@ -32,5 +32,7 @@ public class HardWorkEntity {
     private double weeklyAllProfit;
     private double psTvlUsd;
     private double psApr;
+    private double farmBuyback;
+    private double farmBuybackSum;
 
 }
