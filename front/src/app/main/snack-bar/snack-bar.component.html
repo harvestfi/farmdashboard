@@ -1,0 +1,11 @@
+<div class="row snack-bar-row">
+
+  <div class="left-border-box text-column" [ngStyle]="{'color':  chooseColor(data)}">
+    <angular-emojis [name]="'tractor'" size="15"></angular-emojis>
+    {{data}}
+    <angular-emojis [name]="'tractor'" size="15"></angular-emojis>
+  </div>
+  <div class="left-border-box button-column">
+    <mat-icon (click)="dismiss()" [inline]="true" class="pointer button-close" aria-hidden="false" aria-label="close">close</mat-icon>
+  </div>
+</div>

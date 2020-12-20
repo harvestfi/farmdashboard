@@ -1,0 +1,32 @@
+.flow-tab-td {
+  /*vertical-align:middle !important;*/
+  /*display: inline;*/
+}
+
+.flow-tab-table {
+  /*widows: 100;*/
+}
+
+
+.last-price-text {
+  font-size: 0.9em;
+  vertical-align:middle;
+}
+
+.uni-price {
+  font-size: 0.9em;
+  margin: 0;
+  padding: 0
+}
+
+.uni-amount, .uni-other-amount {
+  font-size: 1.2em;
+}
+
+.uni-coin, .uni-other-coin {
+  font-size: 0.7em;
+}
+
+.do-hard-work-img {
+  margin-bottom: 10px;
+}

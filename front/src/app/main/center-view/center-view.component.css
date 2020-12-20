@@ -1,0 +1,60 @@
+.central-view-row {
+  width: 100%;
+}
+
+.left {
+  width: 100%;
+}
+
+.middle {
+  width: 100%;
+  height: 100%;
+}
+
+.price-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #fffce6;
+  margin: 10px 10px 10px 10px;
+  padding: 3px;
+  height: 300px;
+}
+
+.grain-chart, .farm-chart {
+  width: 50%;
+}
+
+@media screen and (max-width: 900px) {
+  .price-card {
+    height: 450px;
+  }
+
+  .grain-chart, .farm-chart {
+    width: 100%;
+  }
+
+  /*.left {*/
+  /*  width: 50%;*/
+  /*}*/
+
+  /*.middle {*/
+  /*  width: 50%;*/
+  /*}*/
+}
+
+@media screen and (max-width: 600px) {
+  .price-card {
+    height: 350px;
+  }
+}
+
+@media screen and (max-width: 399px) {
+  .left {
+    width: 100%;
+  }
+
+  .middle {
+    width: 100%;
+  }
+}

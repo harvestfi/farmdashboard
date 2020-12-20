@@ -1,0 +1,106 @@
+<div class="row header-row">
+  <div class="left-border-box checkbox">
+    <mat-checkbox [(ngModel)]="includeInactive" (change)="sortData(null)">Include inactive
+    </mat-checkbox>
+  </div>
+  <div class="left-border-box title">
+    Information about all existing vaults
+  </div>
+</div>
+
+<div class="dialog-card" mat-dialog-content>
+  <table matSort (matSortChange)="sortData($event)" class="table-vaults">
+    <tr>
+      <th mat-sort-header="name">Name</th>
+      <th mat-sort-header="tvl">TVL</th>
+      <th mat-sort-header="users">Users</th>
+      <th mat-sort-header="income">Income</th>
+      <th mat-sort-header="income-apr">Income APR</th>
+      <th mat-sort-header="reward">Reward</th>
+      <th mat-sort-header="reward-apr">Reward APR</th>
+      <th mat-sort-header="all-apr">All APR</th>
+    </tr>
+
+    <tr *ngFor="let tvlName of sortedVaults">
+
+      <td class="tvl-name">
+        <img class="tvl-img" src="{{getImgSrc(tvlName)}}" alt="?"/>
+        {{tvlPrettyName(tvlName)}}
+      </td>
+
+      <td class="tvl-value">
+        {{tvls.get(tvlName) / 1000000 | number: '1.0-1'}}M$
+      </td>
+
+      <td class="owners-value">
+        {{users(tvlName)}}
+      </td>
+
+      <td class="income-value">
+
+        <div *ngIf="tvlName !== 'PS'; else psBlockIncome">
+          {{hardWorks.get(tvlName)?.shareUsdTotal / 1000 | number: '1.0-1'}}K$
+        </div>
+        <ng-template #psBlockIncome>
+          <div>
+            {{psIncome / 1000 | number: '1.0-1'}}K$
+          </div>
+        </ng-template>
+
+      </td>
+
+      <td class="income-apr-value">
+
+        <div *ngIf="tvlName !== 'PS'; else psBlockPerc">
+          {{incomeApr(tvlName) | number: '1.2-2'}}%
+        </div>
+        <ng-template #psBlockPerc>
+          <div>
+            {{psApr | number: '1.2-2'}}%
+          </div>
+        </ng-template>
+
+      </td>
+
+      <td class="reward-value">
+
+        <div *ngIf="tvlName !== 'PS'; else psBlockReward">
+          {{vaultReward(tvlName) | number: '1.0-0'}} FARM
+        </div>
+        <ng-template #psBlockReward>
+          <div>
+            {{0 | number: '1.0-0'}} FARM
+          </div>
+        </ng-template>
+
+      </td>
+
+      <td class="reward-apr">
+
+        <div *ngIf="tvlName !== 'PS'; else psBlockRewardApr">
+          {{vaultRewardApr(tvlName) | number: '1.2-2'}}%
+        </div>
+        <ng-template #psBlockRewardApr>
+          <div>
+            {{0 | number: '1.2-2'}}%
+          </div>
+        </ng-template>
+
+      </td>
+
+      <td class="all-apr">
+
+        <div *ngIf="tvlName !== 'PS'; else psBlockAllApr">
+          {{incomeApr(tvlName) + vaultRewardApr(tvlName) | number: '1.2-2'}}%
+        </div>
+        <ng-template #psBlockAllApr>
+          <div>
+            {{0 | number: '1.2-2'}}%
+          </div>
+        </ng-template>
+
+      </td>
+
+    </tr>
+  </table>
+</div>

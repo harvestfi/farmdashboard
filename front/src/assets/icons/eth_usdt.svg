@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="84px" height="79px" viewBox="0 0 84 79" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Slice 1</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="XTVCUSDT--big" transform="translate(28.000000, 23.000000)">
+            <circle id="Oval" fill="#26A17B" cx="28" cy="28" r="28"></circle>
+            <path d="M31,30.121 C30.834,30.121 30.12,30.189 28.033,30.189 C26.36,30.189 25.414,30.139 25,30.121 C18.557,29.835 13.507,28.705 13.507,27.339 C13.507,25.973 18.557,24.826 25,24.539 L25,28.992 L31,28.992 L31,24.54 C37.426,24.826 42.476,25.973 42.476,27.339 C42.476,28.688 37.426,29.835 31,30.121 Z M31,24.068 L31,20 L40,20 L40,14 L16,14 L16,20 L25,20 L25,24.067 C17.712,24.405 12,25.889 12,27.642 C12,29.396 17.712,30.88 25,31.218 L25,44 L31,44 L31,31.218 C38.288,30.88 44,29.396 44,27.642 C44,25.889 38.288,24.422 31,24.067 L31,24.068 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+        </g>
+        <g id="eth">
+            <circle id="Oval" stroke="#FFFFFF" stroke-width="2" fill="#627EEA" cx="28" cy="28" r="27"></circle>
+            <polygon id="Path" fill-opacity="0.6" fill="#FFFFFF" fill-rule="nonzero" points="28 8 28 22.783 40.5 28.367"></polygon>
+            <polygon id="Path" fill="#FFFFFF" fill-rule="nonzero" points="28 8 15.5 28.367 28 22.783"></polygon>
+            <polygon id="Path" fill-opacity="0.6" fill="#FFFFFF" fill-rule="nonzero" points="28 37.95 28 48 40.5 30.7"></polygon>
+            <polygon id="Path" fill="#FFFFFF" fill-rule="nonzero" points="28 48 28 37.95 15.5 30.7"></polygon>
+            <polygon id="Path" fill-opacity="0.2" fill="#FFFFFF" fill-rule="nonzero" points="28 35.617 40.5 28.367 28 22.783 28 35.617"></polygon>
+            <polygon id="Path" fill-opacity="0.6" fill="#FFFFFF" fill-rule="nonzero" points="15.5 28.367 28 35.617 28 22.783"></polygon>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,76 @@
+<div [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}">
+
+  <div class="trade-date left-border-box trade-field"
+       #tooltip="matTooltip"
+       matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}} &#13;
+                    {{dto.type}} &#13;
+                    FARM: {{dto.amount | number}} &#13;
+                    Other coin: {{dto.otherAmount | number}} &#13;
+                    Price: {{dto.lastPrice | number}} &#13;
+                    Last gas: {{dto.lastGas | number}}"
+       matTooltipClass="tooltip-spaced">
+    {{dto.blockDateAdopted | date: 'HH:mm:ss'}}
+  </div>
+
+  <div class="trade-type left-border-box trade-field">
+    <container-element [ngSwitch]="dto.type">
+      <mat-icon *ngSwitchCase="'BUY'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
+                aria-hidden="false"
+                aria-label="BUY">trending_up
+      </mat-icon>
+      <mat-icon *ngSwitchCase="'SELL'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
+                aria-hidden="false"
+                aria-label="SELL">trending_down
+      </mat-icon>
+      <mat-icon *ngSwitchCase="'ADD'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
+                aria-hidden="false"
+                aria-label="ADD_LIQ">import_export
+      </mat-icon>
+      <mat-icon *ngSwitchCase="'REM'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
+                aria-hidden="false"
+                aria-label="ADD_LIQ">import_export
+      </mat-icon>
+      <mat-icon *ngSwitchDefault [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
+                aria-hidden="false"
+                aria-label="?">help
+      </mat-icon>
+    </container-element>
+  </div>
+
+  <div class="trade-amount left-border-box trade-field">
+    {{dto.amount | number: '1.0-0'}}
+  </div>
+
+  <div class="trade-coin left-border-box trade-field">
+    {{dto.coin}}
+  </div>
+
+  <div class="trade-other-amount left-border-box trade-field">
+    {{dto.otherAmount | number: '1.0-0'}}
+  </div>
+
+  <div class="trade-other-coin left-border-box trade-field">
+    {{dto.otherCoin}}
+  </div>
+
+  <div class="trade-price left-border-box trade-field">
+    {{dto.lastPrice | number: '1.0-0'}}
+  </div>
+
+  <div class="trade-sign left-border-box trade-field pointer" (click)="openEthersacanTx(dto.hash)">
+    <container-element [ngSwitch]="checkImportantOwner(dto.owner)">
+          <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price" class="sign-icon">
+            open_in_new
+          </mat-icon>
+<!--      <span *ngSwitchCase="'normal'">-->
+<!--      for-->
+<!--    </span>-->
+      <mat-icon *ngSwitchCase="'devs'" [ngStyle]="{'color': '#c4ad58'}" aria-hidden="false" aria-label="Price" class="sign-icon">
+        warning
+      </mat-icon>
+      <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" size="20"
+                      class="do-hard-work-img"></angular-emojis>
+    </container-element>
+  </div>
+
+</div>

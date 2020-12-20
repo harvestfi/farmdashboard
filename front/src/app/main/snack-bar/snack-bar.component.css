@@ -1,0 +1,35 @@
+.snack-bar-row {
+  /*min-width: 50px;*/
+}
+
+.text-column {
+  text-align: center;
+  width: 96%;
+  font-size: 0.9em;
+  font-weight: bolder;
+  /*float: right;*/
+  /*box-sizing: border-box;*/
+}
+
+.button-column {
+  width: 4%;
+  /*float: right;*/
+  /*box-sizing: border-box;*/
+}
+
+.button-close {
+  margin-left: 5px;
+  font-size: 1em;
+}
+
+::ng-deep .mat-snack-bar-container {
+  padding: 5px;
+  margin: 5px;
+  min-height: 10px;
+}
+
+@media screen and (max-width: 1025px) {
+  .text-column {
+    font-size: 0.7em;
+  }
+}

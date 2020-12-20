@@ -1,0 +1,51 @@
+<container-element [ngSwitch]="vt.getViewType()">
+  <div *ngSwitchCase="'v2'" class="row tvl-row">
+
+    <div class="left-border-box strategies-row-first-w">
+      <div class="row strategies-row-first">
+        <div class="left-border-box first-list">
+          <div class="list-card">
+            <app-tvl-box [tvlName]="null" [name]="'Stablecoins'"></app-tvl-box>
+            <app-tvl-box *ngFor="let vault of vaultsListStable" [tvlName]="vault"></app-tvl-box>
+          </div>
+        </div>
+
+        <div class="left-border-box second-list">
+          <div class="list-card">
+            <app-tvl-box [tvlName]="null" [name]="'Curve'"></app-tvl-box>
+            <app-tvl-box *ngFor="let vault of vaultsListCrv" [tvlName]="vault"></app-tvl-box>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="left-border-box strategies-row-second-w">
+      <div class="row strategies-row-second">
+        <div class="left-border-box third-list">
+          <div class="list-card">
+            <app-tvl-box [tvlName]="null" [name]="'Coins'"></app-tvl-box>
+            <app-tvl-box *ngFor="let vault of vaultsListCrypto" [tvlName]="vault"></app-tvl-box>
+          </div>
+        </div>
+
+        <div class="left-border-box fourth-list">
+          <div class="list-card">
+            <app-tvl-box [tvlName]="null" [name]="'LP Pools'"></app-tvl-box>
+            <app-tvl-box *ngFor="let vault of vaultsListLpPools" [tvlName]="vault"></app-tvl-box>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <table style="margin-top: 10px;" *ngSwitchDefault>
+
+    <tr *ngFor="let vault of vaultsList">
+      <td>
+        <app-tvl-box [tvlName]="vault"></app-tvl-box>
+      </td>
+    </tr>
+  </table>
+
+</container-element>

@@ -14,10 +14,6 @@
     <artifactId>server</artifactId>
     <version>2.0.0</version>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-
     <dependencies>
         <!--****************************** SPRING *************************************-->
         <dependency>
@@ -170,7 +166,7 @@
                             <outputDirectory>${basedir}/target/classes/static/</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/../farmdashboard-front/dist/farmdashboard-front</directory>
+                                    <directory>${basedir}/front/dist/farmdashboard-front</directory>
                                 </resource>
                             </resources>
                         </configuration>

@@ -1,0 +1,96 @@
+<ng-sidebar-container class="sidebar-container">
+
+  <!-- A sidebar -->
+  <ng-sidebar [(opened)]="opened">
+    <div class="side-menu">
+      <div class="row top-menu-row">
+        <div class="left-border-box top-menu-button-close">
+          <mat-icon (click)="toggleSidebar()" class="pointer button-menu" aria-hidden="false" aria-label="menu">close
+          </mat-icon>
+        </div>
+        <div class="left-border-box top-menu-caption">
+<!--          <div class="side-menu-caption">-->
+            Harvest Live Dashboard
+<!--          </div>-->
+        </div>
+        <div class="left-border-box top-menu-button-switch">
+          <button mat-mini-fab color="primary" (click)="toggleTheme()" class="switch-button"
+                  #tooltip="matTooltip" matTooltip="Switch to Dark Theme">
+            <mat-icon>toggle_on</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="menu-content">
+
+        <button mat-button color="primary" (click)="openAllStats()" class="menu-button">
+          Full Strategies Info
+        </button>
+
+        <button mat-button color="primary" (click)="openTvlDialog()" class="menu-button">
+          TVL History Info
+        </button>
+
+        <button mat-button color="primary" (click)="openIncomeDialog()" class="menu-button">
+          Income History Info
+        </button>
+
+      </div>
+    </div>
+  </ng-sidebar>
+
+  <div ng-sidebar-content>
+
+    <div class="top-menu row">
+
+      <div class="left-border-box button-menu-div">
+        <mat-icon (click)="toggleSidebar()" class="pointer button-menu" aria-hidden="false" aria-label="menu">
+          menu
+        </mat-icon>
+      </div>
+
+      <div class="left-border-box top-title-div">
+        Welcome to the Harvest Live dashboard. Refresh page not necessary!
+      </div>
+
+      <div class="left-border-box connection-state-div">
+        <div class="row connection-state-row">
+          <div>
+            <mat-icon [ngStyle]="{'color': ws.isConnected() ? '#479d43' : '#b51919'}" aria-hidden="false"
+                      aria-label="Connected" class="connect-sign">
+              online_prediction
+            </mat-icon>
+          </div>
+
+          <div *ngIf="ws.isConnected()" class="connect-title">
+            Online
+          </div>
+          <div *ngIf="!ws.isConnected()" class="connect-title">
+            Offline
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row main-row">
+      <div class="middle">
+        <app-dashboard-last-values></app-dashboard-last-values>
+        <app-center-view></app-center-view>
+        <app-uni-tx></app-uni-tx>
+      </div>
+    </div>
+
+    <footer>
+      <app-main-footer></app-main-footer>
+    </footer>
+
+  </div>
+
+
+</ng-sidebar-container>
+
+
+
+
+

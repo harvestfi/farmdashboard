@@ -1,0 +1,73 @@
+<ng-sidebar-container class="sidebar-container">
+  <!-- A sidebar -->
+  <ng-sidebar [(opened)]="opened">
+    <div class="side-menu">
+      <!--      <mat-icon (click)="toggleSidebar()" class="pointer button-menu" aria-hidden="false" aria-label="menu">close</mat-icon>-->
+      <mat-icon (click)="toggleSidebar()" class="pointer button-menu" aria-hidden="false" aria-label="menu">menu
+      </mat-icon>
+      <div class="menu-content">
+
+        <button mat-button (click)="toggleTheme()" class="switch-button">
+          Switch theme
+        </button>
+
+      </div>
+    </div>
+  </ng-sidebar>
+
+  <div ng-sidebar-content>
+    <div class="top-menu row">
+      <div class="left-border-box">
+        <mat-icon (click)="toggleSidebar()" class="pointer button-menu" aria-hidden="false" aria-label="menu">
+          menu
+        </mat-icon>
+      </div>
+      <div class="left-border-box top-caption">
+        This mode only supports the desktop version with a high-resolution monitor and is no longer supported
+      </div>
+    </div>
+
+    <table class="main-table" style="width: 100%; vertical-align: top; min-height: 100%;">
+      <tr style="vertical-align: top;">
+
+
+        <td style="width: 25%;">
+          <app-uni-tx></app-uni-tx>
+        </td>
+
+        <td style="width: 25%;">
+          <app-harvest-tx></app-harvest-tx>
+        </td>
+
+
+        <td style="width: 50%; padding: 0;">
+          <table class="price-and-plot-table" style="width: 100%;">
+            <tr>
+              <td colspan="2">
+                <app-dashboard-last-values></app-dashboard-last-values>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 200px; vertical-align: top;">
+                <app-strategy-list></app-strategy-list>
+              </td>
+              <td>
+                <div style="width: 100%;">
+                  <app-farm-chart></app-farm-chart>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+
+        </td>
+      </tr>
+    </table>
+
+    <footer>
+      <app-main-footer></app-main-footer>
+    </footer>
+
+  </div>
+
+</ng-sidebar-container>

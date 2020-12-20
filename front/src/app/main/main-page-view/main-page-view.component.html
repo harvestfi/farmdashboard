@@ -1,0 +1,7 @@
+<container-element [ngSwitch]="vt.getViewType()">
+  <app-main-page-v2 *ngSwitchCase="'v2'"></app-main-page-v2>
+<!--  <app-main-page-mobile *ngSwitchCase="'mobile'"></app-main-page-mobile>-->
+  <app-main-page-descktop *ngSwitchDefault></app-main-page-descktop>
+</container-element>
+
+
