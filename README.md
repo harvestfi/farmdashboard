@@ -1,13 +1,12 @@
-# Farm live dashboard backend
+# Farm live dashboard
 
-You can find the frontend part in https://github.com/belbix/farmdashboard-frontend
-
-For correct deployment clone both of them in the same OS folder.
+It ain't much, but it is honest work!
 
 Angular 2 is required.
 
-Run in the frontend project folder 
+Run in the front folder 
 ```bash
+npm install
 ng build --prod
 ```
 
