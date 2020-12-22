@@ -49,6 +49,11 @@ import {environment} from '../environments/environment';
 import { ProfitDialogComponent } from './dialogs/profit-dialog/profit-dialog.component';
 import { GrainChartComponent } from './chart/grain-chart/grain-chart.component';
 import { FarmBuybacksDialogComponent } from './dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
+import { HistoryPageComponent } from './history/history-page/history-page.component';
+import {AppRoutingModule} from "./app-routing/app-routing.module";
+import { MainComponentsComponent } from './main/main-components/main-components.component';
+import { StakedBoxComponent } from './history/staked-box/staked-box.component';
+import { TradeBoxComponent } from './history/trade-box/trade-box.component';
 
 declare var require: any;
 
@@ -83,9 +88,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     IncomeDialogComponent,
     ProfitDialogComponent,
     GrainChartComponent,
-    FarmBuybacksDialogComponent
+    FarmBuybacksDialogComponent,
+    HistoryPageComponent,
+    MainComponentsComponent,
+    StakedBoxComponent,
+    TradeBoxComponent
   ],
   imports: [
+    AppRoutingModule,
     MatCheckboxModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,

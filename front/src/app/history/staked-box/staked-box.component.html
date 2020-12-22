@@ -1,0 +1,47 @@
+
+
+<div class="row main-row">
+
+  <div class="left-border-box value" [style]="isPositive() ? 'color: green' : 'color: red'">
+    {{getTitle}}
+  </div>
+
+  <div class="left-border-box">
+    <div>
+      <mat-icon [style]="isPositive() ? 'color: green' : 'color: red'">
+         {{isPositive() ? 'trending_up' : 'trending_down'}}
+      </mat-icon>
+    </div>
+  </div>
+
+  <div class="left-border-box value" #tooltip="matTooltip"
+       matTooltip="{{harvestDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
+    {{harvestDto.blockDateAdopted | date: 'dd MMM'}}
+  </div>
+
+  <div class="left-border-box value">
+    {{harvestDto.methodName}}
+  </div>
+
+  <div class="left-border-box value">
+    {{harvestDto.amount | number: '1.0-2'}}
+  </div>
+
+  <div class="left-border-box value">
+    ({{harvestDto.usdAmount}}$)
+  </div>
+
+  <div class="left-border-box value">
+    to {{harvestDto.vault}}
+  </div>
+
+  <div class="left-border-box value">
+    <img class="tvl-img" src="{{getImgUrl(harvestDto.vault)}}" alt="?"/>
+  </div>
+
+  <div class="left-border-box value pointer" (click)="openEthersacanTx(harvestDto.hash)">
+    <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
+  </div>
+
+
+</div>
