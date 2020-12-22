@@ -57,8 +57,8 @@ export class WebsocketService implements OnDestroy {
 
   send(topic: string, payload: any): void {
     this.connect()
-      .pipe(first())
-      .subscribe(inst => inst.send(topic, {}, JSON.stringify(payload)));
+    .pipe(first())
+    .subscribe(inst => inst.send(topic, {}, JSON.stringify(payload)));
   }
 
   private connectSockJs(): void {
@@ -84,14 +84,17 @@ export class WebsocketService implements OnDestroy {
 
   private connect(): Observable<Client> {
     return new Observable<Client>(observer => {
-      this.state.pipe(filter(state => state === SocketClientState.CONNECTED)).subscribe(() => {
+      this.state?.pipe(filter(state => state === SocketClientState.CONNECTED)).subscribe(() => {
         observer.next(this.client);
       });
     });
   }
 
   public isConnected(): boolean {
-    return this.client.connected;
+    if (this.client) {
+      return this.client?.connected;
+    }
+    return false;
   }
 
 }
