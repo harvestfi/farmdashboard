@@ -9,10 +9,10 @@ import {WebsocketService} from "../../services/websocket.service";
 export class MainComponentsComponent implements OnInit {
 
   constructor(public ws: WebsocketService) {
+    this.ws.connectSockJs();
   }
 
   ngOnInit(): void {
-    this.ws.connectSockJs();
   }
 
 }

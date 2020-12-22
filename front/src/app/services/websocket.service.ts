@@ -19,7 +19,8 @@ export enum SocketClientState {
 })
 export class WebsocketService implements OnDestroy {
   private client: Client;
-  private state: BehaviorSubject<SocketClientState>;
+  private state: BehaviorSubject<SocketClientState>
+      = new BehaviorSubject<SocketClientState>(SocketClientState.ATTEMPTING);
   private recTimeout = null;
   private consumers = new Set<WsConsumer>();
 
@@ -64,7 +65,6 @@ export class WebsocketService implements OnDestroy {
     this.client = over(new SockJS(WS_ENDPOINT));
     this.client.debug = null;
     this.client.reconnect_delay = RECONNECT_INTERVAL * 1000;
-    this.state = new BehaviorSubject<SocketClientState>(SocketClientState.ATTEMPTING);
     this.client.connect({}, () => {
       this.state.next(SocketClientState.CONNECTED);
       clearTimeout(this.recTimeout);
@@ -83,7 +83,7 @@ export class WebsocketService implements OnDestroy {
 
   private connect(): Observable<Client> {
     return new Observable<Client>(observer => {
-      this.state?.pipe(filter(state => state === SocketClientState.CONNECTED)).subscribe(() => {
+      this.state.pipe(filter(state => state === SocketClientState.CONNECTED)).subscribe(() => {
         observer.next(this.client);
       });
     });
