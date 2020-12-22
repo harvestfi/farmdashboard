@@ -24,7 +24,6 @@ export class WebsocketService implements OnDestroy {
   private consumers = new Set<WsConsumer>();
 
   constructor() {
-    this.connectSockJs();
   }
 
   static jsonHandler(message: Message): any {
@@ -61,7 +60,7 @@ export class WebsocketService implements OnDestroy {
       .subscribe(inst => inst.send(topic, {}, JSON.stringify(payload)));
   }
 
-  private connectSockJs(): void {
+  public connectSockJs(): void {
     this.client = over(new SockJS(WS_ENDPOINT));
     this.client.debug = null;
     this.client.reconnect_delay = RECONNECT_INTERVAL * 1000;
@@ -91,7 +90,7 @@ export class WebsocketService implements OnDestroy {
   }
 
   public isConnected(): boolean {
-    return this.client.connected;
+    return this.client?.connected;
   }
 
 }

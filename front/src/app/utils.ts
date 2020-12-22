@@ -151,4 +151,40 @@ export class Utils {
   public static aprToApy(apr: number, period: number): number {
     return (Math.pow(1.0 + ((apr / 100) / period), period) - 1.0) * 100;
   }
+
+  public static isUni(record: any): boolean {
+    return !!record.type;
+  }
+
+  public static isUniTrade(record: any): boolean {
+    return Utils.isUni(record) && (record.type === 'BUY' || record.type === 'SELL');
+  }
+
+  public static isUniLiq(record: any): boolean {
+    return Utils.isUni(record) && (record.type === 'ADD' || record.type === 'REM');
+  }
+
+  public static isUniPositive(record: any): boolean {
+    return Utils.isUni(record) && (record.type === 'BUY' || record.type === 'ADD');
+  }
+
+  public static isUniNegative(record: any): boolean {
+    return Utils.isUni(record) && (record.type === 'REM' || record.type === 'SELL');
+  }
+
+  public static isHarvest(record: any): boolean {
+    return !!record.methodName;
+  }
+
+  public static isHarvestPositive(record: any): boolean {
+    return Utils.isHarvest(record) && record.methodName === 'Deposit';
+  }
+
+  public static isHarvestNegative(record: any): boolean {
+    return Utils.isHarvest(record) && record.methodName === 'Withdraw';
+  }
+
+  public static openEthersacanTx(hash: string): void {
+    window.open('https://etherscan.io/tx/' + hash, '_blank');
+  }
 }

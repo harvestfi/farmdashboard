@@ -1,0 +1,79 @@
+<div class="history-page">
+
+  <div class="title">
+    History for account {{this.address}}
+  </div>
+
+  <div class="row stat-row">
+    <div class="stat-1 left-border-box styled-card title-card">
+      🚜FARM: {{farmSum | number: '1.0-2'}}
+      <mat-checkbox [(ngModel)]="includeFarm" (change)="sortValues()"></mat-checkbox>
+    </div>
+
+    <div class="stat-3 left-border-box styled-card title-card">
+      💰LP: {{farmLpSum | number: '1.0-2'}}$
+      <mat-checkbox [(ngModel)]="includeLpFarm" (change)="sortValues()"></mat-checkbox>
+    </div>
+
+    <div *ngFor="let vault of vaults">
+      <div class="stat-2 left-border-box styled-card title-card">
+        <img class="tvl-img" src="{{getImgUrl(vault)}}" alt="?"/>
+        {{vault}}: {{stakedSum.get(vault) | number: '1.0-2'}}$
+        <mat-checkbox [(ngModel)]="includeStaked" (change)="sortValues()"></mat-checkbox>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="text-align: center; font-weight: bolder; color: #4e4e4e">
+    It is a beta version, data calculated approximately
+  </div>
+
+  <div *ngFor="let record of sortedData">
+    <div class="row main-row">
+      <div class="left-col left-border-box">
+        <div *ngIf="isPositive(record)">
+          &nbsp;
+        </div>
+        <div *ngIf="isNegative(record)" class="styled-card sum-card">
+          <div *ngIf="isHarvest(record)">
+            <img class="tvl-img" src="{{getImgUrl(record.vault)}}" alt="?"/>
+          </div>
+          {{balanceAtDate(record)}}
+        </div>
+      </div>
+
+      <div class="mid-col left-border-box">
+
+        <div class="styled-card box-card row" [style]="isPositive(record)? 'float: right' : ''">
+          <div *ngIf="isHarvest(record)">
+            <app-staked-box [harvestDto]="record"></app-staked-box>
+          </div>
+
+          <div *ngIf="isUni(record)">
+            <app-trade-box [uniswapDto]="record"></app-trade-box>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="right-col left-border-box">
+        <div *ngIf="isNegative(record)">
+          &nbsp;
+        </div>
+        <div *ngIf="isPositive(record)" class="styled-card sum-card">
+          <div *ngIf="isHarvest(record)">
+            <img class="tvl-img" src="{{getImgUrl(record.vault)}}" alt="?"/>
+          </div>
+          {{balanceAtDate(record)}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="sortedData.length == 0">
+    Address not found
+  </div>
+
+</div>

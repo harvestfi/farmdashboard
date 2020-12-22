@@ -1,0 +1,74 @@
+.title {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.history-page {
+  width: 100%;
+  margin:0 auto;
+}
+
+.stat-row {
+  margin-bottom: 10px;
+}
+
+.box-card {
+  /*width: 50%;*/
+  display: inline-block;
+  color: black;
+  margin: 5px;
+  padding: 3px;
+  /*line-height: 100%;*/
+}
+
+.title-card {
+  padding: 3px;
+  margin: 5px;
+  font-weight: bolder;
+}
+
+.sum-card {
+  padding: 3px;
+  margin: 5px;
+  width: 100%;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.balance {
+
+}
+
+.main-row {
+  display: flex;
+  /*width: 80%;*/
+  margin: 0 auto;
+}
+
+.left-col, .mid-col, .right-col {
+
+}
+
+.mid-col {
+  width: 60%;
+}
+
+.left-col, .right-col {
+  width: 20%;
+  display: flex;
+}
+
+.stat-1, .stat-2, .stat-3 {
+
+}
+
+.tvl-img {
+  width: 15px;
+  height: 15px;
+  margin-right: 3px;
+  /*margin-top: 5px;*/
+}
