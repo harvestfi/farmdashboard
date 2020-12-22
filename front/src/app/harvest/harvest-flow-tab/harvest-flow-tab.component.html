@@ -7,12 +7,12 @@
 
         <div class="harvest-field harvest2-date left-border-box"
              #tooltip="matTooltip"
-             matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}} &#13;
-                    {{dto.vault}} &#13;
-                    {{dto.methodName}} &#13;
-                    fAmount: {{dto.amount | number: '1.0-6'}} &#13;
-                    amount: {{dto.amountIn | number: '1.0-6'}} &#13;
-                    sharePrice: {{dto.sharePrice | number}} &#13;
+             matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
+                    {{dto.vault}}
+                    {{dto.methodName}}
+                    fAmount: {{dto.amount | number: '1.0-6'}}
+                    amount: {{dto.amountIn | number: '1.0-6'}}
+                    sharePrice: {{dto.sharePrice | number}}
                     vault tvl: {{dto.lastTvl | number}}"
              matTooltipClass="tooltip-spaced">
           {{dto.blockDateAdopted | date: 'HH:mm:ss'}}
@@ -66,10 +66,10 @@
 
         <td #tooltip="matTooltip"
             class="flow-tab-td"
-            matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}} &#13;
-                    fAmount: {{dto.amount | number: '1.0-6'}} &#13;
-                    amount: {{dto.amountIn | number: '1.0-6'}} &#13;
-                    sharePrice: {{dto.sharePrice | number}} &#13;
+            matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
+                    fAmount: {{dto.amount | number: '1.0-6'}}
+                    amount: {{dto.amountIn | number: '1.0-6'}}
+                    sharePrice: {{dto.sharePrice | number}}
                     vault tvl: {{dto.lastTvl | number}}"
             matTooltipClass="tooltip-spaced">
           <p class="harvest-date">
