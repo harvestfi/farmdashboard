@@ -52,6 +52,8 @@ import { FarmBuybacksDialogComponent } from './dialogs/farm-buybacks-dialog/farm
 import { HistoryPageComponent } from './history/history-page/history-page.component';
 import {AppRoutingModule} from "./app-routing/app-routing.module";
 import { MainComponentsComponent } from './main/main-components/main-components.component';
+import { StakedBoxComponent } from './history/staked-box/staked-box.component';
+import { TradeBoxComponent } from './history/trade-box/trade-box.component';
 
 declare var require: any;
 
@@ -88,7 +90,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     GrainChartComponent,
     FarmBuybacksDialogComponent,
     HistoryPageComponent,
-    MainComponentsComponent
+    MainComponentsComponent,
+    StakedBoxComponent,
+    TradeBoxComponent
   ],
   imports: [
     AppRoutingModule,

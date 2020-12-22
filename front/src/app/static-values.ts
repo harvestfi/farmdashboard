@@ -38,6 +38,7 @@ export class StaticValues {
     'TUSD',
     'CRV_TBTC',
     'PS',
+    'PS_V0',
     'CRV_CMPND',
     'CRV_BUSD',
     'CRV_USDN',

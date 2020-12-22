@@ -3,9 +3,10 @@ import {HttpService} from "../../services/http.service";
 import {ActivatedRoute} from "@angular/router";
 import {HarvestDto} from "../../models/harvest-dto";
 import {UniswapDto} from "../../models/uniswap-dto";
-import {DatePipe} from "@angular/common";
 import {Utils} from "../../utils";
 import {NGXLogger} from "ngx-logger";
+import {StaticValues} from "../../static-values";
+import {TvlBoxComponent} from "../../dashboard/tvl-box/tvl-box.component";
 
 @Component({
   selector: 'app-history-page',
@@ -13,32 +14,37 @@ import {NGXLogger} from "ngx-logger";
   styleUrls: ['./history-page.component.css']
 })
 export class HistoryPageComponent implements OnInit {
-  private datepipe = new DatePipe('en-US')
   private fullData = [];
   sortedData = [];
-  stakedMap = new Map<number, number>();
+  stakedMap = new Map<string, Map<number, number>>();
   farmMap = new Map<number, number>();
   farmLpMap = new Map<number, number>();
-  stakedSum = 0;
+  stakedSum = new Map<string, number>();
   farmSum = 0;
   farmLpSum = 0;
   includeFarm = true;
   includeStaked = true;
   includeLpFarm = true;
+  vaults = new Set<string>();
+  address;
 
   constructor(private http: HttpService,
               private route: ActivatedRoute,
               private log: NGXLogger) {
+    StaticValues.vaults.forEach(vault => {
+      this.stakedMap.set(vault, new Map<number, number>());
+    });
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.http.getAddressHistoryHarvest(params['address']).subscribe(data => {
+      this.address = params['address'];
+      this.http.getAddressHistoryHarvest(this.address).subscribe(data => {
             data?.forEach(harvest => {
               HarvestDto.enrich(harvest);
               this.fullData.push(harvest);
             });
-            this.http.getAddressHistoryUni(params['address']).subscribe(data => {
+            this.http.getAddressHistoryUni(this.address).subscribe(data => {
                   data?.forEach(uni => {
                     UniswapDto.round(uni);
                     this.fullData.push(uni);
@@ -80,14 +86,21 @@ export class HistoryPageComponent implements OnInit {
   }
 
   private parseHarvest(record: HarvestDto) {
+    this.vaults.add(record.vault);
+    const vaultMap = this.stakedMap.get(record.vault);
+    let sum = this.stakedSum.get(record.vault);
+    if (!sum) {
+      sum = 0;
+    }
     if (Utils.isHarvestPositive(record)) {
-      this.stakedSum += record.usdAmount;
+      sum += record.usdAmount;
     } else if (Utils.isHarvestNegative(record)) {
-      this.stakedSum -= record.usdAmount;
+      sum -= record.usdAmount;
     } else {
       this.log.warn('Unknown harvest record', record);
     }
-    this.stakedMap.set(record.blockDate, this.stakedSum);
+    this.stakedSum.set(record.vault, sum);
+    vaultMap.set(record.blockDate, sum);
   }
 
   private parseUniswap(record: UniswapDto) {
@@ -96,9 +109,9 @@ export class HistoryPageComponent implements OnInit {
     } else if (record.type === 'SELL') {
       this.farmSum -= record.amount;
     } else if (record.type === 'ADD') {
-      this.farmLpSum += record.amount;
+      this.farmLpSum += this.lpAmount(record);
     } else if (record.type === 'REM') {
-      this.farmLpSum -= record.amount;
+      this.farmLpSum -= this.lpAmount(record);
     } else {
       this.log.warn('Unknown uniswap record', record);
     }
@@ -106,43 +119,23 @@ export class HistoryPageComponent implements OnInit {
     this.farmLpMap.set(record.blockDate, this.farmLpSum);
   }
 
-  printRecord(record: any): string {
-    if (Utils.isHarvest(record)) {
-      return this.printHarvest(record)
-    } else if (Utils.isUni(record)) {
-      return this.printUniswap(record)
-    } else {
-      this.log.warn('Unknown record for print', record);
-    }
-  }
-
-  private printHarvest(record: HarvestDto) {
-    return this.datepipe.transform(record.blockDate * 1000, 'dd-MMM-yyyy HH:mm:ss') + ' '
-        + record.methodName + ' '
-        + record.vault + ' '
-        + record.amount.toFixed(2) + ' '
-        + record.usdAmount.toFixed(2) + '$ '
-        ;
-  }
-
-  private printUniswap(record: UniswapDto) {
-    return this.datepipe.transform(record.blockDate * 1000, 'dd-MMM-yyyy HH:mm:ss') + ' '
-        + record.type + ' '
-        + record.amount.toFixed(2) + ' '
-        + record.coin + ' '
-        + record.otherAmount.toFixed(2) + ' '
-        + record.otherCoin + ' '
-        ;
+  private lpAmount(record: UniswapDto): number {
+    return (record.amount * record.lastPrice * 2);
   }
 
   balanceAtDate(record: any): string {
     if (Utils.isHarvest(record)) {
-      return 'Staked ' + this.stakedMap.get(record.blockDate).toFixed(2) + '$';
+      try {
+        return record.vault + ' '
+            + this.stakedMap.get(record.vault).get(record.blockDate).toFixed(2) + '$';
+      } catch (e) {
+        return 'Error ' + record.vault
+      }
     } else if (Utils.isUniTrade(record)) {
-      return 'Hold ' + this.farmMap.get(record.blockDate).toFixed(2) + ' FARM';
+      return '🚜Hold ' + this.farmMap.get(record.blockDate)?.toFixed(2) + ' FARM';
     }
     if (Utils.isUniLiq(record)) {
-      return 'FARM in LP ' + this.farmLpMap.get(record.blockDate).toFixed(2);
+      return '💰LP ' + this.farmLpMap.get(record.blockDate)?.toFixed(2) + '$';
     } else {
       this.log.warn('Unknown record for balance', record);
     }
@@ -162,5 +155,9 @@ export class HistoryPageComponent implements OnInit {
 
   isUni(record: any): boolean {
     return Utils.isUni(record);
+  }
+
+  getImgUrl(name: string): string {
+    return TvlBoxComponent.getImgSrc(name);
   }
 }

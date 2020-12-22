@@ -183,4 +183,8 @@ export class Utils {
   public static isHarvestNegative(record: any): boolean {
     return Utils.isHarvest(record) && record.methodName === 'Withdraw';
   }
+
+  public static openEthersacanTx(hash: string): void {
+    window.open('https://etherscan.io/tx/' + hash, '_blank');
+  }
 }
