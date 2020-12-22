@@ -1,0 +1,39 @@
+.box-card {
+  width: 50%;
+  color: black;
+  margin: 5px;
+  padding: 3px;
+  line-height: 100%;
+}
+
+.title-card {
+  padding: 3px;
+  margin: 5px;
+}
+
+.sum-card {
+  padding: 3px;
+  margin: 5px;
+}
+
+.main-row {
+  display: inline;
+}
+
+.left-col, .mid-col, .right-col {
+
+}
+
+.mid-col {
+  width: 70%;
+}
+
+.left-col, .right-col {
+  min-width: 15%;
+  max-width: 15%;
+  color: #a09c9c;
+}
+
+.stat-1, .stat-2, .stat-3 {
+
+}

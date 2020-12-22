@@ -39,7 +39,7 @@ export class SnackService {
   }
 
   public getErrorText(e): string {
-    let s = '';
+    let s = 'Error: ';
     if (e) {
       s += e.status;
     }

@@ -1,0 +1,73 @@
+<div>
+  <div style="text-align: center; font-weight: bolder">
+    It is a beta version functionality, data calculated approximately
+  </div>
+
+  <div class="row stat-row">
+    <div class="stat-1 left-border-box styled-card title-card">
+      {{farmSum | number: '1.0-2'}} FARM
+      <mat-checkbox [(ngModel)]="includeFarm" (change)="sortValues()"></mat-checkbox>
+    </div>
+
+    <div class="stat-2 left-border-box styled-card title-card">
+      STAKED: {{stakedSum | number: '1.0-2'}}$
+      <mat-checkbox [(ngModel)]="includeStaked" (change)="sortValues()"></mat-checkbox>
+    </div>
+
+    <div class="stat-3 left-border-box styled-card title-card">
+      FARM in LP: {{farmLpSum | number: '1.0-2'}}
+      <mat-checkbox [(ngModel)]="includeLpFarm" (change)="sortValues()"></mat-checkbox>
+    </div>
+
+  </div>
+
+  <div *ngFor="let record of sortedData">
+    <div class="row main-row">
+      <div class="left-col left-border-box">
+        <div *ngIf="isPositive(record)">
+          &nbsp;
+        </div>
+        <div *ngIf="isNegative(record)" class="styled-card sum-card">
+          {{balanceAtDate(record)}}
+        </div>
+      </div>
+
+      <div class="mid-col left-border-box">
+
+        <div class="styled-card box-card row" [style]="isPositive(record)? 'float: right' : ''">
+          <div *ngIf="isHarvest(record)">
+            <div *ngIf="isPositive(record)">
+              Staked:
+            </div>
+            <div *ngIf="isNegative(record)">
+              Unstaked:
+            </div>
+            <div>
+              {{printRecord(record)}}
+            </div>
+          </div>
+
+          <div *ngIf="isUni(record)">
+            {{printRecord(record)}}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="right-col left-border-box">
+        <div *ngIf="isNegative(record)">
+          &nbsp;
+        </div>
+        <div *ngIf="isPositive(record)" class="styled-card sum-card">
+          {{balanceAtDate(record)}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="sortedData.length == 0">
+    Address not found
+  </div>
+
+</div>
