@@ -20,6 +20,10 @@ export class HarvestDto {
   usdAmount: number;
   prices: string;
   lpStat: string;
+  ownerBalance: number;
+  ownerBalanceUsd: number;
+  allOwnersCount: number;
+
   lpStatDto: LpStat;
   pricesDto: PricesDto;
   blockDateAdopted: Date;
@@ -46,6 +50,9 @@ export class HarvestDto {
     tx.blockDate = jsonData.blockDate;
     tx.prices = jsonData.prices;
     tx.lpStat = jsonData.lpStat;
+    tx.ownerBalance = jsonData.ownerBalance;
+    tx.ownerBalanceUsd = jsonData.ownerBalanceUsd;
+    tx.allOwnersCount = jsonData.allOwnersCount;
 
     tx.acquired = new Date();
     HarvestDto.enrich(tx);

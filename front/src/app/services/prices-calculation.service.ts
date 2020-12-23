@@ -20,6 +20,7 @@ export class PricesCalculationService {
   public lastHarvests = new Map<string, HarvestDto>();
   public lastHardWorks = new Map<string, HardWorkDto>();
   public lastRewards = new Map<string, RewardDto>();
+  public latestHarvest: HarvestDto;
   public latestHardWork: HardWorkDto;
   private prices = new Map<string, number>();
   private lastPriceDate = 0;
@@ -50,17 +51,17 @@ export class PricesCalculationService {
 
   private static isStableCoin(name: string): boolean {
     return 'USD' === name
-      || 'USDC' === name
-      || 'USDT' === name
-      || 'YCRV' === name
-      || '3CRV' === name
-      || 'TUSD' === name
-      || 'DAI' === name
-      || 'CRV_CMPND' === name
-      || 'CRV_BUSD' === name
-      || 'CRV_USDN' === name
-      || 'CRV_HUSD' === name
-      ;
+        || 'USDC' === name
+        || 'USDT' === name
+        || 'YCRV' === name
+        || '3CRV' === name
+        || 'TUSD' === name
+        || 'DAI' === name
+        || 'CRV_CMPND' === name
+        || 'CRV_BUSD' === name
+        || 'CRV_USDN' === name
+        || 'CRV_HUSD' === name
+        ;
   }
 
   public writeFromHarvestTx(tx: HarvestDto): void {
@@ -74,6 +75,7 @@ export class PricesCalculationService {
     this.vaultStats.set(tx.vault, vaultStats);
     this.lastTvlDates.set(tx.vault, tx.blockDate);
     this.lastHarvests.set(tx.vault, tx);
+    this.latestHarvest = tx;
   }
 
   public saveHardWork(tx: HardWorkDto): void {
@@ -208,5 +210,20 @@ export class PricesCalculationService {
       return StaticValues.lastPrice;
     }
     return 0.0;
+  }
+
+  lastAllUsersCount(): number {
+    if (!this.latestHarvest || !this.latestHarvest.allOwnersCount) {
+      return 0;
+    }
+    return this.latestHarvest?.allOwnersCount;
+  }
+
+  lastPoolsActiveUsersCount(): number {
+    let count = 0;
+    for (let dto of this.lastHarvests.values()) {
+      count += dto.ownerCount;
+    }
+    return count;
   }
 }

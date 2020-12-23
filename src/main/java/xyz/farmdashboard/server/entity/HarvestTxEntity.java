@@ -40,4 +40,7 @@ public class HarvestTxEntity {
     private String prices;
     private String lpStat;
     private Double lastAllUsdTvl;
+    private Double ownerBalance;
+    private Double ownerBalanceUsd;
+    private Integer allOwnersCount;
 }

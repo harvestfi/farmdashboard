@@ -8,6 +8,7 @@ export class StaticValues {
   public static staked = 0.0;
   public static farmTotalSupply = 0.0;
   public static apy = 0.0;
+  public static farmUsers = 0;
   public static vaults: string[] = [
     'YCRV_V0',
     'WETH_V0',

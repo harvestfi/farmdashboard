@@ -73,6 +73,18 @@ export class DashboardLastValuesComponent implements OnInit {
     return this.pricesCalculationService.latestHardWork?.farmBuybackSum / 1000;
   }
 
+  get allUsersCount(): number {
+    return this.pricesCalculationService.lastAllUsersCount();
+  }
+
+  get poolsActiveUsersCount(): number {
+    return this.pricesCalculationService.lastPoolsActiveUsersCount();
+  }
+
+  get farmActiveUsers(): number {
+    return StaticValues.farmUsers;
+  }
+
   ngOnInit(): void {
   }
 
@@ -114,6 +126,16 @@ export class DashboardLastValuesComponent implements OnInit {
       data: {
         title: 'FARM Buyback history chart',
         name: 'Name'
+      }
+    });
+  }
+
+  openPsTvlDialog(): void {
+    this.dialog.open(TvlDialogComponent, {
+      width: '100%',
+      height: 'auto',
+      data: {
+        type: 'PS'
       }
     });
   }
