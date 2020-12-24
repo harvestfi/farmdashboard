@@ -85,6 +85,10 @@ export class DashboardLastValuesComponent implements OnInit {
     return StaticValues.farmUsers;
   }
 
+  get savedGasFees(): number {
+    return this.pricesCalculationService.savedGasFees();
+  }
+
   ngOnInit(): void {
   }
 

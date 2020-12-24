@@ -43,4 +43,5 @@ public class HarvestTxEntity {
     private Double ownerBalance;
     private Double ownerBalanceUsd;
     private Integer allOwnersCount;
+    private Integer allPoolsOwnersCount;
 }

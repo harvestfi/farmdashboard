@@ -37,7 +37,8 @@ public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, Stri
         "    null as last_all_usd_tvl, " +
         "    null as owner_balance, " +
         "    owner_balance_usd as owner_balance_usd, " +
-        "    all_owners_count as all_owners_count " +
+        "    all_owners_count as all_owners_count, " +
+        "    all_pools_owners_count as all_pools_owners_count " +
         "from harvest_tx where vault = :vault order by block_date")
     List<HarvestTxEntity> fetchAllTvlForVault(@Param("vault") String vault);
 
@@ -63,7 +64,8 @@ public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, Stri
         "       null      owner_balance, " +
         "       null      owner_balance_usd, " +
         "       SUBSTRING_INDEX(MAX(CONCAT(block_date, '_', all_owners_count)), '_', -1) all_owners_count, " +
-        "       null      last_all_usd_tvl " +
+        "       null      last_all_usd_tvl, " +
+        "       null      all_pools_owners_count " +
         " " +
         "from harvest_tx " +
         "group by vault")

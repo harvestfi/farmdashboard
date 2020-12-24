@@ -220,10 +220,13 @@ export class PricesCalculationService {
   }
 
   lastPoolsActiveUsersCount(): number {
-    let count = 0;
-    for (let dto of this.lastHarvests.values()) {
-      count += dto.ownerCount;
+    if (!this.latestHarvest || !this.latestHarvest.allPoolsOwnersCount) {
+      return 0;
     }
-    return count;
+    return this.latestHarvest?.allPoolsOwnersCount;
+  }
+
+  savedGasFees(): number {
+    return 0;
   }
 }
