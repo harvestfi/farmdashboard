@@ -182,16 +182,17 @@
                   🛡️Saved gas fees
                 </div>
                 <div class="value-number-middle">
-                  <text>{{savedGasFees | number: '1.0-1'}}</text>
-                  K$
+                  <text>{{savedGasFees / 1000000 | number: '1.0-1'}}</text>
+                  M$
                 </div>
               </div>
             </div>
           </div>
 
           <div class="right-column-middle left-border-box">
-            <div class="value-card"
-                 #tooltip="matTooltip" matTooltip="Total unique accounts interacted with the project">
+            <div class="value-card pointer"
+                 #tooltip="matTooltip" matTooltip="Total unique accounts interacted with the project"
+                 (click)="openTotalUsersDialog()">
               <div>
                 <div class="value-middle">
                   👪Total users

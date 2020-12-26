@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {HttpService} from "../../services/http.service";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {DialogData} from "../../dashboard/dashboard-last-values/dashboard-last-values.component";
@@ -7,11 +7,11 @@ import {NGXLogger} from "ngx-logger";
 import {ChartBuilder} from "../../chart/chart-builder";
 
 @Component({
-  selector: 'hard-work-history-dialog',
-  templateUrl: './hard-work-history-dialog.component.html',
-  styleUrls: ['./hard-work-history-dialog.component.css']
+  selector: 'app-total-users-dialog',
+  templateUrl: './total-users-dialog.component.html',
+  styleUrls: ['./total-users-dialog.component.css']
 })
-export class HardWorkHistoryDialogComponent implements AfterViewInit {
+export class TotalUsersDialogComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
   ready = false;
 
@@ -27,19 +27,18 @@ export class HardWorkHistoryDialogComponent implements AfterViewInit {
   }
 
   private loadData(): void {
-    this.httpService.getHardWorkHistoryData().subscribe(data => {
-      this.log.debug('History of All Hard Works loaded ', data);
+    this.httpService.getHistoryAllTvl().subscribe(data => {
+      this.log.debug('History of All Harvests loaded ', data);
       const chartBuilder = new ChartBuilder();
-      const hwFees = new Map<number, number>();
-      let savedGas = 0;
+      chartBuilder.initVariables(2);
       data?.forEach(dto => {
-        savedGas += dto.savedGasFees;
-        hwFees.set(dto.blockDate, savedGas);
+        chartBuilder.addInData(0, dto.calculateTime, dto.lastAllOwnersCount);
+        chartBuilder.addInData(1, dto.calculateTime, dto.lastTvl);
       });
-      chartBuilder.initVariables(1);
-      hwFees.forEach((fees, date) => chartBuilder.addInData(0, date, fees / 1000000));
+
       this.handleData(chartBuilder, [
-        ['Saved Gas Fees M$', 'right', '#0085ff']
+        ['Total users', 'right', '#0085ff'],
+        ['TVL', '1', '#eeb000']
       ]);
     });
   }
@@ -50,5 +49,4 @@ export class HardWorkHistoryDialogComponent implements AfterViewInit {
     const chart = chartBuilder.initChart(this.chartEl);
     chartBuilder.addToChart(chart, config);
   }
-
 }

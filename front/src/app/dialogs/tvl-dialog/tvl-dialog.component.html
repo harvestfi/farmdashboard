@@ -22,7 +22,7 @@
         <mat-tab label="TVL">
 
           <div class="title">
-            {{data.type}} TVL history and Active accounts
+            {{data.type == 'All' ? 'All pools' : data.type + ' pool'}} history
           </div>
           <div #chart class="tvl-chart"></div>
 

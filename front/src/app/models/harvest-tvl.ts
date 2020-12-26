@@ -7,4 +7,5 @@ export class HarvestTvl {
   sharePrice: number;
   lastPrice: number;
   lastTvlNative: number;
+  lastAllOwnersCount: number;
 }

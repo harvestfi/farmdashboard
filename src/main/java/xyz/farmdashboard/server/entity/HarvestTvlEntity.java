@@ -26,5 +26,6 @@ public class HarvestTvlEntity {
     private Long calculateTime;
     private Double lastTvl;
     private int lastOwnersCount;
+    private int lastAllOwnersCount;
     private Double lastPrice;
 }

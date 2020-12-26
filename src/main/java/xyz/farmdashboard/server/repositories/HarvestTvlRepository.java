@@ -15,6 +15,7 @@ public interface HarvestTvlRepository extends JpaRepository<HarvestTvlEntity, St
         "       MAX(agg.calculate_time) calculate_time,  " +
         "       MAX(agg.last_tvl) last_tvl,  " +
         "       MAX(agg.last_owners_count) last_owners_count,  " +
+        "       MAX(agg.last_all_owners_count) last_all_owners_count,  " +
         "       MAX(agg.last_price) last_price  " +
         "from (  " +
         "         select  " +
@@ -22,6 +23,7 @@ public interface HarvestTvlRepository extends JpaRepository<HarvestTvlEntity, St
         "             t.calculate_time calculate_time,  " +
         "             t.last_tvl last_tvl,  " +
         "             t.last_owners_count last_owners_count,  " +
+        "             t.last_all_owners_count last_all_owners_count,  " +
         "             t.last_price last_price,  " +
         "             date_format(from_unixtime(t.calculate_time), '%Y-%m-%d %H' ) grp  " +
         "         from harvest_tvl t  " +
