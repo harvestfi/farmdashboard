@@ -31,9 +31,11 @@ export class IncomeDialogComponent implements AfterViewInit {
       this.log.debug('History of All Incomes loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(3);
-      data?.forEach(dto => chartBuilder.addInData(0, dto.blockDate, dto.shareUsdTotal / 1000));
-      data?.forEach(dto => chartBuilder.addInData(1, dto.blockDate, dto.apr));
-      data?.forEach(dto => chartBuilder.addInData(2, dto.blockDate, dto.tvl / 1000000));
+      data?.forEach(dto => {
+        chartBuilder.addInData(0, dto.blockDate, dto.shareUsdTotal / 1000);
+        chartBuilder.addInData(1, dto.blockDate, dto.apr);
+        chartBuilder.addInData(2, dto.blockDate, dto.tvl / 1000000);
+      });
       this.handleData(chartBuilder, [
         ['Profit K$', 'right', '#0085ff'],
         ['APR %', '1', '#eeb000'],

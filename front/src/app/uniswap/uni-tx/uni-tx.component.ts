@@ -106,5 +106,8 @@ export class UniTxComponent implements AfterViewInit {
     if (tx.psIncomeUsd) {
       StaticValues.psIncomeUsd = tx.psIncomeUsd;
     }
+    if (tx.ownerCount) {
+      StaticValues.farmUsers = tx.ownerCount;
+    }
   }
 }

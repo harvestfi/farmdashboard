@@ -158,12 +158,12 @@ export class TvlDialogComponent implements AfterViewInit {
     });
     this.tvlSeries.setData(lastTvlData);
 
-    // this.ownersSeries = this.chart.addLineSeries({
-    //   title: 'Wallets',
-    //   color: '#7e7e7e',
-    //   priceScaleId: '1',
-    // });
-    // this.ownersSeries.setData(lastOwnersData);
+    this.ownersSeries = this.chart.addLineSeries({
+      title: 'Accounts',
+      color: '#7e7e7e',
+      priceScaleId: '1',
+    });
+    this.ownersSeries.setData(lastOwnersData);
 
     let title = 'Shared Price';
     if (this.data.type === 'PS') {
@@ -203,10 +203,10 @@ export class TvlDialogComponent implements AfterViewInit {
         this.markerAdded.push(1);
         this.addLabelToChart(this.tvlSeries, h, this.tvlDataMap, this.markerAdded);
       }
-      // if (this.markerAdded2.length === 0) {
-      //   this.markerAdded2.push(1);
-      //   this.addLabelToChart(this.ownersSeries, h, this.ownersDataMap, this.markerAdded2);
-      // }
+      if (this.markerAdded2.length === 0) {
+        this.markerAdded2.push(1);
+        this.addLabelToChart(this.ownersSeries, h, this.ownersDataMap, this.markerAdded2);
+      }
 
       if (this.markerAdded3.length === 0 && this.sharePriceDataMap.size !== 0) {
         this.markerAdded3.push(1);

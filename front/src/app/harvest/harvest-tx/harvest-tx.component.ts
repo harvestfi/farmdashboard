@@ -122,6 +122,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   public subscribeToTopic(): void {
+    this.log.info('Harvest Subscribe on topic')
     this.subscribed = true;
     this.ws.onMessage('/topic/harvest', (m => HarvestDto.fromJson(m.body)))
       .subscribe(tx => {

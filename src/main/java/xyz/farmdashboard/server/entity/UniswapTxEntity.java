@@ -33,4 +33,6 @@ public class UniswapTxEntity { //TODO get from ethparser
     private Integer ownerCount;
     private Double psWeekApy;
     private Double psIncomeUsd;
+    private Double ownerBalance;
+    private Double ownerBalanceUsd;
 }

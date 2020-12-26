@@ -34,5 +34,10 @@ public class HardWorkEntity {
     private double psApr;
     private double farmBuyback;
     private double farmBuybackSum;
+    private int callsQuantity;
+    private int poolUsers;
+    private double savedGasFees;
+    private double savedGasFeesSum;
+    private double fee;
 
 }
