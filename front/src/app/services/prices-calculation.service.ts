@@ -227,6 +227,12 @@ export class PricesCalculationService {
   }
 
   savedGasFees(): number {
-    return 0;
+    let fees = 0;
+    for (let hw of this.lastHardWorks.values()) {
+      if (hw.savedGasFeesSum) {
+        fees += hw.savedGasFeesSum;
+      }
+    }
+    return fees;
   }
 }

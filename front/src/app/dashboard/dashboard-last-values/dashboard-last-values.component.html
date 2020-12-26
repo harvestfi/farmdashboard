@@ -140,10 +140,10 @@
       <div class="left-column-bottom left-border-box">
 
         <div class="side-card left-border-box">
-          <div class="value-card" #tooltip="matTooltip" matTooltip="Accounts with positive FARM balance">
+          <div class="value-card" #tooltip="matTooltip" matTooltip="Accounts with positive (more than 10$) FARM balance">
             <div>
               <div class="value-middle">
-                👨‍🌾FARM Active accounts
+                👨‍🌾FARM Holders
               </div>
               <div class="value-number-middle">
                 <text>{{farmActiveUsers | number: '1.0-0'}}</text>
@@ -174,8 +174,9 @@
           </div>
 
           <div class="middle-column-middle left-border-box">
-            <div class="value-card" #tooltip="matTooltip"
-                 matTooltip="How much gas would users spend on transactions without our project?">
+            <div class="value-card pointer" #tooltip="matTooltip"
+                 matTooltip="How much gas would users spend on transactions without our project?"
+                 (click)="openSavedFeesDialog()">
               <div>
                 <div class="value-middle">
                   🛡️Saved gas fees
@@ -209,7 +210,7 @@
 
         <div class="side-card left-border-box">
           <div class="value-card" #tooltip="matTooltip"
-               matTooltip="Accounts staked funds in pools">
+               matTooltip="Accounts staked funds in pools with balance more than 10$">
             <div>
               <div class="value-middle">
                 👨‍🌾Pools active accounts

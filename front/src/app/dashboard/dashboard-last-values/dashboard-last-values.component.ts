@@ -7,6 +7,7 @@ import {ViewTypeService} from '../../services/view-type.service';
 import {HttpService} from '../../services/http.service';
 import {ProfitDialogComponent} from '../../dialogs/profit-dialog/profit-dialog.component';
 import {FarmBuybacksDialogComponent} from '../../dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
+import {HardWorkHistoryDialogComponent} from "../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component";
 
 export interface TvlDialogData {
   type: string;
@@ -140,6 +141,17 @@ export class DashboardLastValuesComponent implements OnInit {
       height: 'auto',
       data: {
         type: 'PS'
+      }
+    });
+  }
+
+  openSavedFeesDialog() {
+    this.dialog.open(HardWorkHistoryDialogComponent, {
+      width: '100%',
+      height: 'auto',
+      data: {
+        title: 'Hard Work History',
+        name: 'Name'
       }
     });
   }

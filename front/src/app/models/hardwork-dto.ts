@@ -18,6 +18,11 @@ export class HardWorkDto {
   psApr: number;
   farmBuyback: number;
   farmBuybackSum: number;
+  callsQuantity: number;
+  poolUsers: number;
+  savedGasFees: number;
+  savedGasFeesSum: number;
+  fee: number;
 
   blockDateAdopted: Date;
 
@@ -44,6 +49,11 @@ export class HardWorkDto {
     tx.psApr = jsonData.psApr;
     tx.farmBuyback = jsonData.farmBuyback;
     tx.farmBuybackSum = jsonData.farmBuybackSum;
+    tx.callsQuantity = jsonData.callsQuantity;
+    tx.poolUsers = jsonData.poolUsers;
+    tx.savedGasFees = jsonData.savedGasFees;
+    tx.savedGasFeesSum = jsonData.savedGasFeesSum;
+    tx.fee = jsonData.fee;
 
     HardWorkDto.enrich(tx);
     return tx;

@@ -12,11 +12,15 @@ export class UniswapDto {
   confirmed: boolean;
   lastPrice: number;
   lastGas: number;
-  acquired: Date;
   blockDate: number;
-  blockDateAdopted: Date;
   psWeekApy: number;
   psIncomeUsd: number;
+  ownerCount: number;
+  ownerBalance: number;
+  ownerBalanceUsd: number;
+
+  acquired: Date;
+  blockDateAdopted: Date;
 
   public static fromJson(data: string): UniswapDto {
     const jsonData = JSON.parse(data);
@@ -37,6 +41,10 @@ export class UniswapDto {
     tx.blockDate = jsonData.blockDate;
     tx.psWeekApy = jsonData.psWeekApy;
     tx.psIncomeUsd = jsonData.psIncomeUsd;
+    tx.ownerCount = jsonData.ownerCount;
+    tx.ownerBalance = jsonData.ownerBalance;
+    tx.ownerBalanceUsd = jsonData.ownerBalanceUsd;
+
     tx.acquired = new Date();
     UniswapDto.round(tx);
     return tx;

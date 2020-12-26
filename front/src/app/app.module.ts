@@ -54,6 +54,7 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
 import { MainComponentsComponent } from './main/main-components/main-components.component';
 import { StakedBoxComponent } from './history/staked-box/staked-box.component';
 import { TradeBoxComponent } from './history/trade-box/trade-box.component';
+import { HardWorkHistoryDialogComponent } from './dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
 
 declare var require: any;
 
@@ -92,7 +93,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HistoryPageComponent,
     MainComponentsComponent,
     StakedBoxComponent,
-    TradeBoxComponent
+    TradeBoxComponent,
+    HardWorkHistoryDialogComponent
   ],
   imports: [
     AppRoutingModule,
