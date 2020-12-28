@@ -141,7 +141,7 @@ export class DashboardLastValuesComponent implements OnInit {
       width: '100%',
       height: 'auto',
       data: {
-        type: 'PS Pool'
+        type: 'PS'
       }
     });
   }
