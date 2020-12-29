@@ -15,7 +15,7 @@ import {TvlBoxComponent} from "../../dashboard/tvl-box/tvl-box.component";
 })
 export class HistoryPageComponent implements OnInit {
   private fullData = [];
-  sortedData = [];
+  sortedData;
   stakedMap = new Map<string, Map<number, number>>();
   farmMap = new Map<number, number>();
   farmLpMap = new Map<number, number>();
@@ -69,7 +69,7 @@ export class HistoryPageComponent implements OnInit {
         this.sortedData.push(record);
       }
     });
-    this.sortedData.sort((o1, o2) => o1.blockDate - o2.blockDate);
+    this.sortedData.sort((o1, o2) => o2.blockDate - o1.blockDate);
   }
 
   parseValues(): void {
@@ -126,16 +126,15 @@ export class HistoryPageComponent implements OnInit {
   balanceAtDate(record: any): string {
     if (Utils.isHarvest(record)) {
       try {
-        return record.vault + ' '
-            + this.stakedMap.get(record.vault).get(record.blockDate).toFixed(2) + '$';
+        return record.vault + ' ' + record.ownerBalanceUsd.toFixed(2) + '$';
       } catch (e) {
         return 'Error ' + record.vault
       }
     } else if (Utils.isUniTrade(record)) {
-      return '🚜Hold ' + this.farmMap.get(record.blockDate)?.toFixed(2) + ' FARM';
+      return '🚜Hold ' + record.ownerBalance?.toFixed(2) + ' ' + record.coin;
     }
     if (Utils.isUniLiq(record)) {
-      return '💰LP ' + this.farmLpMap.get(record.blockDate)?.toFixed(2) + '$';
+      return '💰LP ' + record.ownerBalanceUsd?.toFixed(2) + '$';
     } else {
       this.log.warn('Unknown record for balance', record);
     }

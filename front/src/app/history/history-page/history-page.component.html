@@ -5,12 +5,12 @@
   </div>
 
   <div class="row stat-row">
-    <div class="stat-1 left-border-box styled-card title-card">
+    <div *ngIf="farmSum !== 0" class="stat-1 left-border-box styled-card title-card">
       🚜FARM: {{farmSum | number: '1.0-2'}}
       <mat-checkbox [(ngModel)]="includeFarm" (change)="sortValues()"></mat-checkbox>
     </div>
 
-    <div class="stat-3 left-border-box styled-card title-card">
+    <div *ngIf="farmLpSum !== 0" class="stat-3 left-border-box styled-card title-card">
       💰LP: {{farmLpSum | number: '1.0-2'}}$
       <mat-checkbox [(ngModel)]="includeLpFarm" (change)="sortValues()"></mat-checkbox>
     </div>
@@ -72,8 +72,12 @@
     </div>
   </div>
 
-  <div *ngIf="sortedData.length == 0">
-    Address not found
+  <div class="message" *ngIf="sortedData?.length == 0">
+    Address doesn't have any operations
+  </div>
+
+  <div class="message" *ngIf="!sortedData">
+    <app-loading-spinner></app-loading-spinner>
   </div>
 
 </div>
