@@ -1,18 +1,18 @@
 package xyz.farmdashboard.server.service;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import xyz.farmdashboard.server.entity.UniswapTxEntity;
-import xyz.farmdashboard.server.repositories.UniswapTxRepository;
-import org.springframework.stereotype.Service;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 import java.time.Instant;
 import java.util.List;
-
-import static java.time.temporal.ChronoUnit.DAYS;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import xyz.farmdashboard.server.entity.UniswapTxEntity;
+import xyz.farmdashboard.server.repositories.UniswapTxRepository;
 
 @Service
 public class UniswapDBService {
+
     private static final int SEPT_04 = 1599177600;
     private final UniswapTxRepository uniswapTxRepository;
     private final static Pageable LIMIT_100 = PageRequest.of(0, 100);
@@ -21,9 +21,20 @@ public class UniswapDBService {
         this.uniswapTxRepository = uniswapTxRepository;
     }
 
-    public List<UniswapTxEntity> fetchAllForLastDay() {
-        return uniswapTxRepository.fetchAllFromBlockDate(
-            Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
+    public List<UniswapTxEntity> fetchUni(String from, String to) {
+        if (from == null && to == null) {
+            return uniswapTxRepository.fetchAllFromBlockDate(
+                Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
+        }
+        Integer fromI = 0;
+        Integer toI = Integer.MAX_VALUE;
+        if (from != null) {
+            fromI = Integer.parseInt(from);
+        }
+        if (to != null) {
+            toI = Integer.parseInt(to);
+        }
+        return uniswapTxRepository.fetchAllByPeriod(fromI, toI);
     }
 
 //    public List<UniswapTxEntity> fetchAllForLastDay() {

@@ -13,6 +13,14 @@ public interface UniswapTxRepository extends JpaRepository<UniswapTxEntity, Stri
         "select * from uni_tx t where t.coin = 'FARM' and t.block_date > :fromTs order by t.block_date")
     List<UniswapTxEntity> fetchAllFromBlockDate(@Param("fromTs") long fromTs);
 
+    @Query(nativeQuery = true, value =
+        "select * from uni_tx t where "
+            + "t.coin = 'FARM' "
+            + "and t.block_date > :from "
+            + "and t.block_date <= :to "
+            + "order by t.block_date")
+    List<UniswapTxEntity> fetchAllByPeriod(@Param("from") long from, @Param("to") long to);
+
     @Query(nativeQuery = true, value = "" +
         "select FLOOR(MIN(block_date)/:period)*:period timestamp,  " +
         "       SUBSTRING_INDEX(MIN(CONCAT(block_date, '_', last_price)), '_', -1) open,  " +

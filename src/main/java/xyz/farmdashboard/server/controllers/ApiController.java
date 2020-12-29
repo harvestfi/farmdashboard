@@ -1,10 +1,12 @@
 package xyz.farmdashboard.server.controllers;
 
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.farmdashboard.server.dto.IncomeDTO;
 import xyz.farmdashboard.server.dto.TvlHistoryDTO;
@@ -21,10 +23,9 @@ import xyz.farmdashboard.server.service.IncomeDBService;
 import xyz.farmdashboard.server.service.RewardDBService;
 import xyz.farmdashboard.server.service.UniswapDBService;
 
-import java.util.List;
-
 @RestController
 public class ApiController {
+
     private static final Logger log = LoggerFactory.getLogger(ApiController.class);
     private final UniswapDBService uniswapDBService;
     private final HarvestDBService harvestDBService;
@@ -48,8 +49,9 @@ public class ApiController {
     }
 
     @RequestMapping(value = "api/transactions/history/uni", method = RequestMethod.GET)
-    public Iterable<UniswapTxEntity> uniswapHistoryData() {
-        return uniswapDBService.fetchAllForLastDay();
+    public Iterable<UniswapTxEntity> uniswapHistoryData(@RequestParam(value = "from", required = false) String from,
+                                                        @RequestParam(value = "to", required = false) String to) {
+        return uniswapDBService.fetchUni(from, to);
     }
 
     @RequestMapping(value = "api/transactions/history/harvest", method = RequestMethod.GET)
