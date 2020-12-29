@@ -44,7 +44,7 @@
         {{vaultApy(tvlName) + vaultRewardApy(tvlName) | number: '1.0-1'}}
       </div>
       <ng-template #psFarmBlockPerc>
-        <div class="left-border-box farm-apy-value pointer" (click)="openPSIncomeDialog()"
+        <div class="left-border-box farm-apy-value pointer" (click)="openPsApyDialog()"
              #tooltip="matTooltip" matTooltip="APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%">
           {{vaultRewardApy(tvlName) | number: '1.0-1'}}
         </div>

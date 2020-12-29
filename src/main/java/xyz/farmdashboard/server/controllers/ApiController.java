@@ -59,6 +59,11 @@ public class ApiController {
         return harvestDBService.fetchAllForLastDay();
     }
 
+    @RequestMapping(value = "api/transactions/history/harvest/{name}", method = RequestMethod.GET)
+    public Iterable<HarvestTxEntity> harvestHistoryDataForVault(@PathVariable("name") String name) {
+        return harvestDBService.fetchAllByName(name);
+    }
+
     @RequestMapping(value = "api/transactions/history/alltvl", method = RequestMethod.GET)
     public Iterable<HarvestTvlEntity> allTvlHistoryData() {
         log.info("Request allTvlHistoryData");
@@ -113,5 +118,10 @@ public class ApiController {
     @RequestMapping(value = "api/transactions/last/reward", method = RequestMethod.GET)
     public List<RewardEntity> lastReward() {
         return rewardDBService.getAllLastRewards();
+    }
+
+    @RequestMapping(value = "api/transactions/history/reward/{name}", method = RequestMethod.GET)
+    public List<RewardEntity> historyReward(@PathVariable("name") String name) {
+        return rewardDBService.getAllRewards(name);
     }
 }

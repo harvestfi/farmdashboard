@@ -32,6 +32,13 @@ export class HttpService {
     );
   }
 
+  getHarvestHistoryByVault(name: string): Observable<HarvestDto[]> {
+    return this.http.get<HarvestDto[]>(`${this.url}/history/harvest/` + name).pipe(
+        catchError(this.snackService.handleError<HarvestDto[]>(name + `Harvest history`))
+    );
+  }
+
+
   getHardWorkHistoryData(): Observable<HardWorkDto[]> {
     return this.http.get<HardWorkDto[]>(`${this.url}/history/hardwork`).pipe(
         catchError(this.snackService.handleError<HardWorkDto[]>(`HardWork history`))
@@ -71,6 +78,12 @@ export class HttpService {
   getLastRewards(): Observable<RewardDto[]> {
     return this.http.get<RewardDto[]>('api/transactions/last/reward').pipe(
         catchError(this.snackService.handleError<RewardDto[]>(`last reward `))
+    );
+  }
+
+  getHistoryRewards(name: string): Observable<RewardDto[]> {
+    return this.http.get<RewardDto[]>('api/transactions/history/reward/' + name).pipe(
+        catchError(this.snackService.handleError<RewardDto[]>(`history reward `))
     );
   }
 

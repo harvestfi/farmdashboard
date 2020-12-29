@@ -5,6 +5,13 @@
   margin-bottom: 10px;
 }
 
+.message {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 1.3em;
+  margin: 20px;
+}
+
 .history-page {
   width: 100%;
   margin:0 auto;
