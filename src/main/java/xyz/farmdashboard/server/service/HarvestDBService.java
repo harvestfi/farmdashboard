@@ -28,6 +28,10 @@ public class HarvestDBService {
             Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
     }
 
+    public List<HarvestTxEntity> fetchAllByName(String name) {
+        return harvestTxRepository.findAllByVaultOrderByBlockDate(name);
+    }
+
     public List<HarvestTxEntity> fetchLastTvl() {
         return harvestTxRepository.fetchLastTvl();
     }

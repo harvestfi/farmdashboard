@@ -6,6 +6,7 @@ import {ViewTypeService} from '../../services/view-type.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {Utils} from '../../utils';
 import {IncomeDialogComponent} from '../../dialogs/income-dialog/income-dialog.component';
+import {RewardsDialogComponent} from "../../dialogs/rewards-dialog/rewards-dialog.component";
 
 @Component({
   selector: 'app-tvl-box',
@@ -192,6 +193,17 @@ export class TvlBoxComponent implements OnInit {
       height: 'auto',
       data: {
         type: 'income'
+      }
+    });
+  }
+
+  openPsApyDialog(): void {
+    this.dialog.open(RewardsDialogComponent, {
+      width: '100%',
+      height: 'auto',
+      data: {
+        title: 'PS APY History',
+        name: ''
       }
     });
   }

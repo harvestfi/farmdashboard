@@ -4,6 +4,7 @@ import {WebsocketService} from '../../services/websocket.service';
 import {AllStatsDialogComponent} from '../../dialogs/all-stats-dialog/all-stats-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {TvlDialogComponent} from '../../dialogs/tvl-dialog/tvl-dialog.component';
+import {RewardsDialogComponent} from "../../dialogs/rewards-dialog/rewards-dialog.component";
 
 @Component({
   selector: 'app-main-page-v2',
@@ -50,6 +51,17 @@ export class MainPageV2Component implements OnInit {
       height : 'auto',
       data: {
         type: 'income'
+      }
+    });
+  }
+
+  openPsApyDialog(): void {
+    this.dialog.open(RewardsDialogComponent, {
+      width: '100%',
+      height: 'auto',
+      data: {
+        title: 'PS APY History',
+        name: ''
       }
     });
   }

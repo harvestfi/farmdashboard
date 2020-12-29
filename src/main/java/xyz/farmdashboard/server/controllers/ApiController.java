@@ -1,5 +1,6 @@
 package xyz.farmdashboard.server.controllers;
 
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +22,9 @@ import xyz.farmdashboard.server.service.IncomeDBService;
 import xyz.farmdashboard.server.service.RewardDBService;
 import xyz.farmdashboard.server.service.UniswapDBService;
 
-import java.util.List;
-
 @RestController
 public class ApiController {
+
     private static final Logger log = LoggerFactory.getLogger(ApiController.class);
     private final UniswapDBService uniswapDBService;
     private final HarvestDBService harvestDBService;
@@ -55,6 +55,11 @@ public class ApiController {
     @RequestMapping(value = "api/transactions/history/harvest", method = RequestMethod.GET)
     public Iterable<HarvestTxEntity> harvestHistoryData() {
         return harvestDBService.fetchAllForLastDay();
+    }
+
+    @RequestMapping(value = "api/transactions/history/harvest/{name}", method = RequestMethod.GET)
+    public Iterable<HarvestTxEntity> harvestHistoryDataForVault(@PathVariable("name") String name) {
+        return harvestDBService.fetchAllByName(name);
     }
 
     @RequestMapping(value = "api/transactions/history/alltvl", method = RequestMethod.GET)
@@ -111,5 +116,10 @@ public class ApiController {
     @RequestMapping(value = "api/transactions/last/reward", method = RequestMethod.GET)
     public List<RewardEntity> lastReward() {
         return rewardDBService.getAllLastRewards();
+    }
+
+    @RequestMapping(value = "api/transactions/history/reward/{name}", method = RequestMethod.GET)
+    public List<RewardEntity> historyReward(@PathVariable("name") String name) {
+        return rewardDBService.getAllRewards(name);
     }
 }
