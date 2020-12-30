@@ -52,11 +52,11 @@ import { FarmBuybacksDialogComponent } from './dialogs/farm-buybacks-dialog/farm
 import { HistoryPageComponent } from './history/history-page/history-page.component';
 import {AppRoutingModule} from "./app-routing/app-routing.module";
 import { MainComponentsComponent } from './main/main-components/main-components.component';
-import { StakedBoxComponent } from './history/staked-box/staked-box.component';
 import { TradeBoxComponent } from './history/trade-box/trade-box.component';
 import { HardWorkHistoryDialogComponent } from './dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
 import { TotalUsersDialogComponent } from './dialogs/total-users-dialog/total-users-dialog.component';
 import { RewardsDialogComponent } from './dialogs/rewards-dialog/rewards-dialog.component';
+import {MatInputModule} from '@angular/material/input';
 
 declare var require: any;
 
@@ -94,7 +94,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FarmBuybacksDialogComponent,
     HistoryPageComponent,
     MainComponentsComponent,
-    StakedBoxComponent,
     TradeBoxComponent,
     HardWorkHistoryDialogComponent,
     TotalUsersDialogComponent,
@@ -109,6 +108,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatTabsModule,
     MatButtonModule,
     MatSidenavModule,
+    MatInputModule,
     FormsModule,
     CommonModule,
     BrowserModule,

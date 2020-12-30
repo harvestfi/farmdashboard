@@ -42,7 +42,7 @@
     </div>
   </ng-sidebar>
 
-  <div ng-sidebar-content>
+  <div ng-sidebar-content style="min-height: 100%">
 
     <div class="top-menu row">
 
@@ -53,7 +53,12 @@
       </div>
 
       <div class="left-border-box top-title-div">
-        Welcome to the Harvest Live dashboard. Refresh page not necessary!
+        <div *ngIf="uniInited()">
+          Welcome to the Harvest Live dashboard. Refresh page not necessary!
+        </div>
+        <div *ngIf="!uniInited()">
+          &nbsp;
+        </div>
       </div>
 
       <div class="left-border-box connection-state-div">
@@ -77,7 +82,7 @@
     </div>
 
 
-    <div class="row main-row">
+    <div class="main-row">
       <div class="middle">
     <router-outlet></router-outlet>
       </div>

@@ -7,6 +7,7 @@ import {HardWorkDto} from '../../models/hardwork-dto';
 import {Utils} from '../../utils';
 import {IncomeDialogComponent} from '../../dialogs/income-dialog/income-dialog.component';
 import {RewardsDialogComponent} from "../../dialogs/rewards-dialog/rewards-dialog.component";
+import {StaticValues} from "../../static-values";
 
 @Component({
   selector: 'app-tvl-box',
@@ -74,96 +75,15 @@ export class TvlBoxComponent implements OnInit {
     return 0;
   }
 
-  get tvlPrettyName(): string {
-    return this.tvlName?.replace('SUSHI_', '').replace('UNI_LP_', '');
-  }
-
-  public static getImgSrc(name: string): string {
-    switch (name) {
-      case 'UNI_ETH_DAI_V0':
-      case 'UNI_ETH_DAI':
-        return '/assets/icons/eth_dai.png';
-      case 'UNI_ETH_USDC_V0':
-      case 'UNI_ETH_USDC':
-        return '/assets/icons/eth_usdc.png';
-      case 'UNI_ETH_USDT_V0':
-      case 'UNI_ETH_USDT':
-        return '/assets/icons/eth_usdt.png';
-      case 'UNI_ETH_WBTC_V0':
-      case 'UNI_ETH_WBTC':
-        return '/assets/icons/eth_btc.svg';
-      case 'WETH_V0':
-      case 'WETH':
-        return '/assets/icons/eth.png';
-      case 'USDC_V0':
-      case 'USDC':
-        return '/assets/icons/usdc.png';
-      case 'USDT_V0':
-      case 'USDT':
-        return '/assets/icons/usdt.png';
-      case 'DAI_V0':
-      case 'DAI':
-        return '/assets/icons/dai.png';
-      case 'WBTC_V0':
-      case 'WBTC':
-        return '/assets/icons/wbtc.png';
-      case 'RENBTC_V0':
-      case 'RENBTC':
-        return '/assets/icons/ren.png';
-      case 'CRVRENWBTC_V0':
-      case 'CRVRENWBTC':
-        return '/assets/icons/btc.png';
-      case 'SUSHI_WBTC_TBTC':
-        return '/assets/icons/sushi_tbtc.png';
-      case 'WBTC_TBTC':
-        return '/assets/icons/sushi_tbtc.png';
-      case 'YCRV_V0':
-      case 'YCRV':
-        return '/assets/icons/curve.png';
-      case '3CRV':
-      case '_3CRV':
-        return '/assets/icons/three-pool.png';
-      case 'TUSD':
-        return '/assets/icons/tusd.png';
-      case 'PS_V0':
-      case 'PS':
-        return '/assets/icons/farm.png';
-      case 'CRV_TBTC':
-        return '/assets/icons/tbtc-mixed.png';
-      case 'CRV_CMPND':
-        return '/assets/icons/curve-compound.png';
-      case 'CRV_BUSD':
-        return '/assets/icons/curve-busd.png';
-      case 'CRV_USDN':
-        return '/assets/icons/curve-usdn.png';
-      case 'SUSHI_ETH_DAI':
-        return '/assets/icons/sushi-dai.png';
-      case 'SUSHI_ETH_USDC':
-        return '/assets/icons/sushi-usdc.png';
-      case 'SUSHI_ETH_USDT':
-        return '/assets/icons/sushi-usdt.png';
-      case 'SUSHI_ETH_WBTC':
-        return '/assets/icons/sushi-wbtc.png';
-      case 'IDX_ETH_DPI':
-        return '/assets/icons/eth_dpi.png';
-      case 'CRV_HUSD':
-        return '/assets/icons/curve-husd.png';
-      case 'CRV_HBTC':
-        return '/assets/icons/curve-hbtc.png';
-      case 'UNI_LP_USDC_FARM':
-        return '/assets/icons/farm-usdc.png';
-      case 'UNI_LP_WETH_FARM':
-        return '/assets/icons/farm-weth.png';
-      case 'UNI_LP_GRAIN_FARM':
-        return '/assets/icons/corn.svg';
-    }
+  vaultPrettyName(name: string): string {
+    return StaticValues.vaultPrettyName(name);
   }
 
   ngOnInit(): void {
   }
 
   getImgSrc(name: string): string {
-    return TvlBoxComponent.getImgSrc(name);
+    return StaticValues.getImgSrcForVault(name);
   }
 
   openTvlDialog(): void {
