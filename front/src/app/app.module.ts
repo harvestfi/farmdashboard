@@ -56,6 +56,7 @@ import { TradeBoxComponent } from './history/trade-box/trade-box.component';
 import { HardWorkHistoryDialogComponent } from './dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
 import { TotalUsersDialogComponent } from './dialogs/total-users-dialog/total-users-dialog.component';
 import { RewardsDialogComponent } from './dialogs/rewards-dialog/rewards-dialog.component';
+import {MatInputModule} from '@angular/material/input';
 
 declare var require: any;
 
@@ -107,6 +108,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatTabsModule,
     MatButtonModule,
     MatSidenavModule,
+    MatInputModule,
     FormsModule,
     CommonModule,
     BrowserModule,

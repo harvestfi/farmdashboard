@@ -6,6 +6,7 @@ import {MainComponentsComponent} from "../main/main-components/main-components.c
 const routes: Routes = [
   {path: '', component: MainComponentsComponent},
   {path: 'history/:address', component: HistoryPageComponent},
+  {path: 'history', component: HistoryPageComponent},
 
   {path: '**', redirectTo: ''}
 ];

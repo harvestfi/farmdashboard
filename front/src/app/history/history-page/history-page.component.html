@@ -1,14 +1,33 @@
 <div class="history-page">
-
-  <div class="title">
-    History for account {{this.address}}
+  <div *ngIf="address" class="title">
+    History for address
   </div>
 
   <div class="title">
-    TVL: {{tvl() | number: '1.0-0'}}$
+    <mat-form-field class="form-input">
+      <mat-label class="label-input">Address</mat-label>
+      <input matInput type="text" [(ngModel)]="inputAddress">
+      <button mat-button *ngIf="inputAddress" matSuffix mat-icon-button aria-label="Clear" (click)="inputAddress=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-mini-fab color="global" *ngIf="this.inputAddress && this.inputAddress != this.address"
+            routerLink="/history/{{this.inputAddress?.trim()}}" class="open-button">
+      <mat-icon>search</mat-icon>
+    </button>
   </div>
+
+
+
+
 
   <div class="row stat-row">
+    <div *ngIf="address && fullData?.length != 0" class="left-border-box styled-card title-card">
+      <div class="">
+        Summary: {{tvl() | number: '1.0-0'}}$
+      </div>
+    </div>
+
     <div *ngIf="lastFarmHold" class="stat-1 left-border-box styled-card title-card">
       🚜FARM: {{lastFarmHold.ownerBalance | number: '1.0-2'}}
       <mat-checkbox [(ngModel)]="includeFarm" (change)="sortValues()"></mat-checkbox>
@@ -30,7 +49,7 @@
 
   </div>
 
-  <div style="text-align: center; font-weight: bolder; color: #4e4e4e">
+  <div *ngIf="address" style="text-align: center; font-weight: bolder; color: #4e4e4e">
     It is a beta version, data doesn't include FARM movements and rewards
   </div>
 
@@ -52,7 +71,7 @@
 
   </div>
 
-  <div class="message" *ngIf="sortedData?.length == 0">
+  <div  class="message" *ngIf="address && fullData?.length == 0">
     Address doesn't have any operations
   </div>
 

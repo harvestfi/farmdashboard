@@ -18,12 +18,13 @@ class CheckedValue {
   styleUrls: ['./history-page.component.css']
 })
 export class HistoryPageComponent implements OnInit {
-  private fullData = [];
+  fullData = [];
   sortedData;
   includeFarm = false;
   vaults: CheckedValue[] = [];
   lps: CheckedValue[] = [];
-  address;
+  address: string;
+  inputAddress: string;
 
   lastFarmHold: UniswapDto;
   lastLp = new Map<string, UniswapDto>();
@@ -36,14 +37,18 @@ export class HistoryPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
+      this.clear();
       this.address = params['address'];
-      this.http.getAddressHistoryHarvest(this.address).subscribe(data => {
-            data?.forEach(harvest => {
+      this.inputAddress = params['address'];
+      this.http.getAddressHistoryHarvest(this.address).subscribe(harvests => {
+            this.log.info('Load harvest history', harvests);
+            harvests?.forEach(harvest => {
               HarvestDto.enrich(harvest);
               this.fullData.push(harvest);
             });
-            this.http.getAddressHistoryUni(this.address).subscribe(data => {
-                  data?.forEach(uni => {
+            this.http.getAddressHistoryUni(this.address).subscribe(unis => {
+                  this.log.info('Load uni history', harvests);
+                  unis?.forEach(uni => {
                     UniswapDto.round(uni);
                     this.fullData.push(uni);
                   });
@@ -54,6 +59,19 @@ export class HistoryPageComponent implements OnInit {
           }
       );
     });
+  }
+
+  clear() {
+    this.fullData = [];
+    this.sortedData = null;
+    this.includeFarm = false;
+    this.vaults = [];
+    this.lps = [];
+    this.address = null;
+    this.inputAddress = null;
+    this.lastFarmHold = null;
+    this.lastLp = new Map<string, UniswapDto>();
+    this.lastStaked = new Map<string, HarvestDto>();
   }
 
   sortValues(): void {
@@ -188,5 +206,12 @@ export class HistoryPageComponent implements OnInit {
 
   getImgUrl(name: string): string {
     return StaticValues.getImgSrcForVault(name);
+  }
+
+  goToAddress() {
+    if (!this.inputAddress) {
+      return;
+    }
+    window.open('/history/' + this.inputAddress.trim());
   }
 }

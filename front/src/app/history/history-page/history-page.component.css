@@ -1,3 +1,16 @@
+.form-input {
+  color: black;
+  width: 60%;
+}
+
+.label-input {
+  color: black;
+}
+
+.open-button {
+  margin: 5px;
+}
+
 .title {
   text-align: center;
   font-weight: bolder;
@@ -15,6 +28,7 @@
 .history-page {
   width: 100%;
   margin: 0 auto;
+  min-height: 100%;
 }
 
 .stat-row {
@@ -51,8 +65,12 @@
   justify-content: center;
 }
 
-.balance {
+.balance-row {
 
+}
+
+.balance {
+  width: 30%;
 }
 
 .main-row {
@@ -98,4 +116,19 @@
 
 ::ng-deep .mat-checkbox .mat-checkbox-frame {
   border-color: #8d8d8d;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: black !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: black !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: black !important;;
 }
