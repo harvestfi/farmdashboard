@@ -82,7 +82,7 @@
     </div>
 
     <div class="left-border-box value amount balance-coll">
-      {{uniswapDto.ownerBalance | number: '1.0-2'}}
+      {{(isTrade() ? uniswapDto.ownerBalance : uniswapDto.ownerBalanceUsd) | number: '1.0-2'}}
       <img class="tvl-img" src="{{getCoinImgUrl(uniswapDto.coin)}}" alt="?"/>
     </div>
 
@@ -113,16 +113,12 @@
       Type
     </div>
 
-    <div class="left-border-box head amount amount-col">
+    <div class="left-border-box head amount usd-amount-col">
       Amount
     </div>
 
-    <div class="left-border-box head coin-col">
+    <div class="left-border-box head vault-col">
       Pool
-    </div>
-
-    <div class="left-border-box head amount other-amount-col">
-      Amount$
     </div>
 
     <div class="left-border-box head other-coin-col">
@@ -155,29 +151,17 @@
       {{harvestDto.blockDateAdopted | date: 'dd MMM'}}
     </div>
 
-    <!--  <div class="left-border-box trend-col">-->
-    <!--    <div>-->
-    <!--      <mat-icon [style]="isPositive() ? 'color: green' : 'color: red'">-->
-    <!--         {{isPositive() ? 'trending_up' : 'trending_down'}}-->
-    <!--      </mat-icon>-->
-    <!--    </div>-->
-    <!--  </div>-->
-
     <div class="left-border-box value trend-col">
       {{harvestDto.methodName}}
     </div>
 
-    <div class="left-border-box value amount-col">
-      {{harvestDto.amount | number: '1.0-2'}}
+    <div class="left-border-box value usd-amount-col">
+      {{harvestDto.usdAmount  | number: '1.0-0'}}$
     </div>
 
-    <div class="left-border-box value coin-col">
+    <div class="left-border-box value vault-col">
       {{harvestDto.vault}}
       <img class="tvl-img" src="{{getCoinImgUrl(harvestDto.vault)}}" alt="?"/>
-    </div>
-
-    <div class="left-border-box value other-amount-col">
-      {{harvestDto.usdAmount}}$
     </div>
 
     <div class="left-border-box value other-coin-col">

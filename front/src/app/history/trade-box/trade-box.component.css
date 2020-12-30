@@ -24,8 +24,18 @@
   font-size: 1.2em;
 }
 
+.usd-amount-col {
+  width: 25%;
+  font-size: 1.2em;
+}
+
 .coin-col {
   width: 9%;
+  font-size: 0.8em;
+}
+
+.vault-col {
+  width: 14%;
   font-size: 0.8em;
 }
 

@@ -13,18 +13,18 @@
       🚜FARM: {{lastFarmHold.ownerBalance | number: '1.0-2'}}
       <mat-checkbox [(ngModel)]="includeFarm" (change)="sortValues()"></mat-checkbox>
     </div>
-    <div *ngFor="let lpName of lps">
-      <div *ngIf="lastLp.get(lpName).ownerBalanceUsd > 0" class="stat-3 left-border-box styled-card title-card">
-        💰LP {{lpName}}: {{lastLp.get(lpName).ownerBalanceUsd | number: '1.0-2'}}$
-        <mat-checkbox [(ngModel)]="includeLp" (change)="sortValues()"></mat-checkbox>
+    <div *ngFor="let c of lps">
+      <div class="stat-3 left-border-box styled-card title-card">
+        💰LP {{c.value}}: {{lastLp.get(c.value).ownerBalanceUsd | number: '1.0-2'}}$
+        <mat-checkbox [(ngModel)]="c.checked" (change)="sortValues()"></mat-checkbox>
       </div>
     </div>
 
-    <div *ngFor="let vaultName of vaults">
-      <div *ngIf="lastStaked.get(vaultName).ownerBalanceUsd > 0" class="stat-2 left-border-box styled-card title-card">
-        <img class="tvl-img" src="{{getImgUrl(vaultName)}}" alt="?"/>
-        {{prettyVaultName(vaultName)}}: {{lastStaked.get(vaultName).ownerBalanceUsd | number: '1.0-2'}}$
-        <mat-checkbox [(ngModel)]="includeStaked" (change)="sortValues()"></mat-checkbox>
+    <div *ngFor="let c of vaults">
+      <div class="stat-2 left-border-box styled-card title-card">
+        <img class="tvl-img" src="{{getImgUrl(c.value)}}" alt="?"/>
+        {{prettyVaultName(c.value)}}: {{lastStaked.get(c.value).ownerBalanceUsd | number: '1.0-2'}}$
+        <mat-checkbox [(ngModel)]="c.checked"  name="{{c.value}}" (change)="sortValues()"></mat-checkbox>
       </div>
     </div>
 

@@ -1,11 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpService} from "../../services/http.service";
-import {ActivatedRoute} from "@angular/router";
-import {HarvestDto} from "../../models/harvest-dto";
-import {UniswapDto} from "../../models/uniswap-dto";
-import {Utils} from "../../utils";
-import {NGXLogger} from "ngx-logger";
-import {StaticValues} from "../../static-values";
+import {HttpService} from '../../services/http.service';
+import {ActivatedRoute} from '@angular/router';
+import {HarvestDto} from '../../models/harvest-dto';
+import {UniswapDto} from '../../models/uniswap-dto';
+import {Utils} from '../../utils';
+import {NGXLogger} from 'ngx-logger';
+import {StaticValues} from '../../static-values';
+
+class CheckedValue {
+  value: string;
+  checked: boolean;
+}
 
 @Component({
   selector: 'app-history-page',
@@ -15,18 +20,9 @@ import {StaticValues} from "../../static-values";
 export class HistoryPageComponent implements OnInit {
   private fullData = [];
   sortedData;
-
-  stakedMap = new Map<string, Map<number, number>>();
-
-  stakedSum = new Map<string, number>();
-  farmSum = 0;
-  farmLpSum = 0;
-
-  includeFarm = true;
-  includeStaked = true;
-  includeLp = true;
-  vaults = new Set<string>();
-  lps = new Set<string>();
+  includeFarm = false;
+  vaults: CheckedValue[] = [];
+  lps: CheckedValue[] = [];
   address;
 
   lastFarmHold: UniswapDto;
@@ -36,9 +32,6 @@ export class HistoryPageComponent implements OnInit {
   constructor(private http: HttpService,
               private route: ActivatedRoute,
               private log: NGXLogger) {
-    StaticValues.vaults.forEach(vault => {
-      this.stakedMap.set(vault, new Map<number, number>());
-    });
   }
 
   ngOnInit(): void {
@@ -66,7 +59,7 @@ export class HistoryPageComponent implements OnInit {
   sortValues(): void {
     this.sortedData = [];
     this.fullData.forEach(record => {
-      if (Utils.isHarvest(record) && this.includeStaked) {
+      if (Utils.isHarvest(record) && this.includeIn(this.vaults, record.vault)) {
         //we have it in liquidity
         if (this.isLiqHarvest(record)) {
           return;
@@ -74,11 +67,19 @@ export class HistoryPageComponent implements OnInit {
         this.sortedData.push(record);
       } else if (Utils.isUniTrade(record) && this.includeFarm) {
         this.sortedData.push(record);
-      } else if (Utils.isUniLiq(record) && this.includeLp) {
+      } else if (Utils.isUniLiq(record) && this.includeIn(this.lps, this.lpName(record))) {
         this.sortedData.push(record);
       }
     });
     this.sortedData.sort((o1, o2) => o2.blockDate - o1.blockDate);
+  }
+
+  includeIn(arr: CheckedValue[], name: string): boolean {
+    const c = arr.find(el => el.value === name);
+    if (c) {
+      return c.checked;
+    }
+    return false;
   }
 
   parseValues(): void {
@@ -91,7 +92,7 @@ export class HistoryPageComponent implements OnInit {
       } else {
         this.log.warn('Unknown record type', record);
       }
-    })
+    });
   }
 
   private parseHarvest(record: HarvestDto) {
@@ -99,8 +100,8 @@ export class HistoryPageComponent implements OnInit {
     if (this.isLiqHarvest(record)) {
       return;
     }
-    const harvest = this.lastStaked.get(record.vault)
-    this.vaults.add(record.vault);
+    const harvest = this.lastStaked.get(record.vault);
+    this.addInCheckedArr(this.vaults, record.vault);
     if (harvest) {
       if (harvest.blockDate < record.blockDate) {
         this.lastStaked.set(record.vault, record);
@@ -108,6 +109,16 @@ export class HistoryPageComponent implements OnInit {
     } else {
       this.lastStaked.set(record.vault, record);
     }
+  }
+
+  private addInCheckedArr(arr: CheckedValue[], name: string) {
+    if (arr.find(el => el.value === name)) {
+      return;
+    }
+    const c = new CheckedValue();
+    c.value = name;
+    c.checked = false;
+    arr.push(c);
   }
 
   private parseUniswap(record: UniswapDto) {
@@ -120,9 +131,9 @@ export class HistoryPageComponent implements OnInit {
         this.lastFarmHold = record;
       }
     } else if (Utils.isUniLiq(record)) {
-      const lpName = record.coin + '_' + record.otherCoin;
-      this.lps.add(lpName);
-      const uni = this.lastLp.get(lpName)
+      const lpName = this.lpName(record);
+      this.addInCheckedArr(this.lps, lpName);
+      const uni = this.lastLp.get(lpName);
       if (uni) {
         if (uni.blockDate < record.blockDate) {
           this.lastLp.set(lpName, record);
@@ -133,35 +144,26 @@ export class HistoryPageComponent implements OnInit {
     }
   }
 
-  printBalance(record: any): string {
-    if (Utils.isHarvest(record)) {
-      return this.prettyVaultName(record.vault) + ' ' + record.ownerBalanceUsd.toFixed(2) + '$';
-    } else if (Utils.isUniTrade(record)) {
-      return '🚜 ' + record.ownerBalance?.toFixed(2) + ' ' + record.coin;
-    }
-    if (Utils.isUniLiq(record)) {
-      return '💰LP ' + record.coin + '_' + record.otherCoin + ' ' + record.ownerBalanceUsd?.toFixed(2) + '$';
-    } else {
-      this.log.warn('Unknown record for balance', record);
-    }
-  }
-
   tvl(): number {
     let tvl = this.lastFarmHold?.ownerBalanceUsd;
     this.lastLp?.forEach(lp => {
       tvl += lp.ownerBalanceUsd;
     });
     this.lastStaked?.forEach(harvest => {
-      if(harvest.vault === 'PS') {
+      if (harvest.vault === 'PS' || harvest.vault === 'PS_V0') {
         return;
       }
       tvl += harvest.ownerBalanceUsd;
-    })
+    });
     return tvl;
   }
 
+  lpName(record: UniswapDto): string {
+    return record.coin + '_' + record.otherCoin;
+  }
+
   prettyVaultName(name: string) {
-    return StaticValues.vaultPrettyName(name)
+    return StaticValues.vaultPrettyName(name);
   }
 
   isLiqHarvest(record: HarvestDto) {

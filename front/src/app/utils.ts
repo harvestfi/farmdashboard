@@ -188,6 +188,10 @@ export class Utils {
     window.open('https://etherscan.io/tx/' + hash, '_blank');
   }
 
+  public static openHistory(hash: string): void {
+    window.open('/history/' + hash, '_blank');
+  }
+
   public static priceGradientFarm(type: string, amount: number, success: boolean): string {
     if (success) {
       switch (type) {

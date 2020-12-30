@@ -56,8 +56,8 @@ export class HarvestFlowTabComponent implements OnInit {
     return Utils.priceGradientHarvest(type, amount, success);
   }
 
-  openEthersacanTx(hash: string): void {
-    window.open('https://etherscan.io/tx/' + hash, '_blank');
+  openHistory(hash: string): void {
+    Utils.openHistory(hash);
   }
 
   getImgUrl(name: string): string {

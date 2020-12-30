@@ -14,7 +14,7 @@
 
 .history-page {
   width: 100%;
-  margin:0 auto;
+  margin: 0 auto;
 }
 
 .stat-row {
@@ -94,4 +94,8 @@
   .main-row {
     width: 97%;
   }
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: #8d8d8d;
 }
