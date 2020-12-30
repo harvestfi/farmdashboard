@@ -1,5 +1,6 @@
 export class StaticValues {
   public static SECONDS_OF_YEAR = 31557600;
+  public static SECONDS_OF_DAY = 60 * 60 * 24;
   public static uniInited = false;
   public static lastPsApy = 0.0;
   public static psIncomeUsd = 0.0;
