@@ -7,7 +7,7 @@ td, th {
   margin: 10px;
 }
 
-.title {
+.title-col {
   font-size: 1.5em;
   color: black;
   font-weight: bolder;
@@ -60,7 +60,7 @@ tr:hover {
 }
 
 @media screen and (max-width: 900px) {
-  .title {
+  .title-col {
     font-size: 1em;
     margin: 5px;
   }

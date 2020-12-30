@@ -53,7 +53,12 @@
       </div>
 
       <div class="left-border-box top-title-div">
-        Welcome to the Harvest Live dashboard. Refresh page not necessary!
+        <div *ngIf="uniInited()">
+          Welcome to the Harvest Live dashboard. Refresh page not necessary!
+        </div>
+        <div *ngIf="!uniInited()">
+          &nbsp;
+        </div>
       </div>
 
       <div class="left-border-box connection-state-div">

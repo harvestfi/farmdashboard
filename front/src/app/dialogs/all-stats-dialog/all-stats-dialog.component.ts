@@ -50,7 +50,7 @@ export class AllStatsDialogComponent implements OnInit {
   }
 
   getImgSrc(name: string): string {
-    return TvlBoxComponent.getImgSrc(name);
+    return StaticValues.getImgSrcForVault(name);
   }
 
   sortData(sort: Sort): void {

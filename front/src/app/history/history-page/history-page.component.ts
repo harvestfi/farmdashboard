@@ -6,7 +6,6 @@ import {UniswapDto} from "../../models/uniswap-dto";
 import {Utils} from "../../utils";
 import {NGXLogger} from "ngx-logger";
 import {StaticValues} from "../../static-values";
-import {TvlBoxComponent} from "../../dashboard/tvl-box/tvl-box.component";
 
 @Component({
   selector: 'app-history-page',
@@ -16,17 +15,23 @@ import {TvlBoxComponent} from "../../dashboard/tvl-box/tvl-box.component";
 export class HistoryPageComponent implements OnInit {
   private fullData = [];
   sortedData;
+
   stakedMap = new Map<string, Map<number, number>>();
-  farmMap = new Map<number, number>();
-  farmLpMap = new Map<number, number>();
+
   stakedSum = new Map<string, number>();
   farmSum = 0;
   farmLpSum = 0;
+
   includeFarm = true;
   includeStaked = true;
-  includeLpFarm = true;
+  includeLp = true;
   vaults = new Set<string>();
+  lps = new Set<string>();
   address;
+
+  lastFarmHold: UniswapDto;
+  lastLp = new Map<string, UniswapDto>();
+  lastStaked = new Map<string, HarvestDto>();
 
   constructor(private http: HttpService,
               private route: ActivatedRoute,
@@ -62,10 +67,14 @@ export class HistoryPageComponent implements OnInit {
     this.sortedData = [];
     this.fullData.forEach(record => {
       if (Utils.isHarvest(record) && this.includeStaked) {
+        //we have it in liquidity
+        if (this.isLiqHarvest(record)) {
+          return;
+        }
         this.sortedData.push(record);
       } else if (Utils.isUniTrade(record) && this.includeFarm) {
         this.sortedData.push(record);
-      } else if (Utils.isUniLiq(record) && this.includeLpFarm) {
+      } else if (Utils.isUniLiq(record) && this.includeLp) {
         this.sortedData.push(record);
       }
     });
@@ -86,58 +95,77 @@ export class HistoryPageComponent implements OnInit {
   }
 
   private parseHarvest(record: HarvestDto) {
+    //we have it in liquidity
+    if (this.isLiqHarvest(record)) {
+      return;
+    }
+    const harvest = this.lastStaked.get(record.vault)
     this.vaults.add(record.vault);
-    const vaultMap = this.stakedMap.get(record.vault);
-    let sum = this.stakedSum.get(record.vault);
-    if (!sum) {
-      sum = 0;
-    }
-    if (Utils.isHarvestPositive(record)) {
-      sum += record.usdAmount;
-    } else if (Utils.isHarvestNegative(record)) {
-      sum -= record.usdAmount;
+    if (harvest) {
+      if (harvest.blockDate < record.blockDate) {
+        this.lastStaked.set(record.vault, record);
+      }
     } else {
-      this.log.warn('Unknown harvest record', record);
+      this.lastStaked.set(record.vault, record);
     }
-    this.stakedSum.set(record.vault, sum);
-    vaultMap.set(record.blockDate, sum);
   }
 
   private parseUniswap(record: UniswapDto) {
-    if (record.type === 'BUY') {
-      this.farmSum += record.amount;
-    } else if (record.type === 'SELL') {
-      this.farmSum -= record.amount;
-    } else if (record.type === 'ADD') {
-      this.farmLpSum += this.lpAmount(record);
-    } else if (record.type === 'REM') {
-      this.farmLpSum -= this.lpAmount(record);
-    } else {
-      this.log.warn('Unknown uniswap record', record);
-    }
-    this.farmMap.set(record.blockDate, this.farmSum);
-    this.farmLpMap.set(record.blockDate, this.farmLpSum);
-  }
-
-  private lpAmount(record: UniswapDto): number {
-    return (record.amount * record.lastPrice * 2);
-  }
-
-  balanceAtDate(record: any): string {
-    if (Utils.isHarvest(record)) {
-      try {
-        return record.vault + ' ' + record.ownerBalanceUsd.toFixed(2) + '$';
-      } catch (e) {
-        return 'Error ' + record.vault
+    if (Utils.isUniTrade(record)) {
+      if (this.lastFarmHold) {
+        if (this.lastFarmHold.blockDate < record.blockDate) {
+          this.lastFarmHold = record;
+        }
+      } else {
+        this.lastFarmHold = record;
       }
+    } else if (Utils.isUniLiq(record)) {
+      const lpName = record.coin + '_' + record.otherCoin;
+      this.lps.add(lpName);
+      const uni = this.lastLp.get(lpName)
+      if (uni) {
+        if (uni.blockDate < record.blockDate) {
+          this.lastLp.set(lpName, record);
+        }
+      } else {
+        this.lastLp.set(lpName, record);
+      }
+    }
+  }
+
+  printBalance(record: any): string {
+    if (Utils.isHarvest(record)) {
+      return this.prettyVaultName(record.vault) + ' ' + record.ownerBalanceUsd.toFixed(2) + '$';
     } else if (Utils.isUniTrade(record)) {
-      return '🚜Hold ' + record.ownerBalance?.toFixed(2) + ' ' + record.coin;
+      return '🚜 ' + record.ownerBalance?.toFixed(2) + ' ' + record.coin;
     }
     if (Utils.isUniLiq(record)) {
-      return '💰LP ' + record.ownerBalanceUsd?.toFixed(2) + '$';
+      return '💰LP ' + record.coin + '_' + record.otherCoin + ' ' + record.ownerBalanceUsd?.toFixed(2) + '$';
     } else {
       this.log.warn('Unknown record for balance', record);
     }
+  }
+
+  tvl(): number {
+    let tvl = this.lastFarmHold?.ownerBalanceUsd;
+    this.lastLp?.forEach(lp => {
+      tvl += lp.ownerBalanceUsd;
+    });
+    this.lastStaked?.forEach(harvest => {
+      if(harvest.vault === 'PS') {
+        return;
+      }
+      tvl += harvest.ownerBalanceUsd;
+    })
+    return tvl;
+  }
+
+  prettyVaultName(name: string) {
+    return StaticValues.vaultPrettyName(name)
+  }
+
+  isLiqHarvest(record: HarvestDto) {
+    return record.vault.includes('FARM');
   }
 
   isPositive(record: any): boolean {
@@ -157,6 +185,6 @@ export class HistoryPageComponent implements OnInit {
   }
 
   getImgUrl(name: string): string {
-    return TvlBoxComponent.getImgSrc(name);
+    return StaticValues.getImgSrcForVault(name);
   }
 }

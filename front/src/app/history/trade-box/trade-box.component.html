@@ -1,34 +1,202 @@
+<div *ngIf="uniswapDto">
 
+  <div class="row head-row">
 
-<div class="row main-row">
-
-  <div class="left-border-box value" [style]="isPositive() ? 'color: green' : 'color: red'">
-    {{getTitle}}
-  </div>
-
-  <div class="left-border-box value">
-    <div>
-      <mat-icon [style]="isPositive() ? 'color: green' : 'color: red'">
-        {{isPositive() ? 'trending_up' : 'trending_down'}}
-      </mat-icon>
+    <div class="left-border-box head title-col">
+      &nbsp;
     </div>
+
+    <div class="left-border-box head amount date-col">
+      Date
+    </div>
+
+    <div class="left-border-box head trend-col">
+      Type
+    </div>
+
+    <div class="left-border-box head amount amount-col">
+      Amount1
+    </div>
+
+    <div class="left-border-box head coin-col">
+      Coin1
+    </div>
+
+    <div class="left-border-box head amount other-amount-col">
+      Amount2
+    </div>
+
+    <div class="left-border-box head other-coin-col">
+      Coin2
+    </div>
+
+    <div class="left-border-box head amount price-coll">
+      Price
+    </div>
+
+    <div class="left-border-box head amount balance-coll">
+      Balance
+    </div>
+
+    <div class="left-border-box head pointer link-col">
+      &nbsp;
+    </div>
+
   </div>
 
-  <div class="left-border-box value" #tooltip="matTooltip"
-       matTooltip="{{uniswapDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
-    {{uniswapDto.blockDateAdopted | date: 'dd MMM'}}
+  <div class="row main-row" [style]=" 'color: ' + getColor()">
+
+    <div class="left-border-box value title-col">
+      {{getTitle}}
+    </div>
+
+    <div class="left-border-box value amount date-col" #tooltip="matTooltip"
+         matTooltip="{{uniswapDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
+      {{uniswapDto.blockDateAdopted | date: 'dd MMM'}}
+    </div>
+
+    <div class="left-border-box value trend-col">
+      {{uniswapDto.type}}
+    </div>
+
+    <div class="left-border-box value amount amount-col">
+      {{uniswapDto.amount | number: '1.0-2'}}
+    </div>
+
+    <div class="left-border-box value coin-col">
+      {{uniswapDto.coin}}
+      <img class="tvl-img" src="{{getCoinImgUrl(uniswapDto.coin)}}" alt="?"/>
+    </div>
+
+    <div class="left-border-box value amount other-amount-col">
+      {{uniswapDto.otherAmount| number: '1.0-2'}}
+    </div>
+
+    <div class="left-border-box value other-coin-col">
+      {{uniswapDto.otherCoin}}
+      <img class="tvl-img" src="{{getCoinImgUrl(uniswapDto.otherCoin)}}" alt="?"/>
+    </div>
+
+    <div class="left-border-box value amount price-coll">
+      {{uniswapDto.lastPrice}}$
+    </div>
+
+    <div class="left-border-box value amount balance-coll">
+      {{uniswapDto.ownerBalance | number: '1.0-2'}}
+      <img class="tvl-img" src="{{getCoinImgUrl(uniswapDto.coin)}}" alt="?"/>
+    </div>
+
+    <div class="left-border-box value pointer link-col" (click)="openEthersacanTx(uniswapDto.hash)">
+      <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
+    </div>
+
   </div>
 
-  <div class="left-border-box value">
-    {{uniswapDto.type}}
-    {{uniswapDto.amount | number: '1.0-2'}} {{uniswapDto.coin}}
-    {{isTrade()? 'for' : 'and'}} {{uniswapDto.otherAmount| number: '1.0-2'}} {{uniswapDto.otherCoin}}
-    at price {{uniswapDto.lastPrice}}
+</div>
+
+<!-- ****************************************************************************  -->
+
+
+<div *ngIf="harvestDto">
+
+  <div class="row head-row">
+
+    <div class="left-border-box head title-col">
+      &nbsp;
+    </div>
+
+    <div class="left-border-box head amount date-col">
+      Date
+    </div>
+
+    <div class="left-border-box head trend-col">
+      Type
+    </div>
+
+    <div class="left-border-box head amount amount-col">
+      Amount
+    </div>
+
+    <div class="left-border-box head coin-col">
+      Pool
+    </div>
+
+    <div class="left-border-box head amount other-amount-col">
+      Amount$
+    </div>
+
+    <div class="left-border-box head other-coin-col">
+      &nbsp;
+    </div>
+
+    <div class="left-border-box head amount price-coll">
+      TVL
+    </div>
+
+    <div class="left-border-box head amount balance-coll">
+      Balance
+    </div>
+
+    <div class="left-border-box head pointer link-col">
+      &nbsp;
+    </div>
+
   </div>
 
-  <div class="left-border-box value pointer" (click)="openEthersacanTx(uniswapDto.hash)">
-    <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
-  </div>
 
+  <div class="row main-row" [style]=" 'color: ' + getColor()">
+
+    <div class="left-border-box value title-col">
+      {{getTitle}}
+    </div>
+
+    <div class="left-border-box value date-col" #tooltip="matTooltip"
+         matTooltip="{{harvestDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
+      {{harvestDto.blockDateAdopted | date: 'dd MMM'}}
+    </div>
+
+    <!--  <div class="left-border-box trend-col">-->
+    <!--    <div>-->
+    <!--      <mat-icon [style]="isPositive() ? 'color: green' : 'color: red'">-->
+    <!--         {{isPositive() ? 'trending_up' : 'trending_down'}}-->
+    <!--      </mat-icon>-->
+    <!--    </div>-->
+    <!--  </div>-->
+
+    <div class="left-border-box value trend-col">
+      {{harvestDto.methodName}}
+    </div>
+
+    <div class="left-border-box value amount-col">
+      {{harvestDto.amount | number: '1.0-2'}}
+    </div>
+
+    <div class="left-border-box value coin-col">
+      {{harvestDto.vault}}
+      <img class="tvl-img" src="{{getCoinImgUrl(harvestDto.vault)}}" alt="?"/>
+    </div>
+
+    <div class="left-border-box value other-amount-col">
+      {{harvestDto.usdAmount}}$
+    </div>
+
+    <div class="left-border-box value other-coin-col">
+
+    </div>
+
+    <div class="left-border-box value price-coll">
+      {{harvestDto.lastUsdTvl / 1000000 | number: '1.0-0'}}M$
+    </div>
+
+    <div class="left-border-box value amount balance-coll">
+      {{harvestDto.ownerBalanceUsd | number: '1.0-0'}}$
+    </div>
+
+    <div class="left-border-box value pointer link-col" (click)="openEthersacanTx(harvestDto.hash)">
+      <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
+    </div>
+
+
+  </div>
 
 </div>

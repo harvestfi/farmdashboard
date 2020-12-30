@@ -28,6 +28,7 @@ export class UniTxComponent implements AfterViewInit {
               public vt: ViewTypeService,
               private snack: SnackService,
               private log: NGXLogger) {
+    StaticValues.uniInited = true;
   }
 
   ngAfterViewInit(): void {

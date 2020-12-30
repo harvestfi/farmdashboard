@@ -1,26 +1,113 @@
+.head-row {
+  display: flex;
+}
+
 .main-row {
   display: flex;
 }
 
-.title {
-  padding: 3px;
-  font-weight: bolder;
+.title-col {
+  width: 5%;
+}
+
+.date-col {
+  width: 10%;
+}
+
+.trend-col {
+  width: 9%;
+  font-size: 0.8em;
+}
+
+.amount-col {
+  width: 13%;
+  font-size: 1.2em;
+}
+
+.coin-col {
+  width: 9%;
+  font-size: 0.8em;
+}
+
+.other-amount-col {
+  width: 17%;
+  font-size: 1.2em;
+}
+
+.other-coin-col {
+  width: 9%;
+  font-size: 0.8em;
+}
+
+.price-coll {
+  width: 10%;
+  font-size: 1em;
+}
+
+.balance-coll {
+  width: 15%;
+}
+
+.link-col {
+  width: 3%;
 }
 
 .value {
-  padding: 3px;
+  /*padding: 3px;*/
   font-weight: bolder;
-  margin-top: 3px;
+  /*font-size: 0.8em;*/
+  /*margin-top: 3px;*/
   display: flex;
-  align-items: center;
+  justify-content: center;
+  /*text-align: center;*/
+}
+
+.head {
+  font-weight: bolder;
+  font-size: 0.7em;
+  display: flex;
+  justify-content: center;
+}
+
+.amount {
+  font-weight: bolder;
+  /*font-size: 1.1em;*/
 }
 
 .tvl-img {
   width: 15px;
   height: 15px;
-  margin-right: 5px;
+  /*margin-right: 5px;*/
+  margin-left: 5px;
 }
 
 .sign-icon {
   font-size: 1.2em;
+}
+
+@media screen and (max-width: 600px) {
+  .head {
+    font-size: 70%;
+  }
+
+  .value {
+    font-size: 65%;
+  }
+
+  .tvl-img {
+    width: 10px;
+    height: 10px;
+    margin-left: 2px;
+    margin-top: 5px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .head {
+    font-size: 50%;
+  }
+
+  .value {
+    font-size: 50%;
+  }
 }

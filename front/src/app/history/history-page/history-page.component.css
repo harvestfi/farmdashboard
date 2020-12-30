@@ -30,6 +30,11 @@
   /*line-height: 100%;*/
 }
 
+.values {
+  float: right;
+  width: 100%;
+}
+
 .title-card {
   padding: 3px;
   margin: 5px;
@@ -52,8 +57,9 @@
 
 .main-row {
   display: flex;
-  /*width: 80%;*/
+  width: 70%;
   margin: 0 auto;
+  padding-top: 10px;
 }
 
 .left-col, .mid-col, .right-col {
@@ -61,11 +67,11 @@
 }
 
 .mid-col {
-  width: 60%;
+  width: 100%;
 }
 
 .left-col, .right-col {
-  width: 20%;
+  width: 30%;
   display: flex;
 }
 
@@ -78,4 +84,14 @@
   height: 15px;
   margin-right: 3px;
   /*margin-top: 5px;*/
+}
+
+@media screen and (max-width: 600px) {
+  .title {
+    font-size: 1em;
+  }
+
+  .main-row {
+    width: 97%;
+  }
 }
