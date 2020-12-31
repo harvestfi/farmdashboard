@@ -27,9 +27,11 @@
              class="title-span">Fingerlings Trades
 
           <input class="filter-input" #uniswapDtoFilter placeholder="More than..." type="text">
+          <button class="show-more" (click)="openUniHistory()" >show older</button>
         </div>
-
+        
         <app-flow-tab [dtos]="dtos" [maxHeight]="200" [minAmount]="+uniswapDtoFilter.value"></app-flow-tab>
+        
       </div>
     </div>
 

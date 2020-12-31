@@ -1,13 +1,14 @@
 .uni-row {
-  /*margin: 10px 0 0 10px;*/
+  /* margin: 10px 0 0 10px; */
 }
-.left, .right, .middle {
+.left,
+.right,
+.middle {
   width: 33.333%;
   padding: 10px;
 }
 
 .left {
-
 }
 
 .uni-card {
@@ -15,26 +16,37 @@
   transition: 0.3s;
   border: 1px solid rgba(0, 0, 0, 0.2);
   background: #fffce6;
-  /*margin: 10px;*/
+  /* margin: 10px; */
   padding: 3px;
+  height: 100%;
 }
 
 .title-span {
   font-weight: bolder;
-  text-align: center;
+  text-align: left;
 }
 
 .filter-input {
-  width: 30%;
+  width: 20%;
+  margin-left: 5px;
+}
+.show-more {
+  background-color: #bce3e2;
+  color: black;
+  font-weight: bold;
+  border-radius: 3px;
+  border: none;
+  margin-left: 10px;
+  font-size: 1.1em;
 }
 
-
 @media screen and (max-width: 1025px) {
-  .left, .right, .middle {
+  .left,
+  .right,
+  .middle {
     width: 100%;
   }
 }
-
 
 /*------------ old ---------------*/
 

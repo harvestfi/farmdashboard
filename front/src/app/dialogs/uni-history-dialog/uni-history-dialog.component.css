@@ -1,0 +1,36 @@
+::ng-deep.mat-dialog-container {
+  overflow-x: hidden;
+  border-radius: 3px;
+  padding: 2% !important;
+  background: #fffce6;
+  width: 35vw;
+}
+
+.uni-transactions {
+  width: 100%;
+}
+
+.title {
+  font-size: 1.5em;
+  color: black;
+  font-weight: bolder;
+  text-align: center;
+  width: 100%;
+}
+
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 1em;
+    margin: 5px;
+  }
+}
+@media screen and (max-width: 980px) {
+  ::ng-deep.mat-dialog-container {
+    width: 100vw;
+    padding: 0;
+    height: 80vh;
+  }
+  .uni-transactions {
+    width: 100%;
+  }
+}

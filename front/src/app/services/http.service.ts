@@ -26,11 +26,24 @@ export class HttpService {
     );
   }
 
+  getUniswapTxHistoryByRange(minBlock:number,maxBlock:number): Observable<UniswapDto[]> {
+    return this.http.get<UniswapDto[]>(`${this.url}/history/uni?from=${minBlock}&to=${maxBlock}`).pipe(
+        catchError(this.snackService.handleError<UniswapDto[]>(`Uni history`))
+    );
+  }
+
   getHarvestTxHistoryData(): Observable<HarvestDto[]> {
     return this.http.get<HarvestDto[]>(`${this.url}/history/harvest`).pipe(
         catchError(this.snackService.handleError<HarvestDto[]>(`Harvest history`))
     );
   }
+
+  getHarvestHistoryByVault(name: string): Observable<HarvestDto[]> {
+    return this.http.get<HarvestDto[]>(`${this.url}/history/harvest/` + name).pipe(
+        catchError(this.snackService.handleError<HarvestDto[]>(name + `Harvest history`))
+    );
+  }
+
 
   getHardWorkHistoryData(): Observable<HardWorkDto[]> {
     return this.http.get<HardWorkDto[]>(`${this.url}/history/hardwork`).pipe(
@@ -71,6 +84,12 @@ export class HttpService {
   getLastRewards(): Observable<RewardDto[]> {
     return this.http.get<RewardDto[]>('api/transactions/last/reward').pipe(
         catchError(this.snackService.handleError<RewardDto[]>(`last reward `))
+    );
+  }
+
+  getHistoryRewards(name: string): Observable<RewardDto[]> {
+    return this.http.get<RewardDto[]>('api/transactions/history/reward/' + name).pipe(
+        catchError(this.snackService.handleError<RewardDto[]>(`history reward `))
     );
   }
 

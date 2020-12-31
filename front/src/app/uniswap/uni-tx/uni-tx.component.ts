@@ -1,18 +1,20 @@
-import {AfterViewInit, Component} from '@angular/core';
-import {UniswapDto} from '../../models/uniswap-dto';
-import {Utils} from '../../utils';
-import {HttpService} from '../../services/http.service';
-import {NGXLogger} from 'ngx-logger';
-import {Title} from '@angular/platform-browser';
-import {UniswapSubscriberService} from '../uniswap-subscriber.service';
-import {StaticValues} from 'src/app/static-values';
-import {ViewTypeService} from '../../services/view-type.service';
-import {SnackService} from '../../services/snack.service';
+import { AfterViewInit, Component } from '@angular/core';
+import { UniswapDto } from '../../models/uniswap-dto';
+import { Utils } from '../../utils';
+import { HttpService } from '../../services/http.service';
+import { NGXLogger } from 'ngx-logger';
+import { Title } from '@angular/platform-browser';
+import { UniswapSubscriberService } from '../uniswap-subscriber.service';
+import { StaticValues } from 'src/app/static-values';
+import { ViewTypeService } from '../../services/view-type.service';
+import { SnackService } from '../../services/snack.service';
+import { UniHistoryDialogComponent } from '../../dialogs/uni-history-dialog/uni-history-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-uni-tx',
   templateUrl: './uni-tx.component.html',
-  styleUrls: ['./uni-tx.component.css']
+  styleUrls: ['./uni-tx.component.css'],
 })
 export class UniTxComponent implements AfterViewInit {
   dtos: UniswapDto[] = [];
@@ -22,32 +24,42 @@ export class UniTxComponent implements AfterViewInit {
   private maxMessages = 50;
   whalesMoreThan = 500;
 
+
+
   constructor(private txHistory: HttpService,
-              private titleService: Title,
-              private uniswapSubscriberService: UniswapSubscriberService,
-              public vt: ViewTypeService,
-              private snack: SnackService,
-              private log: NGXLogger) {
+    private titleService: Title,
+    private uniswapSubscriberService: UniswapSubscriberService,
+    public vt: ViewTypeService,
+    private snack: SnackService,
+    private dialog: MatDialog,
+    private log: NGXLogger) {
+    StaticValues.uniInited = true;
   }
 
   ngAfterViewInit(): void {
-    this.txHistory.getUniswapTxHistoryData().subscribe(data => {
-      Utils.loadingOff();
-      this.log.debug('tx data fetched', data.length);
-      data.forEach(tx => {
-        UniswapDto.round(tx);
-        this.saveLastValue(tx);
-        if (tx.amount < this.whalesMoreThan) {
-          this.addInArray(this.dtos, tx);
-        } else {
-          this.addInArray(this.dtosWhales, tx);
-        }
-      });
-    }, err => {
-      Utils.loadingOff();
-    });
+    this.txHistory.getUniswapTxHistoryData().subscribe(
+      (data) => {
 
-    this.uniswapSubscriberService.handlers.set(this, tx => {
+        Utils.loadingOff();
+        this.log.debug('tx data fetched', data.length);
+        data.forEach((tx) => {
+          UniswapDto.round(tx);
+          this.saveLastValue(tx);
+          if (tx.amount < this.whalesMoreThan) {
+            this.addInArray(this.dtos, tx);
+          } else {
+            this.addInArray(this.dtosWhales, tx);
+          }
+        });
+      },
+      (err) => {
+        Utils.loadingOff();
+      }
+    );
+
+    this.uniswapSubscriberService.handlers.set(this, (tx) => {
+
+
       if (tx.coin !== 'FARM') {
         return;
       }
@@ -86,6 +98,8 @@ export class UniTxComponent implements AfterViewInit {
     }
   }
 
+
+
   private saveLastValue(tx: UniswapDto): void {
     if (!tx.confirmed || tx.lastPrice === 0) {
       return;
@@ -110,4 +124,12 @@ export class UniTxComponent implements AfterViewInit {
       StaticValues.farmUsers = tx.ownerCount;
     }
   }
+
+  openUniHistory(): void {
+    this.dialog.open(UniHistoryDialogComponent, {
+      data: {}
+    });
+  }
+
+
 }

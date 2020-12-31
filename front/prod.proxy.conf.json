@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://farmdashboard.xyz",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

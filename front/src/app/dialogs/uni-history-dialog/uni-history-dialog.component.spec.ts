@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StakedBoxComponent } from './staked-box.component';
+import { UniHistoryDialogComponent } from './uni-history-dialog.component';
 
-describe('StakedBoxComponent', () => {
-  let component: StakedBoxComponent;
-  let fixture: ComponentFixture<StakedBoxComponent>;
+describe('UniHistoryDialogComponent', () => {
+  let component: UniHistoryDialogComponent;
+  let fixture: ComponentFixture<UniHistoryDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StakedBoxComponent ]
+      declarations: [ UniHistoryDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StakedBoxComponent);
+    fixture = TestBed.createComponent(UniHistoryDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,54 @@
+import { Component, AfterViewInit } from '@angular/core';
+import { HttpService } from '../../services/http.service';
+import { ViewTypeService } from '../../services/view-type.service';
+import { NGXLogger } from 'ngx-logger';
+import { UniswapDto } from '../../models/uniswap-dto';
+
+
+@Component({
+  selector: 'app-uni-history-dialog',
+  templateUrl: './uni-history-dialog.component.html',
+  styleUrls: ['./uni-history-dialog.component.css'],
+})
+export class UniHistoryDialogComponent implements AfterViewInit {
+  dtos: UniswapDto[] = [];
+  dtosWhales: UniswapDto[] = [];
+  txIds = new Set<string>();
+
+  constructor(
+    private txHistory: HttpService,
+    public vt: ViewTypeService,
+    private log: NGXLogger
+  ) { }
+
+  ngAfterViewInit(): void {
+    this.txHistory.getUniswapTxHistoryData().subscribe(
+      (data) => {
+        this.log.debug('tx data fetched', data.length);
+        data.forEach((tx) => {
+          UniswapDto.round(tx);
+
+
+          this.addInArray(this.dtos, tx);
+
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+
+
+  }
+  private addInArray(arr: UniswapDto[], tx: UniswapDto): void {
+    if (tx.type === 'ADD' || tx.type === 'REM') {
+      return;
+    }
+    arr.unshift(tx);
+  }
+
+
+
+
+
+}

@@ -295,7 +295,7 @@ export class TvlDialogComponent implements AfterViewInit {
     });
 
     this.psAprSeries = this.incomeChart.addLineSeries({
-      title: 'PS APR',
+      title: 'PS Buyback Income APR',
       color: '#0085ff',
       priceFormat: {
         type: 'percent',

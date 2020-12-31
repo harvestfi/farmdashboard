@@ -18,4 +18,8 @@ public class RewardDBService {
     public List<RewardEntity> getAllLastRewards() {
         return rewardRepository.fetchLastRewards();
     }
+
+    public List<RewardEntity> getAllRewards(String name) {
+        return rewardRepository.getAllByVaultOrderByBlockDate(name);
+    }
 }
