@@ -1,24 +1,37 @@
-td,
-th {
-  padding: 4px;
+::ng-deep.mat-dialog-container {
+  overflow: hidden;
+  border-radius: 3px;
+  padding: 2% !important;
+  background: #fffce6;
+  width: 30vw;
 }
 
-.row {
-  width: 100%;
-  margin: 10px;
+.uni-transactions {
+  width: 90%;
+  margin: 0 auto;
 }
 
 .title {
   font-size: 1.5em;
   color: black;
   font-weight: bolder;
-  text-align: left;
-  width: 75%;
+  text-align: center;
+  width: 100%;
 }
 
 @media screen and (max-width: 900px) {
   .title {
     font-size: 1em;
     margin: 5px;
+  }
+}
+@media screen and (max-width: 600px) {
+  ::ng-deep.mat-dialog-container {
+    width: 100vw;
+    padding: 0;
+  }
+  .uni-transactions {
+    width: 100%;
+    margin: 0 auto;
   }
 }

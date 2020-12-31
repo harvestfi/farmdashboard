@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://farmdashboard.xyz",
-    "secure": true
+    "target": "https://localhost:8443",
+    "secure": false
   }
 }

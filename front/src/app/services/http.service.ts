@@ -26,7 +26,7 @@ export class HttpService {
     );
   }
 
-  getOlderUniswapTxHistoryData(minBlock:number,maxBlock:number): Observable<UniswapDto[]> {
+  getUniswapTxHistoryByRange(minBlock:number,maxBlock:number): Observable<UniswapDto[]> {
     return this.http.get<UniswapDto[]>(`${this.url}/history/uni?from=${minBlock}&to=${maxBlock}`).pipe(
         catchError(this.snackService.handleError<UniswapDto[]>(`Uni history`))
     );
