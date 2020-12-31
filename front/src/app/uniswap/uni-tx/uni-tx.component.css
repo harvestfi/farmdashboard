@@ -1,13 +1,14 @@
 .uni-row {
-  /*margin: 10px 0 0 10px;*/
+  margin: 10px 0 0 10px;
 }
-.left, .right, .middle {
+.left,
+.right,
+.middle {
   width: 33.333%;
   padding: 10px;
 }
 
 .left {
-
 }
 
 .uni-card {
@@ -15,8 +16,19 @@
   transition: 0.3s;
   border: 1px solid rgba(0, 0, 0, 0.2);
   background: #fffce6;
-  /*margin: 10px;*/
+  /* margin: 10px 0; */
   padding: 3px;
+  height: 100%;
+}
+.uni-card .button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -20px;
+  position: relative;
+  z-index: 200;
+}
+.uni-card .button-container .show-more {
 }
 
 .title-span {
@@ -28,13 +40,13 @@
   width: 30%;
 }
 
-
 @media screen and (max-width: 1025px) {
-  .left, .right, .middle {
+  .left,
+  .right,
+  .middle {
     width: 100%;
   }
 }
-
 
 /*------------ old ---------------*/
 

@@ -1,0 +1,14 @@
+<div class="uni-transactions">
+    <div class="left-border-box middle">
+        <div class="uni-card">
+          <h1 class="title">Uniswap Transaction History</h1>
+          
+          <app-flow-tab [dtos]="dtos" ></app-flow-tab>
+          <div class="button-container">
+            <button class="show-older" (click)="getOlderTransactions()">older</button>
+            <button class="show-recent" (click)="toRecentTransactions()">recent</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  

@@ -1,0 +1,24 @@
+td,
+th {
+  padding: 4px;
+}
+
+.row {
+  width: 100%;
+  margin: 10px;
+}
+
+.title {
+  font-size: 1.5em;
+  color: black;
+  font-weight: bolder;
+  text-align: left;
+  width: 75%;
+}
+
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 1em;
+    margin: 5px;
+  }
+}
