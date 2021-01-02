@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UniswapDto} from '../../models/uniswap-dto';
+import {Utils} from "../../utils";
 
 @Component({
   selector: 'app-uni-trade',
@@ -47,8 +48,8 @@ export class UniTradeComponent implements OnInit {
     return '#ffffff';
   }
 
-  openEthersacanTx(hash: string): void {
-    window.open('https://etherscan.io/tx/' + hash, '_blank');
+  openHistory(hash: string): void {
+    Utils.openHistory(hash);
   }
 
   checkImportantOwner(address: string): string {

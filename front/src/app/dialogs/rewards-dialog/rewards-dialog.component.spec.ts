@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StakedBoxComponent } from './staked-box.component';
+import { RewardsDialogComponent } from './rewards-dialog.component';
 
-describe('StakedBoxComponent', () => {
-  let component: StakedBoxComponent;
-  let fixture: ComponentFixture<StakedBoxComponent>;
+describe('RewardsDialogComponent', () => {
+  let component: RewardsDialogComponent;
+  let fixture: ComponentFixture<RewardsDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StakedBoxComponent ]
+      declarations: [ RewardsDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StakedBoxComponent);
+    fixture = TestBed.createComponent(RewardsDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

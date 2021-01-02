@@ -21,4 +21,6 @@ public interface RewardRepository extends JpaRepository<RewardEntity, String> {
         "group by vault")
     List<RewardEntity> fetchLastRewards();
 
+
+    List<RewardEntity> getAllByVaultOrderByBlockDate(String vault);
 }

@@ -57,7 +57,7 @@
     {{dto.lastPrice | number: '1.0-0'}}
   </div>
 
-  <div class="trade-sign left-border-box trade-field pointer" (click)="openEthersacanTx(dto.hash)">
+  <div class="trade-sign left-border-box trade-field pointer" (click)="openHistory(dto.owner)">
     <container-element [ngSwitch]="checkImportantOwner(dto.owner)">
           <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price" class="sign-icon">
             open_in_new

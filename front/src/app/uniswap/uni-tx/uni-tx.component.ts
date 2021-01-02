@@ -8,8 +8,8 @@ import { UniswapSubscriberService } from "../uniswap-subscriber.service";
 import { StaticValues } from "src/app/static-values";
 import { ViewTypeService } from "../../services/view-type.service";
 import { SnackService } from "../../services/snack.service";
-import {UniHistoryDialogComponent} from '../../dialogs/uni-history-dialog/uni-history-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
+import { UniHistoryDialogComponent } from '../../dialogs/uni-history-dialog/uni-history-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: "app-uni-tx",
@@ -23,8 +23,8 @@ export class UniTxComponent implements AfterViewInit {
   pureTitle = "Harvest Live Dashboard";
   private maxMessages = 50;
   whalesMoreThan = 500;
- 
- 
+
+
 
   constructor(
     private txHistory: HttpService,
@@ -34,14 +34,14 @@ export class UniTxComponent implements AfterViewInit {
     private snack: SnackService,
     private log: NGXLogger,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngAfterViewInit(): void {
     this.txHistory.getUniswapTxHistoryData().subscribe(
       (data) => {
-        
 
-        
+
+
         console.log(data);
         Utils.loadingOff();
         this.log.debug("tx data fetched", data.length);
@@ -61,7 +61,7 @@ export class UniTxComponent implements AfterViewInit {
     );
 
     this.uniswapSubscriberService.handlers.set(this, (tx) => {
-     
+
 
       if (tx.coin !== "FARM") {
         return;
@@ -101,7 +101,7 @@ export class UniTxComponent implements AfterViewInit {
     }
   }
 
-  
+
 
   private saveLastValue(tx: UniswapDto): void {
     if (!tx.confirmed || tx.lastPrice === 0) {
@@ -134,5 +134,5 @@ export class UniTxComponent implements AfterViewInit {
     });
   }
 
-  
+
 }

@@ -49,7 +49,7 @@
           {{dto.lastUsdTvl | number: '1.0-0'}}$
         </div>
 
-        <div class="harvest-field harvest2-sign pointer left-border-box" (click)="openEthersacanTx(dto.hash)">
+        <div class="harvest-field harvest2-sign pointer left-border-box" (click)="openHistory(dto.owner)">
           <mat-icon [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price" class="sign-icon">open_in_new</mat-icon>
         </div>
 
@@ -62,7 +62,7 @@
       <tr *ngFor="let dto of dtos | harvestFilter:minAmount:vaultFilter"
           class="flow-tab-tr"
           [ngStyle]="{'color': priceGradient(dto.methodName, dto.usdAmount, dto.confirmed)}"
-          (click)="openEthersacanTx(dto.hash)">
+          (click)="openHistory(dto.owner)">
 
         <td #tooltip="matTooltip"
             class="flow-tab-td"
