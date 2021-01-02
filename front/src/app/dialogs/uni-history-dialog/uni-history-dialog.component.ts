@@ -15,7 +15,6 @@ export class UniHistoryDialogComponent implements AfterViewInit {
   dtosWhales: UniswapDto[] = [];
   txIds = new Set<string>();
   pureTitle = "Harvest Live Dashboard";
-  private maxMessages = 350;
   latestBlock = 0;
   earliestBlock = 0;
   step = 4500;
@@ -53,9 +52,6 @@ export class UniHistoryDialogComponent implements AfterViewInit {
       return;
     }
     arr.unshift(tx);
-    if (arr.length > this.maxMessages) {
-      arr.pop();
-    }
   }
 
 
