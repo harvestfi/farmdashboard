@@ -1,5 +1,5 @@
 ::ng-deep.mat-dialog-container {
-  overflow: hidden;
+  overflow-x: hidden;
   border-radius: 3px;
   padding: 2% !important;
   background: #fffce6;
@@ -7,8 +7,7 @@
 }
 
 .uni-transactions {
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .title {
@@ -29,9 +28,9 @@
   ::ng-deep.mat-dialog-container {
     width: 100vw;
     padding: 0;
+    height: 80vh;
   }
   .uni-transactions {
     width: 100%;
-    margin: 0 auto;
   }
 }

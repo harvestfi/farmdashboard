@@ -1,26 +1,26 @@
-import { AfterViewInit, Component } from "@angular/core";
-import { UniswapDto } from "../../models/uniswap-dto";
-import { Utils } from "../../utils";
-import { HttpService } from "../../services/http.service";
-import { NGXLogger } from "ngx-logger";
-import { Title } from "@angular/platform-browser";
-import { UniswapSubscriberService } from "../uniswap-subscriber.service";
-import { StaticValues } from "src/app/static-values";
-import { ViewTypeService } from "../../services/view-type.service";
-import { SnackService } from "../../services/snack.service";
+import { AfterViewInit, Component } from '@angular/core';
+import { UniswapDto } from '../../models/uniswap-dto';
+import { Utils } from '../../utils';
+import { HttpService } from '../../services/http.service';
+import { NGXLogger } from 'ngx-logger';
+import { Title } from '@angular/platform-browser';
+import { UniswapSubscriberService } from '../uniswap-subscriber.service';
+import { StaticValues } from 'src/app/static-values';
+import { ViewTypeService } from '../../services/view-type.service';
+import { SnackService } from '../../services/snack.service';
 import { UniHistoryDialogComponent } from '../../dialogs/uni-history-dialog/uni-history-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-uni-tx",
-  templateUrl: "./uni-tx.component.html",
-  styleUrls: ["./uni-tx.component.css"],
+  selector: 'app-uni-tx',
+  templateUrl: './uni-tx.component.html',
+  styleUrls: ['./uni-tx.component.css'],
 })
 export class UniTxComponent implements AfterViewInit {
   dtos: UniswapDto[] = [];
   dtosWhales: UniswapDto[] = [];
   txIds = new Set<string>();
-  pureTitle = "Harvest Live Dashboard";
+  pureTitle = 'Harvest Live Dashboard';
   private maxMessages = 50;
   whalesMoreThan = 500;
 
@@ -40,11 +40,8 @@ export class UniTxComponent implements AfterViewInit {
     this.txHistory.getUniswapTxHistoryData().subscribe(
       (data) => {
 
-
-
-        console.log(data);
         Utils.loadingOff();
-        this.log.debug("tx data fetched", data.length);
+        this.log.debug('tx data fetched', data.length);
         data.forEach((tx) => {
           UniswapDto.round(tx);
           this.saveLastValue(tx);
@@ -63,12 +60,12 @@ export class UniTxComponent implements AfterViewInit {
     this.uniswapSubscriberService.handlers.set(this, (tx) => {
 
 
-      if (tx.coin !== "FARM") {
+      if (tx.coin !== 'FARM') {
         return;
       }
       this.snack.openSnack(tx.print());
       if (!this.isUniqTx(tx)) {
-        this.log.error("Not unique", tx);
+        this.log.error('Not unique', tx);
         return;
       }
       if (tx.amount < this.whalesMoreThan) {
@@ -92,7 +89,7 @@ export class UniTxComponent implements AfterViewInit {
   }
 
   private addInArray(arr: UniswapDto[], tx: UniswapDto): void {
-    if (tx.type === "ADD" || tx.type === "REM") {
+    if (tx.type === 'ADD' || tx.type === 'REM') {
       return;
     }
     arr.unshift(tx);
@@ -108,7 +105,7 @@ export class UniTxComponent implements AfterViewInit {
       return;
     }
     if (tx.lastPrice != null && tx.lastPrice !== 0) {
-      this.titleService.setTitle(tx.lastPrice + " | " + this.pureTitle);
+      this.titleService.setTitle(tx.lastPrice + ' | ' + this.pureTitle);
       StaticValues.lastPrice = tx.lastPrice;
     }
     if (tx.lastGas != null || tx.lastGas !== 0) {
