@@ -26,15 +26,15 @@ export class UniTxComponent implements AfterViewInit {
 
 
 
-  constructor(private txHistory: HttpService,
+  constructor(
+    private txHistory: HttpService,
     private titleService: Title,
     private uniswapSubscriberService: UniswapSubscriberService,
     public vt: ViewTypeService,
     private snack: SnackService,
-    private dialog: MatDialog,
-    private log: NGXLogger) {
-    StaticValues.uniInited = true;
-  }
+    private log: NGXLogger,
+    private dialog: MatDialog
+  ) { }
 
   ngAfterViewInit(): void {
     this.txHistory.getUniswapTxHistoryData().subscribe(
