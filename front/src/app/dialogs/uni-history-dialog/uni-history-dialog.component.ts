@@ -4,7 +4,7 @@ import { StaticValues } from 'src/app/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { NGXLogger } from 'ngx-logger';
 import { UniswapDto } from '../../models/uniswap-dto';
-import { Title } from "@angular/platform-browser";
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -18,7 +18,6 @@ export class UniHistoryDialogComponent implements AfterViewInit {
   txIds = new Set<string>();
   pureTitle = "Harvest Live Dashboard";
   latestBlock = 0;
-  earliestBlock = 0;
 
   constructor(
     private txHistory: HttpService,
@@ -32,16 +31,9 @@ export class UniHistoryDialogComponent implements AfterViewInit {
       (data) => {
         this.log.debug('tx data fetched', data.length);
         console.log(data)
+        this.latestBlock = data[data.length - 1].blockDate;
         data.forEach((tx) => {
-          this.latestBlock = data[data.length - 1].blockDate;
-          this.earliestBlock = this.latestBlock - (StaticValues.SECONDS_OF_DAY * 2);
-          UniswapDto.round(tx);
-
-          if (!this.isUniqTx(tx)) {
-            this.log.error('Not unique', tx);
-            return;
-          }
-          this.addInArray(this.dtos, tx);
+          this.appendArray(this.dtos, tx);
 
         });
       },
@@ -63,19 +55,22 @@ export class UniHistoryDialogComponent implements AfterViewInit {
     }
     return true;
   }
-  private addInArray(arr: UniswapDto[], tx: UniswapDto): void {
-    if (tx.type === 'ADD' || tx.type === 'REM') {
-      return;
-    }
-    arr.unshift(tx);
-  }
+
   private appendArray(arr: UniswapDto[], tx: UniswapDto): void {
     if (tx.type === 'ADD' || tx.type === 'REM') {
       return;
     }
+    if (!this.isUniqTx(tx)) {
+      // this.log.error('Not unique', tx);
+      return;
+    }
+    else {
+      UniswapDto.round(tx);
+
+
+    }
     arr.push(tx)
   }
-
 
   private saveLastValue(tx: UniswapDto): void {
     if (!tx.confirmed || tx.lastPrice === 0) {
@@ -102,28 +97,18 @@ export class UniHistoryDialogComponent implements AfterViewInit {
     }
   }
 
+
   getOlderTransactions(): void {
-
     this.txHistory
-
-      .getUniswapTxHistoryByRange(this.earliestBlock, this.latestBlock)
+      .getUniswapTxHistoryByRange(this.latestBlock - (StaticValues.SECONDS_OF_DAY * 2), this.latestBlock)
       .subscribe(
         (data) => {
           console.log(data);
-          this.earliestBlock = this.earliestBlock - StaticValues.SECONDS_OF_DAY;
-          console.log(StaticValues.SECONDS_OF_DAY)
           this.log.debug('tx data fetched', data.length);
           data.forEach((tx) => {
-            UniswapDto.round(tx);
-            if (!this.isUniqTx(tx)) {
-              // this.log.error('Not unique', tx);
-              return;
-            }
-            else {
-              this.saveLastValue(tx);
-              this.appendArray(this.dtos, tx);
 
-            }
+            this.appendArray(this.dtos, tx);
+            this.saveLastValue(tx);
 
 
           });
@@ -132,8 +117,6 @@ export class UniHistoryDialogComponent implements AfterViewInit {
 
         }
       );
-
-
   }
 
 
