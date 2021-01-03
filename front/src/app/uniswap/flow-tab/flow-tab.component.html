@@ -1,4 +1,4 @@
-<perfect-scrollbar [ngStyle]="{'maxHeight': maxHeight+'px','paddingRight': '3px'}" class="scroller">
+<perfect-scrollbar [ngStyle]="{'maxHeight': maxHeight+'px'}" class="scroller">
 
   <container-element [ngSwitch]="vt.getViewType()">
 
@@ -13,14 +13,20 @@
 
     <table class="flow-tab-table" *ngSwitchDefault>
 
-      <tr *ngFor="let dto of dtos | uniswapFilter:minAmount" class="flow-tab-tr" (click)="openEthersacanTx(dto.hash)"
-        [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}">
+      <tr *ngFor="let dto of dtos | uniswapFilter:minAmount"
+          class="flow-tab-tr"
+          (click)="openEthersacanTx(dto.hash)"
+          [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
+      >
         <td class="flow-tab-td">
-          <p #tooltip="matTooltip" matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
+          <p #tooltip="matTooltip"
+             matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
                     FARM: {{dto.amount | number}}
                     Other coin: {{dto.otherAmount | number}}
                     Price: {{dto.lastPrice | number}}
-                    Last gas: {{dto.lastGas | number}}" matTooltipClass="tooltip-spaced" class="uni-price">
+                    Last gas: {{dto.lastGas | number}}"
+             matTooltipClass="tooltip-spaced"
+             class="uni-price">
             {{dto.blockDateAdopted | date: 'HH:mm:ss'}}
           </p>
         </td>
@@ -28,19 +34,24 @@
         <td class="flow-tab-td">
           <container-element [ngSwitch]="dto.type">
             <mat-icon *ngSwitchCase="'BUY'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-              aria-hidden="false" aria-label="BUY">trending_up
+                      aria-hidden="false"
+                      aria-label="BUY">trending_up
             </mat-icon>
             <mat-icon *ngSwitchCase="'SELL'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-              aria-hidden="false" aria-label="SELL">trending_down
+                      aria-hidden="false"
+                      aria-label="SELL">trending_down
             </mat-icon>
             <mat-icon *ngSwitchCase="'ADD'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-              aria-hidden="false" aria-label="ADD_LIQ">import_export
+                      aria-hidden="false"
+                      aria-label="ADD_LIQ">import_export
             </mat-icon>
             <mat-icon *ngSwitchCase="'REM'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-              aria-hidden="false" aria-label="ADD_LIQ">import_export
+                      aria-hidden="false"
+                      aria-label="ADD_LIQ">import_export
             </mat-icon>
             <mat-icon *ngSwitchDefault [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-              aria-hidden="false" aria-label="?">help
+                      aria-hidden="false"
+                      aria-label="?">help
             </mat-icon>
           </container-element>
         </td>
@@ -67,8 +78,8 @@
             <mat-icon *ngSwitchCase="'devs'" [ngStyle]="{'color': '#c4ad58'}" aria-hidden="false" aria-label="Price">
               warning
             </mat-icon>
-            <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" size="20" class="do-hard-work-img">
-            </angular-emojis>
+            <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" size="20"
+                            class="do-hard-work-img"></angular-emojis>
           </container-element>
         </td>
 

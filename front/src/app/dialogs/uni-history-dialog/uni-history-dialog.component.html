@@ -1,5 +1,9 @@
 <div class="uni-transactions">
         <h1 class="title">Uniswap Transaction History</h1>
+        <input class="filter-input" #uniswapDtoFilter placeholder="More than..." type="text">
+        <app-flow-tab [dtos]="dtos" [minAmount]="+uniswapDtoFilter.value"></app-flow-tab>
+        <div class="button-container">
+                <button class="show-even-more" (click)="getOlderTransactions()">load more</button>
+        </div>
 
-        <app-flow-tab [dtos]="dtos"></app-flow-tab>
 </div>
