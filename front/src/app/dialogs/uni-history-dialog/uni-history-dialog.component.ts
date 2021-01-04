@@ -14,35 +14,31 @@ import { Title } from '@angular/platform-browser';
 })
 export class UniHistoryDialogComponent implements AfterViewInit {
   dtos: UniswapDto[] = [];
-  dtosWhales: UniswapDto[] = [];
   txIds = new Set<string>();
-  pureTitle = "Harvest Live Dashboard";
-  latestBlock = 0;
+  lowestBlockDate = 999999999999;
+  disabled = false;
+
 
   constructor(
     private txHistory: HttpService,
     public vt: ViewTypeService,
-    private titleService: Title,
     private log: NGXLogger
-  ) { }
+  ) {
+  }
 
   ngAfterViewInit(): void {
-    this.txHistory.getUniswapTxHistoryData().subscribe(
-      (data) => {
-        this.log.debug('tx data fetched', data.length);
-        console.log(data)
-        this.latestBlock = data[data.length - 1].blockDate;
-        data.forEach((tx) => {
-          this.appendArray(this.dtos, tx);
 
-        });
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.txHistory.getUniswapTxHistoryData().subscribe(data => this.addInArray(data));
+  }
 
-
+  getOlderTransactions(): void {
+    this.disabled = true;
+    if (this.lowestBlockDate === 0) {
+      return;
+    }
+    this.txHistory
+      .getUniswapTxHistoryByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2), this.lowestBlockDate)
+      .subscribe(data => this.addInArray(data));
   }
 
   private isUniqTx(tx: UniswapDto): boolean {
@@ -56,68 +52,24 @@ export class UniHistoryDialogComponent implements AfterViewInit {
     return true;
   }
 
-  private appendArray(arr: UniswapDto[], tx: UniswapDto): void {
-    if (tx.type === 'ADD' || tx.type === 'REM') {
-      return;
-    }
-    if (!this.isUniqTx(tx)) {
-      // this.log.error('Not unique', tx);
-      return;
-    }
-    else {
+  private addInArray(newValues: UniswapDto[]): void {
+
+    this.log.info('New values', newValues);
+    for (let i = newValues.length - 1; i > 0; i--) {
+      const tx = newValues[i];
+      if (tx.type === 'ADD' || tx.type === 'REM') {
+        continue;
+      }
+      if (!this.isUniqTx(tx)) {
+        this.log.warn('Not unique transaction', tx);
+        continue;
+      }
+      if (tx.blockDate < this.lowestBlockDate) {
+        this.lowestBlockDate = tx.blockDate;
+      }
       UniswapDto.round(tx);
-
-
-    }
-    arr.push(tx)
-  }
-
-  private saveLastValue(tx: UniswapDto): void {
-    if (!tx.confirmed || tx.lastPrice === 0) {
-      return;
-    }
-    if (tx.lastPrice != null && tx.lastPrice !== 0) {
-      this.titleService.setTitle(tx.lastPrice + ' | ' + this.pureTitle);
-      StaticValues.lastPrice = tx.lastPrice;
-    }
-    if (tx.lastGas != null || tx.lastGas !== 0) {
-      StaticValues.lastGas = tx.lastGas;
-    }
-    if (tx.blockDateAdopted != null) {
-      StaticValues.lastBlockDateAdopted = tx.blockDateAdopted;
-    }
-    if (tx.psWeekApy) {
-      StaticValues.lastPsApy = tx.psWeekApy;
-    }
-    if (tx.psIncomeUsd) {
-      StaticValues.psIncomeUsd = tx.psIncomeUsd;
-    }
-    if (tx.ownerCount) {
-      StaticValues.farmUsers = tx.ownerCount;
+      this.dtos.push(tx);
+      this.disabled = false;
     }
   }
-
-
-  getOlderTransactions(): void {
-    this.txHistory
-      .getUniswapTxHistoryByRange(this.latestBlock - (StaticValues.SECONDS_OF_DAY * 2), this.latestBlock)
-      .subscribe(
-        (data) => {
-          console.log(data);
-          this.log.debug('tx data fetched', data.length);
-          data.forEach((tx) => {
-
-            this.appendArray(this.dtos, tx);
-            this.saveLastValue(tx);
-
-
-          });
-        },
-        (err) => {
-
-        }
-      );
-  }
-
-
 }

@@ -3,7 +3,11 @@
         <input class="filter-input" #uniswapDtoFilter placeholder="More than..." type="text">
         <app-flow-tab [dtos]="dtos" [minAmount]="+uniswapDtoFilter.value"></app-flow-tab>
         <div class="button-container">
-                <button class="show-even-more" (click)="getOlderTransactions()">load more</button>
+                <button class="show-even-more" (click)="getOlderTransactions()" [disabled]="disabled" [ngStyle]="{
+                                'pointer-events': disabled ? 'none' : 'auto',
+                                'cursor': disabled ? 'wait' : 'pointer',
+                                'background-color': disabled ? '#afcecd' : '#bce3e2'
+                        }">{{disabled ? 'please wait' : 'load more'}}</button>
         </div>
 
 </div>

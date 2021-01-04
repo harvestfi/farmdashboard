@@ -23,7 +23,7 @@
 
 .title-span {
   font-weight: bolder;
-  text-align: left;
+  text-align: center;
 }
 
 .filter-input {
@@ -44,6 +44,7 @@
   border: none;
   margin-left: 10px;
   font-size: 1.1em;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1025px) {
