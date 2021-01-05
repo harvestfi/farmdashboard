@@ -37,13 +37,12 @@
   align-items: center;
 }
 .show-more {
-  background-color: #bce3e2;
+  background-color: #eebf65;
   color: black;
   font-weight: bold;
   border-radius: 3px;
-  border: none;
+  border: 1px solid black;
   margin-left: 10px;
-  font-size: 1.1em;
   cursor: pointer;
 }
 

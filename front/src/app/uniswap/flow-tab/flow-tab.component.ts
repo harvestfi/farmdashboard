@@ -11,6 +11,7 @@ export class FlowTabComponent implements OnInit {
   @Input() dtos: UniswapDto[] = [];
   @Input() maxHeight = 800;
   @Input() minAmount = 0;
+  @Input() showFullDate = false;
 
   constructor(public vt: ViewTypeService) {
   }

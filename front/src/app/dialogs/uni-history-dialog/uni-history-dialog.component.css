@@ -1,10 +1,4 @@
-::ng-deep.mat-dialog-container {
-  overflow-x: hidden;
-  border-radius: 3px;
-  padding: 2% !important;
-  background: #fffce6;
-  width: 35vw;
-}
+
 
 .uni-transactions {
   width: 100%;
@@ -12,6 +6,14 @@
   flex-direction: column;
   justify-content: center;
 }
+::ng-deep.mat-dialog-container {
+  overflow-x: hidden;
+  border-radius: 3px;
+  padding: 2% !important;
+  background: #fffce6;
+
+}
+
 
 .title {
   font-size: 1.5em;
@@ -32,14 +34,12 @@
 }
 
 .show-even-more {
-  background-color: #bce3e2;
   color: black;
   font-weight: bold;
   border-radius: 3px;
-  border: none;
+  border: 1px solid black;
   margin-top: 5px;
   margin-left: 10px;
-  font-size: 1.2em;
   padding: 1%;
   cursor: pointer;
 
@@ -54,7 +54,7 @@
 }
 @media screen and (max-width: 980px) {
   ::ng-deep.mat-dialog-container {
-    width: 100vw;
+    width: 100vh;
     padding: 0;
     height: 80vh;
   }

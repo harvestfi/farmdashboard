@@ -1,12 +1,12 @@
 <div class="uni-transactions">
         <h1 class="title">Uniswap Transaction History</h1>
         <input class="filter-input" #uniswapDtoFilter placeholder="More than..." type="text">
-        <app-flow-tab [dtos]="dtos" [minAmount]="+uniswapDtoFilter.value"></app-flow-tab>
+        <app-flow-tab [dtos]="dtos" [minAmount]="+uniswapDtoFilter.value" [showFullDate]=true></app-flow-tab>
         <div class="button-container">
                 <button class="show-even-more" (click)="getOlderTransactions()" [disabled]="disabled" [ngStyle]="{
                                 'pointer-events': disabled ? 'none' : 'auto',
                                 'cursor': disabled ? 'wait' : 'pointer',
-                                'background-color': disabled ? '#afcecd' : '#bce3e2'
+                                'background-color': disabled ? '#eebf65' : '#eebf65'
                         }">{{disabled ? 'please wait' : 'load more'}}</button>
         </div>
 
