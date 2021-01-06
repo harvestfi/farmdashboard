@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UniswapDto} from '../../models/uniswap-dto';
-import {Utils} from "../../utils";
+import { Component, Input, OnInit } from '@angular/core';
+import { UniswapDto } from '../../models/uniswap-dto';
+import { Utils } from "../../utils";
 
 @Component({
   selector: 'app-uni-trade',
@@ -9,6 +9,10 @@ import {Utils} from "../../utils";
 })
 export class UniTradeComponent implements OnInit {
   @Input() dto: UniswapDto;
+  @Input() dtos: UniswapDto[] = [];
+  @Input() maxHeight = 800;
+  @Input() minAmount = 0;
+  @Input() fullDate = false;
 
   constructor() {
   }

@@ -4,7 +4,6 @@ import { StaticValues } from 'src/app/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { NGXLogger } from 'ngx-logger';
 import { UniswapDto } from '../../models/uniswap-dto';
-import { Title } from '@angular/platform-browser';
 
 
 @Component({

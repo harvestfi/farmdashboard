@@ -127,9 +127,9 @@ export class UniTxComponent implements AfterViewInit {
 
   openUniHistory(): void {
     this.dialog.open(UniHistoryDialogComponent, {
-      width: '600px',
+      width: '60%',
       data: {},
-      panelClass: 'uni-tx-history'
+      panelClass: 'uni-tx-hist'
     });
   }
 

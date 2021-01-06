@@ -1,7 +1,7 @@
 
 
-.uni-transactions {
-  width: 100%;
+.uni-tx-hist {
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,9 +11,7 @@
   border-radius: 3px;
   padding: 2% !important;
   background: #fffce6;
-
 }
-
 
 .title {
   font-size: 1.5em;
@@ -23,7 +21,7 @@
   width: 100%;
 }
 .filter-input {
-  width: 60%;
+  width: 30%;
   margin: 0 auto;
   margin-bottom: 10px;
 }
@@ -39,8 +37,6 @@
   border-radius: 3px;
   border: 1px solid black;
   margin-top: 5px;
-  margin-left: 10px;
-  padding: 1%;
   cursor: pointer;
 
 }
@@ -52,13 +48,4 @@
     margin: 5px;
   }
 }
-@media screen and (max-width: 980px) {
-  ::ng-deep.mat-dialog-container {
-    width: 100vh;
-    padding: 0;
-    height: 80vh;
-  }
-  .uni-transactions {
-    width: 100%;
-  }
-}
+
