@@ -44,13 +44,13 @@
 
   </div>
 
-  <div class="row main-row" [style]=" 'color: ' + getColor()">
+  <div [style]=" 'color: ' + getColor()" class="row main-row">
 
     <div class="left-border-box value title-col">
       {{getTitle}}
     </div>
 
-    <div class="left-border-box value amount date-col" #tooltip="matTooltip"
+    <div #tooltip="matTooltip" class="left-border-box value amount date-col"
          matTooltip="{{uniswapDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
       {{uniswapDto.blockDateAdopted | date: 'dd MMM'}}
     </div>
@@ -65,7 +65,7 @@
 
     <div class="left-border-box value coin-col">
       {{uniswapDto.coin}}
-      <img class="tvl-img" src="{{getCoinImgUrl(uniswapDto.coin)}}" alt="?"/>
+      <img alt="?" class="tvl-img" src="{{getCoinImgUrl(uniswapDto.coin)}}"/>
     </div>
 
     <div class="left-border-box value amount other-amount-col">
@@ -74,7 +74,7 @@
 
     <div class="left-border-box value other-coin-col">
       {{uniswapDto.otherCoin}}
-      <img class="tvl-img" src="{{getCoinImgUrl(uniswapDto.otherCoin)}}" alt="?"/>
+      <img alt="?" class="tvl-img" src="{{getCoinImgUrl(uniswapDto.otherCoin)}}"/>
     </div>
 
     <div class="left-border-box value amount price-coll">
@@ -83,10 +83,10 @@
 
     <div class="left-border-box value amount balance-coll">
       {{(isTrade() ? uniswapDto.ownerBalance : uniswapDto.ownerBalanceUsd) | number: '1.0-2'}}
-      <img class="tvl-img" src="{{getCoinImgUrl(uniswapDto.coin)}}" alt="?"/>
+      <img alt="?" class="tvl-img" src="{{getCoinImgUrl(uniswapDto.coin)}}"/>
     </div>
 
-    <div class="left-border-box value pointer link-col" (click)="openEthersacanTx(uniswapDto.hash)">
+    <div (click)="openEthersacanTx(uniswapDto.hash)" class="left-border-box value pointer link-col">
       <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
     </div>
 
@@ -140,13 +140,13 @@
   </div>
 
 
-  <div class="row main-row" [style]=" 'color: ' + getColor()">
+  <div [style]=" 'color: ' + getColor()" class="row main-row">
 
     <div class="left-border-box value title-col">
       {{getTitle}}
     </div>
 
-    <div class="left-border-box value date-col" #tooltip="matTooltip"
+    <div #tooltip="matTooltip" class="left-border-box value date-col"
          matTooltip="{{harvestDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
       {{harvestDto.blockDateAdopted | date: 'dd MMM'}}
     </div>
@@ -161,7 +161,7 @@
 
     <div class="left-border-box value vault-col">
       {{harvestDto.vault}}
-      <img class="tvl-img" src="{{getCoinImgUrl(harvestDto.vault)}}" alt="?"/>
+      <img alt="?" class="tvl-img" src="{{getCoinImgUrl(harvestDto.vault)}}"/>
     </div>
 
     <div class="left-border-box value other-coin-col">
@@ -176,7 +176,7 @@
       {{harvestDto.ownerBalanceUsd | number: '1.0-0'}}$
     </div>
 
-    <div class="left-border-box value pointer link-col" (click)="openEthersacanTx(harvestDto.hash)">
+    <div (click)="openEthersacanTx(harvestDto.hash)" class="left-border-box value pointer link-col">
       <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
     </div>
 

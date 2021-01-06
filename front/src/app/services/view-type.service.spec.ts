@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ViewTypeService } from './view-type.service';
+import {ViewTypeService} from './view-type.service';
 
 describe('ViewTypeService', () => {
   let service: ViewTypeService;

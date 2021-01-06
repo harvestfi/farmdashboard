@@ -1,8 +1,6 @@
-import {ChangeDetectorRef, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {WebsocketService} from './websocket.service';
-import {HttpService} from './http.service';
 import {PricesCalculationService} from './prices-calculation.service';
-import {ViewTypeService} from './view-type.service';
 import {SnackService} from './snack.service';
 import {NGXLogger} from 'ngx-logger';
 import {HardWorkDto} from '../models/hardwork-dto';
@@ -38,13 +36,13 @@ export class HardworkSubscriberService implements WsConsumer {
   public subscribeToTopic(): void {
     this.subscribed = true;
     this.ws.onMessage('/topic/hardwork', (m => HardWorkDto.fromJson(m.body)))
-      .subscribe(tx => {
-        try {
-          this.log.debug('hardwork from ws', tx);
-          this.pricesCalculationService.saveHardWork(tx);
-        } catch (e) {
-          this.log.error('Error hardwork', e, tx);
-        }
-      });
+    .subscribe(tx => {
+      try {
+        this.log.debug('hardwork from ws', tx);
+        this.pricesCalculationService.saveHardWork(tx);
+      } catch (e) {
+        this.log.error('Error hardwork', e, tx);
+      }
+    });
   }
 }

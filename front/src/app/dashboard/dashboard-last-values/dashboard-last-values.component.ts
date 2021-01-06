@@ -7,8 +7,8 @@ import {ViewTypeService} from '../../services/view-type.service';
 import {HttpService} from '../../services/http.service';
 import {ProfitDialogComponent} from '../../dialogs/profit-dialog/profit-dialog.component';
 import {FarmBuybacksDialogComponent} from '../../dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
-import {HardWorkHistoryDialogComponent} from "../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component";
-import {TotalUsersDialogComponent} from "../../dialogs/total-users-dialog/total-users-dialog.component";
+import {HardWorkHistoryDialogComponent} from '../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
+import {TotalUsersDialogComponent} from '../../dialogs/total-users-dialog/total-users-dialog.component';
 
 export interface TvlDialogData {
   type: string;
@@ -146,7 +146,7 @@ export class DashboardLastValuesComponent implements OnInit {
     });
   }
 
-  openSavedFeesDialog() {
+  openSavedFeesDialog(): void {
     this.dialog.open(HardWorkHistoryDialogComponent, {
       width: '100%',
       height: 'auto',
@@ -157,7 +157,7 @@ export class DashboardLastValuesComponent implements OnInit {
     });
   }
 
-  openTotalUsersDialog() {
+  openTotalUsersDialog(): void {
     this.dialog.open(TotalUsersDialogComponent, {
       width: '100%',
       height: 'auto',

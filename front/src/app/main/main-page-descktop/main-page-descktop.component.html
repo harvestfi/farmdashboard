@@ -3,11 +3,11 @@
   <ng-sidebar [(opened)]="opened">
     <div class="side-menu">
       <!--      <mat-icon (click)="toggleSidebar()" class="pointer button-menu" aria-hidden="false" aria-label="menu">close</mat-icon>-->
-      <mat-icon (click)="toggleSidebar()" class="pointer button-menu" aria-hidden="false" aria-label="menu">menu
+      <mat-icon (click)="toggleSidebar()" aria-hidden="false" aria-label="menu" class="pointer button-menu">menu
       </mat-icon>
       <div class="menu-content">
 
-        <button mat-button (click)="toggleTheme()" class="switch-button">
+        <button (click)="toggleTheme()" class="switch-button" mat-button>
           Switch theme
         </button>
 
@@ -18,7 +18,7 @@
   <div ng-sidebar-content>
     <div class="top-menu row">
       <div class="left-border-box">
-        <mat-icon (click)="toggleSidebar()" class="pointer button-menu" aria-hidden="false" aria-label="menu">
+        <mat-icon (click)="toggleSidebar()" aria-hidden="false" aria-label="menu" class="pointer button-menu">
           menu
         </mat-icon>
       </div>

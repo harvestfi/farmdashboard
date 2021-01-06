@@ -10,7 +10,7 @@ describe('DashboardLastValuesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DashboardLastValuesComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

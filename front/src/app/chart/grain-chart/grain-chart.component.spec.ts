@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GrainChartComponent } from './grain-chart.component';
+import {GrainChartComponent} from './grain-chart.component';
 
 describe('GrainChartComponent', () => {
   let component: GrainChartComponent;
@@ -8,7 +8,7 @@ describe('GrainChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GrainChartComponent ]
+      declarations: [GrainChartComponent]
     })
     .compileComponents();
   }));

@@ -10,7 +10,7 @@ describe('HarvestTxComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HarvestTxComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

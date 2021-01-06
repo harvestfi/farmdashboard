@@ -10,7 +10,7 @@ describe('StrategyListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [StrategyListComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

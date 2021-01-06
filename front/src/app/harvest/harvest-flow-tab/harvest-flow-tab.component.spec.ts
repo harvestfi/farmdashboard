@@ -10,7 +10,7 @@ describe('HarvestFlowTabComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HarvestFlowTabComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

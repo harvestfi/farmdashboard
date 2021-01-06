@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {StaticValues} from '../../static-values';
 import {HardWorkDto} from '../../models/hardwork-dto';
-import {TvlBoxComponent} from '../../dashboard/tvl-box/tvl-box.component';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {Sort} from '@angular/material/sort';
 
@@ -18,23 +17,12 @@ export class AllStatsDialogComponent implements OnInit {
     this.sortedVaults = StaticValues.vaults;
   }
 
-  ngOnInit(): void {
-  }
-
   get tvls(): Map<string, number> {
     return this.pricesCalculationService.tvls;
   }
 
-  users(name: string): number {
-    return this.pricesCalculationService.vaultStats.get(name)?.owners;
-  }
-
   get hardWorks(): Map<string, HardWorkDto> {
     return this.pricesCalculationService.lastHardWorks;
-  }
-
-  incomeApr(tvlName: string): number {
-    return this.pricesCalculationService.incomeApr(tvlName);
   }
 
   get psIncome(): number {
@@ -43,6 +31,17 @@ export class AllStatsDialogComponent implements OnInit {
 
   get psApr(): number {
     return this.pricesCalculationService.latestHardWork?.psApr;
+  }
+
+  ngOnInit(): void {
+  }
+
+  users(name: string): number {
+    return this.pricesCalculationService.vaultStats.get(name)?.owners;
+  }
+
+  incomeApr(tvlName: string): number {
+    return this.pricesCalculationService.incomeApr(tvlName);
   }
 
   tvlPrettyName(tvlName: string): string {

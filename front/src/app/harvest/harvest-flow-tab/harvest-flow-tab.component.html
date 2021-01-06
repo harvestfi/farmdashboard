@@ -2,11 +2,11 @@
   <container-element [ngSwitch]="vt.getViewType()">
     <div *ngSwitchCase="'v2'">
 
-      <div *ngFor="let dto of dtos | harvestFilter:minAmount:vaultFilter" class="row harvest2-row"
-           [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.usdAmount, dto.confirmed)}">
+      <div *ngFor="let dto of dtos | harvestFilter:minAmount:vaultFilter" [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.usdAmount, dto.confirmed)}"
+           class="row harvest2-row">
 
-        <div class="harvest-field harvest2-date left-border-box"
-             #tooltip="matTooltip"
+        <div #tooltip="matTooltip"
+             class="harvest-field harvest2-date left-border-box"
              matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
                     {{dto.vault}}
                     {{dto.methodName}}
@@ -30,7 +30,8 @@
                       aria-hidden="false"
                       aria-label="SELL">trending_down
             </mat-icon>
-            <mat-icon *ngSwitchDefault [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.amount, dto.confirmed)}"
+            <mat-icon *ngSwitchDefault
+                      [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.amount, dto.confirmed)}"
                       aria-hidden="false"
                       aria-label="?">help
             </mat-icon>
@@ -42,27 +43,29 @@
         </div>
 
         <div class="harvest-field harvest2-vault left-border-box">
-          <img class="tvl-img" src="{{getImgUrl(dto.vault)}}" alt="?"/>
+          <img alt="?" class="tvl-img" src="{{getImgUrl(dto.vault)}}"/>
         </div>
 
         <div class="harvest-field harvest2-tvl left-border-box">
           {{dto.lastUsdTvl | number: '1.0-0'}}$
         </div>
 
-        <div class="harvest-field harvest2-sign pointer left-border-box" (click)="openHistory(dto.owner)">
-          <mat-icon [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price" class="sign-icon">open_in_new</mat-icon>
+        <div (click)="openHistory(dto.owner)" class="harvest-field harvest2-sign pointer left-border-box">
+          <mat-icon [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price" class="sign-icon">
+            open_in_new
+          </mat-icon>
         </div>
 
       </div>
 
     </div>
 
-    <table class="flow-tab-table" *ngSwitchDefault>
+    <table *ngSwitchDefault class="flow-tab-table">
 
-      <tr *ngFor="let dto of dtos | harvestFilter:minAmount:vaultFilter"
-          class="flow-tab-tr"
+      <tr (click)="openHistory(dto.owner)"
+          *ngFor="let dto of dtos | harvestFilter:minAmount:vaultFilter"
           [ngStyle]="{'color': priceGradient(dto.methodName, dto.usdAmount, dto.confirmed)}"
-          (click)="openHistory(dto.owner)">
+          class="flow-tab-tr">
 
         <td #tooltip="matTooltip"
             class="flow-tab-td"

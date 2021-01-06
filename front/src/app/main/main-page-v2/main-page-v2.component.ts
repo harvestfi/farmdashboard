@@ -4,8 +4,8 @@ import {WebsocketService} from '../../services/websocket.service';
 import {AllStatsDialogComponent} from '../../dialogs/all-stats-dialog/all-stats-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {TvlDialogComponent} from '../../dialogs/tvl-dialog/tvl-dialog.component';
-import {RewardsDialogComponent} from "../../dialogs/rewards-dialog/rewards-dialog.component";
-import {StaticValues} from "../../static-values";
+import {RewardsDialogComponent} from '../../dialogs/rewards-dialog/rewards-dialog.component';
+import {StaticValues} from '../../static-values';
 
 @Component({
   selector: 'app-main-page-v2',

@@ -84,35 +84,6 @@ export class TvlDialogComponent implements AfterViewInit {
     }
   }
 
-  private loadData(): void {
-    if (this.data.type === 'All') {
-      this.httpService.getHistoryAllTvl().subscribe(data => {
-        this.log.debug('History of All TVL loaded ', data);
-        this.ready = true;
-        this.cdRef.detectChanges();
-        this.postLoadInitCharts();
-        this.addValuesToTvlChart(data);
-      });
-    } else if (this.data.type === 'income') {
-      this.httpService.getHardWorkHistoryData().subscribe(data => {
-        this.log.debug('History of All hardworks loaded ', data);
-        this.ready = true;
-        this.cdRef.detectChanges();
-        this.postLoadInitCharts();
-        this.addValuesToHardworkChart(data);
-      });
-    } else {
-      this.httpService.getHistoryTvlByVault(this.data.type).subscribe(data => {
-        this.log.debug('History of ' + this.data.type + ' TVL loaded ', data);
-        this.pureData = data;
-        this.ready = true;
-        this.cdRef.detectChanges();
-        this.postLoadInitCharts();
-        this.addValuesToTvlChart(data);
-      });
-    }
-  }
-
   public addValuesToTvlChart(dtos: HarvestTvl[]): void {
     const lastTvlData = [];
     const lastOwnersData = [];
@@ -225,14 +196,6 @@ export class TvlDialogComponent implements AfterViewInit {
     this.chart.timeScale().fitContent();
   }
 
-  private loadShareData(): void {
-    if (this.data.type === 'All') {
-
-    } else {
-      this.addValuesToShareChart(this.pureData);
-    }
-  }
-
   public addValuesToShareChart(dtos: HarvestTvl[]): void {
     const sharesData = [];
     const times = new Set<number>();
@@ -276,7 +239,7 @@ export class TvlDialogComponent implements AfterViewInit {
     const dates = new Set<number>();
     dtos?.forEach(x => {
       if (dates.has(x.blockDate)
-        || x.blockDate < 1599609600) { // exclude crazy data
+          || x.blockDate < 1599609600) { // exclude crazy data
         return;
       }
       dates.add(x.blockDate);
@@ -356,6 +319,43 @@ export class TvlDialogComponent implements AfterViewInit {
       }
     } else {
       marker.shift();
+    }
+  }
+
+  private loadData(): void {
+    if (this.data.type === 'All') {
+      this.httpService.getHistoryAllTvl().subscribe(data => {
+        this.log.debug('History of All TVL loaded ', data);
+        this.ready = true;
+        this.cdRef.detectChanges();
+        this.postLoadInitCharts();
+        this.addValuesToTvlChart(data);
+      });
+    } else if (this.data.type === 'income') {
+      this.httpService.getHardWorkHistoryData().subscribe(data => {
+        this.log.debug('History of All hardworks loaded ', data);
+        this.ready = true;
+        this.cdRef.detectChanges();
+        this.postLoadInitCharts();
+        this.addValuesToHardworkChart(data);
+      });
+    } else {
+      this.httpService.getHistoryTvlByVault(this.data.type).subscribe(data => {
+        this.log.debug('History of ' + this.data.type + ' TVL loaded ', data);
+        this.pureData = data;
+        this.ready = true;
+        this.cdRef.detectChanges();
+        this.postLoadInitCharts();
+        this.addValuesToTvlChart(data);
+      });
+    }
+  }
+
+  private loadShareData(): void {
+    if (this.data.type === 'All') {
+
+    } else {
+      this.addValuesToShareChart(this.pureData);
     }
   }
 }

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FarmBuybacksDialogComponent } from './farm-buybacks-dialog.component';
+import {FarmBuybacksDialogComponent} from './farm-buybacks-dialog.component';
 
 describe('FarmBuybacksDialogComponent', () => {
   let component: FarmBuybacksDialogComponent;
@@ -8,7 +8,7 @@ describe('FarmBuybacksDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FarmBuybacksDialogComponent ]
+      declarations: [FarmBuybacksDialogComponent]
     })
     .compileComponents();
   }));

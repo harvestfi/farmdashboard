@@ -60,6 +60,7 @@
 .top-menu-button-close, .top-menu-button-switch {
   width: 15%;
 }
+
 .top-menu-caption {
   width: 70%;
   font-size: 1.3em;
@@ -76,7 +77,6 @@
 .top-menu-row {
   background: #fffce6;
 }
-
 
 
 footer {

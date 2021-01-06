@@ -1,6 +1,3 @@
-import {CrosshairMode} from 'lightweight-charts';
-import * as moment from 'moment';
-
 export class ChartsOptionsLight {
   public static getOptions(): any {
     return {

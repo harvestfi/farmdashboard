@@ -10,7 +10,7 @@ describe('TvlDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [TvlDialogComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

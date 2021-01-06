@@ -78,6 +78,47 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
     this.hardworkSubscriberService.initWs();
   }
 
+  public initWs(): void {
+    if (this.ws.registerConsumer(this) && !this.subscribed) {
+      this.subscribeToTopic();
+    }
+  }
+
+  public subscribeToTopic(): void {
+    this.log.info('Harvest Subscribe on topic');
+    this.subscribed = true;
+    this.ws.onMessage('/topic/harvest', (m => HarvestDto.fromJson(m.body)))
+    .subscribe(tx => {
+      try {
+        this.log.debug('harvest tx', tx);
+        if (tx.methodName === 'price_stub') {
+          this.handlePriceTx(tx);
+          return;
+        }
+        this.snack.openSnack(tx.print());
+        if (!this.isUniqTx(tx)) {
+          this.log.error('Not unique', tx);
+          return;
+        }
+        this.addInArray(this.dtos, tx);
+        this.pricesCalculationService.updateTvls();
+        HarvestTxComponent.saveLastValues(tx);
+        // this.cdRef.markForCheck();
+      } catch (e) {
+        this.log.error('Error harvest', e, tx);
+      }
+    });
+    this.ws.onMessage('/topic/rewards', (m => RewardDto.fromJson(m.body)))
+    .subscribe(tx => {
+      try {
+        this.log.debug('Reward tx', tx);
+        this.pricesCalculationService.saveReward(tx);
+      } catch (e) {
+        this.log.error('Error harvest', e, tx);
+      }
+    });
+  }
+
   private loadLastTvl(): void {
     this.httpService.getLastTvls().subscribe(data => {
       this.log.debug('Loaded last tvls ', data);
@@ -113,47 +154,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
       });
       this.log.debug('Loaded last rewards ', data);
     });
-  }
-
-  public initWs(): void {
-    if (this.ws.registerConsumer(this) && !this.subscribed) {
-      this.subscribeToTopic();
-    }
-  }
-
-  public subscribeToTopic(): void {
-    this.log.info('Harvest Subscribe on topic')
-    this.subscribed = true;
-    this.ws.onMessage('/topic/harvest', (m => HarvestDto.fromJson(m.body)))
-      .subscribe(tx => {
-        try {
-          this.log.debug('harvest tx', tx);
-          if (tx.methodName === 'price_stub') {
-            this.handlePriceTx(tx);
-            return;
-          }
-          this.snack.openSnack(tx.print());
-          if (!this.isUniqTx(tx)) {
-            this.log.error('Not unique', tx);
-            return;
-          }
-          this.addInArray(this.dtos, tx);
-          this.pricesCalculationService.updateTvls();
-          HarvestTxComponent.saveLastValues(tx);
-          // this.cdRef.markForCheck();
-        } catch (e) {
-          this.log.error('Error harvest', e, tx);
-        }
-      });
-    this.ws.onMessage('/topic/rewards', (m => RewardDto.fromJson(m.body)))
-      .subscribe(tx => {
-        try {
-          this.log.debug('Reward tx', tx);
-          this.pricesCalculationService.saveReward(tx);
-        } catch (e) {
-          this.log.error('Error harvest', e, tx);
-        }
-      });
   }
 
   private isUniqTx(tx: HarvestDto): boolean {

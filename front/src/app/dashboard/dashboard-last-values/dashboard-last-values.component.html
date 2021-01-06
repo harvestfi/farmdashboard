@@ -23,7 +23,7 @@
             <div class="value-card">
               <div class="pointer">
                 <div class="value-middle">
-                  <img src="assets/icons/gas.svg" class="icon"/>
+                  <img class="icon" src="assets/icons/gas.svg"/>
                   <text class="small-value-caption">Gas price</text>
                 </div>
 
@@ -39,7 +39,7 @@
             <div class="value-card">
               <div>
                 <div class="value-middle">
-                  <img src="assets/icons/btc.png" class="icon"/>
+                  <img class="icon" src="assets/icons/btc.png"/>
                   <text class="small-value-caption">BTC</text>
                 </div>
                 <div class="value-number-middle">
@@ -54,7 +54,7 @@
             <div class="value-card">
               <div>
                 <div class="value-middle">
-                  <img src="assets/icons/eth.svg" class="icon"/>
+                  <img class="icon" src="assets/icons/eth.svg"/>
                   <text class="small-value-caption">ETH</text>
                 </div>
                 <div class="value-number-middle">
@@ -69,9 +69,9 @@
 
         <div class="middle-bottom">
           <div class="left-column-middle left-border-box">
-            <div class="value-card pointer" #tooltip="matTooltip"
-                 matTooltip="FARM staked in profit share pool"
-                 (click)="openPsTvlDialog()">
+            <div #tooltip="matTooltip" (click)="openPsTvlDialog()"
+                 class="value-card pointer"
+                 matTooltip="FARM staked in profit share pool">
               <div>
                 <div class="value-middle">
                   🔒PS Staked
@@ -85,9 +85,9 @@
           </div>
 
           <div class="middle-column-middle left-border-box">
-            <div class="value-card pointer" #tooltip="matTooltip"
-                 matTooltip="Profit from all vaults for the last week"
-                 (click)="openWeeklyProfitDialog()">
+            <div #tooltip="matTooltip" (click)="openWeeklyProfitDialog()"
+                 class="value-card pointer"
+                 matTooltip="Profit from all vaults for the last week">
               <div>
                 <div class="value-middle">
                   🤑Weekly Profit
@@ -101,9 +101,9 @@
           </div>
 
           <div class="right-column-middle left-border-box">
-            <div class="value-card pointer"
-                 #tooltip="matTooltip" matTooltip="Income from strategies in Profit Share pool, based on all history"
-                 (click)="openPsIncomeDialog()">
+            <div #tooltip="matTooltip"
+                 (click)="openPsIncomeDialog()" class="value-card pointer"
+                 matTooltip="Income from strategies in Profit Share pool, based on all history">
               <div>
                 <div class="value-middle">
                   📈PS Income
@@ -120,9 +120,9 @@
       </div>
 
       <div class="right-column left-border-box">
-        <div class="value-card pointer"
-             #tooltip="matTooltip" matTooltip="Click to open history chart"
-             (click)="openTvlDialog()">
+        <div #tooltip="matTooltip"
+             (click)="openTvlDialog()" class="value-card pointer"
+             matTooltip="Click to open history chart">
           <div class="value-caption" style="font-size: 1.2em">
             Total Value Locked
           </div>
@@ -140,7 +140,8 @@
       <div class="left-column-bottom left-border-box">
 
         <div class="side-card left-border-box">
-          <div class="value-card" #tooltip="matTooltip" matTooltip="Accounts with positive (more than 10$) FARM balance">
+          <div #tooltip="matTooltip" class="value-card"
+               matTooltip="Accounts with positive (more than 10$) FARM balance">
             <div>
               <div class="value-middle">
                 👨‍🌾FARM Holders
@@ -158,9 +159,9 @@
 
         <div class="middle-bottom">
           <div class="left-column-middle left-border-box">
-            <div class="value-card pointer" #tooltip="matTooltip"
-                 matTooltip="30% profit of each HardWork goes to buy FARM"
-                 (click)="openFarmBuybacksDialog()">
+            <div #tooltip="matTooltip" (click)="openFarmBuybacksDialog()"
+                 class="value-card pointer"
+                 matTooltip="30% profit of each HardWork goes to buy FARM">
               <div>
                 <div class="value-middle">
                   📥Farm buybacks
@@ -174,9 +175,9 @@
           </div>
 
           <div class="middle-column-middle left-border-box">
-            <div class="value-card pointer" #tooltip="matTooltip"
-                 matTooltip="How much gas would users spend on transactions without our project?"
-                 (click)="openSavedFeesDialog()">
+            <div #tooltip="matTooltip" (click)="openSavedFeesDialog()"
+                 class="value-card pointer"
+                 matTooltip="How much gas would users spend on transactions without our project?">
               <div>
                 <div class="value-middle">
                   🛡️Saved gas fees
@@ -190,9 +191,9 @@
           </div>
 
           <div class="right-column-middle left-border-box">
-            <div class="value-card pointer"
-                 #tooltip="matTooltip" matTooltip="Total unique accounts interacted with the project"
-                 (click)="openTotalUsersDialog()">
+            <div #tooltip="matTooltip"
+                 (click)="openTotalUsersDialog()" class="value-card pointer"
+                 matTooltip="Total unique accounts interacted with the project">
               <div>
                 <div class="value-middle">
                   👪Total users
@@ -210,7 +211,7 @@
       <div class="right-column-bottom left-border-box">
 
         <div class="side-card left-border-box">
-          <div class="value-card" #tooltip="matTooltip"
+          <div #tooltip="matTooltip" class="value-card"
                matTooltip="Accounts staked funds in pools with balance more than 10$">
             <div>
               <div class="value-middle">
@@ -230,7 +231,7 @@
   </div>
 
 
-  <table class="last-values-table" *ngSwitchDefault>
+  <table *ngSwitchDefault class="last-values-table">
 
     <tr>
       <td class="caption-font-small">Farm Price</td>

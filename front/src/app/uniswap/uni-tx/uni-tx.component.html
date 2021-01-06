@@ -1,16 +1,16 @@
 <container-element [ngSwitch]="vt.getViewType()">
 
-  <div class="row uni-row" *ngSwitchCase="'v2'">
+  <div *ngSwitchCase="'v2'" class="row uni-row">
 
     <div class="left-border-box left">
       <div class="uni-card">
         <div #tooltip="matTooltip"
              aria-hidden="false"
              aria-label="?"
+             class="title-span"
              matTooltip="List of trades contains FARM amounts more than {{whalesMoreThan}}.
         Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
-        Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price"
-             class="title-span">Whales Trades
+        Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price">Whales Trades
         </div>
         <app-flow-tab [dtos]="dtosWhales" [maxHeight]="200"></app-flow-tab>
       </div>
@@ -21,12 +21,12 @@
         <div #tooltip="matTooltip"
              aria-hidden="false"
              aria-label="?"
+             class="title-span"
              matTooltip="List of trades contains FARM amounts less than {{whalesMoreThan}}.
           Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
-          Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price"
-             class="title-span">Fingerlings Trades
+          Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price">Fingerlings Trades
 
-          <input class="filter-input" #uniswapDtoFilter placeholder="More than..." type="text">
+          <input #uniswapDtoFilter class="filter-input" placeholder="More than..." type="text">
         </div>
 
         <app-flow-tab [dtos]="dtos" [maxHeight]="200" [minAmount]="+uniswapDtoFilter.value"></app-flow-tab>
@@ -39,7 +39,7 @@
   </div>
 
 
-  <table  *ngSwitchDefault class="live-trades-table">
+  <table *ngSwitchDefault class="live-trades-table">
 
     <tr>
       <td style="width: 50%; height: 30px">

@@ -1,8 +1,9 @@
-.footer-row{
+.footer-row {
   width: 100%;
   display: flex;
   justify-content: center;
 }
+
 .caption {
   font-size: 0.9em;
   font-weight: bolder;
@@ -16,11 +17,11 @@ a {
   color: black;
 }
 
-.tg-img, .gh-img, .alchemy{
+.tg-img, .gh-img, .alchemy {
 
 }
 
-.tg-img, .gh-img{
+.tg-img, .gh-img {
   width: 15px;
   height: 15px;
   margin: 0 3px 0 10px;

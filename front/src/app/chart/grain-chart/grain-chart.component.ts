@@ -1,16 +1,8 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {HttpService} from '../../services/http.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {DialogData} from '../../dashboard/dashboard-last-values/dashboard-last-values.component';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
-import {ChartBuilder} from '../chart-builder';
 import {PriceService} from '../../services/price.service';
-import {OhlcDto} from '../../models/ohlc-dto';
-import {createChart, IChartApi} from 'lightweight-charts';
 import {UniswapSubscriberService} from '../../uniswap/uniswap-subscriber.service';
-import {LightweightChartsOptions} from '../lightweight-charts-options';
-import {UniswapDto} from '../../models/uniswap-dto';
 import {PriceChartBuilder} from '../price-chart-builder';
 
 @Component({

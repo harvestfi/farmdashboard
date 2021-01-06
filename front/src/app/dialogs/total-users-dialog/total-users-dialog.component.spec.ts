@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TotalUsersDialogComponent } from './total-users-dialog.component';
+import {TotalUsersDialogComponent} from './total-users-dialog.component';
 
 describe('TotalUsersDialogComponent', () => {
   let component: TotalUsersDialogComponent;
@@ -8,7 +8,7 @@ describe('TotalUsersDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TotalUsersDialogComponent ]
+      declarations: [TotalUsersDialogComponent]
     })
     .compileComponents();
   }));

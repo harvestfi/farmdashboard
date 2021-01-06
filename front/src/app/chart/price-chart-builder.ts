@@ -1,6 +1,6 @@
 import {UniswapDto} from '../models/uniswap-dto';
 import {OhlcDto} from '../models/ohlc-dto';
-import {ElementRef, ViewChild} from '@angular/core';
+import {ElementRef} from '@angular/core';
 import {createChart, IChartApi} from 'lightweight-charts';
 import {NGXLogger} from 'ngx-logger';
 import {LightweightChartsOptions} from './lightweight-charts-options';

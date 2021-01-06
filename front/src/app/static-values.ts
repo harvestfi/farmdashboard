@@ -95,9 +95,9 @@ export class StaticValues {
   ];
 
   public static currentVaults: string[] = StaticValues.strategiesListStablecoins
-    .concat(StaticValues.strategiesListCurve)
-    .concat(StaticValues.strategiesListCrypto)
-    .concat(StaticValues.strategiesListLpPools);
+  .concat(StaticValues.strategiesListCurve)
+  .concat(StaticValues.strategiesListCrypto)
+  .concat(StaticValues.strategiesListLpPools);
 
   public static vaultPrettyName(name: string): string {
     return name?.replace('SUSHI_', '')

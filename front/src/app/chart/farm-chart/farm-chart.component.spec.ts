@@ -10,7 +10,7 @@ describe('PriceChartComponent', () => {
     TestBed.configureTestingModule({
       declarations: [FarmChartComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

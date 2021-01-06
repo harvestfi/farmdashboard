@@ -6,19 +6,16 @@
   <div class="title">
     <mat-form-field class="form-input">
       <mat-label class="label-input">Address</mat-label>
-      <input matInput type="text" [(ngModel)]="inputAddress">
-      <button mat-button *ngIf="inputAddress" matSuffix mat-icon-button aria-label="Clear" (click)="inputAddress=''">
+      <input [(ngModel)]="inputAddress" matInput type="text">
+      <button (click)="inputAddress=''" *ngIf="inputAddress" aria-label="Clear" mat-button mat-icon-button matSuffix>
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-    <button mat-mini-fab color="global" *ngIf="this.inputAddress && this.inputAddress != this.address"
-            routerLink="/history/{{this.inputAddress?.trim()}}" class="open-button">
+    <button *ngIf="this.inputAddress && this.inputAddress != this.address" class="open-button" color="global"
+            mat-mini-fab routerLink="/history/{{this.inputAddress?.trim()}}">
       <mat-icon>search</mat-icon>
     </button>
   </div>
-
-
-
 
 
   <div class="row stat-row">
@@ -30,20 +27,20 @@
 
     <div *ngIf="lastFarmHold" class="stat-1 left-border-box styled-card title-card">
       🚜FARM: {{lastFarmHold.ownerBalance | number: '1.0-2'}}
-      <mat-checkbox [(ngModel)]="includeFarm" (change)="sortValues()"></mat-checkbox>
+      <mat-checkbox (change)="sortValues()" [(ngModel)]="includeFarm"></mat-checkbox>
     </div>
     <div *ngFor="let c of lps">
       <div class="stat-3 left-border-box styled-card title-card">
         💰LP {{c.value}}: {{lastLp.get(c.value).ownerBalanceUsd | number: '1.0-2'}}$
-        <mat-checkbox [(ngModel)]="c.checked" (change)="sortValues()"></mat-checkbox>
+        <mat-checkbox (change)="sortValues()" [(ngModel)]="c.checked"></mat-checkbox>
       </div>
     </div>
 
     <div *ngFor="let c of vaults">
       <div class="stat-2 left-border-box styled-card title-card">
-        <img class="tvl-img" src="{{getImgUrl(c.value)}}" alt="?"/>
+        <img alt="?" class="tvl-img" src="{{getImgUrl(c.value)}}"/>
         {{prettyVaultName(c.value)}}: {{lastStaked.get(c.value).ownerBalanceUsd | number: '1.0-2'}}$
-        <mat-checkbox [(ngModel)]="c.checked"  name="{{c.value}}" (change)="sortValues()"></mat-checkbox>
+        <mat-checkbox (change)="sortValues()" [(ngModel)]="c.checked" name="{{c.value}}"></mat-checkbox>
       </div>
     </div>
 
@@ -53,7 +50,7 @@
     It is a beta version, data doesn't include FARM movements and rewards
   </div>
 
-  <div *ngFor="let record of sortedData" >
+  <div *ngFor="let record of sortedData">
 
     <div class="main-row">
 
@@ -71,11 +68,11 @@
 
   </div>
 
-  <div  class="message" *ngIf="address && fullData?.length == 0">
+  <div *ngIf="address && fullData?.length == 0" class="message">
     Address doesn't have any operations
   </div>
 
-  <div class="message" *ngIf="!sortedData">
+  <div *ngIf="!sortedData" class="message">
     <app-loading-spinner></app-loading-spinner>
   </div>
 
