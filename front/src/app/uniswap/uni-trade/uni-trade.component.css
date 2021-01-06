@@ -1,6 +1,6 @@
 .uni-trades {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr .5fr 1fr 1fr 1fr 1fr 1fr .5fr;
 }
 
 .trade-field {
@@ -49,9 +49,4 @@
     
   }
 }
-@media(max-width: 900px) {
-  .uni-trades {
-    
-    grid-template-columns: 2fr .5fr 1fr 1fr 1fr 1fr 1fr .5fr;
-  }
-}
+

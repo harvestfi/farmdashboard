@@ -37,7 +37,7 @@ export class UniHistoryDialogComponent implements AfterViewInit {
     }
     this.txHistory
       .getUniswapTxHistoryByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2), this.lowestBlockDate)
-      .subscribe(data => this.addInArray(data));
+      .subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
   }
 
   private isUniqTx(tx: UniswapDto): boolean {
@@ -68,7 +68,7 @@ export class UniHistoryDialogComponent implements AfterViewInit {
       }
       UniswapDto.round(tx);
       this.dtos.push(tx);
-      this.disabled = false;
+
     }
   }
 }

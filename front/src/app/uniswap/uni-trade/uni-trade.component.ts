@@ -9,9 +9,6 @@ import { Utils } from "../../utils";
 })
 export class UniTradeComponent implements OnInit {
   @Input() dto: UniswapDto;
-  @Input() dtos: UniswapDto[] = [];
-  @Input() maxHeight = 800;
-  @Input() minAmount = 0;
   @Input() fullDate = false;
 
   constructor() {
