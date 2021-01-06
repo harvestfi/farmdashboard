@@ -71,13 +71,17 @@
           <div class="left-column-middle left-border-box">
             <div #tooltip="matTooltip" (click)="openPsTvlDialog()"
                  class="value-card pointer"
-                 matTooltip="FARM staked in profit share pool">
+                 matTooltipClass="tooltip-spaced"
+                 matTooltip="FARM staked in pools
+                             PS Staked: {{farmPsStaked | number: '1.0-1'}}%
+                             LP Staked: {{farmLpStaked | number: '1.0-1'}}%
+               ">
               <div>
                 <div class="value-middle">
-                  🔒PS Staked
+                  🔒FARM Staked
                 </div>
                 <div class="value-number-middle">
-                  <text>{{staked | number: '1.0-1'}}</text>
+                  <text>{{farmStaked | number: '1.0-1'}}</text>
                   %
                 </div>
               </div>

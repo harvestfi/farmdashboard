@@ -94,6 +94,12 @@ export class StaticValues {
     'IDX_ETH_DPI'
   ];
 
+  public static farmPools: string[] = [
+    'UNI_LP_USDC_FARM',
+    'UNI_LP_WETH_FARM',
+    'UNI_LP_GRAIN_FARM'
+  ];
+
   public static currentVaults: string[] = StaticValues.strategiesListStablecoins
   .concat(StaticValues.strategiesListCurve)
   .concat(StaticValues.strategiesListCrypto)

@@ -55,8 +55,16 @@ export class DashboardLastValuesComponent implements OnInit {
     return this.pricesCalculationService.eth;
   }
 
-  get staked(): number {
-    return StaticValues.staked;
+  get farmStaked(): number {
+    return this.farmPsStaked + this.farmLpStaked;
+  }
+
+  get farmPsStaked(): number {
+    return this.pricesCalculationService.farmPsStaked();
+  }
+
+  get farmLpStaked(): number {
+    return this.pricesCalculationService.farmLpStaked();
   }
 
   get mCap(): number {

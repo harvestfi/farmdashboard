@@ -198,12 +198,37 @@ export class PricesCalculationService {
 
   savedGasFees(): number {
     let fees = 0;
-    for (let hw of this.lastHardWorks.values()) {
+    for (const hw of this.lastHardWorks.values()) {
       if (hw.savedGasFeesSum) {
         fees += hw.savedGasFeesSum;
       }
     }
     return fees;
+  }
+
+  farmPsStaked(): number {
+    return StaticValues.staked;
+  }
+
+  farmLpStaked(): number {
+    let farmInLp = 0;
+    let lpStaked = 0;
+    for (const name of StaticValues.farmPools) {
+      const harvest = this.lastHarvests.get(name);
+      if (!harvest) {
+        continue;
+      }
+      if (harvest.lpStatDto.coin1 === 'FARM') {
+        farmInLp += harvest.lpStatDto.amount1;
+      }
+      if (harvest.lpStatDto.coin2 === 'FARM') {
+        farmInLp += harvest.lpStatDto.amount2;
+      }
+    }
+    if (farmInLp !== 0) {
+      lpStaked = (farmInLp / StaticValues.farmTotalSupply) * 100;
+    }
+    return lpStaked;
   }
 
   private getPrice(name: string): number {
