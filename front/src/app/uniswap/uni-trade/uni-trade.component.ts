@@ -9,6 +9,7 @@ import {Utils} from '../../utils';
 })
 export class UniTradeComponent implements OnInit {
   @Input() dto: UniswapDto;
+  @Input() fullDate = false;
 
   constructor() {
   }

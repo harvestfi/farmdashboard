@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -55,6 +54,7 @@ import {MainComponentsComponent} from './main/main-components/main-components.co
 import {TradeBoxComponent} from './history/trade-box/trade-box.component';
 import {HardWorkHistoryDialogComponent} from './dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
 import {TotalUsersDialogComponent} from './dialogs/total-users-dialog/total-users-dialog.component';
+import {UniHistoryDialogComponent} from './dialogs/uni-history-dialog/uni-history-dialog.component';
 import {RewardsDialogComponent} from './dialogs/rewards-dialog/rewards-dialog.component';
 import {MatInputModule} from '@angular/material/input';
 
@@ -97,6 +97,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TradeBoxComponent,
     HardWorkHistoryDialogComponent,
     TotalUsersDialogComponent,
+    UniHistoryDialogComponent,
     RewardsDialogComponent
   ],
   imports: [

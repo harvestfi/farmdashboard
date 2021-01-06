@@ -1,3 +1,8 @@
+.uni-trades {
+  display: grid;
+  grid-template-columns: 2fr .5fr 1fr 1fr 1fr 1fr 1fr .5fr;
+}
+
 .trade-field {
   font-weight: bolder;
   display: inline-block;
@@ -6,49 +11,42 @@
 }
 
 .trade-date {
-  min-width: 17%;
-  max-width: 17%;
   font-size: 0.9em;
 }
 
 .trade-type {
-  min-width: 9%;
-  max-width: 9%;
 }
 
 .trade-amount {
-  min-width: 15%;
-  max-width: 15%;
 }
 
 .trade-coin {
-  min-width: 13%;
-  max-width: 13%;
   font-size: 0.7em;
 }
 
 .trade-other-amount {
-  min-width: 18%;
-  max-width: 18%;
+  
 }
 
 .trade-other-coin {
-  min-width: 10%;
-  max-width: 10%;
   font-size: 0.7em;
 }
 
 .trade-sign {
-  min-width: 8%;
-  max-width: 8%;
   font-size: 0.9em;
 }
 
-.trade-price {
-  min-width: 10%;
-  max-width: 10%;
+.trade-price{
 }
 
 .sign-icon {
   font-size: 0.9em;
 }
+
+@media(max-width: 1100px) {
+  .uni-trades {
+    margin: 10px 0;
+    
+  }
+}
+

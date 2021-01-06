@@ -1,4 +1,4 @@
-<div [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}">
+<div class='uni-trades' [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}">
 
   <div #tooltip="matTooltip"
        class="trade-date left-border-box trade-field"
@@ -7,32 +7,29 @@
                     FARM: {{dto.amount | number}}
                     Other coin: {{dto.otherAmount | number}}
                     Price: {{dto.lastPrice | number}}
-                    Last gas: {{dto.lastGas | number}}"
-       matTooltipClass="tooltip-spaced">
-    {{dto.blockDateAdopted | date: 'HH:mm:ss'}}
+                    Last gas: {{dto.lastGas | number}}" matTooltipClass="tooltip-spaced">
+    {{fullDate ?
+    (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'):
+    (dto.blockDateAdopted | date: 'HH:mm:ss')
+    }}
   </div>
 
   <div class="trade-type left-border-box trade-field">
     <container-element [ngSwitch]="dto.type">
       <mat-icon *ngSwitchCase="'BUY'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-                aria-hidden="false"
-                aria-label="BUY">trending_up
+        aria-hidden="false" aria-label="BUY">trending_up
       </mat-icon>
       <mat-icon *ngSwitchCase="'SELL'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-                aria-hidden="false"
-                aria-label="SELL">trending_down
+        aria-hidden="false" aria-label="SELL">trending_down
       </mat-icon>
       <mat-icon *ngSwitchCase="'ADD'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-                aria-hidden="false"
-                aria-label="ADD_LIQ">import_export
+        aria-hidden="false" aria-label="ADD_LIQ">import_export
       </mat-icon>
       <mat-icon *ngSwitchCase="'REM'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-                aria-hidden="false"
-                aria-label="ADD_LIQ">import_export
+        aria-hidden="false" aria-label="ADD_LIQ">import_export
       </mat-icon>
       <mat-icon *ngSwitchDefault [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-                aria-hidden="false"
-                aria-label="?">help
+        aria-hidden="false" aria-label="?">help
       </mat-icon>
     </container-element>
   </div>
