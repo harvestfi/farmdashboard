@@ -45,7 +45,6 @@
 }
 
 
-
 .value-caption .help-sign {
   font-size: 80%;
   color: #4e4e4e;
@@ -185,6 +184,7 @@
     width: 6px;
     height: 6px;
   }
+
   .small-value-caption {
     margin-left: 8px;
   }

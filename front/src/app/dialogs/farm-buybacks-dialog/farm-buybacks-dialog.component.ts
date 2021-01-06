@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
 import {HttpService} from '../../services/http.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DialogData} from '../../dashboard/dashboard-last-values/dashboard-last-values.component';
@@ -33,14 +33,14 @@ export class FarmBuybacksDialogComponent implements AfterViewInit {
       chartBuilder.initVariables(2);
       data?.forEach(dto => chartBuilder.addInData(0, dto.blockDate, dto.farmBuybackSum / 1000));
 
-      this.httpService.getHistoryTvlByVault('PS').subscribe( vaultData => {
-        this.log.debug('History of PS TVL loaded ', vaultData);
-        vaultData?.forEach(dto => chartBuilder.addInData(1, dto.calculateTime, dto.sharePrice / 1000));
-        this.handleData(chartBuilder, [
-          ['FARM Buyback K', 'right', '#0085ff'],
-          ['All supply K', '1', '#efa4a4']
-        ]);
-        }
+      this.httpService.getHistoryTvlByVault('PS').subscribe(vaultData => {
+            this.log.debug('History of PS TVL loaded ', vaultData);
+            vaultData?.forEach(dto => chartBuilder.addInData(1, dto.calculateTime, dto.sharePrice / 1000));
+            this.handleData(chartBuilder, [
+              ['FARM Buyback K', 'right', '#0085ff'],
+              ['All supply K', '1', '#efa4a4']
+            ]);
+          }
       );
     });
   }

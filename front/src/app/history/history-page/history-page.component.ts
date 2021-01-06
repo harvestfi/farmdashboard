@@ -113,55 +113,6 @@ export class HistoryPageComponent implements OnInit {
     });
   }
 
-  private parseHarvest(record: HarvestDto) {
-    //we have it in liquidity
-    if (this.isLiqHarvest(record)) {
-      return;
-    }
-    const harvest = this.lastStaked.get(record.vault);
-    this.addInCheckedArr(this.vaults, record.vault);
-    if (harvest) {
-      if (harvest.blockDate < record.blockDate) {
-        this.lastStaked.set(record.vault, record);
-      }
-    } else {
-      this.lastStaked.set(record.vault, record);
-    }
-  }
-
-  private addInCheckedArr(arr: CheckedValue[], name: string) {
-    if (arr.find(el => el.value === name)) {
-      return;
-    }
-    const c = new CheckedValue();
-    c.value = name;
-    c.checked = false;
-    arr.push(c);
-  }
-
-  private parseUniswap(record: UniswapDto) {
-    if (Utils.isUniTrade(record)) {
-      if (this.lastFarmHold) {
-        if (this.lastFarmHold.blockDate < record.blockDate) {
-          this.lastFarmHold = record;
-        }
-      } else {
-        this.lastFarmHold = record;
-      }
-    } else if (Utils.isUniLiq(record)) {
-      const lpName = this.lpName(record);
-      this.addInCheckedArr(this.lps, lpName);
-      const uni = this.lastLp.get(lpName);
-      if (uni) {
-        if (uni.blockDate < record.blockDate) {
-          this.lastLp.set(lpName, record);
-        }
-      } else {
-        this.lastLp.set(lpName, record);
-      }
-    }
-  }
-
   tvl(): number {
     let tvl = this.lastFarmHold?.ownerBalanceUsd;
     this.lastLp?.forEach(lp => {
@@ -213,5 +164,54 @@ export class HistoryPageComponent implements OnInit {
       return;
     }
     window.open('/history/' + this.inputAddress.trim());
+  }
+
+  private parseHarvest(record: HarvestDto) {
+    //we have it in liquidity
+    if (this.isLiqHarvest(record)) {
+      return;
+    }
+    const harvest = this.lastStaked.get(record.vault);
+    this.addInCheckedArr(this.vaults, record.vault);
+    if (harvest) {
+      if (harvest.blockDate < record.blockDate) {
+        this.lastStaked.set(record.vault, record);
+      }
+    } else {
+      this.lastStaked.set(record.vault, record);
+    }
+  }
+
+  private addInCheckedArr(arr: CheckedValue[], name: string) {
+    if (arr.find(el => el.value === name)) {
+      return;
+    }
+    const c = new CheckedValue();
+    c.value = name;
+    c.checked = false;
+    arr.push(c);
+  }
+
+  private parseUniswap(record: UniswapDto) {
+    if (Utils.isUniTrade(record)) {
+      if (this.lastFarmHold) {
+        if (this.lastFarmHold.blockDate < record.blockDate) {
+          this.lastFarmHold = record;
+        }
+      } else {
+        this.lastFarmHold = record;
+      }
+    } else if (Utils.isUniLiq(record)) {
+      const lpName = this.lpName(record);
+      this.addInCheckedArr(this.lps, lpName);
+      const uni = this.lastLp.get(lpName);
+      if (uni) {
+        if (uni.blockDate < record.blockDate) {
+          this.lastLp.set(lpName, record);
+        }
+      } else {
+        this.lastLp.set(lpName, record);
+      }
+    }
   }
 }

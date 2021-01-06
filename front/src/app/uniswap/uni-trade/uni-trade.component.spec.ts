@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UniTradeComponent } from './uni-trade.component';
+import {UniTradeComponent} from './uni-trade.component';
 
 describe('UniTradeComponent', () => {
   let component: UniTradeComponent;
@@ -8,7 +8,7 @@ describe('UniTradeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UniTradeComponent ]
+      declarations: [UniTradeComponent]
     })
     .compileComponents();
   }));

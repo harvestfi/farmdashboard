@@ -10,7 +10,7 @@ describe('MainPageDescktopComponent', () => {
     TestBed.configureTestingModule({
       declarations: [MainPageDescktopComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

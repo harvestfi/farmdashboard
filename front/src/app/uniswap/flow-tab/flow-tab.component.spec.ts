@@ -10,7 +10,7 @@ describe('FlowTabComponent', () => {
     TestBed.configureTestingModule({
       declarations: [FlowTabComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

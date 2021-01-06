@@ -10,7 +10,7 @@ describe('TvlBoxComponent', () => {
     TestBed.configureTestingModule({
       declarations: [TvlBoxComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

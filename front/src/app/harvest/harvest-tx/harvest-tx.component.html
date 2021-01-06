@@ -7,9 +7,9 @@
         <div #tooltip="matTooltip"
              aria-hidden="false"
              aria-label="?"
+             class="pool-title left-border-box"
              matTooltip="Changes in Harvest vaults.
-          Format: Date | add/remove | Amount in USD | Pool TVL"
-             class="pool-title left-border-box">
+          Format: Date | add/remove | Amount in USD | Pool TVL">
           Pools
         </div>
 
@@ -19,7 +19,7 @@
           <option *ngFor="let name of tvlNames" [value]="name">{{name}}</option>
         </select>
 
-        <input #harvestDtoFilter placeholder="More than..." type="text" class="input-less-than left-border-box">
+        <input #harvestDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="text">
 
       </div>
 
@@ -31,7 +31,7 @@
   </div>
 
 
-  <table class="live-trades-table" *ngSwitchDefault>
+  <table *ngSwitchDefault class="live-trades-table">
 
     <tr>
       <td style="width: 50%; height: 30px">

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CenterViewComponent } from './center-view.component';
+import {CenterViewComponent} from './center-view.component';
 
 describe('CenterViewComponent', () => {
   let component: CenterViewComponent;
@@ -8,7 +8,7 @@ describe('CenterViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CenterViewComponent ]
+      declarations: [CenterViewComponent]
     })
     .compileComponents();
   }));

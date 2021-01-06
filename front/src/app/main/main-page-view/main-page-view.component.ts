@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {DeviceDetectorService} from 'ngx-device-detector';
 import {ViewTypeService} from '../../services/view-type.service';
 
 @Component({

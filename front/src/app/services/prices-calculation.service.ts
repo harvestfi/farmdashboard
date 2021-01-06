@@ -119,39 +119,6 @@ export class PricesCalculationService {
     // console.log('allTvls ', this.allTvls);
   }
 
-  private getPrice(name: string): number {
-    if (PricesCalculationService.isStableCoin(name)) {
-      return 1.0;
-    }
-    if (name === 'FARM') {
-      return this.lastFarmPrice();
-    }
-    return this.prices.get(PricesCalculationService.mapCoinNameToSimple(name));
-  }
-
-  private calculateTvlForLp(lpStat: LpStat): number {
-    const simpleName1 = PricesCalculationService.mapCoinNameToSimple(lpStat.coin1);
-    const simpleName2 = PricesCalculationService.mapCoinNameToSimple(lpStat.coin2);
-    const price1 = this.getPrice(simpleName1);
-    const price2 = this.getPrice(simpleName2);
-    const amount1 = price1 * lpStat.amount1;
-    const amount2 = price2 * lpStat.amount2;
-    // console.log('calculateTvlForLp ', simpleName1, simpleName2, price1, price2, amount1, amount2);
-    return amount1 + amount2;
-  }
-
-  private calculateTvl(vaultStats: VaultStats, name: string): number {
-    if (name === 'PS') {
-      return vaultStats.tvl * StaticValues.lastPrice;
-    } else if (vaultStats.lpStat) {
-      return this.calculateTvlForLp(vaultStats.lpStat);
-    } else if (vaultStats.tvl) {
-      const price = this.getPrice(name);
-      return vaultStats.tvl * price;
-    }
-    return 0.0;
-  }
-
   saveReward(tx: RewardDto): void {
     if (!tx || this.lastRewards.get(tx.vault)?.blockDate > tx.blockDate) {
       return;
@@ -231,11 +198,69 @@ export class PricesCalculationService {
 
   savedGasFees(): number {
     let fees = 0;
-    for (let hw of this.lastHardWorks.values()) {
+    for (const hw of this.lastHardWorks.values()) {
       if (hw.savedGasFeesSum) {
         fees += hw.savedGasFeesSum;
       }
     }
     return fees;
+  }
+
+  farmPsStaked(): number {
+    return StaticValues.staked;
+  }
+
+  farmLpStaked(): number {
+    let farmInLp = 0;
+    let lpStaked = 0;
+    for (const name of StaticValues.farmPools) {
+      const harvest = this.lastHarvests.get(name);
+      if (!harvest) {
+        continue;
+      }
+      if (harvest.lpStatDto.coin1 === 'FARM') {
+        farmInLp += harvest.lpStatDto.amount1;
+      }
+      if (harvest.lpStatDto.coin2 === 'FARM') {
+        farmInLp += harvest.lpStatDto.amount2;
+      }
+    }
+    if (farmInLp !== 0) {
+      lpStaked = (farmInLp / StaticValues.farmTotalSupply) * 100;
+    }
+    return lpStaked;
+  }
+
+  private getPrice(name: string): number {
+    if (PricesCalculationService.isStableCoin(name)) {
+      return 1.0;
+    }
+    if (name === 'FARM') {
+      return this.lastFarmPrice();
+    }
+    return this.prices.get(PricesCalculationService.mapCoinNameToSimple(name));
+  }
+
+  private calculateTvlForLp(lpStat: LpStat): number {
+    const simpleName1 = PricesCalculationService.mapCoinNameToSimple(lpStat.coin1);
+    const simpleName2 = PricesCalculationService.mapCoinNameToSimple(lpStat.coin2);
+    const price1 = this.getPrice(simpleName1);
+    const price2 = this.getPrice(simpleName2);
+    const amount1 = price1 * lpStat.amount1;
+    const amount2 = price2 * lpStat.amount2;
+    // console.log('calculateTvlForLp ', simpleName1, simpleName2, price1, price2, amount1, amount2);
+    return amount1 + amount2;
+  }
+
+  private calculateTvl(vaultStats: VaultStats, name: string): number {
+    if (name === 'PS') {
+      return vaultStats.tvl * StaticValues.lastPrice;
+    } else if (vaultStats.lpStat) {
+      return this.calculateTvlForLp(vaultStats.lpStat);
+    } else if (vaultStats.tvl) {
+      const price = this.getPrice(name);
+      return vaultStats.tvl * price;
+    }
+    return 0.0;
   }
 }

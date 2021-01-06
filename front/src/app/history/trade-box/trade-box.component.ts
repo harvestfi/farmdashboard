@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UniswapDto} from "../../models/uniswap-dto";
-import {Utils} from "../../utils";
-import {StaticValues} from "../../static-values";
-import {HarvestDto} from "../../models/harvest-dto";
+import {UniswapDto} from '../../models/uniswap-dto';
+import {Utils} from '../../utils';
+import {StaticValues} from '../../static-values';
+import {HarvestDto} from '../../models/harvest-dto';
 
 @Component({
   selector: 'app-trade-box',
@@ -17,21 +17,21 @@ export class TradeBoxComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit(): void {
-  }
-
   get getTitle() {
     if (this.uniswapDto) {
       if (this.isTrade()) {
-        return '💸'
+        return '💸';
       } else {
-        return '💰'
+        return '💰';
       }
     }
     if (this.isPositive()) {
-      return '🏦'
+      return '🏦';
     }
-    return "🏦"
+    return '🏦';
+  }
+
+  ngOnInit(): void {
   }
 
   isPositive(): boolean {

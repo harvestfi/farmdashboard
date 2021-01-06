@@ -11,16 +11,22 @@
     </div>
 
 
-    <table class="flow-tab-table" *ngSwitchDefault>
+    <table *ngSwitchDefault class="flow-tab-table">
 
-      <tr *ngFor="let dto of dtos | uniswapFilter:minAmount" class="flow-tab-tr" (click)="openEthersacanTx(dto.hash)"
-        [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}">
+      <tr (click)="openEthersacanTx(dto.hash)"
+          *ngFor="let dto of dtos | uniswapFilter:minAmount"
+          [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
+          class="flow-tab-tr"
+      >
         <td class="flow-tab-td">
-          <p #tooltip="matTooltip" matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
+          <p #tooltip="matTooltip"
+             class="uni-price"
+             matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
                     FARM: {{dto.amount | number}}
                     Other coin: {{dto.otherAmount | number}}
                     Price: {{dto.lastPrice | number}}
-                    Last gas: {{dto.lastGas | number}}" matTooltipClass="tooltip-spaced" class="uni-price">
+                    Last gas: {{dto.lastGas | number}}"
+             matTooltipClass="tooltip-spaced">
             {{dto.blockDateAdopted | date: 'HH:mm:ss'}}
           </p>
         </td>
@@ -67,8 +73,8 @@
             <mat-icon *ngSwitchCase="'devs'" [ngStyle]="{'color': '#c4ad58'}" aria-hidden="false" aria-label="Price">
               warning
             </mat-icon>
-            <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" size="20" class="do-hard-work-img">
-            </angular-emojis>
+            <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" class="do-hard-work-img"
+                            size="20"></angular-emojis>
           </container-element>
         </td>
 

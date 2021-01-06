@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { HardworkSubscriberService } from './hardwork-subscriber.service';
+import {HardworkSubscriberService} from './hardwork-subscriber.service';
 
 describe('HardworkSubscriberService', () => {
   let service: HardworkSubscriberService;

@@ -18,13 +18,13 @@ export class PriceService {
 
   getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
     return this.http.get<OhlcDto[]>('api/transactions/history/uni/ohcl/' + coin).pipe(
-      catchError(this.snackService.handleError<OhlcDto[]>(`history ohlc`))
+        catchError(this.snackService.handleError<OhlcDto[]>(`history ohlc`))
     );
   }
 
   getLastData(from: string): Observable<Price[]> {
     return this.http.get<Price[]>(`${this.url}/last/FARM/${from}`).pipe(
-      catchError(this.snackService.handleError<Price[]>(`last Price ${from}`))
+        catchError(this.snackService.handleError<Price[]>(`last Price ${from}`))
     );
   }
 }

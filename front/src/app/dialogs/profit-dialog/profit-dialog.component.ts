@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
 import {HttpService} from '../../services/http.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {DialogData} from '../../dashboard/dashboard-last-values/dashboard-last-values.component';

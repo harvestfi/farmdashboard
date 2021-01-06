@@ -21,8 +21,8 @@ export class UniTxComponent implements AfterViewInit {
   dtosWhales: UniswapDto[] = [];
   txIds = new Set<string>();
   pureTitle = 'Harvest Live Dashboard';
-  private maxMessages = 50;
   whalesMoreThan = 500;
+  private maxMessages = 50;
 
 
 

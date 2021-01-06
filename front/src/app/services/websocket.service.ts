@@ -81,19 +81,19 @@ export class WebsocketService implements OnDestroy {
     });
   }
 
+  public isConnected(): boolean {
+    if (this.client) {
+      return this.client?.connected;
+    }
+    return false;
+  }
+
   private connect(): Observable<Client> {
     return new Observable<Client>(observer => {
       this.state.pipe(filter(state => state === SocketClientState.CONNECTED)).subscribe(() => {
         observer.next(this.client);
       });
     });
-  }
-
-  public isConnected(): boolean {
-    if (this.client) {
-      return this.client?.connected;
-    }
-    return false;
   }
 
 }

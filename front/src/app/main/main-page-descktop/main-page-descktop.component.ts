@@ -10,7 +10,8 @@ export class MainPageDescktopComponent implements OnInit {
 
   opened = false;
 
-  constructor(public vt: ViewTypeService) { }
+  constructor(public vt: ViewTypeService) {
+  }
 
   ngOnInit(): void {
   }

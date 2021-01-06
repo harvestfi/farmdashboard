@@ -10,7 +10,7 @@ describe('MainPageViewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [MainPageViewComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

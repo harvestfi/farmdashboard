@@ -85,9 +85,9 @@ export class HarvestDto {
   print(): string {
     // (moment(this.blockDateAdopted)).format('DD-MMM HH:mm:ss')
     return this.methodName
-      + ' ' + this.usdAmount?.toFixed(2)
-      + '$ ' + this.vault
-      + ' TVL is ' + this.lastUsdTvl?.toFixed(2) + '$'
-      ;
+        + ' ' + this.usdAmount?.toFixed(2)
+        + '$ ' + this.vault
+        + ' TVL is ' + this.lastUsdTvl?.toFixed(2) + '$'
+        ;
   }
 }

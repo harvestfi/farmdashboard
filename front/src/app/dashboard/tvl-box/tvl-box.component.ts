@@ -6,8 +6,8 @@ import {ViewTypeService} from '../../services/view-type.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {Utils} from '../../utils';
 import {IncomeDialogComponent} from '../../dialogs/income-dialog/income-dialog.component';
-import {RewardsDialogComponent} from "../../dialogs/rewards-dialog/rewards-dialog.component";
-import {StaticValues} from "../../static-values";
+import {RewardsDialogComponent} from '../../dialogs/rewards-dialog/rewards-dialog.component';
+import {StaticValues} from '../../static-values';
 
 @Component({
   selector: 'app-tvl-box',
@@ -29,6 +29,26 @@ export class TvlBoxComponent implements OnInit {
 
   get hardWorks(): Map<string, HardWorkDto> {
     return this.pricesCalculationService.lastHardWorks;
+  }
+
+  get psIncome(): number {
+    return this.pricesCalculationService.psIncome();
+  }
+
+  get psApy(): number {
+    return Utils.aprToApyEveryDayReinvest(this.psApr);
+  }
+
+  get psApr(): number {
+    return this.pricesCalculationService.latestHardWork?.psApr;
+  }
+
+  get psFarmApy(): number {
+    return Utils.aprToApyEveryDayReinvest(this.psFarmApr);
+  }
+
+  get psFarmApr(): number {
+    return 0;
   }
 
   vaultApy(tvlName: string): number {
@@ -53,26 +73,6 @@ export class TvlBoxComponent implements OnInit {
 
   vaultReward(tvlName: string): number {
     return this.pricesCalculationService.vaultReward(tvlName);
-  }
-
-  get psIncome(): number {
-    return this.pricesCalculationService.psIncome();
-  }
-
-  get psApy(): number {
-    return Utils.aprToApyEveryDayReinvest(this.psApr);
-  }
-
-  get psApr(): number {
-    return this.pricesCalculationService.latestHardWork?.psApr;
-  }
-
-  get psFarmApy(): number {
-    return Utils.aprToApyEveryDayReinvest(this.psFarmApr);
-  }
-
-  get psFarmApr(): number {
-    return 0;
   }
 
   vaultPrettyName(name: string): string {

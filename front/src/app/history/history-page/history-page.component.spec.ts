@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HistoryPageComponent } from './history-page.component';
+import {HistoryPageComponent} from './history-page.component';
 
 describe('HistoryPageComponent', () => {
   let component: HistoryPageComponent;
@@ -8,7 +8,7 @@ describe('HistoryPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HistoryPageComponent ]
+      declarations: [HistoryPageComponent]
     })
     .compileComponents();
   }));

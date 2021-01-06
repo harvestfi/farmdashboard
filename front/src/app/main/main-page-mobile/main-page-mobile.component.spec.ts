@@ -10,7 +10,7 @@ describe('MainPageMobileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [MainPageMobileComponent]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {
