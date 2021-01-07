@@ -1,4 +1,5 @@
 import {HttpErrorResponse} from '@angular/common/http';
+import {TransferDto} from './models/transfer-dto';
 
 export class Utils {
   public static ACTIVE_PREFIX = 'Active';
@@ -156,6 +157,14 @@ export class Utils {
     return !!record.type;
   }
 
+  public static isTransfer(record: any): boolean {
+    return !!record.recipient;
+  }
+
+  public static isTransferPositive(record: any, address: string): boolean {
+    return Utils.isTransfer(record) && record.recipient.toLowerCase() === address.toLowerCase();
+  }
+
   public static isUniTrade(record: any): boolean {
     return Utils.isUni(record) && (record.type === 'BUY' || record.type === 'SELL');
   }
@@ -173,7 +182,7 @@ export class Utils {
   }
 
   public static isHarvest(record: any): boolean {
-    return !!record.methodName;
+    return !!record.vault;
   }
 
   public static isHarvestPositive(record: any): boolean {
@@ -182,6 +191,19 @@ export class Utils {
 
   public static isHarvestNegative(record: any): boolean {
     return Utils.isHarvest(record) && record.methodName === 'Withdraw';
+  }
+
+  public static transferBalance(t: TransferDto, address: string): number {
+    if (address.toLowerCase() === t.owner.toLowerCase()) {
+      return t.balanceOwner;
+    } else if (address.toLowerCase() === t.recipient.toLowerCase()) {
+      return t.balanceRecipient;
+    }
+    return 0;
+  }
+
+  public static transferBalanceUsd(t: TransferDto, address: string): number {
+    return Utils.transferBalance(t, address) * t.price;
   }
 
   public static openEthersacanTx(hash: string): void {

@@ -1,92 +1,95 @@
-<div *ngIf="uniswapDto">
+<div *ngIf="transferDto">
 
-  <div class="row head-row">
+  <div class="head-row-tr">
 
-    <div class="left-border-box head title-col">
+    <div class="head title-col">
       &nbsp;
     </div>
 
-    <div class="left-border-box head amount date-col">
+    <div class="head amount date-col">
       Date
     </div>
 
-    <div class="left-border-box head trend-col">
+    <div class="head trend-col">
       Type
     </div>
 
-    <div class="left-border-box head amount amount-col">
-      Amount1
+    <div class="head amount amount-col">
+      Amount
     </div>
 
-    <div class="left-border-box head coin-col">
-      Coin1
+    <div class="head amount amount-col">
+      USD Amount
     </div>
 
-    <div class="left-border-box head amount other-amount-col">
-      Amount2
+    <div class="head coin-col">
+      Other Side
     </div>
 
-    <div class="left-border-box head other-coin-col">
-      Coin2
-    </div>
-
-    <div class="left-border-box head amount price-coll">
+    <div class="head other-coin-col">
       Price
     </div>
 
-    <div class="left-border-box head amount balance-coll">
+    <div class="head amount price-coll">
+      Profit
+    </div>
+
+    <div class="head amount balance-coll">
       Balance
     </div>
 
-    <div class="left-border-box head pointer link-col">
+    <div class="head pointer link-col">
       &nbsp;
     </div>
 
   </div>
 
-  <div [style]=" 'color: ' + getColor()" class="row main-row">
+  <div [style]=" 'color: ' + getColor()" class="main-row-tr">
 
-    <div class="left-border-box value title-col">
+    <div class="value title-col">
       {{getTitle}}
     </div>
 
-    <div #tooltip="matTooltip" class="left-border-box value amount date-col"
-         matTooltip="{{uniswapDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
-      {{uniswapDto.blockDateAdopted | date: 'dd MMM'}}
+    <div #tooltip="matTooltip" class="value amount date-col"
+         matTooltip="{{transferDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
+      {{transferDto.blockDateAdopted | date: 'dd MMM'}}
     </div>
 
-    <div class="left-border-box value trend-col">
-      {{uniswapDto.type}}
+    <div class="value trend-col">
+      {{prettyType()}}
     </div>
 
-    <div class="left-border-box value amount amount-col">
-      {{uniswapDto.amount | number: '1.0-2'}}
+    <div class="value amount amount-col">
+      {{transferDto.value | number: '1.0-2'}}
+      <text class="coin-sign">FARM</text>
     </div>
 
-    <div class="left-border-box value coin-col">
-      {{uniswapDto.coin}}
-      <img alt="?" class="tvl-img" src="{{getCoinImgUrl(uniswapDto.coin)}}"/>
+    <div class="value amount amount-col">
+      {{transferDto.value * transferDto.price | number: '1.0-2'}}
+      <text class="coin-sign">$</text>
     </div>
 
-    <div class="left-border-box value amount other-amount-col">
-      {{uniswapDto.otherAmount| number: '1.0-2'}}
+    <div class="value coin-col"
+         matTooltip="{{otherSideAddress}}">
+      {{prettyName(otherSideName)}}
+      <img *ngIf="!otherSideName.startsWith('0x')" class="tvl-img" src="{{getCoinImgUrl(otherSideName)}}"/>
     </div>
 
-    <div class="left-border-box value other-coin-col">
-      {{uniswapDto.otherCoin}}
-      <img alt="?" class="tvl-img" src="{{getCoinImgUrl(uniswapDto.otherCoin)}}"/>
+    <div class="value amount price-coll">
+      {{transferDto.price| number: '1.0-2'}}
+      <text class="coin-sign">$</text>
     </div>
 
-    <div class="left-border-box value amount price-coll">
-      {{uniswapDto.lastPrice}}$
+    <div class="value other-coin-col">
+      {{transferDto.profit}}
     </div>
 
-    <div class="left-border-box value amount balance-coll">
-      {{(isTrade() ? uniswapDto.ownerBalance : uniswapDto.ownerBalanceUsd) | number: '1.0-2'}}
-      <img alt="?" class="tvl-img" src="{{getCoinImgUrl(uniswapDto.coin)}}"/>
+    <div class="value amount balance-coll">
+      {{transferBalance(transferDto)| number: '1.0-2'}}
+      <text class="coin-sign">FARM</text>
     </div>
 
-    <div (click)="openEthersacanTx(uniswapDto.hash)" class="left-border-box value pointer link-col">
+    <div (click)="openEthersacanTx(transferDto.id.split('_')[0])" class="value pointer link-col">
       <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
     </div>
 
@@ -99,84 +102,97 @@
 
 <div *ngIf="harvestDto">
 
-  <div class="row head-row">
+  <div class="head-row-hv">
 
-    <div class="left-border-box head title-col">
+    <div class="head title-col">
       &nbsp;
     </div>
 
-    <div class="left-border-box head amount date-col">
+    <div class="head amount date-col">
       Date
     </div>
 
-    <div class="left-border-box head trend-col">
+    <div class="head trend-col">
       Type
     </div>
 
-    <div class="left-border-box head amount usd-amount-col">
+    <div class="head amount usd-amount-col">
       Amount
     </div>
 
-    <div class="left-border-box head vault-col">
+    <div class="head amount usd-amount-col">
+      USD Amount
+    </div>
+
+    <div class="head vault-col">
       Pool
     </div>
 
-    <div class="left-border-box head other-coin-col">
-      &nbsp;
-    </div>
-
-    <div class="left-border-box head amount price-coll">
+    <div class="head amount price-coll">
       TVL
     </div>
 
-    <div class="left-border-box head amount balance-coll">
+    <div class="head amount balance-coll">
       Balance
     </div>
 
-    <div class="left-border-box head pointer link-col">
+    <div class="head amount balance-coll">
+      Balance USD
+    </div>
+
+    <div class="head pointer link-col">
       &nbsp;
     </div>
 
   </div>
 
 
-  <div [style]=" 'color: ' + getColor()" class="row main-row">
+  <div [style]=" 'color: ' + getColor()" class="main-row-hv">
 
-    <div class="left-border-box value title-col">
+    <div class="value title-col">
       {{getTitle}}
     </div>
 
-    <div #tooltip="matTooltip" class="left-border-box value date-col"
+    <div #tooltip="matTooltip" class="value date-col"
          matTooltip="{{harvestDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
       {{harvestDto.blockDateAdopted | date: 'dd MMM'}}
     </div>
 
-    <div class="left-border-box value trend-col">
+    <div class="value trend-col">
       {{harvestDto.methodName}}
     </div>
 
-    <div class="left-border-box value usd-amount-col">
-      {{harvestDto.usdAmount  | number: '1.0-0'}}$
+    <div class="value usd-amount-col"
+         matTooltip="{{harvestDto.amount| number: '1.0-8'}}">
+      {{harvestDto.amount  | number: '1.0-2'}}
     </div>
 
-    <div class="left-border-box value vault-col">
-      {{harvestDto.vault}}
+    <div class="value usd-amount-col">
+      {{harvestDto.usdAmount  | number: '1.0-0'}}
+      <text class="coin-sign">$</text>
+    </div>
+
+    <div class="value vault-col">
+      {{prettyName(harvestDto.vault)}}
       <img alt="?" class="tvl-img" src="{{getCoinImgUrl(harvestDto.vault)}}"/>
     </div>
 
-    <div class="left-border-box value other-coin-col">
-
+    <div class="value price-coll">
+      {{harvestDto.lastUsdTvl / 1000000 | number: '1.0-0'}}
+      <text class="coin-sign">M$</text>
     </div>
 
-    <div class="left-border-box value price-coll">
-      {{harvestDto.lastUsdTvl / 1000000 | number: '1.0-0'}}M$
+    <div class="value amount balance-coll"
+         matTooltip="{{harvestDto.ownerBalance| number: '1.0-8'}}">
+      {{harvestDto.ownerBalance | number: '1.0-0'}}
     </div>
 
-    <div class="left-border-box value amount balance-coll">
-      {{harvestDto.ownerBalanceUsd | number: '1.0-0'}}$
+    <div class="value other-coin-col">
+      {{harvestDto.ownerBalanceUsd | number: '1.0-0'}}
+      <text class="coin-sign">$</text>
     </div>
 
-    <div (click)="openEthersacanTx(harvestDto.hash)" class="left-border-box value pointer link-col">
+    <div (click)="openEthersacanTx(harvestDto.hash)" class="value pointer link-col">
       <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
     </div>
 
