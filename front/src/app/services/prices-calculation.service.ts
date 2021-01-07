@@ -65,6 +65,9 @@ export class PricesCalculationService {
   }
 
   public writeFromHarvestTx(tx: HarvestDto): void {
+    if (!this.latestHarvest || this.latestHarvest.blockDate < tx.blockDate) {
+      this.latestHarvest = tx;
+    }
     if (!tx || this.lastTvlDates.get(tx.vault) > tx.blockDate) {
       return;
     }
@@ -75,7 +78,6 @@ export class PricesCalculationService {
     this.vaultStats.set(tx.vault, vaultStats);
     this.lastTvlDates.set(tx.vault, tx.blockDate);
     this.lastHarvests.set(tx.vault, tx);
-    this.latestHarvest = tx;
   }
 
   public saveHardWork(tx: HardWorkDto): void {
