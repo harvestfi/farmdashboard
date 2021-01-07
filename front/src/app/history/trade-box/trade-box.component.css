@@ -1,65 +1,50 @@
-.head-row {
-  display: flex;
-}
-
-.main-row {
-  display: flex;
+.head-row-tr, .main-row-tr, .head-row-hv, .main-row-hv  {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr .3fr;
 }
 
 .title-col {
-  width: 5%;
 }
 
 .date-col {
-  width: 10%;
 }
 
 .trend-col {
-  width: 9%;
   font-size: 0.8em;
 }
 
 .amount-col {
-  width: 13%;
   font-size: 1.2em;
 }
 
 .usd-amount-col {
-  width: 25%;
   font-size: 1.2em;
 }
 
 .coin-col {
-  width: 9%;
   font-size: 0.8em;
 }
 
 .vault-col {
-  width: 14%;
   font-size: 0.8em;
 }
 
 .other-amount-col {
-  width: 17%;
   font-size: 1.2em;
 }
 
 .other-coin-col {
-  width: 9%;
   font-size: 0.8em;
 }
 
 .price-coll {
-  width: 10%;
   font-size: 1em;
 }
 
 .balance-coll {
-  width: 15%;
 }
 
 .link-col {
-  width: 3%;
 }
 
 .value {
@@ -77,6 +62,16 @@
   font-size: 0.7em;
   display: flex;
   justify-content: center;
+}
+
+.coin-sign {
+  font-weight: bolder;
+  font-size: 0.6em;
+  display: inline-block;
+  align-self: flex-end;
+  margin-bottom: 2px;
+  margin-left: 2px;
+
 }
 
 .amount {
@@ -97,11 +92,11 @@
 
 @media screen and (max-width: 600px) {
   .head {
-    font-size: 70%;
+    font-size: 50%;
   }
 
   .value {
-    font-size: 65%;
+    font-size: 50%;
   }
 
   .tvl-img {
