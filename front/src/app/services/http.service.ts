@@ -9,6 +9,7 @@ import {HarvestTvl} from '../models/harvest-tvl';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
 import {environment} from '../../environments/environment';
+import {TransferDto} from '../models/transfer-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -102,6 +103,12 @@ export class HttpService {
   getAddressHistoryUni(address: string): Observable<UniswapDto[]> {
     return this.http.get<UniswapDto[]>(environment.apiEndpoint + '/history/uni/' + address).pipe(
         catchError(this.snackService.handleError<UniswapDto[]>(`history address uni `))
+    );
+  }
+
+  getAddressHistoryTransfers(address: string): Observable<TransferDto[]> {
+    return this.http.get<TransferDto[]>(environment.apiEndpoint + '/history/transfer/' + address).pipe(
+        catchError(this.snackService.handleError<TransferDto[]>(`history address transfers `))
     );
   }
 }

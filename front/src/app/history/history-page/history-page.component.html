@@ -21,19 +21,14 @@
   <div class="row stat-row">
     <div *ngIf="address && fullData?.length != 0" class="left-border-box styled-card title-card">
       <div class="">
-        Summary: {{tvl() | number: '1.0-0'}}$
+        Summary: {{summary() | number: '1.0-0'}}$
       </div>
     </div>
 
-    <div *ngIf="lastFarmHold" class="stat-1 left-border-box styled-card title-card">
-      🚜FARM: {{lastFarmHold.ownerBalance | number: '1.0-2'}}
-      <mat-checkbox (change)="sortValues()" [(ngModel)]="includeFarm"></mat-checkbox>
-    </div>
-    <div *ngFor="let c of lps">
-      <div class="stat-3 left-border-box styled-card title-card">
-        💰LP {{c.value}}: {{lastLp.get(c.value).ownerBalanceUsd | number: '1.0-2'}}$
-        <mat-checkbox (change)="sortValues()" [(ngModel)]="c.checked"></mat-checkbox>
-      </div>
+    <div *ngIf="lastTransfer" class="stat-1 left-border-box styled-card title-card">
+      <img alt="?" class="tvl-img" src="{{getImgUrl('FARM')}}"/>
+      FARM: {{transferBalanceUsd(lastTransfer) | number: '1.0-2'}}
+      <mat-checkbox (change)="sortValues()" [(ngModel)]="includeTransfers"></mat-checkbox>
     </div>
 
     <div *ngFor="let c of vaults">
@@ -46,21 +41,17 @@
 
   </div>
 
-  <div *ngIf="address" style="text-align: center; font-weight: bolder; color: #4e4e4e">
-    It is a beta version, data doesn't include FARM movements and rewards
-  </div>
-
   <div *ngFor="let record of sortedData">
 
     <div class="main-row">
 
       <div class="styled-card box-card row values">
         <div *ngIf="isHarvest(record)" style="width: 100%">
-          <app-trade-box [harvestDto]="record"></app-trade-box>
+          <app-trade-box [harvestDto]="record" [address]="address"></app-trade-box>
         </div>
 
-        <div *ngIf="isUni(record)" style="width: 100%">
-          <app-trade-box [uniswapDto]="record"></app-trade-box>
+        <div *ngIf="isTransfer(record)" style="width: 100%">
+          <app-trade-box [transferDto]="record" [address]="address"></app-trade-box>
         </div>
       </div>
 

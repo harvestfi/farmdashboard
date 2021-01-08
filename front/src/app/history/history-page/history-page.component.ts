@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../../services/http.service';
 import {ActivatedRoute} from '@angular/router';
 import {HarvestDto} from '../../models/harvest-dto';
-import {UniswapDto} from '../../models/uniswap-dto';
 import {Utils} from '../../utils';
 import {NGXLogger} from 'ngx-logger';
 import {StaticValues} from '../../static-values';
+import {TransferDto} from '../../models/transfer-dto';
 
 class CheckedValue {
   value: string;
@@ -19,15 +19,13 @@ class CheckedValue {
 })
 export class HistoryPageComponent implements OnInit {
   fullData = [];
-  sortedData;
-  includeFarm = false;
+  sortedData: any[];
+  includeTransfers: boolean;
   vaults: CheckedValue[] = [];
-  lps: CheckedValue[] = [];
   address: string;
   inputAddress: string;
 
-  lastFarmHold: UniswapDto;
-  lastLp = new Map<string, UniswapDto>();
+  lastTransfer: TransferDto;
   lastStaked = new Map<string, HarvestDto>();
 
   constructor(private http: HttpService,
@@ -38,39 +36,38 @@ export class HistoryPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.clear();
-      this.address = params['address'];
-      this.inputAddress = params['address'];
+      this.address = params.address;
+      this.inputAddress = params.address;
       this.http.getAddressHistoryHarvest(this.address).subscribe(harvests => {
             this.log.info('Load harvest history', harvests);
             harvests?.forEach(harvest => {
               HarvestDto.enrich(harvest);
               this.fullData.push(harvest);
             });
-            this.http.getAddressHistoryUni(this.address).subscribe(unis => {
-                  this.log.info('Load uni history', harvests);
-                  unis?.forEach(uni => {
-                    UniswapDto.round(uni);
-                    this.fullData.push(uni);
-                  });
-                  this.sortValues();
-                  this.parseValues();
-                }
-            );
+
+            this.http.getAddressHistoryTransfers(this.address).subscribe(transfers => {
+              this.log.info('Load transfers history', transfers);
+              transfers?.forEach(transfer => {
+                TransferDto.enrich(transfer);
+                this.fullData.push(transfer);
+              });
+
+              this.sortValues();
+              this.parseValues();
+            });
           }
       );
     });
   }
 
-  clear() {
+  clear(): void {
     this.fullData = [];
     this.sortedData = null;
-    this.includeFarm = false;
+    this.includeTransfers = false;
     this.vaults = [];
-    this.lps = [];
     this.address = null;
     this.inputAddress = null;
-    this.lastFarmHold = null;
-    this.lastLp = new Map<string, UniswapDto>();
+    this.lastTransfer = null;
     this.lastStaked = new Map<string, HarvestDto>();
   }
 
@@ -78,14 +75,11 @@ export class HistoryPageComponent implements OnInit {
     this.sortedData = [];
     this.fullData.forEach(record => {
       if (Utils.isHarvest(record) && this.includeIn(this.vaults, record.vault)) {
-        //we have it in liquidity
-        if (this.isLiqHarvest(record)) {
+        this.sortedData.push(record);
+      } else if (Utils.isTransfer(record) && this.includeTransfers) {
+        if (record.type === 'PS_EXIT' || record.type === 'PS_STAKE') {
           return;
         }
-        this.sortedData.push(record);
-      } else if (Utils.isUniTrade(record) && this.includeFarm) {
-        this.sortedData.push(record);
-      } else if (Utils.isUniLiq(record) && this.includeIn(this.lps, this.lpName(record))) {
         this.sortedData.push(record);
       }
     });
@@ -105,72 +99,50 @@ export class HistoryPageComponent implements OnInit {
     .forEach(record => {
       if (Utils.isHarvest(record)) {
         this.parseHarvest(record);
-      } else if (Utils.isUni(record)) {
-        this.parseUniswap(record);
+      } else if (Utils.isTransfer(record)) {
+        this.parseTransfer(record);
       } else {
         this.log.warn('Unknown record type', record);
       }
     });
   }
 
-  tvl(): number {
-    let tvl = this.lastFarmHold?.ownerBalanceUsd;
-    this.lastLp?.forEach(lp => {
-      tvl += lp.ownerBalanceUsd;
-    });
+  summary(): number {
+    let summary = 0;
+    if (this.lastTransfer) {
+      summary = this.transferBalanceUsd(this.lastTransfer);
+    }
     this.lastStaked?.forEach(harvest => {
-      if (harvest.vault === 'PS' || harvest.vault === 'PS_V0') {
-        return;
-      }
-      tvl += harvest.ownerBalanceUsd;
+      summary += harvest.ownerBalanceUsd;
     });
-    return tvl;
+    return summary;
   }
 
-  lpName(record: UniswapDto): string {
-    return record.coin + '_' + record.otherCoin;
+  transferBalanceUsd(t: TransferDto): number {
+    return Utils.transferBalanceUsd(t, this.address);
   }
 
-  prettyVaultName(name: string) {
+  prettyVaultName(name: string): string {
     return StaticValues.vaultPrettyName(name);
-  }
-
-  isLiqHarvest(record: HarvestDto) {
-    return record.vault.includes('FARM');
   }
 
   isPositive(record: any): boolean {
     return Utils.isHarvestPositive(record) || Utils.isUniPositive(record);
   }
 
-  isNegative(record: any): boolean {
-    return Utils.isHarvestNegative(record) || Utils.isUniNegative(record);
-  }
-
   isHarvest(record: any): boolean {
     return Utils.isHarvest(record);
   }
 
-  isUni(record: any): boolean {
-    return Utils.isUni(record);
+  isTransfer(record: any): boolean {
+    return Utils.isTransfer(record);
   }
 
   getImgUrl(name: string): string {
     return StaticValues.getImgSrcForVault(name);
   }
 
-  goToAddress() {
-    if (!this.inputAddress) {
-      return;
-    }
-    window.open('/history/' + this.inputAddress.trim());
-  }
-
-  private parseHarvest(record: HarvestDto) {
-    //we have it in liquidity
-    if (this.isLiqHarvest(record)) {
-      return;
-    }
+  private parseHarvest(record: HarvestDto): void {
     const harvest = this.lastStaked.get(record.vault);
     this.addInCheckedArr(this.vaults, record.vault);
     if (harvest) {
@@ -182,7 +154,17 @@ export class HistoryPageComponent implements OnInit {
     }
   }
 
-  private addInCheckedArr(arr: CheckedValue[], name: string) {
+  private parseTransfer(record: TransferDto): void {
+    if (this.lastTransfer) {
+      if (this.lastTransfer.blockDate < record.blockDate) {
+        this.lastTransfer = record;
+      }
+    } else {
+      this.lastTransfer = record;
+    }
+  }
+
+  private addInCheckedArr(arr: CheckedValue[], name: string): void {
     if (arr.find(el => el.value === name)) {
       return;
     }
@@ -190,28 +172,5 @@ export class HistoryPageComponent implements OnInit {
     c.value = name;
     c.checked = false;
     arr.push(c);
-  }
-
-  private parseUniswap(record: UniswapDto) {
-    if (Utils.isUniTrade(record)) {
-      if (this.lastFarmHold) {
-        if (this.lastFarmHold.blockDate < record.blockDate) {
-          this.lastFarmHold = record;
-        }
-      } else {
-        this.lastFarmHold = record;
-      }
-    } else if (Utils.isUniLiq(record)) {
-      const lpName = this.lpName(record);
-      this.addInCheckedArr(this.lps, lpName);
-      const uni = this.lastLp.get(lpName);
-      if (uni) {
-        if (uni.blockDate < record.blockDate) {
-          this.lastLp.set(lpName, record);
-        }
-      } else {
-        this.lastLp.set(lpName, record);
-      }
-    }
   }
 }
