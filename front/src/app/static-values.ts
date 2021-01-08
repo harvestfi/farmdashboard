@@ -55,6 +55,10 @@ export class StaticValues {
     'UNI_LP_USDC_FARM',
     'UNI_LP_WETH_FARM',
     'UNI_LP_GRAIN_FARM',
+    'UNI_BAC_DAI',
+    'UNI_DAI_BAS',
+    'SUSHI_MIC_USDT',
+    'SUSHI_MIS_USDT'
   ];
 
   public static strategiesListStablecoins: string[] = [
@@ -91,7 +95,11 @@ export class StaticValues {
     'SUSHI_ETH_USDC',
     'SUSHI_ETH_USDT',
     'SUSHI_ETH_WBTC',
-    'IDX_ETH_DPI'
+    'IDX_ETH_DPI',
+    'UNI_BAC_DAI',
+    'UNI_DAI_BAS',
+    'SUSHI_MIC_USDT',
+    'SUSHI_MIS_USDT'
   ];
 
   public static farmPools: string[] = [
@@ -107,7 +115,8 @@ export class StaticValues {
 
   public static vaultPrettyName(name: string): string {
     return name?.replace('SUSHI_', '')
-    .replace('UNI_LP_', '');
+    .replace('UNI_LP_', '')
+    .replace('UNI_', '');
   }
 
   public static getImgSrcForVault(name: string): string {
@@ -190,6 +199,16 @@ export class StaticValues {
         return '/assets/icons/farm-weth.png';
       case 'UNI_LP_GRAIN_FARM':
         return '/assets/icons/corn.svg';
+      case 'UNI_BAC_DAI':
+        return '/assets/icons/bac-dai.png';
+      case 'UNI_DAI_BAS':
+        return '/assets/icons/dai-bas.png';
+      case 'SUSHI_MIC_USDT':
+      case 'MIC_USDT':
+        return '/assets/icons/mic-usdt.png';
+      case 'SUSHI_MIS_USDT':
+      case 'MIS_USDT':
+        return '/assets/icons/mis-usdt.png';
     }
   }
 }

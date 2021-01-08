@@ -3,4 +3,8 @@ export class PricesDto {
   eth: number;
   dpi: number;
   grain: number;
+  bac: number;
+  bas: number;
+  mic: number;
+  mis: number;
 }
