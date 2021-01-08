@@ -2,43 +2,36 @@
   margin-bottom: 2px;
 }
 
+.harvest-trades {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr .5fr 3fr .5fr 3fr .5fr ;
+}
+
 .harvest-field {
   font-weight: bolder;
   display: inline-block;
   min-height: 30px;
   text-align: center;
-  width: 100%;
 }
 
 .harvest2-date {
-  min-width: 17%;
-  max-width: 17%;
   font-size: 0.9em;
 }
 
 .harvest2-type {
-  min-width: 10%;
-  max-width: 10%;
 }
 
 .harvest2-amount {
-  min-width: 25%;
-  max-width: 25%;
 }
 
 .harvest2-vault {
-  min-width: 10%;
-  max-width: 10%;
 }
 
 .harvest2-tvl {
-  min-width: 28%;
-  max-width: 28%;
 }
 
 .harvest2-sign {
-  min-width: 10%;
-  max-width: 10%;
 }
 
 .sign-icon {
@@ -48,26 +41,26 @@
 .tvl-img {
   width: 15px;
   height: 15px;
-  margin-right: 5px;
+  
 }
 
 /*------------------------- old *------------------------*/
 
 
-.harvest-date {
+/* .harvest-date {
   font-size: 0.9em;
   margin: 0;
   padding: 0;
 }
 
 .harvest-amount {
-  font-size: 1.2em;
+  font-size: .9em;
 }
 
 .harvest-vault {
-  font-size: 0.8em;
+  font-size: 0.9em;
 }
 
 .harvest-tvl {
   font-size: 0.9em;
-}
+} */

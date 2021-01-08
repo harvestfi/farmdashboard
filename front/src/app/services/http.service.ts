@@ -27,7 +27,7 @@ export class HttpService {
     );
   }
 
-  getUniswapTxHistoryByRange(minBlock:number,maxBlock:number): Observable<UniswapDto[]> {
+  getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
     return this.http.get<UniswapDto[]>(`${this.url}/history/uni?from=${minBlock}&to=${maxBlock}`).pipe(
         catchError(this.snackService.handleError<UniswapDto[]>(`Uni history`))
     );
@@ -35,6 +35,11 @@ export class HttpService {
 
   getHarvestTxHistoryData(): Observable<HarvestDto[]> {
     return this.http.get<HarvestDto[]>(`${this.url}/history/harvest`).pipe(
+        catchError(this.snackService.handleError<HarvestDto[]>(`Harvest history`))
+    );
+  }
+  getHarvestTxHistoryByRange(minBlock: number, maxBlock: number): Observable<HarvestDto[]> {
+    return this.http.get<HarvestDto[]>(`${this.url}/history/harvest?from=${minBlock}&to=${maxBlock}`).pipe(
         catchError(this.snackService.handleError<HarvestDto[]>(`Harvest history`))
     );
   }

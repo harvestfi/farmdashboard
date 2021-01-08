@@ -26,6 +26,20 @@
   width: 30%;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.show-more {
+  background-color: #eebf65;
+  color: black;
+  font-weight: bold;
+  border-radius: 3px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
 
 td {
   /*padding: 0 !important;*/
