@@ -103,6 +103,10 @@ export class PricesCalculationService {
     this.prices.set('ETH', prices.eth);
     this.prices.set('DPI', prices.dpi);
     this.prices.set('GRAIN', prices.grain);
+    this.prices.set('BAC', prices.bac);
+    this.prices.set('BAS', prices.bas);
+    this.prices.set('MIC', prices.mic);
+    this.prices.set('MIS', prices.mis);
     this.lastPriceDate = time;
   }
 
