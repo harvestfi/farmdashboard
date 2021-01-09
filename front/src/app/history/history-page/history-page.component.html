@@ -27,7 +27,7 @@
 
     <div *ngIf="lastTransfer" class="stat-1 left-border-box styled-card title-card">
       <img alt="?" class="tvl-img" src="{{getImgUrl('FARM')}}"/>
-      FARM: {{transferBalanceUsd(lastTransfer) | number: '1.0-2'}}
+      FARM: {{transferBalanceUsd(lastTransfer) | number: '1.0-2'}}$
       <mat-checkbox (change)="sortValues()" [(ngModel)]="includeTransfers"></mat-checkbox>
     </div>
 
