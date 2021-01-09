@@ -23,9 +23,20 @@ public class HarvestDBService {
         this.harvestTxRepository = harvestTxRepository;
     }
 
-    public List<HarvestTxEntity> fetchAllForLastDay() {
-        return harvestTxRepository.fetchAllFromBlockDate(
-            Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
+    public List<HarvestTxEntity> fetchHarvest(String from, String to) {
+        if (from == null && to == null) {
+            return harvestTxRepository.fetchAllFromBlockDate(
+                Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
+        }
+        int fromI = 0;
+        int toI = Integer.MAX_VALUE;
+        if (from != null) {
+            fromI = Integer.parseInt(from);
+        }
+        if (to != null) {
+            toI = Integer.parseInt(to);
+        }
+        return harvestTxRepository.fetchAllByPeriod(fromI, toI);
     }
 
     public List<HarvestTxEntity> fetchAllByName(String name) {

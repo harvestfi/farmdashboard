@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import xyz.farmdashboard.server.entity.HarvestTxEntity;
 
 import java.util.List;
+import xyz.farmdashboard.server.entity.UniswapTxEntity;
 
 public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, String> {
 
@@ -72,4 +73,10 @@ public interface HarvestTxRepository extends JpaRepository<HarvestTxEntity, Stri
         "from harvest_tx " +
         "group by vault")
     List<HarvestTxEntity> fetchLastTvl();
+
+    @Query("select t from HarvestTxEntity t where "
+            + "t.blockDate > :from "
+            + "and t.blockDate <= :to "
+            + "order by t.blockDate")
+    List<HarvestTxEntity> fetchAllByPeriod(@Param("from") long from, @Param("to") long to);
 }
