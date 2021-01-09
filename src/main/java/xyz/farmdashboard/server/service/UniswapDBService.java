@@ -26,8 +26,8 @@ public class UniswapDBService {
             return uniswapTxRepository.fetchAllFromBlockDate(
                 Instant.now().minus(1, DAYS).toEpochMilli() / 1000);
         }
-        Integer fromI = 0;
-        Integer toI = Integer.MAX_VALUE;
+        int fromI = 0;
+        int toI = Integer.MAX_VALUE;
         if (from != null) {
             fromI = Integer.parseInt(from);
         }

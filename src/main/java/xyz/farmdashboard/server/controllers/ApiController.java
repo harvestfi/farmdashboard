@@ -55,8 +55,9 @@ public class ApiController {
     }
 
     @RequestMapping(value = "api/transactions/history/harvest", method = RequestMethod.GET)
-    public Iterable<HarvestTxEntity> harvestHistoryData() {
-        return harvestDBService.fetchAllForLastDay();
+    public Iterable<HarvestTxEntity> harvestHistoryData(@RequestParam(value = "from", required = false) String from,
+                                                        @RequestParam(value = "to", required = false) String to) {
+        return harvestDBService.fetchHarvest(from, to);
     }
 
     @RequestMapping(value = "api/transactions/history/harvest/{name}", method = RequestMethod.GET)
