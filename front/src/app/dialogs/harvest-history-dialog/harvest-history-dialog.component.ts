@@ -14,10 +14,10 @@ import { HarvestDto } from '../../models/harvest-dto';
 export class HarvestHistoryDialogComponent implements AfterViewInit {
   vaultFilter = 'all';
   dtos: HarvestDto[] = [];
-  txIds = new Set<string>();
+  harvestTxIds = new Set<string>();
   lowestBlockDate = 999999999999;
   disabled = false;
-  subscribed = false;
+
 
   constructor(
 
@@ -37,7 +37,10 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.httpService.getHarvestTxHistoryData().subscribe(data => this.addInArray(data));
+    this.httpService.getHarvestTxHistoryData().subscribe(data => {
+
+      this.addInArray(data);
+    });
   }
 
   getOlderTransactions(): void {
@@ -48,20 +51,20 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
     this.httpService
       .getHarvestTxHistoryByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2), this.lowestBlockDate)
       .subscribe(data => {
-        console.log(data)
-        this.addInArray(data)
+
+        this.addInArray(data);
       }).add(() => this.disabled = false);
   }
 
 
 
   private isUniqTx(tx: HarvestDto): boolean {
-    if (this.txIds.has(tx.id)) {
+    if (this.harvestTxIds.has(tx.id)) {
       return false;
     }
-    this.txIds.add(tx.id);
-    if (this.txIds.size > 100_000) {
-      this.txIds = new Set<string>();
+    this.harvestTxIds.add(tx.id);
+    if (this.harvestTxIds.size > 100_000) {
+      this.harvestTxIds = new Set<string>();
     }
     return true;
   }
@@ -71,7 +74,6 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
     this.log.info('New values', newValues);
     for (let i = newValues.length - 1; i > 0; i--) {
       const tx = newValues[i];
-
       if (!this.isUniqTx(tx)) {
         this.log.warn('Not unique transaction', tx);
         continue;
