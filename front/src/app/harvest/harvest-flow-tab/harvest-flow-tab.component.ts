@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {HarvestDto} from '../../models/harvest-dto';
-import {ViewTypeService} from '../../services/view-type.service';
-import {StaticValues} from '../../static-values';
-import {Utils} from '../../utils';
+import { Component, Input, OnInit } from '@angular/core';
+import { HarvestDto } from '../../models/harvest-dto';
+import { ViewTypeService } from '../../services/view-type.service';
+import { StaticValues } from '../../static-values';
+import { Utils } from '../../utils';
 
 @Component({
   selector: 'app-harvest-flow-tab',
@@ -15,6 +15,7 @@ export class HarvestFlowTabComponent implements OnInit {
   @Input() maxHeight = 800;
   @Input() minAmount = 0;
   @Input() vaultFilter = 'all';
+  @Input() showFullDate = false;
 
   constructor(public vt: ViewTypeService) {
   }

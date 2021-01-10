@@ -1,0 +1,52 @@
+.harvest-tx-hist {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+::ng-deep.mat-dialog-container {
+  overflow-x: hidden;
+  border-radius: 3px;
+  padding: 2% !important;
+  background: #fffce6;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.title {
+  font-size: 1.5em;
+  color: black;
+  font-weight: bolder;
+  text-align: center;
+  width: 100%;
+}
+.input-less-than {
+ 
+  margin-bottom: 10px;
+  padding: 1px 0;
+}
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.show-even-more {
+  color: black;
+  font-weight: bold;
+  border-radius: 3px;
+  border: 1px solid black;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 1em;
+    margin: 5px;
+  }
+}

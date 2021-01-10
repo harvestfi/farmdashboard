@@ -57,6 +57,7 @@ import {TotalUsersDialogComponent} from './dialogs/total-users-dialog/total-user
 import {UniHistoryDialogComponent} from './dialogs/uni-history-dialog/uni-history-dialog.component';
 import {RewardsDialogComponent} from './dialogs/rewards-dialog/rewards-dialog.component';
 import {MatInputModule} from '@angular/material/input';
+import { HarvestHistoryDialogComponent } from './dialogs/harvest-history-dialog/harvest-history-dialog.component';
 
 declare var require: any;
 
@@ -98,7 +99,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HardWorkHistoryDialogComponent,
     TotalUsersDialogComponent,
     UniHistoryDialogComponent,
-    RewardsDialogComponent
+    RewardsDialogComponent,
+    HarvestHistoryDialogComponent
   ],
   imports: [
     AppRoutingModule,

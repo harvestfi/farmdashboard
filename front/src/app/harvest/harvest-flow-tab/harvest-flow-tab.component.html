@@ -1,39 +1,37 @@
 <perfect-scrollbar [ngStyle]="{'maxHeight': maxHeight+'px'}" class="scroller">
   <container-element [ngSwitch]="vt.getViewType()">
-    <div *ngSwitchCase="'v2'">
 
-      <div *ngFor="let dto of dtos | harvestFilter:minAmount:vaultFilter" [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.usdAmount, dto.confirmed)}"
-           class="row harvest2-row">
 
-        <div #tooltip="matTooltip"
-             class="harvest-field harvest2-date left-border-box"
-             matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
+
+    <div *ngFor="let dto of dtos | harvestFilter:minAmount:vaultFilter"
+      [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.usdAmount, dto.confirmed)}" class="row harvest2-row">
+      <div class="harvest-trades">
+        <div class="harvest-field harvest2-date left-border-box" matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
                     {{dto.vault}}
                     {{dto.methodName}}
                     fAmount: {{dto.amount | number: '1.0-6'}}
                     amount: {{dto.amountIn | number: '1.0-6'}}
                     sharePrice: {{dto.sharePrice | number}}
-                    vault tvl: {{dto.lastTvl | number}}"
-             matTooltipClass="tooltip-spaced">
-          {{dto.blockDateAdopted | date: 'HH:mm:ss'}}
+                    vault tvl: {{dto.lastTvl | number}}" matTooltipClass="tooltip-spaced">
+          {{showFullDate ?
+          (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'):
+          (dto.blockDateAdopted | date: 'HH:mm:ss')
+          }}
         </div>
 
         <div class="harvest-field harvest2-type left-border-box">
           <container-element [ngSwitch]="dto.methodName.toLowerCase()">
             <mat-icon *ngSwitchCase="'deposit'"
-                      [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.amount, dto.confirmed)}"
-                      aria-hidden="false"
-                      aria-label="BUY">trending_up
+              [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.amount, dto.confirmed)}" aria-hidden="false"
+              aria-label="BUY">trending_up
             </mat-icon>
             <mat-icon *ngSwitchCase="'withdraw'"
-                      [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.amount, dto.confirmed)}"
-                      aria-hidden="false"
-                      aria-label="SELL">trending_down
+              [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.amount, dto.confirmed)}" aria-hidden="false"
+              aria-label="SELL">trending_down
             </mat-icon>
             <mat-icon *ngSwitchDefault
-                      [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.amount, dto.confirmed)}"
-                      aria-hidden="false"
-                      aria-label="?">help
+              [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.amount, dto.confirmed)}" aria-hidden="false"
+              aria-label="?">help
             </mat-icon>
           </container-element>
         </div>
@@ -43,7 +41,7 @@
         </div>
 
         <div class="harvest-field harvest2-vault left-border-box">
-          <img alt="?" class="tvl-img" src="{{getImgUrl(dto.vault)}}"/>
+          <img alt="?" class="tvl-img" src="{{getImgUrl(dto.vault)}}" />
         </div>
 
         <div class="harvest-field harvest2-tvl left-border-box">
@@ -57,72 +55,74 @@
         </div>
 
       </div>
-
     </div>
 
-    <table *ngSwitchDefault class="flow-tab-table">
 
-      <tr (click)="openHistory(dto.owner)"
-          *ngFor="let dto of dtos | harvestFilter:minAmount:vaultFilter"
-          [ngStyle]="{'color': priceGradient(dto.methodName, dto.usdAmount, dto.confirmed)}"
-          class="flow-tab-tr">
 
-        <td #tooltip="matTooltip"
-            class="flow-tab-td"
-            matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
-                    fAmount: {{dto.amount | number: '1.0-6'}}
-                    amount: {{dto.amountIn | number: '1.0-6'}}
-                    sharePrice: {{dto.sharePrice | number}}
-                    vault tvl: {{dto.lastTvl | number}}"
-            matTooltipClass="tooltip-spaced">
-          <p class="harvest-date">
-            {{dto.blockDateAdopted | date: 'HH:mm:ss'}}
-          </p>
-        </td>
 
-        <td class="flow-tab-td">
-          <container-element [ngSwitch]="dto.methodName.toLowerCase()">
-            <mat-icon *ngSwitchCase="'deposit'"
-                      [ngStyle]="{'color': priceGradient(dto.methodName, dto.amount, dto.confirmed)}"
-                      aria-hidden="false"
-                      aria-label="BUY">trending_up
-            </mat-icon>
-            <mat-icon *ngSwitchCase="'withdraw'"
-                      [ngStyle]="{'color': priceGradient(dto.methodName, dto.amount, dto.confirmed)}"
-                      aria-hidden="false"
-                      aria-label="SELL">trending_down
-            </mat-icon>
-            <mat-icon *ngSwitchDefault [ngStyle]="{'color': priceGradient(dto.methodName, dto.amount, dto.confirmed)}"
-                      aria-hidden="false"
-                      aria-label="?">help
-            </mat-icon>
-          </container-element>
-        </td>
+    <!-- <table *ngSwitchDefault class="flow-tab-table">
 
-        <td class="flow-tab-td">
-          <b class="harvest-amount">{{dto.usdAmount | number}}$</b>
-        </td>
+      <tr (click)="openHistory(dto.owner)" *ngFor="let dto of dtos | harvestFilter:minAmount:vaultFilter"
+        [ngStyle]="{'color': priceGradient(dto.methodName, dto.usdAmount, dto.confirmed)}" class="flow-tab-tr">
+        <div class="harvest-trades">
+          <td #tooltip="matTooltip" class="flow-tab-td" matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
+                      fAmount: {{dto.amount | number: '1.0-6'}}
+                      amount: {{dto.amountIn | number: '1.0-6'}}
+                      sharePrice: {{dto.sharePrice | number}}
+                      vault tvl: {{dto.lastTvl | number}}" matTooltipClass="tooltip-spaced">
+            <p class="harvest-date">
+              {{showFullDate ?
+              (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'):
+              (dto.blockDateAdopted | date: 'HH:mm:ss')
+              }}
+            </p>
+          </td>
 
-        <td>
-          <text class="harvest-vault"> {{dto.vault}}</text>
-        </td>
+          <td class="flow-tab-td">
+            <container-element [ngSwitch]="dto.methodName.toLowerCase()">
+              <mat-icon *ngSwitchCase="'deposit'"
+                [ngStyle]="{'color': priceGradient(dto.methodName, dto.amount, dto.confirmed)}" aria-hidden="false"
+                aria-label="BUY">trending_up
+              </mat-icon>
+              <mat-icon *ngSwitchCase="'withdraw'"
+                [ngStyle]="{'color': priceGradient(dto.methodName, dto.amount, dto.confirmed)}" aria-hidden="false"
+                aria-label="SELL">trending_down
+              </mat-icon>
+              <mat-icon *ngSwitchDefault [ngStyle]="{'color': priceGradient(dto.methodName, dto.amount, dto.confirmed)}"
+                aria-hidden="false" aria-label="?">help
+              </mat-icon>
+            </container-element>
+          </td>
 
-        <td class="flow-tab-td">
-          <mat-icon [ngStyle]="{'color': '#514f4f'}" aria-hidden="false" aria-label="Price">forward</mat-icon>
-        </td>
+          <td class="flow-tab-td">
+            <b class="harvest-amount">{{dto.usdAmount | number}}$</b>
+          </td>
 
-        <td class="flow-tab-td">
-          <container-element [ngSwitch]="dto.confirmed">
-            <mat-icon *ngSwitchCase="false" [ngStyle]="{'color': '#514f4f'}" aria-hidden="false" aria-label="Not valid">
-              highlight_off
-            </mat-icon>
-            <b *ngSwitchCase="true" class="harvest-tvl">{{dto.lastUsdTvl | number}}$</b>
-          </container-element>
-        </td>
+          <td>
+            <text class="harvest-vault"> {{dto.vault}}</text>
+          </td>
+
+          <td class="flow-tab-td">
+            <mat-icon [ngStyle]="{'color': '#514f4f'}" aria-hidden="false" aria-label="Price">forward</mat-icon>
+          </td>
+
+          <td class="flow-tab-td">
+            <container-element [ngSwitch]="dto.confirmed">
+              <mat-icon *ngSwitchCase="false" [ngStyle]="{'color': '#514f4f'}" aria-hidden="false"
+                aria-label="Not valid">
+                highlight_off
+              </mat-icon>
+              <b *ngSwitchCase="true" class="harvest-tvl">{{dto.lastUsdTvl | number}}$</b>
+            </container-element>
+          </td>
+        </div>
+
 
       </tr>
 
-    </table>
+    </table> -->
+
+
 
 
   </container-element>
