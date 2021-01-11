@@ -53,6 +53,10 @@ export class UniTradeComponent implements OnInit {
     Utils.openHistory(hash);
   }
 
+  openEthersacanTx(hash: string): void {
+    window.open('https://etherscan.io/tx/' + hash, '_blank');
+  }
+
   checkImportantOwner(address: string): string {
     if (address === '0xbed04c43e74150794f2ff5b62b4f73820edaf661') {
       return 'doHardWork';
