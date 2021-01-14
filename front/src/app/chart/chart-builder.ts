@@ -1,19 +1,14 @@
 import {ElementRef} from '@angular/core';
-import {HarvestTvl} from '../models/harvest-tvl';
 import {createChart, IChartApi, ISeriesApi, MouseEventParams, SeriesMarker, Time} from 'lightweight-charts';
 import {LightweightChartsOptions} from './lightweight-charts-options';
 import {ChartsOptionsLight} from './charts-options-light';
 
 export class ChartBuilder {
-
   chartData = [[]];
-
-  pureData: HarvestTvl[];
-
   series: ISeriesApi<'Line'>[] = [];
   dataMaps: Map<number, number>[] = [];
-
   markers = [];
+  priceLineVisible = true;
 
   public initVariables(dataCount: number): void {
     this.dataMaps = [];
@@ -26,9 +21,16 @@ export class ChartBuilder {
 
   }
 
-  initChart(chartEl: ElementRef): IChartApi {
-    const chart = createChart(chartEl?.nativeElement, LightweightChartsOptions.getOptions());
-    chart.applyOptions(ChartsOptionsLight.getOptions());
+  initChart(chartEl: ElementRef, options?): IChartApi {
+    let enrichOptions = false;
+    if (!options) {
+      enrichOptions = true;
+      options = LightweightChartsOptions.getOptions();
+    }
+    const chart = createChart(chartEl?.nativeElement, options);
+    if (enrichOptions) {
+      chart.applyOptions(ChartsOptionsLight.getOptions());
+    }
     return chart;
   }
 
@@ -58,7 +60,8 @@ export class ChartBuilder {
     this.series[i] = chart.addLineSeries({
       title: config[i][0],
       priceScaleId: config[i][1],
-      color: config[i][2]
+      color: config[i][2],
+      priceLineVisible: false
     });
     this.series[i].setData(this.chartData[i]);
   }

@@ -13,6 +13,7 @@ export class TransferDto {
   type: string;
   methodName: string;
   profit: number;
+  profitUsd: number;
 
   blockDateAdopted: Date;
 
@@ -33,6 +34,7 @@ export class TransferDto {
     tx.type = jsonData.type;
     tx.methodName = jsonData.methodName;
     tx.profit = jsonData.profit;
+    tx.profitUsd = jsonData.profitUsd;
 
     TransferDto.enrich(tx);
     return tx;
@@ -47,6 +49,17 @@ export class TransferDto {
       const d = new Date(0);
       d.setUTCSeconds(tx.blockDate);
       tx.blockDateAdopted = d;
+    }
+  }
+
+  public static getBalanceForAddress(dto: TransferDto, address: string): number {
+    if (dto.owner.toLowerCase() === address.toLowerCase()) {
+      return dto.balanceOwner;
+    } else if (dto.recipient.toLowerCase() === address.toLowerCase()) {
+      return dto.balanceRecipient;
+    } else {
+      console.log('wrong balance for ', address, dto);
+      return 0;
     }
   }
 

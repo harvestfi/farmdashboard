@@ -10,15 +10,6 @@ import {FarmBuybacksDialogComponent} from '../../dialogs/farm-buybacks-dialog/fa
 import {HardWorkHistoryDialogComponent} from '../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
 import {TotalUsersDialogComponent} from '../../dialogs/total-users-dialog/total-users-dialog.component';
 
-export interface TvlDialogData {
-  type: string;
-}
-
-export interface DialogData {
-  title: string;
-  name: string;
-}
-
 @Component({
   selector: 'app-dashboard-last-values',
   templateUrl: './dashboard-last-values.component.html',

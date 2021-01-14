@@ -116,7 +116,9 @@ export class StaticValues {
   public static vaultPrettyName(name: string): string {
     return name?.replace('SUSHI_', '')
     .replace('UNI_LP_', '')
-    .replace('UNI_', '');
+    .replace('UNI_', '')
+    .replace('ST_', '')
+        ;
   }
 
   public static getImgSrcForVault(name: string): string {
@@ -167,6 +169,7 @@ export class StaticValues {
         return '/assets/icons/three-pool.png';
       case 'TUSD':
         return '/assets/icons/tusd.png';
+      case 'ST_PS_V0':
       case 'PS_V0':
       case 'PS':
       case 'FARM':

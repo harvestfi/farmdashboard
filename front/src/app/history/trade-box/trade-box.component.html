@@ -80,8 +80,10 @@
       <text class="coin-sign">$</text>
     </div>
 
-    <div class="value other-coin-col">
-      {{transferDto.profit}}
+    <div class="value other-coin-col"
+         matTooltip="{{transferDto.profit | number: '1.0-2'}} FARM">
+      {{!transferDto.profitUsd ? 0 : transferDto.profitUsd | number: '1.0-2'}}
+      <text class="coin-sign">$</text>
     </div>
 
     <div class="value amount balance-coll">

@@ -13,6 +13,7 @@ import {PriceChartBuilder} from '../price-chart-builder';
 export class FarmChartComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
   coin = 'FARM';
+  otherCoin = 'ETH';
 
   constructor(private priceService: PriceService,
               private uniswapSubscriberService: UniswapSubscriberService,
@@ -28,7 +29,7 @@ export class FarmChartComponent implements AfterViewInit {
     });
 
     this.uniswapSubscriberService.handlers.set(this, tx => {
-      if (tx.coin !== this.coin) {
+      if (tx.coin !== this.coin || tx.otherCoin !== this.otherCoin) {
         return;
       }
       priceChartBuilder.collectLastUniTx(tx);

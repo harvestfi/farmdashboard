@@ -7,11 +7,11 @@ import {ChartBuilder} from '../../chart/chart-builder';
 import {DialogData} from '../dialog-data';
 
 @Component({
-  selector: 'app-profit-dialog',
-  templateUrl: './profit-dialog.component.html',
-  styleUrls: ['./profit-dialog.component.css']
+  selector: 'app-simple-chart-dialog',
+  templateUrl: './simple-chart-dialog.component.html',
+  styleUrls: ['./simple-chart-dialog.component.css']
 })
-export class ProfitDialogComponent implements AfterViewInit {
+export class SimpleChartDialogComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
   ready = false;
 
@@ -27,17 +27,18 @@ export class ProfitDialogComponent implements AfterViewInit {
   }
 
   private loadData(): void {
-    this.httpService.getHardWorkHistoryData().subscribe(data => {
-      this.log.debug('History of All Profits loaded ', data);
-      const chartBuilder = new ChartBuilder();
-      chartBuilder.initVariables(1);
-      data?.forEach(dto => chartBuilder.addInData(0, dto.blockDate, (dto.weeklyAllProfit / 0.7) / 1000));
-      // data?.forEach(dto => chartBuilder.addInData(1, dto.blockDate, dto.tvl / 1000000));
-      this.handleData(chartBuilder, [
-        ['Weekly Profit K$', 'right', '#0085ff'],
-        // ['TVL M$', '1', '#7e7e7e']
-      ]);
+    this.log.info('Create a chart form', this.data);
+    const chartBuilder = new ChartBuilder();
+    chartBuilder.initVariables(this.data.data.length);
+    this.data.data.forEach((arr, i) => {
+      if (!arr) {
+        return;
+      }
+      arr.forEach(el => {
+        chartBuilder.addInData(i, el[0], el[1]);
+      });
     });
+    this.handleData(chartBuilder, this.data.config);
   }
 
   private handleData(chartBuilder: ChartBuilder, config: string[][]): void {

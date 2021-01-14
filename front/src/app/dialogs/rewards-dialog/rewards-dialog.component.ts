@@ -1,7 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
 import {HttpService} from '../../services/http.service';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {DialogData} from '../../dashboard/dashboard-last-values/dashboard-last-values.component';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
@@ -9,6 +8,7 @@ import {StaticValues} from '../../static-values';
 import {RewardDto} from '../../models/reward-dto';
 import {HarvestDto} from '../../models/harvest-dto';
 import {Utils} from '../../utils';
+import {DialogData} from '../dialog-data';
 
 @Component({
   selector: 'app-rewards-dialog',

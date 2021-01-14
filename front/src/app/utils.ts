@@ -275,4 +275,29 @@ export class Utils {
     }
     return '#ffffff';
   }
+
+  public static prettyTransferType(type: string): string {
+    if (!type) {
+      return '';
+    }
+    switch (type) {
+      case 'COMMON':
+        return 'Transfer';
+      case 'LP_SELL':
+        return 'Sell';
+      case 'LP_BUY':
+        return 'Buy';
+      case 'REWARD':
+        return 'Reward';
+      case 'PS_STAKE':
+        return 'PS Stake';
+      case 'PS_EXIT':
+        return 'PS Exit';
+      case 'ONE_INCH':
+        return '1Inch';
+      case 'ZERO_X':
+        return 'ZeroX';
+    }
+    return type;
+  }
 }

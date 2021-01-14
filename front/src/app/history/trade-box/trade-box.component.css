@@ -14,11 +14,11 @@
 }
 
 .amount-col {
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .usd-amount-col {
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .coin-col {
@@ -30,11 +30,11 @@
 }
 
 .other-amount-col {
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .other-coin-col {
-  font-size: 0.8em;
+  font-size: 1em;
 }
 
 .price-coll {

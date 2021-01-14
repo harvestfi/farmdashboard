@@ -24,7 +24,10 @@ export class TradeBoxComponent implements OnInit {
 
   get getTitle(): string {
     if (this.transferDto) {
-      return '💸';
+      if (this.transferDto.type === 'PS_EXIT' || this.transferDto.type === 'PS_STAKE') {
+        return '💳';
+      }
+      return '💸' + this.transferDirection();
     }
     if (this.isPositive()) {
       return '🏦';
@@ -64,6 +67,14 @@ export class TradeBoxComponent implements OnInit {
   }
 
   getColor(): string {
+    if (this.transferDto && (
+        this.transferDto.type === 'PS_EXIT'
+        || this.transferDto.type === 'PS_STAKE'
+        || this.transferDto.type === 'LP_ADD'
+        || this.transferDto.type === 'LP_REM'
+    )) {
+      return '#000000';
+    }
     if (this.isPositive()) {
       return '#478c54';
     }
@@ -104,21 +115,17 @@ export class TradeBoxComponent implements OnInit {
   }
 
   prettyType(): string {
-    if (!this.transferDto) {
+    return Utils.prettyTransferType(this.transferDto?.type);
+  }
+
+  transferDirection(): string {
+    if (this.transferDto.type === 'PS_EXIT' || this.transferDto.type === 'PS_STAKE') {
       return '';
     }
-    if (this.transferDto.type === 'COMMON') {
-      return 'Transfer';
+    if (this.address.toLowerCase() === this.transferDto.owner.toLowerCase()) {
+      return '➡';
+    } else {
+      return '⬅';
     }
-    if (this.transferDto.type === 'LP_SELL') {
-      return 'Sell';
-    }
-    if (this.transferDto.type === 'LP_BUY') {
-      return 'Buy';
-    }
-    if (this.transferDto.type === 'REWARD') {
-      return 'Reward';
-    }
-    return this.transferDto.type;
   }
 }

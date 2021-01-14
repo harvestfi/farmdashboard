@@ -4,12 +4,12 @@ import {HarvestTvl} from '../../models/harvest-tvl';
 import {createChart, IChartApi, ISeriesApi, MouseEventParams, SeriesMarker, Time} from 'lightweight-charts';
 import {LightweightChartsOptions} from '../../chart/lightweight-charts-options';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {TvlDialogData} from '../../dashboard/dashboard-last-values/dashboard-last-values.component';
 import {ViewTypeService} from '../../services/view-type.service';
 import {ChartsOptionsLight} from '../../chart/charts-options-light';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {HttpService} from '../../services/http.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
+import {DialogData} from '../dialog-data';
 
 @Component({
   selector: 'app-tvl-dialog',
@@ -53,7 +53,7 @@ export class TvlDialogComponent implements AfterViewInit {
   psTvlUsdDataMap = new Map<number, number>();
 
   constructor(private httpService: HttpService,
-              @Inject(MAT_DIALOG_DATA) public data: TvlDialogData,
+              @Inject(MAT_DIALOG_DATA) public data: DialogData,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
