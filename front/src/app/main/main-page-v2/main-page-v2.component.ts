@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {TvlDialogComponent} from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import {RewardsDialogComponent} from '../../dialogs/rewards-dialog/rewards-dialog.component';
 import {StaticValues} from '../../static-values';
+import {UserSettings} from '../../user-settings';
 
 @Component({
   selector: 'app-main-page-v2',
@@ -21,6 +22,12 @@ export class MainPageV2Component implements OnInit {
   }
 
   ngOnInit(): void {
+    if (UserSettings.getTheme() ==='light') {
+      this.vt.v2Theme = true;
+    }else {
+      this.vt.v2Theme = false;
+    }
+
   }
 
   toggleSidebar(): void {
@@ -28,8 +35,17 @@ export class MainPageV2Component implements OnInit {
   }
 
   toggleTheme(): void {
+
     this.vt.v2Theme = !this.vt.v2Theme;
+    if (!this.vt.v2Theme) {
+      UserSettings.theme = 'dark';
   }
+  else {
+    UserSettings.theme = 'light';
+  }
+    UserSettings.setTheme(UserSettings.theme);
+  }
+
 
   openAllStats(): void {
     this.dialog.open(AllStatsDialogComponent, {
