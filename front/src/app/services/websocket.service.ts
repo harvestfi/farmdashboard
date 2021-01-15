@@ -23,6 +23,7 @@ export class WebsocketService implements OnDestroy {
       = new BehaviorSubject<SocketClientState>(SocketClientState.ATTEMPTING);
   private recTimeout = null;
   private consumers = new Set<WsConsumer>();
+  private subscriptions = new Set<string>();
 
   constructor() {
   }
@@ -44,6 +45,10 @@ export class WebsocketService implements OnDestroy {
   }
 
   onMessage(topic: string, handler = WebsocketService.jsonHandler): Observable<any> {
+    if (this.subscriptions.has(topic)) {
+      return;
+    }
+    this.subscriptions.add(topic);
     return this.connect().pipe(first(), switchMap(inst => {
       return new Observable<any>(observer => {
         inst.unsubscribe(topic);

@@ -92,7 +92,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
     this.log.info('Harvest Subscribe on topic');
     this.subscribed = true;
     this.ws.onMessage('/topic/harvest', (m => HarvestDto.fromJson(m.body)))
-      .subscribe(tx => {
+      ?.subscribe(tx => {
         try {
           this.log.debug('harvest tx', tx);
           if (tx.methodName === 'price_stub') {
@@ -113,7 +113,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
         }
       });
     this.ws.onMessage('/topic/rewards', (m => RewardDto.fromJson(m.body)))
-      .subscribe(tx => {
+      ?.subscribe(tx => {
         try {
           this.log.debug('Reward tx', tx);
           this.pricesCalculationService.saveReward(tx);

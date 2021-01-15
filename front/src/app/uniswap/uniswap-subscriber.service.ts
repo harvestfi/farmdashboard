@@ -21,7 +21,7 @@ export class UniswapSubscriberService implements WsConsumer {
     this.log.info('Uniswap Subscribe on topic');
     this.subscribed = true;
     this.ws.onMessage('/topic/transactions', (m => UniswapDto.fromJson(m.body)))
-    .subscribe(tx => {
+    ?.subscribe(tx => {
       this.log.debug('uni tx', tx);
       try {
         this.handlers.forEach((handler, obj) => handler.call(obj, tx));

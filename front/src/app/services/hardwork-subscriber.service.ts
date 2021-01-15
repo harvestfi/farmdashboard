@@ -36,7 +36,7 @@ export class HardworkSubscriberService implements WsConsumer {
   public subscribeToTopic(): void {
     this.subscribed = true;
     this.ws.onMessage('/topic/hardwork', (m => HardWorkDto.fromJson(m.body)))
-    .subscribe(tx => {
+    ?.subscribe(tx => {
       try {
         this.log.debug('hardwork from ws', tx);
         this.pricesCalculationService.saveHardWork(tx);

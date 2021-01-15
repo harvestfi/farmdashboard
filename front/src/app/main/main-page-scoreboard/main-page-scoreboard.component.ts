@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
-import {UserSettings} from '../../user-settings';
 
 @Component({
   selector: 'app-main-page-scoreboard',
