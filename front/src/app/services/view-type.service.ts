@@ -17,6 +17,7 @@ export class ViewTypeService {
     } else {
       UserSettings.setTheme(this.themeLight);
     }
+    window.location.reload();
   }
 
   public isNonScoreboard(): boolean {

@@ -24,6 +24,7 @@ export class WebsocketService implements OnDestroy {
   private recTimeout = null;
   private consumers = new Set<WsConsumer>();
   private subscriptions = new Set<string>();
+  private wasConnected = false;
 
   constructor() {
   }
@@ -34,6 +35,36 @@ export class WebsocketService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.connect().pipe(first()).subscribe(inst => inst.disconnect(null));
+  }
+
+  public connectSockJs(): void {
+    this.client = over(new SockJS(WS_ENDPOINT));
+    this.client.debug = null;
+    this.client.reconnect_delay = RECONNECT_INTERVAL * 1000;
+    this.client.connect({}, () => {
+      clearTimeout(this.recTimeout);
+      // reload page not so elegant method, but it should work
+      // without connection we have a gap for the data, we should reload
+      if (this.wasConnected) {
+        // for avoid DDOS on the backend
+        setTimeout(() => {
+          window.location.reload();
+        }, (Math.random() * 10000) + 1000);
+      }
+      this.subscriptions.clear();
+      this.state.next(SocketClientState.CONNECTED);
+      this.consumers.forEach(c => {
+        if (!c.isSubscribed()) {
+          c.subscribeToTopic();
+        }
+      });
+      this.wasConnected = true;
+    }, () => {
+      this.consumers.forEach(c => c.setSubscribed(false));
+      this.recTimeout = setTimeout(() => {
+        this.connectSockJs();
+      }, RECONNECT_INTERVAL * 1000);
+    });
   }
 
   registerConsumer(wsConsumer: WsConsumer): boolean {
@@ -64,26 +95,6 @@ export class WebsocketService implements OnDestroy {
     this.connect()
     .pipe(first())
     .subscribe(inst => inst.send(topic, {}, JSON.stringify(payload)));
-  }
-
-  public connectSockJs(): void {
-    this.client = over(new SockJS(WS_ENDPOINT));
-    this.client.debug = null;
-    this.client.reconnect_delay = RECONNECT_INTERVAL * 1000;
-    this.client.connect({}, () => {
-      this.state.next(SocketClientState.CONNECTED);
-      clearTimeout(this.recTimeout);
-      this.consumers.forEach(c => {
-        if (!c.isSubscribed()) {
-          c.subscribeToTopic();
-        }
-      });
-    }, () => {
-      this.consumers.forEach(c => c.setSubscribed(false));
-      this.recTimeout = setTimeout(() => {
-        this.connectSockJs();
-      }, RECONNECT_INTERVAL * 1000);
-    });
   }
 
   public isConnected(): boolean {
