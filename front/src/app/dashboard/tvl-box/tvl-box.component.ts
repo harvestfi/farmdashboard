@@ -51,6 +51,17 @@ export class TvlBoxComponent implements OnInit {
     return 0;
   }
 
+  vaultFullApy(name: string): string {
+    const apr = this.vaultApy(name) + this.vaultRewardApy(name);
+    if (apr < 1000) {
+      return apr.toFixed(1);
+    } else if (apr < 1000_000) {
+      return (apr / 1000).toFixed(1) + 'k';
+    } else {
+      return (apr / 1000_000).toFixed(1) + 'm';
+    }
+  }
+
   vaultApy(tvlName: string): number {
     return Utils.aprToApyEveryDayReinvest(this.vaultApr(tvlName));
   }

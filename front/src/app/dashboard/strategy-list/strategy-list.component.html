@@ -2,10 +2,11 @@
 
   <div class="left-border-box strategies-row-first-w">
     <div class="row strategies-row-first">
+
       <div class="left-border-box first-list">
         <div class="list-card">
-          <app-tvl-box [name]="'Stablecoins'" [tvlName]="null"></app-tvl-box>
-          <app-tvl-box *ngFor="let vault of vaultsListStable" [tvlName]="vault"></app-tvl-box>
+          <app-tvl-box [name]="'Coins'" [tvlName]="null"></app-tvl-box>
+          <app-tvl-box *ngFor="let vault of vaultsListCrypto" [tvlName]="vault"></app-tvl-box>
         </div>
       </div>
 
@@ -15,24 +16,27 @@
           <app-tvl-box *ngFor="let vault of vaultsListCrv" [tvlName]="vault"></app-tvl-box>
         </div>
       </div>
+
     </div>
   </div>
 
   <div class="left-border-box strategies-row-second-w">
     <div class="row strategies-row-second">
+
       <div class="left-border-box third-list">
         <div class="list-card">
-          <app-tvl-box [name]="'Coins'" [tvlName]="null"></app-tvl-box>
-          <app-tvl-box *ngFor="let vault of vaultsListCrypto" [tvlName]="vault"></app-tvl-box>
+          <app-tvl-box [name]="'Non Uni LPs'" [tvlName]="null"></app-tvl-box>
+          <app-tvl-box *ngFor="let vault of vaultsListNonUniLpPools" [tvlName]="vault"></app-tvl-box>
         </div>
       </div>
 
       <div class="left-border-box fourth-list">
         <div class="list-card">
-          <app-tvl-box [name]="'LP Pools'" [tvlName]="null"></app-tvl-box>
-          <app-tvl-box *ngFor="let vault of vaultsListLpPools" [tvlName]="vault"></app-tvl-box>
+          <app-tvl-box [name]="'Uniswap LPs'" [tvlName]="null"></app-tvl-box>
+          <app-tvl-box *ngFor="let vault of vaultsListUniLpPools" [tvlName]="vault"></app-tvl-box>
         </div>
       </div>
+
     </div>
   </div>
 </div>

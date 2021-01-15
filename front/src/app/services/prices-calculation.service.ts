@@ -31,20 +31,17 @@ export class PricesCalculationService {
   }
 
   private static mapCoinNameToSimple(name: string): string {
-    if ('WETH' === name) {
-      return 'ETH';
-    } else if ('RENBTC' === name) {
-      return 'BTC';
-    } else if ('CRVRENWBTC' === name) {
-      return 'BTC';
-    } else if ('TBTC' === name) {
-      return 'BTC';
-    } else if ('WBTC' === name) {
-      return 'BTC';
-    } else if ('CRV_TBTC' === name) {
-      return 'BTC';
-    } else if ('CRV_HBTC' === name) {
-      return 'BTC';
+    switch (name) {
+      case 'WETH':
+        return 'ETH';
+      case 'RENBTC':
+      case 'CRVRENWBTC':
+      case 'TBTC':
+      case 'WBTC':
+      case 'CRV_TBTC':
+      case 'CRV_HBTC':
+      case 'CRV_OBTC':
+        return 'BTC';
     }
     return name;
   }

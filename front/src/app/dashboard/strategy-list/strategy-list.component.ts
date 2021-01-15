@@ -16,20 +16,20 @@ export class StrategyListComponent implements OnInit {
     return StaticValues.currentVaults;
   }
 
-  get vaultsListStable(): string[] {
-    return StaticValues.strategiesListStablecoins;
-  }
-
   get vaultsListCrv(): string[] {
     return StaticValues.strategiesListCurve;
   }
 
   get vaultsListCrypto(): string[] {
-    return StaticValues.strategiesListCrypto;
+    return StaticValues.strategiesListSingleCoins;
   }
 
-  get vaultsListLpPools(): string[] {
-    return StaticValues.strategiesListLpPools;
+  get vaultsListUniLpPools(): string[] {
+    return StaticValues.strategiesListUniLpPools;
+  }
+
+  get vaultsListNonUniLpPools(): string[] {
+    return StaticValues.strategiesListNonUniLpPools;
   }
 
   ngOnInit(): void {

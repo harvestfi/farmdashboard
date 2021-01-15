@@ -58,14 +58,12 @@ export class StaticValues {
     'UNI_BAC_DAI',
     'UNI_DAI_BAS',
     'SUSHI_MIC_USDT',
-    'SUSHI_MIS_USDT'
-  ];
-
-  public static strategiesListStablecoins: string[] = [
-    'USDC',
-    'USDT',
-    'DAI',
-    'TUSD',
+    'SUSHI_MIS_USDT',
+    'CRV_OBTC',
+    'ONEINCH_ETH_DAI',
+    'ONEINCH_ETH_USDC',
+    'ONEINCH_ETH_USDT',
+    'ONEINCH_ETH_WBTC'
   ];
 
   public static strategiesListCurve: string[] = [
@@ -77,29 +75,41 @@ export class StaticValues {
     'CRV_USDN',
     'CRV_TBTC',
     'CRV_HBTC',
+    'CRV_OBTC',
   ];
 
-  public static strategiesListCrypto: string[] = [
+  public static strategiesListSingleCoins: string[] = [
     'PS',
     'WETH',
     'WBTC',
     'RENBTC',
     'CRVRENWBTC',
+    'USDC',
+    'USDT',
+    'DAI',
+    'TUSD',
   ];
 
-  public static strategiesListLpPools: string[] = [
+  public static strategiesListUniLpPools: string[] = [
     'UNI_LP_USDC_FARM',
     'UNI_LP_WETH_FARM',
     'UNI_LP_GRAIN_FARM',
+    'IDX_ETH_DPI',
+    'UNI_BAC_DAI',
+    'UNI_DAI_BAS'
+  ];
+
+  public static strategiesListNonUniLpPools: string[] = [
     'SUSHI_ETH_DAI',
     'SUSHI_ETH_USDC',
     'SUSHI_ETH_USDT',
     'SUSHI_ETH_WBTC',
-    'IDX_ETH_DPI',
-    'UNI_BAC_DAI',
-    'UNI_DAI_BAS',
     'SUSHI_MIC_USDT',
-    'SUSHI_MIS_USDT'
+    'SUSHI_MIS_USDT',
+    'ONEINCH_ETH_DAI',
+    'ONEINCH_ETH_USDC',
+    'ONEINCH_ETH_USDT',
+    'ONEINCH_ETH_WBTC',
   ];
 
   public static farmPools: string[] = [
@@ -108,16 +118,19 @@ export class StaticValues {
     'UNI_LP_GRAIN_FARM'
   ];
 
-  public static currentVaults: string[] = StaticValues.strategiesListStablecoins
+  public static currentVaults: string[] = []
   .concat(StaticValues.strategiesListCurve)
-  .concat(StaticValues.strategiesListCrypto)
-  .concat(StaticValues.strategiesListLpPools);
+  .concat(StaticValues.strategiesListSingleCoins)
+  .concat(StaticValues.strategiesListNonUniLpPools)
+  .concat(StaticValues.strategiesListUniLpPools);
 
   public static vaultPrettyName(name: string): string {
-    return name?.replace('SUSHI_', '')
-    .replace('UNI_LP_', '')
-    .replace('UNI_', '')
-    .replace('ST_', '')
+    return name
+    ?.replace('SUSHI_', '')
+    ?.replace('ONEINCH_', '')
+    ?.replace('UNI_LP_', '')
+    ?.replace('UNI_', '')
+    ?.replace('ST_', '')
         ;
   }
 
@@ -212,6 +225,16 @@ export class StaticValues {
       case 'SUSHI_MIS_USDT':
       case 'MIS_USDT':
         return '/assets/icons/mis-usdt.png';
+      case 'CRV_OBTC':
+        return '/assets/icons/curve-obtc.png';
+      case 'ONEINCH_ETH_DAI':
+        return '/assets/icons/1inch-eth-dai.png';
+      case 'ONEINCH_ETH_USDC':
+        return '/assets/icons/1inch-eth-usdc.png';
+      case 'ONEINCH_ETH_USDT':
+        return '/assets/icons/1inch-eth-usdt.png';
+      case 'ONEINCH_ETH_WBTC':
+        return '/assets/icons/1inch-eth-wbtc.png';
     }
   }
 }

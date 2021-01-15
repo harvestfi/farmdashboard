@@ -38,7 +38,7 @@
            FARM: {{vaultReward(tvlName) | number: '1.0-1'}} for period {{vaultRewardPeriod(tvlName)| number: '1.0-2'}} days
            Reward APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%
 " matTooltipClass="tooltip-spaced">
-      {{vaultApy(tvlName) + vaultRewardApy(tvlName) | number: '1.0-1'}}
+      {{vaultFullApy(tvlName)}}
     </div>
     <ng-template #psFarmBlockPerc>
       <div #tooltip="matTooltip" (click)="openPsApyDialog()"
