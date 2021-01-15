@@ -1,4 +1,4 @@
-<div *ngIf="ready === true; then readyBlock else loadingBlock"></div>
+<div *ngIf="ready === true; then readyBlock else loadingBlock" id="ready"></div>
 
 <ng-template #loadingBlock>
   <app-loading-spinner></app-loading-spinner>

@@ -1,22 +1,25 @@
 import {Injectable} from '@angular/core';
-import {DeviceDetectorService} from 'ngx-device-detector';
+import {UserSettings} from '../user-settings';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ViewTypeService {
-  public v2Theme = true;
+  private themeScoreboard = 'scoreboard';
+  private themeLight = 'light';
 
-  constructor(private deviceService: DeviceDetectorService) {
+  constructor() {
   }
 
-  getViewType(): string {
-    if (this.v2Theme) {
-      return 'v2';
+  toggleTheme(): void {
+    if (UserSettings.getTheme() === this.themeLight) {
+      UserSettings.setTheme(this.themeScoreboard);
+    } else {
+      UserSettings.setTheme(this.themeLight);
     }
-    if (this.deviceService.isMobile() || this.deviceService.isTablet()) {
-      return 'mobile';
-    }
-    return 'desktop';
+  }
+
+  public isNonScoreboard(): boolean {
+    return UserSettings.getTheme() !== this.themeScoreboard;
   }
 }

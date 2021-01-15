@@ -104,6 +104,9 @@ export class HistoryPageComponent implements AfterViewInit {
   }
 
   private createBalanceChart(): void {
+    if (this.balanceHistory.length === 0) {
+      return;
+    }
     this.log.info('Creat balance chart from data', this.balanceHistory);
     const chartBuilder = new ChartBuilder();
     chartBuilder.initVariables(1);

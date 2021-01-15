@@ -1,7 +1,2 @@
-<container-element [ngSwitch]="vt.getViewType()">
-  <app-main-page-v2 *ngSwitchCase="'v2'"></app-main-page-v2>
-  <!--  <app-main-page-mobile *ngSwitchCase="'mobile'"></app-main-page-mobile>-->
-  <app-main-page-descktop *ngSwitchDefault></app-main-page-descktop>
-</container-element>
-
-
+<app-main-page-light *ngIf="vt.isNonScoreboard()" id="top-div-light"></app-main-page-light>
+<app-main-page-scoreboard *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard"></app-main-page-scoreboard>

@@ -20,7 +20,7 @@ export class SnackService {
 
   public openSnack(message): void {
     let className = '';
-    if (this.vt.v2Theme) {
+    if (this.vt.isNonScoreboard()) {
       className = 'snack-bar';
     } else {
       className = 'snack-bar-dark';

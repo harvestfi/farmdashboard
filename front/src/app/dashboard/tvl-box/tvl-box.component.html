@@ -1,73 +1,70 @@
-<container-element [ngSwitch]="vt.getViewType()">
-
-  <div *ngSwitchCase="'v2'" class="row tvl-row"
-  >
-    <div *ngIf="tvlName === null">
-      <div class="left-border-box tvl-name first-row-name">
-        {{name}}
-      </div>
-      <div #tooltip="matTooltip"
-           class="left-border-box tvl-value first-row-title" matTooltip="Total Value Locked">
-        TVL M$
-      </div>
-
-      <div #tooltip="matTooltip"
-           class="left-border-box farm-apy-value first-row-title" matTooltip="APY with daily restake period">
-        APY %
-      </div>
+<div *ngIf="vt.isNonScoreboard()" id="top-div-light" class="row tvl-row">
+  <div *ngIf="tvlName === null">
+    <div class="left-border-box tvl-name first-row-name">
+      {{name}}
+    </div>
+    <div #tooltip="matTooltip"
+         class="left-border-box tvl-value first-row-title" matTooltip="Total Value Locked">
+      TVL M$
     </div>
 
-    <div *ngIf="tvlName !== null">
+    <div #tooltip="matTooltip"
+         class="left-border-box farm-apy-value first-row-title" matTooltip="APY with daily restake period">
+      APY %
+    </div>
+  </div>
 
-      <div class="left-border-box tvl-name">
-        <img alt="?" class="tvl-img" src="{{getImgSrc(tvlName)}}"/>
-        {{vaultPrettyName(tvlName)}}
-      </div>
+  <div *ngIf="tvlName !== null">
 
-      <div #tooltip="matTooltip"
-           (click)="openTvlDialog()"
-           [ngStyle]="{'color': tvlValueGradient(tvlName)}" class="left-border-box tvl-value pointer" matTooltip="
+    <div class="left-border-box tvl-name">
+      <img alt="?" class="tvl-img" src="{{getImgSrc(tvlName)}}"/>
+      {{vaultPrettyName(tvlName)}}
+    </div>
+
+    <div #tooltip="matTooltip"
+         (click)="openTvlDialog()"
+         [ngStyle]="{'color': tvlValueGradient(tvlName)}" class="left-border-box tvl-value pointer" matTooltip="
            TVL: {{tvls.get(tvlName) | number}}$
            Click to open TVL history chart"
-           matTooltipClass="tooltip-spaced">
-        {{tvls.get(tvlName) / 1000000 | number: '1.0-1'}}
-      </div>
+         matTooltipClass="tooltip-spaced">
+      {{tvls.get(tvlName) / 1000000 | number: '1.0-1'}}
+    </div>
 
-      <div #tooltip="matTooltip" (click)="openIncomeDialog()"
-           *ngIf="tvlName !== 'PS'; else psFarmBlockPerc"
-           class="left-border-box farm-apy-value pointer" matTooltip="
+    <div #tooltip="matTooltip" (click)="openIncomeDialog()"
+         *ngIf="tvlName !== 'PS'; else psFarmBlockPerc"
+         class="left-border-box farm-apy-value pointer" matTooltip="
            Income: {{hardWorks.get(tvlName)?.shareUsdTotal | number: '1.0-1'}}$
            Income APR(weekly): {{vaultApr(tvlName) | number: '1.0-1'}}%
            FARM: {{vaultReward(tvlName) | number: '1.0-1'}} for period {{vaultRewardPeriod(tvlName)| number: '1.0-2'}} days
            Reward APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%
 " matTooltipClass="tooltip-spaced">
-        {{vaultApy(tvlName) + vaultRewardApy(tvlName) | number: '1.0-1'}}
-      </div>
-      <ng-template #psFarmBlockPerc>
-        <div #tooltip="matTooltip" (click)="openPsApyDialog()"
-             class="left-border-box farm-apy-value pointer" matTooltip="APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%">
-          {{vaultRewardApy(tvlName) | number: '1.0-1'}}
-        </div>
-      </ng-template>
-
+      {{vaultApy(tvlName) + vaultRewardApy(tvlName) | number: '1.0-1'}}
     </div>
+    <ng-template #psFarmBlockPerc>
+      <div #tooltip="matTooltip" (click)="openPsApyDialog()"
+           class="left-border-box farm-apy-value pointer"
+           matTooltip="APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%">
+        {{vaultRewardApy(tvlName) | number: '1.0-1'}}
+      </div>
+    </ng-template>
+
   </div>
+</div>
 
 
-  <table *ngSwitchDefault>
-    <tr>
-      <td style="min-width: 170px;">
-        <img (click)="openTvlDialog()" alt="?" class="pointer"
-             src="{{getImgSrc(tvlName)}}" style="width: 15px; height: 15px; margin-right: 5px;"/>
-        <span class="tvl-caption" style="font-size: 1em; margin-right: 5px;">{{tvlName}}</span>
-      </td>
-      <td>
+<table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard">
+  <tr>
+    <td style="min-width: 170px;">
+      <img (click)="openTvlDialog()" alt="?" class="pointer"
+           src="{{getImgSrc(tvlName)}}" style="width: 15px; height: 15px; margin-right: 5px;"/>
+      <span class="tvl-caption" style="font-size: 1em; margin-right: 5px;">{{tvlName}}</span>
+    </td>
+    <td>
       <span class="tvl-caption"
             style="font-size: 1.2em;"><b>{{tvls.get(tvlName) / 1000000 | number: '1.0-1'}}</b></span>
-        <span style="font-size: 0.8em;">M</span>
-      </td>
-    </tr>
-  </table>
-</container-element>
+      <span style="font-size: 0.8em;">M</span>
+    </td>
+  </tr>
+</table>
 
 

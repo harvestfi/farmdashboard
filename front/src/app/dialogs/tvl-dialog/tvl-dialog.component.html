@@ -6,48 +6,47 @@
 
 <ng-template #readyBlock>
 
-  <container-element [ngSwitch]="vt.getViewType()">
-    <div *ngSwitchCase="'v2'" class="dialog-card">
+
+  <div *ngIf="vt.isNonScoreboard()" id="top-div-light" class="dialog-card">
 
 
-      <div *ngIf="data.type === 'income'">
-        <div class="title">
-          PS income history
-        </div>
-        <div #incomeChart class="tvl-chart"></div>
+    <div *ngIf="data.type === 'income'">
+      <div class="title">
+        PS income history
       </div>
-
-      <mat-tab-group (selectedTabChange)="initChart($event)" *ngIf="data.type !== 'income'">
-
-        <mat-tab label="TVL">
-
-          <div class="title">
-            {{data.type == 'All' ? 'All pools' : data.type + ' pool'}} history
-          </div>
-          <div #chart class="tvl-chart"></div>
-
-        </mat-tab>
-
-        <mat-tab *ngIf="data.type !== 'PS' && data.type !== 'All'" label="Share Price">
-
-          <div class="title">
-            {{data.type}} Share price history
-          </div>
-          <div #sharePriceChart class="tvl-chart"></div>
-
-        </mat-tab>
-
-      </mat-tab-group>
-
-
+      <div #incomeChart class="tvl-chart"></div>
     </div>
 
+    <mat-tab-group (selectedTabChange)="initChart($event)" *ngIf="data.type !== 'income'">
 
-    <div *ngSwitchDefault>
-      <span class="flex-container" style="font-size: 2em; color: #a09c9c; margin-bottom: 10px;">{{data.type}} TVL history and Accounts with positive balances</span>
-      <div #chart style="width: 1000px;"></div>
-    </div>
-  </container-element>
+      <mat-tab label="TVL">
+
+        <div class="title">
+          {{data.type == 'All' ? 'All pools' : data.type + ' pool'}} history
+        </div>
+        <div #chart class="tvl-chart"></div>
+
+      </mat-tab>
+
+      <mat-tab *ngIf="data.type !== 'PS' && data.type !== 'All'" label="Share Price">
+
+        <div class="title">
+          {{data.type}} Share price history
+        </div>
+        <div #sharePriceChart class="tvl-chart"></div>
+
+      </mat-tab>
+
+    </mat-tab-group>
+
+
+  </div>
+
+
+  <div *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard">
+    <span class="flex-container" style="font-size: 2em; color: #a09c9c; margin-bottom: 10px;">{{data.type}} TVL history and Accounts with positive balances</span>
+    <div #chart style="width: 1000px;"></div>
+  </div>
 
 </ng-template>
 

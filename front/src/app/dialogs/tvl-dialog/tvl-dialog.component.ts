@@ -70,7 +70,7 @@ export class TvlDialogComponent implements AfterViewInit {
       this.incomeChart.applyOptions(ChartsOptionsLight.getOptions());
     } else {
       this.chart = createChart(this.chartEl.nativeElement, options);
-      if (this.vt.getViewType() === 'v2') {
+      if (this.vt.isNonScoreboard()) {
         this.chart.applyOptions(ChartsOptionsLight.getOptions());
       }
     }

@@ -38,7 +38,7 @@
 
       <td class="income-value">
 
-        <div *ngIf="tvlName !== 'PS'; else psBlockIncome">
+        <div *ngIf="tvlName !== 'PS'; else psBlockIncome" id="hardwork-id">
           {{hardWorks.get(tvlName)?.shareUsdTotal / 1000 | number: '1.0-1'}}K$
         </div>
         <ng-template #psBlockIncome>
@@ -51,7 +51,7 @@
 
       <td class="income-apr-value">
 
-        <div *ngIf="tvlName !== 'PS'; else psBlockPerc">
+        <div *ngIf="tvlName !== 'PS'; else psBlockPerc" id="income-id">
           {{incomeApr(tvlName) | number: '1.2-2'}}%
         </div>
         <ng-template #psBlockPerc>
@@ -64,7 +64,7 @@
 
       <td class="reward-value">
 
-        <div *ngIf="tvlName !== 'PS'; else psBlockReward">
+        <div *ngIf="tvlName !== 'PS'; else psBlockReward" id="reward-id">
           {{vaultReward(tvlName) | number: '1.0-0'}} FARM
         </div>
         <ng-template #psBlockReward>
@@ -77,7 +77,7 @@
 
       <td class="reward-apr">
 
-        <div *ngIf="tvlName !== 'PS'; else psBlockRewardApr">
+        <div *ngIf="tvlName !== 'PS'; else psBlockRewardApr" id="reward-apr-id">
           {{vaultRewardApr(tvlName) | number: '1.2-2'}}%
         </div>
         <ng-template #psBlockRewardApr>
@@ -90,7 +90,7 @@
 
       <td class="all-apr">
 
-        <div *ngIf="tvlName !== 'PS'; else psBlockAllApr">
+        <div *ngIf="tvlName !== 'PS'; else psBlockAllApr" id="income-apr-id">
           {{incomeApr(tvlName) + vaultRewardApr(tvlName) | number: '1.2-2'}}%
         </div>
         <ng-template #psBlockAllApr>

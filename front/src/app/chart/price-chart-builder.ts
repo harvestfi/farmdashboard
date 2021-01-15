@@ -20,7 +20,7 @@ export class PriceChartBuilder {
 
     this.chart = createChart(chartEl.nativeElement, LightweightChartsOptions.getOptions());
 
-    if (this.vt.getViewType() === 'v2') {
+    if (this.vt.isNonScoreboard()) {
       this.chart.applyOptions({
         // height: 400,
         layout: {

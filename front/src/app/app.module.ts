@@ -22,13 +22,12 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
 import {TvlDialogComponent} from './dialogs/tvl-dialog/tvl-dialog.component';
 import {MatSelectModule} from '@angular/material/select';
-import {MainPageDescktopComponent} from './main/main-page-descktop/main-page-descktop.component';
-import {MainPageMobileComponent} from './main/main-page-mobile/main-page-mobile.component';
+import {MainPageScoreboardComponent} from './main/main-page-scoreboard/main-page-scoreboard.component';
 import {MainPageViewComponent} from './main/main-page-view/main-page-view.component';
 import {StrategyListComponent} from './dashboard/strategy-list/strategy-list.component';
 import {MainFooterComponent} from './main/main-footer/main-footer.component';
 import {CommonModule} from '@angular/common';
-import {MainPageV2Component} from './main/main-page-v2/main-page-v2.component';
+import {MainPageLightComponent} from './main/main-page-light/main-page-light.component';
 import {CenterViewComponent} from './main/center-view/center-view.component';
 import {UniTradeComponent} from './uniswap/uni-trade/uni-trade.component';
 import {FormsModule} from '@angular/forms';
@@ -56,10 +55,11 @@ import {HardWorkHistoryDialogComponent} from './dialogs/hard-work-history-dialog
 import {TotalUsersDialogComponent} from './dialogs/total-users-dialog/total-users-dialog.component';
 import {RewardsDialogComponent} from './dialogs/rewards-dialog/rewards-dialog.component';
 import {MatInputModule} from '@angular/material/input';
-import { HarvestHistoryDialogComponent } from './dialogs/harvest-history-dialog/harvest-history-dialog.component';
-import { SimpleChartDialogComponent } from './dialogs/simple-chart-dialog/simple-chart-dialog.component';
+import {HarvestHistoryDialogComponent} from './dialogs/harvest-history-dialog/harvest-history-dialog.component';
+import {SimpleChartDialogComponent} from './dialogs/simple-chart-dialog/simple-chart-dialog.component';
 import {UniHistoryDialogComponent} from './dialogs/uni-history-dialog/uni-history-dialog.component';
-import { PriceChartComponent } from './chart/price-chart/price-chart.component';
+import {PriceChartComponent} from './chart/price-chart/price-chart.component';
+
 
 declare var require: any;
 
@@ -80,12 +80,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DashboardLastValuesComponent,
     TvlBoxComponent,
     TvlDialogComponent,
-    MainPageDescktopComponent,
-    MainPageMobileComponent,
+    MainPageScoreboardComponent,
     MainPageViewComponent,
     StrategyListComponent,
     MainFooterComponent,
-    MainPageV2Component,
+    MainPageLightComponent,
     CenterViewComponent,
     UniTradeComponent,
     SnackBarComponent,

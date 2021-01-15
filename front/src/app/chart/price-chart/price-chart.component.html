@@ -6,13 +6,13 @@
     </select>
   </div>
 
-  <div *ngIf="showChart === 'GRAIN'" class="grain-chart left-border-box">
+  <div *ngIf="showChart === 'GRAIN'" id="grain" class="grain-chart left-border-box">
     <div class="price-card">
       <app-grain-chart></app-grain-chart>
     </div>
   </div>
 
-  <div *ngIf="showChart === 'FARM'" class="farm-chart left-border-box">
+  <div *ngIf="showChart === 'FARM'" id="farm" class="farm-chart left-border-box">
     <div class="price-card">
       <app-farm-chart></app-farm-chart>
     </div>

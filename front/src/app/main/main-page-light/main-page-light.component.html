@@ -53,10 +53,10 @@
       </div>
 
       <div class="left-border-box top-title-div">
-        <div *ngIf="uniInited()">
+        <div *ngIf="uniInited()" id="top-title1">
           Welcome to the Harvest Live dashboard. Refresh page not necessary!
         </div>
-        <div *ngIf="!uniInited()">
+        <div *ngIf="!uniInited()" id="top-title2">
           &nbsp;
         </div>
       </div>
@@ -70,10 +70,10 @@
             </mat-icon>
           </div>
 
-          <div *ngIf="ws.isConnected()" class="connect-title">
+          <div *ngIf="ws.isConnected()" id="online" class="connect-title">
             Online
           </div>
-          <div *ngIf="!ws.isConnected()" class="connect-title">
+          <div *ngIf="!ws.isConnected()" id="offline" class="connect-title">
             Offline
           </div>
 

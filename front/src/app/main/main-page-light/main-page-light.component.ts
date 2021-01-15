@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {WebsocketService} from '../../services/websocket.service';
 import {AllStatsDialogComponent} from '../../dialogs/all-stats-dialog/all-stats-dialog.component';
@@ -9,11 +9,11 @@ import {StaticValues} from '../../static-values';
 import {UserSettings} from '../../user-settings';
 
 @Component({
-  selector: 'app-main-page-v2',
-  templateUrl: './main-page-v2.component.html',
-  styleUrls: ['./main-page-v2.component.css']
+  selector: 'app-main-page-light',
+  templateUrl: './main-page-light.component.html',
+  styleUrls: ['./main-page-light.component.css']
 })
-export class MainPageV2Component implements OnInit {
+export class MainPageLightComponent implements OnInit {
   opened = false;
 
   constructor(public vt: ViewTypeService,
@@ -22,12 +22,6 @@ export class MainPageV2Component implements OnInit {
   }
 
   ngOnInit(): void {
-    if (UserSettings.getTheme() ==='light') {
-      this.vt.v2Theme = true;
-    }else {
-      this.vt.v2Theme = false;
-    }
-
   }
 
   toggleSidebar(): void {
@@ -35,15 +29,7 @@ export class MainPageV2Component implements OnInit {
   }
 
   toggleTheme(): void {
-
-    this.vt.v2Theme = !this.vt.v2Theme;
-    if (!this.vt.v2Theme) {
-      UserSettings.theme = 'dark';
-  }
-  else {
-    UserSettings.theme = 'light';
-  }
-    UserSettings.setTheme(UserSettings.theme);
+    this.vt.toggleTheme();
   }
 
 

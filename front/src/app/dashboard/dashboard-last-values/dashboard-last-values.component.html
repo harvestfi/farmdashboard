@@ -1,279 +1,278 @@
-<container-element [ngSwitch]="vt.getViewType()">
-  <div *ngSwitchCase="'v2'">
+<div *ngIf="vt.isNonScoreboard()" id="top-div-light">
 
-    <div class="row main-row">
+  <div class="row main-row">
 
-      <div class="left-column left-border-box">
-        <div class="value-card">
-          <div class="value-caption">
-            FARM Price
-          </div>
-          <div class="value value-price">
-            <text class="value-number">{{lastPriceF | number: '1.0-2'}}</text>
-            <text class="sign">$</text>
-          </div>
+    <div class="left-column left-border-box">
+      <div class="value-card">
+        <div class="value-caption">
+          FARM Price
+        </div>
+        <div class="value value-price">
+          <text class="value-number">{{lastPriceF | number: '1.0-2'}}</text>
+          <text class="sign">$</text>
         </div>
       </div>
+    </div>
 
-      <div class="middle-column left-border-box">
+    <div class="middle-column left-border-box">
 
-        <div class="middle-top">
+      <div class="middle-top">
 
-          <div class="left-column-middle left-border-box">
-            <div class="value-card">
-              <div class="pointer">
-                <div class="value-middle">
-                  <img class="icon" src="assets/icons/gas.svg"/>
-                  <text class="small-value-caption">Gas price</text>
-                </div>
+        <div class="left-column-middle left-border-box">
+          <div class="value-card">
+            <div class="pointer">
+              <div class="value-middle">
+                <img class="icon" src="assets/icons/gas.svg"/>
+                <text class="small-value-caption">Gas price</text>
+              </div>
 
-                <div class="value-number-middle">
-                  <text class="">{{lastGasF | number: '1.0-0'}}</text>
-                  gw
-                </div>
+              <div class="value-number-middle">
+                <text class="">{{lastGasF | number: '1.0-0'}}</text>
+                gw
               </div>
             </div>
           </div>
-
-          <div class="middle-column-middle left-border-box">
-            <div class="value-card">
-              <div>
-                <div class="value-middle">
-                  <img class="icon" src="assets/icons/btc.png"/>
-                  <text class="small-value-caption">BTC</text>
-                </div>
-                <div class="value-number-middle">
-                  <text>{{btcF | number: '1.0-0'}}</text>
-                  $
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="right-column-middle left-border-box">
-            <div class="value-card">
-              <div>
-                <div class="value-middle">
-                  <img class="icon" src="assets/icons/eth.svg"/>
-                  <text class="small-value-caption">ETH</text>
-                </div>
-                <div class="value-number-middle">
-                  <text>{{ethF | number: '1.0-0'}}</text>
-                  $
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
 
-        <div class="middle-bottom">
-          <div class="left-column-middle left-border-box">
-            <div #tooltip="matTooltip" (click)="openPsTvlDialog()"
-                 class="value-card pointer"
-                 matTooltipClass="tooltip-spaced"
-                 matTooltip="FARM staked in pools
+        <div class="middle-column-middle left-border-box">
+          <div class="value-card">
+            <div>
+              <div class="value-middle">
+                <img class="icon" src="assets/icons/btc.png"/>
+                <text class="small-value-caption">BTC</text>
+              </div>
+              <div class="value-number-middle">
+                <text>{{btcF | number: '1.0-0'}}</text>
+                $
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-column-middle left-border-box">
+          <div class="value-card">
+            <div>
+              <div class="value-middle">
+                <img class="icon" src="assets/icons/eth.svg"/>
+                <text class="small-value-caption">ETH</text>
+              </div>
+              <div class="value-number-middle">
+                <text>{{ethF | number: '1.0-0'}}</text>
+                $
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="middle-bottom">
+        <div class="left-column-middle left-border-box">
+          <div #tooltip="matTooltip" (click)="openPsTvlDialog()"
+               class="value-card pointer"
+               matTooltipClass="tooltip-spaced"
+               matTooltip="FARM staked in pools
                              PS Staked: {{farmPsStaked | number: '1.0-1'}}%
                              LP Staked: {{farmLpStaked | number: '1.0-1'}}%
                ">
-              <div>
-                <div class="value-middle">
-                  🔒FARM Staked
-                </div>
-                <div class="value-number-middle">
-                  <text>{{farmStaked | number: '1.0-1'}}</text>
-                  %
-                </div>
+            <div>
+              <div class="value-middle">
+                🔒FARM Staked
               </div>
-            </div>
-          </div>
-
-          <div class="middle-column-middle left-border-box">
-            <div #tooltip="matTooltip" (click)="openWeeklyProfitDialog()"
-                 class="value-card pointer"
-                 matTooltip="Profit from all vaults for the last week">
-              <div>
-                <div class="value-middle">
-                  🤑Weekly Profit
-                </div>
-                <div class="value-number-middle">
-                  <text>{{weeklyAllIncome / 1000 | number: '1.0-1'}}</text>
-                  K$
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="right-column-middle left-border-box">
-            <div #tooltip="matTooltip"
-                 (click)="openPsIncomeDialog()" class="value-card pointer"
-                 matTooltip="Income from strategies in Profit Share pool, based on all history">
-              <div>
-                <div class="value-middle">
-                  📈PS Income
-                </div>
-                <div class="value-number-middle ">
-                  <text>{{psApy | number: '1.0-1'}}</text>
-                  %
-                </div>
+              <div class="value-number-middle">
+                <text>{{farmStaked | number: '1.0-1'}}</text>
+                %
               </div>
             </div>
           </div>
         </div>
 
-      </div>
-
-      <div class="right-column left-border-box">
-        <div #tooltip="matTooltip"
-             (click)="openTvlDialog()" class="value-card pointer"
-             matTooltip="Click to open history chart">
-          <div class="value-caption" style="font-size: 1.2em">
-            Total Value Locked
+        <div class="middle-column-middle left-border-box">
+          <div #tooltip="matTooltip" (click)="openWeeklyProfitDialog()"
+               class="value-card pointer"
+               matTooltip="Profit from all vaults for the last week">
+            <div>
+              <div class="value-middle">
+                🤑Weekly Profit
+              </div>
+              <div class="value-number-middle">
+                <text>{{weeklyAllIncome / 1000 | number: '1.0-1'}}</text>
+                K$
+              </div>
+            </div>
           </div>
-          <div class="value value-tvl">
-            <text class="value-number">{{allTvlF | number: '1.0-0'}}</text>
-            <text class="sign">M$</text>
+        </div>
+
+        <div class="right-column-middle left-border-box">
+          <div #tooltip="matTooltip"
+               (click)="openPsIncomeDialog()" class="value-card pointer"
+               matTooltip="Income from strategies in Profit Share pool, based on all history">
+            <div>
+              <div class="value-middle">
+                📈PS Income
+              </div>
+              <div class="value-number-middle ">
+                <text>{{psApy | number: '1.0-1'}}</text>
+                %
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
     </div>
 
+    <div class="right-column left-border-box">
+      <div #tooltip="matTooltip"
+           (click)="openTvlDialog()" class="value-card pointer"
+           matTooltip="Click to open history chart">
+        <div class="value-caption" style="font-size: 1.2em">
+          Total Value Locked
+        </div>
+        <div class="value value-tvl">
+          <text class="value-number">{{allTvlF | number: '1.0-0'}}</text>
+          <text class="sign">M$</text>
+        </div>
+      </div>
+    </div>
 
-    <div class="row main-row">
-      <div class="left-column-bottom left-border-box">
+  </div>
 
-        <div class="side-card left-border-box">
-          <div #tooltip="matTooltip" class="value-card"
-               matTooltip="Accounts with positive (more than 10$) FARM balance">
-            <div>
-              <div class="value-middle">
-                👨‍🌾FARM Holders
-              </div>
-              <div class="value-number-middle">
-                <text>{{farmActiveUsers | number: '1.0-0'}}</text>
-              </div>
+
+  <div class="row main-row">
+    <div class="left-column-bottom left-border-box">
+
+      <div class="side-card left-border-box">
+        <div #tooltip="matTooltip" class="value-card"
+             matTooltip="Accounts with positive (more than 10$) FARM balance">
+          <div>
+            <div class="value-middle">
+              👨‍🌾FARM Holders
+            </div>
+            <div class="value-number-middle">
+              <text>{{farmActiveUsers | number: '1.0-0'}}</text>
             </div>
           </div>
         </div>
-
       </div>
 
-      <div class="middle-column left-border-box">
+    </div>
 
-        <div class="middle-bottom">
-          <div class="left-column-middle left-border-box">
-            <div #tooltip="matTooltip" (click)="openFarmBuybacksDialog()"
-                 class="value-card pointer"
-                 matTooltip="30% profit of each HardWork goes to buy FARM">
-              <div>
-                <div class="value-middle">
-                  📥Farm buybacks
-                </div>
-                <div class="value-number-middle">
-                  <text class="">{{farmBuybacks | number: '1.1-1'}}</text>
-                  K
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="middle-column left-border-box">
 
-          <div class="middle-column-middle left-border-box">
-            <div #tooltip="matTooltip" (click)="openSavedFeesDialog()"
-                 class="value-card pointer"
-                 matTooltip="How much gas would users spend on transactions without our project?">
-              <div>
-                <div class="value-middle">
-                  🛡️Saved gas fees
-                </div>
-                <div class="value-number-middle">
-                  <text>{{savedGasFees / 1000000 | number: '1.0-1'}}</text>
-                  M$
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="right-column-middle left-border-box">
-            <div #tooltip="matTooltip"
-                 (click)="openTotalUsersDialog()" class="value-card pointer"
-                 matTooltip="Total unique accounts interacted with the project">
-              <div>
-                <div class="value-middle">
-                  👪Total users
-                </div>
-                <div class="value-number-middle ">
-                  <text>{{allUsersCount | number: '1.0-0'}}</text>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="right-column-bottom left-border-box">
-
-        <div class="side-card left-border-box">
-          <div #tooltip="matTooltip" class="value-card"
-               matTooltip="Accounts staked funds in pools with balance more than 10$">
+      <div class="middle-bottom">
+        <div class="left-column-middle left-border-box">
+          <div #tooltip="matTooltip" (click)="openFarmBuybacksDialog()"
+               class="value-card pointer"
+               matTooltip="30% profit of each HardWork goes to buy FARM">
             <div>
               <div class="value-middle">
-                👨‍🌾Pools active accounts
+                📥Farm buybacks
               </div>
               <div class="value-number-middle">
-                <text>{{poolsActiveUsersCount | number: '1.0-0'}}</text>
+                <text class="">{{farmBuybacks | number: '1.1-1'}}</text>
+                K
               </div>
             </div>
           </div>
         </div>
 
+        <div class="middle-column-middle left-border-box">
+          <div #tooltip="matTooltip" (click)="openSavedFeesDialog()"
+               class="value-card pointer"
+               matTooltip="How much gas would users spend on transactions without our project?">
+            <div>
+              <div class="value-middle">
+                🛡️Saved gas fees
+              </div>
+              <div class="value-number-middle">
+                <text>{{savedGasFees / 1000000 | number: '1.0-1'}}</text>
+                M$
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-column-middle left-border-box">
+          <div #tooltip="matTooltip"
+               (click)="openTotalUsersDialog()" class="value-card pointer"
+               matTooltip="Total unique accounts interacted with the project">
+            <div>
+              <div class="value-middle">
+                👪Total users
+              </div>
+              <div class="value-number-middle ">
+                <text>{{allUsersCount | number: '1.0-0'}}</text>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="right-column-bottom left-border-box">
+
+      <div class="side-card left-border-box">
+        <div #tooltip="matTooltip" class="value-card"
+             matTooltip="Accounts staked funds in pools with balance more than 10$">
+          <div>
+            <div class="value-middle">
+              👨‍🌾Pools active accounts
+            </div>
+            <div class="value-number-middle">
+              <text>{{poolsActiveUsersCount | number: '1.0-0'}}</text>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
 
   </div>
 
+</div>
 
-  <table *ngSwitchDefault class="last-values-table">
 
-    <tr>
-      <td class="caption-font-small">Farm Price</td>
-      <td class="caption-font-small">TVL</td>
-      <td class="caption-font-small right-value">Income APR</td>
-    </tr>
+<table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard" class="last-values-table">
 
-    <tr>
-      <td class="caption-td">
-        <span class="caption-font">{{lastPriceF | number: '1.0-1'}}</span>
-        <span class="last-price-sign">$</span>
-      </td>
-      <td (click)="openTvlDialog()" class="caption-td pointer">
-        <span class="caption-font">{{allTvlF | number: '1.0-1'}}</span>
-        <span class="last-tvl-sign">M$</span>
-      </td>
-      <td class="caption-td right-value">
-        <span class="caption-font">{{psApy | number: '1.0-1'}}</span>
-        <span class="ps-sign">%</span>
-      </td>
-    </tr>
-    <tr>
-      <td class="caption-font-small caption-btc">BTC Price</td>
-      <td class="caption-font-small caption-eth">ETH Price</td>
-      <td class="caption-font-small caption-ps">Gas</td>
-    </tr>
-    <tr>
-      <td class="caption-td-middle">
-        <span class="caption-font-middle caption-btc-value">{{btcF | number: '1.0-0'}}</span>
-        <span class="caption-font-middle caption-btc-sign">$</span>
-      </td>
-      <td class="caption-td-middle">
-        <span class="caption-font-middle caption-eth-value">{{ethF | number: '1.0-0'}}</span>
-        <span class="caption-font-middle caption-eth-sign">$</span>
-      </td>
-      <td class="caption-td-middle">
-        <span class="caption-font-middle caption-ps-value">{{lastGasF | number: '1.0-0'}}</span>
-      </td>
-    </tr>
-  </table>
-</container-element>
+  <tr>
+    <td class="caption-font-small">Farm Price</td>
+    <td class="caption-font-small">TVL</td>
+    <td class="caption-font-small right-value">Income APR</td>
+  </tr>
+
+  <tr>
+    <td class="caption-td">
+      <span class="caption-font">{{lastPriceF | number: '1.0-1'}}</span>
+      <span class="last-price-sign">$</span>
+    </td>
+    <td (click)="openTvlDialog()" class="caption-td pointer">
+      <span class="caption-font">{{allTvlF | number: '1.0-1'}}</span>
+      <span class="last-tvl-sign">M$</span>
+    </td>
+    <td class="caption-td right-value">
+      <span class="caption-font">{{psApy | number: '1.0-1'}}</span>
+      <span class="ps-sign">%</span>
+    </td>
+  </tr>
+  <tr>
+    <td class="caption-font-small caption-btc">BTC Price</td>
+    <td class="caption-font-small caption-eth">ETH Price</td>
+    <td class="caption-font-small caption-ps">Gas</td>
+  </tr>
+  <tr>
+    <td class="caption-td-middle">
+      <span class="caption-font-middle caption-btc-value">{{btcF | number: '1.0-0'}}</span>
+      <span class="caption-font-middle caption-btc-sign">$</span>
+    </td>
+    <td class="caption-td-middle">
+      <span class="caption-font-middle caption-eth-value">{{ethF | number: '1.0-0'}}</span>
+      <span class="caption-font-middle caption-eth-sign">$</span>
+    </td>
+    <td class="caption-td-middle">
+      <span class="caption-font-middle caption-ps-value">{{lastGasF | number: '1.0-0'}}</span>
+    </td>
+  </tr>
+</table>
+

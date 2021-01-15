@@ -1,4 +1,4 @@
-<div *ngIf="transferDto">
+<div *ngIf="transferDto" id="tr">
 
   <div class="head-row-tr">
 
@@ -72,7 +72,7 @@
     <div class="value coin-col"
          matTooltip="{{otherSideAddress}}">
       {{prettyName(otherSideName)}}
-      <img *ngIf="!otherSideName.startsWith('0x')" class="tvl-img" src="{{getCoinImgUrl(otherSideName)}}"/>
+      <img *ngIf="!otherSideName.startsWith('0x')" class="tvl-img" id="img1" src="{{getCoinImgUrl(otherSideName)}}"/>
     </div>
 
     <div class="value amount price-coll">
@@ -102,7 +102,7 @@
 <!-- ****************************************************************************  -->
 
 
-<div *ngIf="harvestDto">
+<div *ngIf="harvestDto" id="harvest">
 
   <div class="head-row-hv">
 
