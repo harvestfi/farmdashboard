@@ -10,6 +10,7 @@ import {Utils} from '../../utils';
 export class UniTradeComponent implements OnInit {
   @Input() dto: UniswapDto;
   @Input() fullDate = false;
+  openModal = false;
 
   constructor() {
   }
@@ -51,6 +52,12 @@ export class UniTradeComponent implements OnInit {
 
   openHistory(hash: string): void {
     Utils.openHistory(hash);
+  }
+  showTradeLinks(): void {
+    this.openModal = !this.openModal;
+    console.log(this.openModal);
+
+
   }
 
   openEthersacanTx(hash: string): void {

@@ -1,0 +1,10 @@
+<div class="custom-modal">
+    <p>{{dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</p>
+    
+    <div class="links">
+        <a href='https://etherscan.io/tx/{{dto.hash}}' target='_blank' class="trade-link" >Etherscan</a>
+        <a href='https://app.zerion.io/{{dto.owner}}/overview' target='_blank' class="trade-link">Zerion</a>
+        <a href='https://farmdashboard.xyz/history/{{dto.owner}}' target='_blank' class="trade-link">Address History</a>
+    </div>
+    <button (click)="closeModal()" class="close">close</button>
+</div>
