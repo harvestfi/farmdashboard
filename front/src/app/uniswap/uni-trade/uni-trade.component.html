@@ -54,7 +54,7 @@
     {{dto.lastPrice | number: '1.0-0'}}
   </div>
 
-  <div (click)='showTradeLinks()'  class="trade-sign left-border-box trade-field pointer">
+  <div (click)='showTradeLinks()' (scroll)='hideTradeLinks()'  class="trade-sign left-border-box trade-field pointer">
      <app-custom-modal [dto]="dto" *ngIf="openModal"></app-custom-modal> 
     <container-element [ngSwitch]="checkImportantOwner(dto.owner)">
       <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price"

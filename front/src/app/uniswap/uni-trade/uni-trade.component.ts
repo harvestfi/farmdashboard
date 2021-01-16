@@ -55,9 +55,9 @@ export class UniTradeComponent implements OnInit {
   }
   showTradeLinks(): void {
     this.openModal = !this.openModal;
-    console.log(this.openModal);
-
-
+  }
+  hideTradeLinks(): void {
+    this.openModal = false;
   }
 
   openEthersacanTx(hash: string): void {

@@ -1,5 +1,10 @@
 <div class="custom-modal">
     <p>{{dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</p>
+    <div class="trade-information">
+        <p>{{dto.amount | number: '1.0-0'}}</p>
+        <p> {{dto.coin}}</p>    
+    </div>
+    
     
     <div class="links">
         <a href='https://etherscan.io/tx/{{dto.hash}}' target='_blank' class="trade-link" >Etherscan</a>
