@@ -6,15 +6,44 @@ import {UniswapDto} from '../../models/uniswap-dto';
   styleUrls: ['./custom-modal.component.css']
 })
 export class CustomModalComponent implements OnInit {
-  @Input() txHash: string;
-  @Input() address: string;
   @Input()  showModal: boolean;
-  @Input() txDate: string;
   @Input() dto: UniswapDto;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  priceGradient(type: string, amount: number, success: boolean): string {
+    if (success) {
+      switch (type) {
+        case 'ADD':
+        case 'BUY':
+          if (amount > 250) {
+            return '#83b78c';
+          } else if (amount > 100) {
+            return '#8cb894';
+          } else if (amount > 50) {
+            return '#96ba9d';
+          } else {
+            return '#a1bca6';
+          }
+        case 'SELL':
+        case 'REM':
+          if (amount > 250) {
+            return '#c15b5b';
+          } else if (amount > 100) {
+            return '#c36666';
+          } else if (amount > 50) {
+            return '#c47272';
+          } else {
+            return '#c37d7d';
+          }
+      }
+    } else {
+      return '#474646';
+    }
+    return '#ffffff';
   }
 
   openEthersacanTx(hash: string): void {

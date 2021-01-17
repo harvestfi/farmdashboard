@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, HostListener} from '@angular/core';
 import {UniswapDto} from '../../models/uniswap-dto';
 import {Utils} from '../../utils';
 
@@ -8,12 +8,17 @@ import {Utils} from '../../utils';
   styleUrls: ['./uni-trade.component.css']
 })
 export class UniTradeComponent implements OnInit {
-  @Input() dto: UniswapDto;
-  @Input() fullDate = false;
-  openModal = false;
 
   constructor() {
   }
+  @Input() dto: UniswapDto;
+  @Input() fullDate = false;
+  openModal = false;
+  @HostListener('scroll', ['$event'])
+onElementScroll($event) {
+  this.hideTradeLinks();
+  console.log($event)
+}
 
   ngOnInit(): void {
   }
@@ -59,6 +64,7 @@ export class UniTradeComponent implements OnInit {
   hideTradeLinks(): void {
     this.openModal = false;
   }
+
 
   openEthersacanTx(hash: string): void {
     window.open('https://etherscan.io/tx/' + hash, '_blank');

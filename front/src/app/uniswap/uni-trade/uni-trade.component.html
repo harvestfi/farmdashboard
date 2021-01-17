@@ -53,10 +53,11 @@
   <div class="trade-price left-border-box trade-field">
     {{dto.lastPrice | number: '1.0-0'}}
   </div>
-
-  <div (click)='showTradeLinks()' (scroll)='hideTradeLinks()'  class="trade-sign left-border-box trade-field pointer">
-     <app-custom-modal [dto]="dto" *ngIf="openModal"></app-custom-modal> 
-    <container-element [ngSwitch]="checkImportantOwner(dto.owner)">
+ 
+  <div  (click)='showTradeLinks()'  class="trade-sign left-border-box trade-field pointer">
+     
+    <container-element  [ngSwitch]="checkImportantOwner(dto.owner)">
+      <app-custom-modal [dto]="dto" *ngIf="openModal"></app-custom-modal> 
       <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price"
                 class="sign-icon">
         open_in_new
@@ -69,6 +70,8 @@
       <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" class="do-hard-work-img"
                       size="20"></angular-emojis>
     </container-element>
+   
   </div>
 
 </div>
+
