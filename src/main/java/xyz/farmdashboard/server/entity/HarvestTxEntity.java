@@ -1,5 +1,6 @@
 package xyz.farmdashboard.server.entity;
 
+import javax.persistence.Column;
 import lombok.Data;
 import lombok.ToString;
 
@@ -37,6 +38,7 @@ public class HarvestTxEntity {
     private Integer ownerCount;
     private Double sharePrice;
     private Long usdAmount;
+    @Column(columnDefinition = "TEXT") //todo create price entity
     private String prices;
     private String lpStat;
     private Double lastAllUsdTvl;

@@ -104,6 +104,10 @@ export class PricesCalculationService {
     this.prices.set('BAS', prices.bas);
     this.prices.set('MIC', prices.mic);
     this.prices.set('MIS', prices.mis);
+    this.prices.set('BSG', prices.bsg);
+    this.prices.set('BSGS', prices.bsgs);
+    this.prices.set('ESD', prices.esd);
+    this.prices.set('DSD', prices.dsd);
     this.lastPriceDate = time;
   }
 

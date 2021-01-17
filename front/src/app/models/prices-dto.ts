@@ -7,4 +7,8 @@ export class PricesDto {
   bas: number;
   mic: number;
   mis: number;
+  bsg: number;
+  bsgs: number;
+  esd: number;
+  dsd: number;
 }

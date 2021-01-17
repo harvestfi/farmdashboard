@@ -63,7 +63,12 @@ export class StaticValues {
     'ONEINCH_ETH_DAI',
     'ONEINCH_ETH_USDC',
     'ONEINCH_ETH_USDT',
-    'ONEINCH_ETH_WBTC'
+    'ONEINCH_ETH_WBTC',
+    'DAI_BSG',
+    'DAI_BSGS',
+    'BAC',
+    'ESD',
+    'DSD',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -88,6 +93,9 @@ export class StaticValues {
     'USDT',
     'DAI',
     'TUSD',
+    'BAC',
+    'ESD',
+    'DSD',
   ];
 
   public static strategiesListUniLpPools: string[] = [
@@ -96,7 +104,9 @@ export class StaticValues {
     'UNI_LP_GRAIN_FARM',
     'IDX_ETH_DPI',
     'UNI_BAC_DAI',
-    'UNI_DAI_BAS'
+    'UNI_DAI_BAS',
+    'DAI_BSG',
+    'DAI_BSGS',
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
@@ -235,6 +245,16 @@ export class StaticValues {
         return '/assets/icons/1inch-eth-usdt.png';
       case 'ONEINCH_ETH_WBTC':
         return '/assets/icons/1inch-eth-wbtc.png';
+      case 'DAI_BSG':
+        return '/assets/icons/dai-bsg.png';
+      case 'DAI_BSGS':
+        return '/assets/icons/dai-bsgs.png';
+      case 'BAC':
+        return '/assets/icons/bac.png';
+      case 'ESD':
+        return '/assets/icons/esd.png';
+      case 'DSD':
+        return '/assets/icons/dsd.png';
     }
   }
 }
