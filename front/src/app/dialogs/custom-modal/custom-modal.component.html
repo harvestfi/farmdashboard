@@ -1,34 +1,10 @@
 <div class="custom-modal">
-    <p>{{dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</p>
-    <div class="trade-information">
-        <div class="price-trend">
-            <container-element [ngSwitch]="dto.type">
-              <mat-icon *ngSwitchCase="'BUY'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-                aria-hidden="false" aria-label="BUY">trending_up
-              </mat-icon>
-              <mat-icon *ngSwitchCase="'SELL'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-                aria-hidden="false" aria-label="SELL">trending_down
-              </mat-icon>
-              <mat-icon *ngSwitchCase="'ADD'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-                aria-hidden="false" aria-label="ADD_LIQ">import_export
-              </mat-icon>
-              <mat-icon *ngSwitchCase="'REM'" [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-                aria-hidden="false" aria-label="ADD_LIQ">import_export
-              </mat-icon>
-              <mat-icon *ngSwitchDefault [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}"
-                aria-hidden="false" aria-label="?">help
-              </mat-icon>
-            </container-element>
-          </div>
-        <p>{{dto.amount | number: '1.0-0'}}</p>
-        <p> {{dto.coin}}</p>    
-    </div>
-    
+    <p>{{date | date: 'dd-MMM-yyyy HH:mm:ss'}}</p>
     
     <div class="links">
-        <a href='https://etherscan.io/tx/{{dto.hash}}' target='_blank' class="trade-link" >Etherscan</a>
-        <a href='https://app.zerion.io/{{dto.owner}}/overview' target='_blank' class="trade-link">Zerion</a>
-        <a href='https://farmdashboard.xyz/history/{{dto.owner}}' target='_blank' class="trade-link">Address History</a>
+        <a href='https://etherscan.io/tx/{{hash}}' target='_blank' class="trade-link" >Etherscan</a>
+        <a href='https://app.zerion.io/{{owner}}/overview' target='_blank' class="trade-link">Zerion</a>
+        <a href='https://farmdashboard.xyz/history/{{owner}}' target='_blank' class="trade-link">Address History</a>
     </div>
     <button (click)="closeModal()" class="close">close</button>
 </div>

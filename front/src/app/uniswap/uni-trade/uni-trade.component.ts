@@ -14,11 +14,6 @@ export class UniTradeComponent implements OnInit {
   @Input() dto: UniswapDto;
   @Input() fullDate = false;
   openModal = false;
-  @HostListener('scroll', ['$event'])
-onElementScroll($event) {
-  this.hideTradeLinks();
-  console.log($event)
-}
 
   ngOnInit(): void {
   }
@@ -63,11 +58,6 @@ onElementScroll($event) {
   }
   hideTradeLinks(): void {
     this.openModal = false;
-  }
-
-
-  openEthersacanTx(hash: string): void {
-    window.open('https://etherscan.io/tx/' + hash, '_blank');
   }
 
   checkImportantOwner(address: string): string {

@@ -60,6 +60,7 @@ import {SimpleChartDialogComponent} from './dialogs/simple-chart-dialog/simple-c
 import {UniHistoryDialogComponent} from './dialogs/uni-history-dialog/uni-history-dialog.component';
 import {PriceChartComponent} from './chart/price-chart/price-chart.component';
 import { CustomModalComponent } from './dialogs/custom-modal/custom-modal.component';
+import { HarvestTradeComponent } from './harvest/harvest-trade/harvest-trade.component';
 
 
 declare var require: any;
@@ -105,7 +106,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HarvestHistoryDialogComponent,
     SimpleChartDialogComponent,
     PriceChartComponent,
-    CustomModalComponent
+    CustomModalComponent,
+    HarvestTradeComponent
   ],
   imports: [
     AppRoutingModule,

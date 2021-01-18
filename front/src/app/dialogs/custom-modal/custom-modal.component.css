@@ -1,6 +1,6 @@
 .custom-modal {
     position: absolute;
-    z-index: 800;
+    z-index: 1000;
     background-color: #FFFCE6;
     right: 0px;
     padding: 2%;
@@ -35,10 +35,6 @@
     padding: 1%;
     transition: all .2s ease-out;
 
-}
-
-.hidden {
-    display: none;
 }
 
 .close {
