@@ -31,7 +31,7 @@
     </div>
 
     <div #tooltip="matTooltip" (click)="openIncomeDialog()"
-         *ngIf="tvlName !== 'PS'; else psFarmBlockPerc"
+         *ngIf="!isAutoStakeVault(tvlName)"
          class="left-border-box farm-apy-value pointer" matTooltip="
            Income: {{hardWorks.get(tvlName)?.shareUsdTotal | number: '1.0-1'}}$
            Income APR(weekly): {{vaultApr(tvlName) | number: '1.0-1'}}%
@@ -40,13 +40,14 @@
 " matTooltipClass="tooltip-spaced">
       {{vaultFullApy(tvlName)}}
     </div>
-    <ng-template #psFarmBlockPerc>
-      <div #tooltip="matTooltip" (click)="openPsApyDialog()"
-           class="left-border-box farm-apy-value pointer"
-           matTooltip="APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%">
-        {{vaultRewardApy(tvlName) | number: '1.0-1'}}
-      </div>
-    </ng-template>
+
+    <div #tooltip="matTooltip" (click)="openPsApyDialog()"
+         *ngIf="isAutoStakeVault(tvlName)"
+         class="left-border-box farm-apy-value pointer"
+         matTooltip="APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%">
+      {{vaultRewardApy(tvlName) | number: '1.0-1'}}
+    </div>
+
 
   </div>
 </div>

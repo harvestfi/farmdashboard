@@ -105,8 +105,8 @@ export class StaticValues {
     'IDX_ETH_DPI',
     'UNI_BAC_DAI',
     'UNI_DAI_BAS',
-    'DAI_BSG',
-    'DAI_BSGS',
+    // 'DAI_BSG',
+    // 'DAI_BSGS',
   ];
 
   public static strategiesListNonUniLpPools: string[] = [

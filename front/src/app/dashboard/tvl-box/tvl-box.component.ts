@@ -165,6 +165,12 @@ export class TvlBoxComponent implements OnInit {
     return 'rgba(0, 0, 0, ' + alpha + ')';
   }
 
+  isAutoStakeVault(name: string): boolean {
+    return name === 'PS'
+        || name === 'DAI_BSG'
+        || name === 'DAI_BSGS';
+  }
+
   private percentOfMinMax(value: number, min: number, max: number): number {
     const floor = 0.7;
     const perc = (value - min) / (max - min);
