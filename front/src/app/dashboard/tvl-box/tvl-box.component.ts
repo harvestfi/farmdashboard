@@ -57,8 +57,10 @@ export class TvlBoxComponent implements OnInit {
       return apr.toFixed(1);
     } else if (apr < 1000_000) {
       return (apr / 1000).toFixed(1) + 'k';
-    } else {
+    } else if (apr < 1000_000_000){
       return (apr / 1000_000).toFixed(1) + 'm';
+    } else {
+      return '♾';
     }
   }
 
