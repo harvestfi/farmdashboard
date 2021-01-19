@@ -52,13 +52,16 @@ export class TvlBoxComponent implements OnInit {
   }
 
   vaultFullApy(name: string): string {
-    const apr = this.vaultApy(name) + this.vaultRewardApy(name);
-    if (apr < 1000) {
-      return apr.toFixed(1);
-    } else if (apr < 1000_000) {
-      return (apr / 1000).toFixed(1) + 'k';
-    } else if (apr < 1000_000_000){
-      return (apr / 1000_000).toFixed(1) + 'm';
+    return this.prettifyNumber(this.vaultApy(name) + this.vaultRewardApy(name));
+  }
+
+  private prettifyNumber(n: number): string {
+    if (n < 1000) {
+      return n.toFixed(1);
+    } else if (n < 1000_000) {
+      return (n / 1000).toFixed(1) + 'k';
+    } else if (n < 1000_000_000) {
+      return (n / 1000_000).toFixed(1) + 'm';
     } else {
       return '♾';
     }
@@ -74,6 +77,10 @@ export class TvlBoxComponent implements OnInit {
 
   vaultRewardApy(tvlName: string): number {
     return Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName));
+  }
+
+  vaultRewardApyPrettify(tvlName: string): string {
+    return this.prettifyNumber(Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName)));
   }
 
   vaultRewardApr(tvlName: string): number {

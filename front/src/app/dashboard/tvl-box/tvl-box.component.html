@@ -45,7 +45,7 @@
          *ngIf="isAutoStakeVault(tvlName)"
          class="left-border-box farm-apy-value pointer"
          matTooltip="APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%">
-      {{vaultRewardApy(tvlName) | number: '1.0-1'}}
+      {{vaultRewardApyPrettify(tvlName)}}
     </div>
 
 
