@@ -53,16 +53,16 @@
   <div class="trade-price left-border-box trade-field">
     {{dto.lastPrice | number: '1.0-0'}}
   </div>
-
-  <div (click)="openEthersacanTx(dto.hash)" class="trade-sign left-border-box trade-field pointer">
-    <container-element [ngSwitch]="checkImportantOwner(dto.owner)">
+ 
+  <div  (click)='showTradeLinks()'  class="trade-sign left-border-box trade-field pointer">
+     
+    <container-element  [ngSwitch]="checkImportantOwner(dto.owner)">
+      <app-custom-modal [date]="dto.blockDateAdopted" [hash]='dto.hash' [owner]='dto.owner' *ngIf="openModal"></app-custom-modal> 
       <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price"
                 class="sign-icon">
         open_in_new
       </mat-icon>
-      <!--      <span *ngSwitchCase="'normal'">-->
-      <!--      for-->
-      <!--    </span>-->
+    
       <mat-icon *ngSwitchCase="'devs'" [ngStyle]="{'color': '#c4ad58'}" aria-hidden="false" aria-label="Price"
                 class="sign-icon">
         warning
@@ -70,6 +70,8 @@
       <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" class="do-hard-work-img"
                       size="20"></angular-emojis>
     </container-element>
+   
   </div>
 
 </div>
+
