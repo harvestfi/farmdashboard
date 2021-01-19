@@ -24,7 +24,7 @@ public class HarvestTxEntity {
     @Id
     private String id;
     private String hash;
-    private BigInteger block;
+    private Long block;
     private boolean confirmed = false;
     private Long blockDate;
     private String methodName;
