@@ -63,7 +63,7 @@ export class TvlBoxComponent implements OnInit {
     } else if (n < 1000_000_000) {
       return (n / 1000_000).toFixed(1) + 'm';
     } else {
-      return '♾';
+      return '♾️';
     }
   }
 
