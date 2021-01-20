@@ -11,4 +11,9 @@ export class PricesDto {
   bsgs: number;
   esd: number;
   dsd: number;
+  maapl: number;
+  mamzn: number;
+  mgoogl: number;
+  mtsla: number;
+  eurs: number;
 }

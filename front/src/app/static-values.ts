@@ -9,7 +9,6 @@ export class StaticValues {
   public static lastBlockDateAdopted = new Date(0);
   public static staked = 0.0;
   public static farmTotalSupply = 0.0;
-  public static apy = 0.0;
   public static farmUsers = 0;
   public static vaults: string[] = [
     'YCRV_V0',
@@ -69,6 +68,13 @@ export class StaticValues {
     'BAC',
     'ESD',
     'DSD',
+    'CRV_EURS',
+    'CRV_UST',
+    'CRV_STETH',
+    'MAAPL_UST',
+    'MAMZN_UST',
+    'MGOOGL_UST',
+    'MTSLA_UST',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -81,6 +87,9 @@ export class StaticValues {
     'CRV_TBTC',
     'CRV_HBTC',
     'CRV_OBTC',
+    'CRV_EURS',
+    'CRV_UST',
+    'CRV_STETH',
   ];
 
   public static strategiesListSingleCoins: string[] = [
@@ -107,6 +116,10 @@ export class StaticValues {
     'UNI_DAI_BAS',
     'DAI_BSG',
     'DAI_BSGS',
+    'MAAPL_UST',
+    'MAMZN_UST',
+    'MGOOGL_UST',
+    'MTSLA_UST',
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
@@ -255,6 +268,20 @@ export class StaticValues {
         return '/assets/icons/esd.png';
       case 'DSD':
         return '/assets/icons/dsd.png';
+      case 'CRV_EURS':
+        return '/assets/icons/curve-eurs.png';
+      case 'CRV_UST':
+        return '/assets/icons/curve-ust.png';
+      case 'CRV_STETH':
+        return '/assets/icons/curve-steth.png';
+      case 'MAAPL_UST':
+        return '/assets/icons/mirror-aapl.png';
+      case 'MAMZN_UST':
+        return '/assets/icons/mirror-amzn.png';
+      case 'MGOOGL_UST':
+        return '/assets/icons/mirror-goog.png';
+      case 'MTSLA_UST':
+        return '/assets/icons/mirror-tsla.png';
     }
   }
 }

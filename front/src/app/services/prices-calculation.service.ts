@@ -32,6 +32,7 @@ export class PricesCalculationService {
 
   private static mapCoinNameToSimple(name: string): string {
     switch (name) {
+      case 'CRV_STETH':
       case 'WETH':
         return 'ETH';
       case 'RENBTC':
@@ -42,6 +43,8 @@ export class PricesCalculationService {
       case 'CRV_HBTC':
       case 'CRV_OBTC':
         return 'BTC';
+      case 'CRV_EURS':
+        return 'EURS';
     }
     return name;
   }
@@ -58,6 +61,9 @@ export class PricesCalculationService {
         || 'CRV_BUSD' === name
         || 'CRV_USDN' === name
         || 'CRV_HUSD' === name
+        || 'UST_NAME' === name
+        || 'CRV_UST' === name
+        || 'UST' === name
         ;
   }
 
@@ -68,6 +74,7 @@ export class PricesCalculationService {
     if (!tx || this.lastTvlDates.get(tx.vault) > tx.blockDate) {
       return;
     }
+    this.savePrices(tx.pricesDto, tx.blockDateAdopted.getTime());
     const vaultStats = new VaultStats();
     vaultStats.lpStat = tx.lpStatDto;
     vaultStats.tvl = tx.lastTvl;
@@ -108,6 +115,11 @@ export class PricesCalculationService {
     this.prices.set('BSGS', prices.bsgs);
     this.prices.set('ESD', prices.esd);
     this.prices.set('DSD', prices.dsd);
+    this.prices.set('MAAPL', prices.maapl);
+    this.prices.set('MAMZN', prices.mamzn);
+    this.prices.set('MGOOGL', prices.mgoogl);
+    this.prices.set('MTSLA', prices.mtsla);
+    this.prices.set('EURS', prices.eurs);
     this.lastPriceDate = time;
   }
 

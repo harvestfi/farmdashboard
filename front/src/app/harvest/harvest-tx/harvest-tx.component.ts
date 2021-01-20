@@ -130,7 +130,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
         HarvestDto.enrich(tvl);
         HarvestTxComponent.saveLastValues(tvl);
         this.pricesCalculationService.writeFromHarvestTx(tvl);
-        this.pricesCalculationService.savePrices(tvl.pricesDto, tvl.blockDateAdopted.getTime());
       });
 
       this.log.debug('All tvl values loaded');
@@ -173,7 +172,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
 
   private addInArray(arr: HarvestDto[], tx: HarvestDto): void {
     this.pricesCalculationService.writeFromHarvestTx(tx);
-    this.pricesCalculationService.savePrices(tx.pricesDto, tx.blockDateAdopted.getTime());
     arr.unshift(tx);
     if (arr.length > this.maxMessages) {
       arr.pop();
