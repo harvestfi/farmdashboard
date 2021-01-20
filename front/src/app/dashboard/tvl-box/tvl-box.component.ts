@@ -137,7 +137,10 @@ export class TvlBoxComponent implements OnInit {
     });
   }
 
-  openPsApyDialog(): void {
+  openPsApyDialog(name: string): void {
+    if (name !== 'PS') {
+      return;
+    }
     this.dialog.open(RewardsDialogComponent, {
       width: '100%',
       height: 'auto',
