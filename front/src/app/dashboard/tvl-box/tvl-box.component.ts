@@ -17,6 +17,7 @@ import {StaticValues} from '../../static-values';
 export class TvlBoxComponent implements OnInit {
   @Input() tvlName: string;
   @Input() name: string;
+  openApyDetails = false;
 
   constructor(private pricesCalculationService: PricesCalculationService,
               public vt: ViewTypeService,
@@ -52,19 +53,10 @@ export class TvlBoxComponent implements OnInit {
   }
 
   vaultFullApy(name: string): string {
-    return this.prettifyNumber(this.vaultApy(name) + this.vaultRewardApy(name));
-  }
-
-  private prettifyNumber(n: number): string {
-    if (n < 1000) {
-      return n.toFixed(1);
-    } else if (n < 1000_000) {
-      return (n / 1000).toFixed(1) + 'k';
-    } else if (n < 1000_000_000) {
-      return (n / 1000_000).toFixed(1) + 'm';
-    } else {
-      return '♾️';
+    if (Utils.isAutoStakeVault(name)) {
+      return this.vaultRewardApyPrettify(name);
     }
+    return Utils.prettifyNumber(this.vaultApy(name) + this.vaultRewardApy(name));
   }
 
   vaultApy(tvlName: string): number {
@@ -80,19 +72,11 @@ export class TvlBoxComponent implements OnInit {
   }
 
   vaultRewardApyPrettify(tvlName: string): string {
-    return this.prettifyNumber(Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName)));
+    return Utils.prettifyNumber(Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName)));
   }
 
   vaultRewardApr(tvlName: string): number {
     return this.pricesCalculationService.vaultRewardApr(tvlName);
-  }
-
-  vaultRewardPeriod(tvlName: string): number {
-    return this.pricesCalculationService.vaultRewardPeriod(tvlName);
-  }
-
-  vaultReward(tvlName: string): number {
-    return this.pricesCalculationService.vaultReward(tvlName);
   }
 
   vaultPrettyName(name: string): string {
@@ -116,27 +100,6 @@ export class TvlBoxComponent implements OnInit {
     });
   }
 
-  openIncomeDialog(): void {
-    this.dialog.open(IncomeDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: this.tvlName + ' Income history chart',
-        name: this.tvlName
-      }
-    });
-  }
-
-  openPSIncomeDialog(): void {
-    this.dialog.open(TvlDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        type: 'income'
-      }
-    });
-  }
-
   openPsApyDialog(name: string): void {
     if (name !== 'PS') {
       return;
@@ -149,6 +112,14 @@ export class TvlBoxComponent implements OnInit {
         name: ''
       }
     });
+  }
+
+  openApyDetailsWindow(): void{
+    this.openApyDetails = true;
+  }
+
+  hideApyDetails(show: boolean): void {
+    this.openApyDetails = show;
   }
 
   tvlValueGradient(tvlName: string): string {
@@ -165,22 +136,6 @@ export class TvlBoxComponent implements OnInit {
     const minMax = this.findMinMax(prices);
     const alpha = this.percentOfMinMax(this.hardWorks.get(tvlName)?.shareUsdTotal, minMax[0], minMax[1] * 0.03);
     return 'rgba(0, 0, 0, ' + alpha + ')';
-  }
-
-  aprIncomeVaultValueGradient(tvlName: string): string {
-    const aprs = [];
-    for (const hw of this.hardWorks.values()) {
-      aprs.push(hw?.apr < 0 ? 0 : hw?.apr);
-    }
-    const minMax = this.findMinMax(aprs);
-    const alpha = this.percentOfMinMax(this.hardWorks.get(tvlName)?.apr, minMax[0], minMax[1] * 0.1);
-    return 'rgba(0, 0, 0, ' + alpha + ')';
-  }
-
-  isAutoStakeVault(name: string): boolean {
-    return name === 'PS'
-        || name === 'DAI_BSG'
-        || name === 'DAI_BSGS';
   }
 
   private percentOfMinMax(value: number, min: number, max: number): number {

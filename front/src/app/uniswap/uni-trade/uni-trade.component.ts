@@ -11,6 +11,7 @@ export class UniTradeComponent implements OnInit {
 
   constructor() {
   }
+
   @Input() dto: UniswapDto;
   @Input() fullDate = false;
   openModal = false;
@@ -53,11 +54,13 @@ export class UniTradeComponent implements OnInit {
   openHistory(hash: string): void {
     Utils.openHistory(hash);
   }
+
   showTradeLinks(): void {
     this.openModal = !this.openModal;
   }
-  hideTradeLinks(): void {
-    this.openModal = false;
+
+  hideTradeLinks(show: boolean): void {
+    this.openModal = show;
   }
 
   checkImportantOwner(address: string): string {

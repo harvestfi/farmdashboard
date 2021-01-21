@@ -23,6 +23,7 @@ export class HardWorkDto {
   savedGasFees: number;
   savedGasFeesSum: number;
   fee: number;
+  weeklyAverageTvl: number;
 
   blockDateAdopted: Date;
 
@@ -54,6 +55,7 @@ export class HardWorkDto {
     tx.savedGasFees = jsonData.savedGasFees;
     tx.savedGasFeesSum = jsonData.savedGasFeesSum;
     tx.fee = jsonData.fee;
+    tx.weeklyAverageTvl = jsonData.weeklyAverageTvl;
 
     HardWorkDto.enrich(tx);
     return tx;

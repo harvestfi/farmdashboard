@@ -23,8 +23,4 @@ export class HarvestFlowTabComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
-
-  
-
 }

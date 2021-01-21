@@ -38,7 +38,7 @@ export class IncomeDialogComponent implements AfterViewInit {
       });
       this.handleData(chartBuilder, [
         ['Profit K$', 'right', '#0085ff'],
-        ['APR %', '1', '#eeb000'],
+        ['Call APR %', '1', '#eeb000'],
         ['TVL M$', '2', '#7e7e7e']
       ]);
     });

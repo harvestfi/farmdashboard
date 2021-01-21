@@ -1,6 +1,7 @@
 export class StaticValues {
-  public static SECONDS_OF_YEAR = 31557600;
   public static SECONDS_OF_DAY = 60 * 60 * 24;
+  public static SECONDS_OF_WEEK = StaticValues.SECONDS_OF_DAY * 7;
+  public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
   public static uniInited = false;
   public static lastPsApy = 0.0;
   public static psIncomeUsd = 0.0;
@@ -78,6 +79,7 @@ export class StaticValues {
   ];
 
   public static strategiesListCurve: string[] = [
+    'CRVRENWBTC',
     'CRV_HUSD',
     'YCRV',
     '3CRV',
@@ -96,8 +98,6 @@ export class StaticValues {
     'PS',
     'WETH',
     'WBTC',
-    'RENBTC',
-    'CRVRENWBTC',
     'USDC',
     'USDT',
     'DAI',
@@ -108,7 +108,6 @@ export class StaticValues {
   ];
 
   public static strategiesListUniLpPools: string[] = [
-    'UNI_LP_USDC_FARM',
     'UNI_LP_WETH_FARM',
     'UNI_LP_GRAIN_FARM',
     'IDX_ETH_DPI',

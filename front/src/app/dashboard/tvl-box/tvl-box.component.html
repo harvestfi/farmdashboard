@@ -30,24 +30,18 @@
       {{tvls.get(tvlName) / 1000000 | number: '1.0-1'}}
     </div>
 
-    <div #tooltip="matTooltip" (click)="openIncomeDialog()"
-         *ngIf="!isAutoStakeVault(tvlName)"
-         class="left-border-box farm-apy-value pointer" matTooltip="
-           Income: {{hardWorks.get(tvlName)?.shareUsdTotal | number: '1.0-1'}}$
-           Income APR(weekly): {{vaultApr(tvlName) | number: '1.0-1'}}%
-           FARM: {{vaultReward(tvlName) | number: '1.0-1'}} for period {{vaultRewardPeriod(tvlName)| number: '1.0-2'}} days
-           Reward APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%
-" matTooltipClass="tooltip-spaced">
-      {{vaultFullApy(tvlName)}}
+    <!--    (click)="openIncomeDialog(tvlName)" -->
+    <div class="left-border-box farm-apy-value">
+      <app-custom-modal class="apy-modal" *ngIf="openApyDetails">
+        <app-apy-window (showModal)="hideApyDetails($event)" [poolName]="tvlName"></app-apy-window>
+      </app-custom-modal>
+      <div class="pointer" (click)="openApyDetailsWindow()" matTooltip="
+           APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%
+           Click to open details"
+           matTooltipClass="tooltip-spaced">
+        {{vaultFullApy(tvlName)}}
+      </div>
     </div>
-
-    <div #tooltip="matTooltip" (click)="openPsApyDialog(tvlName)"
-         *ngIf="isAutoStakeVault(tvlName)"
-         class="left-border-box farm-apy-value pointer"
-         matTooltip="APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%">
-      {{vaultRewardApyPrettify(tvlName)}}
-    </div>
-
 
   </div>
 </div>

@@ -54,10 +54,18 @@
     {{dto.lastPrice | number: '1.0-0'}}
   </div>
  
-  <div  (click)='showTradeLinks()'  class="trade-sign left-border-box trade-field pointer">
+  <div class="trade-sign left-border-box trade-field">
+
+    <app-custom-modal *ngIf="openModal">
+      <app-link-window (showModal)="hideTradeLinks($event)"
+                       [hash]='dto.hash' [owner]='dto.owner'>
+
+      </app-link-window>
+    </app-custom-modal>
      
-    <container-element  [ngSwitch]="checkImportantOwner(dto.owner)">
-      <app-custom-modal [date]="dto.blockDateAdopted" [hash]='dto.hash' [owner]='dto.owner' *ngIf="openModal"></app-custom-modal> 
+    <container-element class="pointer"
+        (click)='showTradeLinks()' [ngSwitch]="checkImportantOwner(dto.owner)">
+
       <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price"
                 class="sign-icon">
         open_in_new
@@ -67,8 +75,10 @@
                 class="sign-icon">
         warning
       </mat-icon>
+
       <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" class="do-hard-work-img"
                       size="20"></angular-emojis>
+
     </container-element>
    
   </div>

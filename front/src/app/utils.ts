@@ -300,4 +300,25 @@ export class Utils {
     }
     return type;
   }
+
+  public static isAutoStakeVault(name: string): boolean {
+    return name === 'PS'
+        || name === 'DAI_BSG'
+        || name === 'DAI_BSGS'
+        || name === 'SUSHI_MIC_USDT'
+        || name === 'SUSHI_MIS_USDT'
+        ;
+  }
+
+  public static prettifyNumber(n: number): string {
+    if (n < 1000) {
+      return n.toFixed(1);
+    } else if (n < 1000_000) {
+      return (n / 1000).toFixed(1) + 'k';
+    } else if (n < 1000_000_000) {
+      return (n / 1000_000).toFixed(1) + 'm';
+    } else {
+      return '♾️';
+    }
+  }
 }

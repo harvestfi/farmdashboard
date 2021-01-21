@@ -33,6 +33,10 @@
   margin-right: 5px;
 }
 
+.apy-modal {
+  position: relative;
+}
+
 @media screen and (max-width: 900px) {
   .tvl-row {
     padding: 1px;

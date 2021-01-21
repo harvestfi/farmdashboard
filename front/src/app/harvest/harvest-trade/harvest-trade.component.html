@@ -46,9 +46,16 @@
       {{dto.lastUsdTvl | number: '1.0-0'}}$
     </div>
 
-    <div (click)="showTradeLinks()" class="harvest-field harvest2-type left-border-box pointer ">
-      <app-custom-modal [date]="dto.blockDateAdopted" [hash]='dto.hash' [owner]='dto.owner' *ngIf="openModal"></app-custom-modal>
-        <mat-icon [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price" class="sign-icon">
+    <div class="harvest-field harvest2-type left-border-box pointer ">
+      <app-custom-modal *ngIf="openModal">
+        <app-link-window (showModal)="hideTradeLinks($event)"
+                         [hash]='dto.hash' [owner]='dto.owner'>
+
+        </app-link-window>
+      </app-custom-modal>
+        <mat-icon (click)="showTradeLinks()"
+                  [ngStyle]="{'color': '#b5b4b4'}"
+                  aria-hidden="false" aria-label="Price" class="sign-icon">
           open_in_new
         </mat-icon>
       </div>

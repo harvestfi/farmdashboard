@@ -1,10 +1,3 @@
-<div class="custom-modal">
-    <p>{{date | date: 'dd-MMM-yyyy HH:mm:ss'}}</p>
-    
-    <div class="links">
-        <a href='https://etherscan.io/tx/{{hash}}' target='_blank' class="trade-link" >Etherscan</a>
-        <a href='https://app.zerion.io/{{owner}}/overview' target='_blank' class="trade-link">Zerion</a>
-        <a href='https://farmdashboard.xyz/history/{{owner}}' target='_blank' class="trade-link">Address History</a>
-    </div>
-    <button (click)="closeModal()" class="close">close</button>
+<div #modal class="custom-modal styled-card">
+    <ng-content></ng-content>
 </div>
