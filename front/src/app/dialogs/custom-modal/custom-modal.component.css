@@ -1,9 +1,11 @@
 .custom-modal {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     z-index: 1000;
-    /*background-color: #FFFCE6;*/
-    right: 0px;
     padding: 2%;
-    /*border: 1px solid black;*/
-    /*border-radius: 5px;*/
+    max-width: 300px;
+    min-width: 300px;
+    transition: opacity 0.2s;
+    
 }
