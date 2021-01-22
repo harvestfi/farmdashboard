@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Price} from '../models/price';
 import {OhlcDto} from '../models/ohlc-dto';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +18,13 @@ export class PriceService {
   }
 
   getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
-    return this.http.get<OhlcDto[]>('api/transactions/history/uni/ohcl/' + coin).pipe(
+    return this.http.get<OhlcDto[]>(environment.apiEndpoint + '/api/transactions/history/uni/ohcl/' + coin).pipe(
         catchError(this.snackService.handleError<OhlcDto[]>(`history ohlc`))
     );
   }
 
   getLastData(from: string): Observable<Price[]> {
-    return this.http.get<Price[]>(`${this.url}/last/FARM/${from}`).pipe(
+    return this.http.get<Price[]>(environment.apiEndpoint + `${this.url}/last/FARM/${from}`).pipe(
         catchError(this.snackService.handleError<Price[]>(`last Price ${from}`))
     );
   }

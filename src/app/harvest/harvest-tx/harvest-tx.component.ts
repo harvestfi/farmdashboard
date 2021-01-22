@@ -68,7 +68,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
     this.httpService.getHarvestTxHistoryData().subscribe(data => {
       Utils.loadingOff();
       this.log.debug('harvest data fetched', data);
-      data.forEach(tx => {
+      data?.forEach(tx => {
         HarvestDto.enrich(tx);
         HarvestTxComponent.saveLastValues(tx);
         this.addInArray(this.dtos, tx);
@@ -126,7 +126,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   private loadLastTvl(): void {
     this.httpService.getLastTvls().subscribe(data => {
       this.log.debug('Loaded last tvls ', data);
-      data.forEach(tvl => {
+      data?.forEach(tvl => {
         HarvestDto.enrich(tvl);
         HarvestTxComponent.saveLastValues(tvl);
         this.pricesCalculationService.writeFromHarvestTx(tvl);

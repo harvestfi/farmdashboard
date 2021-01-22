@@ -7,7 +7,7 @@ export const environment = {
   isDebugMode: true,
   debugLevel: 0,
   wsEndpoint: 'http://localhost:4142/stomp',
-  apiEndpoint: 'http://localhost:4140',
+  apiEndpoint: 'http://localhost:4142',
   // wsEndpoint: 'http://localhost:4140/stomp',
   // wsEndpoint: 'https://api.farmdashboard.xyz:4140/stomp',
   wsReconnectInterval: 15

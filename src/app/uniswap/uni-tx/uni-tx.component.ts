@@ -41,8 +41,8 @@ export class UniTxComponent implements AfterViewInit {
       (data) => {
 
         Utils.loadingOff();
-        this.log.debug('tx data fetched', data.length);
-        data.forEach((tx) => {
+        this.log.debug('tx data fetched', data?.length);
+        data?.forEach((tx) => {
           UniswapDto.round(tx);
           this.saveLastValue(tx);
           if (tx.amount < this.whalesMoreThan) {

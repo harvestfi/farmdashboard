@@ -129,7 +129,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatSnackBarModule,
     HttpClientModule,
     LoggerModule.forRoot({
-      serverLoggingUrl: '/api/logs',
+      serverLoggingUrl: environment.apiEndpoint + '/api/logs',
       level: environment.debugLevel,
       serverLogLevel: NgxLoggerLevel.ERROR,
       disableConsoleLogging: false
