@@ -39,5 +39,6 @@ public class HardWorkEntity {
     private double savedGasFees;
     private double savedGasFeesSum;
     private double fee;
+    private Double weeklyAverageTvl;
 
 }

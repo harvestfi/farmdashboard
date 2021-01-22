@@ -179,15 +179,14 @@ export class PricesCalculationService {
 
   incomeApr(tvlName: string): number {
     const hardWork = this.lastHardWorks.get(tvlName);
-    const harvestDto = this.lastHarvests.get(tvlName);
-    if (hardWork && harvestDto) {
+    if (hardWork) {
       if ((Date.now() / 1000) - hardWork.blockDate > (StaticValues.SECONDS_OF_DAY * 2)) {
         // console.log('old hw for ' + tvlName);
         return 0;
       }
       const weeklyProfit = Math.max(hardWork.weeklyProfit, 0);
       return (StaticValues.SECONDS_OF_YEAR / StaticValues.SECONDS_OF_WEEK)
-          * ((weeklyProfit / harvestDto?.lastUsdTvl) * 100.0);
+          * ((weeklyProfit / hardWork?.weeklyAverageTvl) * 100.0);
     }
     return 0;
   }
