@@ -57,24 +57,22 @@ export class CustomModalComponent implements AfterViewInit {
 
       style.left = this.currentX + "px";
       style.top = this.currentY + "px";
-      style.opacity = 0.6
 
       style.transform = `translate(-50%, -10%)`
       return;
     }
 
-    style.opacity = 1
   }
 
-  handleWindowResize($event){
+  handleWindowResize($event) {
     const style: Record<any, any> = this.modal.nativeElement.style;
-    const windowWidth: number = $event.target.innerWidth 
-    const windowHeight: number = $event.target.innerHeight 
+    const windowWidth: number = $event.target.innerWidth
+    const windowHeight: number = $event.target.innerHeight
     const modalPosition: Record<any, any> = this.modal.nativeElement.getBoundingClientRect()
-    if (modalPosition.right > windowWidth){
+    if (modalPosition.right > windowWidth) {
       style.left = "50%";
     }
-    if (modalPosition.bottom > windowHeight){
+    if (modalPosition.bottom > windowHeight) {
       style.bottom = 0;
     }
 

@@ -2,10 +2,14 @@
     position: fixed;
     z-index: 1000;
     padding: 2%;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
     width: fit-content;
-    transition: opacity 0.2s;
+    transition: none;
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
-
+    ;
 }
 
 .custom-modal:hover {
@@ -16,4 +20,6 @@
 .custom-modal:active {
     cursor: -webkit-grabbing;
     cursor: grabbing;
+    box-shadow: -11px 11px 8px -4px rgba(0, 0, 0, 0.2)!important;
+
 }
