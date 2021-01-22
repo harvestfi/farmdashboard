@@ -5,5 +5,14 @@
     max-width: 300px;
     min-width: 300px;
     transition: opacity 0.2s;
-    
+}
+
+.custom-modal:hover {
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.custom-modal:active {
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
 }
