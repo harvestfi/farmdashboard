@@ -70,9 +70,13 @@ export class CustomModalComponent implements AfterViewInit {
     
     const style: Record<any, any> = this.modal.nativeElement.style;
     const windowWidth: number = $event.target.innerWidth 
+    const windowHeight: number = $event.target.innerHeight 
     const modalPosition: Record<any, any> = this.modal.nativeElement.getBoundingClientRect()
     if (modalPosition.right > windowWidth){
       style.left = "50%";
+    }
+    if (modalPosition.bottom > windowHeight){
+      style.bottom = 0;
     }
 
   }

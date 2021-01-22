@@ -2,9 +2,10 @@
     position: fixed;
     z-index: 1000;
     padding: 2%;
-    max-width: 300px;
-    min-width: 300px;
+    width: fit-content;
     transition: opacity 0.2s;
+    height: max-content;
+
 }
 
 .custom-modal:hover {
