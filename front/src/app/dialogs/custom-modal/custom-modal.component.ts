@@ -67,7 +67,6 @@ export class CustomModalComponent implements AfterViewInit {
   }
 
   handleWindowResize($event){
-    
     const style: Record<any, any> = this.modal.nativeElement.style;
     const windowWidth: number = $event.target.innerWidth 
     const windowHeight: number = $event.target.innerHeight 
