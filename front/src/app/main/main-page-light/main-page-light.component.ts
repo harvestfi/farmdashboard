@@ -5,6 +5,7 @@ import {AllStatsDialogComponent} from '../../dialogs/all-stats-dialog/all-stats-
 import {MatDialog} from '@angular/material/dialog';
 import {TvlDialogComponent} from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import {RewardsDialogComponent} from '../../dialogs/rewards-dialog/rewards-dialog.component';
+import {HardWorkHistoryListDialogComponent} from '../../dialogs/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
 import {StaticValues} from '../../static-values';
 import {UserSettings} from '../../user-settings';
 
@@ -67,6 +68,13 @@ export class MainPageLightComponent implements OnInit {
         title: 'PS APY History',
         name: ''
       }
+    });
+  }
+
+  openHardWorkHistoryListDialog(): void {
+    this.dialog.open(HardWorkHistoryListDialogComponent, {
+      width: '100%',
+      height: 'auto',
     });
   }
 

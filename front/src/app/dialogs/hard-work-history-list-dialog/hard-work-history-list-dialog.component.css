@@ -1,0 +1,33 @@
+.hardwork-list-history {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  ::ng-deep.mat-dialog-container {
+    overflow-x: hidden;
+    border-radius: 3px;
+    padding: 2% !important;
+    background: #fffce6;
+  }
+  .title {
+    font-size: 1.5em;
+    color: black;
+    font-weight: bolder;
+    text-align: center;
+    width: 100%;
+  }
+
+  .hardwork-headers {
+    width: 100%;
+    display: grid;
+    position: relative;
+    grid-template-columns:  1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    color: black;
+    position: sticky;
+}
+
+.hardwork-header {
+    text-align: center;
+    font-weight: bold;
+}

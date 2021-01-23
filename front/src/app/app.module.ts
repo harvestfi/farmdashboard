@@ -63,6 +63,9 @@ import { CustomModalComponent } from './dialogs/custom-modal/custom-modal.compon
 import { HarvestTradeComponent } from './harvest/harvest-trade/harvest-trade.component';
 import { LinkWindowComponent } from './uniswap/link-window/link-window.component';
 import { ApyWindowComponent } from './dashboard/apy-window/apy-window.component';
+import { HardWorkHistoryListDialogComponent } from './dialogs/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
+import { HardworkTradeComponent } from './hardwork/hardwork-trade/hardwork-trade.component';
+import { HardworkFlowTabComponent } from './hardwork/hardwork-flow-tab/hardwork-flow-tab.component';
 
 
 declare var require: any;
@@ -111,7 +114,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CustomModalComponent,
     HarvestTradeComponent,
     LinkWindowComponent,
-    ApyWindowComponent
+    ApyWindowComponent,
+    HardWorkHistoryListDialogComponent,
+    HardworkTradeComponent,
+    HardworkFlowTabComponent
   ],
   imports: [
     AppRoutingModule,
