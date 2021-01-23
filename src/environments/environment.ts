@@ -9,7 +9,7 @@ export const environment = {
   // wsEndpoint: 'http://localhost:4142/stomp',
   wsEndpoint: 'https://ethparser.herokuapp.com/stomp',
   // apiEndpoint: 'http://localhost:4142',
-  apiEndpoint: 'http://ethparser-api.herokuapp.com',
+  apiEndpoint: 'https://ethparser-api.herokuapp.com',
   wsReconnectInterval: 15
 };
 
