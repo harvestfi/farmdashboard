@@ -1,7 +1,7 @@
 .custom-modal {
     position: fixed;
     z-index: 1000;
-    padding: 2%;
+    padding: 1%;
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;

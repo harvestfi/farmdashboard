@@ -6,7 +6,8 @@ import { AfterViewInit, Component, Renderer2, ViewChild } from '@angular/core';
   styleUrls: ['./custom-modal.component.css'],
   host: {
     '(document:mousemove)': 'mousemove($event)',
-    '(window:resize)': 'handleWindowResize($event)'
+    '(window:resize)': 'handleWindowResize($event)',
+    '(document:touchmove)': 'mousemove($event)'
   }
 })
 export class CustomModalComponent implements AfterViewInit {
@@ -37,8 +38,13 @@ export class CustomModalComponent implements AfterViewInit {
 
   mousedown($event): void {
     if ($event.target === this.modal.nativeElement) {
-      this.offsetX = $event.layerY;
-      this.offsetY = $event.layerX;
+      if($event.type == "touchstart"){
+        this.offsetX = $event.touches[0].clientX;
+        this.offsetY = $event.touches[0].clientY;
+      } else {
+        this.offsetX = $event.layerY;
+        this.offsetY = $event.layerX;
+      }
       this.isDown = true;
     }
   }
@@ -48,8 +54,14 @@ export class CustomModalComponent implements AfterViewInit {
 
   mousemove($event): void {
     const style: Record<any, any> = this.modal.nativeElement.style;
-    this.currentX = $event.clientX;
-    this.currentY = $event.clientY;
+
+    if($event.type == "touchmove") {
+      this.currentX = $event.touches[0].clientX;
+      this.currentY = $event.touches[0].clientY;
+    } else {
+      this.currentX = $event.clientX;
+      this.currentY = $event.clientY;
+    }
     if (this.isDown) {
       if ($event.preventDefault) $event.preventDefault();
       if ($event.stopPropagation) $event.stopPropagation();
