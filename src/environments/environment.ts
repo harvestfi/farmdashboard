@@ -6,10 +6,10 @@ export const environment = {
   production: false,
   isDebugMode: true,
   debugLevel: 0,
-  wsEndpoint: 'http://localhost:4142/stomp',
-  apiEndpoint: 'http://localhost:4142',
-  // wsEndpoint: 'http://localhost:4140/stomp',
-  // wsEndpoint: 'https://api.farmdashboard.xyz:4140/stomp',
+  // wsEndpoint: 'http://localhost:4142/stomp',
+  wsEndpoint: 'https://ethparser.herokuapp.com/stomp',
+  // apiEndpoint: 'http://localhost:4142',
+  apiEndpoint: 'http://ethparser-api.herokuapp.com',
   wsReconnectInterval: 15
 };
 

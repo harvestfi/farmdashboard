@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  wsEndpoint: 'https://api.farmdashboard.xyz:4140/stomp',
-  apiEndpoint: 'https://api.farmdashboard.xyz:4140',
+  wsEndpoint: 'https://ethparser.herokuapp.com/stomp',
+  apiEndpoint: 'http://ethparser-api.herokuapp.com',
   wsReconnectInterval: 15,
   debugLevel: 3
 };
