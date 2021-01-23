@@ -1,0 +1,25 @@
+.custom-modal {
+    position: fixed;
+    z-index: 1000;
+    padding: 1%;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    transition: none;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    ;
+}
+
+.custom-modal:hover {
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.custom-modal:active {
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+    box-shadow: -11px 11px 8px -4px rgba(0, 0, 0, 0.2)!important;
+
+}

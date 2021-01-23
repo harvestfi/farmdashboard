@@ -48,9 +48,10 @@ testem.log
 Thumbs.db
 src/test/resources/
 
-front/node_modules
-front/logs
-front/target
-front/dist
-front/tmp
-front/out-tsc
+node_modules
+logs
+target
+dist
+tmp
+out-tsc
+keys
