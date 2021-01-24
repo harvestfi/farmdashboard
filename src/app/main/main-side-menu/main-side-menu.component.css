@@ -1,3 +1,4 @@
+@charset "UTF-8";
 #main-side-menu {
   width: 100%;
   max-width: 400px;
@@ -27,6 +28,41 @@
   margin: 0 10px;
   font-size: 24px;
   font-weight: bold;
+}
+#main-side-menu .main-side-menu-logo-container .dark-mode-toggle-container .dark-mode-toggle-label {
+  height: 35px;
+  width: 70px;
+  background: url("/assets/darkmode-toggle-background.jpg") 0% 4%;
+  display: block;
+  border-radius: 20px;
+  position: relative;
+  transition: background 0.5s;
+}
+#main-side-menu .main-side-menu-logo-container .dark-mode-toggle-container .dark-mode-toggle-label::after {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  content: "☀️";
+  height: 33px;
+  width: 33px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s;
+}
+#main-side-menu .main-side-menu-logo-container .dark-mode-toggle-container #dark-mode-toggle-checkbox {
+  display: none;
+}
+#main-side-menu .main-side-menu-logo-container .dark-mode-toggle-container #dark-mode-toggle-checkbox:checked ~ .dark-mode-toggle-label {
+  background: url("/assets/darkmode-toggle-background.jpg") 100% 93%;
+}
+#main-side-menu .main-side-menu-logo-container .dark-mode-toggle-container #dark-mode-toggle-checkbox:checked ~ .dark-mode-toggle-label::after {
+  left: 50%;
+  content: "🌙";
 }
 #main-side-menu .main-side-menu-items {
   all: unset;
