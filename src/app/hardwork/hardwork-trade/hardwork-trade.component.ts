@@ -7,7 +7,7 @@ import {Utils} from '../../utils';
 @Component({
   selector: 'app-hardwork-trade',
   templateUrl: './hardwork-trade.component.html',
-  styleUrls: ['./hardwork-trade.component.css']
+  styleUrls: ['./hardwork-trade.component.scss']
 })
 export class HardworkTradeComponent implements OnInit {
 
@@ -17,6 +17,15 @@ export class HardworkTradeComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  showTradeLinks(): void {
+    this.openModal = !this.openModal;
+  }
+
+  hideTradeLinks(show: boolean): void {
+    this.openModal = show;
+  }
+
   priceGradientLight(type: string, amount: number, success: boolean): string {
     return Utils.priceGradientHarvest(type, amount, success);
   }

@@ -1,30 +1,41 @@
 <div class="hardwork-info">
+    
     <div class="hardwork-field hardwork-date left-border-box"
          matTooltip="{{dto.blockDateAdopted| date: 'dd.MM.yyyy HH:mm:ss'}}
                   {{dto.vault}}
+                  TVL ${{dto.tvl | number: '1.0-0'}}
+                  PS APR {{dto.psApr.toFixed(2) | number: '1.0-0'}}%
                   
                   " matTooltipClass="tooltip-spaced">
       {{
         (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss') 
       }}
+      
     </div>
+    <div class="hardwork-field hardwork-vault">
+      <img alt="?" class="tvl-img" src="{{getImgUrl(dto.vault)}}"/>
+      
+  </div>
+    
+    
     <div class="hardwork-field hardwork-shareChangeUsd">
-        ${{dto.shareChangeUsd.toFixed(2) | number: '1.0-0'}}
+        ${{dto.shareUsdTotal.toFixed(2) | number: '1.0-0'}}
     </div>
 
-    <div class="hardwork-field hardwork-vault">
-        <img alt="?" class="tvl-img" src="{{getImgUrl(dto.vault)}}"/>
-    </div>
-   
     <div class="hardwork-field hardwork-tvl">
+      ${{dto.weeklyProfit | number: '1.0-0'}}
+    </div>
+    
+   
+    <!-- <div class="hardwork-field hardwork-tvl">
         ${{dto.tvl | number: '1.0-0'}}
     </div>
 
     <div class="hardwork-field hardwork-apr">
         {{dto.psApr.toFixed(2) | number: '1.0-0'}}%
-    </div>
+    </div> -->
 
-    <div class="hardwork-field hardwork-weeklyProfit">
+    <!-- <div class="hardwork-field hardwork-weeklyProfit">
         ${{dto.weeklyProfit.toFixed(2) | number: '1.0-0'}}
     </div>
 
@@ -39,9 +50,23 @@
     <div class="hardwork-field hardwork-savedGasFees">
         ${{dto.savedGasFees.toFixed(2) | number: '1.0-0'}}
     </div>
-    
-    <div class="hardwork-field hardwork-poolUsers">
-        {{dto.poolUsers}}
+     -->
+    <div class="hardwork-field hardwork-poolCalls">
+        {{dto.callsQuantity}}
+    </div>
+
+    <div class="harvest-field harvest2-type left-border-box pointer ">
+        <app-custom-modal *ngIf="openModal">
+          <app-link-window (showModal)="hideTradeLinks($event)"
+                           [hash]='dto.hash' [owner]='dto.owner'>
+  
+          </app-link-window>
+        </app-custom-modal>
+          <mat-icon (click)="showTradeLinks()"
+                    [ngStyle]="{'color': '#b5b4b4'}"
+                    aria-hidden="false" aria-label="Price" class="sign-icon">
+            open_in_new
+          </mat-icon>
     </div>
 
     

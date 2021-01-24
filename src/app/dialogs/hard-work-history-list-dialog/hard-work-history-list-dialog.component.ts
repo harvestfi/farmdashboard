@@ -13,6 +13,7 @@ import { HardWorkDto } from '../../models/hardwork-dto';
 export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   dtos: HardWorkDto[] = [];
   hardWorkIds = new Set<string>();
+  lowestBlockDate = 999999999999;
 
   constructor(
     private hardWorkListHistory: HttpService,
@@ -22,15 +23,19 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
-    this.hardWorkListHistory.getHardWorkHistoryData().subscribe(data => this.addInArray(data));
+    this.hardWorkListHistory.getHardWorkHistoryData().subscribe(data => {
+
+        const truncatedData = data.slice(0, 300);
+        this.addInArray(truncatedData);
+    });
   }
 
   private addInArray(newValues: HardWorkDto[]): void {
     this.log.info('New hard work values', newValues);
     for (let i = newValues.length - 1; i > 0; i--) {
-      const hardWork = newValues[i]
+      const hardWork = newValues[i];
       HardWorkDto.enrich(hardWork);
-      this.dtos.push(hardWork)
+      this.dtos.push(hardWork);
     }
   }
 

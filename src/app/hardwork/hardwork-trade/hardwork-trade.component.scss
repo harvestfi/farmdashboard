@@ -1,0 +1,21 @@
+
+.hardwork-info {
+    display: grid;
+    position: relative;
+    grid-template-columns:  1fr 1fr 1fr 1fr 1fr .5fr;
+    color: black;
+    margin: 10px 0;
+
+    .hardwork-field {
+        align-self: center;
+        text-align: center;
+        font-size: 1.1em;
+        .tvl-img {
+            width: 35px;
+            height: 35px;
+        }
+    }
+}
+
+
+

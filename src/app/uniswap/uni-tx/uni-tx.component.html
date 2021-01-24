@@ -47,7 +47,7 @@
   <tr>
     <td style="width: 50%; height: 30px">
       <div class="flex-container" style="color: #a09c9c">
-        <span style="font-size: 1.2em;">Whales</span>
+        <span style="font-size: 1.2em;">Hard Works</span>
         <mat-icon #tooltip="matTooltip" aria-hidden="false" aria-label="?" matTooltip="List of trades contains FARM amounts more than 1000.
           Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
           Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price"
@@ -59,7 +59,8 @@
 
   <tr>
     <td style="">
-      <app-flow-tab [dtos]="dtosWhales" [maxHeight]="200"></app-flow-tab>
+      <app-hardwork-flow-tab [dtos]="dtos" [maxHeight]="200" ></app-hardwork-flow-tab>
+      <!-- <app-flow-tab [dtos]="dtosWhales" [maxHeight]="200"></app-flow-tab> -->
     </td>
   </tr>
 
