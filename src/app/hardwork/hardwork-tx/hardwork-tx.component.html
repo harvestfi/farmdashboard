@@ -1,0 +1,31 @@
+
+    <div class="left-border-box left">
+        <div class="hardwork-card">
+          <div #tooltip="matTooltip"
+               aria-hidden="false"
+               aria-label="?"
+               class="title-span"
+               matTooltip="List of trades contains FARM amounts more than {{whalesMoreThan}}.
+            Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
+            Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price"
+            >
+          </div>
+          <div class="hardWork-list-history">
+            <h1 class="title">Hard Work History</h1>
+            <div class="hardwork-headers">
+                <h3 class="hardwork-header">Date</h3>
+                <h3 class="hardwork-header">Vault</h3>
+                <h3 class="hardwork-header">Share Total</h3>
+                <h3 class="hardwork-header">Profit</h3>
+                <h3 class="hardwork-header">Calls</h3>
+                
+            </div>
+            <app-hardwork-flow-tab [dtos]="dtos" [maxHeight]="130"></app-hardwork-flow-tab>
+        </div>
+        <div class="button-container">
+          <button (click)="openHardWorkHistoryListDialog()" class="show-more">show older</button>
+        </div>
+        
+         
+        </div>
+      </div>

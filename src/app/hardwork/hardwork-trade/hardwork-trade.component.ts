@@ -13,6 +13,8 @@ export class HardworkTradeComponent implements OnInit {
 
   constructor() { }
   @Input() dto: HardWorkDto;
+  @Input() fullDate = false;
+  @Input() showingCalls = false;
   openModal = false;
 
   ngOnInit(): void {

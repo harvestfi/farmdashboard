@@ -66,6 +66,7 @@ import { ApyWindowComponent } from './dashboard/apy-window/apy-window.component'
 import { HardWorkHistoryListDialogComponent } from './dialogs/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
 import { HardworkTradeComponent } from './hardwork/hardwork-trade/hardwork-trade.component';
 import { HardworkFlowTabComponent } from './hardwork/hardwork-flow-tab/hardwork-flow-tab.component';
+import { HardworkTxComponent } from './hardwork/hardwork-tx/hardwork-tx.component';
 
 
 declare var require: any;
@@ -117,7 +118,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ApyWindowComponent,
     HardWorkHistoryListDialogComponent,
     HardworkTradeComponent,
-    HardworkFlowTabComponent
+    HardworkFlowTabComponent,
+    HardworkTxComponent
   ],
   imports: [
     AppRoutingModule,

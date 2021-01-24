@@ -1,6 +1,6 @@
 <div *ngIf="vt.isNonScoreboard()" id="top-div-light" class="row uni-row">
 
-  <div class="left-border-box left">
+  <!-- <div class="left-border-box left">
     <div class="uni-card">
       <div #tooltip="matTooltip"
            aria-hidden="false"
@@ -10,10 +10,13 @@
         Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
         Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price">Whales Trades
       </div>
-      <app-flow-tab [dtos]="dtosWhales" [maxHeight]="200"></app-flow-tab>
+      <app-flow-tab [dtos]="dtosWhales" ></app-flow-tab>
+      
+      
     </div>
-  </div>
-
+   
+  </div> -->
+  <app-hardwork-tx ></app-hardwork-tx>
   <div class="left-border-box middle">
     <div class="uni-card">
       <div #tooltip="matTooltip"
@@ -59,8 +62,8 @@
 
   <tr>
     <td style="">
-      <app-hardwork-flow-tab [dtos]="dtos" [maxHeight]="200" ></app-hardwork-flow-tab>
-      <!-- <app-flow-tab [dtos]="dtosWhales" [maxHeight]="200"></app-flow-tab> -->
+      
+      <app-flow-tab [dtos]="dtosWhales" [maxHeight]="200"></app-flow-tab>
     </td>
   </tr>
 

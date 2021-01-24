@@ -22,7 +22,7 @@
     width: 100%;
     display: grid;
     position: relative;
-    grid-template-columns:   1fr 1fr 1fr 1fr 1fr .5fr ;
+    grid-template-columns:   1.5fr 1fr 1.5fr 1fr .5fr .5fr ;
     color: black;
     position: sticky;
 }

@@ -7,15 +7,16 @@
                   PS APR {{dto.psApr.toFixed(2) | number: '1.0-0'}}%
                   
                   " matTooltipClass="tooltip-spaced">
-      {{
-        (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss') 
-      }}
+                  {{fullDate ?
+                    (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'):
+                    (dto.blockDateAdopted | date: 'HH:mm:ss')
+                    }}
       
     </div>
     <div class="hardwork-field hardwork-vault">
       <img alt="?" class="tvl-img" src="{{getImgUrl(dto.vault)}}"/>
       
-  </div>
+    </div>
     
     
     <div class="hardwork-field hardwork-shareChangeUsd">
@@ -26,43 +27,12 @@
       ${{dto.weeklyProfit | number: '1.0-0'}}
     </div>
     
-   
-    <!-- <div class="hardwork-field hardwork-tvl">
-        ${{dto.tvl | number: '1.0-0'}}
-    </div>
-
-    <div class="hardwork-field hardwork-apr">
-        {{dto.psApr.toFixed(2) | number: '1.0-0'}}%
-    </div> -->
-
-    <!-- <div class="hardwork-field hardwork-weeklyProfit">
-        ${{dto.weeklyProfit.toFixed(2) | number: '1.0-0'}}
-    </div>
-
-    <div class="hardwork-field hardwork-allProfit">
-        ${{dto.allProfit.toFixed(2) | number: '1.0-0'}}
-    </div> 
-
-    <div class="hardwork-field hardwork-farmBuyback">
-        {{dto.farmBuyback.toFixed(2) | number: '1.0-0'}} FARM
-    </div>
-
-    <div class="hardwork-field hardwork-savedGasFees">
-        ${{dto.savedGasFees.toFixed(2) | number: '1.0-0'}}
-    </div>
-     -->
     <div class="hardwork-field hardwork-poolCalls">
-        {{dto.callsQuantity}}
+        {{showingCalls ? dto.callsQuantity : ""}}
     </div>
 
-    <div class="harvest-field harvest2-type left-border-box pointer ">
-        <app-custom-modal *ngIf="openModal">
-          <app-link-window (showModal)="hideTradeLinks($event)"
-                           [hash]='dto.hash' [owner]='dto.owner'>
-  
-          </app-link-window>
-        </app-custom-modal>
-          <mat-icon (click)="showTradeLinks()"
+    <div class="left-border-box pointer ">
+        <mat-icon class='sign-icon' (click)="showTradeLinks()"
                     [ngStyle]="{'color': '#b5b4b4'}"
                     aria-hidden="false" aria-label="Price" class="sign-icon">
             open_in_new

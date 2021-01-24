@@ -25,8 +25,8 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.hardWorkListHistory.getHardWorkHistoryData().subscribe(data => {
 
-        const truncatedData = data.slice(0, 300);
-        this.addInArray(truncatedData);
+       
+        this.addInArray(data);
     });
   }
 

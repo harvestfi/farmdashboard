@@ -9,7 +9,9 @@ import { ViewTypeService } from '../../services/view-type.service';
 })
 export class HardworkFlowTabComponent implements OnInit {
   @Input() dtos: HardWorkDto[] = [];
-  maxHeight: 600;
+  @Input() maxHeight: 600;
+  @Input() showFullDate = false;
+  @Input() showCalls = false;
   constructor(public vt: ViewTypeService) { }
 
   ngOnInit(): void {
