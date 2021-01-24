@@ -25,9 +25,11 @@
     grid-template-columns:   1.5fr 1fr 1.5fr 1fr .5fr .5fr ;
     color: black;
     position: sticky;
+    
 }
 
 .hardwork-header {
     text-align: center;
     font-weight: bold;
+   
 }
