@@ -1,7 +1,6 @@
 <ng-sidebar-container class="sidebar-container">
 
-  <!-- A sidebar -->
-  <ng-sidebar [(opened)]="opened">
+  <!-- <ng-sidebar [(opened)]="opened">
     <div class="side-menu">
       <div class="row top-menu-row">
         <div class="left-border-box top-menu-button-close">
@@ -9,13 +8,11 @@
           </mat-icon>
         </div>
         <div class="left-border-box top-menu-caption">
-          <!--          <div class="side-menu-caption">-->
           Harvest Live Dashboard
-          <!--          </div>-->
         </div>
         <div class="left-border-box top-menu-button-switch">
-          <button #tooltip="matTooltip" (click)="toggleTheme()" class="switch-button" color="primary"
-                  mat-mini-fab matTooltip="Switch to Dark Theme">
+          <button #tooltip="matTooltip" (click)="toggleTheme()" class="switch-button" color="primary" mat-mini-fab
+            matTooltip="Switch to Dark Theme">
             <mat-icon>toggle_on</mat-icon>
           </button>
         </div>
@@ -40,17 +37,18 @@
 
       </div>
     </div>
-  </ng-sidebar>
-
+  </ng-sidebar> -->
+  
   <div ng-sidebar-content style="min-height: 100%">
+    <app-main-side-menu></app-main-side-menu>
 
-    <div class="top-menu row">
+    <div class="top-menu row middle">
 
-      <div class="left-border-box button-menu-div">
+      <!-- <div class="left-border-box button-menu-div">
         <mat-icon (click)="toggleSidebar()" aria-hidden="false" aria-label="menu" class="pointer button-menu">
           menu
         </mat-icon>
-      </div>
+      </div> -->
 
       <div class="left-border-box top-title-div">
         <div *ngIf="uniInited()" id="top-title1">
@@ -65,7 +63,7 @@
         <div class="row connection-state-row">
           <div>
             <mat-icon [ngStyle]="{'color': ws.isConnected() ? '#479d43' : '#b51919'}" aria-hidden="false"
-                      aria-label="Connected" class="connect-sign">
+              aria-label="Connected" class="connect-sign">
               online_prediction
             </mat-icon>
           </div>
@@ -96,8 +94,3 @@
 
 
 </ng-sidebar-container>
-
-
-
-
-

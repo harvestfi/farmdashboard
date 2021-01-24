@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-custom-modal',
@@ -20,7 +20,7 @@ export class CustomModalComponent implements AfterViewInit {
   private offsetY: number;
   @ViewChild('modal') private modal;
 
-  constructor(private renderer: Renderer2) {
+  constructor() {
     this.isDown = false;
     this.initialX;
     this.initialY;
