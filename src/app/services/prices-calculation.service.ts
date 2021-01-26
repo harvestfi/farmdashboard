@@ -69,12 +69,19 @@ export class PricesCalculationService {
 
   public writeFromHarvestTx(tx: HarvestDto): void {
     if (!this.latestHarvest || this.latestHarvest.blockDate < tx.blockDate) {
+      if (tx.lastGas != null && (tx.lastGas + '') !== 'NaN' && tx.lastGas !== 0) {
+        StaticValues.lastGas = tx.lastGas;
+      }
+      this.savePrices(tx.pricesDto, tx.blockDateAdopted.getTime());
       this.latestHarvest = tx;
     }
     if (!tx || this.lastTvlDates.get(tx.vault) > tx.blockDate) {
       return;
     }
-    this.savePrices(tx.pricesDto, tx.blockDateAdopted.getTime());
+    if (tx.vault === 'PS') {
+      StaticValues.staked = (tx.lastTvl / tx.sharePrice) * 100;
+      StaticValues.farmTotalSupply = tx.sharePrice;
+    }
     const vaultStats = new VaultStats();
     vaultStats.lpStat = tx.lpStatDto;
     vaultStats.tvl = tx.lastTvl;

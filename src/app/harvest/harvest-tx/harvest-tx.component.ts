@@ -43,19 +43,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
     return StaticValues.currentVaults;
   }
 
-  private static saveLastValues(tx: HarvestDto): void {
-    if (!tx.confirmed) {
-      return;
-    }
-    if (tx.lastGas != null && (tx.lastGas + '') !== 'NaN' && tx.lastGas !== 0) {
-      StaticValues.lastGas = tx.lastGas;
-    }
-    if (tx.vault === 'PS') {
-      StaticValues.staked = (tx.lastTvl / tx.sharePrice) * 100;
-      StaticValues.farmTotalSupply = tx.sharePrice;
-    }
-  }
-
   setSubscribed(s: boolean): void {
     this.subscribed = s;
   }
@@ -70,7 +57,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
       this.log.debug('harvest data fetched', data);
       data?.forEach(tx => {
         HarvestDto.enrich(tx);
-        HarvestTxComponent.saveLastValues(tx);
         this.addInArray(this.dtos, tx);
       });
       this.loadLastTvl();
@@ -106,8 +92,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
           }
           this.addInArray(this.dtos, tx);
           this.pricesCalculationService.updateTvls();
-          HarvestTxComponent.saveLastValues(tx);
-          // this.cdRef.markForCheck();
         } catch (e) {
           this.log.error('Error harvest', e, tx);
         }
@@ -128,7 +112,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
       this.log.debug('Loaded last tvls ', data);
       data?.forEach(tvl => {
         HarvestDto.enrich(tvl);
-        HarvestTxComponent.saveLastValues(tvl);
         this.pricesCalculationService.writeFromHarvestTx(tvl);
       });
 
