@@ -6,6 +6,7 @@ import {PricesDto} from '../models/prices-dto';
 import {StaticValues} from '../static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class PricesCalculationService {
   private lastPriceDate = 0;
   private lastTvlDates = new Map<string, number>();
 
-  constructor() {
+  constructor(private log: NGXLogger) {
     StaticValues.vaults.forEach(v => this.tvls.set(v, 0.0));
   }
 
@@ -172,7 +173,11 @@ export class PricesCalculationService {
   vaultRewardApr(tvlName: string): number {
     const reward = this.lastRewards.get(tvlName);
     const harvest = this.lastHarvests.get(tvlName);
-    if (!harvest || !reward || (Date.now() / 1000) > reward.periodFinish) {
+    if (!harvest || !reward) {
+      return 0;
+    }
+    if ((Date.now() / 1000) > reward.periodFinish) {
+      // this.log.warn(tvlName + ' reward setup zero, it is ended', reward);
       return 0;
     }
     const period = StaticValues.SECONDS_OF_YEAR / (reward.periodFinish - reward.blockDate);
