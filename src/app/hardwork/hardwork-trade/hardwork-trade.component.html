@@ -8,8 +8,8 @@
                   
                   " matTooltipClass="tooltip-spaced">
                   {{fullDate ?
-                    (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'):
-                    (dto.blockDateAdopted | date: 'HH:mm:ss')
+                    (dto.blockDateAdopted | date: 'dd-MMM-yyyy'):
+                    (dto.blockDateAdopted | date: 'dd-MMM-yyyy')
                     }}
       
     </div>
@@ -17,27 +17,42 @@
       <img alt="?" class="tvl-img" src="{{getImgUrl(dto.vault)}}"/>
       
     </div>
-    
-    
     <div class="hardwork-field hardwork-shareChangeUsd">
-        ${{dto.shareUsdTotal.toFixed(2) | number: '1.0-0'}}
+      ${{dto.shareChangeUsd.toFixed(2) | number: '1.0-0'}}
+  </div>
+    
+    
+    <div  class="hardwork-field hardwork-farmBuyback">
+      {{dto.farmBuyback.toFixed(2)}} 
     </div>
 
-    <div class="hardwork-field hardwork-tvl">
+    <div *ngIf='moreColumns' class="hardwork-field hardwork-weeklProfit">
       ${{dto.weeklyProfit | number: '1.0-0'}}
     </div>
-    
-    <div class="hardwork-field hardwork-poolCalls">
-        {{showingCalls ? dto.callsQuantity : ""}}
+
+    <div *ngIf='moreColumns' class="hardwork-field hardwork-tvl currency">
+    ${{ (dto.tvl| number: '1.0-0')}}
     </div>
 
-    <div class="left-border-box pointer ">
+    <div *ngIf='moreColumns' class="hardwork-field hardwork-periodOfWork">
+      {{(dto.periodOfWork / (60*60*24)).toFixed(2)}}
+    </div>
+    
+    <div *ngIf='moreColumns' class="hardwork-field hardwork-gasSaved">
+      ${{dto.savedGasFees | number: '1.0-0' }}
+  </div>
+    
+    <div *ngIf='moreColumns' class="hardwork-field hardwork-poolCalls">
+        {{dto.callsQuantity }}
+    </div>
+
+    <!-- <div class="left-border-box pointer ">
         <mat-icon class='sign-icon' (click)="showTradeLinks()"
                     [ngStyle]="{'color': '#b5b4b4'}"
                     aria-hidden="false" aria-label="Price" class="sign-icon">
             open_in_new
           </mat-icon>
-    </div>
+    </div> -->
 
     
 </div>

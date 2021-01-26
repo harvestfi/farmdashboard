@@ -13,7 +13,7 @@ import {HardWorkHistoryListDialogComponent} from '../../dialogs/hard-work-histor
 @Component({
   selector: 'app-hardwork-tx',
   templateUrl: './hardwork-tx.component.html',
-  styleUrls: ['./hardwork-tx.component.css']
+  styleUrls: ['./hardwork-tx.component.scss']
 })
 export class HardworkTxComponent implements AfterViewInit {
   dtos: HardWorkDto[] = [];
@@ -21,6 +21,7 @@ export class HardworkTxComponent implements AfterViewInit {
   pureTitle = 'Harvest Live Dashboard';
   whalesMoreThan = 500;
   private maxMessages = 50;
+  
 
   constructor(
     private hwHistory: HttpService,

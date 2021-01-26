@@ -11,7 +11,7 @@ export class HardworkFlowTabComponent implements OnInit {
   @Input() dtos: HardWorkDto[] = [];
   @Input() maxHeight: 600;
   @Input() showFullDate = false;
-  @Input() showCalls = false;
+  @Input() showMoreColumns = false;
   constructor(public vt: ViewTypeService) { }
 
   ngOnInit(): void {

@@ -67,6 +67,7 @@ import { HardWorkHistoryListDialogComponent } from './dialogs/hard-work-history-
 import { HardworkTradeComponent } from './hardwork/hardwork-trade/hardwork-trade.component';
 import { HardworkFlowTabComponent } from './hardwork/hardwork-flow-tab/hardwork-flow-tab.component';
 import { HardworkTxComponent } from './hardwork/hardwork-tx/hardwork-tx.component';
+import { HardworkHeaderComponent } from './hardwork/hardwork-header/hardwork-header.component';
 
 
 declare var require: any;
@@ -119,7 +120,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HardWorkHistoryListDialogComponent,
     HardworkTradeComponent,
     HardworkFlowTabComponent,
-    HardworkTxComponent
+    HardworkTxComponent,
+    HardworkHeaderComponent
   ],
   imports: [
     AppRoutingModule,

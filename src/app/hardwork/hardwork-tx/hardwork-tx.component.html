@@ -12,15 +12,8 @@
           </div>
           <div class="hardWork-list-history">
             <h1 class="title">Hard Work History</h1>
-            <div class="hardwork-headers">
-                <h3 class="hardwork-header">Date</h3>
-                <h3 class="hardwork-header">Vault</h3>
-                <h3 class="hardwork-header">Share Total</h3>
-                <h3 class="hardwork-header">Profit</h3>
-                <h3 class="hardwork-header">Calls</h3>
-                
-            </div>
-            <app-hardwork-flow-tab [dtos]="dtos" [maxHeight]="150"></app-hardwork-flow-tab>
+            <app-hardwork-header></app-hardwork-header>
+            <app-hardwork-flow-tab [dtos]="dtos" [showMoreColumns]="false" [showFullDate]="false" [maxHeight]="150"></app-hardwork-flow-tab>
         </div>
         <div class="button-container">
           <button (click)="openHardWorkHistoryListDialog()" class="show-more">show older</button>

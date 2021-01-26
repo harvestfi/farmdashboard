@@ -14,6 +14,8 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   dtos: HardWorkDto[] = [];
   hardWorkIds = new Set<string>();
   lowestBlockDate = 999999999999;
+  
+  
 
   constructor(
     private hardWorkListHistory: HttpService,
