@@ -1,55 +1,14 @@
 <ng-sidebar-container class="sidebar-container">
 
-  <!-- A sidebar -->
-  <ng-sidebar [(opened)]="opened">
-    <div class="side-menu">
-      <div class="row top-menu-row">
-        <div class="left-border-box top-menu-button-close">
-          <mat-icon (click)="toggleSidebar()" aria-hidden="false" aria-label="menu" class="pointer button-menu">close
-          </mat-icon>
-        </div>
-        <div class="left-border-box top-menu-caption">
-          <!--          <div class="side-menu-caption">-->
-          Harvest Live Dashboard
-          <!--          </div>-->
-        </div>
-        <div class="left-border-box top-menu-button-switch">
-          <button #tooltip="matTooltip" (click)="toggleTheme()" class="switch-button" color="primary"
-                  mat-mini-fab matTooltip="Switch to Dark Theme">
-            <mat-icon>toggle_on</mat-icon>
-          </button>
-        </div>
-      </div>
-      <div class="menu-content">
-
-        <button (click)="openAllStats()" class="menu-button" color="primary" mat-button>
-          Full Strategies Info
-        </button>
-
-        <button (click)="openTvlDialog()" class="menu-button" color="primary" mat-button>
-          TVL History Info
-        </button>
-
-        <button (click)="openIncomeDialog()" class="menu-button" color="primary" mat-button>
-          Income History Info
-        </button>
-
-        <button (click)="openPsApyDialog()" class="menu-button" color="primary" mat-button>
-          PS APY History
-        </button>
-
-      </div>
-    </div>
-  </ng-sidebar>
-
   <div ng-sidebar-content style="min-height: 100%">
 
-    <div class="top-menu row">
+    <div class="top-menu row middle">
 
       <div class="left-border-box button-menu-div">
-        <mat-icon (click)="toggleSidebar()" aria-hidden="false" aria-label="menu" class="pointer button-menu">
+        <app-main-side-menu></app-main-side-menu>
+        <!-- <mat-icon (click)="toggleSidebar()" aria-hidden="false" aria-label="menu" class="pointer button-menu">
           menu
-        </mat-icon>
+        </mat-icon> -->
       </div>
 
       <div class="left-border-box top-title-div">
@@ -65,7 +24,7 @@
         <div class="row connection-state-row">
           <div>
             <mat-icon [ngStyle]="{'color': ws.isConnected() ? '#479d43' : '#b51919'}" aria-hidden="false"
-                      aria-label="Connected" class="connect-sign">
+              aria-label="Connected" class="connect-sign">
               online_prediction
             </mat-icon>
           </div>
@@ -96,8 +55,3 @@
 
 
 </ng-sidebar-container>
-
-
-
-
-

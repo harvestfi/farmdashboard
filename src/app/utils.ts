@@ -310,6 +310,10 @@ export class Utils {
         ;
   }
 
+  public static isFarmVault(name: string): boolean {
+    return name.indexOf('FARM') >= 0;
+  }
+
   public static prettifyNumber(n: number): string {
     if (n < 1000) {
       return n.toFixed(1);
