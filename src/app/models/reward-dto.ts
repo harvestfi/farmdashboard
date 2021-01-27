@@ -5,6 +5,10 @@ export class RewardDto {
   blockDate: number;
   reward: number;
   periodFinish: number;
+  apy: number;
+  weeklyApy: number;
+  tvl: number;
+  farmBalance: number;
 
   blockDateAdopted: Date;
 
@@ -18,6 +22,10 @@ export class RewardDto {
     tx.blockDate = jsonData.blockDate;
     tx.reward = jsonData.reward;
     tx.periodFinish = jsonData.periodFinish;
+    tx.apy = jsonData.apy;
+    tx.weeklyApy = jsonData.weeklyApy;
+    tx.tvl = jsonData.tvl;
+    tx.farmBalance = jsonData.farmBalance;
 
     RewardDto.enrich(tx);
     return tx;

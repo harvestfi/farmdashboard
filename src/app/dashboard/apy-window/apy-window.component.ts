@@ -8,6 +8,7 @@ import {RewardsDialogComponent} from '../../dialogs/rewards-dialog/rewards-dialo
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {MatDialog} from '@angular/material/dialog';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-apy-window',
@@ -19,11 +20,16 @@ export class ApyWindowComponent implements OnInit {
   @Input() poolName: string;
 
   constructor(private pricesCalculationService: PricesCalculationService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private log: NGXLogger) {
   }
 
   ngOnInit(): void {
-    console.log(this.poolName + 'hw', this.poolName, this.pricesCalculationService.lastHardWorks.get(this.poolName));
+    this.log.info(this.poolName,
+        this.pricesCalculationService.lastHardWorks.get(this.poolName),
+        this.pricesCalculationService.lastRewards.get(this.poolName),
+        this.pricesCalculationService.lastHarvests.get(this.poolName)
+    );
   }
 
   closeModal(): void {
@@ -79,6 +85,10 @@ export class ApyWindowComponent implements OnInit {
     return Utils.isAutoStakeVault(this.poolName);
   }
 
+  get isFarmVault(): boolean {
+    return Utils.isFarmVault(this.poolName);
+  }
+
   // ********* PS *************
 
   get psIncome(): number {
@@ -113,12 +123,20 @@ export class ApyWindowComponent implements OnInit {
     return Math.max(this.pricesCalculationService.incomeApr(this.poolName), 0);
   }
 
+  get poolRewardPeriod(): number {
+    return this.pricesCalculationService.vaultRewardPeriod(this.poolName);
+  }
+
   get poolReward(): number {
     return this.pricesCalculationService.vaultReward(this.poolName);
   }
 
   get poolRewardApr(): number {
     return this.pricesCalculationService.vaultRewardApr(this.poolName);
+  }
+
+  get poolRewardWeeklyApy(): number {
+    return this.pricesCalculationService.vaultRewardWeeklyApy(this.poolName);
   }
 
 }

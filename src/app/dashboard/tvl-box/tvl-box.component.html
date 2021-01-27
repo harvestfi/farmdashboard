@@ -36,7 +36,7 @@
         <app-apy-window (showModal)="hideApyDetails($event)" [poolName]="tvlName"></app-apy-window>
       </app-custom-modal>
       <div class="pointer" (click)="openApyDetailsWindow()" matTooltip="
-           APR: {{vaultRewardApr(tvlName) | number: '1.0-1'}}%
+           APR: {{vaultFullApr(tvlName)}}%
            Click to open details"
            matTooltipClass="tooltip-spaced">
         {{vaultFullApy(tvlName)}}

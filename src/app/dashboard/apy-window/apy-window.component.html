@@ -14,7 +14,7 @@
 
   <hr>
   <!-- **************STRATEGY INCOME**************** -->
-  <div *ngIf="!isAutoStakeVault">
+  <div *ngIf="!isAutoStakeVault && !isFarmVault">
 
     <div class="value">
       <span class="value-name">Period of work:</span>
@@ -53,11 +53,24 @@
       It's AutoStake pool, only FARM rewards
     </div>
   </div>
+
+  <div *ngIf="isFarmVault">
+    <div class="only-farm-caption">
+      It's Harvest LP, only FARM rewards
+    </div>
+  </div>
+
   <hr>
   <!-- **************WEEKLY FARM REWARDS**************** -->
+
+  <div class="value">
+    <span class="value-name">Reward period:</span>
+    {{poolReward | number: '1.1-1'}} FARM
+  </div>
+
   <div class="value">
     <span class="value-name">FARM rewards:</span>
-    {{poolReward | number: '1.1-1'}} FARM
+    {{poolRewardPeriod | number: '1.0-0'}} day(s)
   </div>
 
   <div class="value">
@@ -68,6 +81,11 @@
   <div class="value">
     <span class="value-name">FARM reward iAPY:</span>
     {{toApy(poolRewardApr) | number: '1.1-1'}}%
+  </div>
+
+  <div class="value" matTooltip="Last week average APY">
+    <span class="value-name">FARM reward hAPY:</span>
+    {{poolRewardWeeklyApy | number: '1.1-1'}}%
   </div>
 
   <hr>

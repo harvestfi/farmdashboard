@@ -53,24 +53,14 @@ export class RewardsDialogComponent implements AfterViewInit {
             this.log.info('Not found harvest for reward');
             return;
           }
-          const apr = this.vaultRewardApr(reward, harvest);
-          if (apr === 0) {
-            this.log.info('APR is null for ', reward, harvest);
-            return;
-          }
-          const apy = Utils.aprToApyEveryDayReinvest(apr);
-          if (apy > 10000) {
-            // skip enormous data
-            return;
-          }
 
-          chartBuilder.addInData(0, reward.blockDate, apy);
+          chartBuilder.addInData(0, reward.blockDate, reward.weeklyApy);
           chartBuilder.addInData(1, reward.blockDate, harvest.lastUsdTvl / 1000000);
 
         });
 
         this.handleData(chartBuilder, [
-          ['APY %', 'right', '#0085ff'],
+          ['Weekly APY %', 'right', '#0085ff'],
           ['TVL M$', '1', '#eeb000']
         ]);
       });
