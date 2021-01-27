@@ -1,8 +1,19 @@
 @charset "UTF-8";
+#menu-button-toggle {
+  cursor: pointer;
+  border: none;
+  font-size: 24px;
+  background: none;
+  margin-left: 5px;
+  outline: none;
+}
+
 #main-side-menu {
   width: 100%;
   max-width: 400px;
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 9999;
   min-height: 100vh;
   background: white;

@@ -1,5 +1,6 @@
-<div id="main-side-menu">
+<button id="menu-button-toggle" (click)="toggleMenu()"><i class="fas fa-bars"></i></button>
 
+<div [@openMenu]="showSideMenu ? 'open' : 'closed'" id="main-side-menu">
     <div class="main-side-menu-logo-container">
         <div class="branding-box">
             <img class="main-side-menu-logo" src="/assets/harvest_logo.gif" alt="Harvest Logo">
@@ -14,10 +15,10 @@
     </div>
 
     <ul class="main-side-menu-items">
-        <li data-menu-icon="📈" class="main-side-menu-item">Full Strategies Info</li>
-        <li data-menu-icon="🕐" class="main-side-menu-item">TVL History Info</li>
-        <li data-menu-icon="💸" class="main-side-menu-item">Income History Info</li>
-        <li data-menu-icon="📅" class="main-side-menu-item">PS APY History</li>
+        <li (click)="openAllStats()" data-menu-icon="📈" class="main-side-menu-item">Full Strategies Info</li>
+        <li (click)="openTvlDialog()" data-menu-icon="🕐" class="main-side-menu-item">TVL History Info</li>
+        <li (click)="openIncomeDialog()" data-menu-icon="💸" class="main-side-menu-item">Income History Info</li>
+        <li (click)="openPsApyDialog()" data-menu-icon="📅" class="main-side-menu-item">PS APY History</li>
     </ul>
 
 
