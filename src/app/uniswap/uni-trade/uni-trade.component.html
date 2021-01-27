@@ -64,7 +64,7 @@
     </app-custom-modal>
      
     <container-element class="pointer"
-        (click)='showTradeLinks()' [ngSwitch]="checkImportantOwner(dto.owner)">
+        (click)='showTradeLinks()' [ngSwitch]="checkImportantOwner(dto)">
 
       <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price"
                 class="sign-icon">

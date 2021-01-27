@@ -6,6 +6,7 @@ import {PricesDto} from '../models/prices-dto';
 import {StaticValues} from '../static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
+import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,9 @@ export class PricesCalculationService {
   private prices = new Map<string, number>();
   private lastPriceDate = 0;
   private lastTvlDates = new Map<string, number>();
+  private rewardEnded = new Set<string>();
 
-  constructor() {
+  constructor(private log: NGXLogger) {
     StaticValues.vaults.forEach(v => this.tvls.set(v, 0.0));
   }
 
@@ -69,12 +71,19 @@ export class PricesCalculationService {
 
   public writeFromHarvestTx(tx: HarvestDto): void {
     if (!this.latestHarvest || this.latestHarvest.blockDate < tx.blockDate) {
+      if (tx.lastGas != null && (tx.lastGas + '') !== 'NaN' && tx.lastGas !== 0) {
+        StaticValues.lastGas = tx.lastGas;
+      }
+      this.savePrices(tx.pricesDto, tx.blockDateAdopted.getTime());
       this.latestHarvest = tx;
     }
     if (!tx || this.lastTvlDates.get(tx.vault) > tx.blockDate) {
       return;
     }
-    this.savePrices(tx.pricesDto, tx.blockDateAdopted.getTime());
+    if (tx.vault === 'PS') {
+      StaticValues.staked = (tx.lastTvl / tx.sharePrice) * 100;
+      StaticValues.farmTotalSupply = tx.sharePrice;
+    }
     const vaultStats = new VaultStats();
     vaultStats.lpStat = tx.lpStatDto;
     vaultStats.tvl = tx.lastTvl;
@@ -101,6 +110,7 @@ export class PricesCalculationService {
     if (!prices || this.lastPriceDate > time) {
       return;
     }
+    // this.log.info('Update prices', prices);
     this.btc = prices.btc;
     this.eth = prices.eth;
     this.prices.set('BTC', prices.btc);
@@ -162,10 +172,25 @@ export class PricesCalculationService {
     return ((reward.periodFinish - reward.blockDate) / 60 / 60 / 24);
   }
 
-  vaultRewardApr(tvlName: string): number {
+  vaultRewardWeeklyApy(tvlName: string): number {
     const reward = this.lastRewards.get(tvlName);
-    const harvest = this.lastHarvests.get(tvlName);
-    if (!harvest || !reward || (Date.now() / 1000) > reward.periodFinish) {
+    if (!reward || (Date.now() / 1000) > reward.periodFinish) {
+      return 0;
+    }
+    return reward.weeklyApy;
+  }
+
+  vaultRewardApr(poolName: string): number {
+    const reward = this.lastRewards.get(poolName);
+    const harvest = this.lastHarvests.get(poolName);
+    if (!harvest || !reward) {
+      return 0;
+    }
+    if ((Date.now() / 1000) > reward.periodFinish) {
+      if (!this.rewardEnded.has(poolName)) {
+        this.log.warn(poolName + ' reward setup zero, it is ended');
+        this.rewardEnded.add(poolName);
+      }
       return 0;
     }
     const period = StaticValues.SECONDS_OF_YEAR / (reward.periodFinish - reward.blockDate);
@@ -180,7 +205,7 @@ export class PricesCalculationService {
   incomeApr(tvlName: string): number {
     const hardWork = this.lastHardWorks.get(tvlName);
     if (hardWork) {
-      if ((Date.now() / 1000) - hardWork.blockDate > (StaticValues.SECONDS_OF_DAY * 2)) {
+      if ((Date.now() / 1000) - hardWork.blockDate > (StaticValues.SECONDS_OF_DAY * 7)) {
         // console.log('old hw for ' + tvlName);
         return 0;
       }

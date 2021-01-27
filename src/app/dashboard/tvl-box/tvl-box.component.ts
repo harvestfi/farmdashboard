@@ -52,6 +52,13 @@ export class TvlBoxComponent implements OnInit {
     return 0;
   }
 
+  vaultFullApr(name: string): string {
+    if (Utils.isAutoStakeVault(name)) {
+      return this.vaultRewardAprPrettify(name);
+    }
+    return (this.vaultApr(name) + this.vaultRewardApr(name)).toFixed(1);
+  }
+
   vaultFullApy(name: string): string {
     if (Utils.isAutoStakeVault(name)) {
       return this.vaultRewardApyPrettify(name);
@@ -71,8 +78,13 @@ export class TvlBoxComponent implements OnInit {
     return Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName));
   }
 
+  vaultRewardAprPrettify(tvlName: string): string {
+    return Utils.prettifyNumber(this.vaultRewardApr(tvlName));
+  }
+
   vaultRewardApyPrettify(tvlName: string): string {
-    return Utils.prettifyNumber(Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName)));
+    // return Utils.prettifyNumber(Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName)));
+    return Utils.prettifyNumber(this.pricesCalculationService.vaultRewardWeeklyApy(tvlName));
   }
 
   vaultRewardApr(tvlName: string): number {

@@ -18,6 +18,7 @@ export class UniswapDto {
   ownerCount: number;
   ownerBalance: number;
   ownerBalanceUsd: number;
+  methodName: string;
 
   acquired: Date;
   blockDateAdopted: Date;
@@ -44,6 +45,7 @@ export class UniswapDto {
     tx.ownerCount = jsonData.ownerCount;
     tx.ownerBalance = jsonData.ownerBalance;
     tx.ownerBalanceUsd = jsonData.ownerBalanceUsd;
+    tx.methodName = jsonData.methodName;
 
     tx.acquired = new Date();
     UniswapDto.round(tx);

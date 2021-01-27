@@ -3,14 +3,13 @@ export class StaticValues {
   public static SECONDS_OF_WEEK = StaticValues.SECONDS_OF_DAY * 7;
   public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
   public static uniInited = false;
-  public static lastPsApy = 0.0;
-  public static psIncomeUsd = 0.0;
   public static lastPrice = 0.0;
   public static lastGas = 0;
   public static lastBlockDateAdopted = new Date(0);
   public static staked = 0.0;
   public static farmTotalSupply = 0.0;
   public static farmUsers = 0;
+
   public static vaults: string[] = [
     'YCRV_V0',
     'WETH_V0',
