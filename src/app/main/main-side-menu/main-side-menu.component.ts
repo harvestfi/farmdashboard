@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
-import { trigger, state, style, animate, transition } from "@angular/animations";
-import { AllStatsDialogComponent } from "../../dialogs/all-stats-dialog/all-stats-dialog.component";
+import { Component } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import { AllStatsDialogComponent } from '../../dialogs/all-stats-dialog/all-stats-dialog.component';
 import { TvlDialogComponent } from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import { RewardsDialogComponent } from '../../dialogs/rewards-dialog/rewards-dialog.component';
 import { ViewTypeService } from '../../services/view-type.service';
@@ -11,16 +11,16 @@ import {UserSettings} from '../../user-settings';
 
 import { MatDialog } from '@angular/material/dialog';
 @Component({
-    selector: "app-main-side-menu",
-    templateUrl: "./main-side-menu.component.html",
-    styleUrls: ["./main-side-menu.component.css"],
+    selector: 'app-main-side-menu',
+    templateUrl: './main-side-menu.component.html',
+    styleUrls: ['./main-side-menu.component.css'],
     animations: [
         trigger('openMenu', [
             state('open', style({
-                transform: "translateX(0%)"
+                transform: 'translateX(0%)'
             })),
             state('closed', style({
-                transform: "translateX(-100%)"
+                transform: 'translateX(-100%)'
             })),
             transition('open => closed', [
                 animate('0.5s')
@@ -33,13 +33,11 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class MainSideMenuComponent {
     showSideMenu = false;
-    isDarkTheme = UserSettings.getTheme() === "scoreboard" ? true : false;
+    isDarkTheme = UserSettings.getTheme() === 'scoreboard' ? true : false;
 
-    constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService) {
-        console.log(this.isDarkTheme, UserSettings.getTheme());
-    }   
+    constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService) {}  
 
-    toggleMenu() {
+    toggleMenu(): void {
         this.showSideMenu = !this.showSideMenu;
     }
 

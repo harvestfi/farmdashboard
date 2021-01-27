@@ -63,7 +63,7 @@ import { CustomModalComponent } from './dialogs/custom-modal/custom-modal.compon
 import { HarvestTradeComponent } from './harvest/harvest-trade/harvest-trade.component';
 import { LinkWindowComponent } from './uniswap/link-window/link-window.component';
 import { ApyWindowComponent } from './dashboard/apy-window/apy-window.component';
-import { MainSideMenuComponent } from "./main/main-side-menu/main-side-menu.component";
+import { MainSideMenuComponent } from './main/main-side-menu/main-side-menu.component';
 
 declare var require: any;
 
