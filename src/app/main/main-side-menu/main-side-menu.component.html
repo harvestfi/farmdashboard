@@ -1,0 +1,34 @@
+<div (click)="toggleMenu()" *ngIf="showSideMenu" id="side-menu-backdrop"></div>
+<button id="menu-button-toggle" (click)="toggleMenu()"><i class="fas fa-bars"></i></button>
+<div [@openMenu]="showSideMenu ? 'open' : 'closed'" id="main-side-menu" [class]="isDarkTheme ? 'dark' : ''">
+    <div class="main-side-menu-logo-container">
+        <div class="branding-box">
+            <img class="main-side-menu-logo" src="/assets/harvest_logo.gif" alt="Harvest Logo">
+            <h4 class="main-side-menu-logo-text">Harvest</h4>
+        </div>
+
+        <div class="dark-mode-toggle-container">
+            <input [checked]="isDarkTheme" type="checkbox" name="darkmode toggle" id="dark-mode-toggle-checkbox">
+            <label title="Switch Theme" (click)="toggleTheme()"  for="dark-mode-toggle-checkbox" class="dark-mode-toggle-label"></label>
+        </div>
+
+    </div>
+
+    <ul class="main-side-menu-items">
+        <li (click)="openAllStats()" data-menu-icon="📈" class="main-side-menu-item">Full Strategies Info</li>
+        <li (click)="openTvlDialog()" data-menu-icon="🕐" class="main-side-menu-item">TVL History Info</li>
+        <li (click)="openIncomeDialog()" data-menu-icon="💸" class="main-side-menu-item">Income History Info</li>
+        <li (click)="openPsApyDialog()" data-menu-icon="📅" class="main-side-menu-item">PS APY History</li>
+        <li (click)="openWeeklyProfitDialog()" data-menu-icon="🔒" class="main-side-menu-item">Weekly Profit History</li>
+        <li (click)="openFarmBuybacksDialog()" data-menu-icon="📥" class="main-side-menu-item">FARM Buybacks</li>
+        <li (click)="openSavedFeesDialog()" data-menu-icon="🛡️" class="main-side-menu-item">Saved Gas Fees</li>
+    </ul>
+
+
+    <nav class="botton-social-icons ">
+        <a class="social-link" href="https://twitter.com/harvest_finance"><i class="fab fa-twitter"></i></a>
+        <a class="social-link" href="https://discord.gg/R5SeTVR"><i class="fab fa-discord"></i></a>
+        <a class="social-link" href="https://medium.com/harvest-finance"><i class="fab fa-medium"></i></a>
+        <a class="social-link" href="https://www.reddit.com/r/HarvestFinance/"><i class="fab fa-reddit-square"></i></a>
+    </nav>
+</div>
