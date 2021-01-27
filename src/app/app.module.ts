@@ -68,6 +68,7 @@ import { HardworkTradeComponent } from './hardwork/hardwork-trade/hardwork-trade
 import { HardworkFlowTabComponent } from './hardwork/hardwork-flow-tab/hardwork-flow-tab.component';
 import { HardworkTxComponent } from './hardwork/hardwork-tx/hardwork-tx.component';
 import { HardworkHeaderComponent } from './hardwork/hardwork-header/hardwork-header.component';
+import { HardworkFilterPipe } from './hardwork/hardwork-filter.pipe';
 
 
 declare var require: any;
@@ -121,7 +122,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HardworkTradeComponent,
     HardworkFlowTabComponent,
     HardworkTxComponent,
-    HardworkHeaderComponent
+    HardworkHeaderComponent,
+    HardworkFilterPipe
   ],
   imports: [
     AppRoutingModule,

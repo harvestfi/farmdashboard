@@ -8,15 +8,13 @@ import { HardWorkDto } from '../../models/hardwork-dto';
 @Component({
   selector: 'app-hard-work-history-list-dialog',
   templateUrl: './hard-work-history-list-dialog.component.html',
-  styleUrls: ['./hard-work-history-list-dialog.component.css']
+  styleUrls: ['./hard-work-history-list-dialog.component.scss']
 })
 export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   dtos: HardWorkDto[] = [];
   hardWorkIds = new Set<string>();
   lowestBlockDate = 999999999999;
-  
-  
-
+  vaultFilter= 'all';
   constructor(
     private hardWorkListHistory: HttpService,
     public vt: ViewTypeService,
@@ -27,9 +25,12 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.hardWorkListHistory.getHardWorkHistoryData().subscribe(data => {
 
-       
         this.addInArray(data);
     });
+  }
+
+  get vaultNames(): string[] {
+    return StaticValues.currentVaults;
   }
 
   private addInArray(newValues: HardWorkDto[]): void {

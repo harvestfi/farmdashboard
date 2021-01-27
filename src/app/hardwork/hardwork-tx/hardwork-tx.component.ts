@@ -20,8 +20,9 @@ export class HardworkTxComponent implements AfterViewInit {
   hwIds = new Set<string>();
   pureTitle = 'Harvest Live Dashboard';
   whalesMoreThan = 500;
+  vaultFilter = 'all';
   private maxMessages = 50;
-  
+
 
   constructor(
     private hwHistory: HttpService,
@@ -38,8 +39,12 @@ export class HardworkTxComponent implements AfterViewInit {
     });
   }
 
+  get vaultNames(): string[] {
+    return StaticValues.currentVaults;
+  }
+
   private addInArray(newValues: HardWorkDto[]): void {
-    
+
     this.log.info('New hard work values', newValues);
     for (let i = newValues.length - 1; i > 0; i--) {
       const hardWork = newValues[i];
@@ -49,7 +54,7 @@ export class HardworkTxComponent implements AfterViewInit {
         this.dtos.pop();
       }
     }
-    
+
   }
 
   openHardWorkHistoryListDialog(): void {

@@ -11,6 +11,7 @@ export class HardworkFlowTabComponent implements OnInit {
   @Input() dtos: HardWorkDto[] = [];
   @Input() maxHeight: 600;
   @Input() showFullDate = false;
+  @Input() vaultFilter = 'all';
   @Input() showMoreColumns = false;
   constructor(public vt: ViewTypeService) { }
 

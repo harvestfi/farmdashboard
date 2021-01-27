@@ -1,5 +1,11 @@
 <div class="hardWork-list-history">
-    <h1 class="title">Hard Work History</h1>
+    <div class="title-row">
+        <h1 class="title">Hard Work History</h1>
+        <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
+          <option [value]="'all'">All</option>
+          <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
+        </select>
+      </div>
    <app-hardwork-header [showMoreColumns]="true"></app-hardwork-header>
-    <app-hardwork-flow-tab [dtos]="dtos" [showMoreColumns]="true"  [showFullDate]="true"></app-hardwork-flow-tab>
+   <app-hardwork-flow-tab [dtos]="dtos" [showMoreColumns]="true" [showFullDate]="true" [vaultFilter]="vaultFilter"></app-hardwork-flow-tab>
 </div>
