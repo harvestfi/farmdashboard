@@ -50,7 +50,8 @@
     {{dto.otherCoin}}
   </div>
 
-  <div class="trade-price left-border-box trade-field">
+  <div class="trade-price left-border-box trade-field"
+       matTooltip="{{dto.otherCoin}} price: {{(dto.otherAmount / dto.amount) | number: '1.4-4'}}">
     {{dto.lastPrice | number: '1.0-0'}}
   </div>
  
