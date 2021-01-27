@@ -1,5 +1,5 @@
+<div (click)="toggleMenu()" *ngIf="showSideMenu" id="side-menu-backdrop"></div>
 <button id="menu-button-toggle" (click)="toggleMenu()"><i class="fas fa-bars"></i></button>
-
 <div [@openMenu]="showSideMenu ? 'open' : 'closed'" id="main-side-menu">
     <div class="main-side-menu-logo-container">
         <div class="branding-box">
@@ -9,7 +9,7 @@
 
         <div class="dark-mode-toggle-container">
             <input type="checkbox" name="darkmode toggle" id="dark-mode-toggle-checkbox">
-            <label for="dark-mode-toggle-checkbox" class="dark-mode-toggle-label"></label>
+            <label  for="dark-mode-toggle-checkbox" class="dark-mode-toggle-label"></label>
         </div>
 
     </div>

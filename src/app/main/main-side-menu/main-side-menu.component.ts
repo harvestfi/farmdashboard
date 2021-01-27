@@ -3,6 +3,7 @@ import { trigger, state, style, animate, transition } from "@angular/animations"
 import { AllStatsDialogComponent } from "../../dialogs/all-stats-dialog/all-stats-dialog.component";
 import { TvlDialogComponent } from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import { RewardsDialogComponent } from '../../dialogs/rewards-dialog/rewards-dialog.component';
+import { ViewTypeService } from '../../services/view-type.service';
 
 import { MatDialog } from '@angular/material/dialog';
 @Component({
@@ -12,10 +13,10 @@ import { MatDialog } from '@angular/material/dialog';
     animations: [
         trigger('openMenu', [
             state('open', style({
-                left: "0%"
+                transform: "translateX(0%)"
             })),
             state('closed', style({
-                left: "-50%"
+                transform: "translateX(-100%)"
             })),
             transition('open => closed', [
                 animate('0.5s')
@@ -27,9 +28,9 @@ import { MatDialog } from '@angular/material/dialog';
     ]
 })
 export class MainSideMenuComponent {
-    showSideMenu = true;
+    showSideMenu = false;
 
-    constructor(private dialog: MatDialog) {
+    constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService) {
 
     }
 
@@ -76,5 +77,9 @@ export class MainSideMenuComponent {
             }
         });
         this.toggleMenu();
+    }
+
+    toggleTheme(): void {
+        this.viewTypeService.toggleTheme();
     }
 }

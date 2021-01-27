@@ -1,4 +1,15 @@
 @charset "UTF-8";
+#side-menu-backdrop {
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+  cursor: pointer;
+}
+
 #menu-button-toggle {
   cursor: pointer;
   border: none;
@@ -10,7 +21,7 @@
 
 #main-side-menu {
   width: 100%;
-  max-width: 400px;
+  max-width: 275px;
   position: fixed;
   top: 0;
   left: 0;
