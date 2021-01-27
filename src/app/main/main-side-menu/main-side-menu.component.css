@@ -34,6 +34,12 @@
   display: flex;
   flex-direction: column;
 }
+#main-side-menu.dark {
+  background: #363661;
+}
+#main-side-menu.dark * {
+  color: white !important;
+}
 #main-side-menu .main-side-menu-logo-container {
   padding: 20px;
   display: flex;
@@ -49,6 +55,7 @@
 }
 #main-side-menu .main-side-menu-logo-container .main-side-menu-logo {
   height: 60px;
+  border-radius: 15px;
 }
 #main-side-menu .main-side-menu-logo-container .main-side-menu-logo-text {
   font-size: 20px;

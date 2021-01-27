@@ -1,6 +1,6 @@
 <div (click)="toggleMenu()" *ngIf="showSideMenu" id="side-menu-backdrop"></div>
 <button id="menu-button-toggle" (click)="toggleMenu()"><i class="fas fa-bars"></i></button>
-<div [@openMenu]="showSideMenu ? 'open' : 'closed'" id="main-side-menu">
+<div [@openMenu]="showSideMenu ? 'open' : 'closed'" id="main-side-menu" [class]="isDarkTheme ? 'dark' : ''">
     <div class="main-side-menu-logo-container">
         <div class="branding-box">
             <img class="main-side-menu-logo" src="/assets/harvest_logo.gif" alt="Harvest Logo">
@@ -8,8 +8,8 @@
         </div>
 
         <div class="dark-mode-toggle-container">
-            <input type="checkbox" name="darkmode toggle" id="dark-mode-toggle-checkbox">
-            <label  for="dark-mode-toggle-checkbox" class="dark-mode-toggle-label"></label>
+            <input [checked]="isDarkTheme" type="checkbox" name="darkmode toggle" id="dark-mode-toggle-checkbox">
+            <label title="Switch Theme" (click)="toggleTheme()"  for="dark-mode-toggle-checkbox" class="dark-mode-toggle-label"></label>
         </div>
 
     </div>
@@ -19,6 +19,9 @@
         <li (click)="openTvlDialog()" data-menu-icon="🕐" class="main-side-menu-item">TVL History Info</li>
         <li (click)="openIncomeDialog()" data-menu-icon="💸" class="main-side-menu-item">Income History Info</li>
         <li (click)="openPsApyDialog()" data-menu-icon="📅" class="main-side-menu-item">PS APY History</li>
+        <li (click)="openWeeklyProfitDialog()" data-menu-icon="🔒" class="main-side-menu-item">Weekly Profit History</li>
+        <li (click)="openFarmBuybacksDialog()" data-menu-icon="📥" class="main-side-menu-item">FARM Buybacks</li>
+        <li (click)="openSavedFeesDialog()" data-menu-icon="🛡️" class="main-side-menu-item">Saved Gas Fees</li>
     </ul>
 
 

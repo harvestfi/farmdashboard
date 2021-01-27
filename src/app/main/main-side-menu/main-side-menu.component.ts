@@ -1,9 +1,13 @@
-import { Component, HostBinding } from "@angular/core";
+import { Component } from "@angular/core";
 import { trigger, state, style, animate, transition } from "@angular/animations";
 import { AllStatsDialogComponent } from "../../dialogs/all-stats-dialog/all-stats-dialog.component";
 import { TvlDialogComponent } from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import { RewardsDialogComponent } from '../../dialogs/rewards-dialog/rewards-dialog.component';
 import { ViewTypeService } from '../../services/view-type.service';
+import { ProfitDialogComponent } from '../../dialogs/profit-dialog/profit-dialog.component';
+import { FarmBuybacksDialogComponent } from '../../dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
+import { HardWorkHistoryDialogComponent } from '../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
+import {UserSettings} from '../../user-settings';
 
 import { MatDialog } from '@angular/material/dialog';
 @Component({
@@ -29,10 +33,11 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class MainSideMenuComponent {
     showSideMenu = false;
+    isDarkTheme = UserSettings.getTheme() === "scoreboard" ? true : false;
 
     constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService) {
-
-    }
+        console.log(this.isDarkTheme, UserSettings.getTheme());
+    }   
 
     toggleMenu() {
         this.showSideMenu = !this.showSideMenu;
@@ -78,6 +83,43 @@ export class MainSideMenuComponent {
         });
         this.toggleMenu();
     }
+
+    openWeeklyProfitDialog(): void {
+        this.dialog.open(ProfitDialogComponent, {
+            width: '100%',
+            height: 'auto',
+            data: {
+                title: 'Weekly profit history chart',
+                name: 'Name'
+            }
+        });
+        this.toggleMenu();
+    }
+
+    openFarmBuybacksDialog(): void {
+        this.dialog.open(FarmBuybacksDialogComponent, {
+            width: '100%',
+            height: 'auto',
+            data: {
+                title: 'FARM Buyback history chart',
+                name: 'Name'
+            }
+        });
+        this.toggleMenu();
+    }
+
+    openSavedFeesDialog(): void {
+        this.dialog.open(HardWorkHistoryDialogComponent, {
+            width: '100%',
+            height: 'auto',
+            data: {
+                title: 'Saved Gas Fees History',
+                name: 'Name'
+            }
+        });
+        this.toggleMenu();
+    }
+
 
     toggleTheme(): void {
         this.viewTypeService.toggleTheme();
