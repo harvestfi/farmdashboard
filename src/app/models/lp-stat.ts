@@ -3,4 +3,6 @@ export class LpStat {
   coin2: string;
   amount1: number;
   amount2: number;
+  price1: number;
+  price2: number;
 }

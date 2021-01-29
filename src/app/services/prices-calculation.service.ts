@@ -15,18 +15,15 @@ export class PricesCalculationService {
   public tvls = new Map<string, number>();
   public tvlNames = new Set<string>();
   public allTvls = 0.0;
-  public btc = 0.0;
-  public eth = 0.0;
   public vaultStats = new Map<string, VaultStats>();
   public lastHarvests = new Map<string, HarvestDto>();
   public lastHardWorks = new Map<string, HardWorkDto>();
   public lastRewards = new Map<string, RewardDto>();
   public latestHarvest: HarvestDto;
   public latestHardWork: HardWorkDto;
-  private prices = new Map<string, number>();
-  private lastPriceDate = 0;
   private lastTvlDates = new Map<string, number>();
   private rewardEnded = new Set<string>();
+  private lastPrices = new Map<string, PricesDto>();
 
   constructor(private log: NGXLogger) {
     StaticValues.vaults.forEach(v => this.tvls.set(v, 0.0));
@@ -47,6 +44,9 @@ export class PricesCalculationService {
         return 'BTC';
       case 'CRV_EURS':
         return 'EURS';
+      case 'PS_V0':
+      case 'PS':
+        return 'FARM';
     }
     return name;
   }
@@ -74,7 +74,6 @@ export class PricesCalculationService {
       if (tx.lastGas != null && (tx.lastGas + '') !== 'NaN' && tx.lastGas !== 0) {
         StaticValues.lastGas = tx.lastGas;
       }
-      this.savePrices(tx.pricesDto, tx.blockDateAdopted.getTime());
       this.latestHarvest = tx;
     }
     if (!tx || this.lastTvlDates.get(tx.vault) > tx.blockDate) {
@@ -103,34 +102,6 @@ export class PricesCalculationService {
     }
 
     this.lastHardWorks.set(tx.vault, tx);
-  }
-
-  public savePrices(prices: PricesDto, time: number): void {
-    // console.log('savePrices', prices, time, this.lastPriceDate);
-    if (!prices || this.lastPriceDate > time) {
-      return;
-    }
-    // this.log.info('Update prices', prices);
-    this.btc = prices.btc;
-    this.eth = prices.eth;
-    this.prices.set('BTC', prices.btc);
-    this.prices.set('ETH', prices.eth);
-    this.prices.set('DPI', prices.dpi);
-    this.prices.set('GRAIN', prices.grain);
-    this.prices.set('BAC', prices.bac);
-    this.prices.set('BAS', prices.bas);
-    this.prices.set('MIC', prices.mic);
-    this.prices.set('MIS', prices.mis);
-    this.prices.set('BSG', prices.bsg);
-    this.prices.set('BSGS', prices.bsgs);
-    this.prices.set('ESD', prices.esd);
-    this.prices.set('DSD', prices.dsd);
-    this.prices.set('MAAPL', prices.maapl);
-    this.prices.set('MAMZN', prices.mamzn);
-    this.prices.set('MGOOGL', prices.mgoogl);
-    this.prices.set('MTSLA', prices.mtsla);
-    this.prices.set('EURS', prices.eurs);
-    this.lastPriceDate = time;
   }
 
   public updateTvls(): void {
@@ -276,14 +247,19 @@ export class PricesCalculationService {
     return lpStaked;
   }
 
-  private getPrice(name: string): number {
+  public getPrice(name: string): number {
+    name = PricesCalculationService.mapCoinNameToSimple(name);
     if (PricesCalculationService.isStableCoin(name)) {
       return 1.0;
     }
     if (name === 'FARM') {
       return this.lastFarmPrice();
     }
-    return this.prices.get(PricesCalculationService.mapCoinNameToSimple(name));
+    if (!this.lastPrices.has(name)) {
+      return 0;
+    }
+    const usdPrice = this.getPrice(this.lastPrices.get(name).otherToken);
+    return this.lastPrices.get(name).price * usdPrice;
   }
 
   private calculateTvlForLp(lpStat: LpStat): number {
@@ -304,8 +280,20 @@ export class PricesCalculationService {
       return this.calculateTvlForLp(vaultStats.lpStat);
     } else if (vaultStats.tvl) {
       const price = this.getPrice(name);
+      if (price === 0) {
+        console.log('not found price for ' + name);
+      }
       return vaultStats.tvl * price;
     }
     return 0.0;
+  }
+
+  public savePrice(tx: PricesDto): void {
+    const name = PricesCalculationService.mapCoinNameToSimple(tx.token);
+    if (this.lastPrices.has(name) && this.lastPrices.get(name).block > tx.block) {
+      this.log.warn('Loaded old price!', tx);
+      return;
+    }
+    this.lastPrices.set(name, tx);
   }
 }
