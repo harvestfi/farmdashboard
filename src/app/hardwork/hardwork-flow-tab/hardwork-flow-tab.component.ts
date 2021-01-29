@@ -12,6 +12,7 @@ export class HardworkFlowTabComponent implements OnInit {
   @Input() maxHeight: 600;
   @Input() showFullDate = false;
   @Input() vaultFilter = 'all';
+  @Input() minAmount = 0;
   @Input() showMoreColumns = false;
   constructor(public vt: ViewTypeService) { }
 

@@ -16,8 +16,12 @@ export class HardworkTradeComponent implements OnInit {
   @Input() fullDate = false;
   @Input() moreColumns = false;
   openModal = false;
+  hash = '';
 
   ngOnInit(): void {
+    const temp = this.dto.id.split('_');
+    this.hash = temp[0];
+
   }
 
   showTradeLinks(): void {

@@ -5,7 +5,15 @@
           <option [value]="'all'">All</option>
           <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
         </select>
+        <input #hardworkDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="text">
       </div>
-   <app-hardwork-header [showMoreColumns]="true"></app-hardwork-header>
    <app-hardwork-flow-tab [dtos]="dtos" [showMoreColumns]="true" [showFullDate]="true" [vaultFilter]="vaultFilter"></app-hardwork-flow-tab>
+
+   <div class="button-container">
+    <button class="show-even-more" (click)="getOlderHardworks()" [disabled]="disabled" [ngStyle]="{
+                    'pointer-events': disabled ? 'none' : 'auto',
+                    'cursor': disabled ? 'wait' : 'pointer',
+                    'background-color': disabled ? '#eebf65' : '#eebf65'
+            }">{{disabled ? 'please wait' : 'load more'}}</button>
+</div>
 </div>

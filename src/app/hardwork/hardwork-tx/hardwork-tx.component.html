@@ -13,13 +13,16 @@
           <div class="hardWork-list-history">
             <div class="title-row">
               <p class="title">Hard Work History</p>
+
               <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
                 <option [value]="'all'">All</option>
                 <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
               </select>
+
+              <input #hardworkDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="text">
             </div>
-            <app-hardwork-header></app-hardwork-header>
-            <app-hardwork-flow-tab [dtos]="dtos" [showMoreColumns]="false" [showFullDate]="false" [maxHeight]="130" [vaultFilter]="vaultFilter"></app-hardwork-flow-tab>
+            
+            <app-hardwork-flow-tab [dtos]="dtos" [showMoreColumns]="false" [showFullDate]="false" [maxHeight]="180" [vaultFilter]="vaultFilter" [minAmount]="+hardworkDtoFilter.value"></app-hardwork-flow-tab>
         </div>
         <div class="button-container">
           <button (click)="openHardWorkHistoryListDialog()" class="show-more">show older</button>

@@ -5,7 +5,9 @@
     justify-content: space-evenly;
     position: relative;
     color: black;
-    margin-bottom: 10px;
+    font-weight: bold;
+    width: 100%;
+    font-size: .9em;
  
 
     .hardwork-field {
@@ -13,20 +15,20 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        font-size: 1em;
         .tvl-img {
-            width: 20%;
+            width: 25%;
             margin: 0 auto;
            
         }
     }
     .pointer {
-        position: absolute;
-        right: 0;
-        bottom: 50%;
-        top: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         .sign-icon {
             font-size: .9em;
+            margin-top: 10px;
+            margin-bottom: 0;
 
         }
     }

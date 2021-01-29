@@ -14,7 +14,8 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   dtos: HardWorkDto[] = [];
   hardWorkIds = new Set<string>();
   lowestBlockDate = 999999999999;
-  vaultFilter= 'all';
+  vaultFilter = 'all';
+  disabled  = false;
   constructor(
     private hardWorkListHistory: HttpService,
     public vt: ViewTypeService,
@@ -23,20 +24,43 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
-    this.hardWorkListHistory.getHardWorkHistoryData().subscribe(data => {
-
-        this.addInArray(data);
-    });
+    this.hardWorkListHistory.getHardWorkHistoryDataByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY / 10), this.lowestBlockDate).subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
   }
 
   get vaultNames(): string[] {
     return StaticValues.currentVaults;
   }
 
+  getOlderHardworks(): void {
+    this.disabled = true;
+    if (this.lowestBlockDate === 0) {
+      return;
+    }
+    this.hardWorkListHistory.getHardWorkHistoryDataByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2), this.lowestBlockDate).subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
+  }
+
+  private isUniqHardwork(hw: HardWorkDto): boolean {
+    if (this.hardWorkIds.has(hw.id)) {
+      return false;
+    }
+    this.hardWorkIds.add(hw.id);
+    if (this.hardWorkIds.size > 100_000) {
+      this.hardWorkIds = new Set<string>();
+    }
+    return true;
+  }
+
   private addInArray(newValues: HardWorkDto[]): void {
     this.log.info('New hard work values', newValues);
     for (let i = newValues.length - 1; i > 0; i--) {
       const hardWork = newValues[i];
+      if (!this.isUniqHardwork(hardWork)) {
+        this.log.warn('Not unique transaction', hardWork);
+        continue;
+      }
+      if (hardWork.blockDate < this.lowestBlockDate) {
+        this.lowestBlockDate = hardWork.blockDate;
+      }
       HardWorkDto.enrich(hardWork);
       this.dtos.push(hardWork);
     }
