@@ -1,0 +1,6 @@
+.custom-modal {
+  position: absolute;
+  z-index: 1000;
+  right: 0px;
+  padding: 2%;
+}

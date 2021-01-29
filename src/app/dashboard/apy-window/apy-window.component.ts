@@ -47,7 +47,7 @@ export class ApyWindowComponent implements OnInit {
   // ------------------- DIALOGS --------------------
 
   openIncomeDialog(): void {
-    if (Utils.isAutoStakeVault(this.poolName)) {
+    if (this.poolName === 'PS') {
       this.openPsApyDialog();
       return;
     }

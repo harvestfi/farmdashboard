@@ -64,6 +64,7 @@ import { HarvestTradeComponent } from './harvest/harvest-trade/harvest-trade.com
 import { LinkWindowComponent } from './uniswap/link-window/link-window.component';
 import { ApyWindowComponent } from './dashboard/apy-window/apy-window.component';
 import { MainSideMenuComponent } from './main/main-side-menu/main-side-menu.component';
+import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.component';
 
 declare var require: any;
 
@@ -112,7 +113,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HarvestTradeComponent,
     LinkWindowComponent,
     ApyWindowComponent,
-    MainSideMenuComponent
+    MainSideMenuComponent,
+    SimpleModalComponent
   ],
   imports: [
     AppRoutingModule,

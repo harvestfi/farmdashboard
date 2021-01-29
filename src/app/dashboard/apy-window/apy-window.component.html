@@ -12,19 +12,19 @@
     </div>
   </div>
 
+  <div class="value">
+    <span class="value-name">Average TVL(last week): </span>
+    {{poolAvgTvl | number: '1.1-1'}}$
+  </div>
+
+  <div class="value">
+    <span class="value-name">Period of work: </span>
+    <span>{{poolPeriodOfWork | number: '1.1-1'}} days</span>
+  </div>
+
   <hr>
   <!-- **************STRATEGY INCOME**************** -->
   <div *ngIf="!isAutoStakeVault && !isFarmVault">
-
-    <div class="value">
-      <span class="value-name">Period of work:</span>
-      <span>{{poolPeriodOfWork | number: '1.1-1'}} days</span>
-    </div>
-
-    <div class="value">
-      <span class="value-name">Average TVL(last week):</span>
-      {{poolAvgTvl | number: '1.1-1'}}$
-    </div>
 
     <div class="value">
       <span class="value-name">Total earned:</span>
