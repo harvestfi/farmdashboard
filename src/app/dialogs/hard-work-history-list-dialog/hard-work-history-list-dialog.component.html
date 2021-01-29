@@ -7,7 +7,8 @@
         </select>
         <input #hardworkDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="text">
       </div>
-   <app-hardwork-flow-tab [dtos]="dtos" [showMoreColumns]="true" [showFullDate]="true" [vaultFilter]="vaultFilter"></app-hardwork-flow-tab>
+      <app-hardwork-header [showMoreColumns]='true' ></app-hardwork-header>
+   <app-hardwork-flow-tab [dtos]="dtos" [showMoreColumns]="true" [showFullDate]="true" [vaultFilter]="vaultFilter" [minAmount]="+hardworkDtoFilter.value"></app-hardwork-flow-tab>
 
    <div class="button-container">
     <button class="show-even-more" (click)="getOlderHardworks()" [disabled]="disabled" [ngStyle]="{

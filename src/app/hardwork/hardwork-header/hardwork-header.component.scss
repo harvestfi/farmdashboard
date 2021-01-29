@@ -13,7 +13,9 @@
         text-align: center;
         font-weight: bold;
         font-size: 1em;
-        
+    &.link {
+        opacity: 0;
+    }
         
        
     }

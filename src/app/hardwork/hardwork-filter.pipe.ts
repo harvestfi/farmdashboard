@@ -9,11 +9,12 @@ export class HardworkFilterPipe implements PipeTransform {
   tmp = [];
 
   transform(dtos: HardWorkDto[], minUsdAmount: number,  vault: string): HardWorkDto[] {
-    if (!dtos || ( !vault)) {
+    console.log(minUsdAmount)
+    if (!dtos || (!minUsdAmount && !vault)) {
       return dtos;
     }
     this.tmp = [];
-    const arr = dtos.filter(dto =>dto.shareChangeUsd > minUsdAmount && (!vault || vault === 'all' || dto.vault === vault));
+    const arr = dtos.filter(dto => dto.shareChangeUsd > minUsdAmount && (!vault || vault === 'all' || dto.vault === vault));
     for (const el of arr) {
       this.tmp.push(el);
     }

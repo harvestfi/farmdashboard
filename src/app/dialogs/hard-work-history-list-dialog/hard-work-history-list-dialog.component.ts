@@ -17,14 +17,14 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   vaultFilter = 'all';
   disabled  = false;
   constructor(
-    private hardWorkListHistory: HttpService,
+    private hwListHistory: HttpService,
     public vt: ViewTypeService,
     private log: NGXLogger
 
   ) { }
 
   ngAfterViewInit(): void {
-    this.hardWorkListHistory.getHardWorkHistoryDataByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY / 10), this.lowestBlockDate).subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
+    this.hwListHistory.getHardWorkHistoryData().subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
   }
 
   get vaultNames(): string[] {
@@ -36,7 +36,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
     if (this.lowestBlockDate === 0) {
       return;
     }
-    this.hardWorkListHistory.getHardWorkHistoryDataByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2), this.lowestBlockDate).subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
+    this.hwListHistory.getHWHistoryDataByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2), this.lowestBlockDate).subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
   }
 
   private isUniqHardwork(hw: HardWorkDto): boolean {
