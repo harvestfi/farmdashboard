@@ -66,6 +66,8 @@ export class PricesCalculationService {
         || 'UST_NAME' === name
         || 'CRV_UST' === name
         || 'UST' === name
+        || 'EURS' === name
+        || 'CRV_EURS' === name
         ;
   }
 
@@ -176,8 +178,8 @@ export class PricesCalculationService {
   incomeApr(tvlName: string): number {
     const hardWork = this.lastHardWorks.get(tvlName);
     if (hardWork) {
-      if ((Date.now() / 1000) - hardWork.blockDate > (StaticValues.SECONDS_OF_DAY * 7)) {
-        // console.log('old hw for ' + tvlName);
+      if ((Date.now() / 1000) - hardWork.blockDate > (StaticValues.SECONDS_OF_DAY * 14)) {
+        // this.log.warn('old hw for ' + tvlName);
         return 0;
       }
       const weeklyProfit = Math.max(hardWork.weeklyProfit, 0);
