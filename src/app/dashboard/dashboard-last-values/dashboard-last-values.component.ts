@@ -39,11 +39,11 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get btcF(): number {
-    return this.pricesCalculationService.btc;
+    return this.pricesCalculationService.getPrice('BTC');
   }
 
   get ethF(): number {
-    return this.pricesCalculationService.eth;
+    return this.pricesCalculationService.getPrice('ETH');
   }
 
   get farmStaked(): number {

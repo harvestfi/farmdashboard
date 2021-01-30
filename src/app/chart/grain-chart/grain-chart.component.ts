@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
-import {PriceService} from '../../services/price.service';
 import {UniswapSubscriberService} from '../../uniswap/uniswap-subscriber.service';
 import {PriceChartBuilder} from '../price-chart-builder';
+import {HttpService} from '../../services/http.service';
 
 @Component({
   selector: 'app-grain-chart',
@@ -14,7 +14,7 @@ export class GrainChartComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
   coin = 'GRAIN';
 
-  constructor(private priceService: PriceService,
+  constructor(private httpService: HttpService,
               private uniswapSubscriberService: UniswapSubscriberService,
               public vt: ViewTypeService,
               private log: NGXLogger) {
@@ -22,7 +22,7 @@ export class GrainChartComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     const priceChartBuilder = new PriceChartBuilder(this.log, this.coin, this.chartEl, this.vt);
-    this.priceService.getUniswapOHLC(this.coin).subscribe(data => {
+    this.httpService.getUniswapOHLC(this.coin).subscribe(data => {
       this.log.debug(this.coin + ' prices loaded ', data);
       priceChartBuilder.addValuesToChart(data, false);
     });
