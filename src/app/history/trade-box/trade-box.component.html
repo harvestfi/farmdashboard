@@ -135,7 +135,7 @@
     </div>
 
     <div class="head amount balance-coll">
-      Balance
+      Profit
     </div>
 
     <div class="head amount balance-coll">
@@ -186,7 +186,8 @@
 
     <div class="value amount balance-coll"
          matTooltip="{{harvestDto.ownerBalance| number: '1.0-8'}}">
-      {{harvestDto.ownerBalance | number: '1.0-0'}}
+      {{harvestDto.profitUsd | number: '1.0-0'}}
+      <text class="coin-sign">$</text>
     </div>
 
     <div class="value other-coin-col">
