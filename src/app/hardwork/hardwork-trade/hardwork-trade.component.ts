@@ -40,4 +40,8 @@ export class HardworkTradeComponent implements OnInit {
     return StaticValues.getImgSrcForVault(name);
   }
 
+  openEthersacanTx(hash: string): void {
+    Utils.openEthersacanTx(hash);
+  }
+
 }

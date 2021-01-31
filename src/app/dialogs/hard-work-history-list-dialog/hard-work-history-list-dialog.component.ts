@@ -52,7 +52,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   }
 
   private addInArray(newValues: HardWorkDto[]): void {
-    this.log.info('New hard work values', newValues);
+    // this.log.info('New hard work values', newValues);
     for (let i = newValues.length - 1; i > 0; i--) {
       const hardWork = newValues[i];
       if (!this.isUniqHardwork(hardWork)) {

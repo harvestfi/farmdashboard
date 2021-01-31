@@ -20,7 +20,7 @@
       
     </div>
     <div class="hardwork-field hardwork-shareChangeUsd">
-      ${{dto.shareChangeUsd.toFixed(2) | number: '1.0-0'}}
+      ${{dto.shareChangeUsd | number: '1.2-2'}}
   </div>
     
     
@@ -52,7 +52,7 @@
   </app-custom-modal>
 
     <div class="hardwork-field pointer ">
-        <mat-icon class='sign-icon' (click)="showTradeLinks()"
+        <mat-icon class='sign-icon' (click)="openEthersacanTx(hash)"
                     [ngStyle]="{'color': '#b5b4b4'}"
                     aria-hidden="false" aria-label="Price" class="sign-icon">
             open_in_new
