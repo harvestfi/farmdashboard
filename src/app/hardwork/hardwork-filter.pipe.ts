@@ -9,7 +9,6 @@ export class HardworkFilterPipe implements PipeTransform {
   tmp = [];
 
   transform(dtos: HardWorkDto[], minUsdAmount: number,  vault: string): HardWorkDto[] {
-    console.log(minUsdAmount)
     if (!dtos || (!minUsdAmount && !vault)) {
       return dtos;
     }

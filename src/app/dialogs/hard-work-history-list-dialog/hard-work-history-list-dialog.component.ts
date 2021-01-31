@@ -36,7 +36,8 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
     if (this.lowestBlockDate === 0) {
       return;
     }
-    this.hwListHistory.getHWHistoryDataByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2), this.lowestBlockDate).subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
+    this.hwListHistory.getHWHistoryDataByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2),
+    this.lowestBlockDate).subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
   }
 
   private isUniqHardwork(hw: HardWorkDto): boolean {
