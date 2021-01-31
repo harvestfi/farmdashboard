@@ -1,0 +1,109 @@
+
+.history-page {
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100%;
+
+  .form-input {
+    color: black;
+    width: 60%;
+  
+    .label-input {
+      color: black;
+    }
+    
+    .open-button {
+      margin: 5px;
+    }
+    
+  }
+
+  .title {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+
+  .balance-chart {
+    width: 100%;
+    height: 200px;
+  }
+  .stat-row {
+    margin-bottom: 10px;
+
+    .title-card {
+      padding: 3px;
+      margin: 5px;
+      font-weight: bolder;
+      display: flex;
+      align-items: baseline;
+
+      .tvl-img {
+        width: 15px;
+        height: 15px;
+        margin-right: 3px;
+      }
+
+      .checkbox {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  .main-row {
+    display: flex;
+    width: 70%;
+    margin: 0 auto;
+    padding-top: 10px;
+    .box-card {
+      /*width: 50%;*/
+      display: inline-block;
+      color: black;
+      margin: 5px;
+      padding: 3px;
+      /*line-height: 100%;*/
+    }
+    .values {
+      float: right;
+      width: 100%;
+    }
+    
+  }
+  .message {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 1.3em;
+    margin: 20px;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  .title {
+    font-size: 1em;
+  }
+
+  .main-row {
+    width: 97%;
+  }
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: #8d8d8d;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: black !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: black !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: black !important;;
+}

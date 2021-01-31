@@ -1,0 +1,112 @@
+<div class="history-page">
+    <div *ngIf="address" id="title-id" class="title">
+      History for address
+    </div>
+  
+    <div class="title">
+      <mat-form-field class="form-input">
+        <mat-label class="label-input">Address</mat-label>
+        <input [(ngModel)]="inputAddress" matInput type="text" (keyup.enter)="routeToAddress(inputAddress?.trim())">
+        <button (click)="inputAddress=''" *ngIf="inputAddress" id="btn1" aria-label="Clear" mat-button mat-icon-button matSuffix>
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button *ngIf="this.inputAddress && this.inputAddress != this.address" id="btn2" class="open-button" color="global"
+              mat-mini-fab routerLink="/history/{{this.inputAddress?.trim()}}">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  
+    <div *ngIf="address && fullData?.length !== 0" #price_chart class="balance-chart" id="chart1"></div>
+  
+    <div class="row stat-row">
+  
+      <div *ngIf="address && fullData?.length != 0" id="sum1" class="left-border-box styled-card title-card">
+        <div class="">
+          🏦 Summary: {{summary() | number: '1.0-0'}}$
+          <mat-checkbox class="checkbox" (change)="changeAllInclude(); sortValues()"
+                        [(ngModel)]="includeAll"></mat-checkbox>
+        </div>
+      </div>
+  
+      <div *ngIf="address && fullData?.length != 0" id="rewards1" class="left-border-box styled-card title-card">
+        <div class="pointer" (click)="openProfitHistoryDialog()">
+          🤑 Rewards: {{rewardSum | number: '1.0-0'}} FARM ({{rewardSumUsd | number: '1.0-0'}}$)
+        </div>
+      </div>
+  
+      <div *ngIf="address && fullData?.length != 0" id="empty1">
+        <div class="stat-2 left-border-box styled-card title-card">
+          Show empty pools
+          <mat-checkbox class="checkbox" (change)="sortValues()" [(ngModel)]="showEmptyPools"></mat-checkbox>
+        </div>
+      </div>
+  
+    </div>
+  
+    <div class="row stat-row">
+  
+      <div *ngIf="lastTransfer" id="farm1" class="stat-1 left-border-box styled-card title-card">
+        <div class="">
+          <img alt="?" class="tvl-img" src="{{getImgUrl('FARM')}}"/>
+          FARM: {{transferBalanceUsd(lastTransfer) | number: '1.0-2'}}$
+        </div>
+        <mat-checkbox class="checkbox" (change)="sortValues()" [(ngModel)]="includeTransfers"></mat-checkbox>
+      </div>
+  
+      <div *ngFor="let c of vaults">
+        <div *ngIf="showEmptyPools || lastStaked.get(c.value).ownerBalanceUsd > 0.01" id="vault-{{c.value}}"
+             class="stat-2 left-border-box styled-card title-card">
+          <div (click)="openHistoryDialog(c.value)" class="pointer">
+            <img alt="?" class="tvl-img" src="{{getImgUrl(c.value)}}"/>
+            {{prettyVaultName(c.value)}}: {{lastStaked.get(c.value).ownerBalanceUsd | number: '1.0-2'}}$
+          </div>
+          <mat-checkbox class="checkbox" (change)="sortValues()" [(ngModel)]="c.checked"
+                        name="{{c.value}}"></mat-checkbox>
+        </div>
+      </div>
+  
+    </div>
+  
+    <div class="row stat-row">
+  
+      <div *ngIf="includeTransfers" id="trans1">
+        <div *ngFor="let c of transferTypeIncluded">
+          <div class="stat-2 left-border-box styled-card title-card">
+              {{prettyTransferType(c.value)}}
+            <mat-checkbox class="checkbox" (change)="sortValues()" [(ngModel)]="c.checked"
+                          name="{{c.value}}"></mat-checkbox>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  
+    <div *ngFor="let record of sortedData">
+  
+      <div class="main-row">
+  
+        <div class="styled-card box-card row values">
+          <div *ngIf="isHarvest(record)" style="width: 100%" id="harv1">
+            <app-trade-box [harvestDto]="record" [address]="address"></app-trade-box>
+          </div>
+  
+          <div *ngIf="isTransfer(record)" id="tr1" style="width: 100%">
+            <app-trade-box [transferDto]="record" [address]="address"></app-trade-box>
+          </div>
+        </div>
+  
+      </div>
+  
+    </div>
+  
+    <div *ngIf="address && fullData?.length == 0" id="not-found1" class="message">
+      Address doesn't have any operations
+    </div>
+  
+    <div *ngIf="!sortedData" id="spinner" class="message">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  
+  </div>
+  

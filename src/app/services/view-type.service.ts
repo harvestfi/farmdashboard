@@ -23,4 +23,8 @@ export class ViewTypeService {
   public isNonScoreboard(): boolean {
     return UserSettings.getTheme() !== this.themeScoreboard;
   }
+
+  public isLightView(): string {
+    return UserSettings.getTheme()
+  }
 }

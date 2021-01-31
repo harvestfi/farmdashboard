@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {HistoryPageComponent} from '../history/history-page/history-page.component';
+import {HistoryPageViewComponent} from '../history/history-page-view/history-page-view.component';
 import {MainComponentsComponent} from '../main/main-components/main-components.component';
 
 const routes: Routes = [
   {path: '', component: MainComponentsComponent},
-  {path: 'history/:address', component: HistoryPageComponent},
-  {path: 'history', component: HistoryPageComponent},
+  {path: 'history/:address', component: HistoryPageViewComponent},
+  {path: 'history', component: HistoryPageViewComponent},
 
   {path: '**', redirectTo: ''}
 ];

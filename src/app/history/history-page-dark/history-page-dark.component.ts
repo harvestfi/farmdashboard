@@ -12,17 +12,18 @@ import {MatDialog} from '@angular/material/dialog';
 import {SimpleChartDialogComponent} from '../../dialogs/simple-chart-dialog/simple-chart-dialog.component';
 import {ViewTypeService} from '../../services/view-type.service';
 
+
 class CheckedValue {
   value: string;
   checked: boolean;
 }
 
 @Component({
-  selector: 'app-history-page',
-  templateUrl: './history-page.component.html',
-  styleUrls: ['./history-page.component.scss']
+  selector: 'app-history-page-dark',
+  templateUrl: './history-page-dark.component.html',
+  styleUrls: ['./history-page-dark.component.scss']
 })
-export class HistoryPageComponent implements AfterViewInit {
+export class HistoryPageDarkComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
   ready = false;
   fullData = [];
@@ -104,7 +105,6 @@ export class HistoryPageComponent implements AfterViewInit {
       this.cdRef.detectChanges();
     });
   }
-
   private createBalanceChart(): void {
     if (this.balanceHistory.length === 0) {
       return;
@@ -339,3 +339,4 @@ export class HistoryPageComponent implements AfterViewInit {
     this.router.navigateByUrl('/history/' + address);
   }
 }
+

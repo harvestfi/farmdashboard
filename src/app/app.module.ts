@@ -65,6 +65,8 @@ import { LinkWindowComponent } from './uniswap/link-window/link-window.component
 import { ApyWindowComponent } from './dashboard/apy-window/apy-window.component';
 import { MainSideMenuComponent } from './main/main-side-menu/main-side-menu.component';
 import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.component';
+import { HistoryPageDarkComponent } from './history/history-page-dark/history-page-dark.component';
+import { HistoryPageViewComponent } from './history/history-page-view/history-page-view.component';
 
 declare var require: any;
 
@@ -114,7 +116,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LinkWindowComponent,
     ApyWindowComponent,
     MainSideMenuComponent,
-    SimpleModalComponent
+    SimpleModalComponent,
+    HistoryPageDarkComponent,
+    HistoryPageViewComponent
   ],
   imports: [
     AppRoutingModule,

@@ -18,7 +18,8 @@ export class MainPageLightComponent implements OnInit {
 
   constructor(public vt: ViewTypeService,
               public ws: WebsocketService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private cdRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
