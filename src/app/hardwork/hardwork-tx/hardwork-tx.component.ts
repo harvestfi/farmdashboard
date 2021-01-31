@@ -59,10 +59,10 @@ export class HardworkTxComponent implements AfterViewInit {
         this.log.error('Not unique', tx);
         return;
       }
-
+      this.addInArray(this.dtos);
     });
 
-    
+
   }
 
 
