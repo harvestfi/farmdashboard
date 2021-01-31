@@ -60,6 +60,7 @@ import { SimpleChartDialogComponent } from './dialogs/simple-chart-dialog/simple
 import { UniHistoryDialogComponent } from './dialogs/uni-history-dialog/uni-history-dialog.component';
 import { PriceChartComponent } from './chart/price-chart/price-chart.component';
 import { DraggableModalComponent } from './dialogs/draggable-modal/draggable-modal.component';
+import { CustomModalComponent } from './dialogs/custom-modal/custom-modal.component';
 import { HarvestTradeComponent } from './harvest/harvest-trade/harvest-trade.component';
 import { LinkWindowComponent } from './uniswap/link-window/link-window.component';
 import { ApyWindowComponent } from './dashboard/apy-window/apy-window.component';
@@ -109,6 +110,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SimpleChartDialogComponent,
     PriceChartComponent,
     DraggableModalComponent,
+    CustomModalComponent,
     HarvestTradeComponent,
     LinkWindowComponent,
     ApyWindowComponent,

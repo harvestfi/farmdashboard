@@ -1,0 +1,7 @@
+<div *ngIf="isModalOpened" class="custom-modal">
+    <div (click)="toggleModal()" class="custom-modal-backdrop"></div>
+    
+    <div [@openModal]="isModalOpened ? 'open' : 'closed'" class="modal-content-container">
+        <ng-content></ng-content>
+    </div>
+</div>
