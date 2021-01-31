@@ -57,12 +57,12 @@
  
   <div class="trade-sign left-border-box trade-field">
 
-    <app-custom-modal *ngIf="openModal">
+    <app-draggable-modal *ngIf="openModal">
       <app-link-window (showModal)="hideTradeLinks($event)"
                        [hash]='dto.hash' [owner]='dto.owner'>
 
       </app-link-window>
-    </app-custom-modal>
+    </app-draggable-modal>
      
     <container-element class="pointer"
         (click)='showTradeLinks()' [ngSwitch]="checkImportantOwner(dto)">

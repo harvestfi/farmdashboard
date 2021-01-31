@@ -1,16 +1,16 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-custom-modal',
-  templateUrl: './custom-modal.component.html',
-  styleUrls: ['./custom-modal.component.css'],
+  selector: 'app-draggable-modal',
+  templateUrl: './draggable-modal.component.html',
+  styleUrls: ['./draggable-modal.component.css'],
   host: {
     '(document:mousemove)': 'mousemove($event)',
     '(window:resize)': 'handleWindowResize($event)',
     '(document:touchmove)': 'mousemove($event)',
   },
 })
-export class CustomModalComponent {
+export class DraggableModalComponent {
   private isDown;
   private currentX: number;
   private currentY: number;

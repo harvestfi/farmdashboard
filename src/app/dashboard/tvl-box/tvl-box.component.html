@@ -32,9 +32,9 @@
 
     <!--    (click)="openIncomeDialog(tvlName)" -->
     <div class="left-border-box farm-apy-value">
-      <app-custom-modal class="apy-modal" *ngIf="openApyDetails">
+      <app-draggable-modal class="apy-modal" *ngIf="openApyDetails">
         <app-apy-window (showModal)="hideApyDetails($event)" [poolName]="tvlName"></app-apy-window>
-      </app-custom-modal>
+      </app-draggable-modal>
       <div class="pointer" (click)="openApyDetailsWindow()" matTooltip="
            APR: {{vaultFullApr(tvlName)}}%
            Click to open details"
