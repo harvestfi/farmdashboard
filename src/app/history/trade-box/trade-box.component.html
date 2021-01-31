@@ -185,12 +185,13 @@
     </div>
 
     <div class="value amount balance-coll"
-         matTooltip="{{harvestDto.ownerBalance| number: '1.0-8'}}">
+         matTooltip="{{harvestDto.profit| number: '1.0-8'}}">
       {{harvestDto.profitUsd | number: '1.0-0'}}
-      <text class="coin-sign">$</text>
+      <text *ngIf="harvestDto.profit" class="coin-sign">$</text>
     </div>
 
-    <div class="value other-coin-col">
+    <div class="value other-coin-col"
+         matTooltip="{{harvestDto.ownerBalance | number: '1.0-8'}}">
       {{harvestDto.ownerBalanceUsd | number: '1.0-0'}}
       <text class="coin-sign">$</text>
     </div>
