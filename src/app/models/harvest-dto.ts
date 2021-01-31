@@ -18,15 +18,16 @@ export class HarvestDto {
   ownerCount: number;
   sharePrice: number;
   usdAmount: number;
-  prices: string;
   lpStat: string;
   ownerBalance: number;
   ownerBalanceUsd: number;
   allOwnersCount: number;
   allPoolsOwnersCount: number;
+  underlyingPrice: number;
+  profit: number;
+  profitUsd: number;
 
   lpStatDto: LpStat;
-  pricesDto: PricesDto;
   blockDateAdopted: Date;
   acquired: Date;
 
@@ -49,12 +50,14 @@ export class HarvestDto {
     tx.sharePrice = jsonData.sharePrice;
     tx.usdAmount = jsonData.usdAmount;
     tx.blockDate = jsonData.blockDate;
-    tx.prices = jsonData.prices;
     tx.lpStat = jsonData.lpStat;
     tx.ownerBalance = jsonData.ownerBalance;
     tx.ownerBalanceUsd = jsonData.ownerBalanceUsd;
     tx.allOwnersCount = jsonData.allOwnersCount;
     tx.allPoolsOwnersCount = jsonData.allPoolsOwnersCount;
+    tx.underlyingPrice = jsonData.underlyingPrice;
+    tx.profit = jsonData.profit;
+    tx.profitUsd = jsonData.profitUsd;
 
     tx.acquired = new Date();
     HarvestDto.enrich(tx);
@@ -64,9 +67,6 @@ export class HarvestDto {
   public static enrich(tx: HarvestDto): void {
     if (tx.acquired == null) {
       tx.acquired = new Date();
-    }
-    if (tx.prices) {
-      tx.pricesDto = JSON.parse(tx.prices);
     }
     if (tx.lpStat) {
       tx.lpStatDto = JSON.parse(tx.lpStat);

@@ -4,8 +4,6 @@ import * as moment from 'moment';
 export class LightweightChartsOptions {
   public static getOptions(): any {
     return {
-      // width: 700,
-      // height: 500,
       layout: {
         backgroundColor: '#2F2C2C',
         textColor: 'rgba(255, 255, 255, 0.9)',

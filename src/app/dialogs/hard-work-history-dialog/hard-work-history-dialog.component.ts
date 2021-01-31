@@ -9,14 +9,14 @@ import {DialogData} from '../dialog-data';
 @Component({
   selector: 'app-hard-work-history-dialog',
   templateUrl: './hard-work-history-dialog.component.html',
-  styleUrls: ['./hard-work-history-dialog.component.css']
+  styleUrls: ['./hard-work-history-dialog.component.scss']
 })
 export class HardWorkHistoryDialogComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
   ready = false;
 
   constructor(private httpService: HttpService,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,
+              // @Inject(MAT_DIALOG_DATA) public data: DialogData,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
