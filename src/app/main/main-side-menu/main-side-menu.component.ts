@@ -7,7 +7,8 @@ import { ViewTypeService } from '../../services/view-type.service';
 import { ProfitDialogComponent } from '../../dialogs/profit-dialog/profit-dialog.component';
 import { FarmBuybacksDialogComponent } from '../../dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
 import { HardWorkHistoryDialogComponent } from '../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
-import {UserSettings} from '../../user-settings';
+import { UserSettings } from '../../user-settings';
+import { CustomModalService } from '../../dialogs/custom-modal/custom-modal.service';
 
 import { MatDialog } from '@angular/material/dialog';
 @Component({
@@ -35,7 +36,7 @@ export class MainSideMenuComponent {
     showSideMenu = false;
     isDarkTheme = UserSettings.getTheme() === 'scoreboard' ? true : false;
 
-    constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService) {}  
+    constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService, private modalService: CustomModalService) {}  
 
     toggleMenu(): void {
         this.showSideMenu = !this.showSideMenu;
@@ -121,5 +122,10 @@ export class MainSideMenuComponent {
 
     toggleTheme(): void {
         this.viewTypeService.toggleTheme();
+    }
+
+    openModal(id: string): void{
+        this.modalService.openModal(id);
+        this.toggleMenu();
     }
 }
