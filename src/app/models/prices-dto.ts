@@ -1,19 +1,40 @@
 export class PricesDto {
-  btc: number;
-  eth: number;
-  dpi: number;
-  grain: number;
-  bac: number;
-  bas: number;
-  mic: number;
-  mis: number;
-  bsg: number;
-  bsgs: number;
-  esd: number;
-  dsd: number;
-  maapl: number;
-  mamzn: number;
-  mgoogl: number;
-  mtsla: number;
-  eurs: number;
+  id: string;
+  block: number;
+  blockDate: number;
+  token: string;
+  tokenAmount: number;
+  otherToken: string;
+  otherTokenAmount: number;
+  price: number;
+  buy: boolean;
+  source: string;
+
+  blockDateAdopted: Date;
+
+  public static fromJson(data: string): PricesDto {
+    const jsonData = JSON.parse(data);
+    const tx: PricesDto = new PricesDto();
+    tx.id = jsonData.id;
+    tx.block = jsonData.block;
+    tx.blockDate = jsonData.blockDate;
+    tx.token = jsonData.token;
+    tx.tokenAmount = jsonData.tokenAmount;
+    tx.otherToken = jsonData.otherToken;
+    tx.otherTokenAmount = jsonData.otherTokenAmount;
+    tx.price = jsonData.price;
+    tx.buy = jsonData.buy;
+    tx.source = jsonData.source;
+
+    PricesDto.fillBlockDateAdopted(tx);
+    return tx;
+  }
+
+  public static fillBlockDateAdopted(tx: PricesDto): void {
+    if (tx.blockDateAdopted == null) {
+      const d = new Date(0);
+      d.setUTCSeconds(tx.blockDate);
+      tx.blockDateAdopted = d;
+    }
+  }
 }

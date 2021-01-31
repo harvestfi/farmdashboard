@@ -10,6 +10,8 @@ import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
 import {environment} from '../../environments/environment';
 import {TransferDto} from '../models/transfer-dto';
+import {OhlcDto} from '../models/ohlc-dto';
+import {PricesDto} from '../models/prices-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -120,6 +122,18 @@ export class HttpService {
   getAddressHistoryTransfers(address: string): Observable<TransferDto[]> {
     return this.http.get<TransferDto[]>(environment.apiEndpoint + '/history/transfer/' + address).pipe(
         catchError(this.snackService.handleError<TransferDto[]>(`history address transfers `))
+    );
+  }
+
+  getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
+    return this.http.get<OhlcDto[]>(environment.apiEndpoint + '/api/transactions/history/uni/ohcl/' + coin).pipe(
+        catchError(this.snackService.handleError<OhlcDto[]>(`history ohlc`))
+    );
+  }
+
+  getLastPrices(): Observable<PricesDto[]> {
+    return this.http.get<PricesDto[]>(environment.apiEndpoint + '/price/token/latest').pipe(
+        catchError(this.snackService.handleError<PricesDto[]>(`last price `))
     );
   }
 }

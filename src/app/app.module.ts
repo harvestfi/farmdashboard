@@ -71,7 +71,7 @@ import { HardworkHeaderComponent } from './hardwork/hardwork-header/hardwork-hea
 import { HardworkFilterPipe } from './hardwork/hardwork-filter.pipe';
 
 import { MainSideMenuComponent } from './main/main-side-menu/main-side-menu.component';
-import { HardworkLinkWindowComponent } from './hardwork/hardwork-link-window/hardwork-link-window.component';
+import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.component';
 
 declare var require: any;
 
@@ -127,7 +127,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HardworkHeaderComponent,
     HardworkFilterPipe,
     MainSideMenuComponent,
-    HardworkLinkWindowComponent
+    SimpleModalComponent
   ],
   imports: [
     AppRoutingModule,

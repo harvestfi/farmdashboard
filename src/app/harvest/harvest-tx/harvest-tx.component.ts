@@ -4,7 +4,6 @@ import {HttpService} from '../../services/http.service';
 import {NGXLogger} from 'ngx-logger';
 import {HarvestDto} from '../../models/harvest-dto';
 import {WsConsumer} from '../../services/ws-consumer';
-import {Utils} from '../../utils';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {StaticValues} from '../../static-values';
 import {ViewTypeService} from '../../services/view-type.service';
@@ -14,6 +13,7 @@ import {HardworkSubscriberService} from '../../services/hardwork-subscriber.serv
 import {RewardDto} from '../../models/reward-dto';
 import {HarvestHistoryDialogComponent} from '../../dialogs/harvest-history-dialog/harvest-history-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {PriceSubscriberService} from '../../services/price-subscriber.service';
 
 @Component({
   selector: 'app-harvest-tx',
@@ -33,6 +33,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
               private pricesCalculationService: PricesCalculationService,
               public vt: ViewTypeService,
               private hardworkSubscriberService: HardworkSubscriberService,
+              private priceSubscriberService: PriceSubscriberService,
               private snack: SnackService,
               private log: NGXLogger,
               private dialog: MatDialog
@@ -52,20 +53,17 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   ngAfterViewInit(): void {
-    this.httpService.getHarvestTxHistoryData().subscribe(data => {
-      Utils.loadingOff();
-      this.log.debug('harvest data fetched', data);
-      data?.forEach(tx => {
-        HarvestDto.enrich(tx);
-        this.addInArray(this.dtos, tx);
-      });
-      this.loadLastTvl();
-    }, err => {
-      Utils.loadingOff();
-    });
+    this.loadLastPrices(
+        () => this.loadLastHarwests(() => this.loadLastTvls(() => {
+          this.loadLastHardWorks();
+          this.loadLastRewards();
+        }))
+    );
+
 
     this.initWs();
     this.hardworkSubscriberService.initWs();
+    this.priceSubscriberService.initWs();
   }
 
   public initWs(): void {
@@ -107,7 +105,18 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
     });
   }
 
-  private loadLastTvl(): void {
+  private loadLastHarwests(next: () => void): void {
+    this.httpService.getHarvestTxHistoryData().subscribe(data => {
+      this.log.debug('harvest data fetched', data);
+      data?.forEach(tx => {
+        HarvestDto.enrich(tx);
+        this.addInArray(this.dtos, tx);
+      });
+      next();
+    });
+  }
+
+  private loadLastTvls(next: () => void): void {
     this.httpService.getLastTvls().subscribe(data => {
       this.log.debug('Loaded last tvls ', data);
       data?.forEach(tvl => {
@@ -117,8 +126,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
 
       this.log.debug('All tvl values loaded');
       this.pricesCalculationService.updateTvls();
-      this.loadLastHardWorks();
-      this.loadLastRewards();
+      next();
     });
   }
 
@@ -145,6 +153,16 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
     });
   }
 
+  private loadLastPrices(next: () => void): void {
+    this.httpService.getLastPrices().subscribe(data => {
+      data?.forEach(tx => {
+        this.pricesCalculationService.savePrice(tx);
+      });
+      this.log.debug('Loaded last prices ', data);
+      next();
+    });
+  }
+
   private isUniqTx(tx: HarvestDto): boolean {
     if (this.txIds.has(tx.id)) {
       return false;
@@ -165,7 +183,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private handlePriceTx(dto: HarvestDto): void {
-    this.pricesCalculationService.savePrices(dto.pricesDto, dto.blockDateAdopted.getTime());
     this.pricesCalculationService.updateTvls();
     if (dto.lastGas != null && (dto.lastGas + '') !== 'NaN' && dto.lastGas !== 0) {
       StaticValues.lastGas = dto.lastGas;
