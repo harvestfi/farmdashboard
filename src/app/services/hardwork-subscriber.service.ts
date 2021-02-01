@@ -11,11 +11,13 @@ import {WsConsumer} from './ws-consumer';
 })
 export class HardworkSubscriberService implements WsConsumer {
   subscribed = false;
+  public handlers = new Map<any, ((value: HardWorkDto) => void)>();
 
   constructor(private ws: WebsocketService,
               private pricesCalculationService: PricesCalculationService,
               private snack: SnackService,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              ) {
   }
 
 
@@ -40,6 +42,7 @@ export class HardworkSubscriberService implements WsConsumer {
       try {
         this.log.debug('hardwork from ws', tx);
         this.pricesCalculationService.saveHardWork(tx);
+        this.handlers.forEach((handler, obj) => handler.call(obj, tx));
       } catch (e) {
         this.log.error('Error hardwork', e, tx);
       }

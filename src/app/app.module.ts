@@ -6,16 +6,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { HttpClientModule } from '@angular/common/http';
 import { FarmChartComponent } from './chart/farm-chart/farm-chart.component';
-import { UniTxComponent } from './uniswap/uni-tx/uni-tx.component';
+import { UniTxComponent } from './flow-cards/uniswap/uni-tx/uni-tx.component';
 import { MatCardModule } from '@angular/material/card';
 import { PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { FlowTabComponent } from './uniswap/flow-tab/flow-tab.component';
+import { FlowTabComponent } from './flow-cards/uniswap/flow-tab/flow-tab.component';
 import { MatIconModule } from '@angular/material/icon';
-import { HarvestTxComponent } from './harvest/harvest-tx/harvest-tx.component';
-import { HarvestFlowTabComponent } from './harvest/harvest-flow-tab/harvest-flow-tab.component';
+import { HarvestTxComponent } from './flow-cards/harvest/harvest-tx/harvest-tx.component';
+import { HarvestFlowTabComponent } from './flow-cards/harvest/harvest-flow-tab/harvest-flow-tab.component';
 import { AngularEmojisModule } from 'angular-emojis';
-import { HarvestFilterPipe } from './harvest/harvest-filter.pipe';
-import { UniswapFilterPipe } from './uniswap/uniswap-filter.pipe';
+import { HarvestFilterPipe } from './flow-cards/harvest/harvest-filter.pipe';
+import { UniswapFilterPipe } from './flow-cards/uniswap/uniswap-filter.pipe';
 import { DashboardLastValuesComponent } from './dashboard/dashboard-last-values/dashboard-last-values.component';
 import { TvlBoxComponent } from './dashboard/tvl-box/tvl-box.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -29,7 +29,7 @@ import { MainFooterComponent } from './main/main-footer/main-footer.component';
 import { CommonModule } from '@angular/common';
 import { MainPageLightComponent } from './main/main-page-light/main-page-light.component';
 import { CenterViewComponent } from './main/center-view/center-view.component';
-import { UniTradeComponent } from './uniswap/uni-trade/uni-trade.component';
+import { UniTradeComponent } from './flow-cards/uniswap/uni-trade/uni-trade.component';
 import { FormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidebarModule } from 'ng-sidebar';
@@ -49,7 +49,6 @@ import { GrainChartComponent } from './chart/grain-chart/grain-chart.component';
 import { FarmBuybacksDialogComponent } from './dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
 import { HistoryPageComponent } from './history/history-page/history-page.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
-import { MainComponentsComponent } from './main/main-components/main-components.component';
 import { TradeBoxComponent } from './history/trade-box/trade-box.component';
 import { HardWorkHistoryDialogComponent } from './dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
 import { TotalUsersDialogComponent } from './dialogs/total-users-dialog/total-users-dialog.component';
@@ -60,11 +59,18 @@ import { SimpleChartDialogComponent } from './dialogs/simple-chart-dialog/simple
 import { UniHistoryDialogComponent } from './dialogs/uni-history-dialog/uni-history-dialog.component';
 import { PriceChartComponent } from './chart/price-chart/price-chart.component';
 import { CustomModalComponent } from './dialogs/custom-modal/custom-modal.component';
-import { HarvestTradeComponent } from './harvest/harvest-trade/harvest-trade.component';
-import { LinkWindowComponent } from './uniswap/link-window/link-window.component';
+import { HarvestTradeComponent } from './flow-cards/harvest/harvest-trade/harvest-trade.component';
+import { LinkWindowComponent } from './flow-cards/uniswap/link-window/link-window.component';
 import { ApyWindowComponent } from './dashboard/apy-window/apy-window.component';
+import { HardWorkHistoryListDialogComponent } from './dialogs/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
+import { HardworkTradeComponent } from './flow-cards/hardwork/hardwork-trade/hardwork-trade.component';
+import { HardworkFlowTabComponent } from './flow-cards/hardwork/hardwork-flow-tab/hardwork-flow-tab.component';
+import { HardworkTxComponent } from './flow-cards/hardwork/hardwork-tx/hardwork-tx.component';
+import { HardworkHeaderComponent } from './flow-cards/hardwork/hardwork-header/hardwork-header.component';
+import { HardworkFilterPipe } from './flow-cards/hardwork/hardwork-filter.pipe';
 import { MainSideMenuComponent } from './main/main-side-menu/main-side-menu.component';
 import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.component';
+import { FlowCardsViewComponent } from './flow-cards/flow-cards-view/flow-cards-view.component';
 
 declare var require: any;
 
@@ -100,7 +106,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     GrainChartComponent,
     FarmBuybacksDialogComponent,
     HistoryPageComponent,
-    MainComponentsComponent,
     TradeBoxComponent,
     HardWorkHistoryDialogComponent,
     TotalUsersDialogComponent,
@@ -113,8 +118,15 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HarvestTradeComponent,
     LinkWindowComponent,
     ApyWindowComponent,
+    HardWorkHistoryListDialogComponent,
+    HardworkTradeComponent,
+    HardworkFlowTabComponent,
+    HardworkTxComponent,
+    HardworkHeaderComponent,
+    HardworkFilterPipe,
     MainSideMenuComponent,
-    SimpleModalComponent
+    SimpleModalComponent,
+    FlowCardsViewComponent
   ],
   imports: [
     AppRoutingModule,

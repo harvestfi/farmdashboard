@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
-import {UniswapSubscriberService} from '../../uniswap/uniswap-subscriber.service';
+import {UniswapSubscriberService} from '../../flow-cards/uniswap/uniswap-subscriber.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {PriceChartBuilder} from '../price-chart-builder';
 import {HttpService} from '../../services/http.service';

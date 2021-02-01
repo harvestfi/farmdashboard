@@ -1,0 +1,21 @@
+<div class="row uni-row" *ngIf="vt.isNonScoreboard()" id="top-div-light">
+
+  <div class="left-border-box left">
+    <app-hardwork-tx></app-hardwork-tx>
+  </div>
+
+  <div class="left-border-box middle">
+    <app-uni-tx></app-uni-tx>
+  </div>
+
+  <div class="left-border-box right">
+    <app-harvest-tx></app-harvest-tx>
+  </div>
+
+</div>
+
+
+
+<div *ngIf="!vt.isNonScoreboard()">
+  <app-hardwork-tx></app-hardwork-tx>
+</div>
