@@ -1,6 +1,6 @@
 <div *ngIf="vt.isNonScoreboard()" id="top-div-light" class="row uni-row">
 
-  <div class="left-border-box left">
+  <!-- <div class="left-border-box left">
     <div class="uni-card">
       <div #tooltip="matTooltip"
            aria-hidden="false"
@@ -10,10 +10,13 @@
         Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
         Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price">Whales Trades
       </div>
-      <app-flow-tab [dtos]="dtosWhales" [maxHeight]="200"></app-flow-tab>
+      <app-flow-tab [dtos]="dtosWhales" ></app-flow-tab>
+      
+      
     </div>
-  </div>
-
+   
+  </div> -->
+  <app-hardwork-tx ></app-hardwork-tx>
   <div class="left-border-box middle">
     <div class="uni-card">
       <div #tooltip="matTooltip"
@@ -47,7 +50,7 @@
   <tr>
     <td style="width: 50%; height: 30px">
       <div class="flex-container" style="color: #a09c9c">
-        <span style="font-size: 1.2em;">Whales</span>
+        <span style="font-size: 1.2em;">Hard Works</span>
         <mat-icon #tooltip="matTooltip" aria-hidden="false" aria-label="?" matTooltip="List of trades contains FARM amounts more than 1000.
           Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
           Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price"
@@ -59,6 +62,7 @@
 
   <tr>
     <td style="">
+      
       <app-flow-tab [dtos]="dtosWhales" [maxHeight]="200"></app-flow-tab>
     </td>
   </tr>
