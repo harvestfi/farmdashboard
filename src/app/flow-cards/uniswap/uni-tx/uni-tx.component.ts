@@ -18,13 +18,9 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class UniTxComponent implements AfterViewInit {
   dtos: UniswapDto[] = [];
-  dtosWhales: UniswapDto[] = [];
   txIds = new Set<string>();
   pureTitle = 'Harvest Live Dashboard';
-  whalesMoreThan = 500;
   private maxMessages = 50;
-
-
 
   constructor(
     private txHistory: HttpService,
@@ -39,26 +35,16 @@ export class UniTxComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.txHistory.getUniswapTxHistoryData().subscribe(
       (data) => {
-
-        Utils.loadingOff();
         this.log.debug('tx data fetched', data?.length);
         data?.forEach((tx) => {
           UniswapDto.round(tx);
           this.saveLastValue(tx);
-          if (tx.amount < this.whalesMoreThan) {
-            this.addInArray(this.dtos, tx);
-          } else {
-            this.addInArray(this.dtosWhales, tx);
-          }
+          this.addInArray(this.dtos, tx);
         });
-      },
-      (err) => {
-        Utils.loadingOff();
       }
     );
 
     this.uniswapSubscriberService.handlers.set(this, (tx) => {
-
 
       if (tx.coin !== 'FARM') {
         return;
@@ -68,11 +54,7 @@ export class UniTxComponent implements AfterViewInit {
         this.log.error('Not unique', tx);
         return;
       }
-      if (tx.amount < this.whalesMoreThan) {
-        this.addInArray(this.dtos, tx);
-      } else {
-        this.addInArray(this.dtosWhales, tx);
-      }
+      this.addInArray(this.dtos, tx);
       this.saveLastValue(tx);
     });
   }
@@ -97,8 +79,6 @@ export class UniTxComponent implements AfterViewInit {
       arr.pop();
     }
   }
-
-
 
   private saveLastValue(tx: UniswapDto): void {
     if (!tx.confirmed || tx.lastPrice === 0) {

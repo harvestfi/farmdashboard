@@ -1,23 +1,5 @@
 <div *ngIf="vt.isNonScoreboard()" id="top-div-light">
 
-  <!-- <div class="left-border-box left">
-    <div class="uni-card">
-      <div #tooltip="matTooltip"
-           aria-hidden="false"
-           aria-label="?"
-           class="title-span"
-           matTooltip="List of trades contains FARM amounts more than {{whalesMoreThan}}.
-        Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
-        Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price">Whales Trades
-      </div>
-      <app-flow-tab [dtos]="dtosWhales" ></app-flow-tab>
-
-
-    </div>
-
-  </div> -->
-
-
   <div class="uni-card">
     <div #tooltip="matTooltip"
          aria-hidden="false"
@@ -42,12 +24,6 @@
 
 
 <table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard" class="live-trades-table">
-  <tr>
-    <td style="">
-      <app-flow-tab [dtos]="dtosWhales" [maxHeight]="200"></app-flow-tab>
-    </td>
-  </tr>
-
   <tr>
     <td style="width: 50%; height: 50px">
       <div class="flex-container" style="color: #a09c9c">
