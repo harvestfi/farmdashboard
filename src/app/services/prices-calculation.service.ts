@@ -293,9 +293,20 @@ export class PricesCalculationService {
 
   public savePrice(tx: PricesDto): void {
     const name = PricesCalculationService.mapCoinNameToSimple(tx.token);
-    if (this.lastPrices.has(name) && this.lastPrices.get(name).block > tx.block) {
-      this.log.warn('Loaded old price!', tx);
-      return;
+    const lastPriceDto = this.lastPrices.get(name);
+    if (lastPriceDto) {
+      if (lastPriceDto.source !== tx.source) {
+        this.log.warn('got prices with different sources', lastPriceDto.source, tx.source);
+        return;
+      }
+      if (lastPriceDto.block > tx.block) {
+        this.log.warn('Loaded old price!', tx);
+        return;
+      }
+      const diff = (Math.abs(lastPriceDto.price - tx.price) / tx.price) * 100;
+      if (diff > 5) {
+        this.log.info('New price changed more than 5%', lastPriceDto, tx);
+      }
     }
     this.lastPrices.set(name, tx);
   }
