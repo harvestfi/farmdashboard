@@ -68,6 +68,7 @@ export class PricesCalculationService {
         || 'UST' === name
         || 'EURS' === name
         || 'CRV_EURS' === name
+        || 'CRV_GUSD' === name
         ;
   }
 

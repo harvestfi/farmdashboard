@@ -75,6 +75,7 @@ export class StaticValues {
     'MAMZN_UST',
     'MGOOGL_UST',
     'MTSLA_UST',
+    'CRV_GUSD',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -91,6 +92,7 @@ export class StaticValues {
     'CRV_EURS',
     'CRV_UST',
     'CRV_STETH',
+    'CRV_GUSD',
   ];
 
   public static strategiesListSingleCoins: string[] = [
@@ -277,6 +279,8 @@ export class StaticValues {
         return '/assets/icons/mirror-goog.png';
       case 'MTSLA_UST':
         return '/assets/icons/mirror-tsla.png';
+      case 'CRV_GUSD':
+        return '/assets/icons/curve-gusd.png';
     }
   }
 }

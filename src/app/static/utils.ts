@@ -314,7 +314,6 @@ export class Utils {
         || name === 'MTSLA_UST'
         || name === 'UNI_BAC_DAI'
         || name === 'UNI_DAI_BAS'
-        || name === ''
         ;
   }
 
