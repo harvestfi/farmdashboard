@@ -3,7 +3,7 @@ import {HarvestDto} from '../models/harvest-dto';
 import {VaultStats} from '../models/vault-stats';
 import {LpStat} from '../models/lp-stat';
 import {PricesDto} from '../models/prices-dto';
-import {StaticValues} from '../static-values';
+import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
 import {NGXLogger} from 'ngx-logger';

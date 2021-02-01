@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HarvestDto} from '../../../models/harvest-dto';
-import {StaticValues} from '../../../static-values';
-import {Utils} from '../../../utils';
+import {StaticValues} from '../../../static/static-values';
+import {Utils} from '../../../static/utils';
 
 @Component({
   selector: 'app-harvest-trade',

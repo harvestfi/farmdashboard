@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UniswapDto} from '../../../models/uniswap-dto';
-import {Utils} from '../../../utils';
+import {Utils} from '../../../static/utils';
 
 @Component({
   selector: 'app-uni-trade',

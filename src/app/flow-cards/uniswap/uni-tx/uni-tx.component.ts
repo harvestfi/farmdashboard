@@ -1,11 +1,11 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { UniswapDto } from '../../../models/uniswap-dto';
-import { Utils } from '../../../utils';
+import { Utils } from '../../../static/utils';
 import { HttpService } from '../../../services/http.service';
 import { NGXLogger } from 'ngx-logger';
 import { Title } from '@angular/platform-browser';
 import { UniswapSubscriberService } from '../uniswap-subscriber.service';
-import { StaticValues } from 'src/app/static-values';
+import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../../services/view-type.service';
 import { SnackService } from '../../../services/snack.service';
 import { UniHistoryDialogComponent } from '../../../dialogs/uni-history-dialog/uni-history-dialog.component';

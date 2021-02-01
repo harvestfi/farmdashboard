@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Utils} from '../../utils';
-import {StaticValues} from '../../static-values';
+import {Utils} from '../../static/utils';
+import {StaticValues} from '../../static/static-values';
 import {HarvestDto} from '../../models/harvest-dto';
 import {TransferDto} from '../../models/transfer-dto';
 import {NGXLogger} from 'ngx-logger';
-import {Addresses} from '../../addresses';
+import {Addresses} from '../../static/addresses';
 
 @Component({
   selector: 'app-trade-box',

@@ -4,10 +4,10 @@ import {MatDialog} from '@angular/material/dialog';
 import {TvlDialogComponent} from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import {ViewTypeService} from '../../services/view-type.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
-import {Utils} from '../../utils';
+import {Utils} from '../../static/utils';
 import {IncomeDialogComponent} from '../../dialogs/income-dialog/income-dialog.component';
 import {RewardsDialogComponent} from '../../dialogs/rewards-dialog/rewards-dialog.component';
-import {StaticValues} from '../../static-values';
+import {StaticValues} from '../../static/static-values';
 
 @Component({
   selector: 'app-tvl-box',
@@ -61,7 +61,7 @@ export class TvlBoxComponent implements OnInit {
 
   vaultFullApy(name: string): string {
     if (Utils.isAutoStakeVault(name)) {
-      return this.vaultRewardApyPrettify(name);
+      return this.vaultRewardAprPrettify(name);
     }
     return Utils.prettifyNumber(this.vaultApy(name) + this.vaultRewardApy(name));
   }

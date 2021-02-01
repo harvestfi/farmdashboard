@@ -2,9 +2,9 @@ import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from
 import {HttpService} from '../../services/http.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HarvestDto} from '../../models/harvest-dto';
-import {Utils} from '../../utils';
+import {Utils} from '../../static/utils';
 import {NGXLogger} from 'ngx-logger';
-import {StaticValues} from '../../static-values';
+import {StaticValues} from '../../static/static-values';
 import {TransferDto} from '../../models/transfer-dto';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {BalanceChartOptions} from '../balance-chart-options';

@@ -5,7 +5,7 @@ import {NGXLogger} from 'ngx-logger';
 import {HarvestDto} from '../../../models/harvest-dto';
 import {WsConsumer} from '../../../services/ws-consumer';
 import {PricesCalculationService} from '../../../services/prices-calculation.service';
-import {StaticValues} from '../../../static-values';
+import {StaticValues} from '../../../static/static-values';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {SnackService} from '../../../services/snack.service';
 import {HardWorkDto} from '../../../models/hardwork-dto';

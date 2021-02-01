@@ -1,5 +1,5 @@
 import {HttpErrorResponse} from '@angular/common/http';
-import {TransferDto} from './models/transfer-dto';
+import {TransferDto} from '../models/transfer-dto';
 
 export class Utils {
   public static ACTIVE_PREFIX = 'Active';
@@ -307,6 +307,14 @@ export class Utils {
         || name === 'DAI_BSGS'
         || name === 'SUSHI_MIC_USDT'
         || name === 'SUSHI_MIS_USDT'
+        || name === 'MAAPL_UST'
+        || name === 'MAAPL_UST'
+        || name === 'MAMZN_UST'
+        || name === 'MGOOGL_UST'
+        || name === 'MTSLA_UST'
+        || name === 'UNI_BAC_DAI'
+        || name === 'UNI_DAI_BAS'
+        || name === ''
         ;
   }
 

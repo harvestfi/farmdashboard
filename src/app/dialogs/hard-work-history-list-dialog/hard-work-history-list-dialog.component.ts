@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { NGXLogger } from 'ngx-logger';
-import { StaticValues } from 'src/app/static-values';
+import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { HardWorkDto } from '../../models/hardwork-dto';
 
