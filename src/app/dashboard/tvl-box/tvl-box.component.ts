@@ -60,6 +60,9 @@ export class TvlBoxComponent implements OnInit {
   }
 
   vaultFullApy(name: string): string {
+    if (name === 'PS') {
+      return this.vaultRewardApyPrettify(name);
+    }
     if (Utils.isAutoStakeVault(name)) {
       return this.vaultRewardAprPrettify(name);
     }
