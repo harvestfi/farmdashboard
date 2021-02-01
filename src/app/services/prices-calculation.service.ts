@@ -297,7 +297,7 @@ export class PricesCalculationService {
     if (lastPriceDto) {
       if (lastPriceDto.source !== tx.source) {
         this.log.warn('got prices with different sources', lastPriceDto.source, tx.source);
-        return;
+        // return;
       }
       if (lastPriceDto.block > tx.block) {
         this.log.warn('Loaded old price!', tx);
