@@ -309,5 +309,6 @@ export class PricesCalculationService {
       }
     }
     this.lastPrices.set(name, tx);
+    this.updateTvls();
   }
 }
