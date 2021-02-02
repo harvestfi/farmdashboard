@@ -102,7 +102,9 @@ export class StaticValues {
     'USDC',
     'USDT',
     'DAI',
-    'TUSD'
+    'TUSD',
+    'ESD',
+    'DSD',
   ];
 
   public static strategiesListUniLpPools: string[] = [
