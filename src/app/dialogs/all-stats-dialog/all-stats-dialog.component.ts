@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {StaticValues} from '../../static-values';
+import {StaticValues} from '../../static/static-values';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {Sort} from '@angular/material/sort';

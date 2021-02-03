@@ -3,7 +3,7 @@ import {HarvestDto} from '../models/harvest-dto';
 import {VaultStats} from '../models/vault-stats';
 import {LpStat} from '../models/lp-stat';
 import {PricesDto} from '../models/prices-dto';
-import {StaticValues} from '../static-values';
+import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
 import {NGXLogger} from 'ngx-logger';
@@ -68,6 +68,7 @@ export class PricesCalculationService {
         || 'UST' === name
         || 'EURS' === name
         || 'CRV_EURS' === name
+        || 'CRV_GUSD' === name
         ;
   }
 
@@ -292,10 +293,22 @@ export class PricesCalculationService {
 
   public savePrice(tx: PricesDto): void {
     const name = PricesCalculationService.mapCoinNameToSimple(tx.token);
-    if (this.lastPrices.has(name) && this.lastPrices.get(name).block > tx.block) {
-      this.log.warn('Loaded old price!', tx);
-      return;
+    const lastPriceDto = this.lastPrices.get(name);
+    if (lastPriceDto) {
+      if (lastPriceDto.source !== tx.source) {
+        this.log.warn('got prices with different sources', lastPriceDto.source, tx.source);
+        // return;
+      }
+      if (lastPriceDto.block > tx.block) {
+        this.log.warn('Loaded old price!', tx);
+        return;
+      }
+      const diff = (Math.abs(lastPriceDto.price - tx.price) / tx.price) * 100;
+      if (diff > 5) {
+        this.log.info('New price changed more than 5%', lastPriceDto, tx);
+      }
     }
     this.lastPrices.set(name, tx);
+    this.updateTvls();
   }
 }
