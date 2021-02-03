@@ -1,5 +1,5 @@
   <div class="custom-modal-container">
-      <div class="custom-modal-content">
+      <div *ngIf="isModalOpened" class="custom-modal-content">
           <ng-content></ng-content>
       </div>
   </div>

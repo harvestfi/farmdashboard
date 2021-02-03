@@ -23,16 +23,11 @@ export class ChartBuilder {
 
   initChart(chartEl: ElementRef, options?): IChartApi {
     let enrichOptions = false;
-    console.log(chartEl.nativeElement.clientWidth)
     if (!options) {
       enrichOptions = true;
       options = LightweightChartsOptions.getOptions();
     }
-    const chart = createChart(chartEl?.nativeElement, {
-      ...options,
-      width: chartEl.nativeElement.clientWidth,
-      height: chartEl.nativeElement.clientHeight 
-    });
+    const chart = createChart(chartEl?.nativeElement, options);
     if (enrichOptions) {
       chart.applyOptions(ChartsOptionsLight.getOptions());
     }

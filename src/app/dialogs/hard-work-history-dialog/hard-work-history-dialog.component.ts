@@ -47,6 +47,7 @@ export class HardWorkHistoryDialogComponent implements AfterViewInit {
   private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
     this.ready = true;
     this.cdRef.detectChanges();
+    console.log(this.chartEl);
     const chart = chartBuilder.initChart(this.chartEl);
     chartBuilder.addToChart(chart, config);
   }

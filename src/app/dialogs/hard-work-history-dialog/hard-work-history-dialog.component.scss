@@ -8,24 +8,20 @@
 
 .dialog-card {
   background: #fffce6;
-  width: 600px;
+  padding: 20px;
 }
 
 ::ng-deep.mat-dialog-container {
   overflow: hidden;
   border-radius: 3px;
-  padding: 10px !important;
   background: #fffce6;
 }
 
 .chart {
-  min-height: 70vh;
+  min-height: 70vh!important;
   width: 100%;
   height: 100%;
-  .tv-lightweight-charts{
-    width: inherit!important;
-    height: inherit!important;
-  }
+
 }
 
 

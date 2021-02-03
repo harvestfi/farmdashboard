@@ -10,7 +10,7 @@ import { CustomModalService } from './custom-modal.service';
 export class CustomModalComponent implements AfterViewInit {
     @Input() id: string;
     private htmlElement: HTMLElement;
-    isModalOpened = true;
+    isModalOpened = false;
     constructor(private el: ElementRef, private modalService: CustomModalService){
         this.htmlElement = el.nativeElement;
     }
@@ -27,7 +27,6 @@ export class CustomModalComponent implements AfterViewInit {
                 this.closeModal();
             }
         })
-
         this.modalService.addModal(this);
     }
     
@@ -39,17 +38,18 @@ export class CustomModalComponent implements AfterViewInit {
 
 
     openModal(): void {
-        this.htmlElement.style.display = 'block';
+        this.htmlElement.style.visibility = 'visible';
         document.body.classList.add('custom-modal-open');
+        this.isModalOpened = true;
     }
-
+    
     closeModal(): void {
-        this.htmlElement.style.display = 'none';
+        this.htmlElement.style.visibility = 'hidden';
         document.body.classList.remove('custom-modal-open')
+        this.isModalOpened = false;
     }
 
     toggleModal(): void{
-        console.log('sada');
         this.isModalOpened = !this.isModalOpened;
     }
 }
