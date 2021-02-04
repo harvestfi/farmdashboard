@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgMarqueeModule } from 'ng-marquee';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -71,6 +72,7 @@ import { HardworkFilterPipe } from './flow-cards/hardwork/hardwork-filter.pipe';
 import { MainSideMenuComponent } from './main/main-side-menu/main-side-menu.component';
 import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.component';
 import { FlowCardsViewComponent } from './flow-cards/flow-cards-view/flow-cards-view.component';
+import { LastPricesListComponent } from './dashboard/last-prices-list/last-prices-list.component';
 
 declare var require: any;
 
@@ -126,7 +128,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HardworkFilterPipe,
     MainSideMenuComponent,
     SimpleModalComponent,
-    FlowCardsViewComponent
+    FlowCardsViewComponent,
+    LastPricesListComponent
   ],
   imports: [
     AppRoutingModule,
@@ -157,7 +160,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     MatIconModule,
     AngularEmojisModule,
-    SidebarModule.forRoot()
+    SidebarModule.forRoot(),
+    NgMarqueeModule
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,

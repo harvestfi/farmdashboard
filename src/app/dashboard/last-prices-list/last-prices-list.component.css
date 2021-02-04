@@ -1,0 +1,19 @@
+.main-row {
+  display: flex;
+}
+
+.value-card {
+  transition: 0.3s;
+  /*margin: 10px;*/
+  padding: 3px;
+  /*display: inline-block;*/
+  margin: 0 3px 10px;
+  line-height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  font-weight: bold;
+  margin-right: 5px;
+}
