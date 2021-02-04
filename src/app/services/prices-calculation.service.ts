@@ -97,6 +97,7 @@ export class PricesCalculationService {
 
   public saveHardWork(tx: HardWorkDto): void {
     if (!tx || this.lastHardWorks.get(tx.vault)?.blockDate > tx.blockDate) {
+      this.log.warn('Old hard work', tx);
       return;
     }
 
@@ -220,6 +221,8 @@ export class PricesCalculationService {
     for (const hw of this.lastHardWorks.values()) {
       if (hw.savedGasFeesSum) {
         fees += hw.savedGasFeesSum;
+      } else {
+        this.log.warn('Saved Gas fees not found in ', hw);
       }
     }
     return fees;
