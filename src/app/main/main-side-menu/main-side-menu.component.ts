@@ -10,6 +10,10 @@ import { HardWorkHistoryDialogComponent } from '../../dialogs/hard-work-history-
 import { UserSettings } from '../../user-settings';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+
+
+
+
 @Component({
     selector: 'app-main-side-menu',
     templateUrl: './main-side-menu.component.html',
@@ -34,7 +38,13 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
 export class MainSideMenuComponent {
     showSideMenu = false;
     isDarkTheme = UserSettings.getTheme() === 'scoreboard' ? true : false;
-    @ViewChild('modal') private modalComponent: CustomModalComponent
+    @ViewChild('allStatsDialog') private allStatsDialog: CustomModalComponent
+    @ViewChild('tvlDialog') private tvlDialog: CustomModalComponent
+    @ViewChild('incomeDialog') private incomeDialog: CustomModalComponent
+    @ViewChild('psApyDialog') private psApyDialog: CustomModalComponent
+    @ViewChild('weeklyProfitDialog') private weeklyProfitDialog: CustomModalComponent
+    @ViewChild('farmBuybackDialog') private farmBuybackDialog: CustomModalComponent
+    @ViewChild('savedFeesDialog') private savedFeesDialog: CustomModalComponent
 
     constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService) {}  
 
@@ -42,90 +52,75 @@ export class MainSideMenuComponent {
         this.showSideMenu = !this.showSideMenu;
     }
 
-    openAllStats(): void {
-        this.dialog.open(AllStatsDialogComponent, {
-            data: {}
-        });
+    openAllStatsDialog(): void {
+        this.allStatsDialog.open();
         this.toggleMenu();
     }
 
     openTvlDialog(): void {
-        this.dialog.open(TvlDialogComponent, {
-            width: '100%',
-            height: 'auto',
-            data: {
-                type: 'All'
-            }
-        });
+        this.tvlDialog.open();
         this.toggleMenu();
     }
 
     openIncomeDialog(): void {
-        this.dialog.open(TvlDialogComponent, {
-            width: '100%',
-            height: 'auto',
-            data: {
-                type: 'income'
-            }
-        });
+       this.incomeDialog.open();
         this.toggleMenu();
     }
 
     openPsApyDialog(): void {
-        this.dialog.open(RewardsDialogComponent, {
-            width: '100%',
-            height: 'auto',
-            data: {
-                title: 'PS APY History',
-                name: ''
-            }
-        });
+        this.psApyDialog.open();
+        // this.dialog.open(RewardsDialogComponent, {
+        //     width: '100%',
+        //     height: 'auto',
+        //     data: {
+        //         title: 'PS APY History',
+        //         name: ''
+        //     }
+        // });
         this.toggleMenu();
     }
 
     openWeeklyProfitDialog(): void {
-        this.dialog.open(ProfitDialogComponent, {
-            width: '100%',
-            height: 'auto',
-            data: {
-                title: 'Weekly profit history chart',
-                name: 'Name'
-            }
-        });
+        this.weeklyProfitDialog.open();
+        // this.dialog.open(ProfitDialogComponent, {
+        //     width: '100%',
+        //     height: 'auto',
+        //     data: {
+        //         title: 'Weekly profit history chart',
+        //         name: 'Name'
+        //     }
+        // });
         this.toggleMenu();
     }
 
     openFarmBuybacksDialog(): void {
-        this.dialog.open(FarmBuybacksDialogComponent, {
-            width: '100%',
-            height: 'auto',
-            data: {
-                title: 'FARM Buyback history chart',
-                name: 'Name'
-            }
-        });
+        this.farmBuybackDialog.open();
+        // this.dialog.open(FarmBuybacksDialogComponent, {
+        //     width: '100%',
+        //     height: 'auto',
+        //     data: {
+        //         title: 'FARM Buyback history chart',
+        //         name: 'Name'
+        //     }
+        // });
         this.toggleMenu();
     }
 
     openSavedFeesDialog(): void {
-        this.dialog.open(HardWorkHistoryDialogComponent, {
-            width: '100%',
-            height: 'auto',
-            data: {
-                title: 'Saved Gas Fees History',
-                name: 'Name'
-            }
-        });
+        // this.dialog.open(HardWorkHistoryDialogComponent, {
+        //     width: '100%',
+        //     height: 'auto',
+        //     data: {
+        //         title: 'Saved Gas Fees History',
+        //         name: 'Name'
+        //     }
+        // });
+        this.savedFeesDialog.open();
         this.toggleMenu();
     }
 
 
     toggleTheme(): void {
         this.viewTypeService.toggleTheme();
-    }
-
-    openModal(): void{
-        this.modalComponent.open();
-        this.toggleMenu();
     }
 }
