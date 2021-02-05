@@ -8,7 +8,6 @@ import { ProfitDialogComponent } from '../../dialogs/profit-dialog/profit-dialog
 import { FarmBuybacksDialogComponent } from '../../dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
 import { HardWorkHistoryDialogComponent } from '../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
 import { UserSettings } from '../../user-settings';
-import { CustomModalService } from '../../dialogs/custom-modal/custom-modal.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 @Component({
@@ -37,7 +36,7 @@ export class MainSideMenuComponent {
     isDarkTheme = UserSettings.getTheme() === 'scoreboard' ? true : false;
     @ViewChild('modal') private modalComponent: CustomModalComponent
 
-    constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService, private modalService: CustomModalService) {}  
+    constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService) {}  
 
     toggleMenu(): void {
         this.showSideMenu = !this.showSideMenu;
