@@ -130,9 +130,9 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   private loadLastHardWorks(): void {
     this.httpService.getLastHardWorks().subscribe(data => {
       data?.forEach(hardWork => {
-        if (!StaticValues.currentVaults.find((p) => p === hardWork.vault)) {
-          return;
-        }
+        // if (!StaticValues.currentVaults.find((p) => p === hardWork.vault)) {
+        //   return;
+        // }
         HardWorkDto.enrich(hardWork);
         this.pricesCalculationService.saveHardWork(hardWork);
       });
