@@ -49,6 +49,7 @@
         align-items: center;
         height: 60px;
         border-bottom: 1px solid #f1f1f1;
+        box-sizing: content-box;
 
         .branding-box {
             display: flex;

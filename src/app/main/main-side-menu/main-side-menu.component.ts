@@ -13,7 +13,7 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
 @Component({
     selector: 'app-main-side-menu',
     templateUrl: './main-side-menu.component.html',
-    styleUrls: ['./main-side-menu.component.css'],
+    styleUrls: ['./main-side-menu.component.scss'],
     animations: [
         trigger('openMenu', [
             state('open', style({
