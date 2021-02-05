@@ -68,8 +68,8 @@ export class PricesCalculationService {
         || 'UST_NAME' === name
         || 'CRV_UST' === name
         || 'UST' === name
-        || 'EURS' === name
-        || 'CRV_EURS' === name
+        // || 'EURS' === name
+        // || 'CRV_EURS' === name
         || 'CRV_GUSD' === name
         ;
   }
@@ -295,9 +295,9 @@ export class PricesCalculationService {
       return this.calculateTvlForLp(vaultStats.lpStat);
     } else if (vaultStats.tvl) {
       const price = this.getPrice(name);
-      if (price === 0) {
-        console.log('not found price for ' + name);
-      }
+      // if (price === 0) {
+      //   console.log('not found price for ' + name);
+      // }
       return vaultStats.tvl * price;
     }
     return 0.0;
