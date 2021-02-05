@@ -1,5 +1,5 @@
-<ng-marquee speed="drowsy" [stopOnHover]="true">
-  <div class="row main-row">
+<div class="row main-row">
+  <div class="first">
     <div *ngFor="let price of allPrices">
       <div class="value-card">
         <div class="name">
@@ -11,4 +11,16 @@
       </div>
     </div>
   </div>
-</ng-marquee>
+  <div class="second">
+    <div *ngFor="let price of allPrices">
+      <div class="value-card">
+        <div class="name">
+          <text>{{ price.tokenName }}</text>
+        </div>
+        <div>
+          <text class="">${{ price.tokenPrice }}</text>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgMarqueeModule } from 'ng-marquee';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -160,8 +159,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     MatIconModule,
     AngularEmojisModule,
-    SidebarModule.forRoot(),
-    NgMarqueeModule
+    SidebarModule.forRoot()
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,

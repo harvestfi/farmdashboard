@@ -1,5 +1,11 @@
 .main-row {
   display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+
+.row:hover {
+  animation-play-state: paused
 }
 
 .value-card {
@@ -16,4 +22,36 @@
 .name {
   font-weight: bold;
   margin-right: 5px;
+}
+
+.first {
+  display: flex;
+  animation: marquee 50s linear infinite;
+  animation-delay: -10s; /* for immediate appear */
+  animation-play-state: inherit;
+}
+
+.second {
+  display: flex;
+  animation: marquee2 50s linear infinite;
+  animation-delay: 15s; /* starts at half of first animation */
+  animation-play-state: inherit;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee2 {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-200%);
+  }
 }
