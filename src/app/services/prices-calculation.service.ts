@@ -6,6 +6,7 @@ import {PricesDto} from '../models/prices-dto';
 import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
+import {LastPrice} from '../models/last-price';
 import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class PricesCalculationService {
   public tvls = new Map<string, number>();
   public tvlNames = new Set<string>();
   public allTvls = 0.0;
+  public allPrices: LastPrice[] = [];
   public vaultStats = new Map<string, VaultStats>();
   public lastHarvests = new Map<string, HarvestDto>();
   public lastHardWorks = new Map<string, HardWorkDto>();
@@ -121,6 +123,13 @@ export class PricesCalculationService {
     });
     this.allTvls = allTvls / 1000000;
     // console.log('allTvls ', this.allTvls);
+  }
+
+  public updatePrices(): void {
+    this.allPrices = Array.from(this.lastPrices.keys()).map(key => ({
+      tokenName: key,
+      tokenPrice: this.getPrice(key).toFixed(2)
+    }));
   }
 
   saveReward(tx: RewardDto): void {
@@ -313,5 +322,10 @@ export class PricesCalculationService {
     }
     this.lastPrices.set(name, tx);
     this.updateTvls();
+    this.updatePrices();
+  }
+
+  getLastPrices() {
+    return this.lastPrices;
   }
 }
