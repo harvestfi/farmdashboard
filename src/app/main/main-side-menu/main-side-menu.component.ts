@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AllStatsDialogComponent } from '../../dialogs/all-stats-dialog/all-stats-dialog.component';
 import { TvlDialogComponent } from '../../dialogs/tvl-dialog/tvl-dialog.component';
@@ -9,8 +9,8 @@ import { FarmBuybacksDialogComponent } from '../../dialogs/farm-buybacks-dialog/
 import { HardWorkHistoryDialogComponent } from '../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
 import { UserSettings } from '../../user-settings';
 import { CustomModalService } from '../../dialogs/custom-modal/custom-modal.service';
-
 import { MatDialog } from '@angular/material/dialog';
+import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 @Component({
     selector: 'app-main-side-menu',
     templateUrl: './main-side-menu.component.html',
@@ -35,6 +35,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class MainSideMenuComponent {
     showSideMenu = false;
     isDarkTheme = UserSettings.getTheme() === 'scoreboard' ? true : false;
+    @ViewChild('modal') private modalComponent: CustomModalComponent
 
     constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService, private modalService: CustomModalService) {}  
 
@@ -124,8 +125,8 @@ export class MainSideMenuComponent {
         this.viewTypeService.toggleTheme();
     }
 
-    openModal(id: string): void{
-        this.modalService.openModal(id);
+    openModal(): void{
+        this.modalComponent.open();
         this.toggleMenu();
     }
 }

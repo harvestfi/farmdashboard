@@ -1,6 +1,4 @@
-  <div class="custom-modal-container">
-      <div *ngIf="isModalOpened" class="custom-modal-content">
-          <ng-content></ng-content>
-      </div>
-  </div>
-  <div class="custom-modal-backdrop"></div>
+
+<ng-template #modal>
+    <ng-container [ngTemplateOutlet]="template"></ng-container>
+</ng-template>

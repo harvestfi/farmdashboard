@@ -72,6 +72,7 @@ import { HardworkFilterPipe } from './flow-cards/hardwork/hardwork-filter.pipe';
 import { MainSideMenuComponent } from './main/main-side-menu/main-side-menu.component';
 import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.component';
 import { FlowCardsViewComponent } from './flow-cards/flow-cards-view/flow-cards-view.component';
+import { CustomModalService } from './dialogs/custom-modal/custom-modal.service';
 
 declare var require: any;
 
@@ -163,9 +164,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
-    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-  }],
-  bootstrap: [AppComponent]
+    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+  },
+  CustomModalService
+],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

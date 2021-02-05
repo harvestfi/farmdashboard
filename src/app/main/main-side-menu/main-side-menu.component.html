@@ -23,12 +23,13 @@
         <li (click)="openFarmBuybacksDialog()" data-menu-icon="📥" class="main-side-menu-item">FARM Buybacks</li>
         <li (click)="openSavedFeesDialog()" data-menu-icon="🛡️" class="main-side-menu-item">Saved Gas Fees</li>
 
-        <button (click)="openModal('testing')"></button>
+        <button (click)="openModal()"></button>
         
-        <app-custom-modal id="testing">
-            <app-hard-work-history-dialog></app-hard-work-history-dialog>
+        <app-custom-modal #modal>
+            <ng-template >
+                <app-hard-work-history-dialog></app-hard-work-history-dialog>
+            </ng-template>
         </app-custom-modal>
-    
     </ul>
 
 
