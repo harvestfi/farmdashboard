@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild, Input} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {HarvestTvl} from '../../models/harvest-tvl';
 import {createChart, IChartApi, ISeriesApi, MouseEventParams, SeriesMarker, Time} from 'lightweight-charts';
@@ -20,6 +20,8 @@ export class TvlDialogComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
   @ViewChild('sharePriceChart') sharePriceChartEl: ElementRef;
   @ViewChild('incomeChart') incomeChartEl: ElementRef;
+  @Input() public data: Record<any, any>;
+
   chart: IChartApi;
   sharePriceChart: IChartApi;
   incomeChart: IChartApi;
@@ -53,7 +55,7 @@ export class TvlDialogComponent implements AfterViewInit {
   psTvlUsdDataMap = new Map<number, number>();
 
   constructor(private httpService: HttpService,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,
+              // @Inject(MAT_DIALOG_DATA) public data: DialogData,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {

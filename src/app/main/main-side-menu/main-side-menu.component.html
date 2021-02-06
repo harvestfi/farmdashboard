@@ -25,14 +25,14 @@
         <li (click)="openTvlDialog()" data-menu-icon="🕐" class="main-side-menu-item">TVL History Info</li>
         <app-custom-modal #tvlDialog>
             <ng-template >
-                <app-tvl-dialog></app-tvl-dialog>
+                <app-tvl-dialog [data]="{type: 'PS'}"></app-tvl-dialog>
             </ng-template>
         </app-custom-modal>
         
         <li (click)="openIncomeDialog()" data-menu-icon="💸" class="main-side-menu-item">Income History Info</li>
         <app-custom-modal #incomeDialog>
             <ng-template >
-                <app-tvl-dialog></app-tvl-dialog>
+                <app-tvl-dialog [data]="{type: 'income'}"></app-tvl-dialog>
             </ng-template>
         </app-custom-modal>
         

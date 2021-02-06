@@ -4,9 +4,6 @@ import { ViewTypeService } from '../../services/view-type.service';
 import { UserSettings } from '../../user-settings';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
-
-
-
 @Component({
     selector: 'app-main-side-menu',
     templateUrl: './main-side-menu.component.html',
