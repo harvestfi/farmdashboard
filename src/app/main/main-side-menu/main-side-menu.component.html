@@ -39,13 +39,13 @@
         <li (click)="openPsApyDialog()" data-menu-icon="📅" class="main-side-menu-item">PS APY History</li>
         <app-custom-modal #psApyDialog>
             <ng-template >
-                <app-rewards-dialog></app-rewards-dialog>
+                <app-rewards-dialog [data]="{title: 'PS APY History'}"></app-rewards-dialog>
             </ng-template>
         </app-custom-modal>
         <li (click)="openWeeklyProfitDialog()" data-menu-icon="🔒" class="main-side-menu-item">Weekly Profit History</li>
         <app-custom-modal #weeklyProfitDialog>
             <ng-template >
-                <app-profit-dialog></app-profit-dialog>
+                <app-profit-dialog [data]="{title: 'Weekly profit history chart'}"></app-profit-dialog>
             </ng-template>
         </app-custom-modal>
 

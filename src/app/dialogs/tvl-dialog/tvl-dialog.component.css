@@ -14,12 +14,6 @@
 
 }
 
-::ng-deep.mat-dialog-container {
-  overflow: hidden;
-  border-radius: 3px;
-  padding: 10px !important;
-  background: #fffce6;
-}
 
 .tvl-chart {
   min-height: 70vh;
