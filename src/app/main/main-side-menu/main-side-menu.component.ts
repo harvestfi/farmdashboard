@@ -59,52 +59,20 @@ export class MainSideMenuComponent {
 
     openPsApyDialog(): void {
         this.psApyDialog.open();
-        // this.dialog.open(RewardsDialogComponent, {
-        //     width: '100%',
-        //     height: 'auto',
-        //     data: {
-        //         title: 'PS APY History',
-        //         name: ''
-        //     }
-        // });
         this.toggleMenu();
     }
 
     openWeeklyProfitDialog(): void {
         this.weeklyProfitDialog.open();
-        // this.dialog.open(ProfitDialogComponent, {
-        //     width: '100%',
-        //     height: 'auto',
-        //     data: {
-        //         title: 'Weekly profit history chart',
-        //         name: 'Name'
-        //     }
-        // });
         this.toggleMenu();
     }
 
     openFarmBuybacksDialog(): void {
         this.farmBuybackDialog.open();
-        // this.dialog.open(FarmBuybacksDialogComponent, {
-        //     width: '100%',
-        //     height: 'auto',
-        //     data: {
-        //         title: 'FARM Buyback history chart',
-        //         name: 'Name'
-        //     }
-        // });
         this.toggleMenu();
     }
 
     openSavedFeesDialog(): void {
-        // this.dialog.open(HardWorkHistoryDialogComponent, {
-        //     width: '100%',
-        //     height: 'auto',
-        //     data: {
-        //         title: 'Saved Gas Fees History',
-        //         name: 'Name'
-        //     }
-        // });
         this.savedFeesDialog.open();
         this.toggleMenu();
     }
