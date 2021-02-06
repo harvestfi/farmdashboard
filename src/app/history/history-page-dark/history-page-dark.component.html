@@ -1,4 +1,4 @@
-<div class="history-page">
+<div *ngIf="vt.isNonScoreboard() === 'scoreboard'" class="history-page">
     <div *ngIf="address" id="title-id" class="title">
       History for address
     </div>
