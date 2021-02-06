@@ -58,7 +58,7 @@
         <li (click)="openSavedFeesDialog()" data-menu-icon="🛡️" class="main-side-menu-item">Saved Gas Fees</li>
         <app-custom-modal #savedFeesDialog>
             <ng-template >
-                <app-hard-work-history-dialog></app-hard-work-history-dialog>
+                <app-hard-work-history-dialog [data]="{title: 'Saved Gas Fees History'}"></app-hard-work-history-dialog>
             </ng-template>
         </app-custom-modal>
                
