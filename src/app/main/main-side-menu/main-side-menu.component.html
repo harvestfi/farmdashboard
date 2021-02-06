@@ -52,7 +52,7 @@
         <li (click)="openFarmBuybacksDialog()" data-menu-icon="📥" class="main-side-menu-item">FARM Buybacks</li>
         <app-custom-modal #farmBuybackDialog>
             <ng-template >
-                <app-farm-buybacks-dialog></app-farm-buybacks-dialog>
+                <app-farm-buybacks-dialog [data]="{title: 'FARM Buyback history chart'}"></app-farm-buybacks-dialog>
             </ng-template>
         </app-custom-modal>
         <li (click)="openSavedFeesDialog()" data-menu-icon="🛡️" class="main-side-menu-item">Saved Gas Fees</li>
