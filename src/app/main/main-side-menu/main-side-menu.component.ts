@@ -1,14 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { AllStatsDialogComponent } from '../../dialogs/all-stats-dialog/all-stats-dialog.component';
-import { TvlDialogComponent } from '../../dialogs/tvl-dialog/tvl-dialog.component';
-import { RewardsDialogComponent } from '../../dialogs/rewards-dialog/rewards-dialog.component';
 import { ViewTypeService } from '../../services/view-type.service';
-import { ProfitDialogComponent } from '../../dialogs/profit-dialog/profit-dialog.component';
-import { FarmBuybacksDialogComponent } from '../../dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
-import { HardWorkHistoryDialogComponent } from '../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
 import { UserSettings } from '../../user-settings';
-import { MatDialog } from '@angular/material/dialog';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 
@@ -46,7 +39,7 @@ export class MainSideMenuComponent {
     @ViewChild('farmBuybackDialog') private farmBuybackDialog: CustomModalComponent
     @ViewChild('savedFeesDialog') private savedFeesDialog: CustomModalComponent
 
-    constructor(private dialog: MatDialog, private viewTypeService: ViewTypeService) {}  
+    constructor(private viewTypeService: ViewTypeService) {}  
 
     toggleMenu(): void {
         this.showSideMenu = !this.showSideMenu;
