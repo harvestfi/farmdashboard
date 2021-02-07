@@ -18,6 +18,7 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
 })
 export class DashboardLastValuesComponent implements OnInit {
   @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
+  @ViewChild('weeklyProfitModal') private weeklyProfitModal: CustomModalComponent;
   constructor(public dialog: MatDialog,
               public vt: ViewTypeService,
               private api: HttpService,
@@ -115,14 +116,16 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   openWeeklyProfitDialog(): void {
-    this.dialog.open(ProfitDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: 'Weekly profit history chart',
-        name: 'Name'
-      }
-    });
+    this.weeklyProfitModal.open();
+    
+    // this.dialog.open(ProfitDialogComponent, {
+    //   width: '100%',
+    //   height: 'auto',
+    //   data: {
+    //     title: 'Weekly profit history chart',
+    //     name: 'Name'
+    //   }
+    // });
   }
 
   openFarmBuybacksDialog(): void {

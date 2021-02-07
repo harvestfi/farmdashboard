@@ -12,7 +12,7 @@ import {DialogData} from '../dialog-data';
 })
 export class ProfitDialogComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
-  @Input() public data;
+  @Input() public data: Record<any, any>;
   ready = false;
 
   constructor(private httpService: HttpService,
