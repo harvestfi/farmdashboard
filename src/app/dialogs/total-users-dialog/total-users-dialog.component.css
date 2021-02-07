@@ -12,13 +12,6 @@
   width: 100vw;
 }
 
-::ng-deep.mat-dialog-container {
-  overflow: hidden;
-  border-radius: 3px;
-  padding: 10px !important;
-  background: #fffce6;
-}
-
 .chart {
   min-height: 70vh;
 }
@@ -28,11 +21,6 @@
   .title-col {
     font-size: 1em;
     margin: 5px;
-  }
-
-  ::ng-deep.mat-dialog-container {
-    border-radius: 1px;
-    padding: 5px !important;
   }
 }
 
