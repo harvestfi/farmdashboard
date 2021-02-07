@@ -1,22 +1,20 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild, Input} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild, Input} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {HarvestTvl} from '../../models/harvest-tvl';
 import {createChart, IChartApi, ISeriesApi, MouseEventParams, SeriesMarker, Time} from 'lightweight-charts';
 import {LightweightChartsOptions} from '../../chart/lightweight-charts-options';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ViewTypeService} from '../../services/view-type.service';
 import {ChartsOptionsLight} from '../../chart/charts-options-light';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {HttpService} from '../../services/http.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
-import {DialogData} from '../dialog-data';
-
+import {ChartGeneralMethods} from '../../chart/chart-general-methods';
 @Component({
   selector: 'app-tvl-dialog',
   templateUrl: './tvl-dialog.component.html',
   styleUrls: ['./tvl-dialog.component.css']
 })
-export class TvlDialogComponent implements AfterViewInit {
+export class TvlDialogComponent extends ChartGeneralMethods implements  AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
   @ViewChild('sharePriceChart') sharePriceChartEl: ElementRef;
   @ViewChild('incomeChart') incomeChartEl: ElementRef;
@@ -55,10 +53,10 @@ export class TvlDialogComponent implements AfterViewInit {
   psTvlUsdDataMap = new Map<number, number>();
 
   constructor(private httpService: HttpService,
-              // @Inject(MAT_DIALOG_DATA) public data: DialogData,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
+                super();
   }
 
   ngAfterViewInit(): void {
