@@ -1,14 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {TvlDialogComponent} from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {HttpService} from '../../services/http.service';
-import {ProfitDialogComponent} from '../../dialogs/profit-dialog/profit-dialog.component';
-import {FarmBuybacksDialogComponent} from '../../dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
-import {HardWorkHistoryDialogComponent} from '../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
-import {TotalUsersDialogComponent} from '../../dialogs/total-users-dialog/total-users-dialog.component';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
@@ -102,83 +97,29 @@ export class DashboardLastValuesComponent implements OnInit {
 
   openTvlDialog(): void {
     this.tvlModal.open();
-    // this.dialog.open(TvlDialogComponent, {
-    //   width: '100%',
-    //   height: 'auto',
-    //   data: {
-    //     type: 'All'
-    //   }
-    // });
   }
 
   openPsIncomeDialog(): void {
     this.psIncomeModal.open();
-    // this.dialog.open(TvlDialogComponent, {
-    //   width: '100%',
-    //   height: 'auto',
-    //   data: {
-    //     type: 'income'
-    //   }
-    // });
   }
 
   openWeeklyProfitDialog(): void {
     this.weeklyProfitModal.open();
-
-    // this.dialog.open(ProfitDialogComponent, {
-    //   width: '100%',
-    //   height: 'auto',
-    //   data: {
-    //     title: 'Weekly profit history chart',
-    //     name: 'Name'
-    //   }
-    // });
   }
 
   openFarmBuybacksDialog(): void {
     this.farmBuybacksModal.open();
-    // this.dialog.open(FarmBuybacksDialogComponent, {
-    //   width: '100%',
-    //   height: 'auto',
-    //   data: {
-    //     title: 'FARM Buyback history chart',
-    //     name: 'Name'
-    //   }
-    // });
   }
 
   openPsTvlDialog(): void {
     this.FARMStakedModal.open();
-    // this.dialog.open(TvlDialogComponent, {
-    //   width: '100%',
-    //   height: 'auto',
-    //   data: {
-    //     type: 'PS'
-    //   }
-    // });
   }
 
   openSavedFeesDialog(): void {
     this.savedFeesModal.open();
-    // this.dialog.open(HardWorkHistoryDialogComponent, {
-    //   width: '100%',
-    //   height: 'auto',
-    //   data: {
-    //     title: 'Saved Gas Fees History',
-    //     name: 'Name'
-    //   }
-    // });
   }
 
   openTotalUsersDialog(): void {
     this.totalUsersModal.open();
-    // this.dialog.open(TotalUsersDialogComponent, {
-    //   width: '100%',
-    //   height: 'auto',
-    //   data: {
-    //     title: 'Total users history',
-    //     name: 'Name'
-    //   }
-    // });
   }
 }
