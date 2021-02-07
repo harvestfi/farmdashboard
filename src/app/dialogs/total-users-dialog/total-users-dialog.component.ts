@@ -11,7 +11,7 @@ import {ChartBuilder} from '../../chart/chart-builder';
 })
 export class TotalUsersDialogComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
-  @Input("data") public data: Record<any, any>;
+  @Input('data') public data: Record<any, any>;
   ready = false;
 
   constructor(private httpService: HttpService,

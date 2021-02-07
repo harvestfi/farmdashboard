@@ -79,7 +79,7 @@ export class HardworkTxComponent implements AfterViewInit {
   }
 
   openHardWorkHistoryListDialog(): void {
-    this.hardWorkHistoryListModal.open()
+    this.hardWorkHistoryListModal.open();
   }
 
 }

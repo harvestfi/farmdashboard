@@ -1,14 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, HostBinding, HostListener, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-draggable-modal',
   templateUrl: './draggable-modal.component.html',
   styleUrls: ['./draggable-modal.component.css'],
-  host: {
-    '(document:mousemove)': 'mousemove($event)',
-    '(window:resize)': 'handleWindowResize($event)',
-    '(document:touchmove)': 'mousemove($event)',
-  },
 })
 export class DraggableModalComponent {
   private isDown;
@@ -41,7 +36,8 @@ export class DraggableModalComponent {
   mouseup($event): void {
     this.isDown = false;
   }
-
+  @HostListener('document:mousemove', ['$event'])
+  @HostListener('document:touchmove', ['$event'])
   mousemove($event): void {
     const style: Record<any, any> = this.modal.nativeElement.style;
 
@@ -68,7 +64,7 @@ export class DraggableModalComponent {
       return;
     }
   }
-
+  @HostListener('window:resize', ['$event'])
   handleWindowResize($event): void {
     const style: Record<any, any> = this.modal.nativeElement.style;
     const windowWidth: number = $event.target.innerWidth;

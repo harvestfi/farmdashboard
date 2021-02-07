@@ -28,16 +28,15 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
 export class MainSideMenuComponent {
     showSideMenu = false;
     isDarkTheme = UserSettings.getTheme() === 'scoreboard' ? true : false;
-    @ViewChild('allStatsDialog') private allStatsDialog: CustomModalComponent
-    @ViewChild('tvlDialog') private tvlDialog: CustomModalComponent
-    @ViewChild('incomeDialog') private incomeDialog: CustomModalComponent
-    @ViewChild('psApyDialog') private psApyDialog: CustomModalComponent
-    @ViewChild('weeklyProfitDialog') private weeklyProfitDialog: CustomModalComponent
-    @ViewChild('farmBuybackDialog') private farmBuybackDialog: CustomModalComponent
-    @ViewChild('savedFeesDialog') private savedFeesDialog: CustomModalComponent
+    @ViewChild('allStatsDialog') private allStatsDialog: CustomModalComponent;
+    @ViewChild('tvlDialog') private tvlDialog: CustomModalComponent;
+    @ViewChild('incomeDialog') private incomeDialog: CustomModalComponent;
+    @ViewChild('psApyDialog') private psApyDialog: CustomModalComponent;
+    @ViewChild('weeklyProfitDialog') private weeklyProfitDialog: CustomModalComponent;
+    @ViewChild('farmBuybackDialog') private farmBuybackDialog: CustomModalComponent;
+    @ViewChild('savedFeesDialog') private savedFeesDialog: CustomModalComponent;
 
-    constructor(private viewTypeService: ViewTypeService) {}  
-
+    constructor(private viewTypeService: ViewTypeService){}
     toggleMenu(): void {
         this.showSideMenu = !this.showSideMenu;
     }
@@ -53,7 +52,7 @@ export class MainSideMenuComponent {
     }
 
     openIncomeDialog(): void {
-       this.incomeDialog.open();
+        this.incomeDialog.open();
         this.toggleMenu();
     }
 

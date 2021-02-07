@@ -325,7 +325,7 @@ export class PricesCalculationService {
     this.updatePrices();
   }
 
-  getLastPrices() {
+  getLastPrices(): Map<string, PricesDto>{
     return this.lastPrices;
   }
 }
