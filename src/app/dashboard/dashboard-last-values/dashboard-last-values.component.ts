@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {TvlDialogComponent} from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
@@ -9,6 +9,7 @@ import {ProfitDialogComponent} from '../../dialogs/profit-dialog/profit-dialog.c
 import {FarmBuybacksDialogComponent} from '../../dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
 import {HardWorkHistoryDialogComponent} from '../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
 import {TotalUsersDialogComponent} from '../../dialogs/total-users-dialog/total-users-dialog.component';
+import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -16,7 +17,7 @@ import {TotalUsersDialogComponent} from '../../dialogs/total-users-dialog/total-
   styleUrls: ['./dashboard-last-values.component.css']
 })
 export class DashboardLastValuesComponent implements OnInit {
-
+  @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
   constructor(public dialog: MatDialog,
               public vt: ViewTypeService,
               private api: HttpService,
@@ -136,13 +137,14 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   openPsTvlDialog(): void {
-    this.dialog.open(TvlDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        type: 'PS'
-      }
-    });
+    this.FARMStakedModal.open();
+    // this.dialog.open(TvlDialogComponent, {
+    //   width: '100%',
+    //   height: 'auto',
+    //   data: {
+    //     type: 'PS'
+    //   }
+    // });
   }
 
   openSavedFeesDialog(): void {
