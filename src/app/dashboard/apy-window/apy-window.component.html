@@ -107,6 +107,18 @@
       Chart
     </a>
   </div>
+  <app-custom-modal #incomeModal>
+    <ng-template>
+      <app-income-dialog [data]="{title: poolName + ' Income history chart'}"></app-income-dialog>
+    </ng-template>
+  </app-custom-modal>
+  
+  <app-custom-modal #psApyModal>
+    <ng-template>
+      <app-rewards-dialog [data]="{title: 'PS APY History'}"></app-rewards-dialog>
+    </ng-template>
+  </app-custom-modal>
+
 
   <div class="link">
     <a href='https://www.notion.so/harvestfinance/APY-Calculation-bd7a8082f76541e79fe49d8d928a2c93'

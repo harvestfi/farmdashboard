@@ -1,11 +1,9 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {IncomeDialogComponent} from '../../dialogs/income-dialog/income-dialog.component';
+import {Component, Input, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
 import {Utils} from '../../static/utils';
 import {StaticValues} from '../../static/static-values';
-import {RewardsDialogComponent} from '../../dialogs/rewards-dialog/rewards-dialog.component';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
-import {MatDialog} from '@angular/material/dialog';
 import {NGXLogger} from 'ngx-logger';
+import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-apy-window',
@@ -15,9 +13,10 @@ import {NGXLogger} from 'ngx-logger';
 export class ApyWindowComponent implements OnInit {
   @Output() showModal = new EventEmitter<boolean>();
   @Input() poolName: string;
+  @ViewChild('incomeModal') private incomeModal: CustomModalComponent;
+  @ViewChild('psApyModal') private psApyModal: CustomModalComponent;
 
   constructor(private pricesCalculationService: PricesCalculationService,
-              private dialog: MatDialog,
               private log: NGXLogger) {
   }
 
@@ -48,28 +47,14 @@ export class ApyWindowComponent implements OnInit {
       this.openPsApyDialog();
       return;
     }
-    this.dialog.open(IncomeDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: this.poolName + ' Income history chart',
-        name: this.poolName
-      }
-    });
+    this.incomeModal.open();
   }
 
   private openPsApyDialog(): void {
     if (this.poolName !== 'PS') {
       return;
     }
-    this.dialog.open(RewardsDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: 'PS APY History',
-        name: ''
-      }
-    });
+    this.psApyModal.open();
   }
 
   // ---------------- GETTERS --------------------
