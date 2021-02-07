@@ -127,6 +127,11 @@
               </div>
             </div>
           </div>
+          <app-custom-modal #psIncomeModal>
+            <ng-template >
+                <app-tvl-dialog [data]="{type: 'income'}"></app-tvl-dialog>
+            </ng-template>
+          </app-custom-modal>
         </div>
       </div>
 
@@ -144,6 +149,11 @@
           <text class="sign">M$</text>
         </div>
       </div>
+      <app-custom-modal #tvlModal>
+        <ng-template >
+            <app-tvl-dialog [data]="{type: 'All'}"></app-tvl-dialog>
+        </ng-template>
+      </app-custom-modal>
     </div>
 
   </div>
@@ -185,6 +195,11 @@
               </div>
             </div>
           </div>
+          <app-custom-modal #farmBuybacksModal>
+            <ng-template >
+                <app-farm-buybacks-dialog [data]="{title: 'FARM Buyback history chart'}"></app-farm-buybacks-dialog>
+            </ng-template>
+          </app-custom-modal>
         </div>
 
         <div class="middle-column-middle left-border-box">
@@ -201,6 +216,11 @@
               </div>
             </div>
           </div>
+          <app-custom-modal #savedFeesModal>
+            <ng-template >
+                <app-hard-work-history-dialog [data]="{title: 'Saved Gas Fees History'}"></app-hard-work-history-dialog>
+            </ng-template>
+          </app-custom-modal>
         </div>
 
         <div class="right-column-middle left-border-box">
@@ -216,6 +236,11 @@
               </div>
             </div>
           </div>
+          <app-custom-modal #totalUsersModal>
+            <ng-template >
+                <app-total-users-dialog [data]="{title: 'Total users history'}"></app-total-users-dialog>
+            </ng-template>
+          </app-custom-modal>
         </div>
       </div>
 

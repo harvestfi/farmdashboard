@@ -19,6 +19,11 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
 export class DashboardLastValuesComponent implements OnInit {
   @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
   @ViewChild('weeklyProfitModal') private weeklyProfitModal: CustomModalComponent;
+  @ViewChild('psIncomeModal') private psIncomeModal: CustomModalComponent;
+  @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
+  @ViewChild('farmBuybacksModal') private farmBuybacksModal: CustomModalComponent;
+  @ViewChild('savedFeesModal') private savedFeesModal: CustomModalComponent;
+  @ViewChild('totalUsersModal') private totalUsersModal: CustomModalComponent;
   constructor(public dialog: MatDialog,
               public vt: ViewTypeService,
               private api: HttpService,
@@ -96,28 +101,30 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   openTvlDialog(): void {
-    this.dialog.open(TvlDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        type: 'All'
-      }
-    });
+    this.tvlModal.open();
+    // this.dialog.open(TvlDialogComponent, {
+    //   width: '100%',
+    //   height: 'auto',
+    //   data: {
+    //     type: 'All'
+    //   }
+    // });
   }
 
   openPsIncomeDialog(): void {
-    this.dialog.open(TvlDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        type: 'income'
-      }
-    });
+    this.psIncomeModal.open();
+    // this.dialog.open(TvlDialogComponent, {
+    //   width: '100%',
+    //   height: 'auto',
+    //   data: {
+    //     type: 'income'
+    //   }
+    // });
   }
 
   openWeeklyProfitDialog(): void {
     this.weeklyProfitModal.open();
-    
+
     // this.dialog.open(ProfitDialogComponent, {
     //   width: '100%',
     //   height: 'auto',
@@ -129,14 +136,15 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   openFarmBuybacksDialog(): void {
-    this.dialog.open(FarmBuybacksDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: 'FARM Buyback history chart',
-        name: 'Name'
-      }
-    });
+    this.farmBuybacksModal.open();
+    // this.dialog.open(FarmBuybacksDialogComponent, {
+    //   width: '100%',
+    //   height: 'auto',
+    //   data: {
+    //     title: 'FARM Buyback history chart',
+    //     name: 'Name'
+    //   }
+    // });
   }
 
   openPsTvlDialog(): void {
@@ -151,24 +159,26 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   openSavedFeesDialog(): void {
-    this.dialog.open(HardWorkHistoryDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: 'Saved Gas Fees History',
-        name: 'Name'
-      }
-    });
+    this.savedFeesModal.open();
+    // this.dialog.open(HardWorkHistoryDialogComponent, {
+    //   width: '100%',
+    //   height: 'auto',
+    //   data: {
+    //     title: 'Saved Gas Fees History',
+    //     name: 'Name'
+    //   }
+    // });
   }
 
   openTotalUsersDialog(): void {
-    this.dialog.open(TotalUsersDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: 'Total users history',
-        name: 'Name'
-      }
-    });
+    this.totalUsersModal.open();
+    // this.dialog.open(TotalUsersDialogComponent, {
+    //   width: '100%',
+    //   height: 'auto',
+    //   data: {
+    //     title: 'Total users history',
+    //     name: 'Name'
+    //   }
+    // });
   }
 }
