@@ -14,7 +14,7 @@
 
     </div>
 
-    <ul class="main-side-menu-items">
+    <ul *ngIf='!isDarkTheme'  class="main-side-menu-items">
         <li (click)="openAllStats()" data-menu-icon="📈" class="main-side-menu-item">Full Strategies Info</li>
         <li (click)="openTvlDialog()" data-menu-icon="🕐" class="main-side-menu-item">TVL History Info</li>
         <li (click)="openIncomeDialog()" data-menu-icon="💸" class="main-side-menu-item">Income History Info</li>
@@ -25,7 +25,7 @@
     </ul>
 
 
-    <nav class="botton-social-icons ">
+    <nav *ngIf='!isDarkTheme' class="botton-social-icons ">
         <a class="social-link" href="https://twitter.com/harvest_finance"><i class="fab fa-twitter"></i></a>
         <a class="social-link" href="https://discord.gg/R5SeTVR"><i class="fab fa-discord"></i></a>
         <a class="social-link" href="https://medium.com/harvest-finance"><i class="fab fa-medium"></i></a>

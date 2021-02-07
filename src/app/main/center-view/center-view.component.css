@@ -15,17 +15,6 @@
   .price-card {
     height: 450px;
   }
-
-  .grain-chart, .farm-chart {
-    width: 100%;
-  }
-
-  /*.left {*/
-  /*  width: 50%;*/
-  /*}*/
-  /*.middle {*/
-  /*  width: 50%;*/
-  /*}*/
 }
 
 @media screen and (max-width: 600px) {

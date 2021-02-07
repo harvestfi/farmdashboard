@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {StaticValues} from '../../static-values';
+import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 
 @Component({

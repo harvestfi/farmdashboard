@@ -2,12 +2,13 @@ import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from
 import {HttpService} from '../../services/http.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HarvestDto} from '../../models/harvest-dto';
-import {Utils} from '../../utils';
+import {Utils} from '../../static/utils';
 import {NGXLogger} from 'ngx-logger';
-import {StaticValues} from '../../static-values';
+import {StaticValues} from '../../static/static-values';
 import {TransferDto} from '../../models/transfer-dto';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {BalanceChartOptions} from '../balance-chart-options';
+import {BalanceChartDarkOptions} from '../balance-chart-dark-options';
 import {MatDialog} from '@angular/material/dialog';
 import {SimpleChartDialogComponent} from '../../dialogs/simple-chart-dialog/simple-chart-dialog.component';
 import {ViewTypeService} from '../../services/view-type.service';
@@ -25,6 +26,7 @@ class CheckedValue {
 export class HistoryPageComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
   ready = false;
+  opened = false;
   fullData = [];
   sortedData: any[];
   includeTransfers: boolean;
@@ -122,7 +124,7 @@ export class HistoryPageComponent implements AfterViewInit {
     this.ready = true;
     this.cdRef.detectChanges();
     chartBuilder.priceLineVisible = false;
-    const chart = chartBuilder.initChart(this.chartEl, BalanceChartOptions.getOptions());
+    const chart = !this.vt.isNonScoreboard() ? chartBuilder.initChart(this.chartEl, BalanceChartDarkOptions.getOptions()) : chartBuilder.initChart(this.chartEl, BalanceChartOptions.getOptions());
     chartBuilder.addToChart(chart, config);
   }
 
@@ -338,4 +340,15 @@ export class HistoryPageComponent implements AfterViewInit {
     }
     this.router.navigateByUrl('/history/' + address);
   }
+
+
+  toggleTheme(): void {
+    this.vt.toggleTheme();
+    this.cdRef.detectChanges();
+  }
+  toggleSidebar(): void {
+    this.opened = !this.opened;
+  }
+
 }
+

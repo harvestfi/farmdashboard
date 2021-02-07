@@ -59,6 +59,12 @@ export class HttpService {
     );
   }
 
+  getHWHistoryDataByRange(minBlock: number, maxBlock: number): Observable<HardWorkDto[]> {
+    return this.http.get<HardWorkDto[]>(environment.apiEndpoint + `${this.url}/history/hardwork?from=${minBlock}&to=${maxBlock}`).pipe(
+      catchError(this.snackService.handleError<HardWorkDto[]>(`HardWork history`))
+    );
+  }
+
   getHardWorkHistoryDataByName(name: string): Observable<HardWorkDto[]> {
     return this.http.get<HardWorkDto[]>(environment.apiEndpoint + `${this.url}/history/hardwork/` + name).pipe(
         catchError(this.snackService.handleError<HardWorkDto[]>(`HardWork history for ` + name))

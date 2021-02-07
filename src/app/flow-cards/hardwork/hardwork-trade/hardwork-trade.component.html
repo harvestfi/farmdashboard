@@ -1,0 +1,63 @@
+<div [ngClass]="moreColumns ? 'hardwork-info-full' : 'hardwork-info'">
+  <div *ngIf='moreColumns' class="hardwork-field hardwork-poolCalls">
+    {{dto.callsQuantity }}
+  </div>
+  <div class="hardwork-field hardwork-date left-border-box"
+       matTooltip="{{dto.blockDateAdopted| date: 'dd.MM.yyyy HH:mm:ss'}}
+    {{dto.vault}}
+    TVL ${{dto.tvl | number: '1.0-0'}}
+    PS APR {{dto.psApr.toFixed(2) | number: '1.0-0'}}%
+
+    " matTooltipClass="tooltip-spaced"
+  >
+    {{fullDate ?
+      (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss') :
+      (dto.blockDateAdopted | date: 'dd-MMM HH:mm')
+    }}
+
+  </div>
+
+  <div class="hardwork-field hardwork-vault-img">
+    <img alt="?" class="tvl-img" src="{{getImgUrl(dto.vault)}}"/>
+  </div>
+
+
+  <div class="hardwork-field hardwork-vault">
+    {{prettyPoolName(dto.vault)}}
+  </div>
+
+  <div class="hardwork-field hardwork-shareChangeUsd">
+    ${{dto.shareChangeUsd | number: '1.2-2'}}
+  </div>
+
+
+  <div *ngIf='moreColumns' class="hardwork-field hardwork-farmBuyback">
+    {{dto.farmBuyback.toFixed(2)}} FARM
+  </div>
+
+  <div *ngIf='moreColumns' class="hardwork-field hardwork-weeklyProfit">
+    {{dto.weeklyProfit | number: '1.0-0'}} FARM
+  </div>
+
+  <div *ngIf='moreColumns' class="hardwork-field hardwork-tvl currency">
+    ${{ (dto.tvl| number: '1.0-0')}}
+  </div>
+
+  <div *ngIf='moreColumns' class="hardwork-field hardwork-periodOfWork">
+    {{(dto.periodOfWork / (60 * 60 * 24)).toFixed(2)}} days
+  </div>
+
+  <div *ngIf='moreColumns' class="hardwork-field hardwork-gasSaved">
+    ${{dto.savedGasFees | number: '1.0-0' }}
+  </div>
+
+  <div class="hardwork-field pointer">
+    <mat-icon (click)="openEthersacanTx(hash)"
+              [ngStyle]="{'color': '#b5b4b4'}"
+              aria-hidden="false" aria-label="Price" class="sign-icon">
+      open_in_new
+    </mat-icon>
+  </div>
+
+
+</div>

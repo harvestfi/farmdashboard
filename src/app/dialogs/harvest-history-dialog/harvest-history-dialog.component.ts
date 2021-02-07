@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { HttpService } from '../../services/http.service';
-import { StaticValues } from 'src/app/static-values';
+import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { NGXLogger } from 'ngx-logger';
 import { HarvestDto } from '../../models/harvest-dto';

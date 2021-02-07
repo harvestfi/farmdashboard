@@ -3,9 +3,10 @@ import {HarvestDto} from '../models/harvest-dto';
 import {VaultStats} from '../models/vault-stats';
 import {LpStat} from '../models/lp-stat';
 import {PricesDto} from '../models/prices-dto';
-import {StaticValues} from '../static-values';
+import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
+import {LastPrice} from '../models/last-price';
 import {NGXLogger} from 'ngx-logger';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class PricesCalculationService {
   public tvls = new Map<string, number>();
   public tvlNames = new Set<string>();
   public allTvls = 0.0;
+  public allPrices: LastPrice[] = [];
   public vaultStats = new Map<string, VaultStats>();
   public lastHarvests = new Map<string, HarvestDto>();
   public lastHardWorks = new Map<string, HardWorkDto>();
@@ -66,8 +68,9 @@ export class PricesCalculationService {
         || 'UST_NAME' === name
         || 'CRV_UST' === name
         || 'UST' === name
-        || 'EURS' === name
-        || 'CRV_EURS' === name
+        // || 'EURS' === name
+        // || 'CRV_EURS' === name
+        || 'CRV_GUSD' === name
         ;
   }
 
@@ -96,6 +99,7 @@ export class PricesCalculationService {
 
   public saveHardWork(tx: HardWorkDto): void {
     if (!tx || this.lastHardWorks.get(tx.vault)?.blockDate > tx.blockDate) {
+      this.log.warn('Old hard work', tx);
       return;
     }
 
@@ -119,6 +123,13 @@ export class PricesCalculationService {
     });
     this.allTvls = allTvls / 1000000;
     // console.log('allTvls ', this.allTvls);
+  }
+
+  public updatePrices(): void {
+    this.allPrices = Array.from(this.lastPrices.keys()).map(key => ({
+      tokenName: key,
+      tokenPrice: this.getPrice(key).toFixed(2)
+    }));
   }
 
   saveReward(tx: RewardDto): void {
@@ -219,6 +230,8 @@ export class PricesCalculationService {
     for (const hw of this.lastHardWorks.values()) {
       if (hw.savedGasFeesSum) {
         fees += hw.savedGasFeesSum;
+      } else {
+        this.log.warn('Saved Gas fees not found in ', hw);
       }
     }
     return fees;
@@ -282,9 +295,9 @@ export class PricesCalculationService {
       return this.calculateTvlForLp(vaultStats.lpStat);
     } else if (vaultStats.tvl) {
       const price = this.getPrice(name);
-      if (price === 0) {
-        console.log('not found price for ' + name);
-      }
+      // if (price === 0) {
+      //   console.log('not found price for ' + name);
+      // }
       return vaultStats.tvl * price;
     }
     return 0.0;
@@ -292,10 +305,27 @@ export class PricesCalculationService {
 
   public savePrice(tx: PricesDto): void {
     const name = PricesCalculationService.mapCoinNameToSimple(tx.token);
-    if (this.lastPrices.has(name) && this.lastPrices.get(name).block > tx.block) {
-      this.log.warn('Loaded old price!', tx);
-      return;
+    const lastPriceDto = this.lastPrices.get(name);
+    if (lastPriceDto) {
+      if (lastPriceDto.source !== tx.source) {
+        this.log.warn('got prices with different sources', lastPriceDto.source, tx.source);
+        // return;
+      }
+      if (lastPriceDto.block > tx.block) {
+        this.log.warn('Loaded old price!', tx);
+        return;
+      }
+      const diff = (Math.abs(lastPriceDto.price - tx.price) / tx.price) * 100;
+      if (diff > 5) {
+        this.log.info('New price changed more than 5%', lastPriceDto, tx);
+      }
     }
     this.lastPrices.set(name, tx);
+    this.updateTvls();
+    this.updatePrices();
+  }
+
+  getLastPrices() {
+    return this.lastPrices;
   }
 }

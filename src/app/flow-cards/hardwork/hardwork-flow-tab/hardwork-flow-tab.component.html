@@ -1,0 +1,9 @@
+<perfect-scrollbar [ngStyle]="{'maxHeight': maxHeight+'px'}" class="scroller">
+  
+    <div *ngFor="let dto of dtos | hardworkFilter:minAmount:vaultFilter"
+          class="row hardwork-row">
+        <app-hardwork-trade [dto]='dto' [moreColumns]="showMoreColumns"  [fullDate]="showFullDate"></app-hardwork-trade>
+    </div>
+  
+  </perfect-scrollbar>
+  

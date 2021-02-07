@@ -4,10 +4,10 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
-import {StaticValues} from '../../static-values';
+import {StaticValues} from '../../static/static-values';
 import {RewardDto} from '../../models/reward-dto';
 import {HarvestDto} from '../../models/harvest-dto';
-import {Utils} from '../../utils';
+import {Utils} from '../../static/utils';
 import {DialogData} from '../dialog-data';
 
 @Component({

@@ -1,0 +1,50 @@
+<div *ngIf="vt.isNonScoreboard()" id="top-div-light">
+
+  <div class="uni-card">
+    <div #tooltip="matTooltip"
+         aria-hidden="false"
+         aria-label="?"
+         class="title-span"
+         matTooltip="List of trades contains FARM amounts less than {{whalesMoreThan}}.
+          Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
+          Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price">Trades
+
+      <input #uniswapDtoFilter class="filter-input" placeholder="More than..." type="text">
+    </div>
+
+    <app-flow-tab [dtos]="dtos" [maxHeight]="180" [minAmount]="+uniswapDtoFilter.value"></app-flow-tab>
+    <div class="button-container">
+      <button class="show-more" (click)="openUniHistory()">show older</button>
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard" class="live-trades-table">
+  <tr>
+    <td style="width: 50%; height: 50px">
+      <div class="flex-container" style="color: #a09c9c">
+        <span style="font-size: 1.2em;">Trades</span>
+
+        <mat-icon #tooltip="matTooltip" aria-hidden="false" aria-label="?" matTooltip="List of trades contains FARM amounts less than 1000.
+          Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
+          Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price"
+                  style="margin-left: 5px; font-size: 1.2em;">help
+        </mat-icon>
+
+        <input #uniswapDtoFilter placeholder="Show more than..."
+               style="background-color: #2F2C2C; color: white; margin-left: 5px; width: 120px;" type="text">
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="width: 50%;">
+      <app-flow-tab [dtos]="dtos" [maxHeight]="650" [minAmount]="+uniswapDtoFilter.value"></app-flow-tab>
+    </td>
+  </tr>
+
+</table>

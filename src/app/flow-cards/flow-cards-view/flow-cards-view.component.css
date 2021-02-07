@@ -1,0 +1,17 @@
+.uni-row {
+  /* margin: 10px 0 0 10px; */
+  display: grid;
+  grid-template-columns:  1fr 1fr 1fr;
+  width: 100%;
+}
+
+.left, .right, .middle {
+  width: 100%;
+  padding: 10px;
+}
+
+@media screen and (max-width: 1025px) {
+  .uni-row {
+    grid-template-columns:  1fr;
+  }
+}

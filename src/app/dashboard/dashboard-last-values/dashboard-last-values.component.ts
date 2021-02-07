@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {TvlDialogComponent} from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
-import {StaticValues} from '../../static-values';
+import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {HttpService} from '../../services/http.service';
 import {ProfitDialogComponent} from '../../dialogs/profit-dialog/profit-dialog.component';
