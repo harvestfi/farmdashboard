@@ -20,8 +20,8 @@ export class ViewTypeService {
     window.location.reload();
   }
 
-  public isNonScoreboard(): string {
-    return UserSettings.getTheme() ;
+  public isNonScoreboard(): boolean {
+    return UserSettings.getTheme() !== this.themeScoreboard;
   }
 
   public isLightView(): string {

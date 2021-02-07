@@ -1,4 +1,4 @@
-<div *ngIf="vt.isLightView() === 'light'" class="history-page">
+<div  [ngClass]="{'history-page-dark' : vt.isNonScoreboard()}" class="history-page">
   <div *ngIf="address" id="title-id" class="title">
     History for address
   </div>

@@ -41,3 +41,15 @@ footer {
 }
 
 
+.main-row {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+}
+.middle {
+  max-width: 1024px;
+  width: 100%;
+  padding: 0px;
+}
+
+
