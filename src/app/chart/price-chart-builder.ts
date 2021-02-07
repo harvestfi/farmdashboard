@@ -5,8 +5,9 @@ import {createChart, IChartApi} from 'lightweight-charts';
 import {NGXLogger} from 'ngx-logger';
 import {LightweightChartsOptions} from './lightweight-charts-options';
 import {ViewTypeService} from '../services/view-type.service';
+import {ChartGeneralMethods} from '../chart/chart-general-methods';
 
-export class PriceChartBuilder {
+export class PriceChartBuilder extends ChartGeneralMethods {
   lastDate = 0;
   lastUpdatedPrice = 0.0;
   lastOhlc: OhlcDto;
@@ -16,10 +17,10 @@ export class PriceChartBuilder {
   coin;
 
   constructor(private log: NGXLogger, coin: string, chartEl: ElementRef, public vt: ViewTypeService) {
+    super();
     this.coin = coin;
 
     this.chart = createChart(chartEl.nativeElement, LightweightChartsOptions.getOptions());
-
     if (this.vt.isNonScoreboard()) {
       this.chart.applyOptions({
         // height: 400,
