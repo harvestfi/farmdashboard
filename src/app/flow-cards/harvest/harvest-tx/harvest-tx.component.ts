@@ -10,7 +10,6 @@ import {ViewTypeService} from '../../../services/view-type.service';
 import {SnackService} from '../../../services/snack.service';
 import {HardWorkDto} from '../../../models/hardwork-dto';
 import {RewardDto} from '../../../models/reward-dto';
-import {HarvestHistoryDialogComponent} from '../../../dialogs/harvest-history-dialog/harvest-history-dialog.component';
 import {PriceSubscriberService} from '../../../services/price-subscriber.service';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
