@@ -10,7 +10,7 @@ import { IChartApi } from 'lightweight-charts';
   templateUrl: './farm-buybacks-dialog.component.html',
   styleUrls: ['./farm-buybacks-dialog.component.css']
 })
-export class FarmBuybacksDialogComponent implements AfterViewInit {
+export class FarmBuybacksDialogComponent extends ChartGeneralMethods implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
   @Input() public data: Record<any, any>;
   ready = false;
@@ -21,6 +21,7 @@ export class FarmBuybacksDialogComponent implements AfterViewInit {
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
+                super();
   }
 
   ngAfterViewInit(): void {
@@ -49,7 +50,7 @@ export class FarmBuybacksDialogComponent implements AfterViewInit {
   private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
     this.ready = true;
     this.cdRef.detectChanges();
-    const chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(chart, config);
+    this.chart = chartBuilder.initChart(this.chartEl);
+    chartBuilder.addToChart(this.chart, config);
   }
 }
