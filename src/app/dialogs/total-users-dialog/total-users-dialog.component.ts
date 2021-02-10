@@ -3,14 +3,14 @@ import {HttpService} from '../../services/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
-import { ChartGeneralMethods } from 'src/app/chart/chart-general-methods';
+import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 
 @Component({
   selector: 'app-total-users-dialog',
   templateUrl: './total-users-dialog.component.html',
   styleUrls: ['./total-users-dialog.component.css']
 })
-export class TotalUsersDialogComponent extends ChartGeneralMethods implements AfterViewInit {
+export class TotalUsersDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
   @Input('data') public data: Record<any, any>;
   ready = false;

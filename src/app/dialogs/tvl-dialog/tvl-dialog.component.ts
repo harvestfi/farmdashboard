@@ -8,13 +8,13 @@ import {ChartsOptionsLight} from '../../chart/charts-options-light';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {HttpService} from '../../services/http.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
-import {ChartGeneralMethods} from '../../chart/chart-general-methods';
+import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.component';
 @Component({
   selector: 'app-tvl-dialog',
   templateUrl: './tvl-dialog.component.html',
   styleUrls: ['./tvl-dialog.component.css']
 })
-export class TvlDialogComponent extends ChartGeneralMethods implements  AfterViewInit {
+export class TvlDialogComponent extends ChartGeneralMethodsComponent implements  AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
   @Input() public data: Record<any, any>;
 

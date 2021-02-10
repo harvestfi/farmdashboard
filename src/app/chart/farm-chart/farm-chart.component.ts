@@ -4,7 +4,7 @@ import {UniswapSubscriberService} from '../../flow-cards/uniswap/uniswap-subscri
 import {ViewTypeService} from '../../services/view-type.service';
 import {PriceChartBuilder} from '../price-chart-builder';
 import {HttpService} from '../../services/http.service';
-import { ChartGeneralMethods } from '../chart-general-methods';
+import {ChartGeneralMethodsComponent} from '../chart-general-methods.component';
 import {IChartApi} from 'lightweight-charts';
 
 
@@ -13,7 +13,7 @@ import {IChartApi} from 'lightweight-charts';
   templateUrl: './farm-chart.component.html',
   styleUrls: ['./farm-chart.component.css']
 })
-export class FarmChartComponent extends ChartGeneralMethods implements AfterViewInit {
+export class FarmChartComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
   coin = 'FARM';
   otherCoin = 'ETH';

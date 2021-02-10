@@ -3,15 +3,15 @@ import {HttpService} from '../../services/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
-import { ChartGeneralMethods } from 'src/app/chart/chart-general-methods';
-import { IChartApi } from 'lightweight-charts';
+import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
+import {IChartApi} from 'lightweight-charts';
 
 @Component({
   selector: 'app-hard-work-history-dialog',
   templateUrl: './hard-work-history-dialog.component.html',
   styleUrls: ['./hard-work-history-dialog.component.scss']
 })
-export class HardWorkHistoryDialogComponent extends ChartGeneralMethods implements AfterViewInit {
+export class HardWorkHistoryDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
   @Input() public data: Record<any, any>;
   ready = false;

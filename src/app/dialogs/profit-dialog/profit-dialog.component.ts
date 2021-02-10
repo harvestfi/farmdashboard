@@ -3,15 +3,15 @@ import {HttpService} from '../../services/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
-import { IChartApi } from 'lightweight-charts';
-import { ChartGeneralMethods } from 'src/app/chart/chart-general-methods';
+import {IChartApi} from 'lightweight-charts';
+import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 
 @Component({
   selector: 'app-profit-dialog',
   templateUrl: './profit-dialog.component.html',
   styleUrls: ['./profit-dialog.component.css']
 })
-export class ProfitDialogComponent extends ChartGeneralMethods implements AfterViewInit {
+export class ProfitDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
   @Input() public data: Record<any, any>;
   ready = false;

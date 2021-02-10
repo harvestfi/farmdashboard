@@ -1,11 +1,10 @@
-
-import {IChartApi} from 'lightweight-charts'
+import {IChartApi} from 'lightweight-charts';
 import {HostListener, Component, ElementRef} from '@angular/core';
 @Component({
     selector: 'app-general-methods',
     template: ``
   })
-export abstract class ChartGeneralMethods {
+export abstract class ChartGeneralMethodsComponent {
     chart: IChartApi;
     chartEl: ElementRef;
 
