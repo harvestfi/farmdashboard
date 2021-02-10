@@ -1,7 +1,6 @@
 .container {
     background: #fffce6;
     color: black;
-    max-height: 80vh;
     padding: 10px;
 }
 
@@ -54,10 +53,8 @@
 }
 
 .scroller {
-    /*white-space: pre-line;*/
     overflow-y: scroll;
-    overflow-x: scroll;
-    /*position: relative;*/
+    max-height: 80vh;
 }
 
 ::ng-deep.mat-dialog-container {
