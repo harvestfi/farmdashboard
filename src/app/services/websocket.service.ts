@@ -49,7 +49,7 @@ export class WebsocketService implements OnDestroy {
         // for avoid DDOS on the backend
         setTimeout(() => {
           window.location.reload();
-        }, (Math.random() * 10000) + 1000);
+        }, (Math.random() * 120000) + 10000);
       }
       this.subscriptions.clear();
       this.state.next(SocketClientState.CONNECTED);
