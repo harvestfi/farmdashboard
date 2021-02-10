@@ -61,7 +61,13 @@
                 <app-hard-work-history-dialog [data]="{title: 'Saved Gas Fees History'}"></app-hard-work-history-dialog>
             </ng-template>
         </app-custom-modal>
-               
+        
+        <li (click)="openUserBalances()" data-menu-icon="👨‍👨‍👦‍👦" class="main-side-menu-item">Users Balances</li>
+        <app-custom-modal #userBalancesDialog>
+            <ng-template >
+                <app-user-balances-dialog [data]="{title: 'User Balances'}"></app-user-balances-dialog>
+            </ng-template>
+        </app-custom-modal>
     </ul>
 
 

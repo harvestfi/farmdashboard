@@ -12,6 +12,7 @@ import {environment} from '../../environments/environment';
 import {TransferDto} from '../models/transfer-dto';
 import {OhlcDto} from '../models/ohlc-dto';
 import {PricesDto} from '../models/prices-dto';
+import {Balance} from '../models/balance';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,7 @@ export class HttpService {
         catchError(this.snackService.handleError<HarvestDto[]>(`Harvest history`))
     );
   }
+
   getHarvestTxHistoryByRange(minBlock: number, maxBlock: number): Observable<HarvestDto[]> {
     return this.http.get<HarvestDto[]>(environment.apiEndpoint + `${this.url}/history/harvest?from=${minBlock}&to=${maxBlock}`).pipe(
         catchError(this.snackService.handleError<HarvestDto[]>(`Harvest history`))
@@ -61,7 +63,7 @@ export class HttpService {
 
   getHWHistoryDataByRange(minBlock: number, maxBlock: number): Observable<HardWorkDto[]> {
     return this.http.get<HardWorkDto[]>(environment.apiEndpoint + `${this.url}/history/hardwork?from=${minBlock}&to=${maxBlock}`).pipe(
-      catchError(this.snackService.handleError<HardWorkDto[]>(`HardWork history`))
+        catchError(this.snackService.handleError<HardWorkDto[]>(`HardWork history`))
     );
   }
 
@@ -134,6 +136,12 @@ export class HttpService {
   getLastPrices(): Observable<PricesDto[]> {
     return this.http.get<PricesDto[]>(environment.apiEndpoint + '/price/token/latest').pipe(
         catchError(this.snackService.handleError<PricesDto[]>(`last price `))
+    );
+  }
+
+  getUserBalances(): Observable<Balance[]> {
+    return this.http.get<Balance[]>(environment.apiEndpoint + '/user_balances').pipe(
+        catchError(this.snackService.handleError<Balance[]>(`load balances`))
     );
   }
 }

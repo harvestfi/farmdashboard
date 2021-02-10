@@ -1,0 +1,83 @@
+.container {
+    background: #fffce6;
+    color: black;
+    max-height: 80vh;
+    padding: 10px;
+}
+
+.title {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.disclaimer {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 0.8em;
+}
+
+.headers, .values  {
+    display: grid;
+    grid-template-columns: 0.3fr 1fr 1fr 1fr;
+}
+
+.header-field {
+    text-align: center;
+    padding: 3px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.values {
+
+}
+
+.value-field {
+    text-align: center;
+    padding: 3px;
+    font-size: 0.9em;
+    font-weight: bolder;
+}
+
+.links a {
+    width: 80%;
+    text-decoration: none;
+    background-color: #EEBF65;
+    color: black;
+    position: relative;
+    font-size: 12px;
+    margin: 5px;
+    border-radius: 5px;
+    padding: 1%;
+    transition: all .2s ease-out;
+}
+
+.scroller {
+    /*white-space: pre-line;*/
+    overflow-y: scroll;
+    overflow-x: scroll;
+    /*position: relative;*/
+}
+
+::ng-deep.mat-dialog-container {
+    overflow: hidden;
+    border-radius: 3px;
+    padding: 10px !important;
+    background: #fffce6;
+}
+
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+    color: black !important;
+    background-color: transparent !important;
+}
+
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label {
+    color: black !important;
+    background-color: transparent !important;
+}
+
+::ng-deep .mat-tab-nav-bar {
+    color: black !important;
+    background-color: transparent !important;
+}
