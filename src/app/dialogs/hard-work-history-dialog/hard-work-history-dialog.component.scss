@@ -9,8 +9,8 @@
 .dialog-card {
   background: #fffce6;
   padding: 20px;
-  min-width: 700px;
-  width: 100%;
+  max-width: 700px;
+  width: 100vw;
 }
 
 ::ng-deep.mat-dialog-container {
