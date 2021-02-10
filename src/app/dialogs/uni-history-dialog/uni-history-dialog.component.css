@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: center;
   padding: 20px;
+  background: #fffce6;
 }
 ::ng-deep.mat-dialog-container {
   overflow-x: hidden;
