@@ -2,7 +2,7 @@
 import {IChartApi} from 'lightweight-charts'
 import {HostListener, Component, ElementRef} from '@angular/core';
 @Component({
-    selector: 'app-tvl-dialog',
+    selector: 'app-general-methods',
     template: ``
   })
 export abstract class ChartGeneralMethods {

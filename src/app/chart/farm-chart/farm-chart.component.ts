@@ -4,25 +4,31 @@ import {UniswapSubscriberService} from '../../flow-cards/uniswap/uniswap-subscri
 import {ViewTypeService} from '../../services/view-type.service';
 import {PriceChartBuilder} from '../price-chart-builder';
 import {HttpService} from '../../services/http.service';
+import { ChartGeneralMethods } from '../chart-general-methods';
+import {IChartApi} from 'lightweight-charts';
+
 
 @Component({
   selector: 'app-farm-chart',
   templateUrl: './farm-chart.component.html',
   styleUrls: ['./farm-chart.component.css']
 })
-export class FarmChartComponent implements AfterViewInit {
+export class FarmChartComponent extends ChartGeneralMethods implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
   coin = 'FARM';
   otherCoin = 'ETH';
+  chart: IChartApi;
 
   constructor(private httpService: HttpService,
               private uniswapSubscriberService: UniswapSubscriberService,
               public vt: ViewTypeService,
               private log: NGXLogger) {
+                super();
   }
 
   ngAfterViewInit(): void {
     const priceChartBuilder = new PriceChartBuilder(this.log, this.coin, this.chartEl, this.vt);
+    this.chart = priceChartBuilder.chart;
     this.httpService.getUniswapOHLC(this.coin).subscribe(data => {
       this.log.debug(this.coin + ' prices loaded ', data);
       priceChartBuilder.addValuesToChart(data, false);

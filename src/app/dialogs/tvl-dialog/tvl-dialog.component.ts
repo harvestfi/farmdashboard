@@ -16,13 +16,9 @@ import {ChartGeneralMethods} from '../../chart/chart-general-methods';
 })
 export class TvlDialogComponent extends ChartGeneralMethods implements  AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
-  @ViewChild('sharePriceChart') sharePriceChartEl: ElementRef;
-  @ViewChild('incomeChart') incomeChartEl: ElementRef;
   @Input() public data: Record<any, any>;
 
   chart: IChartApi;
-  sharePriceChart: IChartApi;
-  incomeChart: IChartApi;
   ready = false;
 
   pureData: HarvestTvl[];
@@ -66,8 +62,8 @@ export class TvlDialogComponent extends ChartGeneralMethods implements  AfterVie
   postLoadInitCharts(): void {
     const options = LightweightChartsOptions.getOptions();
     if (this.data.type === 'income') {
-      this.incomeChart = createChart(this.incomeChartEl.nativeElement, LightweightChartsOptions.getOptions());
-      this.incomeChart.applyOptions(ChartsOptionsLight.getOptions());
+      this.chart = createChart(this.chartEl.nativeElement, LightweightChartsOptions.getOptions());
+      this.chart.applyOptions(ChartsOptionsLight.getOptions());
     } else {
       this.chart = createChart(this.chartEl.nativeElement, options);
       if (this.vt.isNonScoreboard()) {
@@ -77,9 +73,9 @@ export class TvlDialogComponent extends ChartGeneralMethods implements  AfterVie
   }
 
   initChart(tabChangeEvent: MatTabChangeEvent): void {
-    if (tabChangeEvent.index === 1 && !this.sharePriceChart) {
-      this.sharePriceChart = createChart(this.sharePriceChartEl.nativeElement, LightweightChartsOptions.getOptions());
-      this.sharePriceChart.applyOptions(ChartsOptionsLight.getOptions());
+    if (tabChangeEvent.index === 1 && !this.chart) {
+      this.chart = createChart(this.chartEl.nativeElement, LightweightChartsOptions.getOptions());
+      this.chart.applyOptions(ChartsOptionsLight.getOptions());
       this.loadShareData();
     }
   }
@@ -212,7 +208,7 @@ export class TvlDialogComponent extends ChartGeneralMethods implements  AfterVie
       }
     });
     if (sharesData.length !== 0) {
-      this.sharePriceSeries = this.sharePriceChart.addLineSeries({
+      this.sharePriceSeries = this.chart.addLineSeries({
         title: 'Share price',
         color: '#e79494',
         priceFormat: {
@@ -221,9 +217,9 @@ export class TvlDialogComponent extends ChartGeneralMethods implements  AfterVie
         },
       });
       this.sharePriceSeries.setData(sharesData);
-      this.sharePriceChart.timeScale().fitContent();
+      this.chart.timeScale().fitContent();
       this.markerAdded = [];
-      this.sharePriceChart.subscribeCrosshairMove(h => {
+      this.chart.subscribeCrosshairMove(h => {
         if (this.markerAdded.length === 0) {
           this.markerAdded.push(1);
           this.addLabelToChart(this.sharePriceSeries, h, this.sharePriceDataMap, this.markerAdded);
@@ -257,7 +253,7 @@ export class TvlDialogComponent extends ChartGeneralMethods implements  AfterVie
       this.psTvlUsdDataMap.set(x.blockDate, x.psTvlUsd / 1000000);
     });
 
-    this.psAprSeries = this.incomeChart.addLineSeries({
+    this.psAprSeries = this.chart.addLineSeries({
       title: 'PS Buyback Income APR',
       color: '#0085ff',
       priceFormat: {
@@ -266,25 +262,25 @@ export class TvlDialogComponent extends ChartGeneralMethods implements  AfterVie
     });
     this.psAprSeries.setData(apr);
 
-    this.amountSumUsdSeries = this.incomeChart.addLineSeries({
+    this.amountSumUsdSeries = this.chart.addLineSeries({
       title: 'Income USD M$',
       color: '#eeb000',
       priceScaleId: '1',
     });
     this.amountSumUsdSeries.setData(amountSumUsd);
 
-    this.psTvlUsdSeries = this.incomeChart.addLineSeries({
+    this.psTvlUsdSeries = this.chart.addLineSeries({
       title: 'PS TVL M$',
       color: '#7e7e7e',
       priceScaleId: '2',
     });
     this.psTvlUsdSeries.setData(psTvlUsd);
 
-    this.incomeChart.timeScale().fitContent();
+    this.chart.timeScale().fitContent();
     this.markerAdded = [];
     this.markerAdded2 = [];
     this.markerAdded3 = [];
-    this.incomeChart.subscribeCrosshairMove(h => {
+    this.chart.subscribeCrosshairMove(h => {
       if (this.markerAdded.length === 0) {
         this.markerAdded.push(1);
         this.addLabelToChart(this.psAprSeries, h, this.psAprDataMap, this.markerAdded);
