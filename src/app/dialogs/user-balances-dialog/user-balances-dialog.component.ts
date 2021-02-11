@@ -1,7 +1,5 @@
-import {AfterViewInit, Component, Inject} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input} from '@angular/core';
 import {HttpService} from '../../services/http.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {DialogData} from '../dialog-data';
 import {NGXLogger} from 'ngx-logger';
 import {Balance} from '../../models/balance';
 
@@ -11,10 +9,10 @@ import {Balance} from '../../models/balance';
   styleUrls: ['./user-balances-dialog.component.css']
 })
 export class UserBalancesDialogComponent implements AfterViewInit {
+  @Input('data') public data;
   userBalances: Balance[];
 
   constructor(private httpService: HttpService,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,
               private log: NGXLogger) {
   }
 

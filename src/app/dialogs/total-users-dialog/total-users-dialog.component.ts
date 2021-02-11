@@ -1,25 +1,25 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
 import {HttpService} from '../../services/http.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
-import {DialogData} from '../dialog-data';
+import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 
 @Component({
   selector: 'app-total-users-dialog',
   templateUrl: './total-users-dialog.component.html',
   styleUrls: ['./total-users-dialog.component.css']
 })
-export class TotalUsersDialogComponent implements AfterViewInit {
+export class TotalUsersDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
+  @Input('data') public data: Record<any, any>;
   ready = false;
 
   constructor(private httpService: HttpService,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
+                super();
   }
 
   ngAfterViewInit(): void {
@@ -46,7 +46,7 @@ export class TotalUsersDialogComponent implements AfterViewInit {
   private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
     this.ready = true;
     this.cdRef.detectChanges();
-    const chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(chart, config);
+    this.chart = chartBuilder.initChart(this.chartEl);
+    chartBuilder.addToChart(this.chart, config);
   }
 }

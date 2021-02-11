@@ -9,18 +9,14 @@ import { Utils } from '../../../static/utils';
   templateUrl: './harvest-flow-tab.component.html',
   styleUrls: ['./harvest-flow-tab.component.css']
 })
-export class HarvestFlowTabComponent implements OnInit {
+export class HarvestFlowTabComponent{
 
   @Input() dtos: HarvestDto[] = [];
-  @Input() maxHeight = 800;
+  @Input() maxHeight = 400;
   @Input() minAmount = 0;
   @Input() vaultFilter = 'all';
   @Input() showFullDate = false;
 
   constructor(public vt: ViewTypeService) {
   }
-
-  ngOnInit(): void {
-  }
-
 }

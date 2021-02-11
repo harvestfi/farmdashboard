@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import {WebsocketService} from '../../../services/websocket.service';
 import {HttpService} from '../../../services/http.service';
 import {NGXLogger} from 'ngx-logger';
@@ -9,11 +9,9 @@ import {StaticValues} from '../../../static/static-values';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {SnackService} from '../../../services/snack.service';
 import {HardWorkDto} from '../../../models/hardwork-dto';
-import {HardworkSubscriberService} from '../../../services/hardwork-subscriber.service';
 import {RewardDto} from '../../../models/reward-dto';
-import {HarvestHistoryDialogComponent} from '../../../dialogs/harvest-history-dialog/harvest-history-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
 import {PriceSubscriberService} from '../../../services/price-subscriber.service';
+import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-harvest-tx',
@@ -26,6 +24,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   txIds = new Set<string>();
   vaultFilter = 'all';
   private maxMessages = 50;
+  @ViewChild('harvestHistoryModal') private harvestHistoryModal: CustomModalComponent;
 
   constructor(private ws: WebsocketService,
               private httpService: HttpService,
@@ -35,7 +34,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
               private priceSubscriberService: PriceSubscriberService,
               private snack: SnackService,
               private log: NGXLogger,
-              private dialog: MatDialog
   ) {
   }
 
@@ -187,10 +185,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   openHarvestHistory(): void {
-    this.dialog.open(HarvestHistoryDialogComponent, {
-      width: '100%',
-      data: {},
-      panelClass: 'harvest-tx-hist'
-    });
+    this.harvestHistoryModal.open();
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-price-chart',
   templateUrl: './price-chart.component.html',

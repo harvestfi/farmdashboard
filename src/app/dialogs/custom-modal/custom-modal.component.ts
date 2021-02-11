@@ -1,87 +1,32 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, Injectable, Input, OnInit, TemplateRef, ViewChild, ContentChild } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-custom-modal',
-  templateUrl: './custom-modal.component.html',
-  styleUrls: ['./custom-modal.component.css'],
-  host: {
-    '(document:mousemove)': 'mousemove($event)',
-    '(window:resize)': 'handleWindowResize($event)',
-    '(document:touchmove)': 'mousemove($event)',
-  },
+    selector: 'app-custom-modal',
+    templateUrl: './custom-modal.component.html',
+    styleUrls: ['./custom-modal.component.scss'],
 })
-export class CustomModalComponent {
-  private isDown;
-  private currentX: number;
-  private currentY: number;
-  private offsetX: number;
-  private offsetY: number;
-  @ViewChild('modal') private modal;
-
-  constructor() {
-    this.isDown = false;
-    this.currentX = 0;
-    this.currentY = 0;
-    this.offsetX = 0;
-    this.offsetY = 0;
-  }
-
-  mousedown($event): void {
-    if ($event.target === this.modal.nativeElement) {
-      if ($event.type === 'touchstart') {
-        this.offsetX = $event.touches[0].clientX;
-        this.offsetY = $event.touches[0].clientY;
-      } else {
-        this.offsetX = $event.layerY;
-        this.offsetY = $event.layerX;
-      }
-      this.isDown = true;
+@Injectable()
+export class CustomModalComponent implements OnInit {
+    @ViewChild('modal') private modalContent: TemplateRef<CustomModalComponent>;
+    @ContentChild(TemplateRef) template;
+    public modalRef: NgbModalRef;
+    public modalIsOpen: boolean;
+    constructor(private modalService: NgbModal){
     }
-  }
-  mouseup($event): void {
-    this.isDown = false;
-  }
 
-  mousemove($event): void {
-    const style: Record<any, any> = this.modal.nativeElement.style;
-
-    if ($event.type === 'touchmove') {
-      this.currentX = $event.touches[0].clientX;
-      this.currentY = $event.touches[0].clientY;
-    } else {
-      this.currentX = $event.clientX;
-      this.currentY = $event.clientY;
+    ngOnInit(): void {
     }
-    if (this.isDown) {
-      if ($event.preventDefault) {
-        $event.preventDefault();
-      }
-      if ($event.stopPropagation) {
-        $event.stopPropagation();
-      }
-      $event.cancelBubble = true;
-
-      style.left = this.currentX + 'px';
-      style.top = this.currentY + 'px';
-
-      style.transform = 'translate(-50%, -10%)';
-      return;
+    open(): void {
+        this.modalRef = this.modalService.open(this.modalContent);
+        this.modalIsOpen = true;
     }
-  }
-
-  handleWindowResize($event): void {
-    const style: Record<any, any> = this.modal.nativeElement.style;
-    const windowWidth: number = $event.target.innerWidth;
-    const windowHeight: number = $event.target.innerHeight;
-    const modalPosition: Record<
-      any,
-      any
-    > = this.modal.nativeElement.getBoundingClientRect();
-    if (modalPosition.right > windowWidth) {
-      style.left = '50%';
+    close(): void{
+        this.modalIsOpen = false;
+        this.modalRef.close();
     }
-    if (modalPosition.bottom > windowHeight) {
-      style.bottom = 0;
+    dismiss(): void{
+        this.modalIsOpen = false;
+        this.modalRef.dismiss();
     }
-  }
 }

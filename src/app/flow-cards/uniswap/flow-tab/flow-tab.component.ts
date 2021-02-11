@@ -9,7 +9,7 @@ import {ViewTypeService} from '../../../services/view-type.service';
 })
 export class FlowTabComponent implements OnInit {
   @Input() dtos: UniswapDto[] = [];
-  @Input() maxHeight = 800;
+  @Input() maxHeight = 400;
   @Input() minAmount = 0;
   @Input() showFullDate = false;
 

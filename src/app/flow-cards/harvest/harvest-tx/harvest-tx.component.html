@@ -23,7 +23,11 @@
     <div class="button-container">
       <button class="show-more" (click)="openHarvestHistory()">show older</button>
     </div>
-
+    <app-custom-modal #harvestHistoryModal>
+      <ng-template>
+        <app-harvest-history-dialog></app-harvest-history-dialog>
+      </ng-template>
+    </app-custom-modal>
   </div>
 </div>
 
