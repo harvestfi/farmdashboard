@@ -7,11 +7,11 @@ export const environment = {
   isDebugMode: true,
   debugLevel: 0,
   // wsEndpoint: 'http://localhost:4142/stomp',
-  wsEndpoint: 'https://ethparser.herokuapp.com/stomp',
-  // wsEndpoint: 'https://ethparser-staging.herokuapp.com/stomp',
+  // wsEndpoint: 'https://ethparser.herokuapp.com/stomp',
+  wsEndpoint: 'https://ethparser-staging.herokuapp.com/stomp',
   // apiEndpoint: 'http://localhost:4142',
-  apiEndpoint: 'https://ethparser-api.herokuapp.com',
-  // apiEndpoint: 'https://ethparser-staging.herokuapp.com',
+  // apiEndpoint: 'https://ethparser-api.herokuapp.com',
+  apiEndpoint: 'https://ethparser-staging.herokuapp.com',
   wsReconnectInterval: 15
 };
 

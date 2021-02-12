@@ -1,25 +1,27 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
 import {HttpService} from '../../services/http.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
-import {DialogData} from '../dialog-data';
-
+import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.component';
+import { IChartApi } from 'lightweight-charts';
 @Component({
   selector: 'app-farm-buybacks-dialog',
   templateUrl: './farm-buybacks-dialog.component.html',
   styleUrls: ['./farm-buybacks-dialog.component.css']
 })
-export class FarmBuybacksDialogComponent implements AfterViewInit {
+export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
+  @Input() public data: Record<any, any>;
   ready = false;
+  chart: IChartApi;
+
 
   constructor(private httpService: HttpService,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
+                super();
   }
 
   ngAfterViewInit(): void {
@@ -48,7 +50,7 @@ export class FarmBuybacksDialogComponent implements AfterViewInit {
   private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
     this.ready = true;
     this.cdRef.detectChanges();
-    const chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(chart, config);
+    this.chart = chartBuilder.initChart(this.chartEl);
+    chartBuilder.addToChart(this.chart, config);
   }
 }

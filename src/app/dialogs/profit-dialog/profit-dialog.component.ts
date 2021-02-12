@@ -1,25 +1,27 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {HttpService} from '../../services/http.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
-import {DialogData} from '../dialog-data';
+import {IChartApi} from 'lightweight-charts';
+import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 
 @Component({
   selector: 'app-profit-dialog',
   templateUrl: './profit-dialog.component.html',
   styleUrls: ['./profit-dialog.component.css']
 })
-export class ProfitDialogComponent implements AfterViewInit {
+export class ProfitDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
+  @Input() public data: Record<any, any>;
   ready = false;
+  chart: IChartApi;
 
   constructor(private httpService: HttpService,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
+                super();
   }
 
   ngAfterViewInit(): void {
@@ -43,8 +45,8 @@ export class ProfitDialogComponent implements AfterViewInit {
   private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
     this.ready = true;
     this.cdRef.detectChanges();
-    const chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(chart, config);
+    this.chart = chartBuilder.initChart(this.chartEl);
+    chartBuilder.addToChart(this.chart, config);
   }
 
 }

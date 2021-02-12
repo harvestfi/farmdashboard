@@ -16,6 +16,11 @@
     <div class="button-container">
       <button class="show-more" (click)="openUniHistory()">show older</button>
     </div>
+    <app-custom-modal #unitHistoryModal>
+      <ng-template>
+        <app-uni-history-dialog></app-uni-history-dialog>
+      </ng-template>
+    </app-custom-modal>
 
 
   </div>

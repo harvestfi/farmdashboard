@@ -7,7 +7,7 @@ import {Sort} from '@angular/material/sort';
 @Component({
   selector: 'app-all-stats-dialog',
   templateUrl: './all-stats-dialog.component.html',
-  styleUrls: ['./all-stats-dialog.component.css']
+  styleUrls: ['./all-stats-dialog.component.scss']
 })
 export class AllStatsDialogComponent implements OnInit {
   sortedVaults: string[];

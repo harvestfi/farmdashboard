@@ -1,13 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
-import {MatDialog} from '@angular/material/dialog';
-import {TvlDialogComponent} from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import {ViewTypeService} from '../../services/view-type.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {Utils} from '../../static/utils';
-import {IncomeDialogComponent} from '../../dialogs/income-dialog/income-dialog.component';
-import {RewardsDialogComponent} from '../../dialogs/rewards-dialog/rewards-dialog.component';
 import {StaticValues} from '../../static/static-values';
+import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-tvl-box',
@@ -17,11 +14,11 @@ import {StaticValues} from '../../static/static-values';
 export class TvlBoxComponent implements OnInit {
   @Input() tvlName: string;
   @Input() name: string;
+  @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
   openApyDetails = false;
 
   constructor(private pricesCalculationService: PricesCalculationService,
-              public vt: ViewTypeService,
-              private dialog: MatDialog) {
+              public vt: ViewTypeService) {
   }
 
   get tvls(): Map<string, number> {
@@ -106,27 +103,7 @@ export class TvlBoxComponent implements OnInit {
   }
 
   openTvlDialog(): void {
-    this.dialog.open(TvlDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        type: this.tvlName
-      }
-    });
-  }
-
-  openPsApyDialog(name: string): void {
-    if (name !== 'PS') {
-      return;
-    }
-    this.dialog.open(RewardsDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: 'PS APY History',
-        name: ''
-      }
-    });
+    this.tvlModal.open();
   }
 
   openApyDetailsWindow(): void{

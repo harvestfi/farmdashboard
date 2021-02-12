@@ -1,13 +1,13 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {HardWorkDto} from '../../../models/hardwork-dto';
 import {HttpService} from '../../../services/http.service';
 import {NGXLogger} from 'ngx-logger';
 import {StaticValues} from 'src/app/static/static-values';
 import {ViewTypeService} from '../../../services/view-type.service';
-import {MatDialog} from '@angular/material/dialog';
 import {SnackService} from '../../../services/snack.service';
 import {HardworkSubscriberService} from '../../../services/hardwork-subscriber.service';
 import {HardWorkHistoryListDialogComponent} from '../../../dialogs/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
+import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-hardwork-tx',
@@ -19,6 +19,7 @@ export class HardworkTxComponent implements AfterViewInit {
   hwIds = new Set<string>();
   vaultFilter = 'all';
   private maxMessages = 50;
+  @ViewChild('hardWorkHistoryListModal') private hardWorkHistoryListModal: CustomModalComponent;
 
 
   constructor(
@@ -27,7 +28,6 @@ export class HardworkTxComponent implements AfterViewInit {
       public vt: ViewTypeService,
       private snack: SnackService,
       private log: NGXLogger,
-      private dialog: MatDialog
   ) {
   }
 
@@ -79,10 +79,7 @@ export class HardworkTxComponent implements AfterViewInit {
   }
 
   openHardWorkHistoryListDialog(): void {
-    this.dialog.open(HardWorkHistoryListDialogComponent, {
-      width: '100%',
-      height: 'auto',
-    });
+    this.hardWorkHistoryListModal.open();
   }
 
 }

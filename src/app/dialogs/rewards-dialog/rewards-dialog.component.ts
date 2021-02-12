@@ -1,14 +1,11 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
 import {HttpService} from '../../services/http.service';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {StaticValues} from '../../static/static-values';
 import {RewardDto} from '../../models/reward-dto';
 import {HarvestDto} from '../../models/harvest-dto';
-import {Utils} from '../../static/utils';
-import {DialogData} from '../dialog-data';
 
 @Component({
   selector: 'app-rewards-dialog',
@@ -17,10 +14,10 @@ import {DialogData} from '../dialog-data';
 })
 export class RewardsDialogComponent implements AfterViewInit {
   @ViewChild('chart') chartEl: ElementRef;
+  @Input() public data: Record<any, any>;
   ready = false;
 
   constructor(private httpService: HttpService,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {

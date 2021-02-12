@@ -10,6 +10,7 @@ export class StaticValues {
   public static farmTotalSupply = 0.0;
   public static farmUsers = 0;
 
+  // todo all contract info should be get from contract endpoint
   public static vaults: string[] = [
     'YCRV_V0',
     'WETH_V0',
@@ -76,6 +77,8 @@ export class StaticValues {
     'MGOOGL_UST',
     'MTSLA_UST',
     'CRV_GUSD',
+    'CRV_AAVE',
+    'SUSHI_SUSHI_ETH',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -93,6 +96,7 @@ export class StaticValues {
     'CRV_UST',
     'CRV_STETH',
     'CRV_GUSD',
+    'CRV_AAVE',
   ];
 
   public static strategiesListSingleCoins: string[] = [
@@ -122,6 +126,7 @@ export class StaticValues {
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
+    'SUSHI_SUSHI_ETH',
     'SUSHI_ETH_DAI',
     'SUSHI_ETH_USDC',
     'SUSHI_ETH_USDT',
@@ -153,6 +158,48 @@ export class StaticValues {
     ?.replace('UNI_LP_', '')
     ?.replace('UNI_', '')
     ?.replace('ST_', '')
+        ;
+  }
+
+  public static mapCoinNameToSimple(name: string): string {
+    switch (name) {
+      case 'CRV_STETH':
+      case 'WETH':
+        return 'ETH';
+      case 'RENBTC':
+      case 'CRVRENWBTC':
+      case 'TBTC':
+      case 'WBTC':
+      case 'CRV_TBTC':
+      case 'CRV_HBTC':
+      case 'CRV_OBTC':
+        return 'BTC';
+      case 'CRV_EURS':
+        return 'EURS';
+      case 'PS_V0':
+      case 'PS':
+        return 'FARM';
+    }
+    return name;
+  }
+
+  public static isStableCoin(name: string): boolean {
+    return 'USD' === name
+        || 'USDC' === name
+        || 'USDT' === name
+        || 'YCRV' === name
+        || '3CRV' === name
+        || 'TUSD' === name
+        || 'DAI' === name
+        || 'CRV_CMPND' === name
+        || 'CRV_BUSD' === name
+        || 'CRV_USDN' === name
+        || 'CRV_HUSD' === name
+        || 'UST_NAME' === name
+        || 'CRV_UST' === name
+        || 'UST' === name
+        || 'CRV_GUSD' === name
+        || 'CRV_AAVE' === name
         ;
   }
 
@@ -283,6 +330,10 @@ export class StaticValues {
         return '/assets/icons/mirror-tsla.png';
       case 'CRV_GUSD':
         return '/assets/icons/curve-gusd.png';
+      case 'CRV_AAVE':
+        return '/assets/icons/curve-aave.png';
+      case 'SUSHI_SUSHI_ETH':
+        return '/assets/icons/sushi-eth.png';
     }
   }
 }

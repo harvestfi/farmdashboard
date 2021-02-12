@@ -1,3 +1,4 @@
+// todo should be replaced with contract endpoint
 export class Addresses {
   // lp
   public static UNI_LP_ETH_DAI = '0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11'.toLowerCase();

@@ -1,14 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {TvlDialogComponent} from '../../dialogs/tvl-dialog/tvl-dialog.component';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {HttpService} from '../../services/http.service';
-import {ProfitDialogComponent} from '../../dialogs/profit-dialog/profit-dialog.component';
-import {FarmBuybacksDialogComponent} from '../../dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
-import {HardWorkHistoryDialogComponent} from '../../dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
-import {TotalUsersDialogComponent} from '../../dialogs/total-users-dialog/total-users-dialog.component';
+import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -16,7 +12,13 @@ import {TotalUsersDialogComponent} from '../../dialogs/total-users-dialog/total-
   styleUrls: ['./dashboard-last-values.component.css']
 })
 export class DashboardLastValuesComponent implements OnInit {
-
+  @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
+  @ViewChild('weeklyProfitModal') private weeklyProfitModal: CustomModalComponent;
+  @ViewChild('psIncomeModal') private psIncomeModal: CustomModalComponent;
+  @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
+  @ViewChild('farmBuybacksModal') private farmBuybacksModal: CustomModalComponent;
+  @ViewChild('savedFeesModal') private savedFeesModal: CustomModalComponent;
+  @ViewChild('totalUsersModal') private totalUsersModal: CustomModalComponent;
   constructor(public dialog: MatDialog,
               public vt: ViewTypeService,
               private api: HttpService,
@@ -94,76 +96,30 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   openTvlDialog(): void {
-    this.dialog.open(TvlDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        type: 'All'
-      }
-    });
+    this.tvlModal.open();
   }
 
   openPsIncomeDialog(): void {
-    this.dialog.open(TvlDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        type: 'income'
-      }
-    });
+    this.psIncomeModal.open();
   }
 
   openWeeklyProfitDialog(): void {
-    this.dialog.open(ProfitDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: 'Weekly profit history chart',
-        name: 'Name'
-      }
-    });
+    this.weeklyProfitModal.open();
   }
 
   openFarmBuybacksDialog(): void {
-    this.dialog.open(FarmBuybacksDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: 'FARM Buyback history chart',
-        name: 'Name'
-      }
-    });
+    this.farmBuybacksModal.open();
   }
 
   openPsTvlDialog(): void {
-    this.dialog.open(TvlDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        type: 'PS'
-      }
-    });
+    this.FARMStakedModal.open();
   }
 
   openSavedFeesDialog(): void {
-    this.dialog.open(HardWorkHistoryDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: 'Saved Gas Fees History',
-        name: 'Name'
-      }
-    });
+    this.savedFeesModal.open();
   }
 
   openTotalUsersDialog(): void {
-    this.dialog.open(TotalUsersDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: 'Total users history',
-        name: 'Name'
-      }
-    });
+    this.totalUsersModal.open();
   }
 }
