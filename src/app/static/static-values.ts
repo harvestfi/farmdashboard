@@ -78,6 +78,7 @@ export class StaticValues {
     'MTSLA_UST',
     'CRV_GUSD',
     'CRV_AAVE',
+    'SUSHI_SUSHI_ETH',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -125,6 +126,7 @@ export class StaticValues {
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
+    'SUSHI_SUSHI_ETH',
     'SUSHI_ETH_DAI',
     'SUSHI_ETH_USDC',
     'SUSHI_ETH_USDT',
@@ -330,6 +332,8 @@ export class StaticValues {
         return '/assets/icons/curve-gusd.png';
       case 'CRV_AAVE':
         return '/assets/icons/curve-aave.png';
+      case 'SUSHI_SUSHI_ETH':
+        return '/assets/icons/sushi-eth.png';
     }
   }
 }
