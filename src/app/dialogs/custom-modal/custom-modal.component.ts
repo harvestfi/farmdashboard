@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, ɵCompiler_compileModuleSync__POST_R3__ } from '@angular/core';
 
 @Component({
   selector: 'app-custom-modal',
@@ -6,82 +6,78 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
   styleUrls: ['./custom-modal.component.css'],
   host: {
     '(document:mousemove)': 'mousemove($event)',
-    '(window:resize)': 'handleWindowResize($event)',
+    '(window:resize)': 'handleWindowResize()',
     '(document:touchmove)': 'mousemove($event)',
   },
 })
-export class CustomModalComponent {
-  private isDown;
-  private currentX: number;
-  private currentY: number;
-  private offsetX: number;
-  private offsetY: number;
+export class CustomModalComponent implements AfterViewInit{
   @ViewChild('modal') private modal;
+  private positionOne = 0;
+  private positionTwo = 0;
+  private positionThree = 0;
+  private positionFour = 0;
+  private isMouseDown = false;
 
-  constructor() {
-    this.isDown = false;
-    this.currentX = 0;
-    this.currentY = 0;
-    this.offsetX = 0;
-    this.offsetY = 0;
+
+  ngAfterViewInit(): void {
+    this.handleWindowResize();
   }
 
-  mousedown($event): void {
-    if ($event.target === this.modal.nativeElement) {
-      if ($event.type === 'touchstart') {
-        this.offsetX = $event.touches[0].clientX;
-        this.offsetY = $event.touches[0].clientY;
+  mousedown(event): void {
+    event.preventDefault();
+    if (event.target === this.modal.nativeElement) {
+      if (event.type === 'touchmove') {
+        this.positionThree = event.touches[0].clientX;
+        this.positionFour = event.touches[0].clientY;
       } else {
-        this.offsetX = $event.layerY;
-        this.offsetY = $event.layerX;
+        this.positionThree = event.clientX;
+        this.positionFour = event.clientY;
       }
-      this.isDown = true;
+      this.isMouseDown = true;
     }
   }
-  mouseup($event): void {
-    this.isDown = false;
+
+  mouseup(): void {
+    this.isMouseDown = false;
   }
 
-  mousemove($event): void {
-    const style: Record<any, any> = this.modal.nativeElement.style;
-
-    if ($event.type === 'touchmove') {
-      this.currentX = $event.touches[0].clientX;
-      this.currentY = $event.touches[0].clientY;
+  mousemove(event): void {
+    const element = this.modal.nativeElement;
+    event.preventDefault();
+    if (event.type === 'touchmove') {
+      this.positionOne = this.positionThree - event.touches[0].clientX;
+      this.positionTwo = this.positionFour - event.touches[0].clientY;
+      this.positionThree = event.touches[0].clientX;
+      this.positionFour = event.touches[0].clientY;
     } else {
-      this.currentX = $event.clientX;
-      this.currentY = $event.clientY;
+      this.positionOne = this.positionThree - event.clientX;
+      this.positionTwo = this.positionFour - event.clientY;
+      this.positionThree = event.clientX;
+      this.positionFour = event.clientY;
     }
-    if (this.isDown) {
-      if ($event.preventDefault) {
-        $event.preventDefault();
-      }
-      if ($event.stopPropagation) {
-        $event.stopPropagation();
-      }
-      $event.cancelBubble = true;
-
-      style.left = this.currentX + 'px';
-      style.top = this.currentY + 'px';
-
-      style.transform = 'translate(-50%, -10%)';
-      return;
+    if (this.isMouseDown) {
+      element.style.top = element.offsetTop - this.positionTwo + 'px';
+      element.style.left = element.offsetLeft - this.positionOne + 'px';
     }
   }
 
-  handleWindowResize($event): void {
+  handleWindowResize(): void {
+    const xLimit = window.innerWidth;
+    const yLimit = window.innerHeight;
     const style: Record<any, any> = this.modal.nativeElement.style;
-    const windowWidth: number = $event.target.innerWidth;
-    const windowHeight: number = $event.target.innerHeight;
-    const modalPosition: Record<
-      any,
-      any
-    > = this.modal.nativeElement.getBoundingClientRect();
-    if (modalPosition.right > windowWidth) {
-      style.left = '50%';
+    const modalPosition: Record<any, any> = this.modal.nativeElement.getBoundingClientRect();
+    if (modalPosition.right >= xLimit) {
+      style.right = 0;
+      style.left = 100;
+      style.inset = 0;
+      style.inset = '50%';
+      style.transform = 'translate(-50%, -50%)';
     }
-    if (modalPosition.bottom > windowHeight) {
+    if (modalPosition.bottom > yLimit) {
       style.bottom = 0;
+      style.top = 100;
+      style.inset = '50%';
+      style.transform = 'translate(-50%, -50%)';
     }
   }
 }
