@@ -13,7 +13,7 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
 @Component({
   selector: 'app-uni-tx',
   templateUrl: './uni-tx.component.html',
-  styleUrls: ['./uni-tx.component.css'],
+  styleUrls: ['./uni-tx.component.scss'],
 })
 export class UniTxComponent implements AfterViewInit {
   dtos: UniswapDto[] = [];

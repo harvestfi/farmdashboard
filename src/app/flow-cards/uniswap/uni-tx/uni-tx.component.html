@@ -7,9 +7,21 @@
          class="title-span"
          matTooltip="List of trades contains FARM amounts less than {{whalesMoreThan}}.
           Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).
-          Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price">Trades
+          Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price">
+      
+      <div class="title-row">
+        <h4 class="title">Trades</h4>
+        <input #uniswapDtoFilter class="filter-input" placeholder="More than..." type="number" min="0">
+      </div>
+          
+    </div>
 
-      <input #uniswapDtoFilter class="filter-input" placeholder="More than..." type="text">
+    <div class="trade-card-header">
+      <div class="trade-card-header-label date">Date</div>
+      <div class="trade-card-header-label farm">FARM Amount</div>
+      <div class="trade-card-header-label usd">USD Cost</div>
+      <div class="trade-card-header-label price">Price</div>
+      <div class="trade-card-header-label price">🚜</div>
     </div>
 
     <app-flow-tab [dtos]="dtos" [maxHeight]="180" [minAmount]="+uniswapDtoFilter.value"></app-flow-tab>
