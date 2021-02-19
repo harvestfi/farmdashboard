@@ -1,8 +1,6 @@
-
-
 .uni-card {
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
@@ -11,12 +9,13 @@
   padding: 3px;
 
 
-  .title-row{
+  .title-row {
     display: grid;
     grid-template-areas: "title filter";
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+
     .title {
       font-size: 1em;
       color: black;
@@ -27,20 +26,20 @@
       padding: 5px;
       text-align: left;
     }
-    .filter-input{
+
+    .filter-input {
       height: 25px;
     }
   }
 
-
   .trade-card-header {
     background: darken(#fffce6, 5%);
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-pack: space-evenly;
-        -ms-flex-pack: space-evenly;
-            justify-content: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
     position: relative;
     color: black;
     font-weight: bold;
@@ -50,11 +49,10 @@
     grid-template-columns: 23% 23% 23% 23% 8%;
     text-align: center;
     margin: 10px 0;
+    padding: 0 10px;
+
   }
-
-  
 }
-
 
 
 .button-container {
@@ -63,12 +61,13 @@
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
+
 .show-more {
   background-color: #eebf65;
   color: black;
@@ -79,6 +78,7 @@
 }
 
 @media screen and (max-width: 1025px) {
+
   .left,
   .right,
   .middle {
