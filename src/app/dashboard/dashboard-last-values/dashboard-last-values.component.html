@@ -7,8 +7,8 @@
         FARM Price
       </div>
       <div class="value value-price">
-        <text class="value-number">{{lastPriceF | number: '1.0-2'}}</text>
-        <text class="sign">$</text>
+        <span class="value-number">{{lastPriceF | number: '1.0-2'}}</span>
+        <span class="sign">$</span>
       </div>
     </div>
 
@@ -16,11 +16,11 @@
       <div class="pointer">
         <div class="value-middle">
           <img class="icon" src="assets/icons/gas.svg"/>
-          <text class="small-value-caption">Gas price</text>
+          <span class="small-value-caption">Gas price</span>
         </div>
 
         <div class="value-number-middle">
-          <text class="">{{lastGasF | number: '1.0-0'}}</text>
+          <span class="">{{lastGasF | number: '1.0-0'}}</span>
           gw
         </div>
       </div>
@@ -30,10 +30,10 @@
       <div>
         <div class="value-middle">
           <img class="icon" src="assets/icons/btc.png"/>
-          <text class="small-value-caption">BTC</text>
+          <span class="small-value-caption">BTC</span>
         </div>
         <div class="value-number-middle">
-          <text>{{btcF | number: '1.0-0'}}</text>
+          <span>{{btcF | number: '1.0-0'}}</span>
           $
         </div>
       </div>
@@ -43,10 +43,10 @@
       <div>
         <div class="value-middle">
           <img class="icon" src="assets/icons/eth.svg"/>
-          <text class="small-value-caption">ETH</text>
+          <span class="small-value-caption">ETH</span>
         </div>
         <div class="value-number-middle">
-          <text>{{ethF | number: '1.0-0'}}</text>
+          <span>{{ethF | number: '1.0-0'}}</span>
           $
         </div>
       </div>
@@ -65,7 +65,7 @@
                 🔒FARM Staked
               </div>
               <div class="value-number-middle">
-                <text>{{farmStaked | number: '1.0-1'}}</text>
+                <span>{{farmStaked | number: '1.0-1'}}</span>
                 %
               </div>
             </div>
@@ -85,7 +85,7 @@
                 🤑Weekly Profit
               </div>
               <div class="value-number-middle">
-                <text>{{weeklyAllIncome / 1000 | number: '1.0-1'}}</text>
+                <span>{{weeklyAllIncome / 1000 | number: '1.0-1'}}</span>
                 K$
               </div>
             </div>
@@ -104,7 +104,7 @@
            📈PS Income
          </div>
          <div class="value-number-middle ">
-           <text>{{psApy | number: '1.0-1'}}</text>
+           <span>{{psApy | number: '1.0-1'}}</span>
            %
          </div>
        </div>
@@ -122,8 +122,8 @@
           Total Value Locked
         </div>
         <div class="value value-tvl">
-          <text class="value-number">{{allTvlF | number: '1.0-0'}}</text>
-          <text class="sign">M$</text>
+          <span class="value-number">{{allTvlF | number: '1.0-0'}}</span>
+          <span class="sign">M$</span>
         </div>
       </div>
       <app-custom-modal #tvlModal>
@@ -140,7 +140,7 @@
        👨‍🌾FARM Holders
      </div>
      <div class="value-number-middle">
-       <text>{{farmActiveUsers | number: '1.0-0'}}</text>
+       <span>{{farmActiveUsers | number: '1.0-0'}}</span>
      </div>
    </div>
 
@@ -155,7 +155,7 @@
   📥Farm buybacks
 </div>
 <div class="value-number-middle">
-  <text class="">{{farmBuybacks | number: '1.1-1'}}</text>
+  <span class="">{{farmBuybacks | number: '1.1-1'}}</span>
   K
 </div>
 </div>
@@ -174,7 +174,7 @@
                 🛡️Saved gas fees
               </div>
               <div class="value-number-middle">
-                <text>{{savedGasFees / 1000000 | number: '1.0-1'}}</text>
+                <span>{{savedGasFees / 1000000 | number: '1.0-1'}}</span>
                 M$
               </div>
             </div>
@@ -193,7 +193,7 @@
                 👪Total users
               </div>
               <div class="value-number-middle ">
-                <text>{{allUsersCount | number: '1.0-0'}}</text>
+                <span>{{allUsersCount | number: '1.0-0'}}</span>
               </div>
             </div>
           </div>
@@ -211,7 +211,7 @@
            👨‍🌾Pools active accounts
          </div>
          <div class="value-number-middle">
-           <text>{{poolsActiveUsersCount | number: '1.0-0'}}</text>
+           <span>{{poolsActiveUsersCount | number: '1.0-0'}}</span>
          </div>
        </div>
      </div>

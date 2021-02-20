@@ -130,24 +130,13 @@
     /*justify-content: center;*/
 }
 
-/*.value-number, .sign {*/
-/*  align-self: center;*/
-/*}*/
 
-.value-price {
-    ;
-    /*padding-right: 3vh;*/
-}
 
 .sign {
     font-weight: bolder;
-    font-size: 2em;
+    // font-size: 2em;
 }
 
-.value-tvl {
-    ;
-    /*padding-right: 6vh;*/
-}
 
 .value-number {
     /*line-height: 80%;*/
@@ -161,12 +150,6 @@
     /*line-height: 100%;*/
 }
 
-.v-bottom {
-    ;
-    /*position: absolute;*/
-    /*bottom: 2px;*/
-    /*left: 0;*/
-}
 
 .welcome-text {
     font-size: 0.9em;
@@ -237,12 +220,7 @@
         margin: 0 2px 2px;
     }
 
-    .value-middle {
-        ;
-        /*font-size: 2em;*/
-        /*margin: 2px;*/
-    }
-
+ 
     .welcome-text {
         font-size: 0.7em;
     };
@@ -268,7 +246,7 @@
 }
 
 @media screen and(max-width: 400px) {
-    ;
+    
     /** {*/
     /*  font-size: 81%;*/
     /*}*/
@@ -280,11 +258,6 @@
 
 .tvl-caption {
     font-size: 1em;
-}
-
-.right-value {
-    ;
-    /*text-align: right;*/
 }
 
 .last-values-table {
