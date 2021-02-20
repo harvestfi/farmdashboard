@@ -9,7 +9,7 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
 @Component({
   selector: 'app-dashboard-last-values',
   templateUrl: './dashboard-last-values.component.html',
-  styleUrls: ['./dashboard-last-values.component.css']
+  styleUrls: ['./dashboard-last-values.component.scss']
 })
 export class DashboardLastValuesComponent implements OnInit {
   @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
