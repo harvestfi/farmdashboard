@@ -1,9 +1,23 @@
+@import "../../../scss/utilities/breakpoints.scss";
 .main-top-stats {
     display: grid;
     grid-template-areas: "farm-price gas-price btc-price eth-price tvl" 
                          "farm-price farm-staked weekly-profit ps-income tvl" 
                          "farm-holders farm-buybacks saved-gas total-users active-pools";
 
+    @include responsive(phone){
+      grid-template-areas: "farm-price tvl" 
+                           "farm-price tvl"
+                           "gas-price saved-gas" 
+                           "farm-staked weekly-profit"
+                           "ps-income farm-buybacks"
+                           "total-users active-pools"
+                           "btc-price eth-price"
+                           "farm-holders farm-holders"
+                           ;
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
+    }
     .value-card {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         transition: 0.3s;
@@ -26,8 +40,8 @@
       grid-area: btc-price;
     }
 
-    .etch {
-      grid-area: etch-price;
+    .eth {
+      grid-area: eth-price;
     }
 
     .farm-staked{
