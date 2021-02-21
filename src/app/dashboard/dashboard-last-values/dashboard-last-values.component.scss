@@ -19,13 +19,28 @@
       grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
     }
     .value-card {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
         transition: 0.3s;
         border: 1px solid rgba(0, 0, 0, 0.2);
         background: #fffce6;
         padding: 3px;
         margin: 0 10px 10px;
-        line-height: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
     }
 
     .farm {
@@ -82,9 +97,7 @@
       grid-area: active-pools ;
     }
     .value-caption {
-      margin-top: 5px;
-      height: 35%;
-      font-size: 1.7em;
+      margin-bottom: 2rem;
       font-weight: bolder;
       text-align: center;
     }
