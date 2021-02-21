@@ -7,5 +7,13 @@ export class UserSettings {
   public static setTheme(theme: string): void {
     localStorage.setItem('theme', theme);
   }
+
+  public static setColor(color: string){
+    localStorage.setItem('color', color);
+  }
+
+  public static getColor(): string{
+    return localStorage.getItem('color') || 'light';
+  }
 }
 
