@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
+import { ViewTypeService } from 'src/app/services/view-type.service';
 
 @Component({
   selector: 'app-draggable-modal',
@@ -12,6 +13,8 @@ export class DraggableModalComponent implements AfterViewInit {
   private positionThree = 0;
   private positionFour = 0;
   private isMouseDown = false;
+  
+  constructor(public vt: ViewTypeService){}
 
   ngAfterViewInit(): void {
     this.handleWindowResize();
