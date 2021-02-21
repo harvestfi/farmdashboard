@@ -3,7 +3,7 @@ export class ChartsOptionsLight {
     return {
       // height: 400,
       layout: {
-        backgroundColor: '#fffce6',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
         textColor: 'rgba(0,0,0,0.9)',
       },
       watermark: {
