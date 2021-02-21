@@ -1,6 +1,6 @@
 <div (click)="toggleMenu()" *ngIf="showSideMenu" id="side-menu-backdrop"></div>
 <button id="menu-button-toggle" (click)="toggleMenu()"><i class="fas fa-bars"></i></button>
-<div [@openMenu]="showSideMenu ? 'open' : 'closed'" id="main-side-menu" [class]="isDarkTheme ? 'dark' : ''">
+<div [@openMenu]="showSideMenu ? 'open' : 'closed'" id="main-side-menu" [class]="viewTypeService.getThemeColor() + '-card'">
     <div class="main-side-menu-logo-container">
         <div class="branding-box">
             <img class="main-side-menu-logo" src="/assets/harvest_logo.png" alt="Harvest Logo">

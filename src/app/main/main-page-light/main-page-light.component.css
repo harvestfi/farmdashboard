@@ -4,9 +4,6 @@
   justify-content: center;
 }
 
-.main-row, .column, .row, footer, .sidebar-container {
-  background: #bce3e2;
-}
 
 .column {
   float: left;

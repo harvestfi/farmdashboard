@@ -7,14 +7,18 @@
 
     .#{$color}-background {
         background: map-get($variables, "background")!important;
+
+        *{
+            color: map-get($variables, "font")!important;
+        }
     }
 
-    .#{$color}-font {
-        color: map-get($variables, "font")!important;
-    }
-
+   
     .#{$color}-card {
         background: map-get($variables, "card")!important;
+        *{
+            color: map-get($variables, "font")!important;
+        }
     }
 
 }

@@ -23,4 +23,12 @@ export class ViewTypeService {
   public isNonScoreboard(): boolean {
     return UserSettings.getTheme() !== this.themeScoreboard;
   }
+
+  public getThemeColor(): string {
+    return UserSettings.getColor();
+  }
+
+  public setThemeColor(color: string): void {
+    UserSettings.setColor(color);
+  }
 }

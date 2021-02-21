@@ -1,5 +1,5 @@
 <div *ngIf="vt.isNonScoreboard()" id="top-div-light">
-  <div class="harvest-card">
+  <div class="harvest-card" [class]="vt.getThemeColor() + '-card'">
     <div class="row title-row">
 
       <div #tooltip="matTooltip" aria-hidden="false" aria-label="?" class="pool-title left-border-box" matTooltip="Changes in Harvest vaults.

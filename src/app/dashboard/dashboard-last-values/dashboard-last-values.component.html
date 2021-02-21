@@ -2,7 +2,7 @@
 
 
   <div class="main-top-stats">
-    <div class="value-card farm">
+    <div class="value-card farm" [class]="vt.getThemeColor() + '-card'">
       <div class="value-caption">
         FARM Price
       </div>
@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div class="value-card gas">
+    <div class="value-card gas" [class]="vt.getThemeColor() + '-card'">
       <div class="pointer">
         <div class="value-middle">
           <img class="icon" src="assets/icons/gas.svg"/>
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="value-card btc">
+    <div class="value-card btc" [class]="vt.getThemeColor() + '-card'">
       <div>
         <div class="value-middle">
           <img class="icon" src="assets/icons/btc.png"/>
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class="value-card eth">
+    <div class="value-card eth" [class]="vt.getThemeColor() + '-card'">
       <div>
         <div class="value-middle">
           <img class="icon" src="assets/icons/eth.svg"/>
@@ -55,6 +55,7 @@
 
     <div #tooltip="matTooltip" (click)="openPsTvlDialog()"
                class="value-card pointer farm-staked"
+               [class]="vt.getThemeColor() + '-card'"
                matTooltipClass="tooltip-spaced"
                matTooltip="FARM staked in pools
                              PS Staked: {{farmPsStaked | number: '1.0-1'}}%
@@ -79,6 +80,7 @@
 
           <div #tooltip="matTooltip" (click)="openWeeklyProfitDialog()"
                class="value-card pointer weekly-profits"
+               [class]="vt.getThemeColor() + '-card'"
                matTooltip="Profit from all vaults for the last week">
             <div>
               <div class="value-middle">
@@ -97,7 +99,9 @@
           </app-custom-modal>
 
           <div #tooltip="matTooltip"
-          (click)="openPsIncomeDialog()" class="value-card pointer ps-income"
+          (click)="openPsIncomeDialog()" 
+          class="value-card pointer ps-income"
+          [class]="vt.getThemeColor() + '-card'"
           matTooltip="Income from strategies in Profit Share pool, based on all history">
        <div>
          <div class="value-middle">
@@ -116,7 +120,9 @@
      </app-custom-modal>
 
      <div #tooltip="matTooltip"
-           (click)="openTvlDialog()" class="value-card pointer tvl"
+           (click)="openTvlDialog()" 
+           class="value-card pointer tvl"
+           [class]="vt.getThemeColor() + '-card'"
            matTooltip="Click to open history chart">
         <div class="value-caption" style="font-size: 1.2em">
           Total Value Locked
@@ -133,7 +139,9 @@
       </app-custom-modal>
 
 
-      <div #tooltip="matTooltip" class="value-card farm-holders"
+      <div #tooltip="matTooltip" 
+      class="value-card farm-holders"
+      [class]="vt.getThemeColor() + '-card'"
       matTooltip="Accounts with positive (more than 10$) FARM balance">
    <div>
      <div class="value-middle">
@@ -149,6 +157,7 @@
 
  <div #tooltip="matTooltip" (click)="openFarmBuybacksDialog()"
  class="value-card pointer farm-buybacks"
+ [class]="vt.getThemeColor() + '-card'"
  matTooltip="30% profit of each HardWork goes to buy FARM">
 <div>
 <div class="value-middle">
@@ -168,6 +177,7 @@
 
 <div #tooltip="matTooltip" (click)="openSavedFeesDialog()"
                class="value-card pointer saved-fees"
+               [class]="vt.getThemeColor() + '-card'"
                matTooltip="How much gas would users spend on transactions without our project?">
             <div>
               <div class="value-middle">
@@ -186,7 +196,9 @@
           </app-custom-modal>
 
           <div #tooltip="matTooltip"
-               (click)="openTotalUsersDialog()" class="value-card pointer total-users"
+               (click)="openTotalUsersDialog()" 
+               class="value-card pointer total-users"
+               [class]="vt.getThemeColor() + '-card'"
                matTooltip="Total unique accounts interacted with the project">
             <div>
               <div class="value-middle">
@@ -204,7 +216,9 @@
           </app-custom-modal> 
 
 
-          <div #tooltip="matTooltip" class="value-card active-pools"
+          <div #tooltip="matTooltip" 
+          class="value-card active-pools"
+          [class]="vt.getThemeColor() + '-card'"
           matTooltip="Accounts staked funds in pools with balance more than 10$">
        <div>
          <div class="value-middle">

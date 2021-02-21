@@ -8,12 +8,12 @@ export class UserSettings {
     localStorage.setItem('theme', theme);
   }
 
-  public static setColor(color: string){
+  public static setColor(color: string): void {
     localStorage.setItem('color', color);
   }
 
   public static getColor(): string{
-    return localStorage.getItem('color') || 'light';
+    return localStorage.getItem('color');
   }
 }
 

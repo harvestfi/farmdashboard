@@ -1,6 +1,6 @@
 <div *ngIf="vt.isNonScoreboard()" id="top-div-light">
 
-  <div class="uni-card">
+  <div class="uni-card" [class]="vt.getThemeColor() + '-card'">
     <div #tooltip="matTooltip"
          aria-hidden="false"
          aria-label="?"
