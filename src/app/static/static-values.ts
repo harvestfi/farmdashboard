@@ -7,6 +7,7 @@ export class StaticValues {
   public static lastGas = 0;
   public static lastBlockDateAdopted = new Date(0);
   public static staked = 0.0;
+  public static stakedNewPS = 0.0;
   public static farmTotalSupply = 0.0;
   public static farmUsers = 0;
 
@@ -79,6 +80,7 @@ export class StaticValues {
     'CRV_GUSD',
     'CRV_AAVE',
     'SUSHI_SUSHI_ETH',
+    'iPS',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -101,6 +103,7 @@ export class StaticValues {
 
   public static strategiesListSingleCoins: string[] = [
     'PS',
+    'iPS',
     'WETH',
     'WBTC',
     'USDC',
@@ -145,6 +148,12 @@ export class StaticValues {
     'UNI_LP_GRAIN_FARM'
   ];
 
+  public static isPS: Set<string> = new Set<string>([
+    'PS_V0',
+    'PS',
+    'iPS',
+  ]);
+
   public static currentVaults: string[] = []
   .concat(StaticValues.strategiesListCurve)
   .concat(StaticValues.strategiesListSingleCoins)
@@ -178,6 +187,7 @@ export class StaticValues {
         return 'EURS';
       case 'PS_V0':
       case 'PS':
+      case 'iPS':
         return 'FARM';
     }
     return name;
@@ -254,6 +264,7 @@ export class StaticValues {
       case 'ST_PS_V0':
       case 'PS_V0':
       case 'PS':
+      case 'iPS':
       case 'FARM':
         return '/assets/icons/farm.png';
       case 'CRV_TBTC':
