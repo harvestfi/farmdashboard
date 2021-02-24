@@ -1,14 +1,22 @@
 <div class="hardwork-card">
   <div class="hardWork-list-history">
     <div class="title-row">
-      <p class="title">doHardWorks</p>
 
-      <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
-        <option [value]="'all'">All</option>
-        <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
-      </select>
+        <h4 class="title">doHardWorks</h4>
+        <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
+          <option [value]="'all'">All</option>
+          <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
+        </select>
+  
+        <input type="number" min="0" #hardworkDtoFilter class="input-less-than left-border-box" placeholder="More than...">
+    </div>
 
-      <input #hardworkDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="text">
+    <div class="hardwork-card-header">
+      <div class="hardword-card-header-title">Date</div>
+      <div class="hardword-card-header-title"></div>
+      <div class="hardword-card-header-title">Vault</div>
+      <div class="hardword-card-header-title">Income</div>
+      <div class="hardword-card-header-title"></div>
     </div>
 
     <app-hardwork-flow-tab [dtos]="dtos" [showMoreColumns]="false" [showFullDate]="false" [maxHeight]="180"
