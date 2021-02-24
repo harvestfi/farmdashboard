@@ -5,7 +5,7 @@ import {Utils} from '../../../static/utils';
 @Component({
   selector: 'app-uni-trade',
   templateUrl: './uni-trade.component.html',
-  styleUrls: ['./uni-trade.component.css']
+  styleUrls: ['./uni-trade.component.scss']
 })
 export class UniTradeComponent implements OnInit {
 

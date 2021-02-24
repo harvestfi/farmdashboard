@@ -32,6 +32,8 @@
     color: #363636;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    height: 100%;
 
     &.dark {
         background: #363661;

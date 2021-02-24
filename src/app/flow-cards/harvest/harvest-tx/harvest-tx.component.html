@@ -1,20 +1,23 @@
 <div *ngIf="vt.isNonScoreboard()" id="top-div-light">
   <div class="harvest-card">
     <div class="row title-row">
-
       <div #tooltip="matTooltip" aria-hidden="false" aria-label="?" class="pool-title left-border-box" matTooltip="Changes in Harvest vaults.
           Format: Date | add/remove | Amount in USD | Pool TVL">
-        Pools
+        <h4 class="title">Pools</h4>
       </div>
-
-
       <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
         <option [value]="'all'">All</option>
         <option *ngFor="let name of tvlNames" [value]="name">{{name}}</option>
       </select>
-
       <input #harvestDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="text">
+    </div>
 
+    <div class="harvest-tx-header">
+      <div class="harvest-tx-header-label">Date</div>
+      <div class="harvest-tx-header-label">Amount</div>
+      <div class="harvest-tx-header-label">Vault</div>
+      <div class="harvest-tx-header-label">TVL</div>
+      <div class="harvest-tx-header-label"></div>
     </div>
 
     <app-harvest-flow-tab [dtos]="dtos" [maxHeight]="180" [minAmount]="+harvestDtoFilter.value"
