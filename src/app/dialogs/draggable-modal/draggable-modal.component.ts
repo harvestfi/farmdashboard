@@ -21,7 +21,6 @@ export class DraggableModalComponent implements AfterViewInit {
   }
 
   mousedown(event): void {
-    event.preventDefault();
     if (event.target === this.modal.nativeElement) {
       if (event.type === 'touchmove') {
         this.positionThree = event.touches[0].clientX;
