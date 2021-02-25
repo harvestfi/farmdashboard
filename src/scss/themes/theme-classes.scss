@@ -1,23 +1,28 @@
 @import "./theme-variables.scss";
 
 
-@each $color, $variables in $themes_colors {
-    @debug $color;
-    @debug $variables;
-
+@each $color,
+$variables in $themes_colors {
     .#{$color}-background {
-        background: map-get($variables, "background")!important;
+        background: map-get($variables, "background") !important;
 
-        *{
-            color: map-get($variables, "font")!important;
+        * {
+            color: map-get($variables, "font") !important;
+        }
+
+        input,
+        select {
+            background: map-get($variables, "background") !important;
+
         }
     }
 
-   
+
     .#{$color}-card {
-        background: map-get($variables, "card")!important;
-        *{
-            color: map-get($variables, "font")!important;
+        background: map-get($variables, "card") !important;
+
+        * {
+            color: map-get($variables, "font") !important;
         }
     }
 
