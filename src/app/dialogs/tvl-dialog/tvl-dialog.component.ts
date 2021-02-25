@@ -10,6 +10,7 @@ import {MatTabChangeEvent} from '@angular/material/tabs';
 import {HttpService} from '../../services/http.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {DialogData} from '../dialog-data';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-tvl-dialog',
@@ -319,6 +320,13 @@ export class TvlDialogComponent implements AfterViewInit {
       }
     } else {
       marker.shift();
+    }
+  }
+
+  private downloadCSV(type: String) {
+    let pwa = window.open(environment.apiEndpoint + `/csv/transactions/history/tvl/` + this.data.type);
+    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+        alert( 'Please disable your Pop-up blocker and try again.');
     }
   }
 

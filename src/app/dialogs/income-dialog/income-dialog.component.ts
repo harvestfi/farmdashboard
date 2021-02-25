@@ -5,6 +5,7 @@ import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {DialogData} from '../dialog-data';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-income-dialog',
@@ -24,6 +25,13 @@ export class IncomeDialogComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.loadData();
+  }
+
+  private downloadCSV() {
+    let pwa = window.open(environment.apiEndpoint + `/csv/transactions/history/hardwork/` + this.data.name);
+    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+        alert( 'Please disable your Pop-up blocker and try again.');
+    }
   }
 
   private loadData(): void {

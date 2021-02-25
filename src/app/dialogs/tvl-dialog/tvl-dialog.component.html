@@ -26,6 +26,9 @@
         </div>
         <div #chart class="tvl-chart"></div>
 
+        <div class="button-container">
+          <button class="donwload-csv" (click)="downloadCSV(data.type)">Download CSV</button>
+        </div>
       </mat-tab>
 
       <mat-tab *ngIf="data.type !== 'PS' && data.type !== 'All'" label="Share Price">
@@ -33,7 +36,12 @@
         <div class="title">
           {{data.type}} Share price history
         </div>
+        
         <div #sharePriceChart class="tvl-chart"></div>
+
+        <div class="button-container">
+          <button class="donwload-csv" (click)="downloadCSV(data.type)">Download CSV</button>
+        </div>
 
       </mat-tab>
 
