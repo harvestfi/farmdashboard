@@ -1,3 +1,5 @@
+@import "../../../../scss/utilities/utilities.scss";
+
 .uni-card {
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -50,44 +52,47 @@
     text-align: center;
     margin: 10px 0;
     padding: 0 10px;
-
   }
-}
 
+  &.dark-card {
+    .trade-card-header {
+      background: #111111;
+    }
 
-.button-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.show-more {
-  background-color: #eebf65;
-  color: black;
-  font-weight: bold;
-  border-radius: 3px;
-  border: 1px solid black;
-  cursor: pointer;
-}
-
-@media screen and (max-width: 1025px) {
-
-  .left,
-  .right,
-  .middle {
-    width: 100%;
+    .show-more {
+      background: purple;
+    }
   }
-}
 
-/*------------ old ---------------*/
 
-.live-data-table {
-  margin-left: 10px;
+
+  .button-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  .show-more {
+    background-color: #eebf65;
+    color: black;
+    font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid black;
+    cursor: pointer;
+  }
+
+  @include responsive(small) {
+    .left,
+    .right,
+    .middle {
+      width: 100%;
+    }
+  }
 }

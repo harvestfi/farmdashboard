@@ -59,12 +59,6 @@
     cursor: pointer;
   }
 
-
-  td {
-    /*padding: 0 !important;*/
-    /*margin: 0 !important;*/
-  }
-
   .live-data-table {
     margin-left: 10px;
   }
@@ -72,4 +66,17 @@
   .select-strategy {
     width: 110px;
   }
+
+  &.dark-card {
+    .harvest-tx-header {
+      background: #111111;
+    }
+
+
+    .show-more {
+      background: purple;
+    }
+  }
+
+  
 }
