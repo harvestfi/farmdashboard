@@ -45,6 +45,9 @@ export class PricesCalculationService {
       StaticValues.staked = (tx.lastTvl / tx.sharePrice) * 100;
       StaticValues.farmTotalSupply = tx.sharePrice;
     }
+    if (tx.vault === 'iPS') {
+      StaticValues.stakedNewPS = (tx.lastTvl / tx.totalAmount) * 100;
+    }
     const vaultStats = new VaultStats();
     vaultStats.lpStat = tx.lpStatDto;
     vaultStats.tvl = tx.lastTvl;
@@ -127,7 +130,7 @@ export class PricesCalculationService {
     if (!harvest || !reward) {
       return 0;
     }
-    if ((Date.now() / 1000) > reward.periodFinish) {
+    if ((Date.now() / 1000) > reward.periodFinish && !StaticValues.isPS.has(poolName)) {
       if (!this.rewardEnded.has(poolName)) {
         this.log.warn(poolName + ' reward setup zero, it is ended');
         this.rewardEnded.add(poolName);
@@ -196,6 +199,10 @@ export class PricesCalculationService {
 
   farmPsStaked(): number {
     return StaticValues.staked;
+  }
+
+  farmNewPsStaked(): number {
+    return StaticValues.stakedNewPS;
   }
 
   farmLpStaked(): number {

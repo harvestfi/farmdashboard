@@ -4,7 +4,7 @@ import {ViewTypeService} from '../../services/view-type.service';
 @Component({
   selector: 'app-flow-cards-view',
   templateUrl: './flow-cards-view.component.html',
-  styleUrls: ['./flow-cards-view.component.css']
+  styleUrls: ['./flow-cards-view.component.scss']
 })
 export class FlowCardsViewComponent implements OnInit {
 

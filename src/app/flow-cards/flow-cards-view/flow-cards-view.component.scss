@@ -1,0 +1,27 @@
+.uni-row {
+  display: grid;
+  grid-template-columns:  33.3% 33.3% 33.3%;
+  width: 100%;
+  padding: 10px;
+
+  .middle {
+    margin: 0 5px;
+  }
+
+  .left { 
+    margin-right: 10px;
+  }
+
+  .right {
+    margin-left: 10px;
+  }
+
+  @media screen and (max-width: 1025px) {
+      grid-template-columns:  1fr;
+      .middle, .left, .right {
+        margin: 10px 0;
+      }
+  }
+}
+
+

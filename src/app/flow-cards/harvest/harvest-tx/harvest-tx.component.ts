@@ -16,7 +16,7 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
 @Component({
   selector: 'app-harvest-tx',
   templateUrl: './harvest-tx.component.html',
-  styleUrls: ['./harvest-tx.component.css']
+  styleUrls: ['./harvest-tx.component.scss']
 })
 export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   dtos: HarvestDto[] = [];

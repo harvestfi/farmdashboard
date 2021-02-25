@@ -30,6 +30,8 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    height: 100%;
 
     &.dark {
         background: #363661;

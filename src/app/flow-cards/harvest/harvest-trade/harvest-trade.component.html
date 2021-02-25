@@ -1,19 +1,6 @@
 <div class="harvest-trades" [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.usdAmount, dto.confirmed)}">
-    <div class="harvest-field harvest2-date left-border-box"
-         matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
-                  {{dto.vault}}
-                  {{dto.methodName}}
-                  fAmount: {{dto.amount | number: '1.0-6'}}
-                  amount: {{dto.amountIn | number: '1.0-6'}}
-                  sharePrice: {{dto.sharePrice | number}}
-                  vault tvl: {{dto.lastTvl | number}}" matTooltipClass="tooltip-spaced">
-      {{fullDate ?
-        (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss') :
-        (dto.blockDateAdopted | date: 'HH:mm:ss')
-      }}
-    </div>
-
-    <div class="harvest-field harvest2-type left-border-box">
+    
+  <!-- <div class="harvest-field harvest2-type left-border-box">
       <container-element [ngSwitch]="dto.methodName.toLowerCase()">
         
         <mat-icon *ngSwitchCase="'deposit'"
@@ -32,12 +19,27 @@
                   aria-label="?">help
         </mat-icon>
       </container-element>
+    </div> -->
+  
+  <div class="harvest-field harvest2-date left-border-box"
+         matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
+                  {{dto.vault}}
+                  {{dto.methodName}}
+                  fAmount: {{dto.amount | number: '1.0-6'}}
+                  amount: {{dto.amountIn | number: '1.0-6'}}
+                  sharePrice: {{dto.sharePrice | number}}
+                  vault tvl: {{dto.lastTvl | number}}" matTooltipClass="tooltip-spaced">
+      {{fullDate ?
+        (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss') :
+        (dto.blockDateAdopted | date: 'HH:mm:ss')
+      }}
     </div>
 
     <div class="harvest-field harvest2-amount left-border-box">
-      {{dto.usdAmount | number: '1.0-0'}}$
+      ${{dto.usdAmount | number: '1.0-0'}}
     </div>
 
+  
     <div class="harvest-field harvest2-vault left-border-box">
       <img alt="?" class="tvl-img" src="{{getImgUrl(dto.vault)}}"/>
     </div>
