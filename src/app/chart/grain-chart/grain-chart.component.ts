@@ -4,6 +4,7 @@ import {NGXLogger} from 'ngx-logger';
 import {UniswapSubscriberService} from '../../flow-cards/uniswap/uniswap-subscriber.service';
 import {PriceChartBuilder} from '../price-chart-builder';
 import {HttpService} from '../../services/http.service';
+import { IChartApi } from 'lightweight-charts';
 
 @Component({
   selector: 'app-grain-chart',
@@ -13,6 +14,7 @@ import {HttpService} from '../../services/http.service';
 export class GrainChartComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
   coin = 'GRAIN';
+  chart: IChartApi;
 
   constructor(private httpService: HttpService,
               private uniswapSubscriberService: UniswapSubscriberService,

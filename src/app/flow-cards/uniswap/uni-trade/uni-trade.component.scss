@@ -1,7 +1,7 @@
 .uni-trades {
   display: grid;
   position: relative;
-  grid-template-columns: 2fr .5fr 1fr 1fr 1fr 1fr 1fr .5fr;
+  grid-template-columns: 23% 23% 23% 23% 8%;
 }
 
 .trade-field {
@@ -15,18 +15,8 @@
   font-size: 0.9em;
 }
 
-.trade-type {
-}
-
-.trade-amount {
-}
-
 .trade-coin {
   font-size: 0.7em;
-}
-
-.trade-other-amount {
-  
 }
 
 .trade-other-coin {
@@ -35,9 +25,6 @@
 
 .trade-sign {
   font-size: 0.9em;
-}
-
-.trade-price{
 }
 
 .sign-icon {

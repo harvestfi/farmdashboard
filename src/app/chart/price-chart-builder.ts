@@ -17,9 +17,7 @@ export class PriceChartBuilder {
 
   constructor(private log: NGXLogger, coin: string, chartEl: ElementRef, public vt: ViewTypeService) {
     this.coin = coin;
-
     this.chart = createChart(chartEl.nativeElement, LightweightChartsOptions.getOptions());
-
     if (this.vt.isNonScoreboard()) {
       this.chart.applyOptions({
         // height: 400,

@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-  background-color: #2F2C2C;
+  background-color: #2F2C2C!important;
   min-height: 100% !important;
 }
 
@@ -72,10 +72,7 @@ html, body {
 /*  !*align-self: flex-end;*!*/
 /*}*/
 
-.flex-container {
-  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6, BB7 */
-  display: -ms-flexbox; /* TWEENER - IE 10 */
-  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+.flex-container { /* OLD - iOS 6-, Safari 3.1-6, BB7 */ /* TWEENER - IE 10 */ /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
   display: flex; /* NEW, Spec - Firefox, Chrome, Opera */
 
   justify-content: center;
@@ -138,10 +135,26 @@ table {
   border-collapse: collapse;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #cdcdcd;
+  border-radius: 10px;
+}
+
 .scroller {
   white-space: pre-line;
-  height: 1200px;
-  overflow-y: hidden;
+  height: inherit;
+  overflow-y: auto;
   position: relative;
 }
 

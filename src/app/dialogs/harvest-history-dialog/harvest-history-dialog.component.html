@@ -14,7 +14,7 @@
                 <option *ngFor="let name of tvlNames" [value]="name">{{name}}</option>
             </select>
 
-            <input #harvestDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="text">
+            <input #harvestDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="number" min="0">
 
         </div>
 

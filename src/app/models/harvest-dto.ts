@@ -26,6 +26,7 @@ export class HarvestDto {
   underlyingPrice: number;
   profit: number;
   profitUsd: number;
+  totalAmount: number;
 
   lpStatDto: LpStat;
   blockDateAdopted: Date;
@@ -58,6 +59,7 @@ export class HarvestDto {
     tx.underlyingPrice = jsonData.underlyingPrice;
     tx.profit = jsonData.profit;
     tx.profitUsd = jsonData.profitUsd;
+    tx.totalAmount = jsonData.totalAmount;
 
     tx.acquired = new Date();
     HarvestDto.enrich(tx);

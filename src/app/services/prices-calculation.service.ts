@@ -31,49 +31,6 @@ export class PricesCalculationService {
     StaticValues.vaults.forEach(v => this.tvls.set(v, 0.0));
   }
 
-  private static mapCoinNameToSimple(name: string): string {
-    switch (name) {
-      case 'CRV_STETH':
-      case 'WETH':
-        return 'ETH';
-      case 'RENBTC':
-      case 'CRVRENWBTC':
-      case 'TBTC':
-      case 'WBTC':
-      case 'CRV_TBTC':
-      case 'CRV_HBTC':
-      case 'CRV_OBTC':
-        return 'BTC';
-      case 'CRV_EURS':
-        return 'EURS';
-      case 'PS_V0':
-      case 'PS':
-        return 'FARM';
-    }
-    return name;
-  }
-
-  private static isStableCoin(name: string): boolean {
-    return 'USD' === name
-        || 'USDC' === name
-        || 'USDT' === name
-        || 'YCRV' === name
-        || '3CRV' === name
-        || 'TUSD' === name
-        || 'DAI' === name
-        || 'CRV_CMPND' === name
-        || 'CRV_BUSD' === name
-        || 'CRV_USDN' === name
-        || 'CRV_HUSD' === name
-        || 'UST_NAME' === name
-        || 'CRV_UST' === name
-        || 'UST' === name
-        // || 'EURS' === name
-        // || 'CRV_EURS' === name
-        || 'CRV_GUSD' === name
-        ;
-  }
-
   public writeFromHarvestTx(tx: HarvestDto): void {
     if (!this.latestHarvest || this.latestHarvest.blockDate < tx.blockDate) {
       if (tx.lastGas != null && (tx.lastGas + '') !== 'NaN' && tx.lastGas !== 0) {
@@ -87,6 +44,9 @@ export class PricesCalculationService {
     if (tx.vault === 'PS') {
       StaticValues.staked = (tx.lastTvl / tx.sharePrice) * 100;
       StaticValues.farmTotalSupply = tx.sharePrice;
+    }
+    if (tx.vault === 'iPS') {
+      StaticValues.stakedNewPS = (tx.lastTvl / tx.totalAmount) * 100;
     }
     const vaultStats = new VaultStats();
     vaultStats.lpStat = tx.lpStatDto;
@@ -170,7 +130,7 @@ export class PricesCalculationService {
     if (!harvest || !reward) {
       return 0;
     }
-    if ((Date.now() / 1000) > reward.periodFinish) {
+    if ((Date.now() / 1000) > reward.periodFinish && !StaticValues.isPS.has(poolName)) {
       if (!this.rewardEnded.has(poolName)) {
         this.log.warn(poolName + ' reward setup zero, it is ended');
         this.rewardEnded.add(poolName);
@@ -241,6 +201,10 @@ export class PricesCalculationService {
     return StaticValues.staked;
   }
 
+  farmNewPsStaked(): number {
+    return StaticValues.stakedNewPS;
+  }
+
   farmLpStaked(): number {
     let farmInLp = 0;
     let lpStaked = 0;
@@ -263,8 +227,8 @@ export class PricesCalculationService {
   }
 
   public getPrice(name: string): number {
-    name = PricesCalculationService.mapCoinNameToSimple(name);
-    if (PricesCalculationService.isStableCoin(name)) {
+    name = StaticValues.mapCoinNameToSimple(name);
+    if (StaticValues.isStableCoin(name)) {
       return 1.0;
     }
     if (name === 'FARM') {
@@ -278,8 +242,8 @@ export class PricesCalculationService {
   }
 
   private calculateTvlForLp(lpStat: LpStat): number {
-    const simpleName1 = PricesCalculationService.mapCoinNameToSimple(lpStat.coin1);
-    const simpleName2 = PricesCalculationService.mapCoinNameToSimple(lpStat.coin2);
+    const simpleName1 = StaticValues.mapCoinNameToSimple(lpStat.coin1);
+    const simpleName2 = StaticValues.mapCoinNameToSimple(lpStat.coin2);
     const price1 = this.getPrice(simpleName1);
     const price2 = this.getPrice(simpleName2);
     const amount1 = price1 * lpStat.amount1;
@@ -304,7 +268,7 @@ export class PricesCalculationService {
   }
 
   public savePrice(tx: PricesDto): void {
-    const name = PricesCalculationService.mapCoinNameToSimple(tx.token);
+    const name = StaticValues.mapCoinNameToSimple(tx.token);
     const lastPriceDto = this.lastPrices.get(name);
     if (lastPriceDto) {
       if (lastPriceDto.source !== tx.source) {
@@ -325,7 +289,7 @@ export class PricesCalculationService {
     this.updatePrices();
   }
 
-  getLastPrices() {
+  getLastPrices(): Map<string, PricesDto> {
     return this.lastPrices;
   }
 }

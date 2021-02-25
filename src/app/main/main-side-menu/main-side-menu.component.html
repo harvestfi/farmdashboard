@@ -3,7 +3,7 @@
 <div [@openMenu]="showSideMenu ? 'open' : 'closed'" id="main-side-menu" [class]="isDarkTheme ? 'dark' : ''">
     <div class="main-side-menu-logo-container">
         <div class="branding-box">
-            <img class="main-side-menu-logo" src="/assets/harvest_logo.gif" alt="Harvest Logo">
+            <img class="main-side-menu-logo" src="/assets/harvest_logo.png" alt="Harvest Logo">
             <h4 class="main-side-menu-logo-text">Harvest</h4>
         </div>
 
@@ -15,13 +15,59 @@
     </div>
 
     <ul class="main-side-menu-items">
-        <li (click)="openAllStats()" data-menu-icon="📈" class="main-side-menu-item">Full Strategies Info</li>
+        <li (click)="openAllStatsDialog()" data-menu-icon="📈" class="main-side-menu-item">Full Strategies Info</li>
+        <app-custom-modal #allStatsDialog>
+            <ng-template >
+                <app-all-stats-dialog></app-all-stats-dialog>
+            </ng-template>
+        </app-custom-modal>
+
         <li (click)="openTvlDialog()" data-menu-icon="🕐" class="main-side-menu-item">TVL History Info</li>
+        <app-custom-modal #tvlDialog>
+            <ng-template >
+                <app-tvl-dialog [data]="{type: 'PS'}"></app-tvl-dialog>
+            </ng-template>
+        </app-custom-modal>
+        
         <li (click)="openIncomeDialog()" data-menu-icon="💸" class="main-side-menu-item">Income History Info</li>
+        <app-custom-modal #incomeDialog>
+            <ng-template >
+                <app-tvl-dialog [data]="{type: 'income'}"></app-tvl-dialog>
+            </ng-template>
+        </app-custom-modal>
+        
         <li (click)="openPsApyDialog()" data-menu-icon="📅" class="main-side-menu-item">PS APY History</li>
+        <app-custom-modal #psApyDialog>
+            <ng-template >
+                <app-rewards-dialog [data]="{title: 'PS APY History'}"></app-rewards-dialog>
+            </ng-template>
+        </app-custom-modal>
         <li (click)="openWeeklyProfitDialog()" data-menu-icon="🔒" class="main-side-menu-item">Weekly Profit History</li>
+        <app-custom-modal #weeklyProfitDialog>
+            <ng-template >
+                <app-profit-dialog [data]="{title: 'Weekly profit history chart'}"></app-profit-dialog>
+            </ng-template>
+        </app-custom-modal>
+
         <li (click)="openFarmBuybacksDialog()" data-menu-icon="📥" class="main-side-menu-item">FARM Buybacks</li>
+        <app-custom-modal #farmBuybackDialog>
+            <ng-template >
+                <app-farm-buybacks-dialog [data]="{title: 'FARM Buyback history chart'}"></app-farm-buybacks-dialog>
+            </ng-template>
+        </app-custom-modal>
         <li (click)="openSavedFeesDialog()" data-menu-icon="🛡️" class="main-side-menu-item">Saved Gas Fees</li>
+        <app-custom-modal #savedFeesDialog>
+            <ng-template >
+                <app-hard-work-history-dialog [data]="{title: 'Saved Gas Fees History'}"></app-hard-work-history-dialog>
+            </ng-template>
+        </app-custom-modal>
+        
+        <li (click)="openUserBalances()" data-menu-icon="👨‍👨‍👦‍👦" class="main-side-menu-item">Users Balances</li>
+        <app-custom-modal #userBalancesDialog>
+            <ng-template >
+                <app-user-balances-dialog [data]="{title: 'User Balances'}"></app-user-balances-dialog>
+            </ng-template>
+        </app-custom-modal>
     </ul>
 
 

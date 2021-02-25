@@ -58,6 +58,7 @@ import { HarvestHistoryDialogComponent } from './dialogs/harvest-history-dialog/
 import { SimpleChartDialogComponent } from './dialogs/simple-chart-dialog/simple-chart-dialog.component';
 import { UniHistoryDialogComponent } from './dialogs/uni-history-dialog/uni-history-dialog.component';
 import { PriceChartComponent } from './chart/price-chart/price-chart.component';
+import { DraggableModalComponent } from './dialogs/draggable-modal/draggable-modal.component';
 import { CustomModalComponent } from './dialogs/custom-modal/custom-modal.component';
 import { HarvestTradeComponent } from './flow-cards/harvest/harvest-trade/harvest-trade.component';
 import { LinkWindowComponent } from './flow-cards/uniswap/link-window/link-window.component';
@@ -72,6 +73,7 @@ import { MainSideMenuComponent } from './main/main-side-menu/main-side-menu.comp
 import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.component';
 import { FlowCardsViewComponent } from './flow-cards/flow-cards-view/flow-cards-view.component';
 import { LastPricesListComponent } from './dashboard/last-prices-list/last-prices-list.component';
+import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user-balances-dialog.component';
 
 declare var require: any;
 
@@ -115,6 +117,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HarvestHistoryDialogComponent,
     SimpleChartDialogComponent,
     PriceChartComponent,
+    DraggableModalComponent,
     CustomModalComponent,
     HarvestTradeComponent,
     LinkWindowComponent,
@@ -128,7 +131,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MainSideMenuComponent,
     SimpleModalComponent,
     FlowCardsViewComponent,
-    LastPricesListComponent
+    LastPricesListComponent,
+    UserBalancesDialogComponent
   ],
   imports: [
     AppRoutingModule,
@@ -163,9 +167,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
-    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-  }],
-  bootstrap: [AppComponent]
+    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+  },
+],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

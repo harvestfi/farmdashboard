@@ -1,8 +1,5 @@
-<div 
-(mousedown)="mousedown($event)" 
-(mouseup)="mouseup($event)"
-(touchstart)="mousedown($event)"
-(touchend)="mouseup($event)"
-#modal class="custom-modal styled-card">
-    <ng-content ></ng-content>
-</div>
+<ng-template #modal>
+    <div class="custom-modal-container">
+        <ng-container [ngTemplateOutlet]="template"></ng-container>
+    </div>
+</ng-template>

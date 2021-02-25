@@ -14,7 +14,7 @@
       <div class="title">
         PS income history
       </div>
-      <div #incomeChart class="tvl-chart"></div>
+      <div #chart class="tvl-chart"></div>
     </div>
 
     <mat-tab-group (selectedTabChange)="initChart($event)" *ngIf="data.type !== 'income'">
@@ -36,8 +36,7 @@
         <div class="title">
           {{data.type}} Share price history
         </div>
-        
-        <div #sharePriceChart class="tvl-chart"></div>
+        <div #chart class="tvl-chart"></div>
 
         <div class="button-container">
           <button class="donwload-csv" (click)="downloadCSV(data.type)">Download CSV</button>

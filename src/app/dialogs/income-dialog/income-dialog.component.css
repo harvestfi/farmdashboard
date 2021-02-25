@@ -1,6 +1,6 @@
 .title {
   font-size: 1.5em;
-  margin: 10px;
+  padding: 10px;
   color: black;
   font-weight: bolder;
   text-align: center;
@@ -8,6 +8,8 @@
 
 .dialog-card {
   background: #fffce6;
+  width: 100vw;
+  max-width: 800px;
 }
 
 ::ng-deep.mat-dialog-container {

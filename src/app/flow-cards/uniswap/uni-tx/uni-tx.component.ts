@@ -1,6 +1,5 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { UniswapDto } from '../../../models/uniswap-dto';
-import { Utils } from '../../../static/utils';
 import { HttpService } from '../../../services/http.service';
 import { NGXLogger } from 'ngx-logger';
 import { Title } from '@angular/platform-browser';
@@ -8,19 +7,20 @@ import { UniswapSubscriberService } from '../uniswap-subscriber.service';
 import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../../services/view-type.service';
 import { SnackService } from '../../../services/snack.service';
-import { UniHistoryDialogComponent } from '../../../dialogs/uni-history-dialog/uni-history-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-uni-tx',
   templateUrl: './uni-tx.component.html',
-  styleUrls: ['./uni-tx.component.css'],
+  styleUrls: ['./uni-tx.component.scss'],
 })
 export class UniTxComponent implements AfterViewInit {
   dtos: UniswapDto[] = [];
   txIds = new Set<string>();
   pureTitle = 'Harvest Live Dashboard';
   private maxMessages = 50;
+  @ViewChild('unitHistoryModal') private unitHistoryModal: CustomModalComponent;
 
   constructor(
     private txHistory: HttpService,
@@ -100,11 +100,7 @@ export class UniTxComponent implements AfterViewInit {
   }
 
   openUniHistory(): void {
-    this.dialog.open(UniHistoryDialogComponent, {
-      width: '60%',
-      data: {},
-      panelClass: 'uni-tx-hist'
-    });
+    this.unitHistoryModal.open();
   }
 
 
