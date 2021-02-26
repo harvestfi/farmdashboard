@@ -57,7 +57,7 @@ export class ChartsOptionsLight {
           borderColor: 'rgb(169,168,168)',
         }
       }
-    }
+    };
     return options[color];
   }
 }

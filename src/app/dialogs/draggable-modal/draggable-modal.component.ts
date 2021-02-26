@@ -13,7 +13,7 @@ export class DraggableModalComponent implements AfterViewInit {
   private positionThree = 0;
   private positionFour = 0;
   private isMouseDown = false;
-  
+
   constructor(public vt: ViewTypeService){}
 
   ngAfterViewInit(): void {

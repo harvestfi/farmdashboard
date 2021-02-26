@@ -25,7 +25,7 @@ export class ViewTypeService {
   }
 
   public getThemeColor(): string {
-    const color = UserSettings.getColor() || 'light'; 
+    const color = UserSettings.getColor() || 'light';
     return color;
   }
 

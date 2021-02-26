@@ -84,9 +84,9 @@ export class MainSideMenuComponent {
     }
 
     toggleTheme(): void {
-        if(this.viewTypeService.getThemeColor() === 'dark'){
+        if (this.viewTypeService.getThemeColor() === 'dark') {
             this.viewTypeService.setThemeColor('light');
-            return
+            return;
         }
         this.viewTypeService.setThemeColor('dark');
     }
