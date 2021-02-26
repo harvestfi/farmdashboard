@@ -33,15 +33,6 @@
     overflow-y: auto;
     height: 100%;
 
-    &.dark {
-        background: #363661;
-
-        * {
-            // color: white !important;
-        }
-    }
-
-
     .main-side-menu-logo-container {
         padding: 20px;
         display: flex;
@@ -151,13 +142,14 @@
         justify-content: space-evenly;
 
         .social-link i {
-            color: #363636;
             font-size: 34px;
-
-            &:hover {
-                color: lighten(#363636, 5%);
-            }
         }
+    }
+
+
+    .scoreboard-switch-container {
+        text-align: center;
+        margin: 20px 0;
     }
 
 

@@ -64,7 +64,7 @@
         
         <li (click)="openUserBalances()" data-menu-icon="👨‍👨‍👦‍👦" class="main-side-menu-item">Users Balances</li>
         <app-custom-modal #userBalancesDialog>
-            <ng-template >
+        <ng-template >
                 <app-user-balances-dialog [data]="{title: 'User Balances'}"></app-user-balances-dialog>
             </ng-template>
         </app-custom-modal>
@@ -77,4 +77,8 @@
         <a class="social-link" href="https://medium.com/harvest-finance"><i class="fab fa-medium"></i></a>
         <a class="social-link" href="https://www.reddit.com/r/HarvestFinance/"><i class="fab fa-reddit-square"></i></a>
     </nav>
+
+    <div class="scoreboard-switch-container" [class]="viewTypeService.getThemeColor() + '-card'">
+        <a (click)="viewTypeService.toggleTheme()" href="#">Switch To Scoreboard</a>
+    </div>
 </div>
