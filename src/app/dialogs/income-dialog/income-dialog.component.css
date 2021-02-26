@@ -1,7 +1,6 @@
 .title {
   font-size: 1.5em;
   padding: 10px;
-  color: black;
   font-weight: bolder;
   text-align: center;
 }
@@ -37,17 +36,3 @@
 }
 
 
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
-  color: black !important;
-  background-color: transparent !important;
-}
-
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label {
-  color: black !important;
-  background-color: transparent !important;
-}
-
-::ng-deep .mat-tab-nav-bar {
-  color: black !important;
-  background-color: transparent !important;
-}

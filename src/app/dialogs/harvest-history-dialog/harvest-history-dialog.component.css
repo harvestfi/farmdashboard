@@ -4,7 +4,8 @@
   flex-direction: column;
   justify-content: center;
   padding: 20px;
-  background: #fffce6;
+  max-width: 600px;
+  width: 90vw;
 }
 
 .row {
@@ -15,7 +16,6 @@
 
 .title {
   font-size: 1.5em;
-  color: black;
   font-weight: bolder;
   text-align: center;
   width: 100%;
@@ -32,7 +32,6 @@
 }
 
 .show-even-more {
-  color: black;
   font-weight: bold;
   border-radius: 3px;
   border: 1px solid black;

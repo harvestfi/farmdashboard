@@ -5,14 +5,16 @@
 $variables in $themes_colors {
     .#{$color}-background {
         background: map-get($variables, "background") !important;
+        color: map-get($variables, "font") !important;
 
-        * {
+        h1, h2, h3, h4, p, span, label {
             color: map-get($variables, "font") !important;
         }
 
         input,
         select {
-            background: map-get($variables, "background") !important;
+            background: map-get($variables, "card") !important;
+            color: map-get($variables, "font") !important;
 
         }
     }
@@ -20,9 +22,16 @@ $variables in $themes_colors {
 
     .#{$color}-card {
         background: map-get($variables, "card") !important;
-
-        * {
+        color: map-get($variables, "font") !important;
+        h1, h2, h3, h4, p, span, label {
             color: map-get($variables, "font") !important;
+        }
+
+        input,
+        select {
+            background: map-get($variables, "card") !important;
+            color: map-get($variables, "font") !important;
+
         }
     }
 

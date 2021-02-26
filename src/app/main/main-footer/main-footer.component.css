@@ -13,22 +13,10 @@
   /*justify-content: center;*/
 }
 
-a {
-  color: black;
-}
-
-.tg-img, .gh-img, .alchemy {
-
-}
-
 .tg-img, .gh-img {
   width: 15px;
   height: 15px;
   margin: 0 3px 0 10px;
-}
-
-.alchemy {
-
 }
 
 .alchemy-img {
