@@ -9,7 +9,7 @@ import { HarvestDto } from '../../models/harvest-dto';
 @Component({
   selector: 'app-harvest-history-dialog',
   templateUrl: './harvest-history-dialog.component.html',
-  styleUrls: ['./harvest-history-dialog.component.css']
+  styleUrls: ['./harvest-history-dialog.component.scss']
 })
 export class HarvestHistoryDialogComponent implements AfterViewInit {
   vaultFilter = 'all';
