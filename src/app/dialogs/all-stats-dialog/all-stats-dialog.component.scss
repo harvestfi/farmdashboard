@@ -1,62 +1,65 @@
-.all-stats-dialog-container{
-  background: #fffce6;
+@import "../../../scss/themes/theme-variables.scss";
+.all-stats-dialog-container {
 
-  td, th {
+  td,
+  th {
     padding: 4px;
   }
+
+  tr:hover{
+    background: darken(map-get(map-get($themes_colors, "light"), "card"), 5%);
+  }
   
+  &.dark-card {    
+    tr:hover {
+      background: darken(map-get(map-get($themes_colors, "dark"), "card"), 5%); 
+    }
+  }
+
+
+
   .header-row {
     width: 100%;
     padding: 10px;
   }
-  
+
   .title-col {
     font-size: 1.5em;
     font-weight: bolder;
     text-align: left;
     width: 75%;
   }
-  
+
   .checkbox {
     width: 25%;
     font-size: 0.8em !important;
     font-weight: normal;
   }
-  
-  .dialog-card {
-    background: #fffce6;
-  
-  }
-  
-  ::ng-deep.mat-dialog-container {
-    overflow: hidden;
-    border-radius: 3px;
-    padding: 10px !important;
-    background: #fffce6;
-  }
-  
-  
-  tr:hover {
-    background-color: #f5f5f5;
-  }
-  
+
+
   .tvl-name {
     /*width: 40%;*/
     font-size: 0.9em;
   }
-  
-  .tvl-value, .income-value, .income-apr-value, .owners-value, .reward-value, .reward-apr, .all-apr {
+
+  .tvl-value,
+  .income-value,
+  .income-apr-value,
+  .owners-value,
+  .reward-value,
+  .reward-apr,
+  .all-apr {
     font-size: 1em;
     /*width: 20%;*/
     /*font-weight: bolder;*/
   }
-  
+
   .tvl-img {
     width: 15px;
     height: 15px;
     margin-right: 5px;
   }
-  
+
   @media screen and (max-width: 900px) {
     .title-col {
       font-size: 1em;

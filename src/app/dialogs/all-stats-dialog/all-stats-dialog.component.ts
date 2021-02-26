@@ -3,6 +3,7 @@ import {StaticValues} from '../../static/static-values';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {Sort} from '@angular/material/sort';
+import { ViewTypeService } from 'src/app/services/view-type.service';
 
 @Component({
   selector: 'app-all-stats-dialog',
@@ -13,7 +14,7 @@ export class AllStatsDialogComponent implements OnInit {
   sortedVaults: string[];
   includeInactive = true;
 
-  constructor(private pricesCalculationService: PricesCalculationService) {
+  constructor(private pricesCalculationService: PricesCalculationService, public vt: ViewTypeService) {
     this.sortedVaults = StaticValues.vaults;
   }
 

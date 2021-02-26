@@ -19,7 +19,6 @@ export class ChartsOptionsLight {
         },
         leftPriceScale: {
           borderColor: 'rgb(169,168,168)',
-          // visible: true,
         },
         rightPriceScale: {
           borderColor: 'rgb(169,168,168)',
@@ -39,22 +38,21 @@ export class ChartsOptionsLight {
         },
         grid: {
           vertLines: {
-            color: 'rgb(169,168,168)',
+            color: '#333535',
           },
           horzLines: {
-            color: 'rgb(169,168,168)',
+            color: '#333535',
           },
         },
         leftPriceScale: {
-          borderColor: 'rgb(169,168,168)',
-          // visible: true,
+          borderColor: '#333535',
         },
         rightPriceScale: {
-          borderColor: 'rgb(169,168,168)',
+          borderColor: '#333535',
           visible: true,
         },
         timeScale: {
-          borderColor: 'rgb(169,168,168)',
+          borderColor: '#333535',
         }
       }
     };
