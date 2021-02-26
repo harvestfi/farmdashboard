@@ -6,16 +6,8 @@
 }
 
 .dialog-card {
-  background: #fffce6;
   width: 100vw;
   max-width: 700px;
-}
-
-::ng-deep.mat-dialog-container {
-  overflow: hidden;
-  border-radius: 3px;
-  padding: 10px !important;
-  background: #fffce6;
 }
 
 .chart {
@@ -29,9 +21,5 @@
     margin: 5px;
   }
 
-  ::ng-deep.mat-dialog-container {
-    border-radius: 1px;
-    padding: 5px !important;
-  }
 }
 
