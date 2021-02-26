@@ -191,7 +191,7 @@ export class PricesCalculationService {
       if (hw.savedGasFeesSum) {
         fees += hw.savedGasFeesSum;
       } else {
-        this.log.warn('Saved Gas fees not found in ', hw);
+        // this.log.warn('Saved Gas fees not found in ', hw);
       }
     }
     return fees;

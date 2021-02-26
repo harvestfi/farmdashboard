@@ -81,6 +81,7 @@ export class StaticValues {
     'CRV_AAVE',
     'SUSHI_SUSHI_ETH',
     'iPS',
+    'ONEINCH_ETH_ONEINCH',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -140,6 +141,7 @@ export class StaticValues {
     'ONEINCH_ETH_USDC',
     'ONEINCH_ETH_USDT',
     'ONEINCH_ETH_WBTC',
+    'ONEINCH_ETH_ONEINCH',
   ];
 
   public static farmPools: string[] = [
@@ -345,6 +347,8 @@ export class StaticValues {
         return '/assets/icons/curve-aave.png';
       case 'SUSHI_SUSHI_ETH':
         return '/assets/icons/sushi-eth.png';
+      case 'ONEINCH_ETH_ONEINCH':
+        return '/assets/icons/1inch-eth-1inch.png';
     }
   }
 }
