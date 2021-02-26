@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { ViewTypeService } from 'src/app/services/view-type.service';
 
 @Component({
   selector: 'app-loading-spinner',
@@ -7,7 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LoadingSpinnerComponent implements OnInit {
 
-  constructor() {
+  constructor(public vt: ViewTypeService) {
   }
 
   ngOnInit(): void {
