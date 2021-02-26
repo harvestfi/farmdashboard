@@ -63,11 +63,11 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
     const options = LightweightChartsOptions.getOptions();
     if (this.data.type === 'income') {
       this.chart = createChart(this.chartEl.nativeElement, LightweightChartsOptions.getOptions());
-      this.chart.applyOptions(ChartsOptionsLight.getOptions());
+      this.chart.applyOptions(ChartsOptionsLight.getOptions('light'));
     } else {
       this.chart = createChart(this.chartEl.nativeElement, options);
       if (this.vt.isNonScoreboard()) {
-        this.chart.applyOptions(ChartsOptionsLight.getOptions());
+        this.chart.applyOptions(ChartsOptionsLight.getOptions('light'));
       }
     }
   }
@@ -75,7 +75,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
   initChart(tabChangeEvent: MatTabChangeEvent): void {
     if (tabChangeEvent.index === 1 && !this.chart) {
       this.chart = createChart(this.chartEl.nativeElement, LightweightChartsOptions.getOptions());
-      this.chart.applyOptions(ChartsOptionsLight.getOptions());
+      this.chart.applyOptions(ChartsOptionsLight.getOptions('light'));
       this.loadShareData();
     }
   }

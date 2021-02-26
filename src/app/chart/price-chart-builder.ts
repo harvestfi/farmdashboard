@@ -5,6 +5,7 @@ import {createChart, IChartApi} from 'lightweight-charts';
 import {NGXLogger} from 'ngx-logger';
 import {LightweightChartsOptions} from './lightweight-charts-options';
 import {ViewTypeService} from '../services/view-type.service';
+import { ChartsOptionsLight } from './charts-options-light';
 
 export class PriceChartBuilder {
   lastDate = 0;
@@ -19,35 +20,7 @@ export class PriceChartBuilder {
     this.coin = coin;
     this.chart = createChart(chartEl.nativeElement, LightweightChartsOptions.getOptions());
     if (this.vt.isNonScoreboard()) {
-      this.chart.applyOptions({
-        // height: 400,
-        layout: {
-          backgroundColor: 'rgba(0, 0, 0, 0)',
-          textColor: 'rgba(0,0,0,0.9)',
-        },
-        watermark: {
-          color: 'rgba(0,0,0,0.7)',
-          text: coin + ' price chart'
-        },
-        grid: {
-          vertLines: {
-            color: 'rgb(169,168,168)',
-          },
-          horzLines: {
-            color: 'rgb(169,168,168)',
-          },
-        },
-        leftPriceScale: {
-          borderColor: 'rgb(169,168,168)',
-          // visible: true,
-        },
-        rightPriceScale: {
-          borderColor: 'rgb(169,168,168)',
-        },
-        timeScale: {
-          borderColor: 'rgb(169,168,168)',
-        }
-      });
+      this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
     } else {
       this.chart.applyOptions({
         // rightPriceScale: {

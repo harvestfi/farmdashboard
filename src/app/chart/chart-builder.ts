@@ -29,7 +29,7 @@ export class ChartBuilder {
     }
     const chart = createChart(chartEl?.nativeElement, options);
     if (enrichOptions) {
-      chart.applyOptions(ChartsOptionsLight.getOptions());
+      chart.applyOptions(ChartsOptionsLight.getOptions('light'));
     }
     return chart;
   }
