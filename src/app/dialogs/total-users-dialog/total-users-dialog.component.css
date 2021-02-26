@@ -7,7 +7,6 @@
 }
 
 .dialog-card {
-  background: #fffce6;
   max-width: 800px;
   width: 100vw;
 }
@@ -25,17 +24,3 @@
 }
 
 
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
-  color: black !important;
-  background-color: transparent !important;
-}
-
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label {
-  color: black !important;
-  background-color: transparent !important;
-}
-
-::ng-deep .mat-tab-nav-bar {
-  color: black !important;
-  background-color: transparent !important;
-}
