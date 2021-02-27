@@ -51,8 +51,12 @@ $variables in $themes_colors {
         select {
             background: map-get($variables, "card");
             color: map-get($variables, "font");
-
+            
         }
+    }
+    
+    .#{$color}-font {
+        color: map-get($variables, "font");
     }
 
 }

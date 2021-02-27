@@ -49,6 +49,8 @@
     text-align: center;
     margin: 10px 0;
     padding: 0 10px;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
   }
 
   &.dark-card {
@@ -56,7 +58,6 @@
       background: #111111;
     }
   }
-
 
 
   .button-container {

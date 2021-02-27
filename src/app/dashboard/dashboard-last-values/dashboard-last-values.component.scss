@@ -152,3 +152,34 @@
     }
 }
 
+
+#top-div-scoreboard {
+  .caption-btc, .caption-btc-value, .caption-btc-sign {
+    color: #77612e;
+  }
+  
+  .caption-btc-sign {
+    font-size: 3em;
+    color: w
+  }
+  
+  .caption-eth, .caption-eth-value, .caption-eth-sign {
+    color: #596d56;
+  }
+  
+  .caption-eth-sign {
+    font-size: 3em;
+    color: w
+  }
+  
+  .caption-ps-value, .caption-ps-sign, .caption-ps {
+    color: mediumpurple;
+  }
+
+  .last-price-sign {
+    font-size: 4em;
+    color: #fff;
+  }
+  
+}
+
