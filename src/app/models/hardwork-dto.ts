@@ -4,8 +4,8 @@ export class HardWorkDto {
   block: number;
   blockDate: number;
   shareChange: Date;
-  shareChangeUsd: number;
-  shareUsdTotal: number;
+  fullRewardUsd: number;
+  fullRewardUsdTotal: number;
   tvl: number;
   allProfit: number;
   periodOfWork: number;
@@ -36,8 +36,8 @@ export class HardWorkDto {
     tx.block = jsonData.block;
     tx.blockDate = jsonData.blockDate;
     tx.shareChange = jsonData.shareChange;
-    tx.shareChangeUsd = jsonData.shareChangeUsd;
-    tx.shareUsdTotal = jsonData.shareUsdTotal;
+    tx.fullRewardUsd = jsonData.fullRewardUsd;
+    tx.fullRewardUsdTotal = jsonData.fullRewardUsdTotal;
     tx.tvl = jsonData.tvl;
     tx.allProfit = jsonData.allProfit;
     tx.periodOfWork = jsonData.periodOfWork;

@@ -77,12 +77,12 @@ export class AllStatsDialogComponent implements OnInit {
           let incomeA;
           let incomeB;
           if (a !== 'PS') {
-            incomeA = this.hardWorks.get(a)?.shareUsdTotal;
+            incomeA = this.hardWorks.get(a)?.fullRewardUsdTotal;
           } else {
             incomeA = this.psIncome;
           }
           if (b !== 'PS') {
-            incomeB = this.hardWorks.get(b)?.shareUsdTotal;
+            incomeB = this.hardWorks.get(b)?.fullRewardUsdTotal;
           } else {
             incomeB = this.psIncome;
           }

@@ -13,7 +13,7 @@ export class HardworkFilterPipe implements PipeTransform {
       return dtos;
     }
     this.tmp = [];
-    const arr = dtos.filter(dto => dto.shareChangeUsd > minUsdAmount && (!vault || vault === 'all' || dto.vault === vault));
+    const arr = dtos.filter(dto => dto.fullRewardUsd > minUsdAmount && (!vault || vault === 'all' || dto.vault === vault));
     for (const el of arr) {
       this.tmp.push(el);
     }

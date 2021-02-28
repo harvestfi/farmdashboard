@@ -38,7 +38,7 @@ export class HardworkTxComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     // todo optimize request
     this.httpService.getHardWorkHistoryData().subscribe(data => {
-      this.log.info('hard work values', data);
+      this.log.info('hard work history values', data);
       this.addInArray(data);
     });
 

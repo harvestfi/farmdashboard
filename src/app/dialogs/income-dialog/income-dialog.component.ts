@@ -34,7 +34,7 @@ export class IncomeDialogComponent extends ChartGeneralMethodsComponent implemen
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(3);
       data?.forEach(dto => {
-        chartBuilder.addInData(0, dto.blockDate, dto.shareUsdTotal / 1000);
+        chartBuilder.addInData(0, dto.blockDate, (dto.fullRewardUsdTotal * 0.7) / 1000);
         chartBuilder.addInData(1, dto.blockDate, dto.apr);
         chartBuilder.addInData(2, dto.blockDate, dto.tvl / 1000000);
       });
