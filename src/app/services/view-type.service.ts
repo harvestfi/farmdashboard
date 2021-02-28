@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {UserSettings} from '../user-settings';
-
+import { Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class ViewTypeService {
   private themeScoreboard = 'scoreboard';
   private themeLight = 'light';
+  private subject = new Subject<any>();
 
   constructor() {
   }
@@ -31,5 +32,14 @@ export class ViewTypeService {
 
   public setThemeColor(color: string): void {
     UserSettings.setColor(color);
+    this.newEvent('theme-changed');
+  }
+
+  newEvent(event): void {
+    this.subject.next(event);
+  }
+
+  get events$(): Observable<any>{
+    return this.subject.asObservable();
   }
 }
