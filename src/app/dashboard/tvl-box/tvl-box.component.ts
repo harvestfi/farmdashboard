@@ -123,10 +123,10 @@ export class TvlBoxComponent implements OnInit {
   incomeVaultValueGradient(tvlName: string): string {
     const prices = [];
     for (const hw of this.hardWorks.values()) {
-      prices.push(hw?.shareUsdTotal);
+      prices.push(hw?.fullRewardUsdTotal);
     }
     const minMax = this.findMinMax(prices);
-    const alpha = this.percentOfMinMax(this.hardWorks.get(tvlName)?.shareUsdTotal, minMax[0], minMax[1] * 0.03);
+    const alpha = this.percentOfMinMax(this.hardWorks.get(tvlName)?.fullRewardUsdTotal, minMax[0], minMax[1] * 0.03);
     return 'rgba(0, 0, 0, ' + alpha + ')';
   }
 
