@@ -189,7 +189,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         this.addLabelToChart(this.lockedSeries, h, this.lockedDataMap, this.markerAdded5);
       }
     });
-    this.chart.timeScale().fitContent();
+    this.chart.timeScale();
   }
 
   public addValuesToShareChart(dtos: HarvestTvl[]): void {
@@ -217,7 +217,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         },
       });
       this.sharePriceSeries.setData(sharesData);
-      this.chart.timeScale().fitContent();
+      this.chart.timeScale();
       this.markerAdded = [];
       this.chart.subscribeCrosshairMove(h => {
         if (this.markerAdded.length === 0) {
@@ -276,7 +276,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
     });
     this.psTvlUsdSeries.setData(psTvlUsd);
 
-    this.chart.timeScale().fitContent();
+    this.chart.timeScale();
     this.markerAdded = [];
     this.markerAdded2 = [];
     this.markerAdded3 = [];

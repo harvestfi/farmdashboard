@@ -49,6 +49,7 @@ export class LightweightChartsOptions {
           d.setUTCSeconds(time);
           return (moment(d)).format('DD-MMM HH:mm');
         },
+        rightOffset: 50
       }
     };
   }

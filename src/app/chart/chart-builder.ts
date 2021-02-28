@@ -47,7 +47,7 @@ export class ChartBuilder {
         }
       });
     }
-    chart.timeScale().fitContent();
+    chart.timeScale();
   }
 
   public addInData(i: number, timestamp: number, v: number): void {
