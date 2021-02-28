@@ -29,13 +29,6 @@ export class IncomeDialogComponent extends ChartGeneralMethodsComponent implemen
     this.loadData();
   }
 
-  private downloadCSV() {
-    let pwa = window.open(environment.apiEndpoint + `/csv/transactions/history/hardwork/` + this.data.name);
-    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-        alert( 'Please disable your Pop-up blocker and try again.');
-    }
-  }
-
   private loadData(): void {
     this.httpService.getHardWorkHistoryDataByName(this.data.name).subscribe(data => {
       this.log.debug('History of All Incomes loaded ', data);

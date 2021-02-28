@@ -23,15 +23,6 @@
   align-items: center;
 }
 
-.download-csv {
-  background-color: #eebf65;
-  color: black;
-  font-weight: bold;
-  border-radius: 3px;
-  border: 1px solid black;
-  cursor: pointer;
-}
-
 @media screen and (max-width: 900px) {
   .title-col {
     font-size: 1em;

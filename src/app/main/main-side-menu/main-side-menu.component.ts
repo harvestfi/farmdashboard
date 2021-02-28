@@ -36,6 +36,7 @@ export class MainSideMenuComponent {
     @ViewChild('farmBuybackDialog') private farmBuybackDialog: CustomModalComponent;
     @ViewChild('savedFeesDialog') private savedFeesDialog: CustomModalComponent;
     @ViewChild('userBalancesDialog') private userBalancesDialog: CustomModalComponent;
+    @ViewChild('downloadHistoricDataDialog') private downloadHistoricDataDialog: CustomModalComponent;
 
     constructor(private viewTypeService: ViewTypeService){}
     toggleMenu(): void {
@@ -81,6 +82,11 @@ export class MainSideMenuComponent {
     openUserBalances(): void {
       this.userBalancesDialog.open();
       this.toggleMenu();
+    }
+
+    openDownloadHistoricDataDialog(): void {
+        this.downloadHistoricDataDialog.open();
+        this.toggleMenu();
     }
 
     toggleTheme(): void {
