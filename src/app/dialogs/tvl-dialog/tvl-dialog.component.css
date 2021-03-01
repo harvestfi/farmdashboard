@@ -17,6 +17,11 @@
   min-height: 70vh;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 @media screen and (max-width: 900px) {
   .title-col {
