@@ -7,7 +7,7 @@
 <ng-template #readyBlock>
 
 
-  <div *ngIf="vt.isNonScoreboard()" id="top-div-light" class="dialog-card">
+  <div *ngIf="vt.isNonScoreboard()" id="top-div-light" class="dialog-card" [class]="vt.getThemeColor() + '-card'">
 
 
     <div *ngIf="data.type === 'income'">

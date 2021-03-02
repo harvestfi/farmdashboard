@@ -1,22 +1,13 @@
 .title {
   font-size: 1.5em;
   padding: 10px;
-  color: black;
   font-weight: bolder;
   text-align: center;
 }
 
 .dialog-card {
-  background: #fffce6;
   width: 100vw;
   max-width: 800px;
-}
-
-::ng-deep.mat-dialog-container {
-  overflow: hidden;
-  border-radius: 3px;
-  padding: 10px !important;
-  background: #fffce6;
 }
 
 .chart {
@@ -34,25 +25,6 @@
     font-size: 1em;
     margin: 5px;
   }
-
-  ::ng-deep.mat-dialog-container {
-    border-radius: 1px;
-    padding: 5px !important;
-  }
 }
 
 
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
-  color: black !important;
-  background-color: transparent !important;
-}
-
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label {
-  color: black !important;
-  background-color: transparent !important;
-}
-
-::ng-deep .mat-tab-nav-bar {
-  color: black !important;
-  background-color: transparent !important;
-}

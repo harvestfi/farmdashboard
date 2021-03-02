@@ -9,7 +9,7 @@ import { UniswapDto } from '../../models/uniswap-dto';
 @Component({
   selector: 'app-uni-history-dialog',
   templateUrl: './uni-history-dialog.component.html',
-  styleUrls: ['./uni-history-dialog.component.css'],
+  styleUrls: ['./uni-history-dialog.component.scss'],
 })
 export class UniHistoryDialogComponent implements AfterViewInit {
   dtos: UniswapDto[] = [];

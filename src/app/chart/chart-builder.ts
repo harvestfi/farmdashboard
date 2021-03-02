@@ -2,6 +2,7 @@ import {ElementRef} from '@angular/core';
 import {createChart, IChartApi, ISeriesApi, MouseEventParams, SeriesMarker, Time} from 'lightweight-charts';
 import {LightweightChartsOptions} from './lightweight-charts-options';
 import {ChartsOptionsLight} from './charts-options-light';
+import { ViewTypeService } from '../services/view-type.service';
 
 export class ChartBuilder {
   chartData = [[]];
@@ -9,6 +10,7 @@ export class ChartBuilder {
   dataMaps: Map<number, number>[] = [];
   markers = [];
   priceLineVisible = true;
+  vt: ViewTypeService = new ViewTypeService();
 
   public initVariables(dataCount: number): void {
     this.dataMaps = [];
@@ -29,7 +31,7 @@ export class ChartBuilder {
     }
     const chart = createChart(chartEl?.nativeElement, options);
     if (enrichOptions) {
-      chart.applyOptions(ChartsOptionsLight.getOptions());
+      chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
     }
     return chart;
   }
@@ -45,7 +47,7 @@ export class ChartBuilder {
         }
       });
     }
-    chart.timeScale().fitContent();
+    chart.timeScale();
   }
 
   public addInData(i: number, timestamp: number, v: number): void {

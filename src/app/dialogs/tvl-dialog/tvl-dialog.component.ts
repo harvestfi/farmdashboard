@@ -65,11 +65,11 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
     const options = LightweightChartsOptions.getOptions();
     if (this.data.type === 'income') {
       this.chart = createChart(this.chartEl.nativeElement, LightweightChartsOptions.getOptions());
-      this.chart.applyOptions(ChartsOptionsLight.getOptions());
+      this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
     } else {
       this.chart = createChart(this.chartEl.nativeElement, options);
       if (this.vt.isNonScoreboard()) {
-        this.chart.applyOptions(ChartsOptionsLight.getOptions());
+        this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
       }
     }
   }
@@ -77,7 +77,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
   initChart(tabChangeEvent: MatTabChangeEvent): void {
     if (tabChangeEvent.index === 1 && !this.chart) {
       this.chart = createChart(this.chartEl.nativeElement, LightweightChartsOptions.getOptions());
-      this.chart.applyOptions(ChartsOptionsLight.getOptions());
+      this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
       this.loadShareData();
     }
   }
@@ -191,7 +191,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         this.addLabelToChart(this.lockedSeries, h, this.lockedDataMap, this.markerAdded5);
       }
     });
-    this.chart.timeScale().fitContent();
+    this.chart.timeScale();
   }
 
   public addValuesToShareChart(dtos: HarvestTvl[]): void {
@@ -219,7 +219,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         },
       });
       this.sharePriceSeries.setData(sharesData);
-      this.chart.timeScale().fitContent();
+      this.chart.timeScale();
       this.markerAdded = [];
       this.chart.subscribeCrosshairMove(h => {
         if (this.markerAdded.length === 0) {
@@ -278,7 +278,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
     });
     this.psTvlUsdSeries.setData(psTvlUsd);
 
-    this.chart.timeScale().fitContent();
+    this.chart.timeScale();
     this.markerAdded = [];
     this.markerAdded2 = [];
     this.markerAdded3 = [];

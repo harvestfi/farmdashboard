@@ -1,6 +1,4 @@
 .container {
-    background: #fffce6;
-    color: black;
     padding: 10px;
 }
 
@@ -43,7 +41,6 @@
     width: 80%;
     text-decoration: none;
     background-color: #EEBF65;
-    color: black;
     position: relative;
     font-size: 12px;
     margin: 5px;
@@ -57,24 +54,3 @@
     max-height: 80vh;
 }
 
-::ng-deep.mat-dialog-container {
-    overflow: hidden;
-    border-radius: 3px;
-    padding: 10px !important;
-    background: #fffce6;
-}
-
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
-    color: black !important;
-    background-color: transparent !important;
-}
-
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label {
-    color: black !important;
-    background-color: transparent !important;
-}
-
-::ng-deep .mat-tab-nav-bar {
-    color: black !important;
-    background-color: transparent !important;
-}

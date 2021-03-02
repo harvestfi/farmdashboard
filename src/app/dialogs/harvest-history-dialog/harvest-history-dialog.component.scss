@@ -1,0 +1,55 @@
+@import "../../../scss/utilities/utilities.scss";
+.harvest-tx-hist {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  max-width: 600px;
+  width: 90vw;
+
+  @include responsive(small){
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .title {
+    font-size: 1.5em;
+    font-weight: bolder;
+    text-align: center;
+    width: 100%;
+  }
+
+  .input-less-than {
+
+    margin-bottom: 10px;
+    padding: 1px 0;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .show-even-more {
+    font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid black;
+    margin-top: 5px;
+    cursor: pointer;
+    color: black;
+  }
+  @include responsive(small){
+    .title {
+      font-size: 1em;
+      margin: 5px;
+    }
+  }
+}
