@@ -3,10 +3,9 @@
 
 @each $color,
 $variables in $themes_colors {
-    .#{$color}-background {
-        background: map-get($variables, "background");
-        color: map-get($variables, "font");
 
+    .#{$color}-background, .#{$color}-card{
+        color: map-get($variables, "font");
         h1,
         h2,
         h3,
@@ -30,29 +29,22 @@ $variables in $themes_colors {
                 color: lighten(map-get($variables, "links"), 5%);
             }
         }
+
+        .mat-tab-label, .mat-tab-link {
+            color: inherit!important;
+        }
+
+
+    }
+
+    .#{$color}-background {
+        background: map-get($variables, "background");
+
     }
 
 
     .#{$color}-card {
         background: map-get($variables, "card");
-        color: map-get($variables, "font");
-
-        h1,
-        h2,
-        h3,
-        h4,
-        p,
-        span,
-        label {
-            color: map-get($variables, "font");
-        }
-
-        input,
-        select {
-            background: map-get($variables, "card");
-            color: map-get($variables, "font");
-            
-        }
     }
     
     .#{$color}-font {

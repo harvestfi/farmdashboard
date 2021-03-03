@@ -17,7 +17,7 @@
       <div #chart class="tvl-chart"></div>
     </div>
 
-    <mat-tab-group (selectedTabChange)="initChart($event)" *ngIf="data.type !== 'income'">
+    <mat-tab-group (selectedTabChange)="initChart($event)" *ngIf="data.type !== 'income'" color="red">
 
       <mat-tab label="TVL">
 
