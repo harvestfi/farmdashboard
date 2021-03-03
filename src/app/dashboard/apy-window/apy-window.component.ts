@@ -1,9 +1,9 @@
-import {Component, Input, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Utils} from '../../static/utils';
 import {StaticValues} from '../../static/static-values';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {NGXLogger} from 'ngx-logger';
-import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-apy-window',
@@ -88,7 +88,8 @@ export class ApyWindowComponent implements OnInit {
   }
 
   get poolEarnedLastWeek(): number {
-    return this.pricesCalculationService.lastHardWorks.get(this.poolName)?.weeklyProfit;
+    return this.pricesCalculationService.lastHardWorks.get(this.poolName)?.weeklyProfit * 0.7;
+    ;
   }
 
   get poolAvgTvl(): number {
