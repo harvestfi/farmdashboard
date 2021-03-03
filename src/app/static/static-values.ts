@@ -176,6 +176,7 @@ export class StaticValues {
     switch (name) {
       case 'CRV_STETH':
       case 'WETH':
+      case 'ZERO': // 1inch stubbing
         return 'ETH';
       case 'RENBTC':
       case 'CRVRENWBTC':

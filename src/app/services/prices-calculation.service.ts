@@ -256,6 +256,7 @@ export class PricesCalculationService {
     if (name === 'PS') {
       return vaultStats.tvl * StaticValues.lastPrice;
     } else if (vaultStats.lpStat) {
+      // console.log('tvl for ' + name);
       return this.calculateTvlForLp(vaultStats.lpStat);
     } else if (vaultStats.tvl) {
       const price = this.getPrice(name);
