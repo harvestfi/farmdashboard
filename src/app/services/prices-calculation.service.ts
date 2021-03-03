@@ -78,6 +78,9 @@ export class PricesCalculationService {
       const tvl = this.calculateTvl(vaultStats, vaultName);
       if (tvl) {
         this.tvls.set(vaultName, tvl);
+        if (vaultName === 'iPS') {
+          return;
+        }
         allTvls += tvl;
       }
     });

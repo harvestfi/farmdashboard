@@ -49,7 +49,7 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get farmStaked(): number {
-    return this.farmPsStaked + this.farmLpStaked + this.farmNewPsStaked;
+    return this.farmPsStaked + this.farmLpStaked;
   }
 
   get farmPsStaked(): number {
