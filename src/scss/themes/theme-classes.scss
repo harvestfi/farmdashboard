@@ -33,15 +33,12 @@ $variables in $themes_colors {
         .mat-tab-label, .mat-tab-link {
             color: inherit!important;
         }
-
-
     }
 
     .#{$color}-background {
         background: map-get($variables, "background");
 
     }
-
 
     .#{$color}-card {
         background: map-get($variables, "card");
