@@ -82,6 +82,8 @@ export class StaticValues {
     'SUSHI_SUSHI_ETH',
     'iPS',
     'ONEINCH_ETH_ONEINCH',
+    'UNI_WBTC_KLON',
+    'UNI_WBTC_KBTC',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -127,6 +129,8 @@ export class StaticValues {
     'MAMZN_UST',
     'MGOOGL_UST',
     'MTSLA_UST',
+    'UNI_WBTC_KLON',
+    'UNI_WBTC_KBTC',
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
@@ -350,6 +354,10 @@ export class StaticValues {
         return '/assets/icons/sushi-eth.png';
       case 'ONEINCH_ETH_ONEINCH':
         return '/assets/icons/1inch-eth-1inch.png';
+      case 'UNI_WBTC_KLON':
+        return '/assets/icons/klon-wbtc-klon.png';
+      case 'UNI_WBTC_KBTC':
+        return '/assets/icons/klon-wbtc-kbtc.png';
     }
   }
 }
