@@ -35,6 +35,10 @@ export class ViewTypeService {
     this.newEvent('theme-changed');
   }
 
+  public isDarkMode(): boolean {
+    return this.getThemeColor() === 'dark';
+  }
+
   newEvent(event): void {
     this.subject.next(event);
   }

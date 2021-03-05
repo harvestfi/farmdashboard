@@ -134,7 +134,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
     });
     this.ownersSeries.setData(lastOwnersData);
 
-    let title = 'Shared Price';
+    let title = 'Share Price';
     if (this.data.type === 'PS') {
       title = 'All supply';
     }
@@ -307,7 +307,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         data.push({
           time: h.time,
           position: 'inBar',
-          color: '#000000',
+          color: this.vt.isDarkMode() ? '#fafafa' : '#000000',
           shape: 'circle',
           size: 0,
           text: map.get(+h.time) + ''

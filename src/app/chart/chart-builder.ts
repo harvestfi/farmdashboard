@@ -75,7 +75,7 @@ export class ChartBuilder {
         data.push({
           time: h.time,
           position: 'inBar',
-          color: '#000000',
+          color: this.vt.isDarkMode() ? '#fafafa' : '#000000',
           shape: 'circle',
           size: 0,
           text: this.dataMaps[i].get(+h.time)?.toFixed(2)

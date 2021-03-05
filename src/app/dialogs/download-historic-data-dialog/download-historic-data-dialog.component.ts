@@ -11,7 +11,7 @@ import {environment} from '../../../environments/environment';
 export class DownloadHistoricDataDialogComponent implements OnInit {
   sortedVaults: string[];
   includeInactive = false;
-  apiEndpoint= "";
+  apiEndpoint = '';
 
   constructor() {
     this.sortedVaults = StaticValues.vaults;
