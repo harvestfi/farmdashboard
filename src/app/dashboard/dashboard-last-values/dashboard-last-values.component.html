@@ -19,19 +19,26 @@
       <div class="middle-top">
 
         <div class="left-column-middle left-border-box">
-          <div class="value-card">
-            <div class="pointer">
+          <div #tooltip="matTooltip" (click)="openGasPriceDialog()"
+              class="value-card pointer"
+              matTooltipClass="tooltip-spaced"
+              matTooltip="Gas fees history">
+            <div>
               <div class="value-middle">
                 <img class="icon" src="assets/icons/gas.svg"/>
                 <text class="small-value-caption">Gas price</text>
               </div>
-
               <div class="value-number-middle">
                 <text class="">{{lastGasF | number: '1.0-0'}}</text>
                 gw
               </div>
             </div>
           </div>
+          <app-custom-modal #gasFeeModal>
+            <ng-template >
+              <app-gas-dialog [data]="{type: 'income'}"></app-gas-dialog>
+            </ng-template>
+          </app-custom-modal>
         </div>
 
         <div class="middle-column-middle left-border-box">
