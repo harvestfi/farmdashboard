@@ -12,7 +12,9 @@
       </div>
     </div>
 
-    <div class="value-card gas" [class]="vt.getThemeColor() + '-card'">
+    <div class="value-card gas" [class]="vt.getThemeColor() + '-card'"
+         #tooltip="matTooltip" (click)="openGasPriceDialog()"
+         matTooltip="Gas fees history">
       <div class="pointer">
         <div class="value-middle">
           <img class="icon" src="assets/icons/gas.svg"/>
@@ -24,6 +26,11 @@
           gw
         </div>
       </div>
+      <app-custom-modal #gasFeeModal>
+        <ng-template >
+          <app-gas-dialog [data]="{type: 'income'}"></app-gas-dialog>
+        </ng-template>
+      </app-custom-modal>
     </div>
 
     <div class="value-card btc" [class]="vt.getThemeColor() + '-card'">
@@ -99,7 +106,7 @@
           </app-custom-modal>
 
           <div #tooltip="matTooltip"
-          (click)="openPsIncomeDialog()" 
+          (click)="openPsIncomeDialog()"
           class="value-card pointer ps-income"
           [class]="vt.getThemeColor() + '-card'"
           matTooltip="Income from strategies in Profit Share pool, based on all history">
@@ -120,7 +127,7 @@
      </app-custom-modal>
 
      <div #tooltip="matTooltip"
-           (click)="openTvlDialog()" 
+           (click)="openTvlDialog()"
            class="value-card pointer tvl"
            [class]="vt.getThemeColor() + '-card'"
            matTooltip="Click to open history chart">
@@ -139,7 +146,7 @@
       </app-custom-modal>
 
 
-      <div #tooltip="matTooltip" 
+      <div #tooltip="matTooltip"
       class="value-card farm-holders"
       [class]="vt.getThemeColor() + '-card'"
       matTooltip="Accounts with positive (more than 10$) FARM balance">
@@ -152,7 +159,7 @@
      </div>
    </div>
 
-   
+
  </div>
 
  <div #tooltip="matTooltip" (click)="openFarmBuybacksDialog()"
@@ -196,7 +203,7 @@
           </app-custom-modal>
 
           <div #tooltip="matTooltip"
-               (click)="openTotalUsersDialog()" 
+               (click)="openTotalUsersDialog()"
                class="value-card pointer total-users"
                [class]="vt.getThemeColor() + '-card'"
                matTooltip="Total unique accounts interacted with the project">
@@ -213,10 +220,10 @@
             <ng-template >
                 <app-total-users-dialog [data]="{title: 'Total users history'}"></app-total-users-dialog>
             </ng-template>
-          </app-custom-modal> 
+          </app-custom-modal>
 
 
-          <div #tooltip="matTooltip" 
+          <div #tooltip="matTooltip"
           class="value-card active-pools"
           [class]="vt.getThemeColor() + '-card'"
           matTooltip="Accounts staked funds in pools with balance more than 10$">
