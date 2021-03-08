@@ -23,7 +23,7 @@ class CheckedValue {
 @Component({
   selector: 'app-history-page',
   templateUrl: './history-page.component.html',
-  styleUrls: ['./history-page.component.css']
+  styleUrls: ['./history-page.component.scss']
 })
 export class HistoryPageComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
@@ -120,7 +120,7 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
     chartBuilder.initVariables(1);
     this.balanceHistory.forEach(el => chartBuilder.addInData(0, el[0], el[1]));
     this.handleData(chartBuilder, [
-      ['', 'right', '#282828']
+      ['', 'right', '#fc8f34']
     ]);
   }
 
