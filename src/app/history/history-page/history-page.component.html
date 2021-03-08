@@ -29,8 +29,19 @@
         <div class="pointer" (click)="openProfitHistoryDialog()">
           🤑 Rewards: {{rewardSum | number: '1.0-0'}} FARM ({{rewardSumUsd | number: '1.0-0'}}$)
         </div>
+        <app-custom-modal #profitHistoryDialog>
+          <ng-template>
+            <app-simple-chart-dialog 
+            [data]="{
+              title: 'Rewards History',
+              data: [rewardsHistory, balanceHistory], 
+              config: [['Profit FARM', 'right', '#0085ff'],
+                       ['Balance USD', '', '#d7c781']]}">
+          </app-simple-chart-dialog>
+          </ng-template>
+        </app-custom-modal>
       </div>
-  
+
       <div *ngIf="address && fullData?.length != 0" id="empty1">
         <div class="stat-2 left-border-box styled-card title-card">
           Show empty pools
@@ -53,12 +64,23 @@
       <div *ngFor="let c of vaults">
         <div *ngIf="showEmptyPools || lastStaked.get(c.value).ownerBalanceUsd > 0.01" id="vault-{{c.value}}"
              class="stat-2 left-border-box styled-card title-card">
-          <div (click)="openHistoryDialog(c.value)" class="pointer">
+          <div (click)="openHistoryDialog()" class="pointer">
             <img alt="?" class="tvl-img" src="{{getImgUrl(c.value)}}"/>
             {{prettyVaultName(c.value)}}: {{lastStaked.get(c.value).ownerBalanceUsd | number: '1.0-2'}}$
           </div>
           <mat-checkbox class="checkbox" (change)="sortValues()" [(ngModel)]="c.checked"
                         name="{{c.value}}"></mat-checkbox>
+          <app-custom-modal #historyDialog>
+            <ng-template>
+              <app-simple-chart-dialog 
+              [data]="{
+                title: c.value + ' History',
+                data: [balanceHistoryBySource.get(c.value)], 
+                config: [[c.value + ' Balance $', 'right', '#0085ff']]
+              }">
+            </app-simple-chart-dialog>
+            </ng-template>
+          </app-custom-modal>
         </div>
       </div>
   
