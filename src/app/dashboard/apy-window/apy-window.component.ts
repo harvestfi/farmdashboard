@@ -89,7 +89,6 @@ export class ApyWindowComponent implements OnInit {
 
   get poolEarnedLastWeek(): number {
     return this.pricesCalculationService.lastHardWorks.get(this.poolName)?.weeklyProfit * 0.7;
-    ;
   }
 
   get poolAvgTvl(): number {

@@ -34,11 +34,11 @@ export class ViewTypeService {
     UserSettings.setColor(color);
     this.newEvent('theme-changed');
   }
-  
+
   public isDarkMode(): boolean {
     return this.getThemeColor() === 'dark';
   }
-  
+
   public newEvent(event): void {
     this.subject.next(event);
   }
