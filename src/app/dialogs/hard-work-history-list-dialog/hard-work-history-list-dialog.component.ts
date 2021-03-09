@@ -16,7 +16,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   lowestBlockDate = 999999999999;
   vaultFilter = 'all';
   disabled  = false;
-  ready: boolean = false;
+  ready = false;
   constructor(
     private hwListHistory: HttpService,
     public vt: ViewTypeService,
