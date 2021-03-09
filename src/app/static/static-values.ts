@@ -84,6 +84,10 @@ export class StaticValues {
     'ONEINCH_ETH_ONEINCH',
     'UNI_WBTC_KLON',
     'UNI_WBTC_KBTC',
+    'CRV_LINK',
+    'MNFLX_UST',
+    'MTWTR_UST',
+    'SUSHI_ETH_UST',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -102,6 +106,7 @@ export class StaticValues {
     'CRV_STETH',
     'CRV_GUSD',
     'CRV_AAVE',
+    'CRV_LINK',
   ];
 
   public static strategiesListSingleCoins: string[] = [
@@ -131,6 +136,8 @@ export class StaticValues {
     'MTSLA_UST',
     'UNI_WBTC_KLON',
     'UNI_WBTC_KBTC',
+    'MNFLX_UST',
+    'MTWTR_UST',
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
@@ -139,6 +146,7 @@ export class StaticValues {
     'SUSHI_ETH_USDC',
     'SUSHI_ETH_USDT',
     'SUSHI_ETH_WBTC',
+    'SUSHI_ETH_UST',
     'SUSHI_MIC_USDT',
     'SUSHI_MIS_USDT',
     'ONEINCH_ETH_DAI',
@@ -358,6 +366,14 @@ export class StaticValues {
         return '/assets/icons/klon-wbtc-klon.png';
       case 'UNI_WBTC_KBTC':
         return '/assets/icons/klon-wbtc-kbtc.png';
+      case 'CRV_LINK':
+        return '/assets/icons/curve-link.png';
+      case 'MNFLX_UST':
+        return '/assets/icons/mirror-nflx.png';
+      case 'MTWTR_UST':
+        return '/assets/icons/mirror-twtr.png';
+      case 'SUSHI_ETH_UST':
+        return '/assets/icons/sushi-ust.png';
     }
   }
 }
