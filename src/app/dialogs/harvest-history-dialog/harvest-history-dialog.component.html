@@ -8,30 +8,21 @@
                 Pools
             </div>
 
-
             <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
                 <option [value]="'all'">All</option>
                 <option *ngFor="let name of tvlNames" [value]="name">{{name}}</option>
             </select>
 
             <input #harvestDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="number" min="0">
-
         </div>
 
         <app-harvest-flow-tab [dtos]="dtos" [minAmount]="+harvestDtoFilter.value" [vaultFilter]="vaultFilter"
             [showFullDate]=true>
         </app-harvest-flow-tab>
         <div class="button-container">
-            <button class="show-even-more" (click)="getOlderTransactions()" [disabled]="disabled" [ngStyle]="{
-                                'pointer-events': disabled ? 'none' : 'auto',
-                                'cursor': disabled ? 'wait' : 'pointer',
-                                'background-color': disabled ? '#eebf65' : '#eebf65'
-                        }">{{disabled ? 'please wait' : 'load more'}}</button>
+            <button class="show-even-more" (click)="getOlderTransactions()" [disabled]="disabled" >
+                {{disabled ? 'please wait' : 'load more'}}
+            </button>
         </div>
-
-
-
     </div>
-
-
 </div>
