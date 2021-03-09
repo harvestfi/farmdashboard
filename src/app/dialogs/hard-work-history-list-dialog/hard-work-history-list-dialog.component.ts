@@ -16,6 +16,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   lowestBlockDate = 999999999999;
   vaultFilter = 'all';
   disabled  = false;
+  ready: boolean = false;
   constructor(
     private hwListHistory: HttpService,
     public vt: ViewTypeService,
@@ -24,7 +25,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
-    this.hwListHistory.getHardWorkHistoryData().subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
+    this.hwListHistory.getHardWorkHistoryData().subscribe(data => this.addInArray(data)).add(() => this.ready = true);
   }
 
   get vaultNames(): string[] {
