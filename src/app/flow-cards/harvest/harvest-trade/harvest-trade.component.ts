@@ -6,7 +6,7 @@ import {Utils} from '../../../static/utils';
 @Component({
   selector: 'app-harvest-trade',
   templateUrl: './harvest-trade.component.html',
-  styleUrls: ['./harvest-trade.component.css']
+  styleUrls: ['./harvest-trade.component.scss']
 })
 export class HarvestTradeComponent implements OnInit {
 
