@@ -19,7 +19,6 @@ export class DashboardLastValuesComponent implements OnInit {
   @ViewChild('farmBuybacksModal') private farmBuybacksModal: CustomModalComponent;
   @ViewChild('savedFeesModal') private savedFeesModal: CustomModalComponent;
   @ViewChild('totalUsersModal') private totalUsersModal: CustomModalComponent;
-  @ViewChild('gasPriceModal') private gasPriceModal: CustomModalComponent;
   constructor(public dialog: MatDialog,
               public vt: ViewTypeService,
               private api: HttpService,
@@ -126,9 +125,5 @@ export class DashboardLastValuesComponent implements OnInit {
 
   openTotalUsersDialog(): void {
     this.totalUsersModal.open();
-  }
-
-  openGasPriceDialog(): void {
-    this.gasPriceModal.open();
   }
 }
