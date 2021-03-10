@@ -39,7 +39,7 @@ export class ViewTypeService {
     return this.getThemeColor() === 'dark';
   }
 
-  newEvent(event): void {
+  public newEvent(event): void {
     this.subject.next(event);
   }
 
