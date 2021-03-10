@@ -1,11 +1,11 @@
-<div *ngIf="ready === true; then readyBlock else loadingBlock" id="load"></div>
+<div *ngIf="ready === true; then readyBlock else loadingBlock" id="load" [class]="vt.getThemeColor() + '-card'"></div>
 
 <ng-template #loadingBlock>
   <app-loading-spinner></app-loading-spinner>
 </ng-template>
 
 <ng-template #readyBlock>
-  <div class="dialog-card">
+  <div class="dialog-card" [class]="vt.getThemeColor() + '-card'">
     <div class="title">
       {{data.title}}
     </div>

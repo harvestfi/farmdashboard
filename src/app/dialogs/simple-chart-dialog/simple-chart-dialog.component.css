@@ -1,24 +1,17 @@
 .title {
   font-size: 1.5em;
-  margin: 10px;
+  padding: 10px;
   font-weight: bolder;
   text-align: center;
 }
 
 .dialog-card {
-  background: #fffce6;
-}
-
-::ng-deep.mat-dialog-container {
-  overflow: hidden;
-  border-radius: 3px;
-  padding: 10px !important;
-  background: #fffce6;
+  width: 100vw;
+  max-width: 700px;
 }
 
 .chart {
   min-height: 70vh;
-  /*width: 800px;*/
 }
 
 

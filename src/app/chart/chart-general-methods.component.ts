@@ -12,7 +12,7 @@ export abstract class ChartGeneralMethodsComponent implements OnInit {
     public vt: ViewTypeService = new ViewTypeService();
 
     ngOnInit(): void{
-        this.vt.events$.forEach(event => {
+        this.vt.events$.subscribe(event => {
             if (event === 'theme-changed'){
                 this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
             }
