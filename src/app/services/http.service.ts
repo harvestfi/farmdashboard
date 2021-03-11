@@ -109,6 +109,14 @@ export class HttpService {
     );
   }
 
+  getAllHistoryRewards(start?: Date, end?: Date): Observable<RewardDto[]> {
+    start = start || new Date(0);
+    end = end || (new Date());
+    return this.http.get<RewardDto[]>(`${environment.apiEndpoint}/api/transactions/history/reward/?start=${(start.getTime()/1000).toFixed(0)}&end=${(end.getTime()/1000).toFixed(0)}`).pipe(
+        catchError(this.snackService.handleError<RewardDto[]>(`history reward `))
+    );
+  }
+
   getAddressHistoryHarvest(address: string): Observable<HarvestDto[]> {
     return this.http.get<HarvestDto[]>(environment.apiEndpoint + '/history/harvest/' + address).pipe(
         catchError(this.snackService.handleError<HarvestDto[]>(`history address harvest `))
