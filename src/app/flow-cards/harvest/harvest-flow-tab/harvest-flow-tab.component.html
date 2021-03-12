@@ -5,4 +5,8 @@
       <app-harvest-trade [dto]='dto'  [fullDate]='showFullDate'></app-harvest-trade>
   </div>
 
+  <div *ngIf="!dtos.length" class="empty-vault">
+    🏜️ Loading... 🏜️
+  </div>
+
 </perfect-scrollbar>

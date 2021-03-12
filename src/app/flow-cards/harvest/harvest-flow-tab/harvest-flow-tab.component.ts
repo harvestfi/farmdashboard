@@ -1,13 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HarvestDto } from '../../../models/harvest-dto';
 import { ViewTypeService } from '../../../services/view-type.service';
-import { StaticValues } from '../../../static/static-values';
-import { Utils } from '../../../static/utils';
+
 
 @Component({
   selector: 'app-harvest-flow-tab',
   templateUrl: './harvest-flow-tab.component.html',
-  styleUrls: ['./harvest-flow-tab.component.css']
+  styleUrls: ['./harvest-flow-tab.component.scss']
 })
 export class HarvestFlowTabComponent{
 

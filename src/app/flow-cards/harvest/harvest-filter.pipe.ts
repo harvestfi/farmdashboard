@@ -14,10 +14,7 @@ export class HarvestFilterPipe implements PipeTransform {
     }
     this.tmp = [];
     const arr = dtos.filter(dto => dto.usdAmount > minUsdAmount && (!vault || vault === 'all' || dto.vault === vault));
-    for (const el of arr) {
-      this.tmp.push(el);
-    }
-    return this.tmp;
+    return arr;
   }
 
 }
