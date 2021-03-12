@@ -105,7 +105,7 @@ export class StaticValues {
     'CRV_UST',
     'CRV_STETH',
     'CRV_GUSD',
-    'CRV_AAVE',
+    // 'CRV_AAVE',
     'CRV_LINK',
   ];
 
@@ -118,8 +118,8 @@ export class StaticValues {
     'USDT',
     'DAI',
     'TUSD',
-    'ESD',
-    'DSD',
+    // 'ESD',
+    // 'DSD',
   ];
 
   public static strategiesListUniLpPools: string[] = [
@@ -147,13 +147,13 @@ export class StaticValues {
     'SUSHI_ETH_USDT',
     'SUSHI_ETH_WBTC',
     'SUSHI_ETH_UST',
-    'SUSHI_MIC_USDT',
-    'SUSHI_MIS_USDT',
+    // 'SUSHI_MIC_USDT',
+    // 'SUSHI_MIS_USDT',
     'ONEINCH_ETH_DAI',
     'ONEINCH_ETH_USDC',
     'ONEINCH_ETH_USDT',
     'ONEINCH_ETH_WBTC',
-    'ONEINCH_ETH_ONEINCH',
+    // 'ONEINCH_ETH_ONEINCH',
   ];
 
   public static farmPools: string[] = [
