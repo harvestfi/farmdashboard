@@ -1,0 +1,19 @@
+@import "../../../scss/themes/theme-mixins.scss";
+
+.sortable-table-component {
+    padding: 10px;
+    box-sizing: border-box;
+
+
+    table {
+       thead td {
+           padding: 10px;
+           box-sizing: border-box;
+       }
+        @include isDarkMode() {
+            thead {
+                background: #3c3c3c;
+            }
+        }
+    }
+}

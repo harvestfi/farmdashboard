@@ -10,6 +10,7 @@ import {ViewTypeService} from '../../services/view-type.service';
 export class StrategyListComponent implements OnInit {
 
   constructor(public vt: ViewTypeService) {
+    console.log(this.vaultsListCrv);
   }
 
   get vaultsList(): string[] {
