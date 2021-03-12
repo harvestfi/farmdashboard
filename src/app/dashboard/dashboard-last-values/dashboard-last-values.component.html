@@ -14,7 +14,7 @@
 
     <div class="value-card gas" [class]="vt.getThemeColor() + '-card'"
          #tooltip="matTooltip" (click)="openGasPriceDialog()"
-         matTooltip="Gas fees history">
+         matTooltip="Click to open history chart">
       <div class="pointer">
         <div class="value-middle">
           <img class="icon" src="assets/icons/gas.svg"/>
@@ -26,7 +26,7 @@
           gw
         </div>
       </div>
-      <app-custom-modal #gasFeeModal>
+      <app-custom-modal #gasPriceModal>
         <ng-template >
           <app-gas-dialog [data]="{type: 'income'}"></app-gas-dialog>
         </ng-template>
