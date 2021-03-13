@@ -75,6 +75,7 @@ import { FlowCardsViewComponent } from './flow-cards/flow-cards-view/flow-cards-
 import { LastPricesListComponent } from './dashboard/last-prices-list/last-prices-list.component';
 import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user-balances-dialog.component';
 import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
+import {RewardsHistoryDialogComponent} from "./dialogs/rewards-history-dialog/rewards-history-dialog.component";
 
 declare var require: any;
 
@@ -115,6 +116,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TotalUsersDialogComponent,
     UniHistoryDialogComponent,
     RewardsDialogComponent,
+    RewardsHistoryDialogComponent,
     HarvestHistoryDialogComponent,
     SimpleChartDialogComponent,
     PriceChartComponent,
