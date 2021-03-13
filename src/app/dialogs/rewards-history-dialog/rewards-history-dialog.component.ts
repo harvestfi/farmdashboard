@@ -11,6 +11,7 @@ import {RewardDto} from "../../models/reward-dto";
 })
 
 export class RewardsHistoryDialogComponent implements AfterViewInit {
+    @Input() data;
     rewards: Array<RewardDto> = [];
     ready = false;
     disabled = false;
@@ -22,25 +23,29 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-      const startDate = new Date();
-      startDate.setDate(startDate.getDate() - 5); // start from 5 days ago
-      this.loadRewardsHistory(startDate, new Date());
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - 5); // start from 5 days ago
+        this.loadRewardsHistory(startDate, new Date());
     }
 
     private loadRewardsHistory(startDate: Date, endDate: Date): void {
         // call service api here for data that is about rewards history?!?!!?
         this.httpService.getAllHistoryRewards(startDate, endDate).subscribe((data) => {
-            this.rewards.unshift(...(data.map(RewardDto.fillBlockDateAdopted)));
+            console.log(data);
+            this.rewards.push(...(data.map(RewardDto.fillBlockDateAdopted).reverse()));
             this.ready = true;
             this.disabled = false;
+            this.cdRef.detectChanges();
         });
     }
 
     private loadMoreRewardsHistory(): void {
-      this.disabled = true;
-      const endDate = new Date(this.rewards[0]?.blockDate);
-      const startDate = new Date(endDate.getTime());
-      startDate.setDate(startDate.getDate()-5);
-      this.loadRewardsHistory(endDate, endDate);
+        this.disabled = true;
+        const endDate = new Date(this.rewards[this.rewards.length-1]?.blockDate*1000);
+        endDate.setTime(endDate.getTime()-1000);
+        const startDate = new Date(endDate.getTime());
+        startDate.setDate(startDate.getDate() - 5);
+        console.log(`${startDate} , ${endDate}`);
+        this.loadRewardsHistory(startDate, endDate);
     }
 }

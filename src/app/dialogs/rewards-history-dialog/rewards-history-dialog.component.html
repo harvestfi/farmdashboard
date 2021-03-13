@@ -7,33 +7,31 @@
 <ng-template #readyBlock>
     <div class="dialog-card">
         <div class="title">Rewards History</div>
-        <div>
-            <div class="trade-row" *ngFor="let reward of rewards.reverse()">
-                {{reward.vault}},
-                {{reward.reward | number: '1.0-0'}},
-                {{reward.blockDateAdopted | date}},
+        <div class="headers">
+            <div class="header-field"></div>
+            <div class="header-field">Vault</div>
+            <div class="header-field">Reward</div>
+            <div class="header-field">APY</div>
+            <div class="header-field">Weekly APY</div>
+            <div class="header-field">Date</div>
+        </div>
+        <div class="scroller">
+            <div class="values" *ngFor="let reward of rewards">
+                <div class="value-field"></div>
+                <div class="value-field">{{reward.vault}}</div>
+                <div class="value-field">{{reward.reward | number: '1.8-8'}}</div>
+                <div class="value-field">{{reward.apy | number: '1.2-2'}}%</div>
+                <div class="value-field">{{reward.weeklyApy | number: '1.2-2'}}%</div>
+                <div class="value-field">{{reward.blockDateAdopted | date: "yyyy-MM-dd'T'HH:mm:ss"}}</div>
             </div>
         </div>
-        <button class="show-even-more" (click)="loadMoreRewardsHistory()" [disabled]="disabled" [ngStyle]="{
-            'pointer-events': disabled ? 'none' : 'auto',
-            'cursor': disabled ? 'wait' : 'pointer',
-            'background-color': disabled ? '#eebf65' : '#eebf65'
-        }">{{disabled ? 'please wait' : 'load more'}}</button>
+        <div class="button-container">
+            <button class="show-even-more" (click)="loadMoreRewardsHistory()" [disabled]="disabled" [ngStyle]="{
+                'pointer-events': disabled ? 'none' : 'auto',
+                'cursor': disabled ? 'wait' : 'pointer',
+                'background-color': disabled ? '#eebf65' : '#eebf65'
+            }">{{disabled ? 'please wait' : 'load more'}}</button>
+        </div>
     </div>
 
 </ng-template>
-
-
-<!--<div class="uni-tx-hist">-->
-<!--  <h1 class="title">Uniswap Transaction History</h1>-->
-<!--  <input class="filter-input" #uniswapDtoFilter placeholder="More than..." type="text">-->
-<!--  <app-flow-tab [dtos]="dtos" [minAmount]="+uniswapDtoFilter.value" [showFullDate]=true></app-flow-tab>-->
-<!--  <div class="button-container">-->
-<!--    <button class="show-even-more" (click)="getOlderTransactions()" [disabled]="disabled" [ngStyle]="{-->
-<!--                                'pointer-events': disabled ? 'none' : 'auto',-->
-<!--                                'cursor': disabled ? 'wait' : 'pointer',-->
-<!--                                'background-color': disabled ? '#eebf65' : '#eebf65'-->
-<!--                        }">{{disabled ? 'please wait' : 'load more'}}</button>-->
-<!--  </div>-->
-
-<!--</div>-->
