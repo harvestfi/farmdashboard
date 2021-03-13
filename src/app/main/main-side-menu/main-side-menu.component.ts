@@ -27,7 +27,7 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
 })
 export class MainSideMenuComponent {
     showSideMenu = false;
-    isDarkTheme = UserSettings.getTheme() === 'scoreboard' ? true : false;
+    isDarkTheme = UserSettings.getColor() === 'dark' ? true : false;
     @ViewChild('allStatsDialog') private allStatsDialog: CustomModalComponent;
     @ViewChild('tvlDialog') private tvlDialog: CustomModalComponent;
     @ViewChild('incomeDialog') private incomeDialog: CustomModalComponent;
@@ -36,8 +36,9 @@ export class MainSideMenuComponent {
     @ViewChild('farmBuybackDialog') private farmBuybackDialog: CustomModalComponent;
     @ViewChild('savedFeesDialog') private savedFeesDialog: CustomModalComponent;
     @ViewChild('userBalancesDialog') private userBalancesDialog: CustomModalComponent;
+    @ViewChild('downloadHistoricDataDialog') private downloadHistoricDataDialog: CustomModalComponent;
 
-    constructor(private viewTypeService: ViewTypeService){}
+    constructor(public viewTypeService: ViewTypeService){}
     toggleMenu(): void {
         this.showSideMenu = !this.showSideMenu;
     }
@@ -83,7 +84,16 @@ export class MainSideMenuComponent {
       this.toggleMenu();
     }
 
+    openDownloadHistoricDataDialog(): void {
+        this.downloadHistoricDataDialog.open();
+        this.toggleMenu();
+    }
+
     toggleTheme(): void {
-      this.viewTypeService.toggleTheme();
+        if (this.viewTypeService.getThemeColor() === 'dark') {
+            this.viewTypeService.setThemeColor('light');
+            return;
+        }
+        this.viewTypeService.setThemeColor('dark');
     }
 }

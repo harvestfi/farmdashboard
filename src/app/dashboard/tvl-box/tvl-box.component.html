@@ -23,7 +23,7 @@
 
     <div #tooltip="matTooltip"
          (click)="openTvlDialog()"
-         [ngStyle]="{'color': tvlValueGradient(tvlName)}" class="left-border-box tvl-value pointer" matTooltip="
+         class="left-border-box tvl-value pointer" matTooltip="
            TVL: {{tvls.get(tvlName) | number}}$ 
            Click to open TVL history chart"
          matTooltipClass="tooltip-spaced">

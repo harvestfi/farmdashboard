@@ -9,7 +9,7 @@
     height: -webkit-max-content;
     height: -moz-max-content;
     height: max-content;
-    ;
+    border: 1px solid #7e7e7e;
 }
 
 .custom-modal:hover {

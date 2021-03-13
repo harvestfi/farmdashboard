@@ -4,14 +4,14 @@
     <div class="row strategies-row-first">
 
       <div class="left-border-box first-list">
-        <div class="list-card">
+        <div class="list-card" [class]="vt.getThemeColor() + '-card'">
           <app-tvl-box [name]="'Coins'" [tvlName]="null"></app-tvl-box>
           <app-tvl-box *ngFor="let vault of vaultsListCrypto" [tvlName]="vault"></app-tvl-box>
         </div>
       </div>
 
       <div class="left-border-box second-list">
-        <div class="list-card">
+        <div class="list-card" [class]="vt.getThemeColor() + '-card'">
           <app-tvl-box [name]="'Curve'" [tvlName]="null"></app-tvl-box>
           <app-tvl-box *ngFor="let vault of vaultsListCrv" [tvlName]="vault"></app-tvl-box>
         </div>
@@ -24,14 +24,14 @@
     <div class="row strategies-row-second">
 
       <div class="left-border-box third-list">
-        <div class="list-card">
+        <div class="list-card" [class]="vt.getThemeColor() + '-card'">
           <app-tvl-box [name]="'Non Uni LPs'" [tvlName]="null"></app-tvl-box>
           <app-tvl-box *ngFor="let vault of vaultsListNonUniLpPools" [tvlName]="vault"></app-tvl-box>
         </div>
       </div>
 
       <div class="left-border-box fourth-list">
-        <div class="list-card">
+        <div class="list-card" [class]="vt.getThemeColor() + '-card'">
           <app-tvl-box [name]="'Uniswap LPs'" [tvlName]="null"></app-tvl-box>
           <app-tvl-box *ngFor="let vault of vaultsListUniLpPools" [tvlName]="vault"></app-tvl-box>
         </div>

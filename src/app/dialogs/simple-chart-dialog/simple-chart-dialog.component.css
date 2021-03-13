@@ -1,25 +1,17 @@
 .title {
   font-size: 1.5em;
-  margin: 10px;
-  color: black;
+  padding: 10px;
   font-weight: bolder;
   text-align: center;
 }
 
 .dialog-card {
-  background: #fffce6;
-}
-
-::ng-deep.mat-dialog-container {
-  overflow: hidden;
-  border-radius: 3px;
-  padding: 10px !important;
-  background: #fffce6;
+  width: 100vw;
+  max-width: 700px;
 }
 
 .chart {
   min-height: 70vh;
-  /*width: 800px;*/
 }
 
 
@@ -29,30 +21,5 @@
     margin: 5px;
   }
 
-  ::ng-deep.mat-dialog-container {
-    border-radius: 1px;
-    padding: 5px !important;
-  }
 }
 
-
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label-active {
-  color: black !important;
-  background-color: transparent !important;
-}
-
-::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-label {
-  color: black !important;
-  background-color: transparent !important;
-}
-
-::ng-deep .mat-tab-nav-bar {
-  color: black !important;
-  background-color: transparent !important;
-}
-
-/*@media screen and (max-width: 600px) {*/
-/*  .chart {*/
-/*    width: 400px;*/
-/*  }*/
-/*}*/

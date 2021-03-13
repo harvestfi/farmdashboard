@@ -7,13 +7,13 @@
   </div>
 
   <div *ngIf="showChart === 'GRAIN'" id="grain" class="grain-chart left-border-box">
-    <div class="price-card">
+    <div class="price-card" [class]="vt.getThemeColor() + '-card'">
       <app-grain-chart></app-grain-chart>
     </div>
   </div>
 
   <div *ngIf="showChart === 'FARM'" id="farm" class="farm-chart left-border-box">
-    <div class="price-card">
+    <div class="price-card" [class]="vt.getThemeColor() + '-card'">
       <app-farm-chart></app-farm-chart>
     </div>
   </div>

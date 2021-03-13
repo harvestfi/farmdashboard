@@ -4,9 +4,6 @@
   justify-content: center;
 }
 
-.main-row, .column, .row, footer, .sidebar-container {
-  background: #bce3e2;
-}
 
 .column {
   float: left;
@@ -38,7 +35,6 @@
 .button-menu {
   font-size: 2em;
   margin: 5px;
-  color: black;
 }
 
 .menu-content {

@@ -1,17 +1,17 @@
-<div class="row footer-row">
+<div id="main-footer-component" class="row footer-row">
   <div class="caption gh left-border-box">
     <img alt="?" class="gh-img" src="/assets/github.svg"/>
-    <a href="https://github.com/belbix/farmdashboard">Github</a>
+    <a [class]="vt.getThemeColor() + '-font'" class="footer-link" href="https://github.com/belbix/farmdashboard">Github</a>
   </div>
 
   <div class="caption tg left-border-box">
     <img alt="?" class="tg-img" src="/assets/Telegram_logo.svg"/>
-    <a href="https://t.me/farmdashboard_bot">Telegram Bot</a>
+    <a [class]="vt.getThemeColor() + '-font'" class="footer-link" href="https://t.me/farmdashboard_bot">Telegram Bot</a>
   </div>
 
   <div class="caption alchemy left-border-box">
     <img alt="Alchemy Supercharged" class="alchemy-img" src="/assets/alchemy2.png"/>
-    <a class="alchemy-link" href="https://dashboard.alchemyapi.io/signup?referral=7a5593cb-f0cb-4fe2-b050-fba5f986f883">
+    <a [class]="vt.getThemeColor() + '-font'" class="footer-link" href="https://dashboard.alchemyapi.io/signup?referral=7a5593cb-f0cb-4fe2-b050-fba5f986f883">
       Alchemy
     </a>
   </div>

@@ -1,0 +1,183 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+    background-color: #2F2C2C!important;
+    min-height: 100% !important;
+  }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
+  
+  .left-border-box {
+    float: left;
+    box-sizing: border-box;
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  .styled-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  
+  .mat-global {
+    background-color: #fffce6;
+    color: black;
+  }
+  
+  .mat-global-reverse {
+    background-color: #bce3e2;
+    color: black;
+  }
+  
+  .snack-bar {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: #fffce6;
+  }
+  
+  .snack-bar-dark {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: #d9d9d9;
+  }
+  
+  .footer {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*!*height: 100%;*!*/
+    /*margin: 0 auto;*/
+    /*margin-bottom: 0;*/
+    /*text-align:center;*/
+    /*!*display: flex;*!*/
+  }
+  
+  /*span {*/
+  /*  color: #ffffff;*/
+  /*  !*align-self: flex-end;*!*/
+  /*}*/
+  
+  .flex-container { /* OLD - iOS 6-, Safari 3.1-6, BB7 */ /* TWEENER - IE 10 */ /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex; /* NEW, Spec - Firefox, Chrome, Opera */
+  
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  /*html, body {*/
+  /*  height: 100%;*/
+  /*}*/
+  
+  /*body {*/
+  /*  margin: 0;*/
+  /*  font-family: Roboto, "Helvetica Neue", sans-serif;*/
+  /*}*/
+  
+  
+  div.inline {
+    float: left;
+  }
+  
+  .clearBoth {
+    clear: both;
+  }
+  
+  .caption {
+    /*float:left;*/
+    /*width: 50%;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+  }
+  
+  .caption-td {
+    height: 130px;
+  }
+  
+  .caption-td-middle {
+    height: 100px;
+  }
+  
+  .caption-font {
+    color: #ffffff;
+    font-size: 7em;
+  }
+  
+  .caption-font-middle {
+    /*color: #ffffff;*/
+    font-size: 5em;
+  }
+  
+  .caption-font-small {
+    color: #ffffff;
+    font-size: 2em;
+  }
+  
+  
+  table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #cdcdcd;
+    border-radius: 10px;
+  }
+  
+  .scroller {
+    white-space: pre-line;
+    height: inherit;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .flow-tab-tr {
+    cursor: pointer;
+  }
+  
+  .flow-tab-table, .flow-tab-tr, .flow-tab-td {
+    border-spacing: 4px;
+    border-collapse: separate;
+    /*font-size: 1.1em;*/
+  }
+  
+  .flow-tab-td {
+    /*vertical-align: top;*/
+    vertical-align:middle;
+  }
+  
+  .tooltip-spaced {
+    white-space: pre-line;
+  }
+  
+  .pointer {
+    cursor: pointer;
+  }
+  

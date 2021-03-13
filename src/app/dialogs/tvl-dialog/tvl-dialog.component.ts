@@ -8,7 +8,9 @@ import {ChartsOptionsLight} from '../../chart/charts-options-light';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {HttpService} from '../../services/http.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
+import {environment} from '../../../environments/environment';
 import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.component';
+
 @Component({
   selector: 'app-tvl-dialog',
   templateUrl: './tvl-dialog.component.html',
@@ -63,11 +65,11 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
     const options = LightweightChartsOptions.getOptions();
     if (this.data.type === 'income') {
       this.chart = createChart(this.chartEl.nativeElement, LightweightChartsOptions.getOptions());
-      this.chart.applyOptions(ChartsOptionsLight.getOptions());
+      this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
     } else {
       this.chart = createChart(this.chartEl.nativeElement, options);
       if (this.vt.isNonScoreboard()) {
-        this.chart.applyOptions(ChartsOptionsLight.getOptions());
+        this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
       }
     }
   }
@@ -75,7 +77,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
   initChart(tabChangeEvent: MatTabChangeEvent): void {
     if (tabChangeEvent.index === 1 && !this.chart) {
       this.chart = createChart(this.chartEl.nativeElement, LightweightChartsOptions.getOptions());
-      this.chart.applyOptions(ChartsOptionsLight.getOptions());
+      this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
       this.loadShareData();
     }
   }
@@ -132,7 +134,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
     });
     this.ownersSeries.setData(lastOwnersData);
 
-    let title = 'Shared Price';
+    let title = 'Share Price';
     if (this.data.type === 'PS') {
       title = 'All supply';
     }
@@ -189,7 +191,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         this.addLabelToChart(this.lockedSeries, h, this.lockedDataMap, this.markerAdded5);
       }
     });
-    this.chart.timeScale().fitContent();
+    this.chart.timeScale();
   }
 
   public addValuesToShareChart(dtos: HarvestTvl[]): void {
@@ -217,7 +219,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         },
       });
       this.sharePriceSeries.setData(sharesData);
-      this.chart.timeScale().fitContent();
+      this.chart.timeScale();
       this.markerAdded = [];
       this.chart.subscribeCrosshairMove(h => {
         if (this.markerAdded.length === 0) {
@@ -276,7 +278,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
     });
     this.psTvlUsdSeries.setData(psTvlUsd);
 
-    this.chart.timeScale().fitContent();
+    this.chart.timeScale();
     this.markerAdded = [];
     this.markerAdded2 = [];
     this.markerAdded3 = [];
@@ -305,7 +307,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         data.push({
           time: h.time,
           position: 'inBar',
-          color: '#000000',
+          color: this.vt.isDarkMode() ? '#fafafa' : '#000000',
           shape: 'circle',
           size: 0,
           text: map.get(+h.time) + ''

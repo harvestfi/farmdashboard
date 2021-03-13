@@ -2,7 +2,6 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  background: #fffce6;
   padding: 3px;
 
   .title-row {
@@ -19,7 +18,6 @@
 
     .title {
       font-size: 1em;
-      color: black;
       font-weight: bolder;
       text-align: center;
       margin: 0;
@@ -33,7 +31,6 @@
     align-items: center;
     justify-content: space-evenly;
     position: relative;
-    color: black;
     font-weight: bold;
     width: 100%;
     font-size: .9em;
@@ -59,12 +56,6 @@
     cursor: pointer;
   }
 
-
-  td {
-    /*padding: 0 !important;*/
-    /*margin: 0 !important;*/
-  }
-
   .live-data-table {
     margin-left: 10px;
   }
@@ -72,4 +63,12 @@
   .select-strategy {
     width: 110px;
   }
+
+  &.dark-card {
+    .harvest-tx-header {
+      background: #111111;
+    }
+  }
+
+  
 }

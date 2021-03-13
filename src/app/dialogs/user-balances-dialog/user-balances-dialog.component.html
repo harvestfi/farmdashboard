@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" [class]="vt.getThemeColor() + '-card'">
 
   <div class="title">
     {{data.title}}
@@ -48,7 +48,7 @@
       <div class="value-field links">
         <a href='https://etherscan.io/address/{{balance.owner}}' target='_blank' class="trade-link">Etherscan</a>
         <a href='https://app.zerion.io/{{balance.owner}}/overview' target='_blank' class="trade-link">Zerion</a>
-        <a href='https://farmdashboard.xyz/history/{{balance.owner}}' target='_blank' class="trade-link">History</a>
+        <a href='/history/{{balance.owner}}' target='_blank' class="trade-link">History</a>
       </div>
 
     </div>

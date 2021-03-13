@@ -1,0 +1,16 @@
+@mixin responsive($size){
+
+    $screen_sizes: (
+        phone:   "(max-width: 600px)",
+        tablet:  "(min-width: 700px)",
+        small:   "(max-width: 900px)",
+        medium:  "(max-width: 1250px)",
+        large:   "(max-width: 1600px)",
+    );
+
+    $query_value: map-get($screen_sizes, $size); 
+
+    @media #{$query_value} {
+        @content;
+    }
+}

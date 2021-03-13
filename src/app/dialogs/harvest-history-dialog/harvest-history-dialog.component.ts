@@ -9,7 +9,7 @@ import { HarvestDto } from '../../models/harvest-dto';
 @Component({
   selector: 'app-harvest-history-dialog',
   templateUrl: './harvest-history-dialog.component.html',
-  styleUrls: ['./harvest-history-dialog.component.css']
+  styleUrls: ['./harvest-history-dialog.component.scss']
 })
 export class HarvestHistoryDialogComponent implements AfterViewInit {
   vaultFilter = 'all';
@@ -18,27 +18,18 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
   lowestBlockDate = 999999999999;
   disabled = false;
 
-
   constructor(
-
     private httpService: HttpService,
     public vt: ViewTypeService,
     private log: NGXLogger,
-  ) {
-
-  }
+  ) {}
 
   get tvlNames(): string[] {
     return StaticValues.currentVaults;
   }
 
-
-
-
-
   ngAfterViewInit(): void {
     this.httpService.getHarvestTxHistoryData().subscribe(data => {
-
       this.addInArray(data);
     });
   }
@@ -55,8 +46,6 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
         this.addInArray(data);
       }).add(() => this.disabled = false);
   }
-
-
 
   private isUniqTx(tx: HarvestDto): boolean {
     if (this.harvestTxIds.has(tx.id)) {
@@ -86,7 +75,4 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
 
     }
   }
-
-
-
 }

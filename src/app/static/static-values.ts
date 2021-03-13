@@ -1,5 +1,6 @@
 export class StaticValues {
   public static SECONDS_OF_DAY = 60 * 60 * 24;
+  public static SECONDS_OF_MONTH = StaticValues.SECONDS_OF_DAY * 30;
   public static SECONDS_OF_WEEK = StaticValues.SECONDS_OF_DAY * 7;
   public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
   public static uniInited = false;
@@ -82,6 +83,12 @@ export class StaticValues {
     'SUSHI_SUSHI_ETH',
     'iPS',
     'ONEINCH_ETH_ONEINCH',
+    'UNI_WBTC_KLON',
+    'UNI_WBTC_KBTC',
+    'CRV_LINK',
+    'MNFLX_UST',
+    'MTWTR_UST',
+    'SUSHI_ETH_UST',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -99,7 +106,8 @@ export class StaticValues {
     'CRV_UST',
     'CRV_STETH',
     'CRV_GUSD',
-    'CRV_AAVE',
+    // 'CRV_AAVE',
+    'CRV_LINK',
   ];
 
   public static strategiesListSingleCoins: string[] = [
@@ -111,8 +119,8 @@ export class StaticValues {
     'USDT',
     'DAI',
     'TUSD',
-    'ESD',
-    'DSD',
+    // 'ESD',
+    // 'DSD',
   ];
 
   public static strategiesListUniLpPools: string[] = [
@@ -127,6 +135,10 @@ export class StaticValues {
     'MAMZN_UST',
     'MGOOGL_UST',
     'MTSLA_UST',
+    'UNI_WBTC_KLON',
+    'UNI_WBTC_KBTC',
+    'MNFLX_UST',
+    'MTWTR_UST',
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
@@ -135,13 +147,14 @@ export class StaticValues {
     'SUSHI_ETH_USDC',
     'SUSHI_ETH_USDT',
     'SUSHI_ETH_WBTC',
-    'SUSHI_MIC_USDT',
-    'SUSHI_MIS_USDT',
+    'SUSHI_ETH_UST',
+    // 'SUSHI_MIC_USDT',
+    // 'SUSHI_MIS_USDT',
     'ONEINCH_ETH_DAI',
     'ONEINCH_ETH_USDC',
     'ONEINCH_ETH_USDT',
     'ONEINCH_ETH_WBTC',
-    'ONEINCH_ETH_ONEINCH',
+    // 'ONEINCH_ETH_ONEINCH',
   ];
 
   public static farmPools: string[] = [
@@ -176,6 +189,7 @@ export class StaticValues {
     switch (name) {
       case 'CRV_STETH':
       case 'WETH':
+      case 'ZERO': // 1inch stubbing
         return 'ETH';
       case 'RENBTC':
       case 'CRVRENWBTC':
@@ -349,6 +363,18 @@ export class StaticValues {
         return '/assets/icons/sushi-eth.png';
       case 'ONEINCH_ETH_ONEINCH':
         return '/assets/icons/1inch-eth-1inch.png';
+      case 'UNI_WBTC_KLON':
+        return '/assets/icons/klon-wbtc-klon.png';
+      case 'UNI_WBTC_KBTC':
+        return '/assets/icons/klon-wbtc-kbtc.png';
+      case 'CRV_LINK':
+        return '/assets/icons/curve-link.png';
+      case 'MNFLX_UST':
+        return '/assets/icons/mirror-nflx.png';
+      case 'MTWTR_UST':
+        return '/assets/icons/mirror-twtr.png';
+      case 'SUSHI_ETH_UST':
+        return '/assets/icons/sushi-ust.png';
     }
   }
 }

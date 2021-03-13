@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
+import { ViewTypeService } from 'src/app/services/view-type.service';
 
 @Component({
   selector: 'app-draggable-modal',
@@ -13,12 +14,13 @@ export class DraggableModalComponent implements AfterViewInit {
   private positionFour = 0;
   private isMouseDown = false;
 
+  constructor(public vt: ViewTypeService){}
+
   ngAfterViewInit(): void {
     this.handleWindowResize();
   }
 
   mousedown(event): void {
-    event.preventDefault();
     if (event.target === this.modal.nativeElement) {
       if (event.type === 'touchmove') {
         this.positionThree = event.touches[0].clientX;

@@ -78,6 +78,9 @@ export class PricesCalculationService {
       const tvl = this.calculateTvl(vaultStats, vaultName);
       if (tvl) {
         this.tvls.set(vaultName, tvl);
+        if (vaultName === 'iPS') {
+          return;
+        }
         allTvls += tvl;
       }
     });
@@ -256,6 +259,7 @@ export class PricesCalculationService {
     if (name === 'PS') {
       return vaultStats.tvl * StaticValues.lastPrice;
     } else if (vaultStats.lpStat) {
+      // console.log('tvl for ' + name);
       return this.calculateTvlForLp(vaultStats.lpStat);
     } else if (vaultStats.tvl) {
       const price = this.getPrice(name);

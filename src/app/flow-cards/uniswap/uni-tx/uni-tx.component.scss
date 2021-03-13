@@ -1,3 +1,5 @@
+@import "../../../../scss/utilities/utilities.scss";
+
 .uni-card {
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -5,7 +7,6 @@
   -o-transition: 0.3s;
   transition: 0.3s;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  background: #fffce6;
   padding: 3px;
 
 
@@ -18,7 +19,6 @@
 
     .title {
       font-size: 1em;
-      color: black;
       font-weight: bolder;
       text-align: center;
       width: 100%;
@@ -41,7 +41,6 @@
     -ms-flex-pack: space-evenly;
     justify-content: space-evenly;
     position: relative;
-    color: black;
     font-weight: bold;
     width: 100%;
     font-size: .9em;
@@ -50,44 +49,44 @@
     text-align: center;
     margin: 10px 0;
     padding: 0 10px;
-
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
   }
-}
 
-
-.button-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.show-more {
-  background-color: #eebf65;
-  color: black;
-  font-weight: bold;
-  border-radius: 3px;
-  border: 1px solid black;
-  cursor: pointer;
-}
-
-@media screen and (max-width: 1025px) {
-
-  .left,
-  .right,
-  .middle {
-    width: 100%;
+  &.dark-card {
+    .trade-card-header {
+      background: #111111;
+    }
   }
-}
 
-/*------------ old ---------------*/
 
-.live-data-table {
-  margin-left: 10px;
+  .button-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  .show-more {
+    background-color: #eebf65;
+    color: black;
+    font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid black;
+    cursor: pointer;
+  }
+
+  @include responsive(small) {
+    .left,
+    .right,
+    .middle {
+      width: 100%;
+    }
+  }
 }

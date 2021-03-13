@@ -7,9 +7,11 @@ import {NGXLogger} from 'ngx-logger';
 import {StaticValues} from '../../static/static-values';
 import {TransferDto} from '../../models/transfer-dto';
 import {ChartBuilder} from '../../chart/chart-builder';
-import {BalanceChartOptions} from '../balance-chart-options';
-import {MatDialog} from '@angular/material/dialog';
-import {SimpleChartDialogComponent} from '../../dialogs/simple-chart-dialog/simple-chart-dialog.component';
+import { IChartApi } from 'lightweight-charts';
+import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component';
+import { ChartsOptionsLight } from 'src/app/chart/charts-options-light';
+import { ViewTypeService } from 'src/app/services/view-type.service';
+import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 class CheckedValue {
   value: string;
@@ -19,10 +21,13 @@ class CheckedValue {
 @Component({
   selector: 'app-history-page',
   templateUrl: './history-page.component.html',
-  styleUrls: ['./history-page.component.css']
+  styleUrls: ['./history-page.component.scss']
 })
-export class HistoryPageComponent implements AfterViewInit {
+export class HistoryPageComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
+  @ViewChild('profitHistoryDialog') private profitHistoryDialog: CustomModalComponent;
+  @ViewChild('historyDialog') private historyDialog: CustomModalComponent;
+  chart: IChartApi;
   ready = false;
   fullData = [];
   sortedData: any[];
@@ -48,8 +53,10 @@ export class HistoryPageComponent implements AfterViewInit {
               private route: ActivatedRoute,
               private router: Router,
               private cdRef: ChangeDetectorRef,
-              private dialog: MatDialog,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              public vt: ViewTypeService,
+              ) {
+                super();
   }
 
   clear(): void {
@@ -112,7 +119,7 @@ export class HistoryPageComponent implements AfterViewInit {
     chartBuilder.initVariables(1);
     this.balanceHistory.forEach(el => chartBuilder.addInData(0, el[0], el[1]));
     this.handleData(chartBuilder, [
-      ['', 'right', '#282828']
+      ['', 'right', '#fc8f34']
     ]);
   }
 
@@ -120,8 +127,8 @@ export class HistoryPageComponent implements AfterViewInit {
     this.ready = true;
     this.cdRef.detectChanges();
     chartBuilder.priceLineVisible = false;
-    const chart = chartBuilder.initChart(this.chartEl, BalanceChartOptions.getOptions());
-    chartBuilder.addToChart(chart, config);
+    this.chart = chartBuilder.initChart(this.chartEl, ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
+    chartBuilder.addToChart(this.chart, config);
   }
 
   changeAllInclude(): void {
@@ -297,33 +304,12 @@ export class HistoryPageComponent implements AfterViewInit {
     return StaticValues.getImgSrcForVault(name);
   }
 
-  openHistoryDialog(name: string): void {
-    this.dialog.open(SimpleChartDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: name + ' History',
-        data: [this.balanceHistoryBySource.get(name)],
-        config: [
-          [name + ' Balance $', 'right', '#0085ff']
-        ]
-      }
-    });
+  openHistoryDialog(): void {
+    this.historyDialog.open();
   }
 
   openProfitHistoryDialog(): void {
-    this.dialog.open(SimpleChartDialogComponent, {
-      width: '100%',
-      height: 'auto',
-      data: {
-        title: name + ' History',
-        data: [this.rewardsHistory, this.balanceHistory],
-        config: [
-          ['Profit FARM', 'right', '#0085ff'],
-          ['Balance USD', '', '#d7c781']
-        ]
-      }
-    });
+    this.profitHistoryDialog.open();
   }
 
   prettyTransferType(type: string): string {

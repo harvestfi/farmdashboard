@@ -3,6 +3,7 @@ import {HttpService} from '../../services/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
+import {environment} from '../../../environments/environment';
 import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component';
 import { IChartApi } from 'lightweight-charts';
 

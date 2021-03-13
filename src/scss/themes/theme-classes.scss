@@ -1,0 +1,51 @@
+@import "./theme-variables.scss";
+
+
+@each $color,
+$variables in $themes_colors {
+
+    .#{$color}-background, .#{$color}-card{
+        color: map-get($variables, "font");
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        span,
+        label {
+            color: map-get($variables, "font");
+        }
+
+        input,
+        select {
+            background: map-get($variables, "card");
+            color: map-get($variables, "font");
+        }
+
+        a {
+            color: map-get($variables, "links");
+
+            &:hover {
+                color: lighten(map-get($variables, "links"), 5%);
+            }
+        }
+
+        .mat-tab-label, .mat-tab-link {
+            color: inherit!important;
+        }
+    }
+
+    .#{$color}-background {
+        background: map-get($variables, "background");
+
+    }
+
+    .#{$color}-card {
+        background: map-get($variables, "card");
+    }
+    
+    .#{$color}-font {
+        color: map-get($variables, "font");
+    }
+
+}

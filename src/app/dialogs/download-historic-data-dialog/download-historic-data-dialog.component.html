@@ -1,0 +1,41 @@
+<div class="download-historic-data-container" [class]="vt.getThemeColor() + '-card'">
+
+  <div class="row header-row">
+    <div class="left-border-box checkbox">
+      <mat-checkbox (change)="sortData(null)" [(ngModel)]="includeInactive">Include inactive
+      </mat-checkbox>
+    </div>
+    <div class="left-border-box title">
+      Donwload historic data in CSV about all existing vaults
+    </div>
+  </div>
+  
+  <div class="dialog-card" mat-dialog-content>
+    <table (matSortChange)="sortData($event)" class="table-vaults" matSort>
+      <tr>
+        <th mat-sort-header="name">Name</th>
+        <th mat-sort-header="transactions"></th>
+        <th mat-sort-header="hardwork"></th>
+        <th mat-sort-header="tvl"></th>
+      </tr>
+  
+      <tr *ngFor="let vault of sortedVaults">
+  
+        <td class="name">
+          <img alt="?" class="tvl-img" src="{{getImgSrc(vault)}}"/>
+          {{tvlPrettyName(vault)}}
+        </td>
+  
+        <td class="transactions">
+          <a href='{{apiEndpoint}}/csv/transactions/history/harvest/{{vault}}' target='_blank' class="download-link">Transactions</a>
+        </td>
+        <td class="hardwork">
+          <a href='{{apiEndpoint}}/csv/transactions/history/hardwork/{{vault}}' target='_blank' class="download-link">Hardwork</a>
+        </td>
+        <td class="tvl">
+          <a href='{{apiEndpoint}}/csv/transactions/history/tvl/{{vault}}' target='_blank' class="download-link">TVL</a>
+        </td>  
+      </tr>
+    </table>
+  </div>
+</div>

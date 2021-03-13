@@ -9,7 +9,7 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
 @Component({
   selector: 'app-dashboard-last-values',
   templateUrl: './dashboard-last-values.component.html',
-  styleUrls: ['./dashboard-last-values.component.css']
+  styleUrls: ['./dashboard-last-values.component.scss']
 })
 export class DashboardLastValuesComponent implements OnInit {
   @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
@@ -19,6 +19,7 @@ export class DashboardLastValuesComponent implements OnInit {
   @ViewChild('farmBuybacksModal') private farmBuybacksModal: CustomModalComponent;
   @ViewChild('savedFeesModal') private savedFeesModal: CustomModalComponent;
   @ViewChild('totalUsersModal') private totalUsersModal: CustomModalComponent;
+  @ViewChild('gasPriceModal') private gasPriceModal: CustomModalComponent;
   constructor(public dialog: MatDialog,
               public vt: ViewTypeService,
               private api: HttpService,
@@ -49,7 +50,7 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get farmStaked(): number {
-    return this.farmPsStaked + this.farmLpStaked + this.farmNewPsStaked;
+    return this.farmPsStaked + this.farmLpStaked;
   }
 
   get farmPsStaked(): number {
@@ -125,5 +126,9 @@ export class DashboardLastValuesComponent implements OnInit {
 
   openTotalUsersDialog(): void {
     this.totalUsersModal.open();
+  }
+
+  openGasPriceDialog(): void {
+    this.gasPriceModal.open();
   }
 }
