@@ -30,7 +30,7 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
 
     private loadRewardsHistory(startDate: Date, endDate: Date): void {
         // call service api here for data that is about rewards history?!?!!?
-        this.httpService.getAllHistoryRewards(startDate, endDate).subscribe((data) => {
+        this.httpService.getAllHistoryRewards(Math.floor(startDate.getTime()/1000), Math.floor(endDate.getTime()/1000)).subscribe((data) => {
             console.log(data);
             this.rewards.push(...(data.map(RewardDto.fillBlockDateAdopted).reverse()));
             this.ready = true;

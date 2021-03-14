@@ -8,21 +8,21 @@
     <div class="dialog-card">
         <div class="title">Rewards History</div>
         <div class="headers">
-            <div class="header-field"></div>
+            <div class="header-field">Date</div>
             <div class="header-field">Vault</div>
             <div class="header-field">Reward</div>
-            <div class="header-field">APY</div>
-            <div class="header-field">Weekly APY</div>
-            <div class="header-field">Date</div>
+            <div class="header-field"></div>
         </div>
         <div class="scroller">
             <div class="values" *ngFor="let reward of rewards">
-                <div class="value-field"></div>
+                <div class="value-field">{{reward.blockDateAdopted | date: "yyyy-MM-dd'T'HH:mm:ss"}}</div>
                 <div class="value-field">{{reward.vault}}</div>
                 <div class="value-field">{{reward.reward | number: '1.8-8'}}</div>
-                <div class="value-field">{{reward.apy | number: '1.2-2'}}%</div>
-                <div class="value-field">{{reward.weeklyApy | number: '1.2-2'}}%</div>
-                <div class="value-field">{{reward.blockDateAdopted | date: "yyyy-MM-dd'T'HH:mm:ss"}}</div>
+                <div class="value-field">
+                    <a href='https://etherscan.io/tx/{{reward.id.split("_")[0]}}' target='_blank' class="trade-link">
+                        <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="button-container">

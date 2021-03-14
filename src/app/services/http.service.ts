@@ -109,10 +109,10 @@ export class HttpService {
     );
   }
 
-  getAllHistoryRewards(start?: Date, end?: Date): Observable<RewardDto[]> {
-    start = start || new Date(0);
-    end = end || (new Date());
-    return this.http.get<RewardDto[]>(`${environment.apiEndpoint}/api/transactions/history/reward/?start=${(start.getTime()/1000).toFixed(0)}&end=${(end.getTime()/1000).toFixed(0)}`).pipe(
+  getAllHistoryRewards(startTimestamp?: number, endTimestamp?: number): Observable<RewardDto[]> {
+    startTimestamp = Math.floor(startTimestamp || (new Date(0).getTime()/1000));
+    endTimestamp = Math.floor(endTimestamp || (Date.now() / 1000));
+    return this.http.get<RewardDto[]>(`${environment.apiEndpoint}/api/transactions/history/reward/?start=${startTimestamp}&end=${endTimestamp}`).pipe(
         catchError(this.snackService.handleError<RewardDto[]>(`history reward `))
     );
   }
