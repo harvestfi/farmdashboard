@@ -5,7 +5,7 @@
 </ng-template>
 
 <ng-template #readyBlock>
-    <div class="dialog-card">
+    <div class="dialog-card" [class]="vt.getThemeColor() + '-card'">
         <div class="title">Rewards History</div>
         <div class="headers">
             <div class="header-field">Date</div>
