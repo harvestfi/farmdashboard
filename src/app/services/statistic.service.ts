@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { obj, ethblocksperday, ethblocksperhour, web3, sushiabi, proxyABI } from '../statistic-board/Abi';
 import { formatUnits } from "@ethersproject/units";
 import axios from 'axios';
+import { times } from '../statistic-board/Abi'
 
 import type { Mode } from '../statistic-board/statistic-board-page/statistic-board-page.component';
 
@@ -15,22 +16,21 @@ type getDataArgs = {
 export class StatisticService {
   isLoading = true;
 
-  data: any
+  data: any = {
+    n: times[1], // { key: 2, value: 3, text: "3d" }
+    m: 'shares',
+    c: 'native',
+    a: ethblocksperday,
+  };
   
   constructor() { }
 
   public async init() {
-    console.log(1)
     this.contractsInitiate()
-    console.log(2)
     const curBlock = await web3.eth.getBlockNumber()
-    console.log(3)
     await this.getprices()
-    console.log(4)
     const p = await this.sharePromises(obj, curBlock)
-    console.log(5)
     this.chartsGen(p) 
-    console.log(6)
     let m = p.map(({title, shareBlocks, shares, maxHistory}) => {
       return {title, shareBlocks, shares, maxHistory}
     })
@@ -39,7 +39,6 @@ export class StatisticService {
       curBlock: curBlock, 
       share3data: m
     })
-    console.log(7, this.data)
     this.isLoading = false
   }
 
@@ -56,13 +55,16 @@ export class StatisticService {
   // моды
   handleChange = async (val) => { 
     if(val !== this.data.m){
-      this.setdata({m: val}, () => this.process())  
+      this.setdata({m: val}) 
+      await this.process() 
     }  
   }
   // периоды
   public handleTimeChange = async (val) => {
-    if(val !== this.data.n){
-      val === 24 ? this.setdata({n: val, a: ethblocksperhour}, () => this.process()) : this.setdata({n: val, a: ethblocksperday}, () => this.process()) 
+    if(val !== this.data.n.value){
+      const a = val === 24 ? ethblocksperhour : ethblocksperday
+      this.setdata({n: val, a })
+      await this.process()
     }
   }
 
@@ -78,12 +80,14 @@ export class StatisticService {
 
   private async process(){
     this.isLoading = true;
+
+    // console.log('this.data', this.data)
     
     if(this.data.m === 'shares'){
-      if(this.data.n === 3){ 
+      if(this.data.n.value === 3){ 
         this.chartsGen(this.data.share3data)   
       }
-      if(this.data.n === 5){
+      if(this.data.n.value === 5){
         if(this.data.share5data !== undefined){
           this.chartsGen(this.data.share5data)  
         }else{
@@ -92,7 +96,7 @@ export class StatisticService {
           this.setdata({share5data: m})
         }
       }
-      if(this.data.n === 7){
+      if(this.data.n.value === 7){
         if(this.data.share7data !== undefined){
           this.chartsGen(this.data.share7data)  
         }else{
@@ -101,7 +105,7 @@ export class StatisticService {
           this.setdata({share7data: m})
         }
       }
-      if(this.data.n === 14){
+      if(this.data.n.value === 14){
         if(this.data.share14data !== undefined){
           this.chartsGen(this.data.share14data)  
         }else{
@@ -110,18 +114,18 @@ export class StatisticService {
           this.setdata({share14data: m})
         }
       }
-      if(this.data.n === 24){
+      if(this.data.n.value === 24){
         if(this.data.share24data !== undefined){
           this.chartsGen(this.data.share24data)  
         }else{
-          console.log(this.data.n)
+          console.log(this.data.n.value)
           let m = await this.getData()
           
           this.chartsGen(m)
           this.setdata({share24data: m})
         }
       }
-      if(this.data.n === 0){
+      if(this.data.n.value === 0){
         if(this.data.sharemaxdata !== undefined){
           this.chartsGen(this.data.sharemaxdata)  
         }else{
@@ -133,7 +137,7 @@ export class StatisticService {
     }
   
     if(this.data.m === 'tvl'){
-      if(this.data.n === 3){ 
+      if(this.data.n.value === 3){ 
         if(this.data.tvl3data !== undefined){
           this.chartsGen(this.data.tvl3data)  
         }else{
@@ -142,7 +146,7 @@ export class StatisticService {
           this.setdata({tvl3data: m})
         }
       }
-      if(this.data.n === 5){
+      if(this.data.n.value === 5){
         if(this.data.tvl5data !== undefined){
           this.chartsGen(this.data.tvl5data)  
         }else{
@@ -151,7 +155,7 @@ export class StatisticService {
           this.setdata({tvl5data: m})
         }
       }
-      if(this.data.n === 7){
+      if(this.data.n.value === 7){
         if(this.data.tvl7data !== undefined){
           this.chartsGen(this.data.tvl7data)  
         }else{
@@ -160,7 +164,7 @@ export class StatisticService {
           this.setdata({tvl7data: m})
         }
       }
-      if(this.data.n === 14){
+      if(this.data.n.value === 14){
         if(this.data.tvl14data !== undefined){
           this.chartsGen(this.data.tvl14data)  
         }else{
@@ -169,7 +173,7 @@ export class StatisticService {
           this.setdata({tvl14data: m})
         }
       }
-      if(this.data.n === 24){
+      if(this.data.n.value === 24){
         if(this.data.tvl24data !== undefined){
           this.chartsGen(this.data.tvl24data)  
         }else{
@@ -178,7 +182,7 @@ export class StatisticService {
           this.setdata({tvl24data: m})
         }
       }
-      if(this.data.n === 0){
+      if(this.data.n.value === 0){
         if(this.data.tvlmaxdata !== undefined){
           this.chartsGen(this.data.tvlmaxdata)  
         }else{
@@ -251,14 +255,14 @@ export class StatisticService {
   private async sharePromises(o, b){
     console.time('b')
     
-    let n = this.data.n
+    let n = this.data.n.value
     let m = this.data.m
 
     let promises = o.map(contract => {
-      if(this.data.n > contract.maxHistory && this.data.n !== 24){
+      if(this.data.n.value > contract.maxHistory && this.data.n.value !== 24){
         n = contract.maxHistory
       }
-      if(this.data.n === 0){
+      if(this.data.n.value === 0){
         n = contract.maxHistory
       }
       if(this.data.m === 'shares'){
@@ -266,7 +270,7 @@ export class StatisticService {
       }
       if(this.data.m === 'tvl'){
         m = contract.contractObj.methods.totalSupply()
-      }  
+      }
 
       return this.getPrice(contract, n, this.data.a, m, b)
     })
@@ -300,14 +304,14 @@ export class StatisticService {
 
   private chartsGen(o){
    
-    let n = this.data.n
+    let n = this.data.n.value
     let a = 0
     
     let datacharts = o.map(contract => {  
-      if(this.data.n === 0 || this.data.n > contract.maxHistory){
+      if(this.data.n.value === 0 || this.data.n.value > contract.maxHistory){
         n = contract.maxHistory
       }  
-      if(this.data.n === 24){
+      if(this.data.n.value === 24){
         n = 1
       } 
       
