@@ -1,0 +1,7 @@
+<div>
+    <plotly-plot
+      *ngFor="let item of data"
+      [data]="makeChartProps(item).data"
+      [layout]="makeChartProps(item).layout"
+    ></plotly-plot>
+</div>
