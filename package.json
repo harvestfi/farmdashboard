@@ -57,7 +57,7 @@
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "^11.1.1",
+    "@angular-devkit/build-angular": "^0.1102.4",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
@@ -73,17 +73,5 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0"
-  },
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false,
-    "crypto": false,
-    "stream": false,
-    "http": false,
-    "tls": false,
-    "zlib": false,
-    "https": false,
-    "net": false
   }
 }
