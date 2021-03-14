@@ -11,3 +11,4 @@
 //     if (err) return console.log(err);
 //   });
 // });
+// "postinstall": "node patch-webpack.js"
