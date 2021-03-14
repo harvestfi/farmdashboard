@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {HarvestTxComponent} from './harvest-tx.component';
 
@@ -6,7 +6,7 @@ describe('HarvestTxComponent', () => {
   let component: HarvestTxComponent;
   let fixture: ComponentFixture<HarvestTxComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [HarvestTxComponent]
     })
