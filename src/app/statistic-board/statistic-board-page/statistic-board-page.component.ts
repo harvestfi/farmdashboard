@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { StatisticService } from '../../services/statistic.service';
 import type { Period } from '../Abi';
 import { times } from '../Abi';
@@ -19,28 +19,35 @@ export class StatisticBoardPageComponent implements OnInit {
 
   constructor(private statistic: StatisticService) {}
 
-  ngOnInit(): void {
-    this.statistic.init()
+  async ngOnInit() {
+    this.showLoader();
+    await this.statistic.init();
+    this.hideLoader();
   }
   
-  selectPeriod(period: Period): void {
-    this.showLoader()
+  async selectPeriod(period: Period) {
+    this.showLoader();
     this.selectedPeriod = period;
+    await this.statistic.handleTimeChange(period);
+    this.hideLoader();
   }
 
-  switchMode(mode: Mode) {
-    this.showLoader()
+  async switchMode(mode: Mode) {
+    this.showLoader();
     this.mode = mode;
+    await this.statistic.handleChange(mode);
+    this.hideLoader();
+  }
 
+  get data() {
+    return this.statistic.data.charts;
   }
 
   showLoader() {
     this.isLoading = true;
-    console.log('= = = this.isLoading', this.isLoading)
   }
 
   hideLoader() {
     this.isLoading = false;
-    console.log('= = = this.isLoading', this.isLoading)
   }
 }

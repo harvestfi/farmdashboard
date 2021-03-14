@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 type ChartItem = {
   x: string;
@@ -14,12 +14,15 @@ type ChartItem = {
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css']
 })
-export class ChartsComponent implements OnInit {
+export class ChartsComponent implements OnChanges {
   @Input('data') data: ChartItem[]
+
+  charts = []
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges) {
+    this.charts = changes.data.currentValue.map(this.makeChartProps)
   }
 
   makeChartProps(chart: ChartItem) {
@@ -36,21 +39,21 @@ export class ChartsComponent implements OnInit {
         },                
       ],
       layout: {
-          width: 520, 
-          height: 420, 
+          width: 320, 
+          height: 330, 
           plot_bgcolor: "#FFFCE6",
           paper_bgcolor: "#FFFCE6",
           title: "<b>" + chart.title + "</b>",
           titlefont: {
             family: 'Monospace',
-            size: 34,
+            size: 28,
             color: '#333'
           },
           xaxis:{
             title: "<b>x: block number</b>" + chart.percent + chart.annual,
             titlefont: {
             family: 'Monospace',
-            size: 16,
+            size: 14,
             color: '#333'
           }
         }, 
@@ -58,7 +61,7 @@ export class ChartsComponent implements OnInit {
             title: chart.ytitle,
             titlefont: {
               family: 'Monospace',
-              size: 16,
+              size: 14,
               color: '#333'
           }
         }
