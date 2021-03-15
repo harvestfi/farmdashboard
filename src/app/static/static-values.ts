@@ -141,6 +141,9 @@ export class StaticValues {
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
+    'ETH_DAI_HODL',
+    'ETH_USDC_HODL',
+    'ETH_USDT_HODL',
     'SUSHI_SUSHI_ETH',
     'SUSHI_ETH_DAI',
     'SUSHI_ETH_USDC',

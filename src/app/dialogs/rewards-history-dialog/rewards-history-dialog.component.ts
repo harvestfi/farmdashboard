@@ -16,6 +16,8 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
     rewards: Array<RewardDto> = [];
     ready = false;
     disabled = false;
+    vaultFilter = '';
+    filters = StaticValues.currentVaults;
 
     constructor(private httpService: HttpService,
                 public vt: ViewTypeService,

@@ -7,6 +7,14 @@
 <ng-template #readyBlock>
     <div class="dialog-card" [class]="vt.getThemeColor() + '-card'">
         <div class="title">Rewards History</div>
+        <div  class="filters">
+            <div>
+                <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
+                    <option [value]="">-</option>
+                    <option *ngFor="let name of filters" [value]="name">{{name}}</option>
+                </select>
+            </div>
+        </div>
         <div class="headers">
             <div class="header-field">Date</div>
             <div class="header-field">Vault</div>
@@ -15,7 +23,7 @@
             <div class="header-field"></div>
         </div>
         <div class="scroller">
-            <div class="values" *ngFor="let reward of rewards">
+            <div class="values" *ngFor="let reward of rewards | vaultFilter: vaultFilter">
                 <div class="value-field">{{reward.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
                 <div class="value-field"><img alt="?" class="tvl-img" src="{{getImgUrl(reward.vault)}}"/> {{reward.vault}}</div>
                 <div class="value-field">{{reward.reward | number: '1.1-1'}}</div>
