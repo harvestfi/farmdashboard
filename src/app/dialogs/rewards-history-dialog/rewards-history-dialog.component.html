@@ -11,13 +11,15 @@
             <div class="header-field">Date</div>
             <div class="header-field">Vault</div>
             <div class="header-field">Reward</div>
+            <div class="header-field">Period Finish</div>
             <div class="header-field"></div>
         </div>
         <div class="scroller">
             <div class="values" *ngFor="let reward of rewards">
-                <div class="value-field">{{reward.blockDateAdopted | date: "yyyy-MM-dd'T'HH:mm:ss"}}</div>
-                <div class="value-field">{{reward.vault}}</div>
-                <div class="value-field">{{reward.reward | number: '1.8-8'}}</div>
+                <div class="value-field">{{reward.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
+                <div class="value-field"><img alt="?" class="tvl-img" src="{{getImgUrl(reward.vault)}}"/> {{reward.vault}}</div>
+                <div class="value-field">{{reward.reward | number: '1.1-1'}}</div>
+                <div class="value-field">{{reward.periodFinish*1000 | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
                 <div class="value-field">
                     <a href='https://etherscan.io/tx/{{reward.id.split("_")[0]}}' target='_blank' class="trade-link">
                         <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>

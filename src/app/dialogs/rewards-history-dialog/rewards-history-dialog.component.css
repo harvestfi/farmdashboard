@@ -10,20 +10,25 @@
   max-width: 700px;
 }
 
+.tvl-img {
+  width: 15px;
+  height: 15px;
+}
+
 .headers, .values  {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 0.3fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 0.3fr;
 }
 
 .header-field {
-  text-align: center;
+  /*text-align: center;*/
   padding: 3px;
   font-size: 1em;
   font-weight: bold;
 }
 
 .value-field {
-  text-align: center;
+  /*text-align: center;*/
   padding: 3px;
   font-size: 0.9em;
   font-weight: bolder;

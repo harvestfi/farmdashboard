@@ -3,6 +3,7 @@ import {HttpService} from '../../services/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {RewardDto} from "../../models/reward-dto";
+import {StaticValues} from '../../static/static-values';
 
 @Component({
     selector: 'app-rewards-history-dialog',
@@ -28,11 +29,13 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         this.loadRewardsHistory(startDate, new Date());
     }
 
+    public removePsVault = (reward: RewardDto) => reward.vault.toLowerCase() != "ps";
+
     private loadRewardsHistory(startDate: Date, endDate: Date): void {
         // call service api here for data that is about rewards history?!?!!?
         this.httpService.getAllHistoryRewards(Math.floor(startDate.getTime()/1000), Math.floor(endDate.getTime()/1000)).subscribe((data) => {
             console.log(data);
-            this.rewards.push(...(data.map(RewardDto.fillBlockDateAdopted).reverse()));
+            this.rewards.push(...(data.filter(this.removePsVault).map(RewardDto.fillBlockDateAdopted).reverse()));
             this.ready = true;
             this.disabled = false;
             this.cdRef.detectChanges();
@@ -47,5 +50,9 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         startDate.setDate(startDate.getDate() - 5);
         console.log(`${startDate} , ${endDate}`);
         this.loadRewardsHistory(startDate, endDate);
+    }
+
+    getImgUrl(name: string): string {
+        return StaticValues.getImgSrcForVault(name);
     }
 }
