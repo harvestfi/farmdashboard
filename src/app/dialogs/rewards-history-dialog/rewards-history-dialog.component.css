@@ -50,6 +50,16 @@
   align-items: center;
 }
 
+.show-even-more {
+  font-weight: bold;
+  border-radius: 3px;
+  border: 1px solid black;
+  margin-top: 5px;
+  cursor: pointer;
+  color: black;
+  background-color: #eebf65;
+}
+
 @media screen and (max-width: 900px) {
   .title-col {
     font-size: 1em;
