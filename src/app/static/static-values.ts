@@ -82,6 +82,17 @@ export class StaticValues {
     'SUSHI_SUSHI_ETH',
     'iPS',
     'ONEINCH_ETH_ONEINCH',
+    'UNI_WBTC_KLON',
+    'UNI_WBTC_KBTC',
+    'CRV_LINK',
+    'MNFLX_UST',
+    'MTWTR_UST',
+    'SUSHI_ETH_UST',
+    'SUSHI_HODL',
+    'ETH_DAI_HODL',
+    'ETH_USDC_HODL',
+    'ETH_USDT_HODL',
+    'ETH_WBTC_HODL',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -111,8 +122,8 @@ export class StaticValues {
     'USDT',
     'DAI',
     'TUSD',
-    'ESD',
-    'DSD',
+    // 'ESD',
+    // 'DSD',
   ];
 
   public static strategiesListUniLpPools: string[] = [
@@ -141,7 +152,7 @@ export class StaticValues {
     'ONEINCH_ETH_USDC',
     'ONEINCH_ETH_USDT',
     'ONEINCH_ETH_WBTC',
-    'ONEINCH_ETH_ONEINCH',
+    // 'ONEINCH_ETH_ONEINCH',
   ];
 
   public static farmPools: string[] = [
@@ -169,6 +180,8 @@ export class StaticValues {
     ?.replace('UNI_LP_', '')
     ?.replace('UNI_', '')
     ?.replace('ST_', '')
+    ?.replace('_HODL', '_H')
+    ?.replace('HODL', 'SUSHI_HODL')
         ;
   }
 
@@ -278,12 +291,16 @@ export class StaticValues {
       case 'CRV_USDN':
         return '/assets/icons/curve-usdn.png';
       case 'SUSHI_ETH_DAI':
+      case 'ETH_DAI_HODL':
         return '/assets/icons/sushi-dai.png';
       case 'SUSHI_ETH_USDC':
+      case 'ETH_USDC_HODL':
         return '/assets/icons/sushi-usdc.png';
       case 'SUSHI_ETH_USDT':
+      case 'ETH_USDT_HODL':
         return '/assets/icons/sushi-usdt.png';
       case 'SUSHI_ETH_WBTC':
+      case 'ETH_WBTC_HODL':
         return '/assets/icons/sushi-wbtc.png';
       case 'IDX_ETH_DPI':
         return '/assets/icons/eth_dpi.png';
@@ -349,6 +366,20 @@ export class StaticValues {
         return '/assets/icons/sushi-eth.png';
       case 'ONEINCH_ETH_ONEINCH':
         return '/assets/icons/1inch-eth-1inch.png';
+      case 'UNI_WBTC_KLON':
+        return '/assets/icons/klon-wbtc-klon.png';
+      case 'UNI_WBTC_KBTC':
+        return '/assets/icons/klon-wbtc-kbtc.png';
+      case 'CRV_LINK':
+        return '/assets/icons/curve-link.png';
+      case 'MNFLX_UST':
+        return '/assets/icons/mirror-nflx.png';
+      case 'MTWTR_UST':
+        return '/assets/icons/mirror-twtr.png';
+      case 'SUSHI_ETH_UST':
+        return '/assets/icons/sushi-ust.png';
+      case 'SUSHI_HODL':
+        return '/assets/icons/sushi.png';
     }
   }
 }
