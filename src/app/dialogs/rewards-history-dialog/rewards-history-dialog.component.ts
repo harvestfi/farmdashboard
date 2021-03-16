@@ -20,6 +20,8 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
     vaultFilter = '';
     filters = StaticValues.currentVaults;
 
+    private dayLag = 15;
+
     constructor(private httpService: HttpService,
                 public vt: ViewTypeService,
                 private cdRef: ChangeDetectorRef,
@@ -28,7 +30,7 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
 
     ngAfterViewInit(): void {
         const startDate = new Date();
-        startDate.setDate(startDate.getDate() - 5); // start from 5 days ago
+        startDate.setDate(startDate.getDate() - this.dayLag);
         this.loadRewardsHistory(startDate, new Date());
     }
 
@@ -37,7 +39,7 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         // call service api here for data that is about rewards history?!?!!?
         this.httpService.getAllHistoryRewards(Math.floor(startDate.getTime()/1000), Math.floor(endDate.getTime()/1000)).subscribe((data) => {
             console.log(data);
-            this.rewards.push(...(data.filter(r => Utils.isAutoStakeVault(r.vault)).map(RewardDto.fillBlockDateAdopted).reverse()));
+            this.rewards.push(...(data.filter(r => !Utils.isAutoStakeVault(r.vault)).map(RewardDto.fillBlockDateAdopted).reverse()));
             this.ready = true;
             this.disabled = false;
             this.cdRef.detectChanges();
@@ -49,7 +51,7 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         const endDate = new Date(this.rewards[this.rewards.length-1]?.blockDate*1000);
         endDate.setTime(endDate.getTime()-1000);
         const startDate = new Date(endDate.getTime());
-        startDate.setDate(startDate.getDate() - 5);
+        startDate.setDate(startDate.getDate() - this.dayLag);
         console.log(`${startDate} , ${endDate}`);
         this.loadRewardsHistory(startDate, endDate);
     }
