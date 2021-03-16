@@ -312,6 +312,8 @@ export class Utils {
         || name === 'MAMZN_UST'
         || name === 'MGOOGL_UST'
         || name === 'MTSLA_UST'
+        || name === 'MNFLX_UST'
+        || name === 'MTWTR_UST'
         || name === 'UNI_BAC_DAI'
         || name === 'UNI_DAI_BAS'
         || name === 'UNI_WBTC_KLON'
