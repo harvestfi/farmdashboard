@@ -1,5 +1,4 @@
 .download-historic-data-container{
-  background: #fffce6;
 
   td, th {
     padding: 4px;
@@ -12,7 +11,6 @@
   
   .title-col {
     font-size: 1.5em;
-    color: black;
     font-weight: bolder;
     text-align: left;
     width: 75%;
@@ -21,28 +19,22 @@
   .checkbox {
     width: 25%;
     font-size: 0.8em !important;
-    color: black;
     font-weight: normal;
   }
   
   .dialog-card {
-    background: #fffce6;
-  
   }
   
   ::ng-deep.mat-dialog-container {
     overflow: hidden;
     border-radius: 3px;
     padding: 10px !important;
-    background: #fffce6;
   }
   
   .table-vaults {
-    color: black;
   }
   
   tr:hover {
-    background-color: #f5f5f5;
   }
   
   .tvl-name {

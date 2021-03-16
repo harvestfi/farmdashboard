@@ -68,7 +68,7 @@
             </ng-template>
         </app-custom-modal>
         
-        <li (click)="openDownloadHistoricDataDialog()" data-menu-icon="🗄️" class="main-side-menu-item">Historic Data</li>
+        <li (click)="openDownloadHistoricDataDialog()" data-menu-icon="🗄️" class="main-side-menu-item">Download</li>
         <app-custom-modal #downloadHistoricDataDialog>
             <ng-template >
                 <app-download-historic-data-dialog [data]="{title: 'Download Historic Data'}"></app-download-historic-data-dialog>

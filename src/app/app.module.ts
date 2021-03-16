@@ -41,6 +41,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { LoadingSpinnerComponent } from './main/loading-spinner/loading-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { IncomeDialogComponent } from './dialogs/income-dialog/income-dialog.component';
+import { GasDialogComponent } from './dialogs/gas-dialog/gas-dialog.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { environment } from '../environments/environment';
@@ -108,6 +109,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AllStatsDialogComponent,
     LoadingSpinnerComponent,
     IncomeDialogComponent,
+    GasDialogComponent,
     ProfitDialogComponent,
     GrainChartComponent,
     FarmBuybacksDialogComponent,

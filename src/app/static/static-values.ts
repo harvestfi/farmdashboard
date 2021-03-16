@@ -1,5 +1,6 @@
 export class StaticValues {
   public static SECONDS_OF_DAY = 60 * 60 * 24;
+  public static SECONDS_OF_MONTH = StaticValues.SECONDS_OF_DAY * 30;
   public static SECONDS_OF_WEEK = StaticValues.SECONDS_OF_DAY * 7;
   public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
   public static uniInited = false;
@@ -88,6 +89,11 @@ export class StaticValues {
     'MNFLX_UST',
     'MTWTR_UST',
     'SUSHI_ETH_UST',
+    'SUSHI_HODL',
+    'ETH_DAI_HODL',
+    'ETH_USDC_HODL',
+    'ETH_USDT_HODL',
+    'ETH_WBTC_HODL',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -105,7 +111,7 @@ export class StaticValues {
     'CRV_UST',
     'CRV_STETH',
     'CRV_GUSD',
-    'CRV_AAVE',
+    // 'CRV_AAVE',
     'CRV_LINK',
   ];
 
@@ -118,8 +124,9 @@ export class StaticValues {
     'USDT',
     'DAI',
     'TUSD',
-    'ESD',
-    'DSD',
+    // 'ESD',
+    // 'DSD',
+    'SUSHI_HODL',
   ];
 
   public static strategiesListUniLpPools: string[] = [
@@ -147,13 +154,17 @@ export class StaticValues {
     'SUSHI_ETH_USDT',
     'SUSHI_ETH_WBTC',
     'SUSHI_ETH_UST',
-    'SUSHI_MIC_USDT',
-    'SUSHI_MIS_USDT',
+    // 'SUSHI_MIC_USDT',
+    // 'SUSHI_MIS_USDT',
     'ONEINCH_ETH_DAI',
     'ONEINCH_ETH_USDC',
     'ONEINCH_ETH_USDT',
     'ONEINCH_ETH_WBTC',
-    'ONEINCH_ETH_ONEINCH',
+    // 'ONEINCH_ETH_ONEINCH',
+    'ETH_DAI_HODL',
+    'ETH_USDC_HODL',
+    'ETH_USDT_HODL',
+    'ETH_WBTC_HODL',
   ];
 
   public static farmPools: string[] = [
@@ -181,6 +192,8 @@ export class StaticValues {
     ?.replace('UNI_LP_', '')
     ?.replace('UNI_', '')
     ?.replace('ST_', '')
+    ?.replace('_HODL', '_H')
+    ?.replace('HODL', 'SUSHI_HODL')
         ;
   }
 
@@ -291,12 +304,16 @@ export class StaticValues {
       case 'CRV_USDN':
         return '/assets/icons/curve-usdn.png';
       case 'SUSHI_ETH_DAI':
+      case 'ETH_DAI_HODL':
         return '/assets/icons/sushi-dai.png';
       case 'SUSHI_ETH_USDC':
+      case 'ETH_USDC_HODL':
         return '/assets/icons/sushi-usdc.png';
       case 'SUSHI_ETH_USDT':
+      case 'ETH_USDT_HODL':
         return '/assets/icons/sushi-usdt.png';
       case 'SUSHI_ETH_WBTC':
+      case 'ETH_WBTC_HODL':
         return '/assets/icons/sushi-wbtc.png';
       case 'IDX_ETH_DPI':
         return '/assets/icons/eth_dpi.png';
@@ -374,6 +391,8 @@ export class StaticValues {
         return '/assets/icons/mirror-twtr.png';
       case 'SUSHI_ETH_UST':
         return '/assets/icons/sushi-ust.png';
+      case 'SUSHI_HODL':
+        return '/assets/icons/sushi.png';
     }
   }
 }

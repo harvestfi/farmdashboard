@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StaticValues} from '../../static/static-values';
 import {Sort} from '@angular/material/sort';
 import {environment} from '../../../environments/environment';
+import {ViewTypeService} from '../../services/view-type.service';
 
 @Component({
   selector: 'app-download-historic-data-dialog',
@@ -13,7 +14,7 @@ export class DownloadHistoricDataDialogComponent implements OnInit {
   includeInactive = false;
   apiEndpoint = '';
 
-  constructor() {
+  constructor(public vt: ViewTypeService) {
     this.sortedVaults = StaticValues.vaults;
     this.sortData(null);
     this.apiEndpoint = environment.apiEndpoint;
