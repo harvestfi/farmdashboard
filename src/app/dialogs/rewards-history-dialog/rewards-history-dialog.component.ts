@@ -50,7 +50,6 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         endDate.setTime(endDate.getTime()-1000);
         const startDate = new Date(endDate.getTime());
         startDate.setDate(startDate.getDate() - this.dayLag);
-        console.log(`${startDate} , ${endDate}`);
         this.loadRewardsHistory(startDate, endDate);
     }
 
