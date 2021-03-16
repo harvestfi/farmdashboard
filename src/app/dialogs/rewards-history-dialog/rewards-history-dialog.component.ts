@@ -57,4 +57,8 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
     getImgUrl(name: string): string {
         return StaticValues.getImgSrcForVault(name);
     }
+
+    openEtherscanTx(hash: string): void {
+        return Utils.openEtherscanTx(hash);
+    }
 }

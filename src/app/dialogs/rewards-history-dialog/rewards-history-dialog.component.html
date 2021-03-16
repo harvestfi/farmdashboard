@@ -29,9 +29,7 @@
                 <div class="value-field">{{reward.reward | number: '1.1-1'}}</div>
                 <div class="value-field">{{reward.periodFinish*1000 | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
                 <div class="value-field">
-                    <a href='https://etherscan.io/tx/{{reward.id.split("_")[0]}}' target='_blank' class="trade-link">
-                        <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
-                    </a>
+                    <mat-icon (click)="openEtherscanTx(reward.id.split('_')[0])" [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
                 </div>
             </div>
         </div>

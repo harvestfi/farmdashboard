@@ -206,7 +206,7 @@ export class Utils {
     return Utils.transferBalance(t, address) * t.price;
   }
 
-  public static openEthersacanTx(hash: string): void {
+  public static openEtherscanTx(hash: string): void {
     window.open('https://etherscan.io/tx/' + hash, '_blank');
   }
 
