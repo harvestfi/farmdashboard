@@ -24,8 +24,4 @@ describe('RewardsDialogComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should filter the PS vault", () => {
-    const rewards = [{vault: "PS"} as RewardDto, {vault: "non-PS"} as RewardDto];
-    expect(rewards.filter(component.removePsVault).length).toBe(1)
-  })
 });

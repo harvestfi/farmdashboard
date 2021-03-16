@@ -4,6 +4,7 @@ import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {RewardDto} from "../../models/reward-dto";
 import {StaticValues} from '../../static/static-values';
+import {Utils} from "../../static/utils";
 
 @Component({
     selector: 'app-rewards-history-dialog',
@@ -31,13 +32,12 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         this.loadRewardsHistory(startDate, new Date());
     }
 
-    public removePsVault = (reward: RewardDto) => reward.vault.toLowerCase() != "ps";
 
     private loadRewardsHistory(startDate: Date, endDate: Date): void {
         // call service api here for data that is about rewards history?!?!!?
         this.httpService.getAllHistoryRewards(Math.floor(startDate.getTime()/1000), Math.floor(endDate.getTime()/1000)).subscribe((data) => {
             console.log(data);
-            this.rewards.push(...(data.filter(this.removePsVault).map(RewardDto.fillBlockDateAdopted).reverse()));
+            this.rewards.push(...(data.filter(r => Utils.isAutoStakeVault(r.vault)).map(RewardDto.fillBlockDateAdopted).reverse()));
             this.ready = true;
             this.disabled = false;
             this.cdRef.detectChanges();
