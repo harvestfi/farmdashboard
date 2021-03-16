@@ -141,9 +141,6 @@ export class StaticValues {
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
-    'ETH_DAI_HODL',
-    'ETH_USDC_HODL',
-    'ETH_USDT_HODL',
     'SUSHI_SUSHI_ETH',
     'SUSHI_ETH_DAI',
     'SUSHI_ETH_USDC',
@@ -294,13 +291,10 @@ export class StaticValues {
       case 'CRV_USDN':
         return '/assets/icons/curve-usdn.png';
       case 'SUSHI_ETH_DAI':
-      case 'ETH_DAI_HODL':
         return '/assets/icons/sushi-dai.png';
       case 'SUSHI_ETH_USDC':
-      case 'ETH_USDC_HODL':
         return '/assets/icons/sushi-usdc.png';
       case 'SUSHI_ETH_USDT':
-      case 'ETH_USDT_HODL':
         return '/assets/icons/sushi-usdt.png';
       case 'SUSHI_ETH_WBTC':
         return '/assets/icons/sushi-wbtc.png';
