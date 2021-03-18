@@ -41,7 +41,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { LoadingSpinnerComponent } from './main/loading-spinner/loading-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { IncomeDialogComponent } from './dialogs/income-dialog/income-dialog.component';
-import { GasDialogComponent } from './dialogs/gas-dialog/gas-dialog.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { environment } from '../environments/environment';
@@ -75,7 +74,13 @@ import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.compon
 import { FlowCardsViewComponent } from './flow-cards/flow-cards-view/flow-cards-view.component';
 import { LastPricesListComponent } from './dashboard/last-prices-list/last-prices-list.component';
 import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user-balances-dialog.component';
-import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
+import { StatisticBoardPageComponent } from './statistic-board/statistic-board-page/statistic-board-page.component';
+import { ChartsComponent } from './statistic-board/charts/charts.component';
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+import { Web3chartsComponent } from './web3charts/web3charts.component';
+
+PlotlyModule.plotlyjs = PlotlyJS;
 
 declare var require: any;
 
@@ -107,7 +112,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AllStatsDialogComponent,
     LoadingSpinnerComponent,
     IncomeDialogComponent,
-    GasDialogComponent,
     ProfitDialogComponent,
     GrainChartComponent,
     FarmBuybacksDialogComponent,
@@ -136,7 +140,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FlowCardsViewComponent,
     LastPricesListComponent,
     UserBalancesDialogComponent,
-    DownloadHistoricDataDialogComponent,
+    StatisticBoardPageComponent,
+    ChartsComponent,
+    Web3chartsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -167,7 +173,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     MatIconModule,
     AngularEmojisModule,
-    SidebarModule.forRoot()
+    SidebarModule.forRoot(),
+    PlotlyModule,
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,

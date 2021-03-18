@@ -23,6 +23,7 @@ export class ChartsComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     this.charts = changes.data.currentValue.map(this.makeChartProps)
+    console.log('charts', this.charts)
   }
 
   makeChartProps(chart: ChartItem) {
