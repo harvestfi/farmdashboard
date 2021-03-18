@@ -11,8 +11,12 @@
         <p class="description">Each data point represents 1h for the 24h period & 1d for all other periods. Each contract was initiated at a different time & as such has different max values available. Time periods are calculated using estimated average blocks per day ~6500, this is why the x axis is represented in block numbers. Annualized figures are estimates based on change during the time period. Setting the period to max will take some time to load.</p>
         
         <div class="switch">
-            <div>Share Prices</div>
-            <div>Pool TVL</div>
+            <button
+                class="button shares"
+            >Share Prices</button>
+            <button
+                class="button tvl"
+            >Pool TVL</button>
         </div>
 
         <div class="chart-nav">
@@ -28,10 +32,18 @@
             </div>
         </div>
 
+        <div class="select">
+            <select [(ngModel)]="selectedContractId" (ngModelChange)="selectContract($event)">
+                <option *ngFor="let contract of contracts" [value]="contract.id">{{contract.name}}</option>
+            </select>
+        </div>
+
         <div class="chart-list">
-            <app-charts [data]="data"></app-charts>
+            
         </div>
     </ng-template>
 </div>
+
+
 
 

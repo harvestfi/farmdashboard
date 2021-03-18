@@ -287,9 +287,19 @@ export class StatisticService {
     }
   }
 
+  /**
+   * 
+   * @param o contract
+   * @param n day
+   * @param a ethblocksperday
+   * @param m method contract obj
+   * @param b const curBlock = await web3.eth.getBlockNumber()
+   * @returns 
+   */
   private async getPrice(o, n, a, m, b){
     let shares = []
     let blocks = []
+
       for (let i = 0; i < n; i++) {
         let block = b - (a*i)   
         shares.push(parseFloat(formatUnits(await m.call({}, block), o.decimals)).toPrecision(10))      
@@ -343,8 +353,9 @@ export class StatisticService {
   }
 
   genUsdShares(contract, a){
-    console.log(a)
-    console.log(contract)
+    // console.log(a)
+    // console.log(contract)
+
     let usdshares = contract.shares.map(share => {
       if(contract.native === 'btc'){
         return share*this.data.btcusd

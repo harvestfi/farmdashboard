@@ -9,6 +9,31 @@ import Web3 from 'web3';
 // console.log('Web3', Web3)
 
 // export const web3 = {}
+
+// TODO:
+
+/**
+ * 
+ * декомпозиция задачи
+ * 
+ * 1)  /contracts/vaults   
+ * 
+ * "contract": {
+ *    address": "0x8bf3c1c7b1961764ecb19b4fc4491150ceb1abb1",
+ *    "name": "DSD",
+ *    created - начальная точка построения графика (опционально)
+ * 
+ * 2) сделать выпадающий список - name
+ *    
+ * 3) 2 графика (share price + pool tvl) для текущего пула
+ * 
+ * 4) работа с web3 как с сервисом
+ * 
+ * 5) добавить пункт меню - Web3 charts
+ * 
+ */
+
+
 export const web3 = new Web3(Web3.givenProvider || "wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz");
 const fwbtcaddress = '0x5d9d25c7C457dD82fc8668FFC6B9746b674d4EcB';
 const crvfwbtcaddress = '0x9aA8F427A17d6B0d91B6262989EdC7D45d6aEdf8';
