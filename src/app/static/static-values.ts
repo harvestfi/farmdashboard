@@ -89,6 +89,15 @@ export class StaticValues {
     'MNFLX_UST',
     'MTWTR_UST',
     'SUSHI_ETH_UST',
+    'SUSHI_HODL',
+    'ETH_DAI_HODL',
+    'ETH_USDC_HODL',
+    'ETH_USDT_HODL',
+    'ETH_WBTC_HODL',
+    'MUSE_ETH',
+    'DUDES20_ETH',
+    'MASK20_ETH',
+    'ROPE20_ETH',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -121,6 +130,7 @@ export class StaticValues {
     'TUSD',
     // 'ESD',
     // 'DSD',
+    'SUSHI_HODL',
   ];
 
   public static strategiesListUniLpPools: string[] = [
@@ -139,6 +149,10 @@ export class StaticValues {
     'UNI_WBTC_KBTC',
     'MNFLX_UST',
     'MTWTR_UST',
+    'MUSE_ETH',
+    'DUDES20_ETH',
+    'MASK20_ETH',
+    'ROPE20_ETH'
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
@@ -155,6 +169,10 @@ export class StaticValues {
     'ONEINCH_ETH_USDT',
     'ONEINCH_ETH_WBTC',
     // 'ONEINCH_ETH_ONEINCH',
+    'ETH_DAI_HODL',
+    'ETH_USDC_HODL',
+    'ETH_USDT_HODL',
+    'ETH_WBTC_HODL',
   ];
 
   public static farmPools: string[] = [
@@ -182,6 +200,8 @@ export class StaticValues {
     ?.replace('UNI_LP_', '')
     ?.replace('UNI_', '')
     ?.replace('ST_', '')
+    ?.replace('_HODL', '_H')
+    ?.replace('HODL', 'SUSHI_HODL')
         ;
   }
 
@@ -292,12 +312,16 @@ export class StaticValues {
       case 'CRV_USDN':
         return '/assets/icons/curve-usdn.png';
       case 'SUSHI_ETH_DAI':
+      case 'ETH_DAI_HODL':
         return '/assets/icons/sushi-dai.png';
       case 'SUSHI_ETH_USDC':
+      case 'ETH_USDC_HODL':
         return '/assets/icons/sushi-usdc.png';
       case 'SUSHI_ETH_USDT':
+      case 'ETH_USDT_HODL':
         return '/assets/icons/sushi-usdt.png';
       case 'SUSHI_ETH_WBTC':
+      case 'ETH_WBTC_HODL':
         return '/assets/icons/sushi-wbtc.png';
       case 'IDX_ETH_DPI':
         return '/assets/icons/eth_dpi.png';
@@ -375,6 +399,16 @@ export class StaticValues {
         return '/assets/icons/mirror-twtr.png';
       case 'SUSHI_ETH_UST':
         return '/assets/icons/sushi-ust.png';
+      case 'SUSHI_HODL':
+        return '/assets/icons/sushi.png';
+      case 'MUSE_ETH':
+        return '/assets/icons/nft20-muse.png';
+      case 'DUDES20_ETH':
+        return '/assets/icons/nft20-dudes20.png';
+      case 'MASK20_ETH':
+        return '/assets/icons/nft20-mask20.png';
+      case 'ROPE20_ETH':
+        return '/assets/icons/nft20-rope20.png';
     }
   }
 }
