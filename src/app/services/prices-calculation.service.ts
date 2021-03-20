@@ -156,9 +156,13 @@ export class PricesCalculationService {
         // this.log.warn('old hw for ' + tvlName);
         return 0;
       }
+      let avgTvl = hardWork?.weeklyAverageTvl;
+      if (!avgTvl || avgTvl === 0) {
+        avgTvl = hardWork?.tvl;
+      }
       const weeklyProfit = Math.max(hardWork.weeklyProfit, 0);
       return (StaticValues.SECONDS_OF_YEAR / StaticValues.SECONDS_OF_WEEK)
-          * ((weeklyProfit / hardWork?.weeklyAverageTvl) * 100.0);
+          * ((weeklyProfit / avgTvl) * 100.0);
     }
     return 0;
   }
