@@ -45,10 +45,6 @@ export class StatisticBoardPageComponent implements OnInit {
   }
 
   get data() {
-    // console.log(
-    //   '- - - - charts',
-    //   this.statistic.data
-    // )
     return this.statistic.data.charts;
   }
 

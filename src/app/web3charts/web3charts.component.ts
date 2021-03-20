@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core'
 import { Web3Service } from '../services/web3.service'
 import { times, ethblocksperhour, ethblocksperday } from '../statistic-board/Abi'
-import type { Period } from '../statistic-board/Abi'
+import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component';
+import { ViewTypeService } from '../services/view-type.service'
+import { ChartBuilder } from '../chart/chart-builder'
+import {IChartApi} from 'lightweight-charts';
 
+import type { Period } from '../statistic-board/Abi'
 @Component({
   selector: 'app-web3charts',
   templateUrl: './web3charts.component.html',
   styleUrls: ['./web3charts.component.css']
 })
-export class Web3chartsComponent implements OnInit {
-  selectedPeriod: Period = times[2]
+export class Web3chartsComponent extends ChartGeneralMethodsComponent implements OnInit { // AfterViewInit
+  @ViewChild('chartShares') chartSharesRef: ElementRef;
+  @ViewChild('chartTvl') chartTvlRef: ElementRef;
+  chartShares: IChartApi;
+  chartTvl: IChartApi;
+
+  selectedPeriod: Period = times[3]
   preriodValues: Period[] = times
   
   isLoading = true
@@ -22,13 +31,20 @@ export class Web3chartsComponent implements OnInit {
     tvl: null,
   }
 
-  constructor(private web3: Web3Service) { }
+  constructor(
+    public vt: ViewTypeService,
+    private web3: Web3Service,
+    private cdRef: ChangeDetectorRef,
+  ) {
+    super();
+  }
 
   async ngOnInit() {
     await this.web3.init()
     this.getContractList()
-    this.selectedContractId = this.contracts[0].id
+    this.selectedContractId = this.contracts[6].id
     await this.getChartData()
+    this.renderCharts();
   }
 
   getContractList() {
@@ -40,14 +56,14 @@ export class Web3chartsComponent implements OnInit {
     })
   }
 
-  selectContract(contractId) {
+  async selectContract(contractId) {
     this.selectedContractId = Number(contractId)
-    this.getChartData()
+    await this.getChartData()
   }
 
   async selectPeriod(period: Period) {
     this.selectedPeriod = period
-    this.getChartData()
+    await this.getChartData()
   }
 
   showLoader() {
@@ -56,6 +72,38 @@ export class Web3chartsComponent implements OnInit {
 
   hideLoader() {
     this.isLoading = false
+  }
+
+  renderCharts() {
+    this.handleData(
+      this.chartsData.shares,
+      [['Shares', 'right', '#7e7e7e']],
+      this.chartSharesRef,
+      this.chartShares,
+    );
+
+    this.handleData(
+      this.chartsData.tvl,
+      [['TVL ', 'right', '#7e7e7e']],
+      this.chartTvlRef,
+      this.chartTvl,
+    );
+  }
+
+  private handleData(data: any, config: string[][], elRef: ElementRef, chart: IChartApi): void {
+    if (!data) {
+      return
+    }
+    
+    const builder = new ChartBuilder();
+    builder.initVariables(1);
+
+    data.forEach(item => {
+      builder.addInData(0, item.timestamp, item.share);
+    })
+    this.cdRef.detectChanges();
+    chart = builder.initChart(elRef)
+    builder.addToChart(chart, config)
   }
 
   async getChartData() {
@@ -77,17 +125,18 @@ export class Web3chartsComponent implements OnInit {
       'tvl'
     )
 
-    const [responseShares, responsepTvl] = await Promise.allSettled([pShares, pTvl])
+    // @ts-ignore
+    const [{ value: responseShares }, { value: responsepTvl }] = await Promise.allSettled([pShares, pTvl])
 
     this.chartsData = {
       shares: responseShares,
       tvl: responsepTvl,
     }
 
-    // console.log('- - - - response', {
-    //   shares: responseShares,
-    //   tvl: responsepTvl,
-    // })
+    console.log('- - - - response', {
+      shares: responseShares,
+      tvl: responsepTvl,
+    })
 
     this.hideLoader()
   }
