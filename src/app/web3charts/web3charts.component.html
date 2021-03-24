@@ -1,50 +1,68 @@
 <div class="statistic-board-page">
+
+    <div *ngIf="ready === true; then readyBlock else loadingBlock" id="load"></div>
+
+<ng-template #loadingBlock>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+
+<ng-template #readyBlock>
+  <div class="dialog-card">
+    <!-- <div class="title"> -->
+      <!-- {{data.title}} -->
+    <!-- </div> -->
+    <div #chart class="chart"></div>
+  </div>
+
+</ng-template>
+
     <h1 class="title">Harvest Finance fAsset Charts</h1>
 
     <p class="description">Each data point represents 1h for the 24h period & 1d for all other periods. Each contract was initiated at a different time & as such has different max values available. Time periods are calculated using estimated average blocks per day ~6500, this is why the x axis is represented in block numbers. Annualized figures are estimates based on change during the time period. Setting the period to max will take some time to load.</p>
     
-    <div *ngIf="isLoading; then loader else main"></div>
+    <!-- <div *ngIf="isLoading; then loader else main"></div> -->
 
-    <ng-template #loader>
-        <h2 class="loader">Loading...</h2>
-    </ng-template>
+    <!-- <ng-template #loader> -->
+        <!-- <h2 class="loader">Loading...</h2> -->
+    <!-- </ng-template> -->
 
-    <ng-template #main> 
-        <div class="switch">
+    <!-- <ng-template #main>  -->
+        <!-- <div class="switch"> -->
             <!-- <button -->
                 <!-- class="button shares" -->
             <!-- >Share Prices</button> -->
             <!-- <button -->
                 <!-- class="button tvl" -->
             <!-- >Pool TVL</button> -->
-        </div>
+        <!-- </div> -->
 
-        <div class="select">
-            <select [(ngModel)]="selectedContractId" (ngModelChange)="selectContract($event)">
-                <option *ngFor="let contract of contracts" [value]="contract.id">{{contract.name}}</option>
-            </select>
-        </div>
+        <!-- <div class="select"> -->
+            <!-- <select [(ngModel)]="selectedContractId" (ngModelChange)="selectContract($event)"> -->
+                <!-- <option *ngFor="let contract of contracts" [value]="contract.id">{{contract.name}}</option> -->
+            <!-- </select> -->
+        <!-- </div> -->
 
-        <div class="chart-nav">
-            <div class="buttons">
-                <button
-                    *ngFor="let period of preriodValues"
-                    class="button"
-                    [class.active]="selectedPeriod.key === period.key"
-                    (click)="selectPeriod(period)"
-                >
-                    {{period.text}}
-                </button>
-            </div>
-        </div>
-    </ng-template>
+        <!-- <div class="chart-nav"> -->
+            <!-- <div class="buttons"> -->
+                <!-- <button -->
+                    <!-- *ngFor="let period of preriodValues" -->
+                    <!-- class="button" -->
+                    <!-- [class.active]="selectedPeriod.key === period.key" -->
+                    <!-- (click)="selectPeriod(period)" -->
+                <!-- > -->
+                    <!-- {{period.text}} -->
+                <!-- </button> -->
+            <!-- </div> -->
+        <!-- </div> -->
+    <!-- </ng-template> -->
 
-    <div class="chart-list" [class.hidden]="isLoading">
-        <div class="chart-item">
-            <div #chartShares class="chart"></div>
-        </div>
-        <div class="chart-item">
-            <div #chartTvl class="chart"></div>
-        </div>
-    </div>
+    <!-- <div class="chart-list" >  -->
+        <!-- <div class="chart-item"> -->
+            <!-- <div #chart class="chart"></div> -->
+        <!-- </div> -->
+        <!-- <div class="chart-item"> -->
+            <!-- <div #chartTvl class="chart"></div> -->
+        <!-- </div> -->
+    <!-- </div> -->
+    <!-- [class.hidden]="isLoading" -->
 </div>
