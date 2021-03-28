@@ -11,22 +11,21 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
   styleUrls: ['./strategy-list.component.scss']
 })
 export class StrategyListComponent {
-  public searchTerm: string = '';
-  // Mutating the currentVaults in static values before using it so that we 
+  public searchTerm = '';
+  // Mutating the currentVaults in static values before using it so that we
   // are able to sort this array and not get a new one from the service.
   public vaultsList = [...StaticValues.currentVaults];
   public apyWindowState: Record<string, boolean> = {};
-  public sortDirection: boolean = true;
+  public sortDirection = true;
   @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
   constructor(
     public vt: ViewTypeService,
-    public pricesCalculationService: PricesCalculationService    
-    ) {}
+    public pricesCalculationService: PricesCalculationService) {}
 
-  get vaults(){
-    // If there is a search term, we filter, otherwise we return 
+  get vaults(): string[] {
+    // If there is a search term, we filter, otherwise we return
     // the vaults list
-    if(this.searchTerm){
+    if (this.searchTerm) {
       return this.vaultsList.filter(vault => {
         return vault.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase());
       });
@@ -39,30 +38,30 @@ export class StrategyListComponent {
   }
 
   toggleAPYWindow(name: string): void {
-    if(!(name in this.apyWindowState)){
+    if (!(name in this.apyWindowState)) {
       this.apyWindowState[name] = true;
       return;
     }
     this.apyWindowState[name] = !this.apyWindowState[name];
   }
-  
+
   sortVaultsList(sortBy?: string): void{
     const self = this;
-    this.vaultsList.sort(function(a: any, b: any){
-      let left = self.sortDirection  ? a : b;
-      let right = self.sortDirection ? b : a;
-      // This is not ideal, but it's a decent way to handle 
+    this.vaultsList.sort((a: any, b: any): number => {
+      const left = self.sortDirection  ? a : b;
+      const right = self.sortDirection ? b : a;
+      // This is not ideal, but it's a decent way to handle
       // sorting given the current data :)
-      switch(sortBy){
+      switch (sortBy) {
         case 'name':
-          if(left < right){
+          if (left < right) {
             return -1;
           }
           return 1;
         case 'apy':
           return  Number(self.vaultFullApy(right)) - Number(self.vaultFullApy(left));
         case 'tvl':
-          return self.vaultTvl(right) - self.vaultTvl(left); 
+          return self.vaultTvl(right) - self.vaultTvl(left);
         case 'farm_rewards':
           return self.vaultFarmRewards(right) - self.vaultFarmRewards(left);
         case 'total_earned':
@@ -72,7 +71,7 @@ export class StrategyListComponent {
       }
     });
 
-    this.sortDirection = !this.sortDirection; 
+    this.sortDirection = !this.sortDirection;
   }
 
   get vaultsListCrv(): string[] {
