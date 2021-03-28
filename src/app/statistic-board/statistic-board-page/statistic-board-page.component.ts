@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { StatisticService } from '../../services/statistic.service';
+import { Web3Service } from '../../services/web3.service'
 import type { Period } from '../Abi';
 import { times } from '../Abi';
 
@@ -17,12 +18,16 @@ export class StatisticBoardPageComponent implements OnInit {
   
   mode: Mode = 'shares'
 
-  constructor(private statistic: StatisticService) {}
+  constructor(
+    private statistic: StatisticService,
+    private web3: Web3Service  
+  ) {}
 
   async ngOnInit() {
     this.showLoader();
     await this.statistic.init();
     this.hideLoader();
+    await this.web3.init()
   }
   
   async selectPeriod(period: Period) {

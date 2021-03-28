@@ -18,7 +18,7 @@ export class IncomeDialogComponent extends ChartGeneralMethodsComponent implemen
   chart: IChartApi;
 
   constructor(private httpService: HttpService,
-              public vt: ViewTypeService,
+              public vt: ViewTypeService, // тема графика
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
                 super();
@@ -32,12 +32,15 @@ export class IncomeDialogComponent extends ChartGeneralMethodsComponent implemen
     this.httpService.getHardWorkHistoryDataByName(this.data.name).subscribe(data => {
       this.log.debug('History of All Incomes loaded ', data);
       const chartBuilder = new ChartBuilder();
+      // линии
       chartBuilder.initVariables(3);
       data?.forEach(dto => {
+        // линия дата значение
         chartBuilder.addInData(0, dto.blockDate, (dto.fullRewardUsdTotal * 0.7) / 1000);
         chartBuilder.addInData(1, dto.blockDate, dto.apr);
         chartBuilder.addInData(2, dto.blockDate, dto.tvl / 1000000);
       });
+      // название выравнивание(right или любое другое значение) цвет
       this.handleData(chartBuilder, [
         ['Profit K$', 'right', '#0085ff'],
         ['Call APR %', '1', '#eeb000'],

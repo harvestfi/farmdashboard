@@ -78,6 +78,7 @@ import { StatisticBoardPageComponent } from './statistic-board/statistic-board-p
 import { ChartsComponent } from './statistic-board/charts/charts.component';
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
+import { Web3chartsComponent } from './web3charts/web3charts.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -140,7 +141,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LastPricesListComponent,
     UserBalancesDialogComponent,
     StatisticBoardPageComponent,
-    ChartsComponent
+    ChartsComponent,
+    Web3chartsComponent
   ],
   imports: [
     AppRoutingModule,
