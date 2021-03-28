@@ -132,7 +132,7 @@ export class StrategyListComponent {
   }
 
   vaultTotalEarning(tvlName: string): number {
-    return this.pricesCalculationService.lastHardWorks.get(tvlName)?.fullRewardUsdTotal * 0.7;
+    return (this.pricesCalculationService.lastHardWorks.get(tvlName)?.fullRewardUsdTotal * 0.7) || 0;
   }
 
   vaultFarmRewards(tvlName: string): number {

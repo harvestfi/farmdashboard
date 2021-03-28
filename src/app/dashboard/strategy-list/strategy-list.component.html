@@ -46,8 +46,11 @@
         {{vaultFarmRewards(row) | number: '1.1-1'}} FARM
       </div>
       <div class="column">
-        ${{vaultTotalEarning(row) || 0 | number: '1.1-1'}}
+        ${{vaultTotalEarning(row) | number: '1.1-1'}}
       </div>
+    </div>
+    <div class="empty-list" *ngIf="!vaults.length">
+      🏜️ No results found for '{{searchTerm}}' 🏜️
     </div>
   </div>
 </div>
