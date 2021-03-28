@@ -51,7 +51,7 @@ export class ChartBuilder {
   }
 
   public addInData(i: number, timestamp: number, v: number): void {
-    if (v != undefined || v === 0 || !timestamp || timestamp === 0 || this.dataMaps[i].get(timestamp)) {
+    if (!v || v === 0 || !timestamp || timestamp === 0 || this.dataMaps[i].get(timestamp)) {
       return;
     }
     this.chartData[i].push({time: timestamp, value: v});
