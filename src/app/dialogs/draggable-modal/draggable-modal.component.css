@@ -1,5 +1,5 @@
 .custom-modal {
-    position: absolute;
+    position: fixed;
     z-index: 1000;
     padding: 10px;
     width: -webkit-fit-content;

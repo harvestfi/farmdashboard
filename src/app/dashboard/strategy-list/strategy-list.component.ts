@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, AfterViewInit} from '@angular/core';
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import { PricesCalculationService } from 'src/app/services/prices-calculation.service';
@@ -10,7 +10,7 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
   templateUrl: './strategy-list.component.html',
   styleUrls: ['./strategy-list.component.scss']
 })
-export class StrategyListComponent {
+export class StrategyListComponent implements AfterViewInit{
   public searchTerm = '';
   // Mutating the currentVaults in static values before using it so that we
   // are able to sort this array and not get a new one from the service.
@@ -21,6 +21,9 @@ export class StrategyListComponent {
   constructor(
     public vt: ViewTypeService,
     public pricesCalculationService: PricesCalculationService) {}
+  ngAfterViewInit(): void {
+    this.sortVaultsList('tvl');
+  }
 
   get vaults(): string[] {
     // If there is a search term, we filter, otherwise we return
