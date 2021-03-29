@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import Web3 from 'web3';
-import {proxyABI, ethblocksperday, ethblocksperhour} from '../statistic-board/Abi'
+import { proxyABI, ethblocksperday, ethblocksperhour } from '../web3charts/Abi'
 import { formatUnits } from "@ethersproject/units";
 
 export const web3 = new Web3(Web3.givenProvider || "wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz");
@@ -62,18 +62,14 @@ export class Web3Service {
             let block = this.ethCurrentBlock - (blocksPeriod * i);
             
             const response = await methods[contractMethod].call({}, block).catch(error => console.log(error))
-            
+
             const { timestamp } = await web3.eth.getBlock(block);
             
-            const share = parseFloat(formatUnits(response, contract.decimals)).toPrecision(6)
+            const value = formatUnits(response, contract.decimals)
             
-            chartData.push({ block, share, index: i, timestamp  })
+            chartData.push({ block, value: Number(value), index: i, timestamp  })
         }
 
-        // console.log('chartData', contractMethod, chartData)
-
         return chartData;
-
-        // return contract;
     }
 }

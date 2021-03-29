@@ -74,11 +74,10 @@ import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.compon
 import { FlowCardsViewComponent } from './flow-cards/flow-cards-view/flow-cards-view.component';
 import { LastPricesListComponent } from './dashboard/last-prices-list/last-prices-list.component';
 import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user-balances-dialog.component';
-import { StatisticBoardPageComponent } from './statistic-board/statistic-board-page/statistic-board-page.component';
-import { ChartsComponent } from './statistic-board/charts/charts.component';
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 import { Web3chartsComponent } from './web3charts/web3charts.component';
+import { Web3chartComponent } from './web3charts/components/web3chart/web3chart.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -140,9 +139,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FlowCardsViewComponent,
     LastPricesListComponent,
     UserBalancesDialogComponent,
-    StatisticBoardPageComponent,
-    ChartsComponent,
-    Web3chartsComponent
+    Web3chartsComponent,
+    Web3chartComponent
   ],
   imports: [
     AppRoutingModule,

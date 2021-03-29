@@ -9,12 +9,7 @@
         <h2 class="loader">Loading...</h2>
     </ng-template>
 
-    <ng-template #main> 
-        <div class="switch">
-            <button class="button shares">Share Prices</button>
-            <button class="button tvl">Pool TVL</button>
-        </div>
-
+    <ng-template #main>
         <div class="select">
             <select [(ngModel)]="selectedContractId" (ngModelChange)="selectContract($event)">
                 <option *ngFor="let contract of contracts" [value]="contract.id">{{contract.name}}</option>
@@ -37,10 +32,12 @@
 
     <div class="chart-list" [class.hidden]="isLoading"> 
         <div class="chart-item">
-            <div #chartShares class="chart"></div>
+            <div class="title">Share Prices</div>
+            <app-web3chart [data]="chartsData.shares" [label]="'shares'"></app-web3chart>
         </div>
         <div class="chart-item">
-            <div #chartTvl class="chart"></div>
+            <div class="title">Pool TVL</div>
+            <app-web3chart [data]="chartsData.tvl" [label]="'tvl'"></app-web3chart>
         </div>
     </div>
 </div>

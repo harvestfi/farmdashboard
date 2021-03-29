@@ -1,25 +1,14 @@
-import { BalanceChartOptions } from './../history/balance-chart-options';
-import { Component, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core'
+import { Component, AfterViewInit } from '@angular/core'
 import { Web3Service } from '../services/web3.service'
-import { times, ethblocksperhour, ethblocksperday } from '../statistic-board/Abi'
-import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component';
-import { ViewTypeService } from '../services/view-type.service'
-import { ChartBuilder } from '../chart/chart-builder'
-import { IChartApi } from 'lightweight-charts';
+import { times, ethblocksperhour, ethblocksperday } from './Abi'
+import type { Period } from './Abi'
 
-
-import type { Period } from '../statistic-board/Abi'
 @Component({
   selector: 'app-web3charts',
   templateUrl: './web3charts.component.html',
   styleUrls: ['./web3charts.component.css']
 })
-export class Web3chartsComponent extends ChartGeneralMethodsComponent implements AfterViewInit { // AfterViewInit 
-  @ViewChild('chartShares') chartSharesRef: ElementRef;
-  @ViewChild('chartTvl') chartTvlRef: ElementRef;
-  chartShares: IChartApi;
-  chartTvl: IChartApi;
- 
+export class Web3chartsComponent implements AfterViewInit { 
   selectedPeriod: Period = times[2]
   preriodValues: Period[] = times
   
@@ -34,19 +23,16 @@ export class Web3chartsComponent extends ChartGeneralMethodsComponent implements
   }
  
   constructor(
-    public vt: ViewTypeService,
     private web3: Web3Service,
-    private cdRef: ChangeDetectorRef,
-  ) {
-    super();
-  }
+  ) {}
  
-  async ngAfterViewInit() {
-    await this.web3.init()
-    this.getContractList()
-    this.selectedContractId = this.contracts[14].id
-    await this.getChartData()
-    this.renderCharts();
+   ngAfterViewInit() {
+    this.web3.init()
+      .then(() => {
+        this.getContractList()
+        this.selectedContractId = this.contracts[14].id
+        this.getChartData()
+      })
   }
  
   getContractList() {
@@ -57,17 +43,15 @@ export class Web3chartsComponent extends ChartGeneralMethodsComponent implements
       }
     })
   }
- 
-  async selectContract(contractId) {
+   
+  selectContract(contractId) {
     this.selectedContractId = Number(contractId)
-    await this.getChartData()
-    this.renderCharts();
+    this.getChartData()
   }
- 
-  async selectPeriod(period: Period) {
+   
+  selectPeriod(period: Period) {
     this.selectedPeriod = period
-    await this.getChartData()
-    this.renderCharts();
+    this.getChartData()
   }
  
   showLoader() {
@@ -77,42 +61,8 @@ export class Web3chartsComponent extends ChartGeneralMethodsComponent implements
   hideLoader() {
     this.isLoading = false
   }
- 
-  renderCharts() {
-
-    if (this.chartShares) {
-      this.chartShares.remove()
-    } 
-    const sharesChartBuilder = new ChartBuilder();
-    sharesChartBuilder.initVariables(1);
-    this.chartsData.shares.forEach(el => {
-      sharesChartBuilder.addInData(0, el.timestamp, el.share)
-    })
-    
-    this.cdRef.detectChanges();
-    this.chartShares = sharesChartBuilder.initChart(this.chartSharesRef);
-    sharesChartBuilder.addToChart(this.chartShares, [['Shares', 'right', '#7e7e7e']]);
-    
-    // this.chartShares.timeScale();
-
-    if (this.chartTvl) {
-      this.chartTvl.remove()
-    }
-
-    const tvlChartBuilder = new ChartBuilder();
-    tvlChartBuilder.initVariables(1);
-    this.chartsData.tvl.forEach(el => {
-      tvlChartBuilder.addInData(0, el.timestamp, el.share)
-    })
-    
-    this.cdRef.detectChanges();
-    this.chartTvl = tvlChartBuilder.initChart(this.chartTvlRef);
-    tvlChartBuilder.addToChart(this.chartTvl, [['TVL ', 'right', '#7e7e7e']]);
-
-    // this.chartTvl.timeScale();
-  }
- 
-  async getChartData() {
+   
+  getChartData() {
     this.showLoader()
  
     const blocksPeriod = this.selectedPeriod.value === 24 ? ethblocksperhour : ethblocksperday
@@ -130,14 +80,16 @@ export class Web3chartsComponent extends ChartGeneralMethodsComponent implements
       blocksPeriod,
       'tvl'
     )
- 
-    // @ts-ignore
-    const [{ value: responseShares }, { value: responsepTvl }] = await Promise.allSettled([pShares, pTvl]) 
-    this.chartsData = {
-      shares: responseShares,
-      tvl: responsepTvl,
-    }
- 
-    this.hideLoader()
+
+    Promise.allSettled([pShares, pTvl])
+      .then(([responseShares, responseTvl]) => {
+        if (responseShares.status === 'fulfilled') {
+          this.chartsData.shares = responseShares.value
+        }
+        if (responseTvl.status === 'fulfilled') {
+          this.chartsData.tvl = responseTvl.value
+        }
+        this.hideLoader()
+      })
   }
 }

@@ -1,37 +1,4 @@
 import Web3 from 'web3';
-// const stream = require('stream')
-// console.log('stream', stream)
-
-// System.import('stream').then(file => {
-//   console.log('file', file)
-//   // perform additional interactions after the resource has been asynchronously fetched
-// });
-// console.log('Web3', Web3)
-
-// export const web3 = {}
-
-// TODO:
-
-/**
- * 
- * декомпозиция задачи
- * 
- * 1)  /contracts/vaults   
- * 
- * "contract": {
- *    address": "0x8bf3c1c7b1961764ecb19b4fc4491150ceb1abb1",
- *    "name": "DSD",
- *    created - начальная точка построения графика (опционально)
- * 
- * 2) сделать выпадающий список - name
- *    
- * 3) 2 графика (share price + pool tvl) для текущего пула
- * 
- * 4) работа с web3 как с сервисом
- * 
- * 5) добавить пункт меню - Web3 charts
- * 
- */
 
 
 export const web3 = new Web3(Web3.givenProvider || "wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz");
@@ -126,7 +93,7 @@ export const times = [
     { key: 3, value: 5, text: "5d" },
     { key: 4, value: 7, text: "7d" },
     { key: 6, value: 14, text: "14d" },
-    { key: 7, value: 0, text: "MAX" }
+    // { key: 7, value: 0, text: "MAX" }
 ];
 
 export const ethblocksperday = 6530;

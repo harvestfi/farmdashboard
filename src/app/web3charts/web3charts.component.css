@@ -129,6 +129,12 @@ h1, h2, h3, h4, h5 {
     flex-basis: 48%;
 }
 
+.chart-item .title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 
 .loader {
