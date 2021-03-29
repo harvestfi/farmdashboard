@@ -49,10 +49,9 @@ export class StrategyListComponent implements AfterViewInit{
   }
 
   sortVaultsList(sortBy?: string): void{
-    const self = this;
     this.vaultsList.sort((a: any, b: any): number => {
-      const left = self.sortDirection  ? a : b;
-      const right = self.sortDirection ? b : a;
+      const left = this.sortDirection  ? a : b;
+      const right = this.sortDirection ? b : a;
       // This is not ideal, but it's a decent way to handle
       // sorting given the current data :)
       switch (sortBy) {
@@ -62,13 +61,13 @@ export class StrategyListComponent implements AfterViewInit{
           }
           return 1;
         case 'apy':
-          return  Number(self.vaultFullApy(right)) - Number(self.vaultFullApy(left));
+          return  Number(this.vaultFullApy(right)) - Number(this.vaultFullApy(left));
         case 'tvl':
-          return self.vaultTvl(right) - self.vaultTvl(left);
+          return this.vaultTvl(right) - this.vaultTvl(left);
         case 'farm_rewards':
-          return self.vaultFarmRewards(right) - self.vaultFarmRewards(left);
+          return this.vaultFarmRewards(right) - this.vaultFarmRewards(left);
         case 'total_earned':
-          return self.vaultTotalEarning(right) - self.vaultTotalEarning(left);
+          return this.vaultTotalEarning(right) - this.vaultTotalEarning(left);
         default:
           break;
       }
