@@ -1,0 +1,13 @@
+<div *ngIf="ready === true; then readyBlock else loadingBlock" id="ready"></div>
+
+<ng-template #loadingBlock>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+
+<ng-template #readyBlock>
+  <div class="dialog-card" [class]="vt.getThemeColor() + '-card'">
+    <div class="title">Gas price history</div>
+    <div #chart class="chart"></div>
+  </div>
+
+</ng-template>

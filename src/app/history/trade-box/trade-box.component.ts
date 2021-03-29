@@ -58,8 +58,8 @@ export class TradeBoxComponent implements OnInit {
     return Utils.isUniTrade(this.transferDto);
   }
 
-  openEthersacanTx(hash: string): void {
-    Utils.openEthersacanTx(hash);
+  openEtherscanTx(hash: string): void {
+    Utils.openEtherscanTx(hash);
   }
 
   getCoinImgUrl(name: string): string {

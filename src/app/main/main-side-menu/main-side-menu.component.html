@@ -11,7 +11,6 @@
             <input [checked]="isDarkTheme" type="checkbox" name="darkmode toggle" id="dark-mode-toggle-checkbox">
             <label title="Switch Theme" (click)="toggleTheme()"  for="dark-mode-toggle-checkbox" class="dark-mode-toggle-label"></label>
         </div>
-
     </div>
 
     <ul class="main-side-menu-items">
@@ -49,6 +48,13 @@
             </ng-template>
         </app-custom-modal>
 
+        <li (click)="openWeeklyRewardsDialog()" data-menu-icon="🏆" class="main-side-menu-item">Weekly Rewards History</li>
+        <app-custom-modal #weeklyRewardsDialog>
+            <ng-template >
+                <app-rewards-history-dialog [data]="{title: 'Weekly rewards history chart'}"></app-rewards-history-dialog>
+            </ng-template>
+        </app-custom-modal>
+
         <li (click)="openFarmBuybacksDialog()" data-menu-icon="📥" class="main-side-menu-item">FARM Buybacks</li>
         <app-custom-modal #farmBuybackDialog>
             <ng-template >
@@ -62,7 +68,7 @@
             </ng-template>
         </app-custom-modal>
         
-        <li (click)="openDownloadHistoricDataDialog()" data-menu-icon="🗄️" class="main-side-menu-item">Historic Data</li>
+        <li (click)="openDownloadHistoricDataDialog()" data-menu-icon="🗄️" class="main-side-menu-item">Download</li>
         <app-custom-modal #downloadHistoricDataDialog>
             <ng-template >
                 <app-download-historic-data-dialog [data]="{title: 'Download Historic Data'}"></app-download-historic-data-dialog>

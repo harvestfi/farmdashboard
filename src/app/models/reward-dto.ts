@@ -35,11 +35,12 @@ export class RewardDto {
     RewardDto.fillBlockDateAdopted(tx);
   }
 
-  public static fillBlockDateAdopted(tx: RewardDto): void {
+  public static fillBlockDateAdopted(tx: RewardDto): RewardDto {
     if (tx.blockDateAdopted == null) {
       const d = new Date(0);
       d.setUTCSeconds(tx.blockDate);
       tx.blockDateAdopted = d;
     }
+    return tx;
   }
 }

@@ -33,6 +33,7 @@ export class MainSideMenuComponent {
     @ViewChild('incomeDialog') private incomeDialog: CustomModalComponent;
     @ViewChild('psApyDialog') private psApyDialog: CustomModalComponent;
     @ViewChild('weeklyProfitDialog') private weeklyProfitDialog: CustomModalComponent;
+    @ViewChild('weeklyRewardsDialog') private weeklyRewardsDialog: CustomModalComponent;
     @ViewChild('farmBuybackDialog') private farmBuybackDialog: CustomModalComponent;
     @ViewChild('savedFeesDialog') private savedFeesDialog: CustomModalComponent;
     @ViewChild('userBalancesDialog') private userBalancesDialog: CustomModalComponent;
@@ -65,6 +66,11 @@ export class MainSideMenuComponent {
 
     openWeeklyProfitDialog(): void {
         this.weeklyProfitDialog.open();
+        this.toggleMenu();
+    }
+
+    openWeeklyRewardsDialog(): void {
+        this.weeklyRewardsDialog.open();
         this.toggleMenu();
     }
 

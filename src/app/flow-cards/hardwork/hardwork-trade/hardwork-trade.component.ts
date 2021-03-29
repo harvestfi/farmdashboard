@@ -35,7 +35,7 @@ export class HardworkTradeComponent implements OnInit {
   }
 
   openEthersacanTx(hash: string): void {
-    Utils.openEthersacanTx(hash);
+    Utils.openEtherscanTx(hash);
   }
 
 }
