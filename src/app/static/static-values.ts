@@ -62,10 +62,6 @@ export class StaticValues {
     'SUSHI_MIC_USDT',
     'SUSHI_MIS_USDT',
     'CRV_OBTC',
-    'ONEINCH_ETH_DAI',
-    'ONEINCH_ETH_USDC',
-    'ONEINCH_ETH_USDT',
-    'ONEINCH_ETH_WBTC',
     'DAI_BSG',
     'DAI_BSGS',
     'BAC',
@@ -164,10 +160,6 @@ export class StaticValues {
     'SUSHI_ETH_UST',
     // 'SUSHI_MIC_USDT',
     // 'SUSHI_MIS_USDT',
-    'ONEINCH_ETH_DAI',
-    'ONEINCH_ETH_USDC',
-    'ONEINCH_ETH_USDT',
-    'ONEINCH_ETH_WBTC',
     // 'ONEINCH_ETH_ONEINCH',
     'ETH_DAI_HODL',
     'ETH_USDC_HODL',
@@ -351,14 +343,6 @@ export class StaticValues {
         return '/assets/icons/mis-usdt.png';
       case 'CRV_OBTC':
         return '/assets/icons/curve-obtc.png';
-      case 'ONEINCH_ETH_DAI':
-        return '/assets/icons/1inch-eth-dai.png';
-      case 'ONEINCH_ETH_USDC':
-        return '/assets/icons/1inch-eth-usdc.png';
-      case 'ONEINCH_ETH_USDT':
-        return '/assets/icons/1inch-eth-usdt.png';
-      case 'ONEINCH_ETH_WBTC':
-        return '/assets/icons/1inch-eth-wbtc.png';
       case 'DAI_BSG':
         return '/assets/icons/dai-bsg.png';
       case 'DAI_BSGS':
