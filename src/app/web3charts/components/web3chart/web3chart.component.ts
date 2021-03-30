@@ -1,3 +1,4 @@
+import { ViewTypeService } from 'src/app/services/view-type.service';
 import { IChartApi } from 'lightweight-charts'
 import { ChartBuilder } from './../../../chart/chart-builder'
 import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component'
@@ -16,6 +17,7 @@ export class Web3chartComponent extends ChartGeneralMethodsComponent implements 
 
   constructor(
     private cdRef: ChangeDetectorRef,
+    public vt: ViewTypeService
   ) { 
     super()
   }
@@ -28,7 +30,6 @@ export class Web3chartComponent extends ChartGeneralMethodsComponent implements 
   }
 
   handleData(data) {
-    console.log('data', data)
     if (data === null) {
       return
     }

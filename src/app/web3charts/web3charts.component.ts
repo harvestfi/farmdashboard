@@ -30,7 +30,7 @@ export class Web3chartsComponent implements AfterViewInit {
     this.web3.init()
       .then(() => {
         this.getContractList()
-        this.selectedContractId = this.contracts[14].id
+        this.selectedContractId = this.contracts[17].id
         this.getChartData()
       })
   }
