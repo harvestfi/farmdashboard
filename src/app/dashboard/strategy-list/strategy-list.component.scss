@@ -1,0 +1,90 @@
+@import '../../../scss/themes/theme-mixins.scss';
+@import '../../../scss/utilities/utilities.scss';
+
+.custom-table {
+  margin: 10px;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  height: 100%;
+  padding: 3px;
+
+  .title-bar{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding: 10px 20px;
+
+    .title {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+  }
+
+  .header {
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    padding: 10px 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-weight: bold;
+    background: #fff9cd;
+
+    @include responsive(small){
+      font-size: 0.7rem;
+    }
+
+    .header-column {
+      cursor: pointer;
+    }
+  }
+  
+  @include isDarkMode() {
+    .header {
+      background: #3c3c3c;
+    }
+  }
+  .content {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .row {
+    padding: 10px 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(auto-fill);
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    @include responsive(small){
+      font-size: 0.7rem;
+    }
+  }
+
+  .column {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .empty-list {
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+  }
+}

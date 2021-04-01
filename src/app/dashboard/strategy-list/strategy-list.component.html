@@ -1,46 +1,59 @@
-<div *ngIf="vt.isNonScoreboard()" class="row tvl-row" id="top-div-light">
-
-  <div class="left-border-box strategies-row-first-w">
-    <div class="row strategies-row-first">
-
-      <div class="left-border-box first-list">
-        <div class="list-card" [class]="vt.getThemeColor() + '-card'">
-          <app-tvl-box [name]="'Coins'" [tvlName]="null"></app-tvl-box>
-          <app-tvl-box *ngFor="let vault of vaultsListCrypto" [tvlName]="vault"></app-tvl-box>
-        </div>
-      </div>
-
-      <div class="left-border-box second-list">
-        <div class="list-card" [class]="vt.getThemeColor() + '-card'">
-          <app-tvl-box [name]="'Curve'" [tvlName]="null"></app-tvl-box>
-          <app-tvl-box *ngFor="let vault of vaultsListCrv" [tvlName]="vault"></app-tvl-box>
-        </div>
-      </div>
-
-    </div>
+<div class="custom-table" [class]="vt.getThemeColor() + '-card'">
+  <div class="title-bar">
+    <h1 class="title">Strategies</h1>
+    <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
   </div>
-
-  <div class="left-border-box strategies-row-second-w">
-    <div class="row strategies-row-second">
-
-      <div class="left-border-box third-list">
-        <div class="list-card" [class]="vt.getThemeColor() + '-card'">
-          <app-tvl-box [name]="'Non Uni LPs'" [tvlName]="null"></app-tvl-box>
-          <app-tvl-box *ngFor="let vault of vaultsListNonUniLpPools" [tvlName]="vault"></app-tvl-box>
-        </div>
+  <div class="header">
+      <div (click)="sortVaultsList('name')" class="header-column">Name <i class="fas fa-sort"></i></div>
+      <div (click)="sortVaultsList('apy')" class="header-column" #tooltip="matTooltip" matTooltip="APY with daily restake period">APY % <i class="fas fa-sort"></i></div>
+      <div (click)="sortVaultsList('tvl')" class="header-column" #tooltip="matTooltip" matTooltip="Total Value Locked">TVL M$ <i class="fas fa-sort"></i></div>
+      <div (click)="sortVaultsList('farm_rewards')" class="header-column">FARM Rewards <i class="fas fa-sort"></i></div>
+      <div (click)="sortVaultsList('total_earned')" class="header-column">Total Earned <i class="fas fa-sort"></i></div>
+  </div>
+  <div class="content">
+    <div *ngFor="let row of vaults" class="row">
+      <div class="column">
+        <img width="16" [src]="getImgSrc(row)" [alt]="row + ' icon'"> {{row}}
       </div>
-
-      <div class="left-border-box fourth-list">
-        <div class="list-card" [class]="vt.getThemeColor() + '-card'">
-          <app-tvl-box [name]="'Uniswap LPs'" [tvlName]="null"></app-tvl-box>
-          <app-tvl-box *ngFor="let vault of vaultsListUniLpPools" [tvlName]="vault"></app-tvl-box>
-        </div>
+      <div class="column">
+        <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row]">
+          <app-apy-window (showModal)="toggleAPYWindow(row)" [poolName]="row"></app-apy-window>
+        </app-draggable-modal>
+        <span class="pointer" (click)="toggleAPYWindow(row)" matTooltip="
+        APR: {{vaultFullApy(row)}}%
+        Click to open details"
+        matTooltipClass="tooltip-spaced">
+          {{vaultFullApy(row)}}% <i class="far fa-window-restore"></i>
+        </span>
       </div>
-
+      <div  class="column">
+        <app-custom-modal #tvlModal>
+          <ng-template>
+            <app-tvl-dialog [data]="{type: row}"></app-tvl-dialog>
+          </ng-template>
+        </app-custom-modal>
+        <span
+        class="pointer"
+        (click)="openTvlDialog()" 
+        matTooltip="
+        TVL: {{vaultTvl(row) | number}}$ 
+        Click to open TVL history chart"
+      matTooltipClass="tooltip-spaced">
+      ${{vaultTvl(row)| number: '1.1-1'}}M
+    </span>
+      </div>
+      <div class="column">
+        {{vaultFarmRewards(row) | number: '1.1-1'}} FARM
+      </div>
+      <div class="column">
+        ${{vaultTotalEarning(row) | number: '1.1-1'}}
+      </div>
+    </div>
+    <div class="empty-list" *ngIf="!vaults.length">
+      🏜️ No results found for '{{searchTerm}}' 🏜️
     </div>
   </div>
 </div>
-
 
 <table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard" style="margin-top: 10px;">
 

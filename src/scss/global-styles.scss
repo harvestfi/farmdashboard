@@ -143,14 +143,31 @@ body {
   /* Track */
   ::-webkit-scrollbar-track {
     background: #f1f1f1;
+    transition: all 0.5s;
+
   }
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #cdcdcd;
     border-radius: 10px;
+    transition: all 0.5s;
+
   }
   
+
+  .dark-background, .dark-card {
+
+  ::-webkit-scrollbar-track {
+    background: #363636;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #6b6b6b;
+    border-radius: 10px;
+  }
+  }
+
   .scroller {
     white-space: pre-line;
     height: inherit;
