@@ -7,7 +7,7 @@
       <div (click)="sortVaultsList('name')" class="header-column">Name <i class="fas fa-sort"></i></div>
       <div (click)="sortVaultsList('apy')" class="header-column" #tooltip="matTooltip" matTooltip="APY with daily restake period">APY % <i class="fas fa-sort"></i></div>
       <div (click)="sortVaultsList('tvl')" class="header-column" #tooltip="matTooltip" matTooltip="Total Value Locked">TVL M$ <i class="fas fa-sort"></i></div>
-      <div (click)="sortVaultsList('farm_rewards')" class="header-column">FARM Rewards <i class="fas fa-sort"></i></div>
+      <div (click)="sortVaultsList('users')" class="header-column">Users <i class="fas fa-sort"></i></div>
       <div (click)="sortVaultsList('total_earned')" class="header-column">Total Earned <i class="fas fa-sort"></i></div>
   </div>
   <div class="content">
@@ -43,7 +43,7 @@
     </span>
       </div>
       <div class="column">
-        {{vaultFarmRewards(row) | number: '1.1-1'}} FARM
+        {{vaultUsers(row)}}
       </div>
       <div class="column">
         ${{vaultTotalEarning(row) | number: '1.1-1'}}

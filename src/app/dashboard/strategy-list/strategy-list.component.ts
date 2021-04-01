@@ -1,9 +1,9 @@
-import {Component, ViewChild, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
-import { PricesCalculationService } from 'src/app/services/prices-calculation.service';
+import {PricesCalculationService} from 'src/app/services/prices-calculation.service';
 import {Utils} from '../../static/utils';
-import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-strategy-list',
@@ -64,8 +64,8 @@ export class StrategyListComponent implements AfterViewInit{
           return  Number(this.vaultFullApy(right)) - Number(this.vaultFullApy(left));
         case 'tvl':
           return this.vaultTvl(right) - this.vaultTvl(left);
-        case 'farm_rewards':
-          return this.vaultFarmRewards(right) - this.vaultFarmRewards(left);
+        case 'users':
+          return this.vaultUsers(right) - this.vaultUsers(left);
         case 'total_earned':
           return this.vaultTotalEarning(right) - this.vaultTotalEarning(left);
         default:
@@ -137,11 +137,11 @@ export class StrategyListComponent implements AfterViewInit{
     return (this.pricesCalculationService.lastHardWorks.get(tvlName)?.fullRewardUsdTotal * 0.7) || 0;
   }
 
-  vaultFarmRewards(tvlName: string): number {
-    return this.pricesCalculationService.vaultReward(tvlName);
+  vaultUsers(tvlName: string): number {
+    return this.pricesCalculationService.lastHarvests.get(tvlName)?.ownerCount;
   }
 
-  openTvlDialog(): void{
+  openTvlDialog(): void {
     this.tvlModal.open();
   }
 }
