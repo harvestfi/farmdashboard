@@ -138,7 +138,7 @@ export class StrategyListComponent implements AfterViewInit{
   }
 
   vaultUsers(tvlName: string): number {
-    return this.pricesCalculationService.lastHarvests.get(tvlName)?.ownerCount;
+    return this.pricesCalculationService.lastHarvests.get(tvlName)?.ownerCount || 0;
   }
 
   openTvlDialog(): void {
