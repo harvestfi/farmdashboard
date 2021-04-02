@@ -108,9 +108,11 @@ export class Web3chartsComponent implements AfterViewInit {
         shares: contract.web3.methods.getPricePerFullShare(), 
         tvl: contract.web3.methods.totalSupply(),
     }
+
+    const ethCurrentBlock = await this.web3service.getCurrentBlockNumber()
     
     for (let i = 0; i < timePeriod; i++) {
-        let block = this.web3service.ethCurrentBlock - (blocksPeriod * i);
+        let block = ethCurrentBlock - (blocksPeriod * i);
         
         const response = await methods[contractMethod].call({}, block).catch(error => console.log(error))
         const { timestamp } = await this.web3service.web3.eth.getBlock(block);
