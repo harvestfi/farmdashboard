@@ -1,7 +1,3 @@
-import Web3 from 'web3';
-
-
-export const web3 = new Web3(Web3.givenProvider || "wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz");
 const fwbtcaddress = '0x5d9d25c7C457dD82fc8668FFC6B9746b674d4EcB';
 const crvfwbtcaddress = '0x9aA8F427A17d6B0d91B6262989EdC7D45d6aEdf8';
 const fdaiaddress = '0xab7fa2b2985bccfc13c6d86b1d5a17486ab1e04c';
@@ -81,20 +77,3 @@ export const obj = [
   {title: 'fETH-WBTC',  add: fwbtcwethaddress,  rewardsABI: rewardsABI, rewardsadd: fWBTC_WETHrewards, native: 'unilp', decimals: '18', maxHistory: ((now - 1602632151000)/day))},
   {title: 'fWBTC-TBTC',  add: fslpaddress, rewardsABI: rewardsABI, rewardsadd: fWBTC_TBTCrewards, native: 'sushilp', decimals: '18', maxHistory: ((now - 1602551221000)/day))}*/
   ];
-  
-export type Period = {
-  key: number;
-  value: number;
-  text: string;
-}  
-export const times = [
-    { key: 1, value: 24, text: "last 24h" },
-    { key: 2, value: 3, text: "3d" },
-    { key: 3, value: 5, text: "5d" },
-    { key: 4, value: 7, text: "7d" },
-    { key: 6, value: 14, text: "14d" },
-    // { key: 7, value: 0, text: "MAX" }
-];
-
-export const ethblocksperday = 6530;
-export const ethblocksperhour = 272;

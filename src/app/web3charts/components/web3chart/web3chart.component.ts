@@ -12,7 +12,7 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, Input, ElementRef, OnC
 export class Web3chartComponent extends ChartGeneralMethodsComponent implements OnInit, OnChanges {
   @ViewChild('chart') chartEl: ElementRef
   @Input('data') public data: Array<{timestamp: number; value: number}>
-  @Input('label') public label: string
+  @Input('title') public title: string
   chart: IChartApi
 
   constructor(
@@ -46,6 +46,6 @@ export class Web3chartComponent extends ChartGeneralMethodsComponent implements 
     
     this.cdRef.detectChanges()
     this.chart = chartBuilder.initChart(this.chartEl)
-    chartBuilder.addToChart(this.chart, [[this.label, 'right', '#7e7e7e']])
+    chartBuilder.addToChart(this.chart, [[this.title, 'right', '#7e7e7e']])
   }
 }

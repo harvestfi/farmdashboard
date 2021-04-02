@@ -1,8 +1,15 @@
 import { Component, AfterViewInit } from '@angular/core'
 import { Web3Service } from '../services/web3.service'
-import { times, ethblocksperhour, ethblocksperday } from './Abi'
 import { formatUnits } from "@ethersproject/units";
-import type { Period } from './Abi'
+
+export type Period = {
+  key: number;
+  value: number;
+  text: string;
+} 
+
+export const ethblocksperday = 6530;
+export const ethblocksperhour = 272;
 
 @Component({
   selector: 'app-web3charts',
@@ -10,8 +17,16 @@ import type { Period } from './Abi'
   styleUrls: ['./web3charts.component.css']
 })
 export class Web3chartsComponent implements AfterViewInit { 
-  selectedPeriod: Period = times[2]
-  preriodValues: Period[] = times
+
+  preriodValues: Period[] = [
+    { key: 1, value: 24, text: "last 24h" },
+    { key: 2, value: 3, text: "3d" },
+    { key: 3, value: 5, text: "5d" },
+    { key: 4, value: 7, text: "7d" },
+    { key: 6, value: 14, text: "14d" },
+  ]
+
+  selectedPeriod: Period = this.preriodValues[2]
   
   isLoading = true
   

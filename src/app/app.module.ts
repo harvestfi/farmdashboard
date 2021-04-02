@@ -74,12 +74,9 @@ import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.compon
 import { FlowCardsViewComponent } from './flow-cards/flow-cards-view/flow-cards-view.component';
 import { LastPricesListComponent } from './dashboard/last-prices-list/last-prices-list.component';
 import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user-balances-dialog.component';
-import * as PlotlyJS from 'plotly.js/dist/plotly.js';
-import { PlotlyModule } from 'angular-plotly.js';
 import { Web3chartsComponent } from './web3charts/web3charts.component';
 import { Web3chartComponent } from './web3charts/components/web3chart/web3chart.component';
 
-PlotlyModule.plotlyjs = PlotlyJS;
 
 declare var require: any;
 
@@ -172,7 +169,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatIconModule,
     AngularEmojisModule,
     SidebarModule.forRoot(),
-    PlotlyModule,
+    // PlotlyModule,
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
