@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core'
 import { Web3Service } from '../services/web3.service'
 import { times, ethblocksperhour, ethblocksperday } from './Abi'
+import { formatUnits } from "@ethersproject/units";
 import type { Period } from './Abi'
 
 @Component({
@@ -23,11 +24,11 @@ export class Web3chartsComponent implements AfterViewInit {
   }
  
   constructor(
-    private web3: Web3Service,
+    private web3service: Web3Service,
   ) {}
  
    ngAfterViewInit() {
-    this.web3.init()
+    this.web3service.init()
       .then(() => {
         this.getContractList()
         this.selectedContractId = this.contracts[17].id
@@ -36,7 +37,7 @@ export class Web3chartsComponent implements AfterViewInit {
   }
  
   getContractList() {
-    this.contracts = this.web3.constracts.map((el) => {
+    this.contracts = this.web3service.constracts.map((el) => {
       return {
         id: el.contract.id,
         name: el.contract.name,
@@ -67,14 +68,14 @@ export class Web3chartsComponent implements AfterViewInit {
  
     const blocksPeriod = this.selectedPeriod.value === 24 ? ethblocksperhour : ethblocksperday
     
-    const pShares = this.web3.getPrice(
+    const pShares = this.getPrice(
       this.selectedContractId,
       this.selectedPeriod.value,
       blocksPeriod,
       'shares'
     )
     
-    const pTvl = this.web3.getPrice(
+    const pTvl = this.getPrice(
       this.selectedContractId,
       this.selectedPeriod.value,
       blocksPeriod,
@@ -91,5 +92,34 @@ export class Web3chartsComponent implements AfterViewInit {
         }
         this.hideLoader()
       })
+  }
+
+  async getPrice<TP extends number >(
+    contractId,
+    timePeriod: TP,
+    blocksPeriod: typeof ethblocksperday | typeof ethblocksperhour,
+    contractMethod: 'shares' | 'tvl'
+  ) {
+    const contract = this.web3service.constracts.find(el => el.contract.id === contractId)
+
+    let chartData = []
+    
+    const methods = {
+        shares: contract.web3.methods.getPricePerFullShare(), 
+        tvl: contract.web3.methods.totalSupply(),
+    }
+    
+    for (let i = 0; i < timePeriod; i++) {
+        let block = this.web3service.ethCurrentBlock - (blocksPeriod * i);
+        
+        const response = await methods[contractMethod].call({}, block).catch(error => console.log(error))
+        const { timestamp } = await this.web3service.web3.eth.getBlock(block);
+        
+        const value = formatUnits(response, contract.decimals)
+        
+        chartData.push({ block, value: Number(value), index: i, timestamp  })
+    }
+
+    return chartData;
   }
 }
