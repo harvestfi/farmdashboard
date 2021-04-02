@@ -169,7 +169,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatIconModule,
     AngularEmojisModule,
     SidebarModule.forRoot(),
-    // PlotlyModule,
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
