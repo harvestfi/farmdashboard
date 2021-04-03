@@ -8,6 +8,11 @@ export type Period = {
   text: string;
 } 
 
+type ChartData = {
+  value: number
+  timestamp: number | string
+}
+
 export const ethblocksperday = 6530;
 export const ethblocksperhour = 272;
 
@@ -33,7 +38,10 @@ export class Web3chartsComponent implements AfterViewInit {
   contracts = []
   selectedContractId = null
  
-  chartsData = {
+  chartsData: {
+    shares: ChartData[]
+    tvl: ChartData[]
+  } = {
     shares: null,
     tvl: null,
   }
@@ -108,35 +116,49 @@ export class Web3chartsComponent implements AfterViewInit {
         this.hideLoader()
       })
   }
+  
 
   async getPrice<TP extends number >(
     contractId,
     timePeriod: TP,
     blocksPeriod: typeof ethblocksperday | typeof ethblocksperhour,
     contractMethod: 'shares' | 'tvl'
-  ) {
+  ): Promise<ChartData[]> {
     const contract = this.web3service.constracts.find(el => el.contract.id === contractId)
-
-    let chartData = []
     
     const methods = {
         shares: contract.web3.methods.getPricePerFullShare(), 
         tvl: contract.web3.methods.totalSupply(),
     }
 
-    const ethCurrentBlock = await this.web3service.getCurrentBlockNumber()
-    
-    for (let i = 0; i < timePeriod; i++) {
-        let block = ethCurrentBlock - (blocksPeriod * i);
-        
-        const response = await methods[contractMethod].call({}, block).catch(error => console.log(error))
-        const { timestamp } = await this.web3service.web3.eth.getBlock(block);
-        
-        const value = formatUnits(response, contract.decimals)
-        
-        chartData.push({ block, value: Number(value), index: i, timestamp  })
-    }
+    return this.web3service.getCurrentBlockNumber().then(ethCurrentBlock => {
+      return Array.from({ length: timePeriod })
+        .map((_, i) => {
+          let block = ethCurrentBlock - (blocksPeriod * i);
 
-    return chartData;
+          return Promise.allSettled([
+            methods[contractMethod].call({}, block)
+              .then(value => formatUnits(value, contract.decimals))
+              .catch(error => console.log(error)),
+            this.web3service.web3.eth.getBlock(block)
+              .then(response => response.timestamp)
+          ])
+      })
+    })
+    .then(requests => {
+      return Promise.allSettled(requests).then(values => {
+        return values.map(el => {
+          const item: Partial<ChartData> = {}
+
+          if (el.status === 'fulfilled') {
+            const [valuePromise, timestampPromise] = el.value
+            item.value = valuePromise.status === 'fulfilled' ? valuePromise.value : null
+            item.timestamp = timestampPromise.status === 'fulfilled' ? timestampPromise.value : null
+          }
+          
+          return item as ChartData
+        })
+      })
+    })    
   }
 }

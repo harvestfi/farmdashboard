@@ -20,8 +20,8 @@ export class Web3Service {
         private httpService: HttpService,
     ) {}
 
-    async init() {
-        await this.contractsInitiate()
+    init(): Promise<void> {
+        return this.contractsInitiate()
     }
 
     private getContractsVaults(): Promise<ContractVault[]> {
@@ -36,17 +36,16 @@ export class Web3Service {
         })
     }
 
-    private async contractsInitiate() {
-        const contracts = await this.getContractsVaults()
-
-        this.constracts = contracts.map(item => {
-            const web3 = new this.web3.eth.Contract(proxyABI as AbiItem[], item.contract.address)
-            return Object.assign(item, { web3 })
+    private contractsInitiate(): Promise<void> {        
+        return this.getContractsVaults().then(contracts => {
+            this.constracts = contracts.map(item => {
+                const web3 = new this.web3.eth.Contract(proxyABI as AbiItem[], item.contract.address)
+                return Object.assign(item, { web3 })
+            })
         })
     }
-    
-    async getCurrentBlockNumber() {
-        const curBlock = await this.web3.eth.getBlockNumber()
-        return curBlock
+     
+    getCurrentBlockNumber(): Promise<number> {
+        return this.web3.eth.getBlockNumber()
     }
 }
