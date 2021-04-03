@@ -16,18 +16,22 @@ export class StrategyListComponent implements AfterViewInit{
   // are able to sort this array and not get a new one from the service.
   public vaultsList = [...StaticValues.currentVaults];
   public apyWindowState: Record<string, boolean> = {};
-  public sortDirection = true;
+  // false = desc, true = asc
+  public sortDirection = false;
+  private currentSortingValue = 'tvl';
+
   @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
   constructor(
     public vt: ViewTypeService,
     public pricesCalculationService: PricesCalculationService) {}
   ngAfterViewInit(): void {
-    this.sortVaultsList('tvl');
+    this.sortVaultsList(this.currentSortingValue);
   }
 
   get vaults(): string[] {
     // If there is a search term, we filter, otherwise we return
     // the vaults list
+    this.sortVaultsList(this.currentSortingValue);
     if (this.searchTerm) {
       return this.vaultsList.filter(vault => {
         return vault.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase());
@@ -49,6 +53,7 @@ export class StrategyListComponent implements AfterViewInit{
   }
 
   sortVaultsList(sortBy?: string): void{
+    this.currentSortingValue = sortBy;
     this.vaultsList.sort((a: any, b: any): number => {
       const left = this.sortDirection  ? a : b;
       const right = this.sortDirection ? b : a;
@@ -138,7 +143,7 @@ export class StrategyListComponent implements AfterViewInit{
   }
 
   vaultUsers(tvlName: string): number {
-    return this.pricesCalculationService.lastHarvests.get(tvlName)?.ownerCount;
+    return this.pricesCalculationService.lastHarvests.get(tvlName)?.ownerCount || 0;
   }
 
   openTvlDialog(): void {

@@ -48,6 +48,8 @@
 
     @include responsive(small){
       font-size: 0.7rem;
+      grid-template-columns: repeat(3, 1fr);
+
     }
 
     .header-column {
@@ -74,6 +76,8 @@
             box-sizing: border-box;
     @include responsive(small){
       font-size: 0.7rem;
+      grid-template-columns: repeat(3, 1fr);
+
     }
   }
 

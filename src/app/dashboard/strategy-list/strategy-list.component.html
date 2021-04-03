@@ -7,8 +7,8 @@
       <div (click)="sortVaultsList('name')" class="header-column">Name <i class="fas fa-sort"></i></div>
       <div (click)="sortVaultsList('apy')" class="header-column" #tooltip="matTooltip" matTooltip="APY with daily restake period">APY % <i class="fas fa-sort"></i></div>
       <div (click)="sortVaultsList('tvl')" class="header-column" #tooltip="matTooltip" matTooltip="Total Value Locked">TVL M$ <i class="fas fa-sort"></i></div>
-      <div (click)="sortVaultsList('users')" class="header-column">Users <i class="fas fa-sort"></i></div>
-      <div (click)="sortVaultsList('total_earned')" class="header-column">Total Earned <i class="fas fa-sort"></i></div>
+      <div (click)="sortVaultsList('users')" class="header-column desktop-only">Users <i class="fas fa-sort"></i></div>
+      <div (click)="sortVaultsList('total_earned')" class="header-column desktop-only">Total Earned <i class="fas fa-sort"></i></div>
   </div>
   <div class="content">
     <div *ngFor="let row of vaults" class="row">
@@ -38,14 +38,14 @@
         matTooltip="
         TVL: {{vaultTvl(row) | number}}$ 
         Click to open TVL history chart"
-      matTooltipClass="tooltip-spaced">
-      ${{vaultTvl(row)| number: '1.1-1'}}M
-    </span>
+        matTooltipClass="tooltip-spaced">
+        ${{vaultTvl(row)| number: '1.1-1'}}M
+        </span>
       </div>
-      <div class="column">
+      <div class="column desktop-only">
         {{vaultUsers(row)}}
       </div>
-      <div class="column">
+      <div class="column desktop-only">
         ${{vaultTotalEarning(row) | number: '1.1-1'}}
       </div>
     </div>
