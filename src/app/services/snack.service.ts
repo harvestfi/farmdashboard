@@ -49,8 +49,8 @@ export class SnackService {
     return s;
   }
 
-  public handleError<T>(operation = 'operation', result?: T): any {
-    return (error: any): Observable<T> => {
+  public handleError<T>(operation = 'operation', result?: T): (any: any) => Observable<T> {
+    return (error: {error: {message: string}}): Observable<T> => {
       this.dismiss();
       this.openSnack(this.getErrorText(error));
       this.log.error('Catch error:', error); // log to console instead

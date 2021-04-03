@@ -78,6 +78,8 @@ import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user
 import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
 import {RewardsHistoryDialogComponent} from "./dialogs/rewards-history-dialog/rewards-history-dialog.component";
 import {VaultFilterPipe} from "./dialogs/rewards-history-dialog/vault-filter.pipe";
+import {TransactionComponent} from "./static/components/transactions/transaction.component";
+import {IconsComponent} from "./static/components/icons/icons.component";
 
 declare var require: any;
 
@@ -141,6 +143,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     UserBalancesDialogComponent,
     DownloadHistoricDataDialogComponent,
     VaultFilterPipe,
+    TransactionComponent,
+    IconsComponent,
   ],
   imports: [
     AppRoutingModule,

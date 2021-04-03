@@ -62,7 +62,7 @@ export class Addresses {
   public static CRV_HUSD = '0x29780C39164Ebbd62e9DDDE50c151810070140f2'.toLowerCase();
   public static CRV_HBTC = '0xCC775989e76ab386E9253df5B0c0b473E22102E2'.toLowerCase();
 
-  // stake
+  // stake (pool)
   public static ST_UNI_ETH_DAI = '0x7aeb36e22e60397098C2a5C51f0A5fB06e7b859c'.toLowerCase();
   public static ST_UNI_ETH_USDC = '0x156733b89Ac5C704F3217FEe2949A9D4A73764b5'.toLowerCase();
   public static ST_UNI_ETH_USDT = '0x75071F2653fBC902EBaff908d4c68712a5d1C960'.toLowerCase();
