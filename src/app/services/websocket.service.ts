@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Inject, Injectable, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/internal/Observable';
 import {Client, Message, over, StompSubscription} from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
@@ -6,9 +6,10 @@ import {environment} from '../../environments/environment';
 import {filter, first, switchMap} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {WsConsumer} from './ws-consumer';
+import { AppConfig, APP_CONFIG } from 'src/app.config';
 
-export const WS_ENDPOINT = environment.wsEndpoint;
-export const RECONNECT_INTERVAL = environment.wsReconnectInterval;
+export var WS_ENDPOINT
+export var RECONNECT_INTERVAL
 
 export enum SocketClientState {
   ATTEMPTING, CONNECTED
@@ -26,7 +27,9 @@ export class WebsocketService implements OnDestroy {
   private subscriptions = new Set<string>();
   private wasConnected = false;
 
-  constructor() {
+  constructor(@Inject(APP_CONFIG) public config: AppConfig) {
+    WS_ENDPOINT = config.wsEndpoint
+    RECONNECT_INTERVAL = config.wsReconnectInterval
   }
 
   static jsonHandler(message: Message): any {

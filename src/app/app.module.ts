@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Inject, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -78,6 +78,7 @@ import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user
 import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
 import {RewardsHistoryDialogComponent} from "./dialogs/rewards-history-dialog/rewards-history-dialog.component";
 import {VaultFilterPipe} from "./dialogs/rewards-history-dialog/vault-filter.pipe";
+import { APP_CONFIG } from 'src/app.config';
 
 declare var require: any;
 
@@ -157,12 +158,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BrowserModule,
     MatSnackBarModule,
     HttpClientModule,
-    LoggerModule.forRoot({
-      serverLoggingUrl: environment.apiEndpoint + '/api/logs',
-      level: environment.debugLevel,
-      serverLogLevel: NgxLoggerLevel.ERROR,
-      disableConsoleLogging: false
-    }),
+    // LoggerModule.forRoot({
+    //   serverLoggingUrl: Inject(APP_CONFIG).apiEndpoint + '/api/logs',
+    //   level: Inject(APP_CONFIG).debugLevel,
+    //   serverLogLevel: NgxLoggerLevel.ERROR,
+    //   disableConsoleLogging: false
+    // }),
     BrowserAnimationsModule,
     MatCardModule,
     MatTooltipModule,
@@ -177,6 +178,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     provide: PERFECT_SCROLLBAR_CONFIG,
     useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
   },
+  { 
+    provide: APP_CONFIG, 
+    useValue: Inject(APP_CONFIG),
+    multi: true,
+  }
 ],
   bootstrap: [AppComponent],
 })

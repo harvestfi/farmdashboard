@@ -1,0 +1,6 @@
+{
+    "debugLevel": 3,
+    "wsEndpoint": "https://ethparser.herokuapp.com/stomp",
+    "apiEndpoint": "https://ethparser-api.herokuapp.com",
+    "wsReconnectInterval": 15
+}
