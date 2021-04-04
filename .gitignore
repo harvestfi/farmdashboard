@@ -55,3 +55,4 @@ dist
 tmp
 out-tsc
 keys
+.history
