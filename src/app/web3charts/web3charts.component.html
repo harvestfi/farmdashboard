@@ -1,0 +1,39 @@
+<div class="statistic-board-page">
+    <div *ngIf="isLoading; then loader else main"></div>
+
+    <ng-template #loader>
+        <h2 class="loader">Loading...</h2>
+    </ng-template>
+
+    <ng-template #main>
+        <div class="select">
+            <select [(ngModel)]="selectedContractId" (ngModelChange)="selectContract($event)">
+                <option *ngFor="let contract of contracts" [value]="contract.id">{{contract.name}}</option>
+            </select>
+        </div>
+
+        <div class="chart-nav">
+            <div class="buttons">
+                <button
+                    *ngFor="let period of preriodValues"
+                    class="button"
+                    [class.active]="selectedPeriod.key === period.key"
+                    (click)="selectPeriod(period)"
+                >
+                    {{period.text}}
+                </button>
+            </div>
+        </div>
+    </ng-template>
+
+    <div class="chart-list" [class.hidden]="isLoading"> 
+        <div class="chart-item">
+            <div class="title">Share Prices</div>
+            <app-web3chart [data]="chartsData.shares" [title]="'shares'"></app-web3chart>
+        </div>
+        <div class="chart-item">
+            <div class="title">Pool TVL</div>
+            <app-web3chart [data]="chartsData.tvl" [title]="'tvl'"></app-web3chart>
+        </div>
+    </div>
+</div>

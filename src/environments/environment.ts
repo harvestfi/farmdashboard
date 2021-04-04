@@ -12,6 +12,7 @@ export const environment = {
   // apiEndpoint: 'http://localhost:4142',
   // apiEndpoint: 'https://ethparser-api.herokuapp.com',
   apiEndpoint: 'https://ethparser-staging.herokuapp.com',
+  web3Url: 'wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz',
   wsReconnectInterval: 15
 };
 

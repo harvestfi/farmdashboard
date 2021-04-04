@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UniHistoryDialogComponent } from './uni-history-dialog.component';
 
@@ -6,7 +6,7 @@ describe('UniHistoryDialogComponent', () => {
   let component: UniHistoryDialogComponent;
   let fixture: ComponentFixture<UniHistoryDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UniHistoryDialogComponent ]
     })
