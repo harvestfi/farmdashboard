@@ -318,6 +318,15 @@ export class Utils {
         || name === 'UNI_DAI_BAS'
         || name === 'UNI_WBTC_KLON'
         || name === 'UNI_WBTC_KBTC'
+        || name === 'SUSHI_HODL'
+        || name === 'ETH_DAI_HODL'
+        || name === 'ETH_USDC_HODL'
+        || name === 'ETH_USDT_HODL'
+        || name === 'ETH_WBTC_HODL'
+        || name === 'MUSE_ETH'
+        || name === 'DUDES20_ETH'
+        || name === 'MASK20_ETH'
+        || name === 'ROPE20_ETH'
         ;
   }
 

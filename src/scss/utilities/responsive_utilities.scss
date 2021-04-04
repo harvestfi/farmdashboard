@@ -14,3 +14,10 @@
         @content;
     }
 }
+
+.desktop-only{
+    @include responsive('small'){
+        display: none;
+        visibility: hidden;
+    }
+}

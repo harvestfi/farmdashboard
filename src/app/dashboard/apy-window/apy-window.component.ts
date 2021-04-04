@@ -92,7 +92,11 @@ export class ApyWindowComponent implements OnInit {
   }
 
   get poolAvgTvl(): number {
-    return this.pricesCalculationService.lastHardWorks.get(this.poolName)?.weeklyAverageTvl;
+    let avgTvl = this.pricesCalculationService.lastHardWorks.get(this.poolName)?.weeklyAverageTvl;
+    if (!avgTvl || avgTvl === 0) {
+      avgTvl = this.pricesCalculationService.lastHardWorks.get(this.poolName)?.tvl;
+    }
+    return avgTvl;
   }
 
   get poolPeriodOfWork(): number {
