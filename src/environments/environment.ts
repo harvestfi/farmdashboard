@@ -7,11 +7,12 @@ export const environment = {
   isDebugMode: true,
   debugLevel: 0,
   // wsEndpoint: 'http://localhost:4142/stomp',
-  wsEndpoint: 'https://ethparser.herokuapp.com/stomp',
-  // wsEndpoint: 'https://ethparser-staging.herokuapp.com/stomp',
+  // wsEndpoint: 'https://ethparser.herokuapp.com/stomp',
+  wsEndpoint: 'https://ethparser-staging.herokuapp.com/stomp',
   // apiEndpoint: 'http://localhost:4142',
-  apiEndpoint: 'https://ethparser-api.herokuapp.com',
-  // apiEndpoint: 'https://ethparser-staging.herokuapp.com',
+  // apiEndpoint: 'https://ethparser-api.herokuapp.com',
+  apiEndpoint: 'https://ethparser-staging.herokuapp.com',
+  web3Url: 'wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz',
   wsReconnectInterval: 15
 };
 

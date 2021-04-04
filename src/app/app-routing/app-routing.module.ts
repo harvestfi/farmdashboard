@@ -8,7 +8,7 @@ const routes: Routes = [
   {path: '', component: CenterViewComponent},
   {path: 'history/:address', component: HistoryPageComponent},
   {path: 'history', component: HistoryPageComponent},
-  {path: 'statistic-boards', component: Web3chartsComponent},
+  {path: 'charts', component: Web3chartsComponent},
   {path: '**', redirectTo: ''}
 ];
 

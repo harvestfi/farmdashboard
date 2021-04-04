@@ -14,6 +14,7 @@ import {OhlcDto} from '../models/ohlc-dto';
 import {PricesDto} from '../models/prices-dto';
 import {Balance} from '../models/balance';
 import {ContractVault} from '../models/contract-valut';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -154,8 +155,8 @@ export class HttpService {
   }
 
   getContractsVaults(): Observable<{ data: ContractVault[]; code: string; }> {
-    return this.http.get<ContractVault[]>('http://ethparser-staging.herokuapp.com/contracts/vaults').pipe(
-      catchError(this.snackService.handleError<ContractVault[]>(`contracts vaults`))
-    )
+    return this.http.get<ContractVault[]>(environment.apiEndpoint + '/contracts/vaults').pipe(
+        catchError(this.snackService.handleError<ContractVault[]>(`contracts vaults`))
+    );
   }
 }

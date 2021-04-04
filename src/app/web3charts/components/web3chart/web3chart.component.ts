@@ -1,8 +1,8 @@
-import { ViewTypeService } from 'src/app/services/view-type.service';
-import { IChartApi } from 'lightweight-charts'
-import { ChartBuilder } from './../../../chart/chart-builder'
-import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component'
-import { Component, OnInit, ChangeDetectorRef, ViewChild, Input, ElementRef, OnChanges } from '@angular/core'
+import {ViewTypeService} from 'src/app/services/view-type.service';
+import {IChartApi} from 'lightweight-charts';
+import {ChartBuilder} from '../../../chart/chart-builder';
+import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
+import {ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-web3chart',
@@ -10,42 +10,42 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, Input, ElementRef, OnC
   styleUrls: ['./web3chart.component.css']
 })
 export class Web3chartComponent extends ChartGeneralMethodsComponent implements OnInit, OnChanges {
-  @ViewChild('chart') chartEl: ElementRef
-  @Input('data') public data: Array<{timestamp: number; value: number}>
-  @Input('title') public title: string
-  chart: IChartApi
+  @ViewChild('chart') chartEl: ElementRef;
+  @Input('data') public data: Array<{ timestamp: number; value: number }>;
+  @Input('title') public title: string;
+  chart: IChartApi;
 
   constructor(
-    private cdRef: ChangeDetectorRef,
-    public vt: ViewTypeService
-  ) { 
-    super()
+      private cdRef: ChangeDetectorRef,
+      public vt: ViewTypeService
+  ) {
+    super();
   }
 
   ngOnInit(): void {
   }
 
   ngOnChanges(props): void {
-    this.handleData(props.data.currentValue)
+    this.handleData(props.data.currentValue);
   }
 
-  handleData(data) {
+  handleData(data): void {
     if (data === null) {
-      return
+      return;
     }
 
     if (this.chart) {
-      this.chart.remove()
+      this.chart.remove();
     }
 
-    const chartBuilder = new ChartBuilder()
-    chartBuilder.initVariables(1)
+    const chartBuilder = new ChartBuilder();
+    chartBuilder.initVariables(1);
     data.forEach(el => {
-      chartBuilder.addInData(0, el.timestamp, el.value)
-    })
-    
-    this.cdRef.detectChanges()
-    this.chart = chartBuilder.initChart(this.chartEl)
-    chartBuilder.addToChart(this.chart, [[this.title, 'right', '#7e7e7e']])
+      chartBuilder.addInData(0, el.timestamp, el.value);
+    });
+
+    this.cdRef.detectChanges();
+    this.chart = chartBuilder.initChart(this.chartEl);
+    chartBuilder.addToChart(this.chart, [[this.title, 'right', '#7e7e7e']]);
   }
 }

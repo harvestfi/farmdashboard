@@ -5,12 +5,10 @@
 </ng-template>
 
 <ng-template #readyBlock>
-  <div class="dialog-card">
+  <div class="dialog-card" [class]="vt.getThemeColor() + '-card'">
     <div class="title">
       {{data.title}}
     </div>
     <div #chart class="chart"></div>
   </div>
-  <!-- [class]="vt.getThemeColor() + '-card'"> -->
-
 </ng-template>
