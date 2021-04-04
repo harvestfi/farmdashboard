@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import {FarmChartComponent} from './price-chart.component';
+import {FarmChartComponent} from './farm-chart.component';
 
 describe('PriceChartComponent', () => {
   let component: FarmChartComponent;

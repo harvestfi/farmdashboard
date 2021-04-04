@@ -1,5 +1,5 @@
-import { Component, Injectable, Input, OnInit, TemplateRef, ViewChild, ContentChild } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {Component, ContentChild, Injectable, TemplateRef, ViewChild} from '@angular/core';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-custom-modal',
