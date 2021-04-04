@@ -94,6 +94,10 @@ export class StaticValues {
     'ETH_USDC_HODL',
     'ETH_USDT_HODL',
     'ETH_WBTC_HODL',
+    'MUSE_ETH',
+    'DUDES20_ETH',
+    'MASK20_ETH',
+    'ROPE20_ETH',
   ];
 
   public static strategiesListCurve: string[] = [
@@ -145,6 +149,10 @@ export class StaticValues {
     'UNI_WBTC_KBTC',
     'MNFLX_UST',
     'MTWTR_UST',
+    'MUSE_ETH',
+    'DUDES20_ETH',
+    'MASK20_ETH',
+    'ROPE20_ETH'
   ];
 
   public static strategiesListNonUniLpPools: string[] = [
@@ -217,6 +225,10 @@ export class StaticValues {
       case 'PS':
       case 'iPS':
         return 'FARM';
+      case 'CRV_LINK':
+        return 'LINK';
+      case 'SUSHI_HODL':
+        return 'SUSHI';
     }
     return name;
   }
@@ -393,6 +405,14 @@ export class StaticValues {
         return '/assets/icons/sushi-ust.png';
       case 'SUSHI_HODL':
         return '/assets/icons/sushi.png';
+      case 'MUSE_ETH':
+        return '/assets/icons/nft20-muse.png';
+      case 'DUDES20_ETH':
+        return '/assets/icons/nft20-dudes20.png';
+      case 'MASK20_ETH':
+        return '/assets/icons/nft20-mask20.png';
+      case 'ROPE20_ETH':
+        return '/assets/icons/nft20-rope20.png';
     }
   }
 }

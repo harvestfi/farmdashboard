@@ -76,8 +76,9 @@ import { LastPricesListComponent } from './dashboard/last-prices-list/last-price
 import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user-balances-dialog.component';
 import { Web3chartsComponent } from './web3charts/web3charts.component';
 import { Web3chartComponent } from './web3charts/components/web3chart/web3chart.component';
-
-
+import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
+import {RewardsHistoryDialogComponent} from "./dialogs/rewards-history-dialog/rewards-history-dialog.component";
+import {VaultFilterPipe} from "./dialogs/rewards-history-dialog/vault-filter.pipe";
 declare var require: any;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -117,6 +118,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TotalUsersDialogComponent,
     UniHistoryDialogComponent,
     RewardsDialogComponent,
+    RewardsHistoryDialogComponent,
     HarvestHistoryDialogComponent,
     SimpleChartDialogComponent,
     PriceChartComponent,
@@ -136,6 +138,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FlowCardsViewComponent,
     LastPricesListComponent,
     UserBalancesDialogComponent,
+    DownloadHistoricDataDialogComponent,
+    VaultFilterPipe,
     Web3chartsComponent,
     Web3chartComponent
   ],
