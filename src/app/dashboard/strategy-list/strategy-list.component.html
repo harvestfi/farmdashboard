@@ -13,7 +13,7 @@
   <div class="content">
     <div *ngFor="let row of vaults" class="row">
       <div class="column">
-        <vault-icon [vault]="row"></vault-icon> {{row}}
+        <app-vault-icon [vault]="row"></app-vault-icon> {{row}}
       </div>
       <div class="column">
         <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row]">

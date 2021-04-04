@@ -1,9 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {TransactionComponent} from "./transaction.component";
+import {TransactionComponent} from './transaction.component';
 
 describe('RewardsDialogComponent', () => {
 
-  let component, fixture;
+  let component;
+  let fixture;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

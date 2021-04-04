@@ -77,12 +77,10 @@ import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user
 import { Web3chartsComponent } from './web3charts/web3charts.component';
 import { Web3chartComponent } from './web3charts/components/web3chart/web3chart.component';
 import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
-import {RewardsHistoryDialogComponent} from "./dialogs/rewards-history-dialog/rewards-history-dialog.component";
-import {VaultFilterPipe} from "./dialogs/rewards-history-dialog/vault-filter.pipe";
-import {TransactionComponent} from "./static/components/transactions/transaction.component";
-import {IconsComponent} from "./static/components/icons/icons.component";
-
-declare var require: any;
+import {RewardsHistoryDialogComponent} from './dialogs/rewards-history-dialog/rewards-history-dialog.component';
+import {VaultFilterPipe} from './dialogs/rewards-history-dialog/vault-filter.pipe';
+import {TransactionComponent} from './static/components/transactions/transaction.component';
+import {IconsComponent} from './static/components/icons/icons.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true

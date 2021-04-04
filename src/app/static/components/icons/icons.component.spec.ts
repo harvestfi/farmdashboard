@@ -1,19 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {TransactionComponent} from "./transaction.component";
+import {IconsComponent} from './icons.component';
 
 describe('RewardsDialogComponent', () => {
 
-  let component, fixture;
+  let component;
+  let fixture;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TransactionComponent]
+      declarations: [IconsComponent]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TransactionComponent);
+    fixture = TestBed.createComponent(IconsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -34,11 +34,11 @@ export class Utils {
     return Utils.isUni(record) && (record.type === 'BUY' || record.type === 'ADD');
   }
 
-  public static isHarvest(record: {vault: String}): boolean {
+  public static isHarvest(record: {vault: string}): boolean {
     return !!record.vault;
   }
 
-  public static isHarvestPositive(record: {vault: String, methodName: String}): boolean {
+  public static isHarvestPositive(record: {vault: string; methodName: string}): boolean {
     return Utils.isHarvest(record) && record.methodName === 'Deposit';
   }
 

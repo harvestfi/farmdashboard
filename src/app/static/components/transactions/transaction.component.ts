@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {ViewTypeService} from '../../../services/view-type.service';
 
 @Component({
-    selector: 'transaction-link',
+    selector: 'app-transaction-link',
     templateUrl: './transaction.component.html',
     styleUrls: ['./transaction.component.css']
 })
