@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "heroku-postbuild": "ng build --prod && node patch-webpack.js",
+    "heroku-postbuild": "node patch-webpack.js && ng build --prod",
     "postinstall": "node patch-webpack.js"
   },
   "private": true,
