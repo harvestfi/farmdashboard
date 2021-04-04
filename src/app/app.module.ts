@@ -158,12 +158,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BrowserModule,
     MatSnackBarModule,
     HttpClientModule,
-    // LoggerModule.forRoot({
-    //   serverLoggingUrl: Inject(APP_CONFIG).apiEndpoint + '/api/logs',
-    //   level: Inject(APP_CONFIG).debugLevel,
-    //   serverLogLevel: NgxLoggerLevel.ERROR,
-    //   disableConsoleLogging: false
-    // }),
+    LoggerModule.forRoot({
+      serverLoggingUrl: Inject(APP_CONFIG).apiEndpoint + '/api/logs',
+      level: Inject(APP_CONFIG).debugLevel,
+      serverLogLevel: NgxLoggerLevel.ERROR,
+      disableConsoleLogging: false
+    }),
     BrowserAnimationsModule,
     MatCardModule,
     MatTooltipModule,
@@ -177,11 +177,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
     useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-  },
-  { 
-    provide: APP_CONFIG, 
-    useValue: Inject(APP_CONFIG),
-    multi: true,
   }
 ],
   bootstrap: [AppComponent],
