@@ -111,9 +111,11 @@ export class HttpService {
   }
 
   getAllHistoryRewards(startTimestamp?: number, endTimestamp?: number): Observable<RewardDto[]> {
-    startTimestamp = Math.floor(startTimestamp || (new Date(0).getTime()/1000));
+    startTimestamp = Math.floor(startTimestamp || (new Date(0).getTime() / 1000));
     endTimestamp = Math.floor(endTimestamp || (Date.now() / 1000));
-    return this.http.get<RewardDto[]>(`${environment.apiEndpoint}/api/transactions/history/reward/?start=${startTimestamp}&end=${endTimestamp}`).pipe(
+    return this.http.get<RewardDto[]>(
+        `${environment.apiEndpoint}/api/transactions/history/reward/?start=${startTimestamp}&end=${endTimestamp}`)
+    .pipe(
         catchError(this.snackService.handleError<RewardDto[]>(`history reward `))
     );
   }
@@ -154,7 +156,7 @@ export class HttpService {
     );
   }
 
-  getContractsVaults(): Observable<{ data: ContractVault[]; code: string; }> {
+  getContractsVaults(): Observable<{ data: ContractVault[]; code: string }> {
     return this.http.get<ContractVault[]>(environment.apiEndpoint + '/contracts/vaults').pipe(
         catchError(this.snackService.handleError<ContractVault[]>(`contracts vaults`))
     );

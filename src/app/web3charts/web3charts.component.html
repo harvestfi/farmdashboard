@@ -8,7 +8,7 @@
     <ng-template #main>
         <div class="select">
             <select [(ngModel)]="selectedContractId" (ngModelChange)="selectContract($event)">
-                <option *ngFor="let contract of contracts" [value]="contract.id">{{contract.name}}</option>
+                <option *ngFor="let contract of contracts" [value]="contract.contract.id">{{contract.contract.name}}</option>
             </select>
         </div>
 

@@ -15,11 +15,11 @@ import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.
   styleUrls: ['./hardwork-tx.component.scss']
 })
 export class HardworkTxComponent implements AfterViewInit {
+  private maxMessages = 50;
+  @ViewChild('hardWorkHistoryListModal') private hardWorkHistoryListModal: CustomModalComponent;
   dtos: HardWorkDto[] = [];
   hwIds = new Set<string>();
   vaultFilter = 'all';
-  private maxMessages = 50;
-  @ViewChild('hardWorkHistoryListModal') private hardWorkHistoryListModal: CustomModalComponent;
 
 
   constructor(

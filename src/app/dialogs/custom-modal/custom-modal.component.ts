@@ -7,7 +7,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./custom-modal.component.scss'],
 })
 @Injectable()
-export class CustomModalComponent implements OnInit {
+export class CustomModalComponent {
     @ViewChild('modal') private modalContent: TemplateRef<CustomModalComponent>;
     @ContentChild(TemplateRef) template;
     public modalRef: NgbModalRef;
@@ -15,8 +15,6 @@ export class CustomModalComponent implements OnInit {
     constructor(private modalService: NgbModal){
     }
 
-    ngOnInit(): void {
-    }
     open(): void {
         this.modalRef = this.modalService.open(this.modalContent);
         this.modalIsOpen = true;

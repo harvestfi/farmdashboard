@@ -1,6 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {HardWorkDto} from '../../models/hardwork-dto';
-import {RewardDto} from "../../models/reward-dto";
+import {RewardDto} from '../../models/reward-dto';
 
 @Pipe({
     name: 'vaultFilter',
@@ -9,7 +8,9 @@ import {RewardDto} from "../../models/reward-dto";
 export class VaultFilterPipe implements PipeTransform {
 
     transform(dtos: RewardDto[], vault: string): RewardDto[] {
-        if(vault != '') return dtos.filter(_ => _.vault == vault);
+        if (vault !== '') {
+            return dtos.filter(_ => _.vault === vault);
+        }
         return dtos;
     }
 
