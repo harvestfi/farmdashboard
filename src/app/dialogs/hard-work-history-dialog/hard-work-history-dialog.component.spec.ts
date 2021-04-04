@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {HardWorkHistoryDialogComponent} from './hard-work-history-dialog.component';
 
@@ -6,7 +6,7 @@ describe('SavedFeesDialogComponent', () => {
   let component: HardWorkHistoryDialogComponent;
   let fixture: ComponentFixture<HardWorkHistoryDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [HardWorkHistoryDialogComponent]
     })

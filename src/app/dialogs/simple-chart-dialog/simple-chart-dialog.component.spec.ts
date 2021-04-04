@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SimpleChartDialogComponent } from './simple-chart-dialog.component';
 
@@ -6,7 +6,7 @@ describe('AddressHistoryChartByNameDialogComponent', () => {
   let component: SimpleChartDialogComponent;
   let fixture: ComponentFixture<SimpleChartDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SimpleChartDialogComponent ]
     })

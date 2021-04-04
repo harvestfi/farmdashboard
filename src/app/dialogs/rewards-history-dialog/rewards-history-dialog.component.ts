@@ -2,9 +2,9 @@ import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core'
 import {HttpService} from '../../services/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
-import {RewardDto} from "../../models/reward-dto";
+import {RewardDto} from '../../models/reward-dto';
 import {StaticValues} from '../../static/static-values';
-import {Utils} from "../../static/utils";
+import {Utils} from '../../static/utils';
 
 @Component({
     selector: 'app-rewards-history-dialog',
@@ -36,7 +36,10 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
 
 
     private loadRewardsHistory(startDate: Date, endDate: Date): void {
-        this.httpService.getAllHistoryRewards(Math.floor(startDate.getTime()/1000), Math.floor(endDate.getTime()/1000)).subscribe((data) => {
+        this.httpService.getAllHistoryRewards(
+            Math.floor(startDate.getTime() / 1000),
+            Math.floor(endDate.getTime() / 1000))
+        .subscribe((data) => {
             this.rewards.push(...(data.filter(r => !Utils.isAutoStakeVault(r.vault)).map(RewardDto.fillBlockDateAdopted).reverse()));
             this.ready = true;
             this.disabled = false;
@@ -46,8 +49,8 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
 
     private loadMoreRewardsHistory(): void {
         this.disabled = true;
-        const endDate = new Date(this.rewards[this.rewards.length-1]?.blockDate*1000);
-        endDate.setTime(endDate.getTime()-1000);
+        const endDate = new Date(this.rewards[this.rewards.length - 1]?.blockDate * 1000);
+        endDate.setTime(endDate.getTime() - 1000);
         const startDate = new Date(endDate.getTime());
         startDate.setDate(startDate.getDate() - this.dayLag);
         this.loadRewardsHistory(startDate, endDate);

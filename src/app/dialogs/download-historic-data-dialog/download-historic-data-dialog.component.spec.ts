@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {DownloadHistoricDataDialogComponent} from './download-historic-data-dialog.component';
 
@@ -6,7 +6,7 @@ describe('DownloadHistoricDataDialogComponent', () => {
   let component: DownloadHistoricDataDialogComponent;
   let fixture: ComponentFixture<DownloadHistoricDataDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [DownloadHistoricDataDialogComponent]
     })

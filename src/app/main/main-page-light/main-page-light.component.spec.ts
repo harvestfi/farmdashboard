@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {MainPageLightComponent} from './main-page-light.component';
 
@@ -6,7 +6,7 @@ describe('MainPageV2Component', () => {
   let component: MainPageLightComponent;
   let fixture: ComponentFixture<MainPageLightComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [MainPageLightComponent]
     })
