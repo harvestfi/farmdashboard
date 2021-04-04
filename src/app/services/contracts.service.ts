@@ -18,6 +18,16 @@ export class Contract implements IsContract {
     id: number;
     address: string;
     name: string;
+    prettyName() {
+        return this.name
+            ?.replace('SUSHI_', '')
+            ?.replace('ONEINCH_', '')
+            ?.replace('UNI_LP_', '')
+            ?.replace('UNI_', '')
+            ?.replace('ST_', '')
+            ?.replace('_HODL', '_H')
+            ?.replace('HODL', 'SUSHI_HODL')
+    }
     created: number;
     type: number;
 }
@@ -109,7 +119,7 @@ export class ContractsService<T> implements Service<T> {
         return this.http.get(`${environment.apiEndpoint}/${this.urlPrefix}/${TypePaths.get(type)}s`).pipe(
             catchError(this.snackService.handleError<Result<T>>(`Contracts fetch for ${TypePaths.get(type)} failed.`)),
             map((val: Result<T>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
-            map(_ => _.filter(item => !(item instanceof Vault) || !item.contract?.name?.match(/_V0$/)))
+            map(_ => _.filter(item => !(item instanceof Vault) && !item.contract?.name?.match(/_V0$/)))
         )
     }
 
@@ -118,14 +128,13 @@ export class ContractsService<T> implements Service<T> {
 @Injectable({
     providedIn: 'root'
 })
-export class StaticContractsRegistry<T> implements Service<Vault> {
+export class StaticContractsService implements Service<Vault|Pool> {
 
-    private readonly _set = new Set([Vault]);
     private readonly _vaults: Vault[];
     private _index: Map<string, number> = new Map();
 
     constructor() {
-        this._vaults = StaticValues.vaults.map(v => {
+        this._vaults = StaticValues.currentVaults.map(v => {
             return {contract: {name: v, address: Addresses[v] || Addresses[`_${v}`]}} as Vault
         });
         this._vaults.forEach((v, idx) => this._index[v.contract.name] = name)

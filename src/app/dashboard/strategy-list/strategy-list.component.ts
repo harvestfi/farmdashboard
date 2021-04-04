@@ -4,7 +4,6 @@ import {ViewTypeService} from '../../services/view-type.service';
 import {PricesCalculationService} from 'src/app/services/prices-calculation.service';
 import {Utils} from '../../static/utils';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
-import {ContractsService, Vault} from "../../services/contracts.service";
 
 @Component({
   selector: 'app-strategy-list',
@@ -15,7 +14,7 @@ export class StrategyListComponent implements AfterViewInit{
   public searchTerm = '';
   // Mutating the currentVaults in static values before using it so that we
   // are able to sort this array and not get a new one from the service.
-  public vaultsList = [];
+  public vaultsList = [...StaticValues.currentVaults];
   public apyWindowState: Record<string, boolean> = {};
   // false = desc, true = asc
   public sortDirection = false;
@@ -23,13 +22,10 @@ export class StrategyListComponent implements AfterViewInit{
 
   @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
   constructor(
-    public vt: ViewTypeService,
-    public pricesCalculationService: PricesCalculationService, private contractService: ContractsService<Vault>) {}
+      public vt: ViewTypeService,
+      public pricesCalculationService: PricesCalculationService) {}
   ngAfterViewInit(): void {
-    this.contractService.getContracts(Vault).subscribe(data => {
-      this.vaultsList = data.map(_ => _.contract?.name);
-      this.sortVaultsList(this.currentSortingValue);
-    });
+    this.sortVaultsList(this.currentSortingValue);
   }
 
   get vaults(): string[] {
@@ -104,7 +100,6 @@ export class StrategyListComponent implements AfterViewInit{
   getImgSrc(name: string): string {
     return StaticValues.getImgSrcForVault(name);
   }
-
   vaultRewardApyPrettify(tvlName: string): string {
     return Utils.prettifyNumber(this.pricesCalculationService.vaultRewardWeeklyApy(tvlName));
   }
