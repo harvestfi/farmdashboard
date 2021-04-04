@@ -119,7 +119,7 @@ export class ContractsService<T> implements Service<T> {
         return this.http.get(`${environment.apiEndpoint}/${this.urlPrefix}/${TYPE_PATHS.get(type)}s`).pipe(
             catchError(this.snackService.handleError<Result<T>>(`Contracts fetch for ${TYPE_PATHS.get(type)} failed.`)),
             map((val: Result<T>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
-            map(_ => _.filter(item => !(item instanceof Vault) && !item.contract?.name?.match(/_V0$/)))
+            map(_ => _.filter(item => !(item instanceof Vault) || !(item.contract?.name?.match(/_V0$/))))
         );
     }
 

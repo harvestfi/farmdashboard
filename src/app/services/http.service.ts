@@ -157,8 +157,8 @@ export class HttpService {
   }
 
   getContractsVaults(): Observable<{ data: ContractVault[]; code: string }> {
-    return this.http.get<ContractVault[]>(environment.apiEndpoint + '/contracts/vaults').pipe(
-        catchError(this.snackService.handleError<ContractVault[]>(`contracts vaults`))
+    return this.http.get<{ data: ContractVault[]; code: string }>(environment.apiEndpoint + '/contracts/vaults').pipe(
+        catchError(this.snackService.handleError<{ data: ContractVault[]; code: string }>(`contracts vaults`))
     );
   }
 }

@@ -49,15 +49,15 @@ export class SnackService {
     return s;
   }
 
-  public handleError<T,R>(operation = 'operation', result?: R): (input: T) => Observable<R> {
-    return (error: {error: {message: string}}): Observable<R> => {
+  public handleError<T>(operation = 'operation', result?: T): (input: any) => Observable<T> {
+    return (error: {error?: {message: string}}): Observable<T> => {
       this.dismiss();
       this.openSnack(this.getErrorText(error));
       this.log.error('Catch error:', error); // log to console instead
       if (error && error.error && error.error.message === 'Full authentication is required to access this resource') {
         // this.autoLogoutService.logout();
       }
-      return of(result as R);
+      return of(result as T);
     };
   }
 }
