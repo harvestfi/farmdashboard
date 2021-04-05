@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {ViewTypeService} from '../../../services/view-type.service';
-import {Pool, Vault} from '../../../services/contracts.service';
+import {Pool} from '../../../models/pool';
+import {Vault} from '../../../models/vault';
 
 @Component({
     selector: 'app-vault-icon',

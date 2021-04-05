@@ -13,7 +13,7 @@ import {TransferDto} from '../models/transfer-dto';
 import {OhlcDto} from '../models/ohlc-dto';
 import {PricesDto} from '../models/prices-dto';
 import {Balance} from '../models/balance';
-import {ContractVault} from '../models/contract-valut';
+import {Vault} from '../models/vault';
 
 @Injectable({
   providedIn: 'root'
@@ -156,9 +156,9 @@ export class HttpService {
     );
   }
 
-  getContractsVaults(): Observable<{ data: ContractVault[]; code: string }> {
-    return this.http.get<{ data: ContractVault[]; code: string }>(environment.apiEndpoint + '/contracts/vaults').pipe(
-        catchError(this.snackService.handleError<{ data: ContractVault[]; code: string }>(`contracts vaults`))
+  getContractsVaults(): Observable<{ data: Vault[]; code: string }> {
+    return this.http.get<{ data: Vault[]; code: string }>(environment.apiEndpoint + '/contracts/vaults').pipe(
+        catchError(this.snackService.handleError<{ data: Vault[]; code: string }>(`contracts vaults`))
     );
   }
 }
