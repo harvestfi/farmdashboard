@@ -1,0 +1,14 @@
+.paginator-component{
+    padding: 10px;
+
+    .paginator-btn {
+        padding: 5px;
+        padding: 5px;
+        border: 1px solid #3c3c3c;
+        background: #3d3d3d;
+
+        &.active {
+            background: #292929;
+        }
+    }
+}

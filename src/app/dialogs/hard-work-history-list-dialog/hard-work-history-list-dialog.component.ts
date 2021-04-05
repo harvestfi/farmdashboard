@@ -20,7 +20,6 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   ready = false;
   currentPage = 1;
   pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   constructor(
     private hwListHistory: HttpService,
@@ -34,21 +33,24 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   }
 
   get paginatedDTOs(): any{
-    function paginate(elements, current_page, elements_per_page){
-      let page = current_page || 1;
-      let per_page = elements_per_page || 10;
+
+    function paginate(elements, current_page=1, elements_per_page=10){
+      let page = current_page;
+      let per_page = elements_per_page;
       let offset = (page - 1) * per_page;
 
       let paginated_elements = elements.slice(offset).slice(0, elements_per_page);
       const total_pages = Math.ceil(elements.length / per_page);
       return {
-        page: page,
+        current_page: page,
         next_page: (total_pages > page) ? page + 1 : null,
         previous_page: (page - 1) ? page - 1 : null,
-        total: elements.length,
-        data: paginated_elements
+        total_pages: total_pages,
+        data: paginated_elements,
       }
     }
+
+
 
     let paginatedItems = paginate(this.dtos, this.currentPage, this.pageSize);
     
@@ -60,8 +62,16 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
     return StaticValues.currentVaults;
   }
 
-  onPageEvent($event){
-    this.currentPage = $event.pageIndex;
+  nextPage($event): void {
+    this.currentPage = $event;
+  }
+
+  previousPage($event): void {
+    this.currentPage = $event;
+  }
+
+  selectPage($event): void {
+    this.currentPage = $event;
   }
 
   getOlderHardworks(): void {

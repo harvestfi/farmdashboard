@@ -1,4 +1,5 @@
-<div>
-    <a href="">Previous</a>
-    <a href="">Next</a>
+<div class="paginator-component">
+    <a class="paginator-btn" (click)="handlePreviousPage()" href="#"><i class="fas fa-chevron-left"></i></a>
+    <a class="paginator-btn" [class]="pageObject.page === page ? 'active' : ''" (click)="handleSelectPage(page)" *ngFor="let page of pageRange" href="#">{{page}}</a>
+    <a class="paginator-btn" (click)="handleNextPage()" href="#"><i class="fas fa-chevron-right"></i></a>
 </div>
