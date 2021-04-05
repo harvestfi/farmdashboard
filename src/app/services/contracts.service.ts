@@ -15,8 +15,6 @@ import {Pair} from '../models/pair';
  * service.getContracts(Vault)  => Array<Vault>
  * service.getContracts(Pool)  => Array<Pool>
  * service.getContracts(Token)  => Array<Token>
- * service.getContract(Vault, 'NAME_OF_VAULT')  => Token
- * service.getContract(Token, 'NAME_OF_TOKEN')  => Token
  *
  */
 @Injectable({
