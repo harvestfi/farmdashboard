@@ -1,4 +1,5 @@
 echo DEPLOYMENT_ENV = $DEPLOYMENT_ENV
+env
 if [[ -z $DEPLOYMENT_ENV ]]; then
     echo "DEPLOYMENT_ENV is not set"
 else
