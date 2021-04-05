@@ -30,6 +30,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.hwListHistory.getHardWorkHistoryData().subscribe(data => this.addInArray(data)).add(() => this.ready = true);
+    this.hwListHistory.getPaginatedHardworkHistoryData().subscribe(data => console.log(data));
   }
 
   get paginatedDTOs(): any{
