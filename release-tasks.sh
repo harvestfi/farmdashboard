@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 echo DEPLOYMENT_ENV = $DEPLOYMENT_ENV
 env
 if [[ -z $DEPLOYMENT_ENV ]]; then
