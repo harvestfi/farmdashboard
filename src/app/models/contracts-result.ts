@@ -1,4 +1,5 @@
 interface ContractsResult<T> {
+    code: number;
     data: T;
-    status: number;
+    status: string;
 }
