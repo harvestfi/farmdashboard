@@ -9,11 +9,6 @@ import {Token} from '../models/token';
 import {Pool} from '../models/pool';
 import {Pair} from '../models/pair';
 
-interface Result<T> {
-    data: T;
-    status: number;
-}
-
 /**
  * Usage:
  * const service = new ContractsService(httpClient, snackService);
@@ -43,8 +38,8 @@ export class ContractsService {
 
     getContracts<T extends Vault|Pool|Token|Pair>(type: new () => T): Observable<T[]> {
         return this.http.get(`${environment.apiEndpoint}/${this.urlPrefix}/${this.typePaths.get(type)}s`).pipe(
-            catchError(this.snackService.handleError<Result<T[]>>(`Contracts fetch for ${this.typePaths.get(type)} failed.`)),
-            map((val: Result<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
+            catchError(this.snackService.handleError<ContractsResult<T[]>>(`Contracts fetch for ${this.typePaths.get(type)} failed.`)),
+            map((val: ContractsResult<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
             map(_ => _.filter(item => !(item instanceof Vault) || !(item.contract?.name?.match(/_V0$/))))
         );
     }
