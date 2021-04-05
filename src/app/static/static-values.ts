@@ -225,6 +225,11 @@ export class StaticValues {
       case 'PS':
       case 'iPS':
         return 'FARM';
+        case 'CRV_LINK':
+      case 'CRV_LINK':
+        return 'LINK';
+      case 'SUSHI_HODL':
+        return 'SUSHI';
     }
     return name;
   }
