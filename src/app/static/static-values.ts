@@ -213,7 +213,6 @@ export class StaticValues {
         return 'ETH';
       case 'RENBTC':
       case 'CRVRENWBTC':
-      case 'TBTC':
       case 'WBTC':
       case 'CRV_TBTC':
       case 'CRV_HBTC':

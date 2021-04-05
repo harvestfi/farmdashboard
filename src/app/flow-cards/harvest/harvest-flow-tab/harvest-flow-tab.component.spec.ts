@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {HarvestFlowTabComponent} from './harvest-flow-tab.component';
 
@@ -6,7 +6,7 @@ describe('HarvestFlowTabComponent', () => {
   let component: HarvestFlowTabComponent;
   let fixture: ComponentFixture<HarvestFlowTabComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [HarvestFlowTabComponent]
     })

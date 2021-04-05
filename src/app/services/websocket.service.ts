@@ -80,15 +80,15 @@ export class WebsocketService implements OnDestroy {
       return;
     }
     this.subscriptions.add(topic);
-    return this.connect().pipe(first(), switchMap(inst => {
-      return new Observable<any>(observer => {
+    return this.connect().pipe(first(), switchMap(inst =>
+      new Observable<any>(observer => {
         inst.unsubscribe(topic);
         const subscription: StompSubscription = inst.subscribe(topic, message => {
           observer.next(handler(message));
         });
         return () => inst.unsubscribe(subscription.id);
-      });
-    }));
+      })
+    ));
   }
 
   send(topic: string, payload: any): void {

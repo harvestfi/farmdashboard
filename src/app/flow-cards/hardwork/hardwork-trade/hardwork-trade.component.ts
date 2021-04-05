@@ -11,14 +11,14 @@ import {Utils} from '../../../static/utils';
 })
 export class HardworkTradeComponent implements OnInit {
 
-  constructor() {
-  }
-
   @Input() dto: HardWorkDto;
   @Input() fullDate = false;
   @Input() moreColumns = false;
   openModal = false;
   hash = '';
+
+  constructor() {
+  }
 
   ngOnInit(): void {
     const temp = this.dto.id.split('_');
