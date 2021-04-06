@@ -7,9 +7,9 @@ import {SnackService} from './snack.service';
 import {Vault} from '../models/vault';
 import {Token} from '../models/token';
 import {Pool} from '../models/pool';
-import {Pair} from '../models/pair';
+import {Lps} from '../models/Lps';
 import {IContract} from '../models/icontract';
-import {ContractsResult} from '../models/contracts-result';
+import {RestResponse} from '../models/rest-response';
 
 /**
  * Usage:
@@ -24,13 +24,13 @@ import {ContractsResult} from '../models/contracts-result';
 })
 export class ContractsService {
 
-    private cache = new Map<IContract, Observable<any>>();
+    private cache = new Map<IContract, Observable<any[]>>();
     private urlPrefix = 'contracts';
     private typePaths = new Map<IContract, string>(
         [[Vault, 'vault'],
             [Pool, 'pool'],
             [Token, 'token'],
-            [Pair, 'unipair']]
+            [Lps, 'unipair']]
     );
 
     constructor(private http: HttpClient, private snackService: SnackService) {
@@ -55,8 +55,8 @@ export class ContractsService {
 
     private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {
         return this.http.get(`${environment.apiEndpoint}/${this.urlPrefix}/${this.typePaths.get(type)}s`).pipe(
-            catchError(this.snackService.handleError<ContractsResult<T[]>>(`Contracts fetch for ${this.typePaths.get(type)} failed.`)),
-            map((val: ContractsResult<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
+            catchError(this.snackService.handleError<RestResponse<T[]>>(`Contracts fetch for ${this.typePaths.get(type)} failed.`)),
+            map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
             map(_ => _.filter(item => !(item instanceof Vault) || !(item.contract?.name?.match(/_V0$/)))) // filter older vaults
         );
     }
