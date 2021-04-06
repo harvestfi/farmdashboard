@@ -2,7 +2,6 @@ import {Inject, Injectable, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/internal/Observable';
 import {Client, Message, over, StompSubscription} from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
-import {environment} from '../../environments/environment';
 import {filter, first, switchMap} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {WsConsumer} from './ws-consumer';

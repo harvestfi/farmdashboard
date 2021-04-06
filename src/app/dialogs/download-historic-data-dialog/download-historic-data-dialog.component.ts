@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {StaticValues} from '../../static/static-values';
 import {Sort} from '@angular/material/sort';
-import {environment} from '../../../environments/environment';
 import {ViewTypeService} from '../../services/view-type.service';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
 
