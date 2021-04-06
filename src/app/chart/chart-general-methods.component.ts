@@ -21,6 +21,6 @@ export abstract class ChartGeneralMethodsComponent implements OnInit {
 
     @HostListener('window:resize', ['$event'])
     handleScreenResize($event: any): void {
-        this.chart.resize(this.chartEl.nativeElement.clientWidth, this.chartEl.nativeElement.clientHeight);
+        this.chart?.resize(this.chartEl?.nativeElement?.clientWidth, this.chartEl?.nativeElement?.clientHeight);
     }
 }

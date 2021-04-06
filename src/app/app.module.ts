@@ -41,7 +41,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { LoadingSpinnerComponent } from './main/loading-spinner/loading-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { IncomeDialogComponent } from './dialogs/income-dialog/income-dialog.component';
-import { GasDialogComponent } from './dialogs/gas-dialog/gas-dialog.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { environment } from '../environments/environment';
@@ -75,9 +74,11 @@ import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.compon
 import { FlowCardsViewComponent } from './flow-cards/flow-cards-view/flow-cards-view.component';
 import { LastPricesListComponent } from './dashboard/last-prices-list/last-prices-list.component';
 import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user-balances-dialog.component';
+import { Web3chartsComponent } from './web3charts/web3charts.component';
+import { Web3chartComponent } from './web3charts/components/web3chart/web3chart.component';
 import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
-import {RewardsHistoryDialogComponent} from "./dialogs/rewards-history-dialog/rewards-history-dialog.component";
-import {VaultFilterPipe} from "./dialogs/rewards-history-dialog/vault-filter.pipe";
+import {RewardsHistoryDialogComponent} from './dialogs/rewards-history-dialog/rewards-history-dialog.component';
+import {VaultFilterPipe} from './dialogs/rewards-history-dialog/vault-filter.pipe';
 import { APP_CONFIG } from 'src/app.config';
 
 declare var require: any;
@@ -110,7 +111,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AllStatsDialogComponent,
     LoadingSpinnerComponent,
     IncomeDialogComponent,
-    GasDialogComponent,
     ProfitDialogComponent,
     GrainChartComponent,
     FarmBuybacksDialogComponent,
@@ -142,6 +142,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     UserBalancesDialogComponent,
     DownloadHistoricDataDialogComponent,
     VaultFilterPipe,
+    Web3chartsComponent,
+    Web3chartComponent
   ],
   imports: [
     AppRoutingModule,
@@ -159,8 +161,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatSnackBarModule,
     HttpClientModule,
     LoggerModule.forRoot({
-      serverLoggingUrl: Inject(APP_CONFIG).apiEndpoint + '/api/logs',
-      level: Inject(APP_CONFIG).debugLevel,
+      serverLoggingUrl: 'placeholder - this is set at runtime using logger.updateConfig()',
+      level: 3,
       serverLogLevel: NgxLoggerLevel.ERROR,
       disableConsoleLogging: false
     }),
@@ -172,7 +174,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     MatIconModule,
     AngularEmojisModule,
-    SidebarModule.forRoot()
+    SidebarModule.forRoot(),
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
