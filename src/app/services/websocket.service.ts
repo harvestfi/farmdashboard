@@ -7,6 +7,7 @@ import {filter, first, switchMap} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {WsConsumer} from './ws-consumer';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
+import { NGXLogger, NgxLoggerLevel } from "ngx-logger";
 
 export var WS_ENDPOINT
 export var RECONNECT_INTERVAL
@@ -27,9 +28,15 @@ export class WebsocketService implements OnDestroy {
   private subscriptions = new Set<string>();
   private wasConnected = false;
 
-  constructor(@Inject(APP_CONFIG) public config: AppConfig) {
+  constructor(@Inject(APP_CONFIG) public config: AppConfig, private logger: NGXLogger) {
     WS_ENDPOINT = config.wsEndpoint
     RECONNECT_INTERVAL = config.wsReconnectInterval
+    this.logger.updateConfig({ 
+      serverLoggingUrl: config.apiEndpoint + '/api/logs',
+      level: config.debugLevel,
+      serverLogLevel: NgxLoggerLevel.ERROR,
+      disableConsoleLogging: false
+     });
   }
 
   static jsonHandler(message: Message): any {
