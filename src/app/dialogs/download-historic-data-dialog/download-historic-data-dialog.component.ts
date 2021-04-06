@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {StaticValues} from '../../static/static-values';
 import {Sort} from '@angular/material/sort';
 import {environment} from '../../../environments/environment';
 import {ViewTypeService} from '../../services/view-type.service';
+import { AppConfig, APP_CONFIG } from 'src/app.config';
 
 @Component({
   selector: 'app-download-historic-data-dialog',
@@ -14,10 +15,10 @@ export class DownloadHistoricDataDialogComponent implements OnInit {
   includeInactive = false;
   apiEndpoint = '';
 
-  constructor(public vt: ViewTypeService) {
+  constructor(@Inject(APP_CONFIG) public config: AppConfig, public vt: ViewTypeService) {
     this.sortedVaults = StaticValues.vaults;
     this.sortData(null);
-    this.apiEndpoint = environment.apiEndpoint;
+    this.apiEndpoint = config.apiEndpoint;
   }
 
   ngOnInit(): void {
