@@ -21,11 +21,11 @@ import { AppConfig, APP_CONFIG } from 'src/app.config';
 export class HttpService {
 
   private url = '/api/transactions';
-  public apiEndpoint
+  private apiEndpoint
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig, private http: HttpClient, private snackService: SnackService) {
     this.apiEndpoint = config.apiEndpoint
-    console.log(this.apiEndpoint)
+    console.log("apiEndpoint is: " + this.apiEndpoint)
   }
 
   getUniswapTxHistoryData(): Observable<UniswapDto[]> {
