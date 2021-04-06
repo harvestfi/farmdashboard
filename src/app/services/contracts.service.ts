@@ -24,7 +24,7 @@ import {ContractsResult} from '../models/contracts-result';
 })
 export class ContractsService {
 
-    private cache = new Map<IContract, Observable<any[]>>();
+    private cache = new Map<IContract, Observable<any>>();
     private urlPrefix = 'contracts';
     private typePaths = new Map<IContract, string>(
         [[Vault, 'vault'],
@@ -58,7 +58,7 @@ export class ContractsService {
             catchError(this.snackService.handleError<ContractsResult<T[]>>(`Contracts fetch for ${this.typePaths.get(type)} failed.`)),
             map((val: ContractsResult<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
             map(_ => _.filter(item => !(item instanceof Vault) || !(item.contract?.name?.match(/_V0$/)))) // filter older vaults
-        )
+        );
     }
 
 }

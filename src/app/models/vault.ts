@@ -1,5 +1,5 @@
 import {Contract} from './contract';
-import {IContract} from "./icontract";
+import {IContract} from './icontract';
 
 export class Vault implements IContract {
     id: number;

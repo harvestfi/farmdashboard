@@ -47,6 +47,9 @@
         ],
         "@typescript-eslint/member-ordering": [
           "off"
+        ],
+        "@typescript-eslint/no-empty-interface": [
+          "off"
         ]
       }
     },

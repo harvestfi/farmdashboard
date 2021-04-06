@@ -1,4 +1,4 @@
-import {IContract} from "./icontract";
+import {IContract} from './icontract';
 
 export interface ContractsResult<T> extends IContract {
     code: number;
