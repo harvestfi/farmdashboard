@@ -79,9 +79,8 @@ import { Web3chartComponent } from './web3charts/components/web3chart/web3chart.
 import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
 import {RewardsHistoryDialogComponent} from './dialogs/rewards-history-dialog/rewards-history-dialog.component';
 import {VaultFilterPipe} from './dialogs/rewards-history-dialog/vault-filter.pipe';
-import { APP_CONFIG } from 'src/app.config';
 
-declare var require: any;
+declare let require: any;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true

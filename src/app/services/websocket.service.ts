@@ -7,9 +7,6 @@ import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {WsConsumer} from './ws-consumer';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
 
-export var WS_ENDPOINT
-export var RECONNECT_INTERVAL
-
 export enum SocketClientState {
   ATTEMPTING, CONNECTED
 }
@@ -26,10 +23,7 @@ export class WebsocketService implements OnDestroy {
   private subscriptions = new Set<string>();
   private wasConnected = false;
 
-  constructor(@Inject(APP_CONFIG) public config: AppConfig) {
-    WS_ENDPOINT = config.wsEndpoint
-    RECONNECT_INTERVAL = config.wsReconnectInterval
-  }
+  constructor(@Inject(APP_CONFIG) public config: AppConfig) {}
 
   static jsonHandler(message: Message): any {
     return JSON.parse(message.body);
@@ -40,9 +34,9 @@ export class WebsocketService implements OnDestroy {
   }
 
   public connectSockJs(): void {
-    this.client = over(new SockJS(WS_ENDPOINT));
+    this.client = over(new SockJS(this.config.wsEndpoint));
     this.client.debug = null;
-    this.client.reconnect_delay = RECONNECT_INTERVAL * 1000;
+    this.client.reconnect_delay = this.config.wsReconnectInterval * 1000;
     this.client.connect({}, () => {
       clearTimeout(this.recTimeout);
       // reload page not so elegant method, but it should work
@@ -65,7 +59,7 @@ export class WebsocketService implements OnDestroy {
       this.consumers.forEach(c => c.setSubscribed(false));
       this.recTimeout = setTimeout(() => {
         this.connectSockJs();
-      }, RECONNECT_INTERVAL * 1000);
+      }, this.config.wsReconnectInterval * 1000);
     });
   }
 

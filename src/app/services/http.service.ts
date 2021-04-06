@@ -21,11 +21,11 @@ import {ContractVault} from '../models/contract-valut';
 export class HttpService {
 
   private url = '/api/transactions';
-  private apiEndpoint
+  private apiEndpoint;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig, private http: HttpClient, private snackService: SnackService) {
-    this.apiEndpoint = config.apiEndpoint
-    console.log("apiEndpoint is: " + this.apiEndpoint)
+    this.apiEndpoint = config.apiEndpoint;
+    console.log('apiEndpoint is: ' + this.apiEndpoint);
   }
 
   getUniswapTxHistoryData(): Observable<UniswapDto[]> {
