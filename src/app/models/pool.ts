@@ -1,6 +1,7 @@
 import {Contract} from './contract';
+import {IContract} from "./icontract";
 
-export class Pool {
+export class Pool implements IContract {
     id: number;
     contract: Contract;
     updatedBlock: number;

@@ -1,7 +1,8 @@
 import {Contract} from './contract';
 import {Token} from './token';
+import {IContract} from "./icontract";
 
-export class Pair {
+export class Pair implements IContract {
     id: number;
     contract: Contract;
     updatedBlock: number;
