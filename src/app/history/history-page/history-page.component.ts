@@ -24,7 +24,7 @@ class CheckedValue {
   styleUrls: ['./history-page.component.scss']
 })
 export class HistoryPageComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
-  @ViewChild('price_chart') chartEl: ElementRef;
+  @ViewChild('balance_chart') chartEl: ElementRef;
   @ViewChild('profitHistoryDialog') private profitHistoryDialog: CustomModalComponent;
   @ViewChild('historyDialog') private historyDialog: CustomModalComponent;
   chart: IChartApi;
