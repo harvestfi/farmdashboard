@@ -8,7 +8,6 @@ import {ChartsOptionsLight} from '../../chart/charts-options-light';
 import {MatTabChangeEvent} from '@angular/material/tabs';
 import {HttpService} from '../../services/http.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
-import {environment} from '../../../environments/environment';
 import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.component';
 
 @Component({

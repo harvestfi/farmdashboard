@@ -8,7 +8,6 @@ import {HarvestDto} from '../models/harvest-dto';
 import {HarvestTvl} from '../models/harvest-tvl';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
-import {environment} from '../../environments/environment';
 import {TransferDto} from '../models/transfer-dto';
 import {OhlcDto} from '../models/ohlc-dto';
 import {PricesDto} from '../models/prices-dto';
