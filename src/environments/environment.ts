@@ -1,6 +1,8 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+// DON'T USE THIS FOR RUNTIME VARIABLES
+// 1) make changes to src/assets/config.[environment].json
+// 2) update src/app.config.ts
+// 3) add constructor(@Inject(APP_CONFIG) public config: AppConfig) to your class
+// 4) access config via this.config.apiEndpoint
 
 export const environment = {
   production: false,

@@ -27,9 +27,9 @@ export class PricesCalculationService {
   private rewardEnded = new Set<string>();
   private lastPrices = new Map<string, PricesDto>();
 
-  constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig, private logger: NGXLogger) {
+  constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig) {
     StaticValues.vaults.forEach(v => this.tvls.set(v, 0.0));
-    this.logger.updateConfig({
+    this.log.updateConfig({
       serverLoggingUrl: config.apiEndpoint + '/api/logs',
       level: config.debugLevel,
       serverLogLevel: NgxLoggerLevel.ERROR,
