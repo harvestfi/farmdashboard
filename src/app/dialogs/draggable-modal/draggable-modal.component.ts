@@ -1,5 +1,5 @@
-import { Component, HostListener, ViewChild, AfterViewInit } from '@angular/core';
-import { ViewTypeService } from 'src/app/services/view-type.service';
+import {AfterViewInit, Component, HostListener, ViewChild} from '@angular/core';
+import {ViewTypeService} from 'src/app/services/view-type.service';
 
 @Component({
   selector: 'app-draggable-modal',
@@ -41,7 +41,7 @@ export class DraggableModalComponent implements AfterViewInit {
   @HostListener('document:touchmove', ['$event'])
   mousemove(event): void {
     const element = this.modal.nativeElement;
-  
+
     if (event.type === 'touchmove') {
       this.positionOne = this.positionThree - event.touches[0].clientX;
       this.positionTwo = this.positionFour - event.touches[0].clientY;
@@ -56,8 +56,8 @@ export class DraggableModalComponent implements AfterViewInit {
     if (this.isMouseDown) {
 
       const {x: elementX, width} = this.modal.nativeElement.getBoundingClientRect();
-      const hasScrollBar = (elementX + width + 30) > window.innerWidth; 
-      if(hasScrollBar && event.movementX > -1){
+      const hasScrollBar = (elementX + width + 30) > window.innerWidth;
+      if (hasScrollBar && event.movementX > -1) {
         this.isMouseDown = false;
         return;
       }

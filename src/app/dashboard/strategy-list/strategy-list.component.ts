@@ -33,9 +33,9 @@ export class StrategyListComponent implements AfterViewInit{
     // the vaults list
     this.sortVaultsList(this.currentSortingValue);
     if (this.searchTerm) {
-      return this.vaultsList.filter(vault => {
-        return vault.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase());
-      });
+      return this.vaultsList.filter(vault =>
+          vault.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase())
+      );
     }
     return this.vaultsList;
   }

@@ -164,10 +164,10 @@ export class StaticValues {
     'SUSHI_ETH_UST',
     // 'SUSHI_MIC_USDT',
     // 'SUSHI_MIS_USDT',
-    'ONEINCH_ETH_DAI',
-    'ONEINCH_ETH_USDC',
-    'ONEINCH_ETH_USDT',
-    'ONEINCH_ETH_WBTC',
+    // 'ONEINCH_ETH_DAI',
+    // 'ONEINCH_ETH_USDC',
+    // 'ONEINCH_ETH_USDT',
+    // 'ONEINCH_ETH_WBTC',
     // 'ONEINCH_ETH_ONEINCH',
     'ETH_DAI_HODL',
     'ETH_USDC_HODL',
@@ -213,7 +213,6 @@ export class StaticValues {
         return 'ETH';
       case 'RENBTC':
       case 'CRVRENWBTC':
-      case 'TBTC':
       case 'WBTC':
       case 'CRV_TBTC':
       case 'CRV_HBTC':
