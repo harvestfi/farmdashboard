@@ -13,6 +13,7 @@ import {OhlcDto} from '../models/ohlc-dto';
 import {PricesDto} from '../models/prices-dto';
 import {Balance} from '../models/balance';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {ContractVault} from '../models/contract-valut';
 
 @Injectable({
   providedIn: 'root'
@@ -113,9 +114,11 @@ export class HttpService {
   }
 
   getAllHistoryRewards(startTimestamp?: number, endTimestamp?: number): Observable<RewardDto[]> {
-    startTimestamp = Math.floor(startTimestamp || (new Date(0).getTime()/1000));
+    startTimestamp = Math.floor(startTimestamp || (new Date(0).getTime() / 1000));
     endTimestamp = Math.floor(endTimestamp || (Date.now() / 1000));
-    return this.http.get<RewardDto[]>(`${this.apiEndpoint}/api/transactions/history/reward/?start=${startTimestamp}&end=${endTimestamp}`).pipe(
+    return this.http.get<RewardDto[]>(
+        `${this.apiEndpoint}/api/transactions/history/reward/?start=${startTimestamp}&end=${endTimestamp}`)
+    .pipe(
         catchError(this.snackService.handleError<RewardDto[]>(`history reward `))
     );
   }
@@ -153,6 +156,12 @@ export class HttpService {
   getUserBalances(): Observable<Balance[]> {
     return this.http.get<Balance[]>(this.apiEndpoint + '/user_balances').pipe(
         catchError(this.snackService.handleError<Balance[]>(`load balances`))
+    );
+  }
+
+  getContractsVaults(): Observable<{ data: ContractVault[]; code: string }> {
+    return this.http.get<ContractVault[]>(this.apiEndpoint + '/contracts/vaults').pipe(
+        catchError(this.snackService.handleError<ContractVault[]>(`contracts vaults`))
     );
   }
 }
