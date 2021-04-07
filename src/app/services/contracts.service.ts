@@ -6,7 +6,7 @@ import {SnackService} from './snack.service';
 import {Vault} from '../models/vault';
 import {Token} from '../models/token';
 import {Pool} from '../models/pool';
-import {Lps} from '../models/Lps';
+import {Lps} from '../models/lps';
 import {IContract} from '../models/icontract';
 import {RestResponse} from '../models/rest-response';
 import {APP_CONFIG, AppConfig} from '../../app.config';
