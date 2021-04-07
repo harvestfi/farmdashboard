@@ -70,8 +70,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "farmdashboard-front:build",
-            "proxyConfig": "./proxy.conf.json"
+            "browserTarget": "farmdashboard-front:build"
           },
           "configurations": {
             "production": {
