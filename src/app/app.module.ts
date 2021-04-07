@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Inject, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -80,6 +80,8 @@ import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic
 import {RewardsHistoryDialogComponent} from './dialogs/rewards-history-dialog/rewards-history-dialog.component';
 import {VaultFilterPipe} from './dialogs/rewards-history-dialog/vault-filter.pipe';
 
+declare let require: any;
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -158,8 +160,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatSnackBarModule,
     HttpClientModule,
     LoggerModule.forRoot({
-      serverLoggingUrl: environment.apiEndpoint + '/api/logs',
-      level: environment.debugLevel,
+      serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
+      level: 3,
       serverLogLevel: NgxLoggerLevel.ERROR,
       disableConsoleLogging: false
     }),
@@ -176,7 +178,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
     useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-  },
+  }
 ],
   bootstrap: [AppComponent],
 })

@@ -9,6 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "stage": "ng build --prod && DEPLOYMENT_ENV=stage heroku local -p 5000",
+    "prod": "ng build --prod && DEPLOYMENT_ENV=prod heroku local -p 5000",
     "heroku-postbuild": "ng build --prod"
   },
   "private": true,
