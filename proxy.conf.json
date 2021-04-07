@@ -1,0 +1,18 @@
+{
+  "/prod/*": {
+    "target": "https://ethparser.herokuapp.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/prod": ""
+    }
+  },
+  "/stage/*": {
+    "target": "https://ethparser-staging.herokuapp.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/stage": ""
+    }
+  }
+}
