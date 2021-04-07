@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, timer} from 'rxjs';
 import {environment} from '../../environments/environment';
@@ -10,6 +10,7 @@ import {Pool} from '../models/pool';
 import {Lps} from '../models/Lps';
 import {IContract} from '../models/icontract';
 import {RestResponse} from '../models/rest-response';
+import {APP_CONFIG, AppConfig} from '../../app.config';
 
 /**
  * Usage:
@@ -32,9 +33,10 @@ export class ContractsService {
             [Token, 'token'],
             [Lps, 'unipair']]
     );
+    private config: AppConfig;
 
-    constructor(private http: HttpClient, private snackService: SnackService) {
-
+    constructor(@Inject(APP_CONFIG) public config: AppConfig, private http: HttpClient, private snackService: SnackService) {
+        this.config = config;
     }
 
     /**
@@ -54,7 +56,7 @@ export class ContractsService {
     }
 
     private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {
-        return this.http.get(`${environment.apiEndpoint}/${this.urlPrefix}/${this.typePaths.get(type)}s`).pipe(
+        return this.http.get(`${this.config.apiEndpoint}/${this.urlPrefix}/${this.typePaths.get(type)}s`).pipe(
             catchError(this.snackService.handleError<RestResponse<T[]>>(`Contracts fetch for ${this.typePaths.get(type)} failed.`)),
             map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
             map(_ => _.filter(item => !(item instanceof Vault) || !(item.contract?.name?.match(/_V0$/)))) // filter older vaults
