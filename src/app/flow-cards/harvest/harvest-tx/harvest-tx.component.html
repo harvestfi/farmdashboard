@@ -7,7 +7,7 @@
       </div>
       <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
         <option [value]="'all'">All</option>
-        <option *ngFor="let name of tvlNames" [value]="name">{{name}}</option>
+        <option *ngFor="let name of tvlNames | async" [value]="name">{{name}}</option>
       </select>
       <input #harvestDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="number">
     </div>
@@ -53,7 +53,7 @@
           <mat-form-field appearance="none" class="select-strategy">
             <mat-select [(value)]="vaultFilter" placeholder="-----------All-----------">
               <mat-option value="all">-----------All-----------</mat-option>
-              <mat-option *ngFor="let name of tvlNames" [value]="name">{{name}}</mat-option>
+              <mat-option *ngFor="let name of tvlNames | async" [value]="name">{{name}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

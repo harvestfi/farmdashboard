@@ -1,5 +1,6 @@
 import {Contract} from './contract';
 import {IContract} from './icontract';
+import {map} from 'rxjs/operators';
 
 export class Vault implements IContract {
     id: number;
@@ -24,5 +25,8 @@ export class Vault implements IContract {
     }
     isUniLP() {
         return this.underlying?.type === 2 && this.underlying?.name?.match(/^UNI_LP/);
+    }
+    isActive(): boolean {
+        return !this.contract?.name?.match(/_V0$/);
     }
 }

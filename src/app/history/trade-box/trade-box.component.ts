@@ -58,14 +58,6 @@ export class TradeBoxComponent implements OnInit {
     return Utils.isUniTrade(this.transferDto);
   }
 
-  openEtherscanTx(hash: string): void {
-    Utils.openEtherscanTx(hash);
-  }
-
-  getCoinImgUrl(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
-  }
-
   getColor(): string {
     if (this.transferDto && (
         this.transferDto.type === 'PS_EXIT'
@@ -108,10 +100,6 @@ export class TradeBoxComponent implements OnInit {
       name = name.slice(0, 6) + '..' + name.slice(name.length - 4);
     }
     return name;
-  }
-
-  prettyName(name: string): string {
-    return StaticValues.vaultPrettyName(name);
   }
 
   prettyType(): string {

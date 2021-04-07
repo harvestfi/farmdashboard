@@ -26,8 +26,8 @@
       <tr *ngFor="let tvlName of sortedVaults">
   
         <td class="tvl-name">
-          <img alt="?" class="tvl-img" src="{{getImgSrc(tvlName)}}"/>
-          {{tvlPrettyName(tvlName)}}
+          <app-vault-icon [vault]="tvlName"></app-vault-icon>
+          {{tvlName}}
         </td>
   
         <td class="tvl-value">

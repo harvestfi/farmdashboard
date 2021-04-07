@@ -22,18 +22,18 @@
       <tr *ngFor="let vault of sortedVaults">
   
         <td class="name">
-          <img alt="?" class="tvl-img" src="{{getImgSrc(vault)}}"/>
-          {{tvlPrettyName(vault)}}
+          <app-vault-icon [vault]="vault"></app-vault-icon>
+          {{vault.contract.name}}
         </td>
   
         <td class="transactions">
-          <a href='{{apiEndpoint}}/csv/transactions/history/harvest/{{vault}}' target='_blank' class="download-link">Transactions</a>
+          <a href='{{apiEndpoint}}/csv/transactions/history/harvest/{{vault.contract.name}}' target='_blank' class="download-link">Transactions</a>
         </td>
         <td class="hardwork">
-          <a href='{{apiEndpoint}}/csv/transactions/history/hardwork/{{vault}}' target='_blank' class="download-link">Hardwork</a>
+          <a href='{{apiEndpoint}}/csv/transactions/history/hardwork/{{vault.contract.name}}' target='_blank' class="download-link">Hardwork</a>
         </td>
         <td class="tvl">
-          <a href='{{apiEndpoint}}/csv/transactions/history/tvl/{{vault}}' target='_blank' class="download-link">TVL</a>
+          <a href='{{apiEndpoint}}/csv/transactions/history/tvl/{{vault.contract.name}}' target='_blank' class="download-link">TVL</a>
         </td>  
       </tr>
     </table>

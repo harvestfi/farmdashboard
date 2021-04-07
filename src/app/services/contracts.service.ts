@@ -58,7 +58,6 @@ export class ContractsService {
         return this.http.get(`${this.apiEndPoint}/${this.urlPrefix}/${this.typePaths.get(type)}s`).pipe(
             catchError(this.snackService.handleError<RestResponse<T[]>>(`Contracts fetch for ${this.typePaths.get(type)} failed.`)),
             map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
-            map(_ => _.filter(item => !(item instanceof Vault) || !(item.contract?.name?.match(/_V0$/)))) // filter older vaults
         );
     }
 

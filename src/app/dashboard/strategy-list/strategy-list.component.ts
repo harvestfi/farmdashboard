@@ -4,6 +4,8 @@ import {ViewTypeService} from '../../services/view-type.service';
 import {PricesCalculationService} from 'src/app/services/prices-calculation.service';
 import {Utils} from '../../static/utils';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {ContractsService} from '../../services/contracts.service';
+import {Vault} from '../../models/vault';
 
 @Component({
   selector: 'app-strategy-list',
@@ -14,7 +16,7 @@ export class StrategyListComponent implements AfterViewInit{
   public searchTerm = '';
   // Mutating the currentVaults in static values before using it so that we
   // are able to sort this array and not get a new one from the service.
-  public vaultsList = [...StaticValues.currentVaults];
+  public vaultsList = [];
   public apyWindowState: Record<string, boolean> = {};
   // false = desc, true = asc
   public sortDirection = false;
@@ -23,9 +25,12 @@ export class StrategyListComponent implements AfterViewInit{
   @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
   constructor(
       public vt: ViewTypeService,
-      public pricesCalculationService: PricesCalculationService) {}
+      public pricesCalculationService: PricesCalculationService, private contractsService: ContractsService) {}
   ngAfterViewInit(): void {
-    this.sortVaultsList(this.currentSortingValue);
+    this.contractsService.getContracts(Vault).subscribe(vaults => {
+      this.vaultsList = vaults.filter(_ => _.isActive()).map(v => v.contract?.name);
+      this.sortVaultsList(this.currentSortingValue);
+    });
   }
 
   get vaults(): string[] {
@@ -38,10 +43,6 @@ export class StrategyListComponent implements AfterViewInit{
       );
     }
     return this.vaultsList;
-  }
-
-  vaultPrettyName(name: string): string {
-    return StaticValues.vaultPrettyName(name);
   }
 
   toggleAPYWindow(name: string): void {
@@ -81,25 +82,6 @@ export class StrategyListComponent implements AfterViewInit{
     this.sortDirection = !this.sortDirection;
   }
 
-  get vaultsListCrv(): string[] {
-    return StaticValues.strategiesListCurve;
-  }
-
-  get vaultsListCrypto(): string[] {
-    return StaticValues.strategiesListSingleCoins;
-  }
-
-  get vaultsListUniLpPools(): string[] {
-    return StaticValues.strategiesListUniLpPools;
-  }
-
-  get vaultsListNonUniLpPools(): string[] {
-    return StaticValues.strategiesListNonUniLpPools;
-  }
-
-  getImgSrc(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
-  }
   vaultRewardApyPrettify(tvlName: string): string {
     return Utils.prettifyNumber(this.pricesCalculationService.vaultRewardWeeklyApy(tvlName));
   }
