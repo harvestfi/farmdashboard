@@ -15,9 +15,9 @@ import {APP_CONFIG, AppConfig} from '../../app.config';
  * Usage:
  * const service = new ContractsService(appConfig, httpClient, snackService);
  * service.getContracts(Vault)  => Array<Vault>
- * service.getContracts(Pool)  => Array<Pool>
+ * service.getContracts(Pool)   => Array<Pool>
  * service.getContracts(Token)  => Array<Token>
- *
+ * service.getContracts(Pair)   => Array<Pair>
  */
 @Injectable({
     providedIn: 'root'
@@ -40,6 +40,8 @@ export class ContractsService {
 
     /**
      * Fetch a list of contracts by type, e.g. Vault, Pool, Token, Pair
+     * Uses a cache per type and stores a buffer size of 1 (it's a full list of items)
+     * Refreshes this buffer every 5 minutes.
      *
      * @param type
      */
