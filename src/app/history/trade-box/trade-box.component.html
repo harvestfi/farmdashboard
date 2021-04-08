@@ -72,8 +72,7 @@
     <div class="value coin-col"
          matTooltip="{{otherSideAddress}}">
       {{otherSideName}}
-<!--      <img *ngIf="!otherSideName.startsWith('0x')" class="tvl-img" id="img1" src="{{getCoinImgUrl(otherSideName)}}"/>-->
-      <app-vault-icon [vault]="otherSideName"></app-vault-icon>
+      <app-vault-icon *ngIf="!otherSideName?.startsWith('0x')" [vault]="otherSideName"></app-vault-icon>
     </div>
 
     <div class="value amount price-coll">

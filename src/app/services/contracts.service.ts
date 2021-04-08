@@ -13,7 +13,7 @@ import {APP_CONFIG, AppConfig} from '../../app.config';
 
 /**
  * Usage:
- * const service = new ContractsService(httpClient, snackService);
+ * const service = new ContractsService(appConfig, httpClient, snackService);
  * service.getContracts(Vault)  => Array<Vault>
  * service.getContracts(Pool)  => Array<Pool>
  * service.getContracts(Token)  => Array<Token>

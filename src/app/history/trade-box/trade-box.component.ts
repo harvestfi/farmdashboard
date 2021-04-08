@@ -1,10 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Utils} from '../../static/utils';
 import {StaticValues} from '../../static/static-values';
 import {HarvestDto} from '../../models/harvest-dto';
 import {TransferDto} from '../../models/transfer-dto';
 import {NGXLogger} from 'ngx-logger';
 import {Addresses} from '../../static/addresses';
+import {ContractsService} from '../../services/contracts.service';
+import {Vault} from '../../models/vault';
 
 @Component({
   selector: 'app-trade-box',
@@ -18,8 +20,9 @@ export class TradeBoxComponent implements OnInit {
   @Input() harvestDto: HarvestDto;
   otherSideAddress: string;
   otherSideName: string;
+  addresses: Map<string,string>;
 
-  constructor(private log: NGXLogger) {
+  constructor(private log: NGXLogger, private contractsService: ContractsService) {
   }
 
   get getTitle(): string {
@@ -36,8 +39,11 @@ export class TradeBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.otherSideAddress = this.getTransferOtherSide();
-    this.otherSideName = this.getTransferOtherSidePretty();
+    this.contractsService.getContracts(Vault).subscribe(vaults => {
+      this.addresses = new Map(vaults.map(_ => [_.contract.address, _.contract.name]));
+      this.otherSideAddress = this.getTransferOtherSide();
+      this.otherSideName = this.getTransferOtherSidePretty();
+    });
   }
 
   transferBalance(t: TransferDto): number {
@@ -95,7 +101,7 @@ export class TradeBoxComponent implements OnInit {
 
   getTransferOtherSidePretty(): string {
     const otherSide = this.getTransferOtherSide();
-    let name = Addresses.mapAddressToName(otherSide);
+    let name = this.addresses.get(otherSide) || otherSide;
     if (name === otherSide) {
       name = name.slice(0, 6) + '..' + name.slice(name.length - 4);
     }
