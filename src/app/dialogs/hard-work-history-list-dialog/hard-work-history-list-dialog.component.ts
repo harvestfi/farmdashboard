@@ -4,6 +4,10 @@ import { NGXLogger } from 'ngx-logger';
 import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { HardWorkDto } from '../../models/hardwork-dto';
+import {ContractsService} from '../../services/contracts.service';
+import {Vault} from '../../models/vault';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-hard-work-history-list-dialog',
@@ -20,16 +24,19 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   constructor(
     private hwListHistory: HttpService,
     public vt: ViewTypeService,
-    private log: NGXLogger
-
+    private log: NGXLogger,
+    private contractsService: ContractsService
   ) { }
 
   ngAfterViewInit(): void {
     this.hwListHistory.getHardWorkHistoryData().subscribe(data => this.addInArray(data)).add(() => this.ready = true);
+
   }
 
-  get vaultNames(): string[] {
-    return StaticValues.currentVaults;
+  get vaultNames(): Observable<string[]> {
+    return this.contractsService.getContracts(Vault).pipe(
+        map(vaults => vaults.map(_ => _.contract.name))
+    );
   }
 
   getOlderHardworks(): void {

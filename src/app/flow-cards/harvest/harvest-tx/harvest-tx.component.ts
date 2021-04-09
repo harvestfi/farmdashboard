@@ -12,6 +12,10 @@ import {HardWorkDto} from '../../../models/hardwork-dto';
 import {RewardDto} from '../../../models/reward-dto';
 import {PriceSubscriberService} from '../../../services/price-subscriber.service';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {ContractsService} from '../../../services/contracts.service';
+import {Vault} from '../../../models/vault';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-harvest-tx',
@@ -34,11 +38,14 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
               private priceSubscriberService: PriceSubscriberService,
               private snack: SnackService,
               private log: NGXLogger,
+              private  contractsService: ContractsService
   ) {
   }
 
-  get tvlNames(): string[] {
-    return StaticValues.currentVaults;
+  get tvlNames(): Observable<string[]> {
+    return this.contractsService.getContracts(Vault).pipe(
+        map(vaults => vaults.map(_ => _.contract.name))
+    );
   }
 
   setSubscribed(s: boolean): void {
@@ -56,6 +63,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
           this.loadLastRewards();
         }))
     );
+
 
     this.initWs();
     this.priceSubscriberService.initWs();
@@ -128,9 +136,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   private loadLastHardWorks(): void {
     this.httpService.getLastHardWorks().subscribe(data => {
       data?.forEach(hardWork => {
-        // if (!StaticValues.currentVaults.find((p) => p === hardWork.vault)) {
-        //   return;
-        // }
         HardWorkDto.enrich(hardWork);
         this.pricesCalculationService.saveHardWork(hardWork);
       });

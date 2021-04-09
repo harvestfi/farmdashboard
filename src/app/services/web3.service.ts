@@ -1,7 +1,7 @@
 import {HttpService} from './http.service';
 import {Inject, Injectable} from '@angular/core';
 // import Web3 from 'web3';
-import type {ContractVault} from '../models/contract-valut';
+import type {Vault} from '../models/vault';
 // import type {AbiItem} from 'web3-utils';
 // import type {Contract} from 'web3-eth-contract';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
@@ -33,7 +33,7 @@ export class Web3Service {
         return this.web3.eth.getBlockNumber();
     }
 
-    private getContractsVaults(): Promise<ContractVault[]> {
+    private getContractsVaults(): Promise<Vault[]> {
         return new Promise((resolve, reject) => {
             this.httpService.getContractsVaults().subscribe(response => {
                 if (response.code === '200') {

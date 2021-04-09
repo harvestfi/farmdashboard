@@ -18,12 +18,12 @@
   </div>
 
   <div class="hardwork-field hardwork-vault-img">
-    <img alt="?" class="tvl-img" src="{{getImgUrl(dto.vault)}}"/>
+    <app-vault-icon [vault]="dto.vault"></app-vault-icon>
   </div>
 
 
   <div class="hardwork-field hardwork-vault">
-    {{prettyPoolName(dto.vault)}}
+    {{dto.vault}}
   </div>
 
   <div class="hardwork-field hardwork-shareChangeUsd">
@@ -52,11 +52,7 @@
   </div>
 
   <div class="hardwork-field pointer">
-    <mat-icon (click)="openEthersacanTx(hash)"
-              [ngStyle]="{'color': '#b5b4b4'}"
-              aria-hidden="false" aria-label="Price" class="sign-icon">
-      open_in_new
-    </mat-icon>
+    <app-transaction-link [transactionHash]="hash"></app-transaction-link>
   </div>
 
 

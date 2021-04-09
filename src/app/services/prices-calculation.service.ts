@@ -9,6 +9,8 @@ import {RewardDto} from '../models/reward-dto';
 import {LastPrice} from '../models/last-price';
 import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {ContractsService} from './contracts.service';
+import {Vault} from '../models/vault';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,8 +29,10 @@ export class PricesCalculationService {
   private rewardEnded = new Set<string>();
   private lastPrices = new Map<string, PricesDto>();
 
-  constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig) {
-    StaticValues.vaults.forEach(v => this.tvls.set(v, 0.0));
+  constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig, private contractsService: ContractsService) {
+    contractsService.getContracts(Vault).subscribe(vaults => {
+      vaults.forEach(v => this.tvls.set(v.contract.name, 0.0));
+    });
     this.log.updateConfig({
       serverLoggingUrl: config.apiEndpoint + '/api/logs',
       level: config.debugLevel,

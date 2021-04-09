@@ -32,8 +32,4 @@ export class HarvestTradeComponent implements OnInit {
     return Utils.priceGradientHarvest(type, amount, success);
   }
 
-  getImgUrl(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
-  }
-
 }

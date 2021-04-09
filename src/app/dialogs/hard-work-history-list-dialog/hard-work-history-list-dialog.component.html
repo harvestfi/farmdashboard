@@ -9,7 +9,7 @@
     <div class="fields-container">
       <select [(ngModel)]="vaultFilter" class="strategy-select-field">
         <option [value]="'all'">All</option>
-        <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
+        <option *ngFor="let name of vaultNames | async" [value]="name">{{name}}</option>
       </select>
       <input #hardworkDtoFilter class="less-than-filter-field" placeholder="More than..." type="number" min="0">
     </div>

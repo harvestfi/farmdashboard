@@ -26,16 +26,4 @@ export class HardworkTradeComponent implements OnInit {
 
   }
 
-  prettyPoolName(name: string): string {
-    return StaticValues.vaultPrettyName(name);
-  }
-
-  getImgUrl(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
-  }
-
-  openEthersacanTx(hash: string): void {
-    Utils.openEtherscanTx(hash);
-  }
-
 }

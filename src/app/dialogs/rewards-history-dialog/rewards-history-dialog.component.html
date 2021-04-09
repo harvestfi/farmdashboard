@@ -25,7 +25,10 @@
         <div class="scroller">
             <div class="values" *ngFor="let reward of rewards | vaultFilter: vaultFilter">
                 <div class="value-field">{{reward.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
-                <div class="value-field"><img alt="?" class="tvl-img" src="{{getImgUrl(reward.vault)}}"/> {{reward.vault}}</div>
+                <div class="value-field">
+                    <app-vault-icon [vault]="reward.vault"></app-vault-icon>
+                    {{reward.vault}}
+                </div>
                 <div class="value-field">{{reward.reward | number: '1.1-1'}}</div>
                 <div class="value-field">{{reward.periodFinish*1000 | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
                 <div class="value-field">

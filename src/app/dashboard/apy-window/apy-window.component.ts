@@ -59,10 +59,6 @@ export class ApyWindowComponent implements OnInit {
 
   // ---------------- GETTERS --------------------
 
-  getImgSrc(): string {
-    return StaticValues.getImgSrcForVault(this.poolName);
-  }
-
   get isAutoStakeVault(): boolean {
     return Utils.isAutoStakeVault(this.poolName);
   }

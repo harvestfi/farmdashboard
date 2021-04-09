@@ -284,10 +284,6 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
     return Utils.transferBalanceUsd(t, this.address);
   }
 
-  prettyVaultName(name: string): string {
-    return StaticValues.vaultPrettyName(name);
-  }
-
   isPositive(record: any): boolean {
     return Utils.isHarvestPositive(record) || Utils.isUniPositive(record);
   }
@@ -298,10 +294,6 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
 
   isTransfer(record: any): boolean {
     return Utils.isTransfer(record);
-  }
-
-  getImgUrl(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
   }
 
   openHistoryDialog(): void {
