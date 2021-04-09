@@ -19,7 +19,7 @@ export class Vault implements IContract {
             !new Set([
                 'BAC', 'DSD','UNI_WBTC_KLON','SUSHI_WBTC_TBTC','UNI_ETH_DAI','UNI_ETH_USDC','UNI_ETH_USDT','UNI_ETH_WBTC',
                 'CRV_AAVE', 'TUSD', 'ESD', 'RENBTC', 'CRV_TBTC', 'ONEINCH_ETH_DAI', 'ONEINCH_ETH_USDC', 'ONEINCH_ETH_WBTC',
-                'ONEINCH_ETH_USDT', 'SUSHI_MIC_USDT', 'SUSHI_MIC_USDT'
+                'ONEINCH_ETH_USDT', 'SUSHI_MIC_USDT', 'SUSHI_MIS_USDT'
             ]).has(this.contract.name);
     }
 }
