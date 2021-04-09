@@ -27,6 +27,11 @@ export class Vault implements IContract {
         return this.underlying?.type === 2 && this.underlying?.name?.match(/^UNI_LP/);
     }
     isActive(): boolean {
-        return !this.contract?.name?.match(/_V0$/);
+        return !this.contract?.name?.match(/_V0$/) &&
+            !new Set([
+                'BAC', 'DSD','UNI_WBTC_KLON','SUSHI_WBTC_TBTC','UNI_ETH_DAI','UNI_ETH_USDC','UNI_ETH_USDT','UNI_ETH_WBTC',
+                'CRV_AAVE', 'TUSD', 'ESD', 'RENBTC', 'CRV_TBTC', 'ONEINCH_ETH_DAI', 'ONEINCH_ETH_USDC', 'ONEINCH_ETH_WBTC',
+                'ONEINCH_ETH_USDT', 'SUSHI_MIC_USDT', 'SUSHI_MIC_USDT'
+            ]).has(this.contract.name);
     }
 }
