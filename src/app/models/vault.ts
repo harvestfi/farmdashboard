@@ -14,18 +14,6 @@ export class Vault implements IContract {
     strategy: Contract;
     underlying: Contract;
     symbol: string;
-    isCRV() {
-        return this.underlying?.type === 4 && this.contract?.name?.match(/CRV/);
-    }
-    isOtherLP() {
-        return this.underlying?.type === 2 && !this.underlying?.name?.match(/^UNI_LP/);
-    }
-    isStableCoin() {
-        return this.underlying?.type === 4 && !this.contract?.name?.match(/CRV/);
-    }
-    isUniLP() {
-        return this.underlying?.type === 2 && this.underlying?.name?.match(/^UNI_LP/);
-    }
     isActive(): boolean {
         return !this.contract?.name?.match(/_V0$/) &&
             !new Set([
