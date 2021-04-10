@@ -1,5 +1,6 @@
 // /* eslint-disable @angular-eslint/no-output-on-prefix */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ViewTypeService } from 'src/app/services/view-type.service';
 
 type PaginatedObject = {
   currentPage: number; //current page
@@ -18,6 +19,7 @@ export class PaginatorComponent {
   @Output() previousPage = new EventEmitter();
   @Output() selectPage = new EventEmitter();
   @Input('pageObject') pageObject: PaginatedObject;
+  public vt: ViewTypeService = new ViewTypeService();
 
   handleNextPage(): void {
     this.nextPage.emit(this.pageObject.nextPage);
@@ -31,7 +33,7 @@ export class PaginatorComponent {
     if (page === '...') {
       return;
     }
-    this.selectPage.emit(page);
+    this.selectPage.emit(page - 1);
   }
 
   get pageRange(): number[] {

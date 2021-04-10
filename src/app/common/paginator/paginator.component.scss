@@ -1,23 +1,56 @@
+
+$paginator-style: (
+    "dark": (
+        "background": #3d3d3d,
+        "border": 1px solid #3c3c3c,
+        "color": #f1f1f1
+        ),
+    "light": (
+        "background": #fff9cd,
+        "border": 1px solid #f0e69c,
+        "color": #363636
+    )
+);
+
+
+@mixin paginatorColors($color){
+    $current-color: map-get($paginator-style , $color);
+
+    background: map-get($current-color, 'background');
+    border: map-get($current-color, 'border');
+    color: map-get($current-color, 'color');
+
+    &.active, &:hover {
+        background: darken(map-get($current-color, 'background'), 10%);
+    }
+}
+
 .paginator-component{
     padding: 10px;
 
     .paginator-btn {
         padding: 5px;
         padding: 5px;
-        border: 1px solid #3c3c3c;
-        background: #3d3d3d;
         cursor: pointer;
         outline: none;
-
-        &.active, &:hover {
-            background: #292929;
-        }
 
         &:disabled {
             opacity: 0.8;
             cursor: not-allowed;
         }
+    }
 
+    &.dark {
+        .paginator-btn{
+            @include paginatorColors(dark)
+        }
+    }
+    
+    &.light {
+        .paginator-btn{
+            @include paginatorColors(light)
+        }
 
     }
+
 }
