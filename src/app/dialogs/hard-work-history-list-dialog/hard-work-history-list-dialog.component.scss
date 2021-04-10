@@ -16,7 +16,7 @@
     max-width: 1200px;
     width: 90vw;
 
-    @include responsive(phone){
+    @include responsive(small){
       width: 100%;
     }
 
