@@ -81,6 +81,7 @@ import {RewardsHistoryDialogComponent} from './dialogs/rewards-history-dialog/re
 import {VaultFilterPipe} from './dialogs/rewards-history-dialog/vault-filter.pipe';
 import {TransactionComponent} from './static/components/transactions/transaction.component';
 import {IconsComponent} from './static/components/icons/icons.component';
+import {GasDialogComponent} from './dialogs/gas-dialog/gas-dialog.component';
 
 declare let require: any;
 
@@ -146,7 +147,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TransactionComponent,
     IconsComponent,
     Web3chartsComponent,
-    Web3chartComponent
+    Web3chartComponent,
+    GasDialogComponent
   ],
   imports: [
     AppRoutingModule,
