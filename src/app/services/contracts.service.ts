@@ -35,7 +35,8 @@ export class ContractsService {
     private apiEndPoint: string;
 
     constructor(@Inject(APP_CONFIG) public config: AppConfig, private http: HttpClient, private snackService: SnackService) {
-        this.apiEndPoint = config.apiEndpoint;
+        //todo temporally use parser url
+        this.apiEndPoint = config.wsEndpoint.replace('/stomp', '');
     }
 
     /**
