@@ -6,6 +6,7 @@ import {ChartBuilder} from '../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.component';
 import { IChartApi } from 'lightweight-charts';
 import {HardworksService} from '../../services/hardworks.service';
+import {TvlsService} from '../../services/tvls.service';
 @Component({
   selector: 'app-farm-buybacks-dialog',
   templateUrl: './farm-buybacks-dialog.component.html',
@@ -18,11 +19,11 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
   chart: IChartApi;
 
 
-  constructor(private httpService: HttpService,
-              public vt: ViewTypeService,
+  constructor(public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private hardworksService: HardworksService,
+              private tvlsService: TvlsService,
               ) {
                 super();
   }
@@ -38,7 +39,7 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
       chartBuilder.initVariables(2);
       data?.forEach(dto => chartBuilder.addInData(0, dto.blockDate, dto.farmBuybackSum / 1000));
 
-      this.httpService.getHistoryTvlByVault('PS').subscribe(vaultData => {
+      this.tvlsService.getHistoryTvlByVault('PS').subscribe(vaultData => {
             this.log.debug('History of PS TVL loaded ', vaultData);
             vaultData?.forEach(dto => chartBuilder.addInData(1, dto.calculateTime, dto.sharePrice / 1000));
             this.handleData(chartBuilder, [

@@ -4,7 +4,6 @@ import {SnackService} from './snack.service';
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {UniswapDto} from '../models/uniswap-dto';
-import {HarvestTvl} from '../models/harvest-tvl';
 import {RewardDto} from '../models/reward-dto';
 import {TransferDto} from '../models/transfer-dto';
 import {OhlcDto} from '../models/ohlc-dto';
@@ -35,18 +34,6 @@ export class HttpService {
   getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
     return this.http.get<UniswapDto[]>(this.apiEndpoint + `${this.url}/history/uni?from=${minBlock}&to=${maxBlock}`).pipe(
         catchError(this.snackService.handleError<UniswapDto[]>(`Uni history`))
-    );
-  }
-
-  getHistoryAllTvl(): Observable<HarvestTvl[]> {
-    return this.http.get<HarvestTvl[]>(this.apiEndpoint + '/api/transactions/history/alltvl').pipe(
-        catchError(this.snackService.handleError<HarvestTvl[]>(`history all TVL`))
-    );
-  }
-
-  getHistoryTvlByVault(vault: string): Observable<HarvestTvl[]> {
-    return this.http.get<HarvestTvl[]>(this.apiEndpoint + '/api/transactions/history/tvl/' + vault).pipe(
-        catchError(this.snackService.handleError<HarvestTvl[]>(`history TVL ` + vault))
     );
   }
 

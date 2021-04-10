@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {SnackService} from './snack.service';
 import {RewardDto} from '../models/reward-dto';
 
-export class TvlsService {
+export class RewardsService {
 
     private url = '/api/transactions';
     private apiEndpoint;
