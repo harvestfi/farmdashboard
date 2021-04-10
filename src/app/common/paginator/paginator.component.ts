@@ -1,70 +1,64 @@
+// /* eslint-disable @angular-eslint/no-output-on-prefix */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-
-
 type PaginatedObject = {
-    current_page: number, //current page
-    next_page: number,
-    previous_page: number,
-    total_pages: number,
-    data: any[]
-}
+  currentPage: number; //current page
+  nextPage: number;
+  previousPage: number;
+  totalPages: number;
+  data: any[];
+};
 @Component({
-    selector: 'app-paginator',
-    templateUrl: './paginator.component.html',
-    styleUrls: ['./paginator.component.scss']
+  selector: 'app-paginator',
+  templateUrl: './paginator.component.html',
+  styleUrls: ['./paginator.component.scss'],
 })
 export class PaginatorComponent {
-    @Output() onNextPage = new EventEmitter();
-    @Output() onPreviousPage = new EventEmitter();
-    @Output() onSelectPage = new EventEmitter();
-    @Input ('pageObject') pageObject: PaginatedObject;    
+  @Output() nextPage = new EventEmitter();
+  @Output() previousPage = new EventEmitter();
+  @Output() selectPage = new EventEmitter();
+  @Input('pageObject') pageObject: PaginatedObject;
 
-    handleNextPage(): void {
-        console.log(this.pageObject.data);
-        this.onNextPage.emit(this.pageObject.next_page);
+  handleNextPage(): void {
+    this.nextPage.emit(this.pageObject.nextPage);
+  }
+
+  handlePreviousPage(): void {
+    this.previousPage.emit(this.pageObject.previousPage);
+  }
+
+  handleSelectPage(page): void {
+    if (page === '...') {
+      return;
     }
+    this.selectPage.emit(page);
+  }
 
-    handlePreviousPage(): void {
-        this.onPreviousPage.emit(this.pageObject.previous_page);
+  get pageRange(): number[] {
+    const current = this.pageObject.currentPage;
+    const last = this.pageObject.totalPages - 1;
+    const delta = 1;
+    const left = current - delta;
+    const right = current + delta + 1;
+    const range = [];
+    const pages = [];
+    let l;
+
+    for (let i = 1; i <= last; i++) {
+      if (i === 1 || i === last || (i >= left && i < right)) {
+        range.push(i);
+      }
     }
-
-    handleSelectPage(page): void {
-        if (page === '...') {
-            return;
+    range.forEach((i) => {
+      if (l) {
+        if (i - l !== 1) {
+          pages.push('...');
         }
-        this.onSelectPage.emit(page)
-    }
+      }
+      pages.push(i);
+      l = i;
+    });
 
-    get pageRange(): number[] {
-        const current = this.pageObject.current_page;
-        const last = this.pageObject.total_pages;
-        const delta = 1;
-        const left = current - delta;
-        const right = current + delta + 1;
-        const range = []
-        const pages = [];
-        let l;
-
-        for (let i = 1; i <= last; i++) {
-            if (i === 1 || i === last || (i >= left && i < right)){
-                range.push(i);
-            }
-        }
-
-        range.forEach(i => {
-            if (l) {
-                if (i - 1 === 2) {
-                    pages.push(l + 1);
-                } else if (i - l !== 1) {
-                    pages.push('...')
-                }
-            } 
-            pages.push(i);
-            l = i;
-        });
-
-        return pages
-
-    }
+    return pages;
+  }
 }

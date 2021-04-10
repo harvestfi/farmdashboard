@@ -15,7 +15,7 @@
     </div>
     <app-hardwork-header [showMoreColumns]='true' ></app-hardwork-header>
     <app-hardwork-flow-tab [dtos]="paginatedDTOs.data" [showMoreColumns]="true" [showFullDate]="true" [vaultFilter]="vaultFilter" [minAmount]="hardworkDtoFilter.value"></app-hardwork-flow-tab>
-    <app-paginator (onSelectPage)="selectPage($event)" (onNextPage)="nextPage($event)" (onPreviousPage)="previousPage($event)" [pageObject]="paginatedDTOs"></app-paginator>
+    <app-paginator (selectPage)="selectPage($event)" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)" [pageObject]="paginatedDTOs"></app-paginator>
   </ng-template>
 
   
