@@ -4,6 +4,10 @@ import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { NGXLogger } from 'ngx-logger';
 import { HarvestDto } from '../../models/harvest-dto';
+import {Observable} from 'rxjs';
+import {Vault} from '../../models/vault';
+import {map} from 'rxjs/operators';
+import {ContractsService} from '../../services/contracts.service';
 
 
 @Component({
@@ -22,10 +26,13 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
     private httpService: HttpService,
     public vt: ViewTypeService,
     private log: NGXLogger,
+    private  contractsService: ContractsService
   ) {}
 
-  get tvlNames(): string[] {
-    return StaticValues.currentVaults;
+  get tvlNames(): Observable<string[]> {
+    return this.contractsService.getContracts(Vault).pipe(
+        map(vaults => vaults.map(_ => _.contract.name))
+    );
   }
 
   ngAfterViewInit(): void {

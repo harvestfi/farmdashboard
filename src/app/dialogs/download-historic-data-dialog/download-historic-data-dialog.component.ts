@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {StaticValues} from '../../static/static-values';
 import {Sort} from '@angular/material/sort';
-import {environment} from '../../../environments/environment';
 import {ViewTypeService} from '../../services/view-type.service';
+import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {ContractsService} from '../../services/contracts.service';
+import {Vault} from '../../models/vault';
 
 @Component({
   selector: 'app-download-historic-data-dialog',
@@ -10,25 +12,28 @@ import {ViewTypeService} from '../../services/view-type.service';
   styleUrls: ['./download-historic-data-dialog.component.scss']
 })
 export class DownloadHistoricDataDialogComponent implements OnInit {
-  sortedVaults: string[];
+  sortedVaults: Vault[];
+  vaults: Vault[];
   includeInactive = false;
-  apiEndpoint = '';
+  apiEndpoint: string;
 
-  constructor(public vt: ViewTypeService) {
-    this.sortedVaults = StaticValues.vaults;
-    this.sortData(null);
-    this.apiEndpoint = environment.apiEndpoint;
+  constructor(@Inject(APP_CONFIG) public config: AppConfig, public vt: ViewTypeService, private contractsService: ContractsService) {
+    this.apiEndpoint = config.apiEndpoint;
   }
 
   ngOnInit(): void {
+    this.contractsService.getContracts(Vault).subscribe(vaults => {
+      this.sortedVaults = this.vaults = vaults;
+      this.sortData(null);
+    });
   }
 
   sortData(sort: Sort): void {
     let vaults;
     if (this.includeInactive) {
-      vaults = StaticValues.vaults;
+      vaults = this.vaults;
     } else {
-      vaults = Object.assign([], StaticValues.currentVaults);
+      vaults = this.vaults.filter(_ => _.isActive());
     }
     if (!sort || !sort.active || sort.direction === '') {
       this.sortedVaults = vaults;
@@ -44,14 +49,6 @@ export class DownloadHistoricDataDialogComponent implements OnInit {
           return 0;
       }
     });
-  }
-
-  tvlPrettyName(tvlName: string): string {
-    return tvlName?.replace('SUSHI_', '');
-  }
-
-  getImgSrc(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean): number {

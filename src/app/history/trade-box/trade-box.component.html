@@ -71,8 +71,8 @@
 
     <div class="value coin-col"
          matTooltip="{{otherSideAddress}}">
-      {{prettyName(otherSideName)}}
-      <img *ngIf="!otherSideName.startsWith('0x')" class="tvl-img" id="img1" src="{{getCoinImgUrl(otherSideName)}}"/>
+      {{otherSideName}}
+      <app-vault-icon *ngIf="!otherSideName?.startsWith('0x')" [vault]="otherSideName"></app-vault-icon>
     </div>
 
     <div class="value amount price-coll">
@@ -91,9 +91,7 @@
       <text class="coin-sign">FARM</text>
     </div>
 
-    <div (click)="openEtherscanTx(transferDto.id.split('_')[0])" class="value pointer link-col">
-      <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
-    </div>
+    <app-transaction-link [transactionHash]="transferDto.id.split('_')[0]"></app-transaction-link>
 
   </div>
 
@@ -175,8 +173,8 @@
     </div>
 
     <div class="value vault-col">
-      {{prettyName(harvestDto.vault)}}
-      <img alt="?" class="tvl-img" src="{{getCoinImgUrl(harvestDto.vault)}}"/>
+      {{harvestDto.vault}}
+      <app-vault-icon [vault]="harvestDto.vault"></app-vault-icon>
     </div>
 
     <div class="value price-coll">
@@ -196,10 +194,7 @@
       <text class="coin-sign">$</text>
     </div>
 
-    <div (click)="openEtherscanTx(harvestDto.hash)" class="value pointer link-col">
-      <mat-icon [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
-    </div>
-
+    <app-transaction-link [transactionHash]="harvestDto.hash"></app-transaction-link>
 
   </div>
 

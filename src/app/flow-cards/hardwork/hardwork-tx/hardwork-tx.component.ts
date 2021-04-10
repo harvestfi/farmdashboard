@@ -8,6 +8,10 @@ import {SnackService} from '../../../services/snack.service';
 import {HardworkSubscriberService} from '../../../services/hardwork-subscriber.service';
 import {HardWorkHistoryListDialogComponent} from '../../../dialogs/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {Observable} from 'rxjs';
+import {ContractsService} from '../../../services/contracts.service';
+import {Vault} from '../../../models/vault';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-hardwork-tx',
@@ -28,11 +32,14 @@ export class HardworkTxComponent implements AfterViewInit {
       public vt: ViewTypeService,
       private snack: SnackService,
       private log: NGXLogger,
+      private contractsService: ContractsService
   ) {
   }
 
-  get vaultNames(): string[] {
-    return StaticValues.currentVaults;
+  get vaultNames(): Observable<string[]> {
+    return this.contractsService.getContracts(Vault).pipe(
+        map(vaults => vaults.map(_ => _.contract?.name))
+    );
   }
 
   ngAfterViewInit(): void {

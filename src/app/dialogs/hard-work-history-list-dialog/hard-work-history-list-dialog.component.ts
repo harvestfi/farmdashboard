@@ -4,6 +4,10 @@ import { NGXLogger } from 'ngx-logger';
 import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { HardWorkDto } from '../../models/hardwork-dto';
+import {ContractsService} from '../../services/contracts.service';
+import {Vault} from '../../models/vault';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-hard-work-history-list-dialog',
@@ -17,33 +21,31 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   vaultFilter = 'all';
   disabled  = false;
   ready = false;
-  currentPage = 1;
   constructor(
     private hwListHistory: HttpService,
     public vt: ViewTypeService,
-    private log: NGXLogger
+    private log: NGXLogger,
+    private contractsService: ContractsService
   ) {}
 
   ngAfterViewInit(): void {
-    this.hwListHistory
-    .getPaginatedHardworkHistoryData(10, this.currentPage)
-    .subscribe((data: any) => this.dtos = data.data)
-    .add(() => this.ready = true);
+    this.getDtoDataForPage(0);
   }
 
   getDtoDataForPage(page_number: number): void {
     this.hwListHistory
     .getPaginatedHardworkHistoryData(10, page_number)
-    .subscribe((data: any) => this.dtos = data.data)
+    .subscribe((response: any) => {
+      this.dtos = response.data;
+    }
+      )
     .add(() => this.ready = true);
   }
 
-  get paginatedDTOs(): any{
-    return this.dtos;
-  }
-
-  get vaultNames(): string[] {
-    return StaticValues.currentVaults;
+  get vaultNames(): Observable<string[]> {
+    return this.contractsService.getContracts(Vault).pipe(
+        map(vaults => vaults.map(_ => _.contract.name))
+    );
   }
   // These methods all seem redundant, but I separated them because we may
   // want to add additional logic to the next/prev/select transitions.

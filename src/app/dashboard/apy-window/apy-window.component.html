@@ -2,7 +2,7 @@
 
   <div class="row title-row" >
     <div class="title left-border-box">
-      <img alt="?" class="tvl-img" src="{{getImgSrc()}}"/>
+      <app-vault-icon [vault]="poolName"></app-vault-icon>
       {{poolName}}
     </div>
     <div (click)="closeModal()" class="close left-border-box">

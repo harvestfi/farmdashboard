@@ -5,6 +5,8 @@ import {NGXLogger} from 'ngx-logger';
 import {RewardDto} from '../../models/reward-dto';
 import {StaticValues} from '../../static/static-values';
 import {Utils} from '../../static/utils';
+import {ContractsService} from '../../services/contracts.service';
+import {Vault} from '../../models/vault';
 
 @Component({
     selector: 'app-rewards-history-dialog',
@@ -18,19 +20,23 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
     ready = false;
     disabled = false;
     vaultFilter = '';
-    filters = StaticValues.currentVaults;
+    filters: string[];
 
     private dayLag = 15;
 
     constructor(private httpService: HttpService,
                 public vt: ViewTypeService,
                 private cdRef: ChangeDetectorRef,
-                private log: NGXLogger) {
+                private log: NGXLogger,
+                private contractsService: ContractsService) {
     }
 
     ngAfterViewInit(): void {
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - this.dayLag);
+        this.contractsService.getContracts(Vault).subscribe(vaults => {
+            this.filters = vaults.filter(_ => _.isActive()).map(_ => _.contract?.name);
+        });
         this.loadRewardsHistory(startDate, new Date());
     }
 
@@ -54,10 +60,6 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         const startDate = new Date(endDate.getTime());
         startDate.setDate(startDate.getDate() - this.dayLag);
         this.loadRewardsHistory(startDate, endDate);
-    }
-
-    getImgUrl(name: string): string {
-        return StaticValues.getImgSrcForVault(name);
     }
 
     openEtherscanTx(hash: string): void {

@@ -66,7 +66,7 @@ export class HardWorkDto {
   }
 
   public static fillBlockDateAdopted(tx: HardWorkDto): void {
-    if (tx.blockDateAdopted == null) {
+    if (tx?.blockDateAdopted == null) {
       const d = new Date(0);
       d.setUTCSeconds(tx.blockDate);
       tx.blockDateAdopted = d;

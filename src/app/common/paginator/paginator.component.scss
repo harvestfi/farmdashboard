@@ -13,6 +13,11 @@
             background: #292929;
         }
 
+        &:disabled {
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
+
 
     }
 }

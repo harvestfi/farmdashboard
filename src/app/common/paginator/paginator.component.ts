@@ -36,7 +36,7 @@ export class PaginatorComponent {
 
   get pageRange(): number[] {
     const current = this.pageObject.currentPage;
-    const last = this.pageObject.totalPages - 1;
+    const last = this.pageObject.totalPages;
     const delta = 1;
     const left = current - delta;
     const right = current + delta + 1;

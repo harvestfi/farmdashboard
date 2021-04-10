@@ -91,15 +91,7 @@ export class TvlBoxComponent implements OnInit {
     return this.pricesCalculationService.vaultRewardApr(tvlName);
   }
 
-  vaultPrettyName(name: string): string {
-    return StaticValues.vaultPrettyName(name);
-  }
-
   ngOnInit(): void {
-  }
-
-  getImgSrc(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
   }
 
   openTvlDialog(): void {

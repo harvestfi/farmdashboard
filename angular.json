@@ -28,7 +28,14 @@
               "src/styles.scss",
               "src/assets/styles/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "rxjs",
+              "sockjs-client",
+              "@stomp/stompjs",
+              "stomp",
+              "@ethersproject"
+            ]
           },
           "configurations": {
             "production": {

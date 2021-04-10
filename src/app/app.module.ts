@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Inject, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -77,10 +77,14 @@ import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user
 import { Web3chartsComponent } from './web3charts/web3charts.component';
 import { Web3chartComponent } from './web3charts/components/web3chart/web3chart.component';
 import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
-import {RewardsHistoryDialogComponent} from "./dialogs/rewards-history-dialog/rewards-history-dialog.component";
-import {VaultFilterPipe} from "./dialogs/rewards-history-dialog/vault-filter.pipe";
-import { PaginatorComponent } from './common/paginator/paginator.component'; 
-declare var require: any;
+import {RewardsHistoryDialogComponent} from './dialogs/rewards-history-dialog/rewards-history-dialog.component';
+import {VaultFilterPipe} from './dialogs/rewards-history-dialog/vault-filter.pipe';
+import {TransactionComponent} from './static/components/transactions/transaction.component';
+import {IconsComponent} from './static/components/icons/icons.component';
+import {GasDialogComponent} from './dialogs/gas-dialog/gas-dialog.component';
+import {PaginatorComponent} from './common/paginator/paginator.component';
+
+declare let require: any;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -141,8 +145,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     UserBalancesDialogComponent,
     DownloadHistoricDataDialogComponent,
     VaultFilterPipe,
-    PaginatorComponent,
-    Web3chartComponent
+    TransactionComponent,
+    IconsComponent,
+    Web3chartsComponent,
+    Web3chartComponent,
+    GasDialogComponent,
+    PaginatorComponent
   ],
   imports: [
     AppRoutingModule,
@@ -160,8 +168,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatSnackBarModule,
     HttpClientModule,
     LoggerModule.forRoot({
-      serverLoggingUrl: environment.apiEndpoint + '/api/logs',
-      level: environment.debugLevel,
+      serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
+      level: 3,
       serverLogLevel: NgxLoggerLevel.ERROR,
       disableConsoleLogging: false
     }),
@@ -178,7 +186,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
     useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-  },
+  }
 ],
   bootstrap: [AppComponent],
 })

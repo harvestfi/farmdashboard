@@ -17,8 +17,8 @@
   <div *ngIf="tvlName !== null">
 
     <div class="left-border-box tvl-name">
-      <img alt="?" class="tvl-img" src="{{getImgSrc(tvlName)}}"/>
-      {{vaultPrettyName(tvlName)}}
+      <app-vault-icon [vault]="tvlName"></app-vault-icon>
+      {{tvlName}}
     </div>
 
     <div #tooltip="matTooltip"
