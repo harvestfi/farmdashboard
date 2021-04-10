@@ -1,11 +1,14 @@
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {Inject} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {APP_CONFIG, AppConfig} from '../../app.config';
 import {HttpClient} from '@angular/common/http';
 import {SnackService} from './snack.service';
 import {RewardDto} from '../models/reward-dto';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class RewardsService {
 
     private url = '/api/transactions';

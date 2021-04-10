@@ -4,7 +4,6 @@ import {SnackService} from './snack.service';
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {UniswapDto} from '../models/uniswap-dto';
-import {RewardDto} from '../models/reward-dto';
 import {TransferDto} from '../models/transfer-dto';
 import {OhlcDto} from '../models/ohlc-dto';
 import {PricesDto} from '../models/prices-dto';
