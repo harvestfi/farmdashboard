@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HardworkHeaderComponent } from './hardwork-header.component';
 
@@ -6,7 +6,7 @@ describe('HardworkHeaderComponent', () => {
   let component: HardworkHeaderComponent;
   let fixture: ComponentFixture<HardworkHeaderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ HardworkHeaderComponent ]
     })

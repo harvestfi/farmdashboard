@@ -11,31 +11,19 @@ import {Utils} from '../../../static/utils';
 })
 export class HardworkTradeComponent implements OnInit {
 
-  constructor() {
-  }
-
   @Input() dto: HardWorkDto;
   @Input() fullDate = false;
   @Input() moreColumns = false;
   openModal = false;
   hash = '';
 
+  constructor() {
+  }
+
   ngOnInit(): void {
     const temp = this.dto.id.split('_');
     this.hash = temp[0];
 
-  }
-
-  prettyPoolName(name: string): string {
-    return StaticValues.vaultPrettyName(name);
-  }
-
-  getImgUrl(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
-  }
-
-  openEthersacanTx(hash: string): void {
-    Utils.openEtherscanTx(hash);
   }
 
 }

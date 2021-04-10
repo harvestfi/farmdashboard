@@ -12,7 +12,7 @@
   </div>
 
   <div class="history-page-card balance-chart-container" [class]="vt.getThemeColor() + '-card'">
-    <div *ngIf="address && fullData?.length !== 0" #price_chart class="balance-chart" id="chart1"></div>
+    <div *ngIf="address && fullData?.length !== 0" #balance_chart class="balance-chart" id="chart1"></div>
   </div>
   <div class="history-page-card" [class]="vt.getThemeColor() + '-card'">
     <div class="row stat-row">
@@ -55,7 +55,7 @@
   
       <div *ngIf="lastTransfer" id="farm1" class="stat-1 left-border-box styled-card title-card">
         <div class="">
-          <img alt="?" class="tvl-img" src="{{getImgUrl('FARM')}}"/>
+          <app-vault-icon vault="FARM"></app-vault-icon>
           FARM: {{transferBalanceUsd(lastTransfer) | number: '1.0-2'}}$
         </div>
         <mat-checkbox class="checkbox" (change)="sortValues()" [(ngModel)]="includeTransfers"></mat-checkbox>
@@ -65,8 +65,8 @@
         <div *ngIf="showEmptyPools || lastStaked.get(c.value).ownerBalanceUsd > 0.01" id="vault-{{c.value}}"
              class="stat-2 left-border-box styled-card title-card">
           <div (click)="openHistoryDialog()" class="pointer">
-            <img alt="?" class="tvl-img" src="{{getImgUrl(c.value)}}"/>
-            {{prettyVaultName(c.value)}}: {{lastStaked.get(c.value).ownerBalanceUsd | number: '1.0-2'}}$
+            <app-vault-icon [vault]="c.value"></app-vault-icon>
+            {{c.value}}: {{lastStaked.get(c.value).ownerBalanceUsd | number: '1.0-2'}}$
           </div>
           <mat-checkbox class="checkbox" (change)="sortValues()" [(ngModel)]="c.checked"
                         name="{{c.value}}"></mat-checkbox>

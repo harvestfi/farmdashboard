@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {FlowTabComponent} from './flow-tab.component';
 
@@ -6,7 +6,7 @@ describe('FlowTabComponent', () => {
   let component: FlowTabComponent;
   let fixture: ComponentFixture<FlowTabComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [FlowTabComponent]
     })

@@ -1,18 +1,11 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+// DON'T USE THIS FOR RUNTIME VARIABLES
+// 1) make changes to src/assets/config.[environment].json
+// 2) update src/app.config.ts
+// 3) add constructor(@Inject(APP_CONFIG) public config: AppConfig) to your class
+// 4) access config via this.config.variable example this.config.apiEndpoint
 
 export const environment = {
   production: false,
-  isDebugMode: true,
-  debugLevel: 0,
-  // wsEndpoint: 'http://localhost:4142/stomp',
-  // wsEndpoint: 'https://ethparser.herokuapp.com/stomp',
-  wsEndpoint: 'https://ethparser-staging.herokuapp.com/stomp',
-  // apiEndpoint: 'http://localhost:4142',
-  // apiEndpoint: 'https://ethparser-api.herokuapp.com',
-  apiEndpoint: 'https://ethparser-staging.herokuapp.com',
-  wsReconnectInterval: 15
 };
 
 /*

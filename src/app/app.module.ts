@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Inject, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -41,7 +41,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { LoadingSpinnerComponent } from './main/loading-spinner/loading-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { IncomeDialogComponent } from './dialogs/income-dialog/income-dialog.component';
-import { GasDialogComponent } from './dialogs/gas-dialog/gas-dialog.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { environment } from '../environments/environment';
@@ -75,11 +74,16 @@ import { SimpleModalComponent } from './dialogs/simple-modal/simple-modal.compon
 import { FlowCardsViewComponent } from './flow-cards/flow-cards-view/flow-cards-view.component';
 import { LastPricesListComponent } from './dashboard/last-prices-list/last-prices-list.component';
 import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user-balances-dialog.component';
+import { Web3chartsComponent } from './web3charts/web3charts.component';
+import { Web3chartComponent } from './web3charts/components/web3chart/web3chart.component';
 import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
-import {RewardsHistoryDialogComponent} from "./dialogs/rewards-history-dialog/rewards-history-dialog.component";
-import {VaultFilterPipe} from "./dialogs/rewards-history-dialog/vault-filter.pipe";
+import {RewardsHistoryDialogComponent} from './dialogs/rewards-history-dialog/rewards-history-dialog.component';
+import {VaultFilterPipe} from './dialogs/rewards-history-dialog/vault-filter.pipe';
+import {TransactionComponent} from './static/components/transactions/transaction.component';
+import {IconsComponent} from './static/components/icons/icons.component';
+import {GasDialogComponent} from './dialogs/gas-dialog/gas-dialog.component';
 
-declare var require: any;
+declare let require: any;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -109,7 +113,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AllStatsDialogComponent,
     LoadingSpinnerComponent,
     IncomeDialogComponent,
-    GasDialogComponent,
     ProfitDialogComponent,
     GrainChartComponent,
     FarmBuybacksDialogComponent,
@@ -141,6 +144,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     UserBalancesDialogComponent,
     DownloadHistoricDataDialogComponent,
     VaultFilterPipe,
+    TransactionComponent,
+    IconsComponent,
+    Web3chartsComponent,
+    Web3chartComponent,
+    GasDialogComponent
   ],
   imports: [
     AppRoutingModule,
@@ -158,8 +166,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatSnackBarModule,
     HttpClientModule,
     LoggerModule.forRoot({
-      serverLoggingUrl: environment.apiEndpoint + '/api/logs',
-      level: environment.debugLevel,
+      serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
+      level: 3,
       serverLogLevel: NgxLoggerLevel.ERROR,
       disableConsoleLogging: false
     }),
@@ -171,12 +179,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     MatIconModule,
     AngularEmojisModule,
-    SidebarModule.forRoot()
+    SidebarModule.forRoot(),
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,
     useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-  },
+  }
 ],
   bootstrap: [AppComponent],
 })

@@ -1,12 +1,12 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import {FarmChartComponent} from './price-chart.component';
+import {FarmChartComponent} from './farm-chart.component';
 
 describe('PriceChartComponent', () => {
   let component: FarmChartComponent;
   let fixture: ComponentFixture<FarmChartComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [FarmChartComponent]
     })
