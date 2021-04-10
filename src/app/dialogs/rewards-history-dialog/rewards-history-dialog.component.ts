@@ -7,6 +7,7 @@ import {StaticValues} from '../../static/static-values';
 import {Utils} from '../../static/utils';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
+import {RewardsService} from '../../services/rewards.service';
 
 @Component({
     selector: 'app-rewards-history-dialog',
@@ -24,11 +25,12 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
 
     private dayLag = 15;
 
-    constructor(private httpService: HttpService,
-                public vt: ViewTypeService,
+    constructor(public vt: ViewTypeService,
                 private cdRef: ChangeDetectorRef,
                 private log: NGXLogger,
-                private contractsService: ContractsService) {
+                private contractsService: ContractsService,
+                private rewardsService: RewardsService,
+                ) {
     }
 
     ngAfterViewInit(): void {
@@ -42,7 +44,7 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
 
 
     private loadRewardsHistory(startDate: Date, endDate: Date): void {
-        this.httpService.getAllHistoryRewards(
+        this.rewardsService.getAllHistoryRewards(
             Math.floor(startDate.getTime() / 1000),
             Math.floor(endDate.getTime() / 1000))
         .subscribe((data) => {

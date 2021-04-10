@@ -37,28 +37,6 @@ export class HttpService {
     );
   }
 
-  getLastRewards(): Observable<RewardDto[]> {
-    return this.http.get<RewardDto[]>(this.apiEndpoint + '/api/transactions/last/reward').pipe(
-        catchError(this.snackService.handleError<RewardDto[]>(`last reward `))
-    );
-  }
-
-  getHistoryRewards(name: string): Observable<RewardDto[]> {
-    return this.http.get<RewardDto[]>(this.apiEndpoint + '/api/transactions/history/reward/' + name).pipe(
-        catchError(this.snackService.handleError<RewardDto[]>(`history reward `))
-    );
-  }
-
-  getAllHistoryRewards(startTimestamp?: number, endTimestamp?: number): Observable<RewardDto[]> {
-    startTimestamp = Math.floor(startTimestamp || (new Date(0).getTime() / 1000));
-    endTimestamp = Math.floor(endTimestamp || (Date.now() / 1000));
-    return this.http.get<RewardDto[]>(
-        `${this.apiEndpoint}/api/transactions/history/reward/?start=${startTimestamp}&end=${endTimestamp}`)
-    .pipe(
-        catchError(this.snackService.handleError<RewardDto[]>(`history reward `))
-    );
-  }
-
   getAddressHistoryUni(address: string): Observable<UniswapDto[]> {
     return this.http.get<UniswapDto[]>(this.apiEndpoint + '/history/uni/' + address).pipe(
         catchError(this.snackService.handleError<UniswapDto[]>(`history address uni `))

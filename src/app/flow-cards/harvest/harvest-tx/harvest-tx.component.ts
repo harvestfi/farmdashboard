@@ -18,6 +18,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HarvestsService} from '../../../services/harvests.service';
 import {HardworksService} from '../../../services/hardworks.service';
+import {RewardsService} from '../../../services/rewards.service';
 
 @Component({
   selector: 'app-harvest-tx',
@@ -43,6 +44,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
               private  contractsService: ContractsService,
               private  harvestsService: HarvestsService,
               private  hardworksService: HardworksService,
+              private  rewardsService: RewardsService,
   ) {
   }
 
@@ -148,7 +150,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastRewards(): void {
-    this.httpService.getLastRewards().subscribe(data => {
+    this.rewardsService.getLastRewards().subscribe(data => {
       data?.forEach(reward => {
         RewardDto.enrich(reward);
         this.pricesCalculationService.saveReward(reward);
