@@ -9,6 +9,7 @@ import {MatTabChangeEvent} from '@angular/material/tabs';
 import {HttpService} from '../../services/http.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.component';
+import {HardworksService} from '../../services/hardworks.service';
 
 @Component({
   selector: 'app-tvl-dialog',
@@ -52,7 +53,9 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
   constructor(private httpService: HttpService,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              private hardworksService: HardworksService,
+              ) {
                 super();
   }
 
@@ -329,7 +332,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         this.addValuesToTvlChart(data);
       });
     } else if (this.data.type === 'income') {
-      this.httpService.getHardWorkHistoryData().subscribe(data => {
+      this.hardworksService.getHardWorkHistoryData(null).subscribe(data => {
         this.log.debug('History of All hardworks loaded ', data);
         this.ready = true;
         this.cdRef.detectChanges();

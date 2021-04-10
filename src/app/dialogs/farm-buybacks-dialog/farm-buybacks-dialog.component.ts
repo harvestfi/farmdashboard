@@ -5,6 +5,7 @@ import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.component';
 import { IChartApi } from 'lightweight-charts';
+import {HardworksService} from '../../services/hardworks.service';
 @Component({
   selector: 'app-farm-buybacks-dialog',
   templateUrl: './farm-buybacks-dialog.component.html',
@@ -20,7 +21,9 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
   constructor(private httpService: HttpService,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              private hardworksService: HardworksService,
+              ) {
                 super();
   }
 
@@ -29,7 +32,7 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
   }
 
   private loadData(): void {
-    this.httpService.getHardWorkHistoryData().subscribe(data => {
+    this.hardworksService.getHardWorkHistoryData(null).subscribe(data => {
       this.log.debug('History of All Farm buybacks loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(2);

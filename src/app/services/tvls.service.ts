@@ -1,0 +1,33 @@
+import {Observable} from 'rxjs';
+import {HarvestDto} from '../models/harvest-dto';
+import {catchError} from 'rxjs/operators';
+import {Inject} from '@angular/core';
+import {APP_CONFIG, AppConfig} from '../../app.config';
+import {HttpClient} from '@angular/common/http';
+import {SnackService} from './snack.service';
+import {HarvestTvl} from '../models/harvest-tvl';
+
+export class TvlsService {
+
+    private url = '/api/transactions';
+    private apiEndpoint;
+
+    constructor(@Inject(APP_CONFIG) public config: AppConfig, private http: HttpClient, private snackService: SnackService) {
+        this.apiEndpoint = config.apiEndpoint;
+        console.log('apiEndpoint is: ' + this.apiEndpoint);
+    }
+
+
+    getHistoryAllTvl(): Observable<HarvestTvl[]> {
+        return this.http.get<HarvestTvl[]>(this.apiEndpoint + '/api/transactions/history/alltvl').pipe(
+            catchError(this.snackService.handleError<HarvestTvl[]>(`history all TVL`))
+        );
+    }
+
+    getHistoryTvlByVault(vault: string): Observable<HarvestTvl[]> {
+        return this.http.get<HarvestTvl[]>(this.apiEndpoint + '/api/transactions/history/tvl/' + vault).pipe(
+            catchError(this.snackService.handleError<HarvestTvl[]>(`history TVL ` + vault))
+        );
+    }
+
+}

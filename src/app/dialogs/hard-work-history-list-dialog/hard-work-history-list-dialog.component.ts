@@ -8,6 +8,7 @@ import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {HardworksService} from '../../services/hardworks.service';
 
 @Component({
   selector: 'app-hard-work-history-list-dialog',
@@ -22,14 +23,14 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   disabled  = false;
   ready = false;
   constructor(
-    private hwListHistory: HttpService,
     public vt: ViewTypeService,
     private log: NGXLogger,
-    private contractsService: ContractsService
+    private contractsService: ContractsService,
+    private hardworksService: HardworksService,
   ) { }
 
   ngAfterViewInit(): void {
-    this.hwListHistory.getHardWorkHistoryData().subscribe(data => this.addInArray(data)).add(() => this.ready = true);
+    this.hardworksService.getHardWorkHistoryData(null).subscribe(data => this.addInArray(data)).add(() => this.ready = true);
 
   }
 
@@ -37,15 +38,6 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
     return this.contractsService.getContracts(Vault).pipe(
         map(vaults => vaults.map(_ => _.contract.name))
     );
-  }
-
-  getOlderHardworks(): void {
-    this.disabled = true;
-    if (this.lowestBlockDate === 0) {
-      return;
-    }
-    this.hwListHistory.getHWHistoryDataByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2),
-    this.lowestBlockDate).subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
   }
 
   private isUniqHardwork(hw: HardWorkDto): boolean {

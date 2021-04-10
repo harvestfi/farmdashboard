@@ -12,6 +12,7 @@ import {Observable} from 'rxjs';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {map} from 'rxjs/operators';
+import {HardworksService} from '../../../services/hardworks.service';
 
 @Component({
   selector: 'app-hardwork-tx',
@@ -27,12 +28,12 @@ export class HardworkTxComponent implements AfterViewInit {
 
 
   constructor(
-      private httpService: HttpService,
       private hwSubscriber: HardworkSubscriberService,
       public vt: ViewTypeService,
       private snack: SnackService,
       private log: NGXLogger,
-      private contractsService: ContractsService
+      private contractsService: ContractsService,
+      private hardworksService: HardworksService,
   ) {
   }
 
@@ -44,7 +45,7 @@ export class HardworkTxComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     // todo optimize request
-    this.httpService.getHardWorkHistoryData().subscribe(data => {
+    this.hardworksService.getHardWorkHistoryData(null).subscribe(data => {
       this.log.info('hard work history values', data);
       this.addInArray(data);
     });

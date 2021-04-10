@@ -10,7 +10,7 @@ import {Network} from '../models/network';
 @Injectable({
     providedIn: 'root'
 })
-export class HttpService {
+export class HardworksService {
 
     private apiEndpoint: string;
     private url = '/api/transactions';

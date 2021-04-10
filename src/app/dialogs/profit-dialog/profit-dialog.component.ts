@@ -5,6 +5,7 @@ import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {IChartApi} from 'lightweight-charts';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
+import {HardworksService} from '../../services/hardworks.service';
 
 @Component({
   selector: 'app-profit-dialog',
@@ -17,10 +18,11 @@ export class ProfitDialogComponent extends ChartGeneralMethodsComponent implemen
   ready = false;
   chart: IChartApi;
 
-  constructor(private httpService: HttpService,
-              public vt: ViewTypeService,
+  constructor(public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              private hardworksService: HardworksService,
+              ) {
                 super();
   }
 
@@ -29,7 +31,7 @@ export class ProfitDialogComponent extends ChartGeneralMethodsComponent implemen
   }
 
   private loadData(): void {
-    this.httpService.getHardWorkHistoryData().subscribe(data => {
+    this.hardworksService.getHardWorkHistoryData(null).subscribe(data => {
       this.log.debug('History of All Profits loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(1);
