@@ -1,13 +1,12 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { NGXLogger } from 'ngx-logger';
-import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
-import { HardWorkDto } from '../../models/hardwork-dto';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {PaginatedObject} from '../../common/paginator/paginator.component';
 
 @Component({
   selector: 'app-hard-work-history-list-dialog',
@@ -15,10 +14,10 @@ import {Observable} from 'rxjs';
   styleUrls: ['./hard-work-history-list-dialog.component.scss']
 })
 export class HardWorkHistoryListDialogComponent implements AfterViewInit {
-  dtos: HardWorkDto[] = [];
+  dtos: PaginatedObject;
   hardWorkIds = new Set<string>();
   lowestBlockDate = 999999999999;
-  vaultFilter = 'all';
+  vaultFilter = '';
   disabled  = false;
   ready = false;
   constructor(
@@ -34,9 +33,18 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
 
   getDtoDataForPage(page_number: number): void {
     this.hwListHistory
-    .getPaginatedHardworkHistoryData(10, page_number)
+    .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter)
     .subscribe((response: any) => {
-      this.dtos = response.data;
+      if ('data' in response.data){
+        return this.dtos = response.data;
+      }
+      this.dtos = {
+        currentPage: 0,
+        nextPage: -1,
+        previousPage: -1,
+        totalPages: 0,
+        data: []
+      };
     }
       )
     .add(() => this.ready = true);
@@ -61,41 +69,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
     this.getDtoDataForPage($event);
   }
 
-  getOlderHardworks(): void {
-    this.disabled = true;
-    if (this.lowestBlockDate === 0) {
-      return;
-    }
-    this.hwListHistory.getHWHistoryDataByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2),
-    this.lowestBlockDate).subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
+  handleVaultFilter(_$event): void {
+    this.getDtoDataForPage(0);
   }
-
-  private isUniqHardwork(hw: HardWorkDto): boolean {
-    if (this.hardWorkIds.has(hw.id)) {
-      return false;
-    }
-    this.hardWorkIds.add(hw.id);
-    if (this.hardWorkIds.size > 100_000) {
-      this.hardWorkIds = new Set<string>();
-    }
-    return true;
-  }
-
-  private addInArray(newValues: HardWorkDto[]): void {
-    this.log.info('New hard work values', newValues);
-
-    for (let i = newValues.length - 1; i > 0; i--) {
-      const hardWork = newValues[i];
-      if (!this.isUniqHardwork(hardWork)) {
-        this.log.warn('Not unique transaction', hardWork);
-        continue;
-      }
-      if (hardWork.blockDate < this.lowestBlockDate) {
-        this.lowestBlockDate = hardWork.blockDate;
-      }
-      HardWorkDto.enrich(hardWork);
-      this.dtos.push(hardWork);
-    }
-  }
-
 }

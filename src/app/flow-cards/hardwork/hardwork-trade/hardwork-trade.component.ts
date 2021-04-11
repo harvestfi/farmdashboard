@@ -15,7 +15,6 @@ export class HardworkTradeComponent implements OnInit {
   hash = '';
 
   constructor() {
-    console.log(this.dto);
   }
 
   ngOnInit(): void {

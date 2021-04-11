@@ -2,8 +2,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ViewTypeService } from 'src/app/services/view-type.service';
 
-type PaginatedObject = {
-  currentPage: number; //current page
+export type PaginatedObject = {
+  currentPage: number;
   nextPage: number;
   previousPage: number;
   totalPages: number;
