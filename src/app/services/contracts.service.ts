@@ -10,8 +10,8 @@ import {Lps} from '../models/lps';
 import {IContract} from '../models/icontract';
 import {RestResponse} from '../models/rest-response';
 import {APP_CONFIG, AppConfig} from '../../app.config';
-import {Network} from "../models/network";
-import {StaticValues} from "../static/static-values";
+import {Network} from '../models/network';
+import {StaticValues} from '../static/static-values';
 
 /**
  * Usage:

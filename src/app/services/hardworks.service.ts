@@ -6,7 +6,7 @@ import {APP_CONFIG, AppConfig} from '../../app.config';
 import {HttpClient} from '@angular/common/http';
 import {SnackService} from './snack.service';
 import {Network} from '../models/network';
-import {StaticValues} from "../static/static-values";
+import {StaticValues} from '../static/static-values';
 
 @Injectable({
     providedIn: 'root'

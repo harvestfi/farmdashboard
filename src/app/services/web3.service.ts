@@ -5,7 +5,7 @@ import type {Vault} from '../models/vault';
 // import type {AbiItem} from 'web3-utils';
 // import type {Contract} from 'web3-eth-contract';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
-import {ContractsService} from "./contracts.service";
+import {ContractsService} from './contracts.service';
 
 @Injectable({
     providedIn: 'root'

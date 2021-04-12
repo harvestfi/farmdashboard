@@ -6,8 +6,8 @@ import {APP_CONFIG, AppConfig} from '../../app.config';
 import {HttpClient} from '@angular/common/http';
 import {SnackService} from './snack.service';
 import {HarvestTvl} from '../models/harvest-tvl';
-import {Network} from "../models/network";
-import {StaticValues} from "../static/static-values";
+import {Network} from '../models/network';
+import {StaticValues} from '../static/static-values';
 
 export class TvlsService {
 
@@ -21,13 +21,13 @@ export class TvlsService {
 
 
     getHistoryAllTvl(network: Network  = StaticValues.NETWORK_ETH): Observable<HarvestTvl[]> {
-        return this.http.get<HarvestTvl[]>(this.apiEndpoint + '/api/transactions/history/alltvl').pipe(
+        return this.http.get<HarvestTvl[]>(this.apiEndpoint + `${this.url}/history/alltvl`).pipe(
             catchError(this.snackService.handleError<HarvestTvl[]>(`history all TVL`))
         );
     }
 
     getHistoryTvlByVault(vault: string, network: Network  = StaticValues.NETWORK_ETH): Observable<HarvestTvl[]> {
-        return this.http.get<HarvestTvl[]>(this.apiEndpoint + '/api/transactions/history/tvl/' + vault).pipe(
+        return this.http.get<HarvestTvl[]>(this.apiEndpoint + `${this.url}/history/tvl/${vault}`).pipe(
             catchError(this.snackService.handleError<HarvestTvl[]>(`history TVL ` + vault))
         );
     }

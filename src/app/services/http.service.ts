@@ -10,8 +10,8 @@ import {PricesDto} from '../models/prices-dto';
 import {Balance} from '../models/balance';
 import {Vault} from '../models/vault';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
-import {Network} from "../models/network";
-import {StaticValues} from "../static/static-values";
+import {Network} from '../models/network';
+import {StaticValues} from '../static/static-values';
 
 @Injectable({
   providedIn: 'root'
