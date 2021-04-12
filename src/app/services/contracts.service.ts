@@ -48,11 +48,7 @@ export class ContractsService {
      */
     getContracts<T extends IContract>(type: new () => T): Observable<T[]> {
         if(!this.cache.has(type)){
-            const pipeline: Observable<T[]> = timer(0, 300000).pipe(
-                switchMap(() => this.requestContracts<T>(type)),
-                shareReplay(1)
-            );
-            this.cache.set(type, pipeline);
+            this.cache.set(type, this.requestContracts<T>(type));
         }
         return this.cache.get(type);
     }
