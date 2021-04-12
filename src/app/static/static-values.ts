@@ -1,3 +1,5 @@
+import {Network} from "../models/network";
+
 export class StaticValues {
   public static SECONDS_OF_DAY = 60 * 60 * 24;
   public static SECONDS_OF_MONTH = StaticValues.SECONDS_OF_DAY * 30;
@@ -11,6 +13,10 @@ export class StaticValues {
   public static stakedNewPS = 0.0;
   public static farmTotalSupply = 0.0;
   public static farmUsers = 0;
+
+  // Networks
+  public static NETWORK_ETH: Network = {blockExplorerUrl: "https://www.bscscan.com", chainId: 1, currencySymbol: "ETH", name: "Ethereum Mainnet", rpcUrl: "https://mainnet.infura.io/v3/undefined"};
+  public static NETWORK_BSC: Network = {blockExplorerUrl: "https://etherscan.io", chainId: 56, currencySymbol: "BNB", name: "Binance Smart Chain", rpcUrl: "https://bsc-dataseed.binance.org/"};
 
   public static farmPools: string[] = [
     'UNI_LP_USDC_FARM',

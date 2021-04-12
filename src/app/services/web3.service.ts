@@ -5,6 +5,7 @@ import type {Vault} from '../models/vault';
 // import type {AbiItem} from 'web3-utils';
 // import type {Contract} from 'web3-eth-contract';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {ContractsService} from "./contracts.service";
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +22,7 @@ export class Web3Service {
     // contracts: (ContractVault & { web3: Contract })[] = [];
     contracts = [];
 
-    constructor(@Inject(APP_CONFIG) public config: AppConfig, private httpService: HttpService) {
+    constructor(@Inject(APP_CONFIG) public config: AppConfig, private contractsService: ContractsService) {
         this.web3Url = config.web3Url
     }
 
@@ -33,20 +34,8 @@ export class Web3Service {
         return this.web3.eth.getBlockNumber();
     }
 
-    private getContractsVaults(): Promise<Vault[]> {
-        return new Promise((resolve, reject) => {
-            this.httpService.getContractsVaults().subscribe(response => {
-                if (response.code === '200') {
-                    resolve(response.data);
-                } else {
-                    reject();
-                }
-            });
-        });
-    }
-
     private contractsInitiate(): Promise<void> {
-        // return this.getContractsVaults().then(contracts => {
+        // return this.contractsService.getContracts(Vault).subscribe(contracts => {
         //     this.contracts = contracts.map(item => {
         //         const web3 = new this.web3.eth.Contract(this.proxyVaultAbi as AbiItem[], item.contract.address);
         //         return Object.assign(item, {web3});

@@ -6,6 +6,7 @@ import {APP_CONFIG, AppConfig} from '../../app.config';
 import {HttpClient} from '@angular/common/http';
 import {SnackService} from './snack.service';
 import {Network} from '../models/network';
+import {StaticValues} from "../static/static-values";
 
 @Injectable({
     providedIn: 'root'
@@ -20,26 +21,26 @@ export class HardworksService {
         console.log('apiEndpoint is: ' + this.apiEndpoint);
     }
 
-    getHardWorkHistoryData(network: Network): Observable<HardWorkDto[]> {
+    getHardWorkHistoryData(network: Network  = StaticValues.NETWORK_ETH): Observable<HardWorkDto[]> {
         return this.http.get<HardWorkDto[]>(this.apiEndpoint + `${this.url}/history/hardwork`).pipe(
             catchError(this.snackService.handleError<HardWorkDto[]>(`HardWork history`))
         );
     }
 
-    getHWHistoryDataByRange(network: Network, minBlock: number, maxBlock: number): Observable<HardWorkDto[]> {
+    getHWHistoryDataByRange(minBlock: number, maxBlock: number, network: Network  = StaticValues.NETWORK_ETH): Observable<HardWorkDto[]> {
         return this.http.get<HardWorkDto[]>(this.apiEndpoint + `${this.url}/history/hardwork?from=${minBlock}&to=${maxBlock}`).pipe(
             catchError(this.snackService.handleError<HardWorkDto[]>(`HardWork history`))
         );
     }
 
-    getHardWorkHistoryDataByName(network: Network, name: string): Observable<HardWorkDto[]> {
+    getHardWorkHistoryDataByName(name: string, network: Network  = StaticValues.NETWORK_ETH): Observable<HardWorkDto[]> {
         return this.http.get<HardWorkDto[]>(this.apiEndpoint + `${this.url}/history/hardwork/` + name).pipe(
             catchError(this.snackService.handleError<HardWorkDto[]>(`HardWork history for ` + name))
         );
     }
 
 
-    getLastHardWorks(network: Network): Observable<HardWorkDto[]> {
+    getLastHardWorks(network: Network  = StaticValues.NETWORK_ETH): Observable<HardWorkDto[]> {
         return this.http.get<HardWorkDto[]>(this.apiEndpoint + `${this.url}/last/hardwork`).pipe(
             catchError(this.snackService.handleError<HardWorkDto[]>(`last HardWork `))
         );

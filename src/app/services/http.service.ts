@@ -10,6 +10,8 @@ import {PricesDto} from '../models/prices-dto';
 import {Balance} from '../models/balance';
 import {Vault} from '../models/vault';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {Network} from "../models/network";
+import {StaticValues} from "../static/static-values";
 
 @Injectable({
   providedIn: 'root'
@@ -24,51 +26,46 @@ export class HttpService {
     console.log('apiEndpoint is: ' + this.apiEndpoint);
   }
 
-  getUniswapTxHistoryData(): Observable<UniswapDto[]> {
+  getUniswapTxHistoryData(network: Network  = StaticValues.NETWORK_ETH): Observable<UniswapDto[]> {
     return this.http.get<UniswapDto[]>(this.apiEndpoint + `${this.url}/history/uni`).pipe(
         catchError(this.snackService.handleError<UniswapDto[]>(`Uni history`))
     );
   }
 
-  getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
+  getUniswapTxHistoryByRange(minBlock: number, maxBlock: number, network: Network  = StaticValues.NETWORK_ETH): Observable<UniswapDto[]> {
     return this.http.get<UniswapDto[]>(this.apiEndpoint + `${this.url}/history/uni?from=${minBlock}&to=${maxBlock}`).pipe(
         catchError(this.snackService.handleError<UniswapDto[]>(`Uni history`))
     );
   }
 
-  getAddressHistoryUni(address: string): Observable<UniswapDto[]> {
+  getAddressHistoryUni(address: string, network: Network  = StaticValues.NETWORK_ETH): Observable<UniswapDto[]> {
     return this.http.get<UniswapDto[]>(this.apiEndpoint + '/history/uni/' + address).pipe(
         catchError(this.snackService.handleError<UniswapDto[]>(`history address uni `))
     );
   }
 
-  getAddressHistoryTransfers(address: string): Observable<TransferDto[]> {
+  getAddressHistoryTransfers(address: string, network: Network  = StaticValues.NETWORK_ETH): Observable<TransferDto[]> {
     return this.http.get<TransferDto[]>(this.apiEndpoint + '/history/transfer/' + address).pipe(
         catchError(this.snackService.handleError<TransferDto[]>(`history address transfers `))
     );
   }
 
-  getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
+  getUniswapOHLC(coin: string, network: Network  = StaticValues.NETWORK_ETH): Observable<OhlcDto[]> {
     return this.http.get<OhlcDto[]>(this.apiEndpoint + '/api/transactions/history/uni/ohcl/' + coin).pipe(
         catchError(this.snackService.handleError<OhlcDto[]>(`history ohlc`))
     );
   }
 
-  getLastPrices(): Observable<PricesDto[]> {
+  getLastPrices(network: Network  = StaticValues.NETWORK_ETH): Observable<PricesDto[]> {
     return this.http.get<PricesDto[]>(this.apiEndpoint + '/price/token/latest').pipe(
         catchError(this.snackService.handleError<PricesDto[]>(`last price `))
     );
   }
 
-  getUserBalances(): Observable<Balance[]> {
+  getUserBalances(network: Network  = StaticValues.NETWORK_ETH): Observable<Balance[]> {
     return this.http.get<Balance[]>(this.apiEndpoint + '/user_balances').pipe(
         catchError(this.snackService.handleError<Balance[]>(`load balances`))
     );
   }
 
-  getContractsVaults(): Observable<{ data: Vault[]; code: string }> {
-    return this.http.get<{ data: Vault[]; code: string }>(this.apiEndpoint + '/contracts/vaults').pipe(
-        catchError(this.snackService.handleError<{ data: Vault[]; code: string }>(`contracts vaults`))
-    );
-  }
 }

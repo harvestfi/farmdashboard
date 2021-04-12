@@ -10,6 +10,8 @@ import {Lps} from '../models/lps';
 import {IContract} from '../models/icontract';
 import {RestResponse} from '../models/rest-response';
 import {APP_CONFIG, AppConfig} from '../../app.config';
+import {Network} from "../models/network";
+import {StaticValues} from "../static/static-values";
 
 /**
  * Usage:
@@ -45,7 +47,7 @@ export class ContractsService {
      *
      * @param type
      */
-    getContracts<T extends IContract>(type: new () => T): Observable<T[]> {
+    getContracts<T extends IContract>(type: new () => T, network: Network  = StaticValues.NETWORK_ETH): Observable<T[]> {
         if(!this.cache.has(type)){
             const pipeline: Observable<T[]> = timer(0, 300000).pipe(
                 switchMap(() => this.requestContracts<T>(type)),
