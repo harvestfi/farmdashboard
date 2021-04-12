@@ -18,6 +18,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   hardWorkIds = new Set<string>();
   lowestBlockDate = 999999999999;
   vaultFilter = '';
+  minAmount = 0;
   disabled  = false;
   ready = false;
   constructor(
@@ -33,7 +34,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
 
   getDtoDataForPage(page_number: number): void {
     this.hwListHistory
-    .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter)
+    .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount)
     .subscribe((response: any) => {
       if ('data' in response.data){
         return this.dtos = response.data;
@@ -69,7 +70,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
     this.getDtoDataForPage($event);
   }
 
-  handleVaultFilter(_$event): void {
+  handleFilterUpdate(_$event): void {
     this.getDtoDataForPage(0);
   }
 }

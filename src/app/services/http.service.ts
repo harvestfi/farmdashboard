@@ -65,9 +65,10 @@ export class HttpService {
     );
   }
 
-  getPaginatedHardworkHistoryData(page_size: number = 10, page_number: number = 0, vault?: string): Observable<HardWorkDto[]> {
+  getPaginatedHardworkHistoryData(page_size: number = 10, page_number: number = 0, vault?: string, minAmount: number = 0):
+  Observable<HardWorkDto[]> {
     return this.http.get<HardWorkDto[]>
-    (`${this.apiEndpoint}/hardwork/pages?pageSize=${page_size}&page=${page_number}${vault ? `&vault=${vault}` : ''}`)
+    (`${this.apiEndpoint}/hardwork/pages?pageSize=${page_size}&page=${page_number}${vault ? `&vault=${vault}` : ''}&minAmount=${minAmount}`)
     .pipe(
       catchError(this.snackService.handleError<HardWorkDto[]>('Hardwork paginated history')
     ));
