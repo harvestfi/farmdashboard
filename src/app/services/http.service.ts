@@ -13,7 +13,7 @@ import {OhlcDto} from '../models/ohlc-dto';
 import {PricesDto} from '../models/prices-dto';
 import {Balance} from '../models/balance';
 import {Vault} from '../models/vault';
-import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {APP_CONFIG, AppConfig} from 'src/app.config';
 
 @Injectable({
   providedIn: 'root'
@@ -65,10 +65,21 @@ export class HttpService {
     );
   }
 
-  getPaginatedHardworkHistoryData(page_size: number = 10, page_number: number = 0, vault?: string, minAmount: number = 0):
+  getPaginatedHardworkHistoryData(
+      page_size: number = 10,
+      page_number: number = 0,
+      vault?: string,
+      minAmount: number = 0,
+      ordering: string = 'desc'):
   Observable<HardWorkDto[]> {
     return this.http.get<HardWorkDto[]>
-    (`${this.apiEndpoint}/hardwork/pages?pageSize=${page_size}&page=${page_number}${vault ? `&vault=${vault}` : ''}&minAmount=${minAmount}`)
+    (`${this.apiEndpoint}/hardwork/pages` +
+        `?pageSize=${page_size}`
+        + `&page=${page_number}`
+        + `${vault ? `&vault=${vault}` : ''}`
+        + `&minAmount=${minAmount}`
+        + `&ordering=${ordering}`
+    )
     .pipe(
       catchError(this.snackService.handleError<HardWorkDto[]>('Hardwork paginated history')
     ));
