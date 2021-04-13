@@ -1,3 +1,4 @@
+@import "../../../scss/utilities/utilities.scss";
 .hardWork-list-history {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -12,8 +13,12 @@
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    max-width: 900px;
+    max-width: 1200px;
     width: 90vw;
+
+    @include responsive(small){
+      width: 100%;
+    }
 
     .title {
       font-size: 1.5em;

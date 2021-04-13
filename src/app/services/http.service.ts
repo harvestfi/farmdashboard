@@ -65,6 +65,15 @@ export class HttpService {
     );
   }
 
+  getPaginatedHardworkHistoryData(page_size: number = 10, page_number: number = 0, vault?: string, minAmount: number = 0):
+  Observable<HardWorkDto[]> {
+    return this.http.get<HardWorkDto[]>
+    (`${this.apiEndpoint}/hardwork/pages?pageSize=${page_size}&page=${page_number}${vault ? `&vault=${vault}` : ''}&minAmount=${minAmount}`)
+    .pipe(
+      catchError(this.snackService.handleError<HardWorkDto[]>('Hardwork paginated history')
+    ));
+  }
+
   getHWHistoryDataByRange(minBlock: number, maxBlock: number): Observable<HardWorkDto[]> {
     return this.http.get<HardWorkDto[]>(this.apiEndpoint + `${this.url}/history/hardwork?from=${minBlock}&to=${maxBlock}`).pipe(
         catchError(this.snackService.handleError<HardWorkDto[]>(`HardWork history`))
