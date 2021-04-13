@@ -37,7 +37,8 @@ export class ContractsService {
     private apiEndPoint: string;
 
     constructor(@Inject(APP_CONFIG) public config: AppConfig, private http: HttpClient, private snackService: SnackService) {
-        this.apiEndPoint = config.apiEndpoint;
+        //todo temporally use parser url
+        this.apiEndPoint = config.wsEndpoint.replace('/stomp', '');
     }
 
     /**
@@ -49,11 +50,7 @@ export class ContractsService {
      */
     getContracts<T extends IContract>(type: new () => T, network: Network  = StaticValues.NETWORK_ETH): Observable<T[]> {
         if(!this.cache.has(type)){
-            const pipeline: Observable<T[]> = timer(0, 300000).pipe(
-                switchMap(() => this.requestContracts<T>(type)),
-                shareReplay(1)
-            );
-            this.cache.set(type, pipeline);
+            this.cache.set(type, this.requestContracts<T>(type).pipe(shareReplay(1)));
         }
         return this.cache.get(type);
     }

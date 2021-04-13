@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {PricesCalculationService} from 'src/app/services/prices-calculation.service';
 import {Utils} from '../../static/utils';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-strategy-list',
@@ -23,12 +23,19 @@ export class StrategyListComponent implements AfterViewInit{
   private currentSortingValue = 'tvl';
 
   @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
+
   constructor(
       public vt: ViewTypeService,
-      public pricesCalculationService: PricesCalculationService, private contractsService: ContractsService) {}
+      public pricesCalculationService: PricesCalculationService,
+      private contractsService: ContractsService,
+      private log: NGXLogger
+  ) {
+  }
+
   ngAfterViewInit(): void {
     this.contractsService.getContracts(Vault).subscribe(vaults => {
       this.vaultsList = vaults.filter(_ => _.isActive()).map(v => v.contract?.name);
+      this.log.info('Loaded contracts', this.vaultsList);
       this.sortVaultsList(this.currentSortingValue);
     });
   }

@@ -46,5 +46,27 @@ export class HardworksService {
         );
     }
 
+    getPaginatedHardworkHistoryData(
+        page_size: number = 10,
+        page_number: number = 0,
+        vault?: string,
+        minAmount: number = 0,
+        ordering: string = 'desc',
+        network: Network  = StaticValues.NETWORK_ETH,):
+        Observable<HardWorkDto[]> {
+        return this.http.get<HardWorkDto[]>
+        (`${this.apiEndpoint}/hardwork/pages` +
+            `?pageSize=${page_size}`
+            + `&page=${page_number}`
+            + `${vault ? `&vault=${vault}` : ''}`
+            + `&minAmount=${minAmount}`
+            + `&ordering=${ordering}`
+        )
+            .pipe(
+                catchError(this.snackService.handleError<HardWorkDto[]>('Hardwork paginated history')
+                ));
+    }
+
+
 
 }
