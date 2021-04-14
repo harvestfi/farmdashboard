@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HarvestDto} from '../../models/harvest-dto';
 import {Utils} from '../../static/utils';
@@ -12,7 +12,7 @@ import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-method
 import { ChartsOptionsLight } from 'src/app/chart/charts-options-light';
 import { ViewTypeService } from 'src/app/services/view-type.service';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
-import {HarvestsService} from '../../services/harvests.service';
+import {HarvestsService} from '../../services/http/harvests.service';
 
 class CheckedValue {
   value: string;

@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {RewardDto} from '../../models/reward-dto';
@@ -7,7 +7,7 @@ import {StaticValues} from '../../static/static-values';
 import {Utils} from '../../static/utils';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
-import {RewardsService} from '../../services/rewards.service';
+import {RewardsService} from '../../services/http/rewards.service';
 
 @Component({
     selector: 'app-rewards-history-dialog',

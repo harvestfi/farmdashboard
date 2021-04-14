@@ -3,7 +3,7 @@ import {NGXLogger} from 'ngx-logger';
 import {UniswapSubscriberService} from '../../flow-cards/uniswap/uniswap-subscriber.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {PriceChartBuilder} from '../price-chart-builder';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {ChartGeneralMethodsComponent} from '../chart-general-methods.component';
 import {IChartApi} from 'lightweight-charts';
 

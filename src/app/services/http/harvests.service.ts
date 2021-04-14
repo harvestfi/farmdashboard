@@ -1,12 +1,12 @@
 import {Observable} from 'rxjs';
-import {HarvestDto} from '../models/harvest-dto';
+import {HarvestDto} from '../../models/harvest-dto';
 import {catchError} from 'rxjs/operators';
 import {Inject, Injectable} from '@angular/core';
-import {APP_CONFIG, AppConfig} from '../../app.config';
+import {APP_CONFIG, AppConfig} from '../../../app.config';
 import {HttpClient} from '@angular/common/http';
-import {SnackService} from './snack.service';
-import {Network} from '../models/network';
-import {StaticValues} from '../static/static-values';
+import {SnackService} from '../snack.service';
+import {Network} from '../../models/network';
+import {StaticValues} from '../../static/static-values';
 
 @Injectable({
     providedIn: 'root'

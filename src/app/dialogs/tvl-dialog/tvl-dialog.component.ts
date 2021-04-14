@@ -6,11 +6,11 @@ import {LightweightChartsOptions} from '../../chart/lightweight-charts-options';
 import {ViewTypeService} from '../../services/view-type.service';
 import {ChartsOptionsLight} from '../../chart/charts-options-light';
 import {MatTabChangeEvent} from '@angular/material/tabs';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.component';
-import {HardworksService} from '../../services/hardworks.service';
-import {TvlsService} from '../../services/tvls.service';
+import {HardworksService} from '../../services/http/hardworks.service';
+import {TvlsService} from '../../services/http/tvls.service';
 
 @Component({
   selector: 'app-tvl-dialog',
@@ -333,7 +333,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         this.addValuesToTvlChart(data);
       });
     } else if (this.data.type === 'income') {
-      this.hardworksService.getHardWorkHistoryData(null).subscribe(data => {
+      this.hardworksService.getHardWorkHistoryData().subscribe(data => {
         this.log.debug('History of All hardworks loaded ', data);
         this.ready = true;
         this.cdRef.detectChanges();

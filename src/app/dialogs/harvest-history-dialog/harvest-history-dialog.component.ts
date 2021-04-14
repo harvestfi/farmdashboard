@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../services/http/http.service';
 import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { NGXLogger } from 'ngx-logger';
@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 import {Vault} from '../../models/vault';
 import {map} from 'rxjs/operators';
 import {ContractsService} from '../../services/contracts.service';
-import {HarvestsService} from '../../services/harvests.service';
+import {HarvestsService} from '../../services/http/harvests.service';
 
 
 @Component({
