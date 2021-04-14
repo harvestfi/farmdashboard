@@ -1,7 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable, timer} from 'rxjs';
-import {catchError, map, shareReplay, switchMap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
 import {SnackService} from './snack.service';
 import {Vault} from '../models/vault';
 import {Token} from '../models/token';
@@ -10,8 +9,7 @@ import {Lps} from '../models/lps';
 import {IContract} from '../models/icontract';
 import {RestResponse} from '../models/rest-response';
 import {APP_CONFIG, AppConfig} from '../../app.config';
-import {Network} from '../models/network';
-import {StaticValues} from '../static/static-values';
+import {HttpService} from './http/http.service';
 
 /**
  * Usage:
@@ -34,11 +32,11 @@ export class ContractsService {
             [Token, 'token'],
             [Lps, 'unipair']]
     );
-    private apiEndPoint: string;
 
-    constructor(@Inject(APP_CONFIG) public config: AppConfig, private http: HttpClient, private snackService: SnackService) {
-        //todo temporally use parser url
-        this.apiEndPoint = config.wsEndpoint.replace('/stomp', '');
+    constructor(
+        @Inject(APP_CONFIG) public config: AppConfig,
+        private httpService: HttpService,
+        private snackService: SnackService) {
     }
 
     /**
@@ -48,17 +46,17 @@ export class ContractsService {
      *
      * @param type
      */
-    getContracts<T extends IContract>(type: new () => T, network: Network  = StaticValues.NETWORK_ETH): Observable<T[]> {
-        if(!this.cache.has(type)){
+    getContracts<T extends IContract>(type: new () => T): Observable<T[]> {
+        if (!this.cache.has(type)) {
             this.cache.set(type, this.requestContracts<T>(type).pipe(shareReplay(1)));
         }
         return this.cache.get(type);
     }
 
     private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {
-        return this.http.get(`${this.apiEndPoint}/${this.urlPrefix}/${this.typePaths.get(type)}s`).pipe(
-            catchError(this.snackService.handleError<RestResponse<T[]>>(`Contracts fetch for ${this.typePaths.get(type)} failed.`)),
-            map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
+        return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}s`)
+        .pipe(
+            map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
         );
     }
 

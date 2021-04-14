@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HardWorkDto} from '../../models/hardwork-dto';
-import {Network} from '../../models/network';
-import {StaticValues} from '../../static/static-values';
 import {HttpService} from './http.service';
+import {APP_CONFIG, AppConfig} from '../../../app.config';
 
 @Injectable({
     providedIn: 'root'
@@ -13,16 +12,16 @@ export class HardworksService {
     constructor(private httpService: HttpService) {
     }
 
-    getHardWorkHistoryData(network: Network = StaticValues.NETWORK_ETH): Observable<HardWorkDto[]> {
-        return this.httpService.httpGetWithNetwork('/api/transactions/history/hardwork', network);
+    getHardWorkHistoryData(): Observable<HardWorkDto[]> {
+        return this.httpService.httpGetWithNetwork('/api/transactions/history/hardwork');
     }
 
-    getHardWorkHistoryDataByName(name: string, network: Network = StaticValues.NETWORK_ETH): Observable<HardWorkDto[]> {
-        return this.httpService.httpGetWithNetwork(`/api/transactions/history/hardwork/${name}`, network);
+    getHardWorkHistoryDataByName(name: string): Observable<HardWorkDto[]> {
+        return this.httpService.httpGetWithNetwork(`/api/transactions/history/hardwork/${name}`);
     }
 
-    getLastHardWorks(network: Network = StaticValues.NETWORK_ETH): Observable<HardWorkDto[]> {
-        return this.httpService.httpGetWithNetwork('/last/hardwork', network);
+    getLastHardWorks(): Observable<HardWorkDto[]> {
+        return this.httpService.httpGetWithNetwork('/last/hardwork');
     }
 
     getPaginatedHardworkHistoryData(
@@ -30,8 +29,7 @@ export class HardworksService {
         page_number: number = 0,
         vault?: string,
         minAmount: number = 0,
-        ordering: string = 'desc',
-        network: Network = StaticValues.NETWORK_ETH,):
+        ordering: string = 'desc'):
         Observable<HardWorkDto[]> {
         return this.httpService.httpGetWithNetwork(
             `/hardwork/pages` +
@@ -39,8 +37,7 @@ export class HardworksService {
             + `&page=${page_number}`
             + `${vault ? `&vault=${vault}` : ''}`
             + `&minAmount=${minAmount}`
-            + `&ordering=${ordering}`,
-            network);
+            + `&ordering=${ordering}`);
     }
 
 

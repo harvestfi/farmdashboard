@@ -14,8 +14,7 @@ export class StaticValues {
   public static farmTotalSupply = 0.0;
   public static farmUsers = 0;
 
-  // Networks
-  public static NETWORK_ETH: Network = {
+  private static NETWORK_ETH: Network = {
     blockExplorerUrl: 'https://www.bscscan.com',
     chainId: 1,
     currencySymbol: 'ETH',
@@ -23,7 +22,7 @@ export class StaticValues {
     rpcUrl: 'https://mainnet.infura.io/v3/undefined',
     ethparserName: 'eth'
   };
-  public static NETWORK_BSC: Network = {
+  private static NETWORK_BSC: Network = {
     blockExplorerUrl: 'https://etherscan.io',
     chainId: 56,
     currencySymbol: 'BNB',
@@ -31,6 +30,10 @@ export class StaticValues {
     rpcUrl: 'https://bsc-dataseed.binance.org/',
     ethparserName: 'bsc'
   };
+  public static NETWORKS: Map<string, Network> = new Map<string, Network>([
+    ['eth', StaticValues.NETWORK_ETH],
+    ['bsc', StaticValues.NETWORK_BSC]
+  ]);
 
   public static farmPools: string[] = [
     'UNI_LP_USDC_FARM',

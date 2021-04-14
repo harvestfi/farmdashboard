@@ -12,5 +12,6 @@
         "eth": "http://localhost:4142",
         "bsc": "http://localhost:4142"
     },
-    "multipleSources": true
+    "multipleSources": true,
+    "defaultNetwork": "eth"
 }

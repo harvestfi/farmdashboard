@@ -19,22 +19,17 @@ import get = Reflect.get;
 })
 export class HttpService {
 
-  private url = '/api/transactions';
-  private apiEndpoint;
-
   constructor(
       @Inject(APP_CONFIG) public config: AppConfig,
       private http: HttpClient,
       private snackService: SnackService,
       private log: NGXLogger
   ) {
-    this.apiEndpoint = config.apiEndpoint;
-    console.log('apiEndpoint is: ' + this.apiEndpoint);
   }
 
   public httpGetWithNetwork<T>(
       urlAtr: string,
-      network: Network,
+      network: Network = StaticValues.NETWORKS.get(this.config.defaultNetwork),
       mapper = (x: T[]) => x.flat() // only for multiple sources
   ): Observable<T> {
     if (urlAtr.indexOf('?') < 0) {
@@ -59,10 +54,10 @@ export class HttpService {
           map(x => mapper(x)),
       );
     } else {
-      request = this.http.get<T>(
-          get(this.config.apiEndpoints, network.ethparserName, this.config.apiEndpoint)
-          + `${urlAtr}network=${network.ethparserName}`
-      );
+      const url = get(this.config.apiEndpoints, network.ethparserName, this.config.apiEndpoint)
+          + `${urlAtr}network=${network.ethparserName}`;
+      this.log.info('HTTP get for network ' + network.ethparserName, url);
+      request = this.http.get<T>(url);
     }
 
     return request
@@ -71,46 +66,32 @@ export class HttpService {
     );
   }
 
-  getUniswapTxHistoryData(network: Network = StaticValues.NETWORK_ETH): Observable<UniswapDto[]> {
-    return this.http.get<UniswapDto[]>(this.apiEndpoint + `${this.url}/history/uni`).pipe(
-        catchError(this.snackService.handleError<UniswapDto[]>(`Uni history`))
-    );
+  getUniswapTxHistoryData(): Observable<UniswapDto[]> {
+    return this.httpGetWithNetwork('/api/transactions/history/uni');
   }
 
-  getUniswapTxHistoryByRange(minBlock: number, maxBlock: number, network: Network = StaticValues.NETWORK_ETH): Observable<UniswapDto[]> {
-    return this.http.get<UniswapDto[]>(this.apiEndpoint + `${this.url}/history/uni?from=${minBlock}&to=${maxBlock}`).pipe(
-        catchError(this.snackService.handleError<UniswapDto[]>(`Uni history`))
-    );
+  getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
+    return this.httpGetWithNetwork(`/api/transactions/history/uni?from=${minBlock}&to=${maxBlock}`);
   }
 
-  getAddressHistoryUni(address: string, network: Network  = StaticValues.NETWORK_ETH): Observable<UniswapDto[]> {
-    return this.http.get<UniswapDto[]>(this.apiEndpoint + '/history/uni/' + address).pipe(
-        catchError(this.snackService.handleError<UniswapDto[]>(`history address uni `))
-    );
+  getAddressHistoryUni(address: string): Observable<UniswapDto[]> {
+    return this.httpGetWithNetwork('/history/uni/' + address);
   }
 
-  getAddressHistoryTransfers(address: string, network: Network  = StaticValues.NETWORK_ETH): Observable<TransferDto[]> {
-    return this.http.get<TransferDto[]>(this.apiEndpoint + '/history/transfer/' + address).pipe(
-        catchError(this.snackService.handleError<TransferDto[]>(`history address transfers `))
-    );
+  getAddressHistoryTransfers(address: string): Observable<TransferDto[]> {
+    return this.httpGetWithNetwork('/history/transfer/' + address);
   }
 
-  getUniswapOHLC(coin: string, network: Network  = StaticValues.NETWORK_ETH): Observable<OhlcDto[]> {
-    return this.http.get<OhlcDto[]>(this.apiEndpoint + '/api/transactions/history/uni/ohcl/' + coin).pipe(
-        catchError(this.snackService.handleError<OhlcDto[]>(`history ohlc`))
-    );
+  getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
+    return this.httpGetWithNetwork('/api/transactions/history/uni/ohcl/' + coin);
   }
 
-  getLastPrices(network: Network  = StaticValues.NETWORK_ETH): Observable<PricesDto[]> {
-    return this.http.get<PricesDto[]>(this.apiEndpoint + '/price/token/latest').pipe(
-        catchError(this.snackService.handleError<PricesDto[]>(`last price `))
-    );
+  getLastPrices(): Observable<PricesDto[]> {
+    return this.httpGetWithNetwork('/price/token/latest');
   }
 
-  getUserBalances(network: Network  = StaticValues.NETWORK_ETH): Observable<Balance[]> {
-    return this.http.get<Balance[]>(this.apiEndpoint + '/user_balances').pipe(
-        catchError(this.snackService.handleError<Balance[]>(`load balances`))
-    );
+  getUserBalances(): Observable<Balance[]> {
+    return this.httpGetWithNetwork('/user_balances');
   }
 
 }

@@ -12,5 +12,6 @@
         "eth": "https://ethparser-staging.herokuapp.com",
         "bsc": "https://ethparser-bsc.herokuapp.com"
     },
-    "multipleSources": false
+    "multipleSources": false,
+    "defaultNetwork": "bsc"
 }

@@ -32,7 +32,7 @@ export class IncomeDialogComponent extends ChartGeneralMethodsComponent implemen
   }
 
   private loadData(): void {
-    this.hardworksService.getHardWorkHistoryDataByName(null, this.data.name).subscribe(data => {
+    this.hardworksService.getHardWorkHistoryDataByName(this.data.name).subscribe(data => {
       this.log.debug('History of All Incomes loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(3);
