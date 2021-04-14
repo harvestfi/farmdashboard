@@ -4,6 +4,8 @@ import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
+import {HarvestTvl} from '../../models/harvest-tvl';
+import {TvlsService} from '../../services/tvls.service';
 
 @Component({
   selector: 'app-total-users-dialog',
@@ -15,10 +17,10 @@ export class TotalUsersDialogComponent extends ChartGeneralMethodsComponent impl
   @Input('data') public data: Record<any, any>;
   ready = false;
 
-  constructor(private httpService: HttpService,
-              public vt: ViewTypeService,
+  constructor(public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              private tvlService: TvlsService) {
                 super();
   }
 
@@ -27,7 +29,7 @@ export class TotalUsersDialogComponent extends ChartGeneralMethodsComponent impl
   }
 
   private loadData(): void {
-    this.httpService.getHistoryAllTvl().subscribe(data => {
+    this.tvlService.getHistoryAllTvl().subscribe(data => {
       this.log.debug('History of All Harvests loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(2);

@@ -9,6 +9,8 @@ import {MatTabChangeEvent} from '@angular/material/tabs';
 import {HttpService} from '../../services/http.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.component';
+import {HardworksService} from '../../services/hardworks.service';
+import {TvlsService} from '../../services/tvls.service';
 
 @Component({
   selector: 'app-tvl-dialog',
@@ -49,10 +51,12 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
   amountSumUsdDataMap = new Map<number, number>();
   psTvlUsdDataMap = new Map<number, number>();
 
-  constructor(private httpService: HttpService,
-              public vt: ViewTypeService,
+  constructor(public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              private hardworksService: HardworksService,
+              private tvlService: TvlsService,
+              ) {
                 super();
   }
 
@@ -321,7 +325,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
 
   private loadData(): void {
     if (this.data.type === 'All') {
-      this.httpService.getHistoryAllTvl().subscribe(data => {
+      this.tvlService.getHistoryAllTvl().subscribe(data => {
         this.log.debug('History of All TVL loaded ', data);
         this.ready = true;
         this.cdRef.detectChanges();
@@ -329,7 +333,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         this.addValuesToTvlChart(data);
       });
     } else if (this.data.type === 'income') {
-      this.httpService.getHardWorkHistoryData().subscribe(data => {
+      this.hardworksService.getHardWorkHistoryData(null).subscribe(data => {
         this.log.debug('History of All hardworks loaded ', data);
         this.ready = true;
         this.cdRef.detectChanges();
@@ -337,7 +341,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
         this.addValuesToHardworkChart(data);
       });
     } else {
-      this.httpService.getHistoryTvlByVault(this.data.type).subscribe(data => {
+      this.tvlService.getHistoryTvlByVault(this.data.type).subscribe(data => {
         this.log.debug('History of ' + this.data.type + ' TVL loaded ', data);
         this.pureData = data;
         this.ready = true;

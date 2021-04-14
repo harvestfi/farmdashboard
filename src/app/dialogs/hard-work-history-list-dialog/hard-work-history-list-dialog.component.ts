@@ -6,6 +6,7 @@ import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {HardworksService} from '../../services/hardworks.service';
 import {PaginatedObject} from '../../common/paginator/paginator.component';
 
 @Component({
@@ -22,10 +23,10 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   disabled  = false;
   ready = false;
   constructor(
-    private hwListHistory: HttpService,
     public vt: ViewTypeService,
     private log: NGXLogger,
-    private contractsService: ContractsService
+    private contractsService: ContractsService,
+    private hardworksService: HardworksService,
   ) {}
 
   ngAfterViewInit(): void {
@@ -33,7 +34,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   }
 
   getDtoDataForPage(page_number: number): void {
-    this.hwListHistory
+    this.hardworksService
     .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount)
     .subscribe((response: any) => {
       if ('data' in response.data){

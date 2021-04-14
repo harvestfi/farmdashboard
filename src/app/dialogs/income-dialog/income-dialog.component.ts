@@ -5,6 +5,8 @@ import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component';
 import { IChartApi } from 'lightweight-charts';
+import {HarvestsService} from '../../services/harvests.service';
+import {HardworksService} from '../../services/hardworks.service';
 
 @Component({
   selector: 'app-income-dialog',
@@ -20,7 +22,8 @@ export class IncomeDialogComponent extends ChartGeneralMethodsComponent implemen
   constructor(private httpService: HttpService,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              private hardworksService: HardworksService,) {
                 super();
   }
 
@@ -29,7 +32,7 @@ export class IncomeDialogComponent extends ChartGeneralMethodsComponent implemen
   }
 
   private loadData(): void {
-    this.httpService.getHardWorkHistoryDataByName(this.data.name).subscribe(data => {
+    this.hardworksService.getHardWorkHistoryDataByName(null, this.data.name).subscribe(data => {
       this.log.debug('History of All Incomes loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(3);

@@ -16,6 +16,9 @@ import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {HarvestsService} from '../../../services/harvests.service';
+import {HardworksService} from '../../../services/hardworks.service';
+import {RewardsService} from '../../../services/rewards.service';
 
 @Component({
   selector: 'app-harvest-tx',
@@ -38,7 +41,10 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
               private priceSubscriberService: PriceSubscriberService,
               private snack: SnackService,
               private log: NGXLogger,
-              private  contractsService: ContractsService
+              private  contractsService: ContractsService,
+              private  harvestsService: HarvestsService,
+              private  hardworksService: HardworksService,
+              private  rewardsService: RewardsService,
   ) {
   }
 
@@ -109,7 +115,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastHarwests(next: () => void): void {
-    this.httpService.getHarvestTxHistoryData().subscribe(data => {
+    this.harvestsService.getHarvestTxHistoryData().subscribe(data => {
       this.log.debug('harvest data fetched', data);
       data?.forEach(tx => {
         HarvestDto.enrich(tx);
@@ -120,7 +126,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastTvls(next: () => void): void {
-    this.httpService.getLastTvls().subscribe(data => {
+    this.harvestsService.getLastTvls().subscribe(data => {
       this.log.debug('Loaded last tvls ', data);
       data?.forEach(tvl => {
         HarvestDto.enrich(tvl);
@@ -134,7 +140,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastHardWorks(): void {
-    this.httpService.getLastHardWorks().subscribe(data => {
+    this.hardworksService.getLastHardWorks(null).subscribe(data => {
       data?.forEach(hardWork => {
         HardWorkDto.enrich(hardWork);
         this.pricesCalculationService.saveHardWork(hardWork);
@@ -144,7 +150,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastRewards(): void {
-    this.httpService.getLastRewards().subscribe(data => {
+    this.rewardsService.getLastRewards().subscribe(data => {
       data?.forEach(reward => {
         RewardDto.enrich(reward);
         this.pricesCalculationService.saveReward(reward);
