@@ -6,17 +6,18 @@ import {SnackService} from './snack.service';
 import {NGXLogger} from 'ngx-logger';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {PricesDto} from '../models/prices-dto';
+import {Observable, Subscriber} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PriceSubscriberService implements WsConsumer{
+export class PriceSubscriberService implements WsConsumer {
   subscribed = false;
+  private $subscribers: Subscriber<PricesDto>[] = [];
 
   constructor(private ws: WebsocketService,
-              private pricesCalculationService: PricesCalculationService,
-              private snack: SnackService,
               private log: NGXLogger) {
+    this.initWs();
   }
 
 
@@ -31,19 +32,18 @@ export class PriceSubscriberService implements WsConsumer{
   public initWs(): void {
     if (this.ws.registerConsumer(this) && !this.subscribed) {
       this.subscribeToTopic();
+      this.subscribed = true;
     }
   }
 
   public subscribeToTopic(): void {
-    this.subscribed = true;
-    this.ws.onMessage('/topic/prices', (m => PricesDto.fromJson(m.body)))
-    ?.subscribe(tx => {
-      try {
-        this.log.debug('price from ws', tx);
-        this.pricesCalculationService.savePrice(tx);
-      } catch (e) {
-        this.log.error('Error ws price', e, tx);
-      }
-    });
+      this.ws.onMessage('/topic/prices', (m => PricesDto.fromJson(m.body)))
+          ?.subscribe(tx => this.$subscribers.forEach(_ => _.next(tx)));
+  }
+
+  public subscribeToPrices(): Observable<PricesDto> {
+    return new Observable(subscriber => {
+      this.$subscribers.push(subscriber);
+    })
   }
 }

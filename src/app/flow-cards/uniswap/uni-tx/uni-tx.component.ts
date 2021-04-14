@@ -88,9 +88,6 @@ export class UniTxComponent implements AfterViewInit {
       this.titleService.setTitle(tx.lastPrice + ' | ' + this.pureTitle);
       StaticValues.lastPrice = tx.lastPrice;
     }
-    if (tx.lastGas != null || tx.lastGas !== 0) {
-      StaticValues.lastGas = tx.lastGas;
-    }
     if (tx.blockDateAdopted != null) {
       StaticValues.lastBlockDateAdopted = tx.blockDateAdopted;
     }

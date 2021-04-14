@@ -11,6 +11,8 @@ import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
 import {ContractsService} from './contracts.service';
 import {Vault} from '../models/vault';
+import {PriceSubscriberService} from "./price-subscriber.service";
+import {RewardsService} from "./http/rewards.service";
 @Injectable({
   providedIn: 'root'
 })
@@ -29,7 +31,9 @@ export class PricesCalculationService {
   private rewardEnded = new Set<string>();
   private lastPrices = new Map<string, PricesDto>();
 
-  constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig, private contractsService: ContractsService) {
+  constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig, private contractsService: ContractsService,
+              private  priceSubscriberService: PriceSubscriberService,
+              private rewardsService: RewardsService) {
     contractsService.getContracts(Vault).subscribe(vaults => {
       vaults.forEach(v => this.tvls.set(v.contract.name, 0.0));
     });
@@ -39,13 +43,12 @@ export class PricesCalculationService {
       serverLogLevel: NgxLoggerLevel.ERROR,
       disableConsoleLogging: false
      });
+    this.subscribeToPrices();
+    this.subscribeToRewards();
   }
 
   public writeFromHarvestTx(tx: HarvestDto): void {
     if (!this.latestHarvest || this.latestHarvest.blockDate < tx.blockDate) {
-      if (tx.lastGas != null && (tx.lastGas + '') !== 'NaN' && tx.lastGas !== 0) {
-        StaticValues.lastGas = tx.lastGas;
-      }
       this.latestHarvest = tx;
     }
     if (!tx || this.lastTvlDates.get(tx.vault) > tx.blockDate) {
@@ -188,32 +191,6 @@ export class PricesCalculationService {
     return 0.0;
   }
 
-  lastAllUsersCount(): number {
-    if (!this.latestHarvest || !this.latestHarvest.allOwnersCount) {
-      return 0;
-    }
-    return this.latestHarvest?.allOwnersCount;
-  }
-
-  lastPoolsActiveUsersCount(): number {
-    if (!this.latestHarvest || !this.latestHarvest.allPoolsOwnersCount) {
-      return 0;
-    }
-    return this.latestHarvest?.allPoolsOwnersCount;
-  }
-
-  savedGasFees(): number {
-    let fees = 0;
-    for (const hw of this.lastHardWorks.values()) {
-      if (hw.savedGasFeesSum) {
-        fees += hw.savedGasFeesSum;
-      } else {
-        // this.log.warn('Saved Gas fees not found in ', hw);
-      }
-    }
-    return fees;
-  }
-
   farmPsStaked(): number {
     return StaticValues.staked;
   }
@@ -273,13 +250,9 @@ export class PricesCalculationService {
     if (name === 'PS') {
       return vaultStats.tvl * StaticValues.lastPrice;
     } else if (vaultStats.lpStat) {
-      // console.log('tvl for ' + name);
       return this.calculateTvlForLp(vaultStats.lpStat);
     } else if (vaultStats.tvl) {
       const price = this.getPrice(name);
-      // if (price === 0) {
-      //   console.log('not found price for ' + name);
-      // }
       return vaultStats.tvl * price;
     }
     return 0.0;
@@ -307,7 +280,13 @@ export class PricesCalculationService {
     this.updatePrices();
   }
 
-  getLastPrices(): Map<string, PricesDto> {
-    return this.lastPrices;
+  private subscribeToPrices () {
+    this.priceSubscriberService.subscribeToPrices().subscribe(prices => {
+      this.savePrice(prices);
+    })
+  }
+
+  private subscribeToRewards() {
+    this.rewardsService.subscribeToRewards().subscribe(this.saveReward.bind(this));
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LastPrice } from 'src/app/models/last-price';
-import { PricesDto } from 'src/app/models/prices-dto';
 import { PricesCalculationService } from 'src/app/services/prices-calculation.service';
 
 @Component({

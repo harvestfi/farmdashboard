@@ -3,7 +3,6 @@ import {HardWorkDto} from '../../../models/hardwork-dto';
 import {NGXLogger} from 'ngx-logger';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {SnackService} from '../../../services/snack.service';
-import {HardworkSubscriberService} from '../../../services/hardwork-subscriber.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {Observable} from 'rxjs';
 import {ContractsService} from '../../../services/contracts.service';
@@ -25,7 +24,6 @@ export class HardworkTxComponent implements AfterViewInit {
 
 
   constructor(
-      private hwSubscriber: HardworkSubscriberService,
       public vt: ViewTypeService,
       private snack: SnackService,
       private log: NGXLogger,
@@ -42,19 +40,8 @@ export class HardworkTxComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     // todo optimize request
-    this.hardworksService.getHardWorkHistoryData().subscribe(data => {
-      this.log.info('hard work history values', data);
-      this.addInArray(data);
-    });
-
-    this.hwSubscriber.initWs();
-    this.hwSubscriber.handlers.set(this, (tx) => {
-      try {
-        this.addInArray([tx]);
-      } catch (e) {
-        this.log.error('Error handle hardwork from ws', tx, e);
-      }
-    });
+    this.hardworksService.getHardWorkHistoryData().subscribe(this.addInArray.bind(this));
+    this.hardworksService.subscribeToHardworks().subscribe(hardwork => this.addInArray([hardwork]));
   }
 
   private isUniqHardwork(hw: HardWorkDto): boolean {

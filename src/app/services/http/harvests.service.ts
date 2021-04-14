@@ -1,14 +1,41 @@
-import {Observable} from 'rxjs';
+import {Observable, Subscriber} from 'rxjs';
 import {HarvestDto} from '../../models/harvest-dto';
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
+import {WsConsumer} from "../ws-consumer";
+import {WebsocketService} from "../websocket.service";
 
 @Injectable({
     providedIn: 'root'
 })
-export class HarvestsService {
+export class HarvestsService implements WsConsumer {
 
-    constructor(private httpService: HttpService) {
+    private $subscribers: Subscriber<HarvestDto>[] = [];
+    private subscribed = false;
+
+    constructor(private httpService: HttpService,
+                private ws: WebsocketService) {
+        this.ws.registerConsumer(this);
+    }
+
+    isSubscribed(): boolean {
+        return this.subscribed;
+    }
+
+    setSubscribed(s: boolean): void {
+        this.subscribed = s;
+    }
+
+    subscribeToTopic(): void {
+        this.ws.onMessage('/topic/harvest', (m => HarvestDto.fromJson(m.body)))?.subscribe(tx => {
+            this.$subscribers.forEach(_ => _.next(tx));
+        });
+    }
+
+    subscribeToHarvests(): Observable<HarvestDto> {
+        return new Observable(subscriber => {
+            this.$subscribers.push(subscriber);
+        });
     }
 
     getHarvestTxHistoryByRange(minBlock: number, maxBlock: number): Observable<HarvestDto[]> {

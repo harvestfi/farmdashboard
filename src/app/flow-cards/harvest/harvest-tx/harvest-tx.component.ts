@@ -14,7 +14,7 @@ import {PriceSubscriberService} from '../../../services/price-subscriber.service
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
-import {Observable} from 'rxjs';
+import {Observable, Subscriber} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HarvestsService} from '../../../services/http/harvests.service';
 import {HardworksService} from '../../../services/http/hardworks.service';
@@ -38,7 +38,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
               private cdRef: ChangeDetectorRef,
               private pricesCalculationService: PricesCalculationService,
               public vt: ViewTypeService,
-              private priceSubscriberService: PriceSubscriberService,
               private snack: SnackService,
               private log: NGXLogger,
               private  contractsService: ContractsService,
@@ -72,7 +71,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
 
 
     this.initWs();
-    this.priceSubscriberService.initWs();
+    // this.priceSubscriberService.initWs();
   }
 
   public initWs(): void {
@@ -99,15 +98,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
         }
         this.addInArray(this.dtos, tx);
         this.pricesCalculationService.updateTvls();
-      } catch (e) {
-        this.log.error('Error harvest', e, tx);
-      }
-    });
-    this.ws.onMessage('/topic/rewards', (m => RewardDto.fromJson(m.body)))
-    ?.subscribe(tx => {
-      try {
-        this.log.debug('Reward tx', tx);
-        this.pricesCalculationService.saveReward(tx);
       } catch (e) {
         this.log.error('Error harvest', e, tx);
       }
@@ -190,9 +180,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
 
   private handlePriceTx(dto: HarvestDto): void {
     this.pricesCalculationService.updateTvls();
-    if (dto.lastGas != null && (dto.lastGas + '') !== 'NaN' && dto.lastGas !== 0) {
-      StaticValues.lastGas = dto.lastGas;
-    }
   }
 
   openHarvestHistory(): void {

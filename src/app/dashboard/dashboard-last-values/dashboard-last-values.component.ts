@@ -5,6 +5,12 @@ import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {HttpService} from '../../services/http/http.service';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {HarvestDto} from "../../models/harvest-dto";
+import {HardWorkDto} from "../../models/hardwork-dto";
+import {UniswapSubscriberService} from "../../services/uniswap-subscriber.service";
+import {UniswapDto} from "../../models/uniswap-dto";
+import {HarvestsService} from "../../services/http/harvests.service";
+import {HardworksService} from "../../services/http/hardworks.service";
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -23,14 +29,47 @@ export class DashboardLastValuesComponent implements OnInit {
   constructor(public dialog: MatDialog,
               public vt: ViewTypeService,
               private api: HttpService,
-              private pricesCalculationService: PricesCalculationService) {
+              private pricesCalculationService: PricesCalculationService,
+              private harvestsService: HarvestsService,
+              private hardworksService: HardworksService,
+              private uniswapSubscriberService: UniswapSubscriberService,
+              ) {
   }
 
-  get lastGasF(): number {
-    if (StaticValues.lastGas != null) {
-      return StaticValues.lastGas;
+  private lastGas = 0;
+  private hardworkGasCosts = new Map<string,number>();
+  private totalGasSaved = 0.0;
+  private totalUserCount = 0;
+  private totalPooledUsers = 0;
+  private farmHolders = 0;
+
+  ngOnInit(): void {
+    this.harvestsService.getLastTvls().subscribe(harvests =>
+        harvests.sort((a, b) => a.block > b.block? 1: -1)?.forEach(this.handleHarvest.bind(this)));
+    this.harvestsService.subscribeToHarvests().subscribe(this.handleHarvest.bind(this));
+    this.hardworksService.getLastHardWorks().subscribe(data => data.forEach(this.handleHardworks.bind(this)));
+    this.hardworksService.subscribeToHardworks().subscribe(this.handleHardworks.bind(this));
+    this.uniswapSubscriberService.subscribeToUniswapEvents().subscribe(this.handleUniswaps.bind(this))
+    this.api.getUniswapTxHistoryData().subscribe(data => data.forEach(this.handleUniswaps.bind(this)));
+  }
+
+  private handleHarvest(harvest: HarvestDto) {
+    if (harvest.lastGas != null && (harvest.lastGas + '') !== 'NaN' && harvest.lastGas !== 0) {
+      this.lastGas = harvest.lastGas;
     }
-    return 0;
+    this.totalPooledUsers = harvest.allPoolsOwnersCount
+    this.totalUserCount = harvest.allOwnersCount;
+  }
+
+  private handleHardworks(hardwork: HardWorkDto) {
+    const lastGasSum = this.hardworkGasCosts.get(hardwork.vault) || 0;
+    this.hardworkGasCosts.set(hardwork.vault, hardwork.savedGasFeesSum||0);
+    this.totalGasSaved -= lastGasSum;
+    this.totalGasSaved += (hardwork.savedGasFeesSum||0);
+  };
+
+  private handleUniswaps(uniswap: UniswapDto){
+    this.farmHolders = uniswap.ownerCount;
   }
 
   get lastPriceF(): number {
@@ -57,16 +96,8 @@ export class DashboardLastValuesComponent implements OnInit {
     return this.pricesCalculationService.farmPsStaked();
   }
 
-  get farmNewPsStaked(): number {
-    return this.pricesCalculationService.farmNewPsStaked();
-  }
-
   get farmLpStaked(): number {
     return this.pricesCalculationService.farmLpStaked();
-  }
-
-  get mCap(): number {
-    return (StaticValues.farmTotalSupply * StaticValues.lastPrice) / 1000000;
   }
 
   get weeklyAllIncome(): number {
@@ -79,25 +110,6 @@ export class DashboardLastValuesComponent implements OnInit {
 
   get farmBuybacks(): number {
     return this.pricesCalculationService.latestHardWork?.farmBuybackSum / 1000;
-  }
-
-  get allUsersCount(): number {
-    return this.pricesCalculationService.lastAllUsersCount();
-  }
-
-  get poolsActiveUsersCount(): number {
-    return this.pricesCalculationService.lastPoolsActiveUsersCount();
-  }
-
-  get farmActiveUsers(): number {
-    return StaticValues.farmUsers;
-  }
-
-  get savedGasFees(): number {
-    return this.pricesCalculationService.savedGasFees();
-  }
-
-  ngOnInit(): void {
   }
 
   openTvlDialog(): void {
