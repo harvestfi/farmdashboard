@@ -3,5 +3,14 @@
     "wsEndpoint": "https://ethparser-bsc.herokuapp.com/stomp",
     "apiEndpoint": "https://ethparser-bsc.herokuapp.com",
     "wsReconnectInterval": 15,
-    "web3Url": "wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz"
+    "web3Url": "wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz",
+    "wsEndpoints": {
+        "eth": "https://ethparser-staging.herokuapp.com/stomp",
+        "bsc": "https://ethparser-bsc.herokuapp.com/stomp"
+    },
+    "apiEndpoints": {
+        "eth": "https://ethparser-staging.herokuapp.com",
+        "bsc": "https://ethparser-bsc.herokuapp.com"
+    },
+    "multipleSources": true
 }

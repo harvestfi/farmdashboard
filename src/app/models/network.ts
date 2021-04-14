@@ -4,4 +4,5 @@ export interface Network {
     chainId: number;
     currencySymbol: string; // e.g. ETH or BNB
     blockExplorerUrl: string; // e.g. etherscan.io or bscscan.com
+    ethparserName: string;
 }

@@ -3,7 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({

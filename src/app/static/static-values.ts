@@ -20,14 +20,16 @@ export class StaticValues {
     chainId: 1,
     currencySymbol: 'ETH',
     name: 'Ethereum Mainnet',
-    rpcUrl: 'https://mainnet.infura.io/v3/undefined'
+    rpcUrl: 'https://mainnet.infura.io/v3/undefined',
+    ethparserName: 'eth'
   };
   public static NETWORK_BSC: Network = {
     blockExplorerUrl: 'https://etherscan.io',
     chainId: 56,
     currencySymbol: 'BNB',
     name: 'Binance Smart Chain',
-    rpcUrl: 'https://bsc-dataseed.binance.org/'
+    rpcUrl: 'https://bsc-dataseed.binance.org/',
+    ethparserName: 'bsc'
   };
 
   public static farmPools: string[] = [

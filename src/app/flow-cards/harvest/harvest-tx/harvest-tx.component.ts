@@ -1,6 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import {WebsocketService} from '../../../services/websocket.service';
-import {HttpService} from '../../../services/http.service';
+import {HttpService} from '../../../services/http/http.service';
 import {NGXLogger} from 'ngx-logger';
 import {HarvestDto} from '../../../models/harvest-dto';
 import {WsConsumer} from '../../../services/ws-consumer';
@@ -16,9 +16,9 @@ import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {HarvestsService} from '../../../services/harvests.service';
-import {HardworksService} from '../../../services/hardworks.service';
-import {RewardsService} from '../../../services/rewards.service';
+import {HarvestsService} from '../../../services/http/harvests.service';
+import {HardworksService} from '../../../services/http/hardworks.service';
+import {RewardsService} from '../../../services/http/rewards.service';
 
 @Component({
   selector: 'app-harvest-tx',
@@ -140,7 +140,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastHardWorks(): void {
-    this.hardworksService.getLastHardWorks(null).subscribe(data => {
+    this.hardworksService.getLastHardWorks().subscribe(data => {
       data?.forEach(hardWork => {
         HardWorkDto.enrich(hardWork);
         this.pricesCalculationService.saveHardWork(hardWork);

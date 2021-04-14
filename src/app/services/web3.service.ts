@@ -1,4 +1,4 @@
-import {HttpService} from './http.service';
+import {HttpService} from './http/http.service';
 import {Inject, Injectable} from '@angular/core';
 // import Web3 from 'web3';
 import type {Vault} from '../models/vault';

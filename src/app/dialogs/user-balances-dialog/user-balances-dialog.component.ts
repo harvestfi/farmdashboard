@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Inject, Input} from '@angular/core';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {NGXLogger} from 'ngx-logger';
 import {Balance} from '../../models/balance';
 import { ViewTypeService } from 'src/app/services/view-type.service';

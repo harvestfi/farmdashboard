@@ -1,13 +1,13 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {StaticValues} from '../../static/static-values';
 import {RewardDto} from '../../models/reward-dto';
 import {HarvestDto} from '../../models/harvest-dto';
-import {HarvestsService} from '../../services/harvests.service';
-import {RewardsService} from '../../services/rewards.service';
+import {HarvestsService} from '../../services/http/harvests.service';
+import {RewardsService} from '../../services/http/rewards.service';
 
 @Component({
   selector: 'app-rewards-dialog',
