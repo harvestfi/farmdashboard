@@ -8,7 +8,8 @@ export class AppConfig {
     wsEndpoints = {};
     wsReconnectInterval: number;
     web3Url: string;
-    multipleSources;
+    multipleSources: boolean;
+    defaultNetwork: string;
 }
 
 export const APP_CONFIG = new InjectionToken<AppConfig>('APP_CONFIG');
