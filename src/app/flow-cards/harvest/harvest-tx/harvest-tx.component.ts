@@ -10,7 +10,6 @@ import {ViewTypeService} from '../../../services/view-type.service';
 import {SnackService} from '../../../services/snack.service';
 import {HardWorkDto} from '../../../models/hardwork-dto';
 import {RewardDto} from '../../../models/reward-dto';
-import {PriceSubscriberService} from '../../../services/price-subscriber.service';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
@@ -62,13 +61,11 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   ngAfterViewInit(): void {
-    this.loadLastPrices(
-        () => this.loadLastHarwests(() => this.loadLastTvls(() => {
+    this.loadLastHarwests(() => this.loadLastTvls(() => {
           this.loadLastHardWorks();
-          this.loadLastRewards();
-        }))
+          // this.loadLastRewards();
+        })
     );
-
 
     this.initWs();
     // this.priceSubscriberService.initWs();
@@ -139,25 +136,15 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
     });
   }
 
-  private loadLastRewards(): void {
-    this.rewardsService.getLastRewards().subscribe(data => {
-      data?.forEach(reward => {
-        RewardDto.enrich(reward);
-        this.pricesCalculationService.saveReward(reward);
-      });
-      this.log.debug('Loaded last rewards ', data);
-    });
-  }
-
-  private loadLastPrices(next: () => void): void {
-    this.httpService.getLastPrices().subscribe(data => {
-      data?.forEach(tx => {
-        this.pricesCalculationService.savePrice(tx);
-      });
-      this.log.debug('Loaded last prices ', data);
-      next();
-    });
-  }
+  // private loadLastRewards(): void {
+  //   this.rewardsService.getLastRewards().subscribe(data => {
+  //     data?.forEach(reward => {
+  //       RewardDto.enrich(reward);
+  //       this.pricesCalculationService.saveReward(reward);
+  //     });
+  //     this.log.debug('Loaded last rewards ', data);
+  //   });
+  // }
 
   private isUniqTx(tx: HarvestDto): boolean {
     if (this.txIds.has(tx.id)) {

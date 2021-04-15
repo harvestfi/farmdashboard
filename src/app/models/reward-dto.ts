@@ -31,8 +31,8 @@ export class RewardDto {
     return tx;
   }
 
-  public static enrich(tx: RewardDto): void {
-    RewardDto.fillBlockDateAdopted(tx);
+  public static enrich(tx: RewardDto): RewardDto {
+    return RewardDto.fillBlockDateAdopted(tx);
   }
 
   public static fillBlockDateAdopted(tx: RewardDto): RewardDto {

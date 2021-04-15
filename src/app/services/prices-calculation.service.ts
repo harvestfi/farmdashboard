@@ -6,13 +6,14 @@ import {PricesDto} from '../models/prices-dto';
 import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
-import {LastPrice} from '../models/last-price';
 import {NGXLogger, NgxLoggerLevel} from 'ngx-logger';
 import {APP_CONFIG, AppConfig} from 'src/app.config';
 import {ContractsService} from './contracts.service';
 import {Vault} from '../models/vault';
-import {PriceSubscriberService} from "./price-subscriber.service";
-import {RewardsService} from "./http/rewards.service";
+import {RewardsService} from './http/rewards.service';
+import {HttpService} from "./http/http.service";
+import {HarvestsService} from "./http/harvests.service";
+import {PricesService} from "./http/prices.service";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,6 @@ export class PricesCalculationService {
   public tvls = new Map<string, number>();
   public tvlNames = new Set<string>();
   public allTvls = 0.0;
-  public allPrices: LastPrice[] = [];
   public vaultStats = new Map<string, VaultStats>();
   public lastHarvests = new Map<string, HarvestDto>();
   public lastHardWorks = new Map<string, HardWorkDto>();
@@ -33,8 +33,10 @@ export class PricesCalculationService {
   private lastPrices = new Map<string, PricesDto>();
 
   constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig, private contractsService: ContractsService,
-              private  priceSubscriberService: PriceSubscriberService,
-              private rewardsService: RewardsService) {
+              private  pricesService: PricesService,
+              private rewardsService: RewardsService,
+              private httpService: HttpService,
+              private harvestsService: HarvestsService) {
     contractsService.getContracts(Vault).subscribe(vaults => {
       vaults.forEach(v => this.tvls.set(v.contract.name, 0.0));
     });
@@ -44,6 +46,9 @@ export class PricesCalculationService {
       serverLogLevel: NgxLoggerLevel.ERROR,
       disableConsoleLogging: false
      });
+    this.pricesService.getLastPrices().subscribe(data => data?.forEach(this.savePrice.bind(this)));
+    this.harvestsService.getHarvestTxHistoryData().subscribe(data => data?.forEach(this.writeFromHarvestTx.bind(this)));
+    this.rewardsService.getLastRewards().subscribe(data => data?.forEach(reward => this.saveReward(RewardDto.enrich(reward))));
     this.subscribeToPrices();
     this.subscribeToRewards();
   }
@@ -54,10 +59,6 @@ export class PricesCalculationService {
     }
     if (!tx || this.lastTvlDates.get(tx.vault) > tx.blockDate) {
       return;
-    }
-    if (tx.vault === 'PS') {
-      StaticValues.staked = (tx.lastTvl / tx.sharePrice) * 100;
-      StaticValues.farmTotalSupply = tx.sharePrice;
     }
     if (tx.vault === 'iPS') {
       StaticValues.stakedNewPS = (tx.lastTvl / tx.totalAmount) * 100;
@@ -100,13 +101,6 @@ export class PricesCalculationService {
     });
     this.allTvls = allTvls / 1000000;
     // console.log('allTvls ', this.allTvls);
-  }
-
-  public updatePrices(): void {
-    this.allPrices = Array.from(this.lastPrices.keys()).map(key => ({
-      tokenName: key,
-      tokenPrice: this.getPrice(key).toFixed(2)
-    }));
   }
 
   saveReward(tx: RewardDto): void {
@@ -192,10 +186,6 @@ export class PricesCalculationService {
     return 0.0;
   }
 
-  farmPsStaked(): number {
-    return StaticValues.staked;
-  }
-
   farmNewPsStaked(): number {
     return StaticValues.stakedNewPS;
   }
@@ -208,10 +198,10 @@ export class PricesCalculationService {
       if (!harvest) {
         continue;
       }
-      if (harvest.lpStatDto.coin1 === 'FARM') {
+      if (harvest.lpStatDto?.coin1 === 'FARM') {
         farmInLp += harvest.lpStatDto.amount1;
       }
-      if (harvest.lpStatDto.coin2 === 'FARM') {
+      if (harvest.lpStatDto?.coin2 === 'FARM') {
         farmInLp += harvest.lpStatDto.amount2;
       }
     }
@@ -288,13 +278,12 @@ export class PricesCalculationService {
     }
     this.lastPrices.set(name, tx);
     this.updateTvls();
-    this.updatePrices();
   }
 
-  private subscribeToPrices () {
-    this.priceSubscriberService.subscribeToPrices().subscribe(prices => {
+  private subscribeToPrices() {
+    this.pricesService.subscribeToPrices().subscribe(prices => {
       this.savePrice(prices);
-    })
+    });
   }
 
   private subscribeToRewards() {

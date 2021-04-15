@@ -82,10 +82,6 @@ export class HttpService {
     return this.httpGetWithNetwork('/api/transactions/history/uni/ohcl/' + coin);
   }
 
-  getLastPrices(): Observable<PricesDto[]> {
-    return this.httpGetWithNetwork('/price/token/latest');
-  }
-
   getUserBalances(): Observable<Balance[]> {
     return this.httpGetWithNetwork('/user_balances');
   }

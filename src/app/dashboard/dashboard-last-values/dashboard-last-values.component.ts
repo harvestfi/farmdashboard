@@ -5,12 +5,12 @@ import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {HttpService} from '../../services/http/http.service';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
-import {HarvestDto} from "../../models/harvest-dto";
-import {HardWorkDto} from "../../models/hardwork-dto";
-import {UniswapSubscriberService} from "../../services/uniswap-subscriber.service";
-import {UniswapDto} from "../../models/uniswap-dto";
-import {HarvestsService} from "../../services/http/harvests.service";
-import {HardworksService} from "../../services/http/hardworks.service";
+import {HarvestDto} from '../../models/harvest-dto';
+import {HardWorkDto} from '../../models/hardwork-dto';
+import {UniswapDto} from '../../models/uniswap-dto';
+import {HarvestsService} from '../../services/http/harvests.service';
+import {HardworksService} from '../../services/http/hardworks.service';
+import {UniswapService} from "../../services/http/uniswap.service";
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -32,7 +32,7 @@ export class DashboardLastValuesComponent implements OnInit {
               private pricesCalculationService: PricesCalculationService,
               private harvestsService: HarvestsService,
               private hardworksService: HardworksService,
-              private uniswapSubscriberService: UniswapSubscriberService,
+              private uniswapSubscriberService: UniswapService,
               ) {
   }
 
@@ -42,14 +42,15 @@ export class DashboardLastValuesComponent implements OnInit {
   private totalUserCount = 0;
   private totalPooledUsers = 0;
   private farmHolders = 0;
+  private farmStaked = 0;
 
   ngOnInit(): void {
     this.harvestsService.getLastTvls().subscribe(harvests =>
         harvests.sort((a, b) => a.block > b.block? 1: -1)?.forEach(this.handleHarvest.bind(this)));
     this.harvestsService.subscribeToHarvests().subscribe(this.handleHarvest.bind(this));
-    this.hardworksService.getLastHardWorks().subscribe(data => data.forEach(this.handleHardworks.bind(this)));
+    this.hardworksService.getLastHardWorks().subscribe(data => data?.forEach(this.handleHardworks.bind(this)));
     this.hardworksService.subscribeToHardworks().subscribe(this.handleHardworks.bind(this));
-    this.uniswapSubscriberService.subscribeToUniswapEvents().subscribe(this.handleUniswaps.bind(this))
+    this.uniswapSubscriberService.subscribeToUniswapEvents().subscribe(this.handleUniswaps.bind(this));
     this.api.getUniswapTxHistoryData().subscribe(data => data.forEach(this.handleUniswaps.bind(this)));
   }
 
@@ -57,8 +58,16 @@ export class DashboardLastValuesComponent implements OnInit {
     if (harvest.lastGas != null && (harvest.lastGas + '') !== 'NaN' && harvest.lastGas !== 0) {
       this.lastGas = harvest.lastGas;
     }
-    this.totalPooledUsers = harvest.allPoolsOwnersCount
+    this.totalPooledUsers = harvest.allPoolsOwnersCount;
     this.totalUserCount = harvest.allOwnersCount;
+    this.updateFarmStaked(harvest);
+  }
+
+  private updateFarmStaked(harvest: HarvestDto) {
+    if (harvest.vault === 'PS') {
+      this.farmStaked = (harvest.lastTvl / harvest.sharePrice) * 100;
+      StaticValues.farmTotalSupply = harvest.sharePrice;
+    }
   }
 
   private handleHardworks(hardwork: HardWorkDto) {
@@ -88,12 +97,12 @@ export class DashboardLastValuesComponent implements OnInit {
     return this.pricesCalculationService.getPrice('ETH');
   }
 
-  get farmStaked(): number {
-    return this.farmPsStaked + this.farmLpStaked;
+  get totalFarmStaked(): number {
+    return this.farmStaked + this.farmLpStaked;
   }
 
   get farmPsStaked(): number {
-    return this.pricesCalculationService.farmPsStaked();
+    return this.farmStaked;
   }
 
   get farmLpStaked(): number {
@@ -143,4 +152,5 @@ export class DashboardLastValuesComponent implements OnInit {
   openGasPriceDialog(): void {
     this.gasPriceModal.open();
   }
+
 }

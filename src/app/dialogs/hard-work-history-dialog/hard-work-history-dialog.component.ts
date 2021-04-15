@@ -5,7 +5,7 @@ import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 import {IChartApi} from 'lightweight-charts';
-import {HardworksService} from "../../services/http/hardworks.service";
+import {HardworksService} from '../../services/http/hardworks.service';
 
 @Component({
   selector: 'app-hard-work-history-dialog',

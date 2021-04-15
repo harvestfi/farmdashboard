@@ -2,20 +2,21 @@ import {Observable, Subscriber} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {RewardDto} from '../../models/reward-dto';
 import {HttpService} from './http.service';
-import {HarvestDto} from "../../models/harvest-dto";
-import {WebsocketService} from "../websocket.service";
-import {WsConsumer} from "../ws-consumer";
+import {HarvestDto} from '../../models/harvest-dto';
+import {WebsocketService} from '../websocket.service';
+import {WsConsumer} from '../ws-consumer';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RewardsService implements WsConsumer {
-    private $subscribers: Subscriber<RewardDto>[];
+    private $subscribers: Subscriber<RewardDto>[] = [];
     private subscribed = false;
 
     constructor(private httpService: HttpService,
                 private ws: WebsocketService) {
         this.ws.registerConsumer(this);
+        this.setSubscribed(true);
     }
 
     getLastRewards(): Observable<RewardDto[]> {

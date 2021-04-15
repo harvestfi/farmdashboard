@@ -2,8 +2,8 @@ import {Observable, Subscriber} from 'rxjs';
 import {HarvestDto} from '../../models/harvest-dto';
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
-import {WsConsumer} from "../ws-consumer";
-import {WebsocketService} from "../websocket.service";
+import {WsConsumer} from '../ws-consumer';
+import {WebsocketService} from '../websocket.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +16,7 @@ export class HarvestsService implements WsConsumer {
     constructor(private httpService: HttpService,
                 private ws: WebsocketService) {
         this.ws.registerConsumer(this);
+        this.setSubscribed(true);
     }
 
     isSubscribed(): boolean {

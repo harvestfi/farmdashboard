@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable, Subscriber} from 'rxjs';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {HttpService} from './http.service';
-import {WsConsumer} from "../ws-consumer";
-import {WebsocketService} from "../websocket.service";
+import {WsConsumer} from '../ws-consumer';
+import {WebsocketService} from '../websocket.service';
 
 @Injectable({
     providedIn: 'root'
@@ -67,6 +67,6 @@ export class HardworksService implements WsConsumer {
     public subscribeToHardworks(): Observable<HardWorkDto> {
         return new Observable(subscriber => {
             this.$subscribers.push(subscriber);
-        })
+        });
     }
 }
