@@ -30,16 +30,10 @@ export class PricesCalculationService {
   private rewardEnded = new Set<string>();
   private lastPrices = new Map<string, PricesDto>();
 
-  constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig, private contractsService: ContractsService) {
+  constructor(private log: NGXLogger, private contractsService: ContractsService) {
     contractsService.getContracts(Vault).subscribe(vaults => {
       vaults.forEach(v => this.tvls.set(v.contract.name, 0.0));
     });
-    this.log.updateConfig({
-      serverLoggingUrl: config.apiEndpoint + '/api/logs',
-      level: config.debugLevel,
-      serverLogLevel: NgxLoggerLevel.ERROR,
-      disableConsoleLogging: false
-     });
   }
 
   public writeFromHarvestTx(tx: HarvestDto): void {
@@ -206,7 +200,7 @@ export class PricesCalculationService {
   savedGasFees(): number {
     let fees = 0;
     for (const hw of this.lastHardWorks.values()) {
-      if (hw.savedGasFeesSum) {
+      if (hw.network === 'eth' && hw.savedGasFeesSum) {
         fees += hw.savedGasFeesSum;
       } else {
         // this.log.warn('Saved Gas fees not found in ', hw);

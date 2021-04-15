@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {SnackService} from './snack.service';
 import {Vault} from '../models/vault';
@@ -10,6 +10,7 @@ import {IContract} from '../models/icontract';
 import {RestResponse} from '../models/rest-response';
 import {APP_CONFIG, AppConfig} from '../../app.config';
 import {HttpService} from './http/http.service';
+import {StaticValues} from '../static/static-values';
 
 /**
  * Usage:
@@ -42,7 +43,6 @@ export class ContractsService {
     /**
      * Fetch a list of contracts by type, e.g. Vault, Pool, Token, Pair
      * Uses a cache per type and stores a buffer size of 1 (it's a full list of items)
-     * Refreshes this buffer every 5 minutes.
      *
      * @param type
      */
@@ -54,9 +54,30 @@ export class ContractsService {
     }
 
     private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {
-        return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}s`)
+        if (this.config.multipleSources) {
+            return this.requestContractsMultiple(type);
+        } else {
+            return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}s`)
+            .pipe(
+                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
+            );
+        }
+    }
+
+    private requestContractsMultiple<T extends IContract>(type: new () => T): Observable<T[]> {
+        return forkJoin(
+            this.httpService.httpGet(`/${this.urlPrefix}/${this.typePaths.get(type)}s`,
+                StaticValues.NETWORKS.get('eth'))
+            .pipe(
+                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
+            ),
+            this.httpService.httpGet(`/${this.urlPrefix}/${this.typePaths.get(type)}s`,
+                StaticValues.NETWORKS.get('bsc'))
+            .pipe(
+                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
+            ))
         .pipe(
-            map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
+            map(x => x.flat())
         );
     }
 

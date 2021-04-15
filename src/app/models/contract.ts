@@ -4,4 +4,5 @@ export class Contract {
   id: number;
   name: string;
   type: number;
+  network: string;
 }

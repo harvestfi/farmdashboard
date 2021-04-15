@@ -2,8 +2,6 @@ import {InjectionToken} from '@angular/core';
 
 export class AppConfig {
     debugLevel: number;
-    wsEndpoint: string;
-    apiEndpoint: string;
     apiEndpoints = {};
     wsEndpoints = {};
     wsReconnectInterval: number;

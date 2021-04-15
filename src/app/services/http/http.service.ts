@@ -42,7 +42,7 @@ export class HttpService {
       const observables: Observable<T>[] = [];
       Object.keys(this.config.apiEndpoints)
       ?.forEach(netName => {
-        const url = get(this.config.apiEndpoints, netName, this.config.apiEndpoint)
+        const url = get(this.config.apiEndpoints, netName)
             + `${urlAtr}network=${netName}`;
         this.log.info('HTTP get for network ' + netName, url);
         observables.push(this.http.get<T>(url));
@@ -54,7 +54,7 @@ export class HttpService {
           map(x => mapper(x)),
       );
     } else {
-      const url = get(this.config.apiEndpoints, network.ethparserName, this.config.apiEndpoint)
+      const url = get(this.config.apiEndpoints, network.ethparserName)
           + `${urlAtr}network=${network.ethparserName}`;
       this.log.info('HTTP get for network ' + network.ethparserName, url);
       request = this.http.get<T>(url);
@@ -66,20 +66,38 @@ export class HttpService {
     );
   }
 
+  public httpGet<T>(
+      urlAtr: string,
+      network: Network = StaticValues.NETWORKS.get('eth')
+  ): Observable<T> {
+    if (urlAtr.indexOf('?') < 0) {
+      urlAtr += '?';
+    } else {
+      urlAtr += '&';
+    }
+    const url = get(this.config.apiEndpoints, network.ethparserName)
+        + `${urlAtr}network=${network.ethparserName}`;
+    this.log.info('HTTP get for network ' + network.ethparserName, url);
+    return this.http.get<T>(url)
+    .pipe(
+        catchError(this.snackService.handleError<T>(url + ' error'))
+    );
+  }
+
   getUniswapTxHistoryData(): Observable<UniswapDto[]> {
-    return this.httpGetWithNetwork('/api/transactions/history/uni');
+    return this.httpGet('/api/transactions/history/uni');
   }
 
   getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
-    return this.httpGetWithNetwork(`/api/transactions/history/uni?from=${minBlock}&to=${maxBlock}`);
+    return this.httpGet(`/api/transactions/history/uni?from=${minBlock}&to=${maxBlock}`);
   }
 
   getAddressHistoryTransfers(address: string): Observable<TransferDto[]> {
-    return this.httpGetWithNetwork('/history/transfer/' + address);
+    return this.httpGet('/history/transfer/' + address);
   }
 
   getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
-    return this.httpGetWithNetwork('/api/transactions/history/uni/ohcl/' + coin);
+    return this.httpGet('/api/transactions/history/uni/ohcl/' + coin);
   }
 
   getLastPrices(): Observable<PricesDto[]> {

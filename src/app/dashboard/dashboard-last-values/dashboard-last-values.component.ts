@@ -4,7 +4,7 @@ import {PricesCalculationService} from '../../services/prices-calculation.servic
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {HttpService} from '../../services/http/http.service';
-import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -78,7 +78,11 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get farmBuybacks(): number {
-    return this.pricesCalculationService.latestHardWork?.farmBuybackSum / 1000;
+    const hw = this.pricesCalculationService.latestHardWork;
+    if (hw && hw.network === 'bsc') {
+      return (hw?.farmBuybackSum / 1000) / this.pricesCalculationService.lastFarmPrice();
+    }
+    return hw?.farmBuybackSum / 1000;
   }
 
   get allUsersCount(): number {
