@@ -21,7 +21,7 @@ export class HardworksService {
     }
 
     getLastHardWorks(): Observable<HardWorkDto[]> {
-        return this.httpService.httpGetWithNetwork('/last/hardwork');
+        return this.httpService.httpGetWithNetwork('/api/transactions/last/hardwork');
     }
 
     getPaginatedHardworkHistoryData(

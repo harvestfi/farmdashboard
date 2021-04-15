@@ -41,7 +41,7 @@ export class HttpService {
     if (this.config.multipleSources) {
       const observables: Observable<T>[] = [];
       Object.keys(this.config.apiEndpoints)
-      .forEach(netName => {
+      ?.forEach(netName => {
         const url = get(this.config.apiEndpoints, netName, this.config.apiEndpoint)
             + `${urlAtr}network=${netName}`;
         this.log.info('HTTP get for network ' + netName, url);
