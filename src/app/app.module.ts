@@ -169,7 +169,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpClientModule,
     LoggerModule.forRoot({
       serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
-      level: 3,
+      level: 0,
       serverLogLevel: NgxLoggerLevel.ERROR,
       disableConsoleLogging: false
     }),

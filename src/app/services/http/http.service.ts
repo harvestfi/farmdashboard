@@ -41,7 +41,7 @@ export class HttpService {
     if (this.config.multipleSources) {
       const observables: Observable<T>[] = [];
       Object.keys(this.config.apiEndpoints)
-      .forEach(netName => {
+      ?.forEach(netName => {
         const url = get(this.config.apiEndpoints, netName, this.config.apiEndpoint)
             + `${urlAtr}network=${netName}`;
         this.log.info('HTTP get for network ' + netName, url);
@@ -72,10 +72,6 @@ export class HttpService {
 
   getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
     return this.httpGetWithNetwork(`/api/transactions/history/uni?from=${minBlock}&to=${maxBlock}`);
-  }
-
-  getAddressHistoryUni(address: string): Observable<UniswapDto[]> {
-    return this.httpGetWithNetwork('/history/uni/' + address);
   }
 
   getAddressHistoryTransfers(address: string): Observable<TransferDto[]> {
