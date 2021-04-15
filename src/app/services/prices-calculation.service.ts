@@ -7,10 +7,11 @@ import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
 import {LastPrice} from '../models/last-price';
-import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
-import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {NGXLogger, NgxLoggerLevel} from 'ngx-logger';
+import {APP_CONFIG, AppConfig} from 'src/app.config';
 import {ContractsService} from './contracts.service';
 import {Vault} from '../models/vault';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -265,7 +266,7 @@ export class PricesCalculationService {
     const price2 = this.getPrice(simpleName2);
     const amount1 = price1 * lpStat.amount1;
     const amount2 = price2 * lpStat.amount2;
-    // console.log('calculateTvlForLp ', simpleName1, simpleName2, price1, price2, amount1, amount2);
+    // this.log.debug('calculateTvlForLp ', simpleName1, simpleName2, price1, price2, amount1, amount2);
     return amount1 + amount2;
   }
 
@@ -273,12 +274,18 @@ export class PricesCalculationService {
     if (name === 'PS') {
       return vaultStats.tvl * StaticValues.lastPrice;
     } else if (vaultStats.lpStat) {
-      // console.log('tvl for ' + name);
+      // this.log.debug(' lp tvl for ' + name);
       return this.calculateTvlForLp(vaultStats.lpStat);
     } else if (vaultStats.tvl) {
-      const price = this.getPrice(name);
+      let price;
+      // todo use contracts for getting underlying name and fetch actual price
+      if (this.lastHarvests.get(name)?.network === 'bsc' && this.lastHarvests.get(name)?.underlyingPrice) {
+        price = this.lastHarvests.get(name).underlyingPrice;
+      } else {
+        price = this.getPrice(name);
+      }
       // if (price === 0) {
-      //   console.log('not found price for ' + name);
+      //   this.log.debug('not found price for ' + name, this.lastHarvests.get(name));
       // }
       return vaultStats.tvl * price;
     }

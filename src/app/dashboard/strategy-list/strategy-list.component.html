@@ -27,16 +27,16 @@
         </span>
       </div>
       <div  class="column">
-        <app-custom-modal #tvlModal>
+        <app-custom-modal [name]="'tvlModal_' + row">
           <ng-template>
             <app-tvl-dialog [data]="{type: row}"></app-tvl-dialog>
           </ng-template>
         </app-custom-modal>
         <span
         class="pointer"
-        (click)="openTvlDialog()" 
+        (click)="openTvlDialog(row)"
         matTooltip="
-        TVL: {{vaultTvl(row) | number}}$ 
+        TVL: {{vaultTvl(row) | number}}M$
         Click to open TVL history chart"
         matTooltipClass="tooltip-spaced">
         ${{vaultTvl(row)| number: '1.1-1'}}M

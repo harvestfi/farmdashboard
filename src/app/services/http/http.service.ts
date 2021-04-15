@@ -74,10 +74,6 @@ export class HttpService {
     return this.httpGetWithNetwork(`/api/transactions/history/uni?from=${minBlock}&to=${maxBlock}`);
   }
 
-  getAddressHistoryUni(address: string): Observable<UniswapDto[]> {
-    return this.httpGetWithNetwork('/history/uni/' + address);
-  }
-
   getAddressHistoryTransfers(address: string): Observable<TransferDto[]> {
     return this.httpGetWithNetwork('/history/transfer/' + address);
   }

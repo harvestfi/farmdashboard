@@ -91,6 +91,7 @@ export class StaticValues {
         || 'UST' === name
         || 'CRV_GUSD' === name
         || 'CRV_AAVE' === name
+        || 'BUSD' === name
         ;
   }
 }
