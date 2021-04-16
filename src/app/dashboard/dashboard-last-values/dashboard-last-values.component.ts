@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {HttpService} from '../../services/http/http.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {APP_CONFIG, AppConfig} from '../../../app.config';
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -23,6 +24,7 @@ export class DashboardLastValuesComponent implements OnInit {
   constructor(public dialog: MatDialog,
               public vt: ViewTypeService,
               private api: HttpService,
+              @Inject(APP_CONFIG) private config: AppConfig,
               private pricesCalculationService: PricesCalculationService) {
   }
 
@@ -42,6 +44,9 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get btcF(): number {
+    if (this.config.defaultNetwork === 'bsc') {
+      return this.pricesCalculationService.getPrice('BTCB');
+    }
     return this.pricesCalculationService.getPrice('BTC');
   }
 

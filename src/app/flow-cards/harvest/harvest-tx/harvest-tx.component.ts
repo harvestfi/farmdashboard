@@ -11,7 +11,7 @@ import {SnackService} from '../../../services/snack.service';
 import {HardWorkDto} from '../../../models/hardwork-dto';
 import {RewardDto} from '../../../models/reward-dto';
 import {PriceSubscriberService} from '../../../services/price-subscriber.service';
-import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {Observable} from 'rxjs';
@@ -190,7 +190,10 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
 
   private handlePriceTx(dto: HarvestDto): void {
     this.pricesCalculationService.updateTvls();
-    if (dto.lastGas != null && (dto.lastGas + '') !== 'NaN' && dto.lastGas !== 0) {
+    if (dto.lastGas != null
+        && dto.network === 'eth'
+        && (dto.lastGas + '') !== 'NaN'
+        && dto.lastGas !== 0) {
       StaticValues.lastGas = dto.lastGas;
     }
   }

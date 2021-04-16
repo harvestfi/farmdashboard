@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HarvestDto} from '../models/harvest-dto';
 import {VaultStats} from '../models/vault-stats';
 import {LpStat} from '../models/lp-stat';
@@ -7,8 +7,7 @@ import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
 import {LastPrice} from '../models/last-price';
-import {NGXLogger, NgxLoggerLevel} from 'ngx-logger';
-import {APP_CONFIG, AppConfig} from 'src/app.config';
+import {NGXLogger} from 'ngx-logger';
 import {ContractsService} from './contracts.service';
 import {Vault} from '../models/vault';
 
@@ -38,7 +37,10 @@ export class PricesCalculationService {
 
   public writeFromHarvestTx(tx: HarvestDto): void {
     if (!this.latestHarvest || this.latestHarvest.blockDate < tx.blockDate) {
-      if (tx.lastGas != null && (tx.lastGas + '') !== 'NaN' && tx.lastGas !== 0) {
+      if (tx.lastGas != null
+          && tx.network === 'eth'
+          && (tx.lastGas + '') !== 'NaN'
+          && tx.lastGas !== 0) {
         StaticValues.lastGas = tx.lastGas;
       }
       this.latestHarvest = tx;
