@@ -3,6 +3,7 @@ export class HardWorkDto {
   vault: string;
   block: number;
   blockDate: number;
+  network: string;
   shareChange: Date;
   fullRewardUsd: number;
   fullRewardUsdTotal: number;
@@ -35,6 +36,7 @@ export class HardWorkDto {
     tx.vault = jsonData.vault;
     tx.block = jsonData.block;
     tx.blockDate = jsonData.blockDate;
+    tx.network = jsonData.network;
     tx.shareChange = jsonData.shareChange;
     tx.fullRewardUsd = jsonData.fullRewardUsd;
     tx.fullRewardUsdTotal = jsonData.fullRewardUsdTotal;

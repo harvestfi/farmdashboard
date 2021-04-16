@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HarvestDto} from '../models/harvest-dto';
 import {VaultStats} from '../models/vault-stats';
 import {LpStat} from '../models/lp-stat';
@@ -6,8 +6,7 @@ import {PricesDto} from '../models/prices-dto';
 import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
-import {NGXLogger, NgxLoggerLevel} from 'ngx-logger';
-import {APP_CONFIG, AppConfig} from 'src/app.config';
+import {NGXLogger} from 'ngx-logger';
 import {ContractsService} from './contracts.service';
 import {Vault} from '../models/vault';
 import {RewardsService} from './http/rewards.service';
@@ -32,7 +31,7 @@ export class PricesCalculationService {
   private rewardEnded = new Set<string>();
   private lastPrices = new Map<string, PricesDto>();
 
-  constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig, private contractsService: ContractsService,
+  constructor(private log: NGXLogger, private contractsService: ContractsService,
               private  pricesService: PricesService,
               private rewardsService: RewardsService,
               private httpService: HttpService,
@@ -40,12 +39,6 @@ export class PricesCalculationService {
     contractsService.getContracts(Vault).subscribe(vaults => {
       vaults.forEach(v => this.tvls.set(v.contract.name, 0.0));
     });
-    this.log.updateConfig({
-      serverLoggingUrl: config.apiEndpoint + '/api/logs',
-      level: config.debugLevel,
-      serverLogLevel: NgxLoggerLevel.ERROR,
-      disableConsoleLogging: false
-     });
     this.pricesService.getLastPrices().subscribe(data => data?.forEach(this.savePrice.bind(this)));
     this.harvestsService.getHarvestTxHistoryData().subscribe(data => data?.forEach(this.writeFromHarvestTx.bind(this)));
     this.rewardsService.getLastRewards().subscribe(data => data?.forEach(reward => this.saveReward(RewardDto.enrich(reward))));
@@ -55,6 +48,12 @@ export class PricesCalculationService {
 
   public writeFromHarvestTx(tx: HarvestDto): void {
     if (!this.latestHarvest || this.latestHarvest.blockDate < tx.blockDate) {
+      if (tx.lastGas != null
+          && tx.network === 'eth'
+          && (tx.lastGas + '') !== 'NaN'
+          && tx.lastGas !== 0) {
+        StaticValues.lastGas = tx.lastGas;
+      }
       this.latestHarvest = tx;
     }
     if (!tx || this.lastTvlDates.get(tx.vault) > tx.blockDate) {
@@ -184,6 +183,36 @@ export class PricesCalculationService {
       return StaticValues.lastPrice;
     }
     return 0.0;
+  }
+
+  lastAllUsersCount(): number {
+    if (!this.latestHarvest || !this.latestHarvest.allOwnersCount) {
+      return 0;
+    }
+    return this.latestHarvest?.allOwnersCount;
+  }
+
+  lastPoolsActiveUsersCount(): number {
+    if (!this.latestHarvest || !this.latestHarvest.allPoolsOwnersCount) {
+      return 0;
+    }
+    return this.latestHarvest?.allPoolsOwnersCount;
+  }
+
+  savedGasFees(): number {
+    let fees = 0;
+    for (const hw of this.lastHardWorks.values()) {
+      if (hw.network === 'eth' && hw.savedGasFeesSum) {
+        fees += hw.savedGasFeesSum;
+      } else {
+        // this.log.warn('Saved Gas fees not found in ', hw);
+      }
+    }
+    return fees;
+  }
+
+  farmPsStaked(): number {
+    return StaticValues.staked;
   }
 
   farmNewPsStaked(): number {

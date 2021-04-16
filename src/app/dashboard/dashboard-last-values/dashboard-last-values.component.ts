@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {StaticValues} from '../../static/static-values';
@@ -11,6 +11,7 @@ import {UniswapDto} from '../../models/uniswap-dto';
 import {HarvestsService} from '../../services/http/harvests.service';
 import {HardworksService} from '../../services/http/hardworks.service';
 import {UniswapService} from "../../services/http/uniswap.service";
+import {APP_CONFIG, AppConfig} from "../../../app.config";
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -26,7 +27,8 @@ export class DashboardLastValuesComponent implements OnInit {
   @ViewChild('savedFeesModal') private savedFeesModal: CustomModalComponent;
   @ViewChild('totalUsersModal') private totalUsersModal: CustomModalComponent;
   @ViewChild('gasPriceModal') private gasPriceModal: CustomModalComponent;
-  constructor(public dialog: MatDialog,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
+              public dialog: MatDialog,
               public vt: ViewTypeService,
               private api: HttpService,
               private pricesCalculationService: PricesCalculationService,
@@ -90,6 +92,9 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get btcF(): number {
+    if (this.config.defaultNetwork === 'bsc') {
+      return this.pricesCalculationService.getPrice('BTCB');
+    }
     return this.pricesCalculationService.getPrice('BTC');
   }
 
@@ -118,7 +123,11 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get farmBuybacks(): number {
-    return this.pricesCalculationService.latestHardWork?.farmBuybackSum / 1000;
+    const hw = this.pricesCalculationService.latestHardWork;
+    if (hw && hw.network === 'bsc') {
+      return (hw?.farmBuybackSum / 1000) / this.pricesCalculationService.lastFarmPrice();
+    }
+    return hw?.farmBuybackSum / 1000;
   }
 
   openTvlDialog(): void {

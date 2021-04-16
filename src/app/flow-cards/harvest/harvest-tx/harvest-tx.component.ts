@@ -167,6 +167,12 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
 
   private handlePriceTx(dto: HarvestDto): void {
     this.pricesCalculationService.updateTvls();
+    if (dto.lastGas != null
+        && dto.network === 'eth'
+        && (dto.lastGas + '') !== 'NaN'
+        && dto.lastGas !== 0) {
+      StaticValues.lastGas = dto.lastGas;
+    }
   }
 
   openHarvestHistory(): void {

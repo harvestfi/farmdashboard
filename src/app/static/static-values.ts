@@ -12,6 +12,7 @@ export class StaticValues {
   public static stakedNewPS = 0.0;
   public static farmTotalSupply = 0.0;
   public static farmUsers = 0;
+  public static lastGas = 0;
 
   private static NETWORK_ETH: Network = {
     blockExplorerUrl: 'https://www.bscscan.com',
