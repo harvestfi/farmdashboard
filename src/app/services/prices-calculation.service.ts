@@ -84,24 +84,6 @@ export class PricesCalculationService {
     this.lastHardWorks.set(tx.vault, tx);
   }
 
-  public updateTvls(): void {
-    let allTvls = 0.0;
-    this.vaultStats.forEach((vaultStats: VaultStats, vaultName: string) => {
-      // console.log('vaultName ' + vaultName, vaultStats);
-      this.tvlNames.add(vaultName);
-      const tvl = this.calculateTvl(vaultStats, vaultName);
-      if (tvl) {
-        this.tvls.set(vaultName, tvl);
-        if (vaultName === 'iPS') {
-          return;
-        }
-        allTvls += tvl;
-      }
-    });
-    this.allTvls = allTvls / 1000000;
-    // console.log('allTvls ', this.allTvls);
-  }
-
   saveReward(tx: RewardDto): void {
     if (!tx || this.lastRewards.get(tx.vault)?.blockDate > tx.blockDate) {
       return;
@@ -185,20 +167,6 @@ export class PricesCalculationService {
     return 0.0;
   }
 
-  lastAllUsersCount(): number {
-    if (!this.latestHarvest || !this.latestHarvest.allOwnersCount) {
-      return 0;
-    }
-    return this.latestHarvest?.allOwnersCount;
-  }
-
-  lastPoolsActiveUsersCount(): number {
-    if (!this.latestHarvest || !this.latestHarvest.allPoolsOwnersCount) {
-      return 0;
-    }
-    return this.latestHarvest?.allPoolsOwnersCount;
-  }
-
   savedGasFees(): number {
     let fees = 0;
     for (const hw of this.lastHardWorks.values()) {
@@ -209,14 +177,6 @@ export class PricesCalculationService {
       }
     }
     return fees;
-  }
-
-  farmPsStaked(): number {
-    return StaticValues.staked;
-  }
-
-  farmNewPsStaked(): number {
-    return StaticValues.stakedNewPS;
   }
 
   farmLpStaked(): number {
@@ -266,28 +226,6 @@ export class PricesCalculationService {
     return amount1 + amount2;
   }
 
-  private calculateTvl(vaultStats: VaultStats, name: string): number {
-    if (name === 'PS') {
-      return vaultStats.tvl * StaticValues.lastPrice;
-    } else if (vaultStats.lpStat) {
-      // this.log.debug(' lp tvl for ' + name);
-      return this.calculateTvlForLp(vaultStats.lpStat);
-    } else if (vaultStats.tvl) {
-      let price;
-      // todo use contracts for getting underlying name and fetch actual price
-      if (this.lastHarvests.get(name)?.network === 'bsc' && this.lastHarvests.get(name)?.underlyingPrice) {
-        price = this.lastHarvests.get(name).underlyingPrice;
-      } else {
-        price = this.getPrice(name);
-      }
-      // if (price === 0) {
-      //   this.log.debug('not found price for ' + name, this.lastHarvests.get(name));
-      // }
-      return vaultStats.tvl * price;
-    }
-    return 0.0;
-  }
-
   public savePrice(tx: PricesDto): void {
     const name = StaticValues.mapCoinNameToSimple(tx.token);
     const lastPriceDto = this.lastPrices.get(name);
@@ -306,7 +244,6 @@ export class PricesCalculationService {
       }
     }
     this.lastPrices.set(name, tx);
-    this.updateTvls();
   }
 
   private subscribeToPrices() {

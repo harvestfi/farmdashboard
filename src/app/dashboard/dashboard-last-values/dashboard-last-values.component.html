@@ -93,9 +93,13 @@
         <div class="value-middle">
           🤑Weekly Profit
         </div>
-        <div class="value-number-middle">
-          <span>{{weeklyAllIncome / 1000 | number: '1.0-1'}}</span>
-          K$
+        <div class="network-grid">
+          <div *ngFor="let network of weeklyProfits | keyvalue">
+            <div class="network-grid-card">
+              <span class="network-name">{{network.key | uppercase}}</span>
+              <span class="network-value">{{network.value | number: '1.0-0'}}K$</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -134,9 +138,13 @@
       <div class="value-caption" style="font-size: 1.2em">
         Total Value Locked
       </div>
-      <div class="value value-tvl">
-        <span class="value-number">{{allTvlF | number: '1.0-0'}}</span>
-        <span class="sign">M$</span>
+      <div class="network-grid">
+        <div *ngFor="let networkTvl of totalTvls | keyvalue">
+          <div class="network-grid-card">
+            <span class="network-name value-number">{{networkTvl.key | uppercase}}</span>
+            <span class="network-value value-number">{{networkTvl.value / 1000000 | number: '1.0-0'}}<span class="sign">M$</span></span>
+          </div>
+        </div>
       </div>
     </div>
     <app-custom-modal #tvlModal>
@@ -170,9 +178,13 @@
         <div class="value-middle">
           📥Farm buybacks
         </div>
-        <div class="value-number-middle">
-          <span class="">{{farmBuybacks | number: '1.2-2'}}</span>
-          K
+        <div class="network-grid">
+          <div *ngFor="let networkBuyback of farmBuybacks | keyvalue">
+            <div class="network-grid-card">
+              <span class="network-name">{{networkBuyback.key | uppercase}}</span>
+              <span class="network-value">{{networkBuyback.value | number: '1.2-2'}}K</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

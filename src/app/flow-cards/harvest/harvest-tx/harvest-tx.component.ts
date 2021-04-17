@@ -94,7 +94,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
           return;
         }
         this.addInArray(this.dtos, tx);
-        this.pricesCalculationService.updateTvls();
       } catch (e) {
         this.log.error('Error harvest', e, tx);
       }
@@ -121,7 +120,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
       });
 
       this.log.debug('All tvl values loaded');
-      this.pricesCalculationService.updateTvls();
       next();
     });
   }
@@ -166,7 +164,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private handlePriceTx(dto: HarvestDto): void {
-    this.pricesCalculationService.updateTvls();
     if (dto.lastGas != null
         && dto.network === 'eth'
         && (dto.lastGas + '') !== 'NaN'
