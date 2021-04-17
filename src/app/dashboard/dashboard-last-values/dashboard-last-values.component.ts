@@ -33,7 +33,7 @@ export class DashboardLastValuesComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               public dialog: MatDialog,
               public vt: ViewTypeService,
-              private api: HttpService,
+              private uniswapService: UniswapService,
               private pricesCalculationService: PricesCalculationService,
               private harvestsService: HarvestsService,
               private hardworksService: HardworksService,
@@ -66,7 +66,7 @@ export class DashboardLastValuesComponent implements OnInit {
     this.hardworksService.getLastHardWorks().subscribe(data => data?.forEach(this.handleHardworks.bind(this)));
     this.hardworksService.subscribeToHardworks().subscribe(this.handleHardworks.bind(this));
     this.uniswapSubscriberService.subscribeToUniswapEvents().subscribe(this.handleUniswaps.bind(this));
-    this.api.getUniswapTxHistoryData().subscribe(data => data.forEach(this.handleUniswaps.bind(this)));
+    this.uniswapService.getUniswapTxHistoryData().subscribe(data => data.forEach(this.handleUniswaps.bind(this)));
     this.pricesService.getLastPrices().subscribe(data => data?.forEach(this.handlePrice.bind(this)));
     this.pricesService.subscribeToPrices().subscribe(this.handlePrice.bind(this));
   }

@@ -6,6 +6,7 @@ import {UniswapDto} from '../../models/uniswap-dto';
 import {HttpService} from './http.service';
 import {WebsocketService} from '../websocket.service';
 import {OhlcDto} from '../../models/ohlc-dto';
+import {TransferDto} from "../../models/transfer-dto";
 
 @Injectable({
     providedIn: 'root'
@@ -41,14 +42,14 @@ export class UniswapService implements WsConsumer {
     }
 
     getUniswapTxHistoryData(): Observable<UniswapDto[]> {
-        return this.httpService.httpGetWithNetwork('/api/transactions/history/uni');
+        return this.httpService.httpGet('/api/transactions/history/uni');
     }
 
     getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
-        return this.httpService.httpGetWithNetwork(`/api/transactions/history/uni?from=${minBlock}&to=${maxBlock}`);
+        return this.httpService.httpGet(`/api/transactions/history/uni?from=${minBlock}&to=${maxBlock}`);
     }
 
     getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
-        return this.httpService.httpGetWithNetwork('/api/transactions/history/uni/ohcl/' + coin);
+        return this.httpService.httpGet('/api/transactions/history/uni/ohcl/' + coin);
     }
 }
