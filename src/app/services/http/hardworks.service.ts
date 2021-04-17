@@ -4,6 +4,8 @@ import {HardWorkDto} from '../../models/hardwork-dto';
 import {HttpService} from './http.service';
 import {WsConsumer} from '../ws-consumer';
 import {WebsocketService} from '../websocket.service';
+import {RestResponse} from '../../models/rest-response';
+import {Paginated} from '../../models/paginated';
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +36,7 @@ export class HardworksService implements WsConsumer {
         vault?: string,
         minAmount: number = 0,
         ordering: string = 'desc'):
-        Observable<HardWorkDto[]> {
+        Observable<RestResponse<Paginated<HardWorkDto>>> {
         return this.httpService.httpGetWithNetwork(
             `/hardwork/pages` +
             `?pageSize=${page_size}`

@@ -13,6 +13,7 @@ export class HardworkTradeComponent implements OnInit {
   @Input() moreColumns = false;
   openModal = false;
   hash = '';
+  name = '';
 
   constructor() {
   }
@@ -21,7 +22,7 @@ export class HardworkTradeComponent implements OnInit {
     HardWorkDto.fillBlockDateAdopted(this.dto);
     const temp = this.dto.id.split('_');
     this.hash = temp[0];
-
+    this.name = this.dto.vault.replace('ONEINCH_', '');
   }
 
 }
