@@ -9,7 +9,7 @@ import { ViewTypeService } from '../../../services/view-type.service';
 import { SnackService } from '../../../services/snack.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
-import {UniswapService} from "../../../services/http/uniswap.service";
+import {UniswapService} from '../../../services/http/uniswap.service';
 
 @Component({
   selector: 'app-uni-tx',

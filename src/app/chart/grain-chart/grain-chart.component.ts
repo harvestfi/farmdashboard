@@ -5,7 +5,7 @@ import {UniswapSubscriberService} from '../../flow-cards/uniswap/uniswap-subscri
 import {PriceChartBuilder} from '../price-chart-builder';
 import {HttpService} from '../../services/http/http.service';
 import { IChartApi } from 'lightweight-charts';
-import {UniswapService} from "../../services/http/uniswap.service";
+import {UniswapService} from '../../services/http/uniswap.service';
 
 @Component({
   selector: 'app-grain-chart',

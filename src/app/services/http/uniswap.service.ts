@@ -6,7 +6,7 @@ import {UniswapDto} from '../../models/uniswap-dto';
 import {HttpService} from './http.service';
 import {WebsocketService} from '../websocket.service';
 import {OhlcDto} from '../../models/ohlc-dto';
-import {TransferDto} from "../../models/transfer-dto";
+import {TransferDto} from '../../models/transfer-dto';
 
 @Injectable({
     providedIn: 'root'

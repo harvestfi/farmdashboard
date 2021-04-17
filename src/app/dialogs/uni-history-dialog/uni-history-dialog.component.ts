@@ -4,7 +4,7 @@ import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { NGXLogger } from 'ngx-logger';
 import { UniswapDto } from '../../models/uniswap-dto';
-import {UniswapService} from "../../services/http/uniswap.service";
+import {UniswapService} from '../../services/http/uniswap.service';
 
 
 @Component({

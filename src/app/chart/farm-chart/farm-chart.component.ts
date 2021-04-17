@@ -6,7 +6,7 @@ import {PriceChartBuilder} from '../price-chart-builder';
 import {HttpService} from '../../services/http/http.service';
 import {ChartGeneralMethodsComponent} from '../chart-general-methods.component';
 import {IChartApi} from 'lightweight-charts';
-import {UniswapService} from "../../services/http/uniswap.service";
+import {UniswapService} from '../../services/http/uniswap.service';
 
 
 @Component({
