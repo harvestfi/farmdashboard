@@ -14,6 +14,9 @@ import {NGXLogger} from 'ngx-logger';
 })
 export class StrategyListComponent implements AfterViewInit{
   public searchTerm = '';
+  public networkFilter = '';
+  public platformFilter = '';
+  public assetFilter = '';
   // Mutating the currentVaults in static values before using it so that we
   // are able to sort this array and not get a new one from the service.
   public vaultsList = [];
@@ -34,7 +37,8 @@ export class StrategyListComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
     this.contractsService.getContracts(Vault).subscribe(vaults => {
-      this.vaultsList = vaults.filter(_ => _.isActive()).map(v => v.contract?.name);
+      this.vaultsList = vaults.filter(_ => _.isActive()).map(v => v.contract);
+      console.log('======', vaults);
       this.log.info('Loaded contracts', this.vaultsList);
       this.sortVaultsList(this.currentSortingValue);
     });
@@ -46,7 +50,7 @@ export class StrategyListComponent implements AfterViewInit{
     this.sortVaultsList(this.currentSortingValue);
     if (this.searchTerm) {
       return this.vaultsList.filter(vault =>
-          vault.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase())
+          vault.name.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase())
       );
     }
     return this.vaultsList;
@@ -69,18 +73,18 @@ export class StrategyListComponent implements AfterViewInit{
       // sorting given the current data :)
       switch (sortBy) {
         case 'name':
-          if (left < right) {
+          if (left.name < right.name) {
             return -1;
           }
           return 1;
         case 'apy':
-          return  Number(this.vaultFullApy(right)) - Number(this.vaultFullApy(left));
+          return  Number(this.vaultFullApy(right.name)) - Number(this.vaultFullApy(left.name));
         case 'tvl':
-          return this.vaultTvl(right) - this.vaultTvl(left);
+          return this.vaultTvl(right.name) - this.vaultTvl(left.name);
         case 'users':
-          return this.vaultUsers(right) - this.vaultUsers(left);
+          return this.vaultUsers(right.name) - this.vaultUsers(left.name);
         case 'total_earned':
-          return this.vaultTotalEarning(right) - this.vaultTotalEarning(left);
+          return this.vaultTotalEarning(right.name) - this.vaultTotalEarning(left.name);
         default:
           break;
       }

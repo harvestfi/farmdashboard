@@ -83,7 +83,7 @@ import {TransactionComponent} from './static/components/transactions/transaction
 import {IconsComponent} from './static/components/icons/icons.component';
 import {GasDialogComponent} from './dialogs/gas-dialog/gas-dialog.component';
 import {PaginatorComponent} from './common/paginator/paginator.component';
-
+import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
 declare let require: any;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -150,7 +150,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     Web3chartsComponent,
     Web3chartComponent,
     GasDialogComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    StrategyListFilterPipe
   ],
   imports: [
     AppRoutingModule,
