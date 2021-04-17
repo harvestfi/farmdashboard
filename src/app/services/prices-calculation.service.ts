@@ -156,10 +156,6 @@ export class PricesCalculationService {
     return 0;
   }
 
-  weeklyAllIncome(): number {
-    return (this.latestHardWork?.weeklyAllProfit / 0.7);
-  }
-
   lastFarmPrice(): number {
     if (StaticValues.lastPrice != null) {
       return StaticValues.lastPrice;
@@ -179,27 +175,6 @@ export class PricesCalculationService {
     return fees;
   }
 
-  farmLpStaked(): number {
-    let farmInLp = 0;
-    let lpStaked = 0;
-    for (const name of StaticValues.farmPools) {
-      const harvest = this.lastHarvests.get(name);
-      if (!harvest) {
-        continue;
-      }
-      if (harvest.lpStatDto?.coin1 === 'FARM') {
-        farmInLp += harvest.lpStatDto.amount1;
-      }
-      if (harvest.lpStatDto?.coin2 === 'FARM') {
-        farmInLp += harvest.lpStatDto.amount2;
-      }
-    }
-    if (farmInLp !== 0) {
-      lpStaked = (farmInLp / StaticValues.farmTotalSupply) * 100;
-    }
-    return lpStaked;
-  }
-
   public getPrice(name: string): number {
     name = StaticValues.mapCoinNameToSimple(name);
     if (StaticValues.isStableCoin(name)) {
@@ -213,17 +188,6 @@ export class PricesCalculationService {
     }
     const usdPrice = this.getPrice(this.lastPrices.get(name).otherToken);
     return this.lastPrices.get(name).price * usdPrice;
-  }
-
-  private calculateTvlForLp(lpStat: LpStat): number {
-    const simpleName1 = StaticValues.mapCoinNameToSimple(lpStat.coin1);
-    const simpleName2 = StaticValues.mapCoinNameToSimple(lpStat.coin2);
-    const price1 = this.getPrice(simpleName1);
-    const price2 = this.getPrice(simpleName2);
-    const amount1 = price1 * lpStat.amount1;
-    const amount2 = price2 * lpStat.amount2;
-    // this.log.debug('calculateTvlForLp ', simpleName1, simpleName2, price1, price2, amount1, amount2);
-    return amount1 + amount2;
   }
 
   public savePrice(tx: PricesDto): void {

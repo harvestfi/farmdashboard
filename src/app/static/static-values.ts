@@ -8,7 +8,6 @@ export class StaticValues {
   public static uniInited = false;
   public static lastPrice = 0.0;
   public static lastBlockDateAdopted = new Date(0);
-  public static staked = 0.0;
   public static stakedNewPS = 0.0;
   public static farmTotalSupply = 0.0;
   public static farmUsers = 0;

@@ -54,6 +54,8 @@ export class DashboardLastValuesComponent implements OnInit {
   private prices = new Map<string,PricesDto>();
   private farmHolders = 0;
   private farmStaked = 0;
+  private farmTotalSupply = 0;
+  private lpFarmStaked = 0;
 
   ngOnInit(): void {
     this.harvestsService.getLastTvls(StaticValues.NETWORKS.get("bsc")).subscribe(harvests =>
@@ -82,9 +84,14 @@ export class DashboardLastValuesComponent implements OnInit {
 
   private updateFarmStaked(harvest: HarvestDto) {
     if (harvest.vault === 'PS') {
-      this.farmStaked = (harvest.lastTvl / harvest.sharePrice) * 100;
-      StaticValues.farmTotalSupply = harvest.sharePrice;
+      this.farmStaked = harvest.lastTvl;
+      this.farmTotalSupply = harvest.sharePrice;
     }
+    if(StaticValues.farmPools.findIndex(farmPool => farmPool === harvest.vault) >= 0)
+      this.lpFarmStaked =  [1,2].reduce((prev, i) => {
+        if(harvest.lpStatDto[`coin${i}`] === 'FARM') return harvest.lpStatDto[`amount${i}`];
+        return prev;
+      }, 0.0);
   }
 
   private handleHardworks(hardwork: HardWorkDto) {
@@ -126,14 +133,6 @@ export class DashboardLastValuesComponent implements OnInit {
 
   get ethF(): number {
     return this.pricesCalculationService.getPrice('ETH');
-  }
-
-  get totalFarmStaked(): number {
-    return this.farmStaked + this.farmLpStaked;
-  }
-
-  get farmLpStaked(): number {
-    return this.pricesCalculationService.farmLpStaked();
   }
 
   get psApy(): number {
