@@ -2,8 +2,8 @@ import {Observable, Subscriber} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {HarvestTvl} from '../../models/harvest-tvl';
 import {HttpService} from './http.service';
-import {PricesDto} from "../../models/prices-dto";
-import {WebsocketService} from "../websocket.service";
+import {PricesDto} from '../../models/prices-dto';
+import {WebsocketService} from '../websocket.service';
 
 @Injectable({
     providedIn: 'root'

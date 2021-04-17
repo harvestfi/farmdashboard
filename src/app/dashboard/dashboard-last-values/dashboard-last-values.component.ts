@@ -10,11 +10,11 @@ import {HardWorkDto} from '../../models/hardwork-dto';
 import {UniswapDto} from '../../models/uniswap-dto';
 import {HarvestsService} from '../../services/http/harvests.service';
 import {HardworksService} from '../../services/http/hardworks.service';
-import {UniswapService} from "../../services/http/uniswap.service";
-import {APP_CONFIG, AppConfig} from "../../../app.config";
-import {VaultStats} from "../../models/vault-stats";
-import {PricesService} from "../../services/http/prices.service";
-import {PricesDto} from "../../models/prices-dto";
+import {UniswapService} from '../../services/http/uniswap.service';
+import {APP_CONFIG, AppConfig} from '../../../app.config';
+import {VaultStats} from '../../models/vault-stats';
+import {PricesService} from '../../services/http/prices.service';
+import {PricesDto} from '../../models/prices-dto';
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -58,9 +58,9 @@ export class DashboardLastValuesComponent implements OnInit {
   private lpFarmStaked = 0;
 
   ngOnInit(): void {
-    this.harvestsService.getLastTvls(StaticValues.NETWORKS.get("bsc")).subscribe(harvests =>
+    this.harvestsService.getLastTvls(StaticValues.NETWORKS.get('bsc')).subscribe(harvests =>
         harvests.sort((a, b) => a.block > b.block? 1: -1)?.forEach(this.handleHarvest.bind(this)));
-    this.harvestsService.getLastTvls(StaticValues.NETWORKS.get("eth")).subscribe(harvests =>
+    this.harvestsService.getLastTvls(StaticValues.NETWORKS.get('eth')).subscribe(harvests =>
         harvests.sort((a, b) => a.block > b.block? 1: -1)?.forEach(this.handleHarvest.bind(this)));
     this.harvestsService.subscribeToHarvests().subscribe(this.handleHarvest.bind(this));
     this.hardworksService.getLastHardWorks().subscribe(data => data?.forEach(this.handleHardworks.bind(this)));
@@ -88,10 +88,10 @@ export class DashboardLastValuesComponent implements OnInit {
       this.farmTotalSupply = harvest.sharePrice;
     }
     if(StaticValues.farmPools.findIndex(farmPool => farmPool === harvest.vault) >= 0)
-      this.lpFarmStaked =  [1,2].reduce((prev, i) => {
-        if(harvest.lpStatDto[`coin${i}`] === 'FARM') return harvest.lpStatDto[`amount${i}`];
+      {this.lpFarmStaked =  [1,2].reduce((prev, i) => {
+        if(harvest.lpStatDto[`coin${i}`] === 'FARM') {return harvest.lpStatDto[`amount${i}`];}
         return prev;
-      }, 0.0);
+      }, 0.0);}
   }
 
   private handleHardworks(hardwork: HardWorkDto) {

@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
 import {WsConsumer} from '../ws-consumer';
 import {WebsocketService} from '../websocket.service';
-import {Network} from "../../models/network";
+import {Network} from '../../models/network';
 
 @Injectable({
     providedIn: 'root'

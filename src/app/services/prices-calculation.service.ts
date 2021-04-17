@@ -10,9 +10,9 @@ import {NGXLogger} from 'ngx-logger';
 import {ContractsService} from './contracts.service';
 import {Vault} from '../models/vault';
 import {RewardsService} from './http/rewards.service';
-import {HttpService} from "./http/http.service";
-import {HarvestsService} from "./http/harvests.service";
-import {PricesService} from "./http/prices.service";
+import {HttpService} from './http/http.service';
+import {HarvestsService} from './http/harvests.service';
+import {PricesService} from './http/prices.service';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import {AfterViewChecked, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {PricesDto} from '../../models/prices-dto';
-import {PricesService} from "../../services/http/prices.service";
+import {PricesService} from '../../services/http/prices.service';
 
 @Component({
   selector: 'app-last-prices-list',
@@ -12,7 +12,7 @@ export class LastPricesListComponent implements OnInit {
   private prices: Map<string, PricesDto> = new Map();
   private counter = 0; // counter to figure out when to refresh the view
   constructor(private pricesService: PricesService,
-              private cdRef:ChangeDetectorRef) { }
+              private cdRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.pricesService.getLastPrices().subscribe(prices => {

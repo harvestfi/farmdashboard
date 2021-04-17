@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {Observable, Subscriber} from 'rxjs';
-import {WsConsumer} from "../ws-consumer";
-import {UniswapDto} from "../../models/uniswap-dto";
-import {HttpService} from "./http.service";
-import {WebsocketService} from "../websocket.service";
-import {OhlcDto} from "../../models/ohlc-dto";
+import {WsConsumer} from '../ws-consumer';
+import {UniswapDto} from '../../models/uniswap-dto';
+import {HttpService} from './http.service';
+import {WebsocketService} from '../websocket.service';
+import {OhlcDto} from '../../models/ohlc-dto';
 
 @Injectable({
     providedIn: 'root'
