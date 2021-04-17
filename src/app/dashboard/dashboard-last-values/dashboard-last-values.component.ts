@@ -41,13 +41,15 @@ export class DashboardLastValuesComponent implements OnInit {
   private lastGas = 0;
   private hardworkGasCosts = new Map<string,number>();
   private totalGasSaved = 0.0;
-  private totalUserCount = 0;
-  private totalPooledUsers = 0;
+  private totalUserCount = new Map<string,number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
+  private totalPoolUsers = new Map<string,number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
   private farmHolders = 0;
   private farmStaked = 0;
 
   ngOnInit(): void {
-    this.harvestsService.getLastTvls().subscribe(harvests =>
+    this.harvestsService.getLastTvls(StaticValues.NETWORKS.get("bsc")).subscribe(harvests =>
+        harvests.sort((a, b) => a.block > b.block? 1: -1)?.forEach(this.handleHarvest.bind(this)));
+    this.harvestsService.getLastTvls(StaticValues.NETWORKS.get("eth")).subscribe(harvests =>
         harvests.sort((a, b) => a.block > b.block? 1: -1)?.forEach(this.handleHarvest.bind(this)));
     this.harvestsService.subscribeToHarvests().subscribe(this.handleHarvest.bind(this));
     this.hardworksService.getLastHardWorks().subscribe(data => data?.forEach(this.handleHardworks.bind(this)));
@@ -60,8 +62,8 @@ export class DashboardLastValuesComponent implements OnInit {
     if (harvest.lastGas != null && (harvest.lastGas + '') !== 'NaN' && harvest.lastGas !== 0) {
       this.lastGas = harvest.lastGas;
     }
-    this.totalPooledUsers = harvest.allPoolsOwnersCount;
-    this.totalUserCount = harvest.allOwnersCount;
+    this.totalPoolUsers.set(harvest.network, harvest.allPoolsOwnersCount);
+    this.totalUserCount.set(harvest.network, harvest.allOwnersCount);
     this.updateFarmStaked(harvest);
   }
 

@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
 import {WsConsumer} from '../ws-consumer';
 import {WebsocketService} from '../websocket.service';
+import {Network} from "../../models/network";
 
 @Injectable({
     providedIn: 'root'
@@ -47,8 +48,8 @@ export class HarvestsService implements WsConsumer {
         return this.httpService.httpGetWithNetwork(`/api/transactions/history/harvest/${name}`);
     }
 
-    getLastTvls(): Observable<HarvestDto[]> {
-        return this.httpService.httpGetWithNetwork('/api/transactions/last/harvest');
+    getLastTvls(network?: Network): Observable<HarvestDto[]> {
+        return this.httpService.httpGetWithNetwork('/api/transactions/last/harvest', network);
     }
 
     getAddressHistoryHarvest(address: string): Observable<HarvestDto[]> {

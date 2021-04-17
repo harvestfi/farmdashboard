@@ -160,7 +160,6 @@
   
   .caption-btc-sign {
     font-size: 3em;
-    color: w
   }
   
   .caption-eth, .caption-eth-value, .caption-eth-sign {
@@ -169,7 +168,6 @@
   
   .caption-eth-sign {
     font-size: 3em;
-    color: w
   }
   
   .caption-ps-value, .caption-ps-sign, .caption-ps {
@@ -180,6 +178,14 @@
     font-size: 4em;
     color: #fff;
   }
-  
-}
 
+}
+.network-grid {}
+.network-grid-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.network-name, .network-value {
+  font-weight: bolder;
+  text-align: center;
+}

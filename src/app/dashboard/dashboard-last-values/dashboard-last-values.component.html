@@ -211,8 +211,13 @@
         <div class="value-middle">
           👪Total users
         </div>
-        <div class="value-number-middle ">
-          <span>{{totalUserCount | number: '1.0-0'}}</span>
+        <div class="network-grid">
+          <div *ngFor="let networkCount of totalUserCount | keyvalue">
+            <div class="network-grid-card">
+              <span class="network-name">{{networkCount.key | uppercase}}</span>
+              <span class="network-value">{{networkCount.value | number: '1.0-0'}}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -231,8 +236,13 @@
         <div class="value-middle">
           👨‍🌾Pools active accounts
         </div>
-        <div class="value-number-middle">
-          <span>{{totalPooledUsers | number: '1.0-0'}}</span>
+        <div class="network-grid">
+          <div *ngFor="let networkCount of totalPoolUsers | keyvalue">
+            <div class="network-grid-card">
+              <span class="network-name">{{networkCount.key | uppercase}}</span>
+              <span class="network-value">{{networkCount.value | number: '1.0-0'}}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
