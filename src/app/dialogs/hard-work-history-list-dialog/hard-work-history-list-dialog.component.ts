@@ -1,13 +1,13 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { HttpService } from '../../services/http/http.service';
-import { NGXLogger } from 'ngx-logger';
-import { ViewTypeService } from '../../services/view-type.service';
+import {AfterViewInit, Component} from '@angular/core';
+import {NGXLogger} from 'ngx-logger';
+import {ViewTypeService} from '../../services/view-type.service';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {HardworksService} from '../../services/http/hardworks.service';
-import {PaginatedObject} from '../../common/paginator/paginator.component';
+import {Paginated} from '../../models/paginated';
+import {HardWorkDto} from '../../models/hardwork-dto';
 
 @Component({
   selector: 'app-hard-work-history-list-dialog',
@@ -15,7 +15,7 @@ import {PaginatedObject} from '../../common/paginator/paginator.component';
   styleUrls: ['./hard-work-history-list-dialog.component.scss']
 })
 export class HardWorkHistoryListDialogComponent implements AfterViewInit {
-  dtos: PaginatedObject;
+  dtos: Paginated<HardWorkDto>;
   hardWorkIds = new Set<string>();
   lowestBlockDate = 999999999999;
   vaultFilter = '';
@@ -36,17 +36,17 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   getDtoDataForPage(page_number: number): void {
     this.hardworksService
     .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount)
-    .subscribe((response: any) => {
-      if ('data' in response.data){
-        return this.dtos = response.data;
-      }
-      this.dtos = {
-        currentPage: 0,
-        nextPage: -1,
-        previousPage: -1,
-        totalPages: 0,
-        data: []
-      };
+    .subscribe(response => {
+          if ('data' in response.data) {
+            return this.dtos = response.data;
+          }
+          this.dtos = {
+            currentPage: 0,
+            nextPage: -1,
+            previousPage: -1,
+            totalPages: 0,
+            data: []
+          };
     }
       )
     .add(() => this.ready = true);

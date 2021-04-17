@@ -1,14 +1,8 @@
 // /* eslint-disable @angular-eslint/no-output-on-prefix */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ViewTypeService } from 'src/app/services/view-type.service';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ViewTypeService} from 'src/app/services/view-type.service';
+import {Paginated} from '../../models/paginated';
 
-export type PaginatedObject = {
-  currentPage: number;
-  nextPage: number;
-  previousPage: number;
-  totalPages: number;
-  data: any[];
-};
 @Component({
   selector: 'app-paginator',
   templateUrl: './paginator.component.html',
@@ -18,7 +12,7 @@ export class PaginatorComponent {
   @Output() nextPage = new EventEmitter();
   @Output() previousPage = new EventEmitter();
   @Output() selectPage = new EventEmitter();
-  @Input('pageObject') pageObject: PaginatedObject;
+  @Input('pageObject') pageObject: Paginated<any>;
   public vt: ViewTypeService = new ViewTypeService();
 
   handleNextPage(): void {

@@ -3,6 +3,8 @@ import {Observable} from 'rxjs';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {HttpService} from './http.service';
 import {APP_CONFIG, AppConfig} from '../../../app.config';
+import {RestResponse} from '../../models/rest-response';
+import {Paginated} from '../../models/paginated';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +32,7 @@ export class HardworksService {
         vault?: string,
         minAmount: number = 0,
         ordering: string = 'desc'):
-        Observable<HardWorkDto[]> {
+        Observable<RestResponse<Paginated<HardWorkDto>>> {
         return this.httpService.httpGetWithNetwork(
             `/hardwork/pages` +
             `?pageSize=${page_size}`
