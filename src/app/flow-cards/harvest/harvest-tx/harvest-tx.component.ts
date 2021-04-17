@@ -85,7 +85,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
       try {
         this.log.debug('harvest tx', tx);
         if (tx.methodName === 'price_stub') {
-          this.handlePriceTx(tx);
           return;
         }
         this.snack.openSnack(tx.print());
@@ -160,15 +159,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
     arr.unshift(tx);
     if (arr.length > this.maxMessages) {
       arr.pop();
-    }
-  }
-
-  private handlePriceTx(dto: HarvestDto): void {
-    if (dto.lastGas != null
-        && dto.network === 'eth'
-        && (dto.lastGas + '') !== 'NaN'
-        && dto.lastGas !== 0) {
-      StaticValues.lastGas = dto.lastGas;
     }
   }
 

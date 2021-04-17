@@ -73,7 +73,7 @@ export class DashboardLastValuesComponent implements OnInit {
 
   private handleHarvest(harvest: HarvestDto) {
     HarvestDto.enrich(harvest);
-    if (harvest.lastGas != null && (harvest.lastGas + '') !== 'NaN' && harvest.lastGas !== 0) {
+    if (harvest.lastGas != null && harvest.network === 'eth' && harvest.lastGas.toString() !== 'NaN' && harvest.lastGas !== 0) {
       this.lastGas = harvest.lastGas;
     }
     this.totalPoolUsers.set(harvest.network, harvest.allPoolsOwnersCount);

@@ -92,9 +92,6 @@ export class UniTxComponent implements AfterViewInit {
     if (tx.blockDateAdopted != null) {
       StaticValues.lastBlockDateAdopted = tx.blockDateAdopted;
     }
-    if (tx.ownerCount) {
-      StaticValues.farmUsers = tx.ownerCount;
-    }
   }
 
   openUniHistory(): void {
