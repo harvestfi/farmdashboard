@@ -33,28 +33,32 @@
       </app-custom-modal>
     </div>
 
-    <div class="value-card btc" [class]="vt.getThemeColor() + '-card'">
+    <div class="value-card native-tokens" [class]="vt.getThemeColor() + '-card'">
       <div>
         <div class="value-middle">
           <img class="icon" src="assets/icons/btc.png"/>
           <span class="small-value-caption">BTC</span>
         </div>
         <div class="value-number-middle">
-          <span>{{btcF | number: '1.0-0'}}</span>
-          $
+          <span>{{btcF | number: '1.0-0'}}</span><span class="value-sign">$</span>
         </div>
       </div>
-    </div>
-
-    <div class="value-card eth" [class]="vt.getThemeColor() + '-card'">
       <div>
         <div class="value-middle">
           <img class="icon" src="assets/icons/eth.svg"/>
           <span class="small-value-caption">ETH</span>
         </div>
         <div class="value-number-middle">
-          <span>{{ethF | number: '1.0-0'}}</span>
-          $
+          <span>{{ethF | number: '1.0-0'}}</span><span class="value-sign">$</span>
+        </div>
+      </div>
+      <div>
+        <div class="value-middle">
+          <img class="icon" src="assets/icons/venus-wbnb.png"/>
+          <span class="small-value-caption">BNB</span>
+        </div>
+        <div class="value-number-middle">
+          <span>{{bnbF | number: '1.0-0'}}</span><span class="value-sign">$</span>
         </div>
       </div>
     </div>
@@ -275,7 +279,7 @@
       <span class="last-price-sign">$</span>
     </td>
     <td (click)="openTvlDialog()" class="caption-td pointer">
-      <span class="caption-font">{{allTvlF | number: '1.0-1'}}</span>
+      <span class="caption-font">{{totalTVL | number: '1.0-1'}}</span>
       <span class="last-price-sign">M$</span>
     </td>
     <td class="caption-td right-value">

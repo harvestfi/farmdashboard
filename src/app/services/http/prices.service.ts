@@ -4,6 +4,8 @@ import {HarvestTvl} from '../../models/harvest-tvl';
 import {HttpService} from './http.service';
 import {PricesDto} from '../../models/prices-dto';
 import {WebsocketService} from '../websocket.service';
+import {Network} from '../../models/network';
+import {StaticValues} from '../../static/static-values';
 
 @Injectable({
     providedIn: 'root'
@@ -44,8 +46,8 @@ export class PricesService {
         });
     }
 
-    getLastPrices(): Observable<PricesDto[]> {
-        return this.httpService.httpGetWithNetwork('/price/token/latest');
+    getLastPrices(network?: Network): Observable<PricesDto[]> {
+        return this.httpService.httpGetWithNetwork('/price/token/latest', network);
     }
 
 }

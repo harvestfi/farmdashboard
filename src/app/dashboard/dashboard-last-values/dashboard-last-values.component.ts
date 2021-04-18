@@ -66,7 +66,8 @@ export class DashboardLastValuesComponent implements OnInit {
     this.hardworksService.subscribeToHardworks().subscribe(this.handleHardworks.bind(this));
     this.uniswapSubscriberService.subscribeToUniswapEvents().subscribe(this.handleUniswaps.bind(this));
     this.uniswapService.getUniswapTxHistoryData().subscribe(data => data.forEach(this.handleUniswaps.bind(this)));
-    this.pricesService.getLastPrices().subscribe(data => data?.forEach(this.handlePrice.bind(this)));
+    this.pricesService.getLastPrices(StaticValues.NETWORKS.get('eth')).subscribe(data => data?.forEach(this.handlePrice.bind(this)));
+    this.pricesService.getLastPrices(StaticValues.NETWORKS.get('bsc')).subscribe(data => data?.forEach(this.handlePrice.bind(this)));
     this.pricesService.subscribeToPrices().subscribe(this.handlePrice.bind(this));
   }
 
@@ -155,6 +156,10 @@ export class DashboardLastValuesComponent implements OnInit {
 
   get ethF(): number {
     return this.pricesCalculationService.getPrice('ETH');
+  }
+
+  get bnbF(): number {
+    return this.pricesCalculationService.getPrice('WBNB');
   }
 
   get psApy(): number {
