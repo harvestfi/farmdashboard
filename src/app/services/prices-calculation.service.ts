@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HarvestDto} from '../models/harvest-dto';
 import {VaultStats} from '../models/vault-stats';
 import {LpStat} from '../models/lp-stat';
@@ -7,10 +7,10 @@ import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
 import {LastPrice} from '../models/last-price';
-import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
-import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {NGXLogger} from 'ngx-logger';
 import {ContractsService} from './contracts.service';
 import {Vault} from '../models/vault';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,21 +29,18 @@ export class PricesCalculationService {
   private rewardEnded = new Set<string>();
   private lastPrices = new Map<string, PricesDto>();
 
-  constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig, private contractsService: ContractsService) {
+  constructor(private log: NGXLogger, private contractsService: ContractsService) {
     contractsService.getContracts(Vault).subscribe(vaults => {
       vaults.forEach(v => this.tvls.set(v.contract.name, 0.0));
     });
-    this.log.updateConfig({
-      serverLoggingUrl: config.apiEndpoint + '/api/logs',
-      level: config.debugLevel,
-      serverLogLevel: NgxLoggerLevel.ERROR,
-      disableConsoleLogging: false
-     });
   }
 
   public writeFromHarvestTx(tx: HarvestDto): void {
     if (!this.latestHarvest || this.latestHarvest.blockDate < tx.blockDate) {
-      if (tx.lastGas != null && (tx.lastGas + '') !== 'NaN' && tx.lastGas !== 0) {
+      if (tx.lastGas != null
+          && tx.network === 'eth'
+          && (tx.lastGas + '') !== 'NaN'
+          && tx.lastGas !== 0) {
         StaticValues.lastGas = tx.lastGas;
       }
       this.latestHarvest = tx;
@@ -205,7 +202,7 @@ export class PricesCalculationService {
   savedGasFees(): number {
     let fees = 0;
     for (const hw of this.lastHardWorks.values()) {
-      if (hw.savedGasFeesSum) {
+      if (hw.network === 'eth' && hw.savedGasFeesSum) {
         fees += hw.savedGasFeesSum;
       } else {
         // this.log.warn('Saved Gas fees not found in ', hw);
@@ -265,7 +262,7 @@ export class PricesCalculationService {
     const price2 = this.getPrice(simpleName2);
     const amount1 = price1 * lpStat.amount1;
     const amount2 = price2 * lpStat.amount2;
-    // console.log('calculateTvlForLp ', simpleName1, simpleName2, price1, price2, amount1, amount2);
+    // this.log.debug('calculateTvlForLp ', simpleName1, simpleName2, price1, price2, amount1, amount2);
     return amount1 + amount2;
   }
 
@@ -273,12 +270,18 @@ export class PricesCalculationService {
     if (name === 'PS') {
       return vaultStats.tvl * StaticValues.lastPrice;
     } else if (vaultStats.lpStat) {
-      // console.log('tvl for ' + name);
+      // this.log.debug(' lp tvl for ' + name);
       return this.calculateTvlForLp(vaultStats.lpStat);
     } else if (vaultStats.tvl) {
-      const price = this.getPrice(name);
+      let price;
+      // todo use contracts for getting underlying name and fetch actual price
+      if (this.lastHarvests.get(name)?.network === 'bsc' && this.lastHarvests.get(name)?.underlyingPrice) {
+        price = this.lastHarvests.get(name).underlyingPrice;
+      } else {
+        price = this.getPrice(name);
+      }
       // if (price === 0) {
-      //   console.log('not found price for ' + name);
+      //   this.log.debug('not found price for ' + name, this.lastHarvests.get(name));
       // }
       return vaultStats.tvl * price;
     }

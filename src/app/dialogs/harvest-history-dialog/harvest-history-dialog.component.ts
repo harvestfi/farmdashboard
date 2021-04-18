@@ -1,5 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { HttpService } from '../../services/http.service';
+import { HttpService } from '../../services/http/http.service';
 import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { NGXLogger } from 'ngx-logger';
@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 import {Vault} from '../../models/vault';
 import {map} from 'rxjs/operators';
 import {ContractsService} from '../../services/contracts.service';
+import {HarvestsService} from '../../services/http/harvests.service';
 
 
 @Component({
@@ -23,10 +24,10 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
   disabled = false;
 
   constructor(
-    private httpService: HttpService,
     public vt: ViewTypeService,
     private log: NGXLogger,
-    private  contractsService: ContractsService
+    private contractsService: ContractsService,
+    private harvestsService: HarvestsService
   ) {}
 
   get tvlNames(): Observable<string[]> {
@@ -36,7 +37,7 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.httpService.getHarvestTxHistoryData().subscribe(data => {
+    this.harvestsService.getHarvestTxHistoryData().subscribe(data => {
       this.addInArray(data);
     });
   }
@@ -46,7 +47,7 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
     if (this.lowestBlockDate === 0) {
       return;
     }
-    this.httpService
+    this.harvestsService
       .getHarvestTxHistoryByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2), this.lowestBlockDate)
       .subscribe(data => {
 

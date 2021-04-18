@@ -1,8 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HardWorkDto} from 'src/app/models/hardwork-dto';
-import {StaticValues} from '../../../static/static-values';
-import {Utils} from '../../../static/utils';
-
 
 @Component({
   selector: 'app-hardwork-trade',
@@ -16,14 +13,16 @@ export class HardworkTradeComponent implements OnInit {
   @Input() moreColumns = false;
   openModal = false;
   hash = '';
+  name = '';
 
   constructor() {
   }
 
   ngOnInit(): void {
+    HardWorkDto.fillBlockDateAdopted(this.dto);
     const temp = this.dto.id.split('_');
     this.hash = temp[0];
-
+    this.name = this.dto.vault.replace('ONEINCH_', '');
   }
 
 }

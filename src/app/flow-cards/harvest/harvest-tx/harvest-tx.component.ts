@@ -1,6 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
 import {WebsocketService} from '../../../services/websocket.service';
-import {HttpService} from '../../../services/http.service';
+import {HttpService} from '../../../services/http/http.service';
 import {NGXLogger} from 'ngx-logger';
 import {HarvestDto} from '../../../models/harvest-dto';
 import {WsConsumer} from '../../../services/ws-consumer';
@@ -11,11 +11,14 @@ import {SnackService} from '../../../services/snack.service';
 import {HardWorkDto} from '../../../models/hardwork-dto';
 import {RewardDto} from '../../../models/reward-dto';
 import {PriceSubscriberService} from '../../../services/price-subscriber.service';
-import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {HarvestsService} from '../../../services/http/harvests.service';
+import {HardworksService} from '../../../services/http/hardworks.service';
+import {RewardsService} from '../../../services/http/rewards.service';
 
 @Component({
   selector: 'app-harvest-tx',
@@ -38,7 +41,10 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
               private priceSubscriberService: PriceSubscriberService,
               private snack: SnackService,
               private log: NGXLogger,
-              private  contractsService: ContractsService
+              private  contractsService: ContractsService,
+              private  harvestsService: HarvestsService,
+              private  hardworksService: HardworksService,
+              private  rewardsService: RewardsService,
   ) {
   }
 
@@ -109,7 +115,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastHarwests(next: () => void): void {
-    this.httpService.getHarvestTxHistoryData().subscribe(data => {
+    this.harvestsService.getHarvestTxHistoryData().subscribe(data => {
       this.log.debug('harvest data fetched', data);
       data?.forEach(tx => {
         HarvestDto.enrich(tx);
@@ -120,7 +126,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastTvls(next: () => void): void {
-    this.httpService.getLastTvls().subscribe(data => {
+    this.harvestsService.getLastTvls().subscribe(data => {
       this.log.debug('Loaded last tvls ', data);
       data?.forEach(tvl => {
         HarvestDto.enrich(tvl);
@@ -134,7 +140,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastHardWorks(): void {
-    this.httpService.getLastHardWorks().subscribe(data => {
+    this.hardworksService.getLastHardWorks().subscribe(data => {
       data?.forEach(hardWork => {
         HardWorkDto.enrich(hardWork);
         this.pricesCalculationService.saveHardWork(hardWork);
@@ -144,7 +150,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastRewards(): void {
-    this.httpService.getLastRewards().subscribe(data => {
+    this.rewardsService.getLastRewards().subscribe(data => {
       data?.forEach(reward => {
         RewardDto.enrich(reward);
         this.pricesCalculationService.saveReward(reward);
@@ -184,7 +190,10 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
 
   private handlePriceTx(dto: HarvestDto): void {
     this.pricesCalculationService.updateTvls();
-    if (dto.lastGas != null && (dto.lastGas + '') !== 'NaN' && dto.lastGas !== 0) {
+    if (dto.lastGas != null
+        && dto.network === 'eth'
+        && (dto.lastGas + '') !== 'NaN'
+        && dto.lastGas !== 0) {
       StaticValues.lastGas = dto.lastGas;
     }
   }

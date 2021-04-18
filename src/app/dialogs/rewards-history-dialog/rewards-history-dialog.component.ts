@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {RewardDto} from '../../models/reward-dto';
@@ -7,6 +7,7 @@ import {StaticValues} from '../../static/static-values';
 import {Utils} from '../../static/utils';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
+import {RewardsService} from '../../services/http/rewards.service';
 
 @Component({
     selector: 'app-rewards-history-dialog',
@@ -24,11 +25,12 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
 
     private dayLag = 15;
 
-    constructor(private httpService: HttpService,
-                public vt: ViewTypeService,
+    constructor(public vt: ViewTypeService,
                 private cdRef: ChangeDetectorRef,
                 private log: NGXLogger,
-                private contractsService: ContractsService) {
+                private contractsService: ContractsService,
+                private rewardsService: RewardsService,
+                ) {
     }
 
     ngAfterViewInit(): void {
@@ -42,7 +44,7 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
 
 
     private loadRewardsHistory(startDate: Date, endDate: Date): void {
-        this.httpService.getAllHistoryRewards(
+        this.rewardsService.getAllHistoryRewards(
             Math.floor(startDate.getTime() / 1000),
             Math.floor(endDate.getTime() / 1000))
         .subscribe((data) => {

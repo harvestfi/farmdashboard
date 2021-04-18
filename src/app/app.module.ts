@@ -82,6 +82,7 @@ import {VaultFilterPipe} from './dialogs/rewards-history-dialog/vault-filter.pip
 import {TransactionComponent} from './static/components/transactions/transaction.component';
 import {IconsComponent} from './static/components/icons/icons.component';
 import {GasDialogComponent} from './dialogs/gas-dialog/gas-dialog.component';
+import {PaginatorComponent} from './common/paginator/paginator.component';
 
 declare let require: any;
 
@@ -148,7 +149,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     IconsComponent,
     Web3chartsComponent,
     Web3chartComponent,
-    GasDialogComponent
+    GasDialogComponent,
+    PaginatorComponent
   ],
   imports: [
     AppRoutingModule,
@@ -167,8 +169,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpClientModule,
     LoggerModule.forRoot({
       serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
-      level: 3,
-      serverLogLevel: NgxLoggerLevel.ERROR,
+      level: 0,
+      serverLogLevel: NgxLoggerLevel.OFF,
       disableConsoleLogging: false
     }),
     BrowserAnimationsModule,

@@ -1,7 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable, timer} from 'rxjs';
-import {catchError, map, shareReplay, switchMap} from 'rxjs/operators';
+import {forkJoin, Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
 import {SnackService} from './snack.service';
 import {Vault} from '../models/vault';
 import {Token} from '../models/token';
@@ -10,6 +9,8 @@ import {Lps} from '../models/lps';
 import {IContract} from '../models/icontract';
 import {RestResponse} from '../models/rest-response';
 import {APP_CONFIG, AppConfig} from '../../app.config';
+import {HttpService} from './http/http.service';
+import {StaticValues} from '../static/static-values';
 
 /**
  * Usage:
@@ -32,35 +33,51 @@ export class ContractsService {
             [Token, 'token'],
             [Lps, 'unipair']]
     );
-    private apiEndPoint: string;
 
-    constructor(@Inject(APP_CONFIG) public config: AppConfig, private http: HttpClient, private snackService: SnackService) {
-        //todo temporally use parser url
-        this.apiEndPoint = config.wsEndpoint.replace('/stomp', '');
+    constructor(
+        @Inject(APP_CONFIG) public config: AppConfig,
+        private httpService: HttpService,
+        private snackService: SnackService) {
     }
 
     /**
      * Fetch a list of contracts by type, e.g. Vault, Pool, Token, Pair
      * Uses a cache per type and stores a buffer size of 1 (it's a full list of items)
-     * Refreshes this buffer every 5 minutes.
      *
      * @param type
      */
     getContracts<T extends IContract>(type: new () => T): Observable<T[]> {
-        if(!this.cache.has(type)){
-            const pipeline: Observable<T[]> = timer(0, 300000).pipe(
-                switchMap(() => this.requestContracts<T>(type)),
-                shareReplay(1)
-            );
-            this.cache.set(type, pipeline);
+        if (!this.cache.has(type)) {
+            this.cache.set(type, this.requestContracts<T>(type).pipe(shareReplay(1)));
         }
         return this.cache.get(type);
     }
 
     private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {
-        return this.http.get(`${this.apiEndPoint}/${this.urlPrefix}/${this.typePaths.get(type)}s`).pipe(
-            catchError(this.snackService.handleError<RestResponse<T[]>>(`Contracts fetch for ${this.typePaths.get(type)} failed.`)),
-            map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[]),
+        if (this.config.multipleSources) {
+            return this.requestContractsMultiple(type);
+        } else {
+            return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}s`)
+            .pipe(
+                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
+            );
+        }
+    }
+
+    private requestContractsMultiple<T extends IContract>(type: new () => T): Observable<T[]> {
+        return forkJoin(
+            this.httpService.httpGet(`/${this.urlPrefix}/${this.typePaths.get(type)}s`,
+                StaticValues.NETWORKS.get('eth'))
+            .pipe(
+                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
+            ),
+            this.httpService.httpGet(`/${this.urlPrefix}/${this.typePaths.get(type)}s`,
+                StaticValues.NETWORKS.get('bsc'))
+            .pipe(
+                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
+            ))
+        .pipe(
+            map(x => x.flat())
         );
     }
 

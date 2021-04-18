@@ -6,6 +6,8 @@ import {filter, first, switchMap} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {WsConsumer} from './ws-consumer';
 import { AppConfig, APP_CONFIG } from 'src/app.config';
+import get = Reflect.get;
+import {StaticValues} from '../static/static-values';
 
 export enum SocketClientState {
   ATTEMPTING, CONNECTED
@@ -34,7 +36,7 @@ export class WebsocketService implements OnDestroy {
   }
 
   public connectSockJs(): void {
-    this.client = over(new SockJS(this.config.wsEndpoint));
+    this.client = over(new SockJS(get(this.config.wsEndpoints, StaticValues.NETWORKS.get(this.config.defaultNetwork).ethparserName)));
     this.client.debug = null;
     this.client.reconnect_delay = this.config.wsReconnectInterval * 1000;
     this.client.connect({}, () => {

@@ -144,6 +144,7 @@ export class Utils {
         || name === 'DUDES20_ETH'
         || name === 'MASK20_ETH'
         || name === 'ROPE20_ETH'
+        || name === 'MCAT20_ETH'
         ;
   }
 

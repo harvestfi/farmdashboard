@@ -1,11 +1,13 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {StaticValues} from '../../static/static-values';
 import {RewardDto} from '../../models/reward-dto';
 import {HarvestDto} from '../../models/harvest-dto';
+import {HarvestsService} from '../../services/http/harvests.service';
+import {RewardsService} from '../../services/http/rewards.service';
 
 @Component({
   selector: 'app-rewards-dialog',
@@ -17,10 +19,12 @@ export class RewardsDialogComponent implements AfterViewInit {
   @Input() public data: Record<any, any>;
   ready = false;
 
-  constructor(private httpService: HttpService,
-              public vt: ViewTypeService,
+  constructor(public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              private harvestsService: HarvestsService,
+              private rewardsService: RewardsService,
+              ) {
   }
 
   ngAfterViewInit(): void {
@@ -28,10 +32,10 @@ export class RewardsDialogComponent implements AfterViewInit {
   }
 
   private loadData(): void {
-    this.httpService.getHistoryRewards('PS').subscribe(rewards => {
+    this.rewardsService.getHistoryRewards('PS').subscribe(rewards => {
       this.log.debug('History of All PS Rewards loaded ', rewards);
 
-      this.httpService.getHarvestHistoryByVault('PS').subscribe(harvests => {
+      this.harvestsService.getHarvestHistoryByVault('PS').subscribe(harvests => {
         this.log.debug('History of All PS Harvests loaded ', harvests);
 
         const chartBuilder = new ChartBuilder();

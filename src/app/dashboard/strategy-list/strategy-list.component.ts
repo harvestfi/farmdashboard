@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {PricesCalculationService} from 'src/app/services/prices-calculation.service';
 import {Utils} from '../../static/utils';
@@ -22,7 +22,7 @@ export class StrategyListComponent implements AfterViewInit{
   public sortDirection = false;
   private currentSortingValue = 'tvl';
 
-  @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
+  @ViewChildren(CustomModalComponent) private tvlModals: QueryList<CustomModalComponent>;
 
   constructor(
       public vt: ViewTypeService,
@@ -135,7 +135,9 @@ export class StrategyListComponent implements AfterViewInit{
     return this.pricesCalculationService.lastHarvests.get(tvlName)?.ownerCount || 0;
   }
 
-  openTvlDialog(): void {
-    this.tvlModal.open();
+  openTvlDialog(name: string): void {
+    this.tvlModals
+    .find(e => e.name === 'tvlModal_' + name)
+    ?.open();
   }
 }
