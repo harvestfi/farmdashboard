@@ -3,7 +3,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
-import {HttpService} from '../../services/http/http.service';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {HarvestDto} from '../../models/harvest-dto';
 import {HardWorkDto} from '../../models/hardwork-dto';
@@ -12,7 +11,6 @@ import {HarvestsService} from '../../services/http/harvests.service';
 import {HardworksService} from '../../services/http/hardworks.service';
 import {UniswapService} from '../../services/http/uniswap.service';
 import {APP_CONFIG, AppConfig} from '../../../app.config';
-import {VaultStats} from '../../models/vault-stats';
 import {PricesService} from '../../services/http/prices.service';
 import {PricesDto} from '../../models/prices-dto';
 
@@ -30,6 +28,7 @@ export class DashboardLastValuesComponent implements OnInit {
   @ViewChild('savedFeesModal') private savedFeesModal: CustomModalComponent;
   @ViewChild('totalUsersModal') private totalUsersModal: CustomModalComponent;
   @ViewChild('gasPriceModal') private gasPriceModal: CustomModalComponent;
+
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               public dialog: MatDialog,
               public vt: ViewTypeService,
@@ -39,19 +38,19 @@ export class DashboardLastValuesComponent implements OnInit {
               private hardworksService: HardworksService,
               private uniswapSubscriberService: UniswapService,
               private pricesService: PricesService
-              ) {
+  ) {
   }
 
   private lastGas = 0;
-  private hardworkGasCosts = new Map<string,number>();
+  private hardworkGasCosts = new Map<string, number>();
   private totalGasSaved = 0.0;
-  private totalUserCount = new Map<string,number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
-  private totalPoolUsers = new Map<string,number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
-  private weeklyProfits = new Map<string,number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
-  private farmBuybacks = new Map<string,number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
-  private totalTvls = new Map<string,number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
-  private harvestTvls = new Map<string,number>();
-  private prices = new Map<string,PricesDto>();
+  private userCounts = new Map<string, number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
+  private poolUsers = new Map<string, number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
+  private weeklyProfits = new Map<string, number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
+  private farmBuybacks = new Map<string, number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
+  private totalTvls = new Map<string, number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
+  private harvestTvls = new Map<string, number>();
+  private prices = new Map<string, PricesDto>();
   private farmHolders = 0;
   private farmStaked = 0;
   private farmTotalSupply = 0;
@@ -59,9 +58,9 @@ export class DashboardLastValuesComponent implements OnInit {
 
   ngOnInit(): void {
     this.harvestsService.getLastTvls(StaticValues.NETWORKS.get('bsc')).subscribe(harvests =>
-        harvests.sort((a, b) => a.block > b.block? 1: -1)?.forEach(this.handleHarvest.bind(this)));
+        harvests.sort((a, b) => a.block > b.block ? 1 : -1)?.forEach(this.handleHarvest.bind(this)));
     this.harvestsService.getLastTvls(StaticValues.NETWORKS.get('eth')).subscribe(harvests =>
-        harvests.sort((a, b) => a.block > b.block? 1: -1)?.forEach(this.handleHarvest.bind(this)));
+        harvests.sort((a, b) => a.block > b.block ? 1 : -1)?.forEach(this.handleHarvest.bind(this)));
     this.harvestsService.subscribeToHarvests().subscribe(this.handleHarvest.bind(this));
     this.hardworksService.getLastHardWorks().subscribe(data => data?.forEach(this.handleHardworks.bind(this)));
     this.hardworksService.subscribeToHardworks().subscribe(this.handleHardworks.bind(this));
@@ -76,8 +75,8 @@ export class DashboardLastValuesComponent implements OnInit {
     if (harvest.lastGas != null && harvest.network === 'eth' && harvest.lastGas.toString() !== 'NaN' && harvest.lastGas !== 0) {
       this.lastGas = harvest.lastGas;
     }
-    this.totalPoolUsers.set(harvest.network, harvest.allPoolsOwnersCount);
-    this.totalUserCount.set(harvest.network, harvest.allOwnersCount);
+    this.poolUsers.set(harvest.network, harvest.allPoolsOwnersCount);
+    this.userCounts.set(harvest.network, harvest.allOwnersCount);
     this.updateFarmStaked(harvest);
     this.updateTvl(harvest);
   }
@@ -87,23 +86,26 @@ export class DashboardLastValuesComponent implements OnInit {
       this.farmStaked = harvest.lastTvl;
       this.farmTotalSupply = harvest.sharePrice;
     }
-    if(StaticValues.farmPools.findIndex(farmPool => farmPool === harvest.vault) >= 0)
-      {this.lpFarmStaked =  [1,2].reduce((prev, i) => {
-        if(harvest.lpStatDto[`coin${i}`] === 'FARM') {return harvest.lpStatDto[`amount${i}`];}
+    if (StaticValues.farmPools.findIndex(farmPool => farmPool === harvest.vault) >= 0) {
+      this.lpFarmStaked = [1, 2].reduce((prev, i) => {
+        if (harvest.lpStatDto[`coin${i}`] === 'FARM') {
+          return harvest.lpStatDto[`amount${i}`];
+        }
         return prev;
-      }, 0.0);}
+      }, 0.0);
+    }
   }
 
   private handleHardworks(hardwork: HardWorkDto) {
     const lastGasSum = this.hardworkGasCosts.get(hardwork.vault) || 0;
-    this.hardworkGasCosts.set(hardwork.vault, hardwork.savedGasFeesSum||0);
+    this.hardworkGasCosts.set(hardwork.vault, hardwork.savedGasFeesSum || 0);
     this.totalGasSaved -= lastGasSum;
-    this.totalGasSaved += (hardwork.savedGasFeesSum||0);
+    this.totalGasSaved += (hardwork.savedGasFeesSum || 0);
     this.weeklyProfits.set(hardwork.network, hardwork.weeklyAllProfit / 0.7);
     this.farmBuybacks.set(hardwork.network, hardwork?.farmBuybackSum / 1000);
   };
 
-  private handleUniswaps(uniswap: UniswapDto){
+  private handleUniswaps(uniswap: UniswapDto) {
     this.farmHolders = uniswap.ownerCount;
   }
 
@@ -115,9 +117,29 @@ export class DashboardLastValuesComponent implements OnInit {
     const prevHarvestTvl = this.harvestTvls.get(harvest.vault) || 0;
     const prevTotalNetworkTvl = this.totalTvls.get(harvest.network) || 0;
     this.harvestTvls.set(harvest.vault, harvest.lastUsdTvl);
-    if(harvest.vault !== 'iPS'){
+    if (harvest.vault !== 'iPS') {
       this.totalTvls.set(harvest.network, prevTotalNetworkTvl - prevHarvestTvl + harvest.lastUsdTvl);
     }
+  }
+
+  get totalTVL(): number {
+    return Array.from(this.totalTvls.values()).reduce((prev, v) => prev + v, 0);
+  }
+
+  get totalWeeklyProfits(): number {
+    return Array.from(this.weeklyProfits.values()).reduce((prev, v) => prev + v, 0);
+  }
+
+  get totalFarmBuybacks(): number {
+    return Array.from(this.farmBuybacks.values()).reduce((prev, v) => prev + v, 0);
+  }
+
+  get totalUserCount(): number {
+    return Array.from(this.userCounts.values()).reduce((prev, v) => prev + v, 0);
+  }
+
+  get totalPoolCount(): number {
+    return Array.from(this.poolUsers.values()).reduce((prev, v) => prev + v, 0);
   }
 
   get lastPriceF(): number {

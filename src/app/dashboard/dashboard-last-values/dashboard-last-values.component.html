@@ -65,8 +65,8 @@
          [class]="vt.getThemeColor() + '-card'"
          matTooltipClass="tooltip-spaced"
          matTooltip="FARM staked in pools
-                             PS Staked: {{farmStaked / farmTotalSupply * 100 | number: '1.0-1'}}%
-                             LP Staked: {{lpFarmStaked / farmTotalSupply * 100 | number: '1.0-1'}}%
+                     PS Staked: {{farmStaked / farmTotalSupply * 100 | number: '1.0-1'}}%
+                     LP Staked: {{lpFarmStaked / farmTotalSupply * 100 | number: '1.0-1'}}%
                ">
       <div>
         <div class="value-middle">
@@ -88,18 +88,18 @@
     <div #tooltip="matTooltip" (click)="openWeeklyProfitDialog()"
          class="value-card pointer weekly-profits"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Profit from all vaults for the last week">
+         matTooltipClass="tooltip-spaced"
+         matTooltip="WEEKLY PROFITS FROM ALL VAULTS BY NETWORK
+            BSC {{weeklyProfits.get('bsc') / 1000 | number: '1.0-1'}}K$
+            ETH {{weeklyProfits.get('eth') / 1000 | number: '1.0-1'}}K$
+          ">
       <div>
         <div class="value-middle">
           🤑Weekly Profit
         </div>
-        <div class="network-grid">
-          <div *ngFor="let network of weeklyProfits | keyvalue">
-            <div class="network-grid-card">
-              <span class="network-name">{{network.key | uppercase}}</span>
-              <span class="network-value">{{network.value | number: '1.0-0'}}K$</span>
-            </div>
-          </div>
+        <div class="value-number-middle">
+          <span>{{totalWeeklyProfits / 1000 | number: '1.0-1'}}</span>
+          K$
         </div>
       </div>
     </div>
@@ -134,17 +134,17 @@
          (click)="openTvlDialog()"
          class="value-card pointer tvl"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Click to open history chart">
+         matTooltipClass="tooltip-spaced"
+        matTooltip="TOTAL VALUE LOCKED BY NETWORK
+         BSC {{totalTvls.get('bsc') / 1000000}}M$
+         ETH {{totalTvls.get('eth') / 1000000 | number: '1.0-0'}}M$
+             Click to open history chart">
       <div class="value-caption" style="font-size: 1.2em">
         Total Value Locked
       </div>
-      <div class="network-grid">
-        <div *ngFor="let networkTvl of totalTvls | keyvalue">
-          <div class="network-grid-card">
-            <span class="network-name value-number">{{networkTvl.key | uppercase}}</span>
-            <span class="network-value value-number">{{networkTvl.value / 1000000 | number: '1.0-0'}}<span class="sign">M$</span></span>
-          </div>
-        </div>
+      <div class="value value-tvl">
+        <span class="value-number">{{totalTVL / 1000000 | number: '1.0-0'}}</span>
+        <span class="sign">M$</span>
       </div>
     </div>
     <app-custom-modal #tvlModal>
@@ -173,18 +173,19 @@
     <div #tooltip="matTooltip" (click)="openFarmBuybacksDialog()"
          class="value-card pointer farm-buybacks"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="30% profit of each HardWork goes to buy FARM">
+         matTooltipClass="tooltip-spaced"
+         matTooltip="30% profit of each ETH HardWork goes to buy FARM
+            8% profit of each ETH HardWork goes to buy FARM
+            BSC {{farmBuybacks.get('bsc') | number: '1.2-2'}}K
+            ETH {{farmBuybacks.get('eth') | number: '1.2-2'}}K
+          ">
       <div>
         <div class="value-middle">
           📥Farm buybacks
         </div>
-        <div class="network-grid">
-          <div *ngFor="let networkBuyback of farmBuybacks | keyvalue">
-            <div class="network-grid-card">
-              <span class="network-name">{{networkBuyback.key | uppercase}}</span>
-              <span class="network-value">{{networkBuyback.value | number: '1.2-2'}}K</span>
-            </div>
-          </div>
+        <div class="value-number-middle">
+          <span class="">{{totalFarmBuybacks | number: '1.2-2'}}</span>
+          K
         </div>
       </div>
     </div>
@@ -218,18 +219,17 @@
          (click)="openTotalUsersDialog()"
          class="value-card pointer total-users"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Total unique accounts interacted with the project">
+        matTooltipClass="tooltip-spaced"
+        matTooltip="Total unique accounts interacted with the project
+        BSC {{userCounts.get('bsc') | number: '1.0-0'}}
+        ETH {{userCounts.get('eth') | number: '1.0-0'}}
+        ">
       <div>
         <div class="value-middle">
           👪Total users
         </div>
-        <div class="network-grid">
-          <div *ngFor="let networkCount of totalUserCount | keyvalue">
-            <div class="network-grid-card">
-              <span class="network-name">{{networkCount.key | uppercase}}</span>
-              <span class="network-value">{{networkCount.value | number: '1.0-0'}}</span>
-            </div>
-          </div>
+        <div class="value-number-middle ">
+          <span>{{totalUserCount | number: '1.0-0'}}</span>
         </div>
       </div>
     </div>
@@ -243,18 +243,17 @@
     <div #tooltip="matTooltip"
          class="value-card active-pools"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Accounts staked funds in pools with balance more than 10$">
+        matTooltipClass="tooltip-spaced"
+        matTooltip="Accounts staked funds in pools with balance more than 10$
+        BSC {{poolUsers.get('bsc') | number: '1.0-0'}}
+        ETH {{poolUsers.get('eth') | number: '1.0-0'}}
+        ">
       <div>
         <div class="value-middle">
           👨‍🌾Pools active accounts
         </div>
-        <div class="network-grid">
-          <div *ngFor="let networkCount of totalPoolUsers | keyvalue">
-            <div class="network-grid-card">
-              <span class="network-name">{{networkCount.key | uppercase}}</span>
-              <span class="network-value">{{networkCount.value | number: '1.0-0'}}</span>
-            </div>
-          </div>
+        <div class="value-number-middle">
+          <span>{{totalPoolCount | number: '1.0-0'}}</span>
         </div>
       </div>
     </div>
