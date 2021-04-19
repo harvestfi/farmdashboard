@@ -1,7 +1,5 @@
 {
     "debugLevel": 0,
-    "wsEndpoint": "https://ethparser-bsc.herokuapp.com/stomp",
-    "apiEndpoint": "https://ethparser-bsc.herokuapp.com",
     "wsReconnectInterval": 15,
     "web3Url": "wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz",
     "wsEndpoints": {

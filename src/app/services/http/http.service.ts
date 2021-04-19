@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SnackService} from '../snack.service';
 import {forkJoin, Observable} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, filter, map} from 'rxjs/operators';
 import {UniswapDto} from '../../models/uniswap-dto';
 import {TransferDto} from '../../models/transfer-dto';
 import {OhlcDto} from '../../models/ohlc-dto';
@@ -13,6 +13,7 @@ import {StaticValues} from '../../static/static-values';
 import {APP_CONFIG, AppConfig} from 'src/app.config';
 import {NGXLogger} from 'ngx-logger';
 import get = Reflect.get;
+import {RestResponse} from '../../models/rest-response';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,7 @@ export class HttpService {
   }
 
   public httpGetWithNetwork<T>(
-      urlAtr: string,
-      network: Network = StaticValues.NETWORKS.get(this.config.defaultNetwork),
-      mapper = (x: T[]) => x.flat() // only for multiple sources
+      urlAtr: string
   ): Observable<T> {
     if (urlAtr.indexOf('?') < 0) {
       urlAtr += '?';
@@ -44,24 +43,40 @@ export class HttpService {
       ?.forEach(netName => {
         const url = get(this.config.apiEndpoints, netName)
             + `${urlAtr}network=${netName}`;
-        this.log.info('HTTP get for network ' + netName, url);
+        this.log.debug('HTTP get for network ' + netName, url);
         observables.push(this.http.get<T>(url));
       });
       // todo create correct typification
       // @ts-ignore
       request = forkJoin(observables)
       .pipe(
-          map(x => mapper(x)),
+          map(x => {
+            // this.log.info('get data from response for ' + urlAtr, RestResponse.isRestResponse(x), x);
+            if (RestResponse.isRestResponse(x[0])) {
+              return x.map(el => get(el as any, 'data'));
+            }
+            return x;
+          }),
+          map(x => x.flat())
       );
     } else {
-      const url = get(this.config.apiEndpoints, network.ethparserName)
-          + `${urlAtr}network=${network.ethparserName}`;
-      this.log.info('HTTP get for network ' + network.ethparserName, url);
-      request = this.http.get<T>(url);
+      const url = get(this.config.apiEndpoints, this.config.defaultNetwork)
+          + `${urlAtr}network=${this.config.defaultNetwork}`;
+      this.log.debug('HTTP get for network ' + this.config.defaultNetwork, url);
+      request = this.http.get<T>(url).pipe(
+          map(x => {
+            // this.log.info('loaded by ' + url, x);
+            if (RestResponse.isRestResponse(x)) {
+              // this.log.info('get data from response for ' + url);
+              return get(x as any, 'data');
+            }
+            return x;
+          }),
+      );
     }
 
-    return request
-    .pipe(
+    return request.pipe(
+        // filter(x => !!x),
         catchError(this.snackService.handleError<T>(urlAtr + ' error'))
     );
   }
@@ -77,9 +92,14 @@ export class HttpService {
     }
     const url = get(this.config.apiEndpoints, network.ethparserName)
         + `${urlAtr}network=${network.ethparserName}`;
-    this.log.info('HTTP get for network ' + network.ethparserName, url);
-    return this.http.get<T>(url)
-    .pipe(
+    this.log.debug('HTTP simple get for network ' + network.ethparserName, url);
+    return this.http.get<T>(url).pipe(
+        map(x => {
+          if (RestResponse.isRestResponse(x)) {
+            return get(x as any, 'data');
+          }
+          return x;
+        }),
         catchError(this.snackService.handleError<T>(url + ' error'))
     );
   }

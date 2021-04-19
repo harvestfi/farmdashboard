@@ -5,15 +5,13 @@ import {NGXLogger} from 'ngx-logger';
 import {HarvestDto} from '../../../models/harvest-dto';
 import {WsConsumer} from '../../../services/ws-consumer';
 import {PricesCalculationService} from '../../../services/prices-calculation.service';
-import {StaticValues} from '../../../static/static-values';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {SnackService} from '../../../services/snack.service';
 import {HardWorkDto} from '../../../models/hardwork-dto';
-import {RewardDto} from '../../../models/reward-dto';
-import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
-import {Observable, Subscriber} from 'rxjs';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HarvestsService} from '../../../services/http/harvests.service';
 import {HardworksService} from '../../../services/http/hardworks.service';
@@ -124,7 +122,7 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
   }
 
   private loadLastHardWorks(): void {
-    this.hardworksService.getLastHardWorks().subscribe(data => {
+    this.hardworksService.getAllLastHardWorks().subscribe(data => {
       data?.forEach(hardWork => {
         HardWorkDto.enrich(hardWork);
         this.pricesCalculationService.saveHardWork(hardWork);
@@ -132,16 +130,6 @@ export class HarvestTxComponent implements AfterViewInit, WsConsumer {
       this.log.debug('Loaded last hardworks ', data, this.pricesCalculationService.lastHardWorks);
     });
   }
-
-  // private loadLastRewards(): void {
-  //   this.rewardsService.getLastRewards().subscribe(data => {
-  //     data?.forEach(reward => {
-  //       RewardDto.enrich(reward);
-  //       this.pricesCalculationService.saveReward(reward);
-  //     });
-  //     this.log.debug('Loaded last rewards ', data);
-  //   });
-  // }
 
   private isUniqTx(tx: HarvestDto): boolean {
     if (this.txIds.has(tx.id)) {

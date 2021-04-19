@@ -39,10 +39,9 @@ export class HardworkTxComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // todo optimize request
-    this.hardworksService.getPaginatedHardworkHistoryData(50).subscribe(data => {
+    this.hardworksService.getLastHardWorks(this.maxMessages).subscribe(data => {
       this.log.info('hard work history values', data);
-      this.addInArray(data.data.data);
+      this.addInArray(data);
     });
     this.hardworksService.subscribeToHardworks().subscribe(hardwork => this.addInArray([hardwork]));
   }
@@ -62,7 +61,7 @@ export class HardworkTxComponent implements AfterViewInit {
     for (const hardWork of newValues) {
       HardWorkDto.enrich(hardWork);
       if (!this.isUniqHardwork(hardWork)) {
-        this.log.error('Not unique', hardWork);
+        this.log.error('Not unique hardwork', hardWork);
         return;
       }
       this.dtos.push(hardWork);

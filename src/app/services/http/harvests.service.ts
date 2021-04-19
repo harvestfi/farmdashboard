@@ -48,8 +48,8 @@ export class HarvestsService implements WsConsumer {
         return this.httpService.httpGetWithNetwork(`/api/transactions/history/harvest/${name}`);
     }
 
-    getLastTvls(network?: Network): Observable<HarvestDto[]> {
-        return this.httpService.httpGetWithNetwork('/api/transactions/last/harvest', network);
+    getLastTvls(): Observable<HarvestDto[]> {
+        return this.httpService.httpGetWithNetwork('/api/transactions/last/harvest');
     }
 
     getAddressHistoryHarvest(address: string): Observable<HarvestDto[]> {

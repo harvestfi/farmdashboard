@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HarvestDto} from '../models/harvest-dto';
 import {VaultStats} from '../models/vault-stats';
-import {LpStat} from '../models/lp-stat';
 import {PricesDto} from '../models/prices-dto';
 import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
@@ -19,20 +18,20 @@ import {PricesService} from './http/prices.service';
 })
 export class PricesCalculationService {
   public tvls = new Map<string, number>();
-  public tvlNames = new Set<string>();
-  public allTvls = 0.0;
   public vaultStats = new Map<string, VaultStats>();
   public lastHarvests = new Map<string, HarvestDto>();
   public lastHardWorks = new Map<string, HardWorkDto>();
   public lastRewards = new Map<string, RewardDto>();
-  public latestHarvest: HarvestDto;
+  private latestHarvest: HarvestDto;
   public latestHardWork: HardWorkDto;
   private lastTvlDates = new Map<string, number>();
   private rewardEnded = new Set<string>();
-  private lastPrices = new Map<string, PricesDto>();
+  private lastPrices = new Map<string, Map<string, PricesDto>>(
+      Array.from(StaticValues.NETWORKS.keys()).map(name => [name, new Map()])
+  );
 
   constructor(private log: NGXLogger, private contractsService: ContractsService,
-              private  pricesService: PricesService,
+              private pricesService: PricesService,
               private rewardsService: RewardsService,
               private httpService: HttpService,
               private harvestsService: HarvestsService) {
@@ -166,7 +165,7 @@ export class PricesCalculationService {
     return fees;
   }
 
-  public getPrice(name: string): number {
+  public getPrice(name: string, network: string): number {
     name = StaticValues.mapCoinNameToSimple(name);
     if (StaticValues.isStableCoin(name)) {
       return 1.0;
@@ -174,16 +173,17 @@ export class PricesCalculationService {
     if (name === 'FARM') {
       return this.lastFarmPrice();
     }
-    if (!this.lastPrices.has(name)) {
+    if (!this.lastPrices.get(network).has(name)) {
       return 0;
     }
-    const usdPrice = this.getPrice(this.lastPrices.get(name).otherToken);
-    return this.lastPrices.get(name).price * usdPrice;
+    const tx = this.lastPrices.get(network).get(name);
+    const usdPrice = this.getPrice(tx.otherToken, network);
+    return tx.price * usdPrice;
   }
 
   public savePrice(tx: PricesDto): void {
     const name = StaticValues.mapCoinNameToSimple(tx.token);
-    const lastPriceDto = this.lastPrices.get(name);
+    const lastPriceDto = this.lastPrices.get(tx.network).get(name);
     if (lastPriceDto) {
       if (lastPriceDto.source !== tx.source) {
         this.log.warn('got prices with different sources', lastPriceDto.source, tx.source);
@@ -198,7 +198,7 @@ export class PricesCalculationService {
         this.log.info('New price changed more than 5%', lastPriceDto, tx);
       }
     }
-    this.lastPrices.set(name, tx);
+    this.lastPrices.get(tx.network).set(name, tx);
   }
 
   private subscribeToPrices() {

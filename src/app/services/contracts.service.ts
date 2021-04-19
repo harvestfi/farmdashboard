@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {forkJoin, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {SnackService} from './snack.service';
 import {Vault} from '../models/vault';
@@ -7,10 +7,8 @@ import {Token} from '../models/token';
 import {Pool} from '../models/pool';
 import {Lps} from '../models/lps';
 import {IContract} from '../models/icontract';
-import {RestResponse} from '../models/rest-response';
 import {APP_CONFIG, AppConfig} from '../../app.config';
 import {HttpService} from './http/http.service';
-import {StaticValues} from '../static/static-values';
 
 /**
  * Usage:
@@ -54,30 +52,9 @@ export class ContractsService {
     }
 
     private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {
-        if (this.config.multipleSources) {
-            return this.requestContractsMultiple(type);
-        } else {
-            return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}s`)
-            .pipe(
-                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
-            );
-        }
-    }
-
-    private requestContractsMultiple<T extends IContract>(type: new () => T): Observable<T[]> {
-        return forkJoin(
-            this.httpService.httpGet(`/${this.urlPrefix}/${this.typePaths.get(type)}s`,
-                StaticValues.NETWORKS.get('eth'))
-            .pipe(
-                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
-            ),
-            this.httpService.httpGet(`/${this.urlPrefix}/${this.typePaths.get(type)}s`,
-                StaticValues.NETWORKS.get('bsc'))
-            .pipe(
-                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
-            ))
+        return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}s`)
         .pipe(
-            map(x => x.flat())
+            map((val: T[]) => val?.map(o => Object.assign(new type(), o)) as T[])
         );
     }
 

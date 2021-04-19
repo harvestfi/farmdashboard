@@ -3,16 +3,15 @@ import {MatDialog} from '@angular/material/dialog';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
-import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
-import {HarvestDto} from '../../models/harvest-dto';
-import {HardWorkDto} from '../../models/hardwork-dto';
+import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {UniswapDto} from '../../models/uniswap-dto';
-import {HarvestsService} from '../../services/http/harvests.service';
-import {HardworksService} from '../../services/http/hardworks.service';
 import {UniswapService} from '../../services/http/uniswap.service';
 import {APP_CONFIG, AppConfig} from '../../../app.config';
 import {PricesService} from '../../services/http/prices.service';
 import {PricesDto} from '../../models/prices-dto';
+import {NGXLogger} from 'ngx-logger';
+import {HardworkDataService} from '../../services/data/hardwork-data.service';
+import {HarvestDataService} from '../../services/data/harvest-data.service';
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -34,77 +33,34 @@ export class DashboardLastValuesComponent implements OnInit {
               public vt: ViewTypeService,
               private uniswapService: UniswapService,
               private pricesCalculationService: PricesCalculationService,
-              private harvestsService: HarvestsService,
-              private hardworksService: HardworksService,
               private uniswapSubscriberService: UniswapService,
-              private pricesService: PricesService
+              private pricesService: PricesService,
+              private hardworkData: HardworkDataService,
+              private harvestData: HarvestDataService,
+              private log: NGXLogger
   ) {
   }
 
-  private lastGas = 0;
-  private hardworkGasCosts = new Map<string, number>();
-  private totalGasSaved = 0.0;
-  private userCounts = new Map<string, number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
-  private poolUsers = new Map<string, number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
-  private weeklyProfits = new Map<string, number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
-  private farmBuybacks = new Map<string, number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
-  private totalTvls = new Map<string, number>(Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0]));
-  private harvestTvls = new Map<string, number>();
   private prices = new Map<string, PricesDto>();
-  private farmHolders = 0;
-  private farmStaked = 0;
-  private farmTotalSupply = 0;
-  private lpFarmStaked = 0;
+  farmHolders = 0;
 
   ngOnInit(): void {
-    this.harvestsService.getLastTvls(StaticValues.NETWORKS.get('bsc')).subscribe(harvests =>
-        harvests.sort((a, b) => a.block > b.block ? 1 : -1)?.forEach(this.handleHarvest.bind(this)));
-    this.harvestsService.getLastTvls(StaticValues.NETWORKS.get('eth')).subscribe(harvests =>
-        harvests.sort((a, b) => a.block > b.block ? 1 : -1)?.forEach(this.handleHarvest.bind(this)));
-    this.harvestsService.subscribeToHarvests().subscribe(this.handleHarvest.bind(this));
-    this.hardworksService.getLastHardWorks().subscribe(data => data?.forEach(this.handleHardworks.bind(this)));
-    this.hardworksService.subscribeToHardworks().subscribe(this.handleHardworks.bind(this));
+
+    //UNISWAP LOADING
     this.uniswapSubscriberService.subscribeToUniswapEvents().subscribe(this.handleUniswaps.bind(this));
-    this.uniswapService.getUniswapTxHistoryData().subscribe(data => data.forEach(this.handleUniswaps.bind(this)));
-    this.pricesService.getLastPrices(StaticValues.NETWORKS.get('eth')).subscribe(data => data?.forEach(this.handlePrice.bind(this)));
-    this.pricesService.getLastPrices(StaticValues.NETWORKS.get('bsc')).subscribe(data => data?.forEach(this.handlePrice.bind(this)));
+    this.uniswapService.getUniswapTxHistoryData().subscribe(data =>
+        data?.forEach(this.handleUniswaps.bind(this))
+    );
+
+    // PRICE LOADING
+    this.pricesService.getLastPrices(StaticValues.NETWORKS.get('eth')).subscribe(data =>
+        data?.forEach(this.handlePrice.bind(this))
+    );
+    this.pricesService.getLastPrices(StaticValues.NETWORKS.get('bsc')).subscribe(data =>
+        data?.forEach(this.handlePrice.bind(this))
+    );
     this.pricesService.subscribeToPrices().subscribe(this.handlePrice.bind(this));
   }
-
-  private handleHarvest(harvest: HarvestDto) {
-    HarvestDto.enrich(harvest);
-    if (harvest.lastGas != null && harvest.network === 'eth' && harvest.lastGas.toString() !== 'NaN' && harvest.lastGas !== 0) {
-      this.lastGas = harvest.lastGas;
-    }
-    this.poolUsers.set(harvest.network, harvest.allPoolsOwnersCount);
-    this.userCounts.set(harvest.network, harvest.allOwnersCount);
-    this.updateFarmStaked(harvest);
-    this.updateTvl(harvest);
-  }
-
-  private updateFarmStaked(harvest: HarvestDto) {
-    if (harvest.vault === 'PS') {
-      this.farmStaked = harvest.lastTvl;
-      this.farmTotalSupply = harvest.sharePrice;
-    }
-    if (StaticValues.farmPools.findIndex(farmPool => farmPool === harvest.vault) >= 0) {
-      this.lpFarmStaked = [1, 2].reduce((prev, i) => {
-        if (harvest.lpStatDto[`coin${i}`] === 'FARM') {
-          return harvest.lpStatDto[`amount${i}`];
-        }
-        return prev;
-      }, 0.0);
-    }
-  }
-
-  private handleHardworks(hardwork: HardWorkDto) {
-    const lastGasSum = this.hardworkGasCosts.get(hardwork.vault) || 0;
-    this.hardworkGasCosts.set(hardwork.vault, hardwork.savedGasFeesSum || 0);
-    this.totalGasSaved -= lastGasSum;
-    this.totalGasSaved += (hardwork.savedGasFeesSum || 0);
-    this.weeklyProfits.set(hardwork.network, hardwork.weeklyAllProfit / 0.7);
-    this.farmBuybacks.set(hardwork.network, hardwork?.farmBuybackSum / 1000);
-  };
 
   private handleUniswaps(uniswap: UniswapDto) {
     this.farmHolders = uniswap.ownerCount;
@@ -114,57 +70,116 @@ export class DashboardLastValuesComponent implements OnInit {
     this.prices.set(price.id, price);
   }
 
-  private updateTvl(harvest: HarvestDto) {
-    const prevHarvestTvl = this.harvestTvls.get(harvest.vault) || 0;
-    const prevTotalNetworkTvl = this.totalTvls.get(harvest.network) || 0;
-    this.harvestTvls.set(harvest.vault, harvest.lastUsdTvl);
-    if (harvest.vault !== 'iPS') {
-      this.totalTvls.set(harvest.network, prevTotalNetworkTvl - prevHarvestTvl + harvest.lastUsdTvl);
+  // ------------- HARDWORK DATA ---------------------------
+
+  totalGasSaved(network: string): number {
+    return this.hardworkData.getTotalGasSaved(network);
+  }
+
+  totalGasSavedAllNetworks(): number {
+    return Array.from(StaticValues.NETWORKS.keys())
+    .map(network => this.hardworkData.getTotalGasSaved(network))
+    .reduce((p, n) => p + n, 0);
+  }
+
+  farmBuybackSum(network: string): number {
+    if (!this.lastPriceF || this.lastPriceF === 0) {
+      return 0;
     }
-  }
-
-  get totalTVL(): number {
-    return Array.from(this.totalTvls.values()).reduce((prev, v) => prev + v, 0);
-  }
-
-  get totalWeeklyProfits(): number {
-    return Array.from(this.weeklyProfits.values()).reduce((prev, v) => prev + v, 0);
+    let sum = this.hardworkData.getFarmBuybacks(network);
+    if (network === 'bsc') {
+      sum /= this.lastPriceF;
+    }
+    return sum;
   }
 
   get totalFarmBuybacks(): number {
-    return Array.from(this.farmBuybacks.values()).reduce((prev, v) => prev + v, 0);
+    return Array.from(StaticValues.NETWORKS.keys())
+    .map(network => this.farmBuybackSum(network))
+    .reduce((p, n) => n + p, 0);
   }
 
-  get totalUserCount(): number {
-    return Array.from(this.userCounts.values()).reduce((prev, v) => prev + v, 0);
+  get totalWeeklyProfits(): number {
+    return Array.from(StaticValues.NETWORKS.keys())
+    .map(network => this.hardworkData.getWeeklyProfits(network))
+    .reduce((p, n) => p + n, 0);
   }
 
-  get totalPoolCount(): number {
-    return Array.from(this.poolUsers.values()).reduce((prev, v) => prev + v, 0);
+  weeklyProfits(network: string): number {
+    return this.hardworkData.getWeeklyProfits(network);
   }
+
+  // --------------- HARVEST DATA -----------------------------
+
+  gas(network: string): number {
+    return this.harvestData.getLastGas(network);
+  }
+
+  get psFarmTvl(): number {
+    return this.harvestData.getPsFarmTvl();
+  }
+
+  get farmTotalSupply(): number {
+    return this.harvestData.getFarmTotalSupply();
+  }
+
+  get lpFarmStaked(): number {
+    return this.harvestData.getLpFarmStaked();
+  }
+
+  tvlSum(network: string): number {
+    return this.harvestData.getTvlSum(network);
+  }
+
+  get tvlSumAllNetwork(): number {
+    return Array.from(StaticValues.NETWORKS.keys())
+    .map(network => this.tvlSum(network))
+    .reduce((p, n) => p + n, 0);
+  }
+
+  userCount(network: string): number {
+    return this.harvestData.getUserCounts(network);
+  }
+
+  get userCountAllNetwork(): number {
+    return Array.from(StaticValues.NETWORKS.keys())
+    .map(network => this.userCount(network))
+    .reduce((p, n) => p + n, 0);
+  }
+
+  poolUsers(network: string): number {
+    return this.harvestData.getPoolUsers(network);
+  }
+
+  get poolUsersAllNetwork(): number {
+    return Array.from(StaticValues.NETWORKS.keys())
+    .map(network => this.poolUsers(network))
+    .reduce((p, n) => p + n, 0);
+  }
+
+  // --------------------------- OTHER -------------------------
 
   get lastPriceF(): number {
     return this.pricesCalculationService.lastFarmPrice();
   }
 
   get btcF(): number {
-    if (this.config.defaultNetwork === 'bsc') {
-      return this.pricesCalculationService.getPrice('BTCB');
-    }
-    return this.pricesCalculationService.getPrice('BTC');
+    return this.pricesCalculationService.getPrice('BTC', this.config.defaultNetwork);
   }
 
   get ethF(): number {
-    return this.pricesCalculationService.getPrice('ETH');
+    return this.pricesCalculationService.getPrice('ETH', this.config.defaultNetwork);
   }
 
   get bnbF(): number {
-    return this.pricesCalculationService.getPrice('WBNB');
+    return this.pricesCalculationService.getPrice('WBNB', 'bsc');
   }
 
   get psApy(): number {
     return this.pricesCalculationService.latestHardWork?.psApr;
   }
+
+  // -------------- OPEN MODALS ---------------------
 
   openTvlDialog(): void {
     this.tvlModal.open();

@@ -54,6 +54,7 @@ export class StaticValues {
       case 'CRV_TBTC':
       case 'CRV_HBTC':
       case 'CRV_OBTC':
+      case 'BTCB':
         return 'BTC';
       case 'CRV_EURS':
         return 'EURS';
