@@ -4,6 +4,7 @@ import { StaticValues } from 'src/app/static/static-values';
 import { ViewTypeService } from '../../services/view-type.service';
 import { NGXLogger } from 'ngx-logger';
 import { UniswapDto } from '../../models/uniswap-dto';
+import {UniswapService} from '../../services/http/uniswap.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class UniHistoryDialogComponent implements AfterViewInit {
 
 
   constructor(
-    private txHistory: HttpService,
+    private txHistory: UniswapService,
     public vt: ViewTypeService,
     private log: NGXLogger
   ) {

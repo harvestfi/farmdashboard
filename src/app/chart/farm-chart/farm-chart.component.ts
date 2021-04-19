@@ -6,6 +6,7 @@ import {PriceChartBuilder} from '../price-chart-builder';
 import {HttpService} from '../../services/http/http.service';
 import {ChartGeneralMethodsComponent} from '../chart-general-methods.component';
 import {IChartApi} from 'lightweight-charts';
+import {UniswapService} from '../../services/http/uniswap.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class FarmChartComponent extends ChartGeneralMethodsComponent implements 
   otherCoin = 'ETH';
   chart: IChartApi;
 
-  constructor(private httpService: HttpService,
+  constructor(private uniswapService: UniswapService,
               private uniswapSubscriberService: UniswapSubscriberService,
               public vt: ViewTypeService,
               private log: NGXLogger) {
@@ -29,7 +30,7 @@ export class FarmChartComponent extends ChartGeneralMethodsComponent implements 
   ngAfterViewInit(): void {
     const priceChartBuilder = new PriceChartBuilder(this.log, this.coin, this.chartEl, this.vt);
     this.chart = priceChartBuilder.chart;
-    this.httpService.getUniswapOHLC(this.coin).subscribe(data => {
+    this.uniswapService.getUniswapOHLC(this.coin).subscribe(data => {
       this.log.debug(this.coin + ' prices loaded ', data);
       priceChartBuilder.addValuesToChart(data, false);
     });

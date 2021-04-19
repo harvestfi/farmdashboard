@@ -32,10 +32,6 @@ export class ApyWindowComponent implements OnInit {
     this.showModal.emit(false);
   }
 
-  prettyNumber(n: number): string {
-    return Utils.prettifyNumber(n);
-  }
-
   toApy(n: number): number {
     return Utils.aprToApyEveryDayReinvest(n);
   }

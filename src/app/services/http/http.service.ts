@@ -84,24 +84,8 @@ export class HttpService {
     );
   }
 
-  getUniswapTxHistoryData(): Observable<UniswapDto[]> {
-    return this.httpGet('/api/transactions/history/uni');
-  }
-
-  getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
-    return this.httpGet(`/api/transactions/history/uni?from=${minBlock}&to=${maxBlock}`);
-  }
-
   getAddressHistoryTransfers(address: string): Observable<TransferDto[]> {
     return this.httpGet('/history/transfer/' + address);
-  }
-
-  getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
-    return this.httpGet('/api/transactions/history/uni/ohcl/' + coin);
-  }
-
-  getLastPrices(): Observable<PricesDto[]> {
-    return this.httpGetWithNetwork('/price/token/latest');
   }
 
   getUserBalances(): Observable<Balance[]> {

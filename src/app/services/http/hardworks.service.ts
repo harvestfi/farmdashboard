@@ -1,17 +1,21 @@
-import {Inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable, Subscriber} from 'rxjs';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {HttpService} from './http.service';
-import {APP_CONFIG, AppConfig} from '../../../app.config';
+import {WsConsumer} from '../ws-consumer';
+import {WebsocketService} from '../websocket.service';
 import {RestResponse} from '../../models/rest-response';
 import {Paginated} from '../../models/paginated';
 
 @Injectable({
     providedIn: 'root'
 })
-export class HardworksService {
+@Injectable()
+export class HardworksService implements WsConsumer {
+    private subscribed = false;
+    private $subscribers: Subscriber<HardWorkDto>[] = [];
 
-    constructor(private httpService: HttpService) {
+    constructor(private httpService: HttpService, private ws: WebsocketService) {
     }
 
     getHardWorkHistoryData(): Observable<HardWorkDto[]> {
@@ -42,6 +46,29 @@ export class HardworksService {
             + `&ordering=${ordering}`);
     }
 
+    isSubscribed(): boolean {
+        return this.subscribed;
+    }
 
+    setSubscribed(s: boolean): void {
+        this.subscribed = s;
+    }
 
+    public initWs(): void {
+        if (this.ws.registerConsumer(this) && !this.subscribed) {
+            this.subscribeToTopic();
+            this.subscribed = true;
+        }
+    }
+
+    public subscribeToTopic(): void {
+        this.ws.onMessage('/topic/hardwork', (m => HardWorkDto.fromJson(m.body)))
+            ?.subscribe(tx => this.$subscribers.forEach(_ => _.next(tx)));
+    }
+
+    public subscribeToHardworks(): Observable<HardWorkDto> {
+        return new Observable(subscriber => {
+            this.$subscribers.push(subscriber);
+        });
+    }
 }
