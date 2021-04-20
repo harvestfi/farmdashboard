@@ -80,12 +80,3 @@
   </div>
 </div>
 
-<table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard" style="margin-top: 10px;">
-
-  <tr *ngFor="let vault of vaultsList">
-    <td>
-      <app-tvl-box [tvlName]="vault"></app-tvl-box>
-    </td>
-  </tr>
-</table>
-

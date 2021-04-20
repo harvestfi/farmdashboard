@@ -1,4 +1,4 @@
-<div *ngIf="vt.isNonScoreboard()" id="top-div-light" class="row tvl-row">
+<div id="top-div-light" class="row tvl-row">
   <div *ngIf="tvlName === null">
     <div class="left-border-box tvl-name first-row-name">
       {{name}}
@@ -49,21 +49,5 @@
 
   </div>
 </div>
-
-
-<table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard">
-  <tr>
-    <td style="min-width: 170px;">
-      <img (click)="openTvlDialog()" alt="?" class="pointer"
-           src="{{getImgSrc(tvlName)}}" style="width: 15px; height: 15px; margin-right: 5px;"/>
-      <span class="tvl-caption" style="font-size: 1em; margin-right: 5px;">{{tvlName}}</span>
-    </td>
-    <td>
-      <span class="tvl-caption"
-            style="font-size: 1.2em;"><b>{{tvls.get(tvlName) / 1000000 | number: '1.0-1'}}</b></span>
-      <span style="font-size: 0.8em;">M</span>
-    </td>
-  </tr>
-</table>
 
 
