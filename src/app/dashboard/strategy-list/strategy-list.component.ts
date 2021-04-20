@@ -18,11 +18,8 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   public networkFilter = '';
   public platformFilter = '';
   public assetFilter = '';
-  // Mutating the currentVaults in static values before using it so that we
-  // are able to sort this array and not get a new one from the service.
   public vaultsList = [];
   public apyWindowState: Record<string, boolean> = {};
-  // false = desc, true = asc
   public sortDirection = 'desc';
   public currentSortingValue = 'tvl';
   public platform_list = platforms;
