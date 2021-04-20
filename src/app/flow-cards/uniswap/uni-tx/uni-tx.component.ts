@@ -9,6 +9,7 @@ import { ViewTypeService } from '../../../services/view-type.service';
 import { SnackService } from '../../../services/snack.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {UniswapService} from '../../../services/http/uniswap.service';
 
 @Component({
   selector: 'app-uni-tx',
@@ -23,7 +24,7 @@ export class UniTxComponent implements AfterViewInit {
   @ViewChild('unitHistoryModal') private unitHistoryModal: CustomModalComponent;
 
   constructor(
-    private txHistory: HttpService,
+    private txHistory: UniswapService,
     private titleService: Title,
     private uniswapSubscriberService: UniswapSubscriberService,
     public vt: ViewTypeService,
@@ -88,14 +89,8 @@ export class UniTxComponent implements AfterViewInit {
       this.titleService.setTitle(tx.lastPrice + ' | ' + this.pureTitle);
       StaticValues.lastPrice = tx.lastPrice;
     }
-    if (tx.lastGas != null || tx.lastGas !== 0) {
-      StaticValues.lastGas = tx.lastGas;
-    }
     if (tx.blockDateAdopted != null) {
       StaticValues.lastBlockDateAdopted = tx.blockDateAdopted;
-    }
-    if (tx.ownerCount) {
-      StaticValues.farmUsers = tx.ownerCount;
     }
   }
 

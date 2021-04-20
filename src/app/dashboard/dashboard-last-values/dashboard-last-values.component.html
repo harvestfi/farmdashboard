@@ -22,7 +22,7 @@
         </div>
 
         <div class="value-number-middle">
-          <span class="">{{lastGasF | number: '1.0-0'}}</span>
+          <span class="">{{gas('eth') | number: '1.0-0'}}</span>
           gw
         </div>
       </div>
@@ -33,28 +33,32 @@
       </app-custom-modal>
     </div>
 
-    <div class="value-card btc" [class]="vt.getThemeColor() + '-card'">
+    <div class="value-card native-tokens" [class]="vt.getThemeColor() + '-card'">
       <div>
         <div class="value-middle">
           <img class="icon" src="assets/icons/btc.png"/>
           <span class="small-value-caption">BTC</span>
         </div>
         <div class="value-number-middle">
-          <span>{{btcF | number: '1.0-0'}}</span>
-          $
+          <span>{{btcF | number: '1.0-0'}}</span><span class="value-sign">$</span>
         </div>
       </div>
-    </div>
-
-    <div class="value-card eth" [class]="vt.getThemeColor() + '-card'">
       <div>
         <div class="value-middle">
           <img class="icon" src="assets/icons/eth.svg"/>
           <span class="small-value-caption">ETH</span>
         </div>
         <div class="value-number-middle">
-          <span>{{ethF | number: '1.0-0'}}</span>
-          $
+          <span>{{ethF | number: '1.0-0'}}</span><span class="value-sign">$</span>
+        </div>
+      </div>
+      <div>
+        <div class="value-middle">
+          <img class="icon" src="assets/icons/venus-wbnb.png"/>
+          <span class="small-value-caption">BNB</span>
+        </div>
+        <div class="value-number-middle">
+          <span>{{bnbF | number: '1.0-0'}}</span><span class="value-sign">$</span>
         </div>
       </div>
     </div>
@@ -65,15 +69,15 @@
          [class]="vt.getThemeColor() + '-card'"
          matTooltipClass="tooltip-spaced"
          matTooltip="FARM staked in pools
-                             PS Staked: {{farmPsStaked | number: '1.0-1'}}%
-                             LP Staked: {{farmLpStaked | number: '1.0-1'}}%
+                     PS Staked: {{psFarmTvl / farmTotalSupply * 100 | number: '1.0-1'}}%
+                     LP Staked: {{lpFarmStaked / farmTotalSupply * 100 | number: '1.0-1'}}%
                ">
       <div>
         <div class="value-middle">
           🔒FARM Staked
         </div>
         <div class="value-number-middle">
-          <span>{{farmStaked | number: '1.0-1'}}</span>
+          <span>{{(psFarmTvl + lpFarmStaked) / farmTotalSupply * 100 | number: '1.0-1'}}</span>
           %
         </div>
       </div>
@@ -88,13 +92,17 @@
     <div #tooltip="matTooltip" (click)="openWeeklyProfitDialog()"
          class="value-card pointer weekly-profits"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Profit from all vaults for the last week">
+         matTooltipClass="tooltip-spaced"
+         matTooltip="Weekly profits from all vaults by network
+            BSC {{weeklyProfits('bsc') / 1000 | number: '1.0-1'}}K$
+            ETH {{weeklyProfits('eth') / 1000 | number: '1.0-1'}}K$
+          ">
       <div>
         <div class="value-middle">
           🤑Weekly Profit
         </div>
         <div class="value-number-middle">
-          <span>{{weeklyAllIncome / 1000 | number: '1.0-1'}}</span>
+          <span>{{totalWeeklyProfits / 1000 | number: '1.0-1'}}</span>
           K$
         </div>
       </div>
@@ -106,36 +114,33 @@
     </app-custom-modal>
 
     <div #tooltip="matTooltip"
-         (click)="openPsIncomeDialog()"
-         class="value-card pointer ps-income"
+         class="value-card ps-income"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Income from strategies in Profit Share pool, based on all history">
+         matTooltip="Soon">
       <div>
         <div class="value-middle">
-          📈PS Income
+          📈P/A Ratio
         </div>
         <div class="value-number-middle ">
-          <span>{{psApy | number: '1.0-1'}}</span>
-          %
+          -
         </div>
       </div>
     </div>
-    <app-custom-modal #psIncomeModal>
-      <ng-template>
-        <app-tvl-dialog [data]="{type: 'income'}"></app-tvl-dialog>
-      </ng-template>
-    </app-custom-modal>
 
     <div #tooltip="matTooltip"
          (click)="openTvlDialog()"
          class="value-card pointer tvl"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Click to open history chart">
+         matTooltipClass="tooltip-spaced"
+        matTooltip="Total value locked by network
+         BSC {{tvlSum('bsc') / 1000000 | number: '1.0-0'}}M$
+         ETH {{tvlSum('eth') / 1000000 | number: '1.0-0'}}M$
+             Click to open history chart">
       <div class="value-caption" style="font-size: 1.2em">
         Total Value Locked
       </div>
       <div class="value value-tvl">
-        <span class="value-number">{{allTvlF | number: '1.0-0'}}</span>
+        <span class="value-number">{{tvlSumAllNetwork / 1000000 | number: '1.0-0'}}</span>
         <span class="sign">M$</span>
       </div>
     </div>
@@ -155,7 +160,7 @@
           👨‍🌾FARM Holders
         </div>
         <div class="value-number-middle">
-          <span>{{farmActiveUsers | number: '1.0-0'}}</span>
+          <span>{{farmHolders | number: '1.0-0'}}</span>
         </div>
       </div>
 
@@ -165,13 +170,18 @@
     <div #tooltip="matTooltip" (click)="openFarmBuybacksDialog()"
          class="value-card pointer farm-buybacks"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="30% profit of each HardWork goes to buy FARM">
+         matTooltipClass="tooltip-spaced"
+         matTooltip="30% profit of each ETH HardWork goes to buy FARM
+            8% profit of each BSC HardWork goes to buy FARM
+            BSC {{farmBuybackSum('bsc') | number: '1.2-2'}}K
+            ETH {{farmBuybackSum('eth') | number: '1.2-2'}}K
+          ">
       <div>
         <div class="value-middle">
           📥Farm buybacks
         </div>
         <div class="value-number-middle">
-          <span class="">{{farmBuybacks | number: '1.2-2'}}</span>
+          <span class="">{{totalFarmBuybacks | number: '1.2-2'}}</span>
           K
         </div>
       </div>
@@ -185,13 +195,17 @@
     <div #tooltip="matTooltip" (click)="openSavedFeesDialog()"
          class="value-card pointer saved-fees"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="How much gas would users spend on transactions without our project?">
+         matTooltipClass="tooltip-spaced"
+         matTooltip="How much gas would users spend on transactions without our project?
+         BSC: {{totalGasSaved('bsc') / 1000000 | number: '1.0-2'}} M$
+         ETH: {{totalGasSaved('eth') / 1000000 | number: '1.0-2'}} M$
+         ">
       <div>
         <div class="value-middle">
           🛡️Saved gas fees
         </div>
         <div class="value-number-middle">
-          <span>{{savedGasFees / 1000000 | number: '1.0-1'}}</span>
+          <span>{{totalGasSavedAllNetworks() / 1000000 | number: '1.0-1'}}</span>
           M$
         </div>
       </div>
@@ -206,13 +220,17 @@
          (click)="openTotalUsersDialog()"
          class="value-card pointer total-users"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Total unique accounts interacted with the project">
+        matTooltipClass="tooltip-spaced"
+        matTooltip="Total unique accounts interacted with the project
+        BSC {{userCount('bsc') | number: '1.0-0'}}
+        ETH {{userCount('eth') | number: '1.0-0'}}
+        ">
       <div>
         <div class="value-middle">
           👪Total users
         </div>
         <div class="value-number-middle ">
-          <span>{{allUsersCount | number: '1.0-0'}}</span>
+          <span>{{userCountAllNetwork | number: '1.0-0'}}</span>
         </div>
       </div>
     </div>
@@ -226,59 +244,20 @@
     <div #tooltip="matTooltip"
          class="value-card active-pools"
          [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Accounts staked funds in pools with balance more than 10$">
+        matTooltipClass="tooltip-spaced"
+        matTooltip="Accounts staked funds in pools with balance more than 10$
+        BSC {{poolUsers('bsc') | number: '1.0-0'}}
+        ETH {{poolUsers('eth') | number: '1.0-0'}}
+        ">
       <div>
         <div class="value-middle">
           👨‍🌾Pools active accounts
         </div>
         <div class="value-number-middle">
-          <span>{{poolsActiveUsersCount | number: '1.0-0'}}</span>
+          <span>{{poolUsersAllNetwork | number: '1.0-0'}}</span>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-<table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard" class="last-values-table">
-
-  <tr>
-    <td class="caption-font-small">Farm Price</td>
-    <td class="caption-font-small">TVL</td>
-    <td class="caption-font-small right-value">Income APR</td>
-  </tr>
-
-  <tr>
-    <td class="caption-td">
-      <span class="caption-font">{{lastPriceF | number: '1.0-1'}}</span>
-      <span class="last-price-sign">$</span>
-    </td>
-    <td (click)="openTvlDialog()" class="caption-td pointer">
-      <span class="caption-font">{{allTvlF | number: '1.0-1'}}</span>
-      <span class="last-price-sign">M$</span>
-    </td>
-    <td class="caption-td right-value">
-      <span class="caption-font">{{psApy | number: '1.0-1'}}</span>
-      <span class="last-price-sign">%</span>
-    </td>
-  </tr>
-  <tr>
-    <td class="caption-font-small caption-btc">BTC Price</td>
-    <td class="caption-font-small caption-eth">ETH Price</td>
-    <td class="caption-font-small caption-ps">Gas</td>
-  </tr>
-  <tr>
-    <td class="caption-td-middle">
-      <span class="caption-font-middle caption-btc-value">{{btcF | number: '1.0-0'}}</span>
-      <span class="caption-font-middle caption-btc-sign">$</span>
-    </td>
-    <td class="caption-td-middle">
-      <span class="caption-font-middle caption-eth-value">{{ethF | number: '1.0-0'}}</span>
-      <span class="caption-font-middle caption-eth-sign">$</span>
-    </td>
-    <td class="caption-td-middle">
-      <span class="caption-font-middle caption-ps-value">{{lastGasF | number: '1.0-0'}}</span>
-    </td>
-  </tr>
-</table>
 

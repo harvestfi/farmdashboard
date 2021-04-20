@@ -1,4 +1,3 @@
-import {HttpErrorResponse} from '@angular/common/http';
 import {TransferDto} from '../models/transfer-dto';
 
 export class Utils {
@@ -162,5 +161,14 @@ export class Utils {
     } else {
       return '♾️';
     }
+  }
+
+  public static iterableReduce(arr: IterableIterator<number>) {
+    if (!arr) {
+      return 0;
+    }
+    return Array.from(arr)
+    .filter(a => !!a)
+    .reduce((n, p) => n + p, 0);
   }
 }
