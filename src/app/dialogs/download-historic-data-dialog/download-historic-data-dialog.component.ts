@@ -1,8 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {StaticValues} from '../../static/static-values';
 import {Sort} from '@angular/material/sort';
 import {ViewTypeService} from '../../services/view-type.service';
-import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {APP_CONFIG, AppConfig} from 'src/app.config';
+import {ContractsService} from '../../services/contracts.service';
+import {Vault} from '../../models/vault';
+import {StaticValues} from '../../static/static-values';
+import get = Reflect.get;
 
 @Component({
   selector: 'app-download-historic-data-dialog',
@@ -10,25 +13,30 @@ import { AppConfig, APP_CONFIG } from 'src/app.config';
   styleUrls: ['./download-historic-data-dialog.component.scss']
 })
 export class DownloadHistoricDataDialogComponent implements OnInit {
-  sortedVaults: string[];
+  sortedVaults: Vault[];
+  vaults: Vault[];
   includeInactive = false;
-  apiEndpoint = '';
 
-  constructor(@Inject(APP_CONFIG) public config: AppConfig, public vt: ViewTypeService) {
-    this.sortedVaults = StaticValues.vaults;
-    this.sortData(null);
-    this.apiEndpoint = config.apiEndpoint;
+  constructor(
+      @Inject(APP_CONFIG) public config: AppConfig,
+      public vt: ViewTypeService,
+      private contractsService: ContractsService
+  ) {
   }
 
   ngOnInit(): void {
+    this.contractsService.getContracts(Vault).subscribe(vaults => {
+      this.sortedVaults = this.vaults = vaults;
+      this.sortData(null);
+    });
   }
 
   sortData(sort: Sort): void {
     let vaults;
     if (this.includeInactive) {
-      vaults = StaticValues.vaults;
+      vaults = this.vaults;
     } else {
-      vaults = Object.assign([], StaticValues.currentVaults);
+      vaults = this.vaults.filter(_ => _.isActive());
     }
     if (!sort || !sort.active || sort.direction === '') {
       this.sortedVaults = vaults;
@@ -46,15 +54,11 @@ export class DownloadHistoricDataDialogComponent implements OnInit {
     });
   }
 
-  tvlPrettyName(tvlName: string): string {
-    return tvlName?.replace('SUSHI_', '');
-  }
-
-  getImgSrc(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
-  }
-
   compare(a: number | string, b: number | string, isAsc: boolean): number {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  getApiEndpoint(network: string): string {
+    return get(this.config.apiEndpoints, StaticValues.NETWORKS.get(network).ethparserName);
   }
 }

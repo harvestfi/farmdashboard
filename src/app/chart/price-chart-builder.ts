@@ -5,7 +5,7 @@ import {createChart, IChartApi} from 'lightweight-charts';
 import {NGXLogger} from 'ngx-logger';
 import {LightweightChartsOptions} from './lightweight-charts-options';
 import {ViewTypeService} from '../services/view-type.service';
-import { ChartsOptionsLight } from './charts-options-light';
+import {ChartsOptionsLight} from './charts-options-light';
 
 export class PriceChartBuilder {
   lastDate = 0;
@@ -19,20 +19,7 @@ export class PriceChartBuilder {
   constructor(private log: NGXLogger, coin: string, chartEl: ElementRef, public vt: ViewTypeService) {
     this.coin = coin;
     this.chart = createChart(chartEl.nativeElement, LightweightChartsOptions.getOptions());
-    if (this.vt.isNonScoreboard()) {
-      this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
-    } else {
-      this.chart.applyOptions({
-        // rightPriceScale: {
-        //   autoScale: true
-        // },
-        height: 500,
-        timeScale: {
-          rightOffset: 10,
-          // fixLeftEdge: true,
-        }
-      });
-    }
+    this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
   }
 
   public collectLastUniTx(uniDto: UniswapDto): void {

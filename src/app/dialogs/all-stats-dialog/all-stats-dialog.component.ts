@@ -4,6 +4,8 @@ import {HardWorkDto} from '../../models/hardwork-dto';
 import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {Sort} from '@angular/material/sort';
 import { ViewTypeService } from 'src/app/services/view-type.service';
+import {ContractsService} from '../../services/contracts.service';
+import {Vault} from '../../models/vault';
 
 @Component({
   selector: 'app-all-stats-dialog',
@@ -11,11 +13,13 @@ import { ViewTypeService } from 'src/app/services/view-type.service';
   styleUrls: ['./all-stats-dialog.component.scss']
 })
 export class AllStatsDialogComponent implements OnInit {
+  vaults: Vault[];
   sortedVaults: string[];
   includeInactive = true;
 
-  constructor(private pricesCalculationService: PricesCalculationService, public vt: ViewTypeService) {
-    this.sortedVaults = StaticValues.vaults;
+  constructor(private pricesCalculationService: PricesCalculationService,
+              public vt: ViewTypeService,
+              private contractsService: ContractsService) {
   }
 
   get tvls(): Map<string, number> {
@@ -35,6 +39,10 @@ export class AllStatsDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.contractsService.getContracts(Vault).subscribe(vaults => {
+      this.vaults = vaults;
+      this.sortedVaults = vaults.map(_ => _.contract.name);
+    });
   }
 
   users(name: string): number {
@@ -45,20 +53,12 @@ export class AllStatsDialogComponent implements OnInit {
     return this.pricesCalculationService.incomeApr(tvlName);
   }
 
-  tvlPrettyName(tvlName: string): string {
-    return tvlName?.replace('SUSHI_', '');
-  }
-
-  getImgSrc(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
-  }
-
   sortData(sort: Sort): void {
     let vaults;
     if (this.includeInactive) {
-      vaults = StaticValues.vaults;
+      vaults = this.vaults.map(_ => _.contract.name);
     } else {
-      vaults = Object.assign([], StaticValues.currentVaults);
+      vaults = this.vaults.filter(_ => _.isActive()).map(_ => _.contract.name);
     }
     if (!sort || !sort.active || sort.direction === '') {
       this.sortedVaults = vaults;

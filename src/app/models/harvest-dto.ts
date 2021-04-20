@@ -7,6 +7,7 @@ export class HarvestDto {
   block: number;
   confirmed: boolean;
   blockDate: number;
+  network: string;
   methodName: string;
   owner: string;
   amount: number;
@@ -39,6 +40,7 @@ export class HarvestDto {
     tx.hash = jsonData.hash;
     tx.block = jsonData.block;
     tx.confirmed = jsonData.confirmed;
+    tx.network = jsonData.network;
     tx.methodName = jsonData.methodName;
     tx.owner = jsonData.owner;
     tx.amount = jsonData.amount;

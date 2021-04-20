@@ -1,5 +1,5 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HarvestDto} from '../../models/harvest-dto';
 import {Utils} from '../../static/utils';
@@ -12,6 +12,7 @@ import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-method
 import { ChartsOptionsLight } from 'src/app/chart/charts-options-light';
 import { ViewTypeService } from 'src/app/services/view-type.service';
 import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {HarvestsService} from '../../services/http/harvests.service';
 
 class CheckedValue {
   value: string;
@@ -55,6 +56,7 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               public vt: ViewTypeService,
+              public harvestsService: HarvestsService,
               ) {
                 super();
   }
@@ -86,7 +88,7 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
       this.clear();
       this.address = params.address;
       this.inputAddress = params.address;
-      this.http.getAddressHistoryHarvest(this.address).subscribe(harvests => {
+      this.harvestsService.getAddressHistoryHarvest(this.address).subscribe(harvests => {
             this.log.info('Load harvest history', harvests);
             harvests?.forEach(harvest => {
               HarvestDto.enrich(harvest);
@@ -284,10 +286,6 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
     return Utils.transferBalanceUsd(t, this.address);
   }
 
-  prettyVaultName(name: string): string {
-    return StaticValues.vaultPrettyName(name);
-  }
-
   isPositive(record: any): boolean {
     return Utils.isHarvestPositive(record) || Utils.isUniPositive(record);
   }
@@ -298,10 +296,6 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
 
   isTransfer(record: any): boolean {
     return Utils.isTransfer(record);
-  }
-
-  getImgUrl(name: string): string {
-    return StaticValues.getImgSrcForVault(name);
   }
 
   openHistoryDialog(): void {

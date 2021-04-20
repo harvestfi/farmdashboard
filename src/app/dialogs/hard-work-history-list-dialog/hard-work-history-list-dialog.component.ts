@@ -1,9 +1,13 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { HttpService } from '../../services/http.service';
-import { NGXLogger } from 'ngx-logger';
-import { StaticValues } from 'src/app/static/static-values';
-import { ViewTypeService } from '../../services/view-type.service';
-import { HardWorkDto } from '../../models/hardwork-dto';
+import {AfterViewInit, Component} from '@angular/core';
+import {NGXLogger} from 'ngx-logger';
+import {ViewTypeService} from '../../services/view-type.service';
+import {ContractsService} from '../../services/contracts.service';
+import {Vault} from '../../models/vault';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {HardworksService} from '../../services/http/hardworks.service';
+import {Paginated} from '../../models/paginated';
+import {HardWorkDto} from '../../models/hardwork-dto';
 
 @Component({
   selector: 'app-hard-work-history-list-dialog',
@@ -11,61 +15,63 @@ import { HardWorkDto } from '../../models/hardwork-dto';
   styleUrls: ['./hard-work-history-list-dialog.component.scss']
 })
 export class HardWorkHistoryListDialogComponent implements AfterViewInit {
-  dtos: HardWorkDto[] = [];
+  dtos: Paginated<HardWorkDto>;
   hardWorkIds = new Set<string>();
   lowestBlockDate = 999999999999;
-  vaultFilter = 'all';
+  vaultFilter = '';
+  minAmount = 0;
   disabled  = false;
   ready = false;
   constructor(
-    private hwListHistory: HttpService,
     public vt: ViewTypeService,
-    private log: NGXLogger
-
-  ) { }
+    private log: NGXLogger,
+    private contractsService: ContractsService,
+    private hardworksService: HardworksService,
+  ) {}
 
   ngAfterViewInit(): void {
-    this.hwListHistory.getHardWorkHistoryData().subscribe(data => this.addInArray(data)).add(() => this.ready = true);
+    this.getDtoDataForPage(0);
   }
 
-  get vaultNames(): string[] {
-    return StaticValues.currentVaults;
-  }
-
-  getOlderHardworks(): void {
-    this.disabled = true;
-    if (this.lowestBlockDate === 0) {
-      return;
+  getDtoDataForPage(page_number: number): void {
+    this.hardworksService
+    .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount)
+    .subscribe(response => {
+          if ('data' in response.data) {
+            return this.dtos = response.data;
+          }
+          this.dtos = {
+            currentPage: 0,
+            nextPage: -1,
+            previousPage: -1,
+            totalPages: 0,
+            data: []
+          };
     }
-    this.hwListHistory.getHWHistoryDataByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2),
-    this.lowestBlockDate).subscribe(data => this.addInArray(data)).add(() => this.disabled = false);
+      )
+    .add(() => this.ready = true);
   }
 
-  private isUniqHardwork(hw: HardWorkDto): boolean {
-    if (this.hardWorkIds.has(hw.id)) {
-      return false;
-    }
-    this.hardWorkIds.add(hw.id);
-    if (this.hardWorkIds.size > 100_000) {
-      this.hardWorkIds = new Set<string>();
-    }
-    return true;
+  get vaultNames(): Observable<string[]> {
+    return this.contractsService.getContracts(Vault).pipe(
+        map(vaults => vaults.map(_ => _.contract.name))
+    );
+  }
+  // These methods all seem redundant, but I separated them because we may
+  // want to add additional logic to the next/prev/select transitions.
+  nextPage($event): void {
+    this.getDtoDataForPage($event);
   }
 
-  private addInArray(newValues: HardWorkDto[]): void {
-    // this.log.info('New hard work values', newValues);
-    for (let i = newValues.length - 1; i > 0; i--) {
-      const hardWork = newValues[i];
-      if (!this.isUniqHardwork(hardWork)) {
-        this.log.warn('Not unique transaction', hardWork);
-        continue;
-      }
-      if (hardWork.blockDate < this.lowestBlockDate) {
-        this.lowestBlockDate = hardWork.blockDate;
-      }
-      HardWorkDto.enrich(hardWork);
-      this.dtos.push(hardWork);
-    }
+  previousPage($event): void {
+    this.getDtoDataForPage($event);
   }
 
+  selectPage($event): void {
+    this.getDtoDataForPage($event);
+  }
+
+  handleFilterUpdate(_$event): void {
+    this.getDtoDataForPage(0);
+  }
 }

@@ -19,14 +19,8 @@ export class SnackService {
   }
 
   public openSnack(message): void {
-    let className = '';
-    if (this.vt.isNonScoreboard()) {
-      className = 'snack-bar';
-    } else {
-      className = 'snack-bar-dark';
-    }
     this.snackBar.openFromComponent(SnackBarComponent, {
-      panelClass: className,
+      panelClass: 'snack-bar',
       duration: 10000,
       data: message,
       horizontalPosition: this.horizontalPosition,
@@ -49,8 +43,8 @@ export class SnackService {
     return s;
   }
 
-  public handleError<T>(operation = 'operation', result?: T): any {
-    return (error: any): Observable<T> => {
+  public handleError<T>(operation = 'operation', result?: T): (input: any) => Observable<T> {
+    return (error: {error?: {message: string}}): Observable<T> => {
       this.dismiss();
       this.openSnack(this.getErrorText(error));
       this.log.error('Catch error:', error); // log to console instead

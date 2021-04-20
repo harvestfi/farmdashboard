@@ -1,4 +1,4 @@
-import {Component, ContentChild, Injectable, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ContentChild, Directive, Injectable, Input, TemplateRef, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -8,6 +8,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 })
 @Injectable()
 export class CustomModalComponent {
+    @Input() name;
     @ViewChild('modal') private modalContent: TemplateRef<CustomModalComponent>;
     @ContentChild(TemplateRef) template;
     public modalRef: NgbModalRef;

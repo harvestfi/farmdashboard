@@ -79,7 +79,12 @@ import { Web3chartComponent } from './web3charts/components/web3chart/web3chart.
 import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
 import {RewardsHistoryDialogComponent} from './dialogs/rewards-history-dialog/rewards-history-dialog.component';
 import {VaultFilterPipe} from './dialogs/rewards-history-dialog/vault-filter.pipe';
-
+import {TransactionComponent} from './static/components/transactions/transaction.component';
+import {IconsComponent} from './static/components/icons/icons.component';
+import {GasDialogComponent} from './dialogs/gas-dialog/gas-dialog.component';
+import {PaginatorComponent} from './common/paginator/paginator.component';
+import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
+import {SelectElementComponent} from './common/select-element/select-element.component';
 declare let require: any;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -141,8 +146,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     UserBalancesDialogComponent,
     DownloadHistoricDataDialogComponent,
     VaultFilterPipe,
+    TransactionComponent,
+    IconsComponent,
     Web3chartsComponent,
-    Web3chartComponent
+    Web3chartComponent,
+    GasDialogComponent,
+    PaginatorComponent,
+    StrategyListFilterPipe,
+    SelectElementComponent
   ],
   imports: [
     AppRoutingModule,
@@ -161,8 +172,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpClientModule,
     LoggerModule.forRoot({
       serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
-      level: 3,
-      serverLogLevel: NgxLoggerLevel.ERROR,
+      level: 0,
+      serverLogLevel: NgxLoggerLevel.OFF,
       disableConsoleLogging: false
     }),
     BrowserAnimationsModule,

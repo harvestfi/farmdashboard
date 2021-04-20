@@ -1,10 +1,13 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
-import {HttpService} from '../../services/http.service';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.component';
-import { IChartApi } from 'lightweight-charts';
+import {IChartApi} from 'lightweight-charts';
+import {HardworksService} from '../../services/http/hardworks.service';
+import {TvlsService} from '../../services/http/tvls.service';
+import {PricesCalculationService} from '../../services/prices-calculation.service';
+
 @Component({
   selector: 'app-farm-buybacks-dialog',
   templateUrl: './farm-buybacks-dialog.component.html',
@@ -17,10 +20,13 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
   chart: IChartApi;
 
 
-  constructor(private httpService: HttpService,
-              public vt: ViewTypeService,
+  constructor(public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              private hardworksService: HardworksService,
+              private priceService: PricesCalculationService,
+              private tvlsService: TvlsService,
+  ) {
                 super();
   }
 
@@ -29,13 +35,19 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
   }
 
   private loadData(): void {
-    this.httpService.getHardWorkHistoryData().subscribe(data => {
+    this.hardworksService.getHardWorkHistoryData().subscribe(data => {
       this.log.debug('History of All Farm buybacks loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(2);
-      data?.forEach(dto => chartBuilder.addInData(0, dto.blockDate, dto.farmBuybackSum / 1000));
+      data?.forEach(dto => {
+        let bb = dto.farmBuybackSum / 1000;
+        if (dto.network === 'bsc') {
+          bb = bb / this.priceService.lastFarmPrice();
+        }
+        chartBuilder.addInData(0, dto.blockDate, bb);
+      });
 
-      this.httpService.getHistoryTvlByVault('PS').subscribe(vaultData => {
+      this.tvlsService.getHistoryTvlByVault('PS').subscribe(vaultData => {
             this.log.debug('History of PS TVL loaded ', vaultData);
             vaultData?.forEach(dto => chartBuilder.addInData(1, dto.calculateTime, dto.sharePrice / 1000));
             this.handleData(chartBuilder, [

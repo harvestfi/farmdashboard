@@ -1,58 +1,56 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HarvestDto} from '../models/harvest-dto';
 import {VaultStats} from '../models/vault-stats';
-import {LpStat} from '../models/lp-stat';
 import {PricesDto} from '../models/prices-dto';
 import {StaticValues} from '../static/static-values';
 import {HardWorkDto} from '../models/hardwork-dto';
 import {RewardDto} from '../models/reward-dto';
-import {LastPrice} from '../models/last-price';
-import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
-import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {NGXLogger} from 'ngx-logger';
+import {ContractsService} from './contracts.service';
+import {Vault} from '../models/vault';
+import {RewardsService} from './http/rewards.service';
+import {HttpService} from './http/http.service';
+import {HarvestsService} from './http/harvests.service';
+import {PricesService} from './http/prices.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PricesCalculationService {
   public tvls = new Map<string, number>();
-  public tvlNames = new Set<string>();
-  public allTvls = 0.0;
-  public allPrices: LastPrice[] = [];
   public vaultStats = new Map<string, VaultStats>();
   public lastHarvests = new Map<string, HarvestDto>();
   public lastHardWorks = new Map<string, HardWorkDto>();
   public lastRewards = new Map<string, RewardDto>();
-  public latestHarvest: HarvestDto;
+  private latestHarvest: HarvestDto;
   public latestHardWork: HardWorkDto;
   private lastTvlDates = new Map<string, number>();
   private rewardEnded = new Set<string>();
-  private lastPrices = new Map<string, PricesDto>();
+  private lastPrices = new Map<string, Map<string, PricesDto>>(
+      Array.from(StaticValues.NETWORKS.keys()).map(name => [name, new Map()])
+  );
 
-  constructor(private log: NGXLogger, @Inject(APP_CONFIG) public config: AppConfig) {
-    StaticValues.vaults.forEach(v => this.tvls.set(v, 0.0));
-    this.log.updateConfig({
-      serverLoggingUrl: config.apiEndpoint + '/api/logs',
-      level: config.debugLevel,
-      serverLogLevel: NgxLoggerLevel.ERROR,
-      disableConsoleLogging: false
-     });
+  constructor(private log: NGXLogger, private contractsService: ContractsService,
+              private pricesService: PricesService,
+              private rewardsService: RewardsService,
+              private httpService: HttpService,
+              private harvestsService: HarvestsService) {
+    contractsService.getContracts(Vault).subscribe(vaults => {
+      vaults.forEach(v => this.tvls.set(v.contract.name, 0.0));
+    });
+    this.pricesService.getLastPrices().subscribe(data => data?.forEach(this.savePrice.bind(this)));
+    this.harvestsService.getHarvestTxHistoryData().subscribe(data => data?.forEach(this.writeFromHarvestTx.bind(this)));
+    this.rewardsService.getLastRewards().subscribe(data => data?.forEach(reward => this.saveReward(RewardDto.enrich(reward))));
+    this.subscribeToPrices();
+    this.subscribeToRewards();
   }
 
   public writeFromHarvestTx(tx: HarvestDto): void {
     if (!this.latestHarvest || this.latestHarvest.blockDate < tx.blockDate) {
-      if (tx.lastGas != null && (tx.lastGas + '') !== 'NaN' && tx.lastGas !== 0) {
-        StaticValues.lastGas = tx.lastGas;
-      }
       this.latestHarvest = tx;
     }
     if (!tx || this.lastTvlDates.get(tx.vault) > tx.blockDate) {
       return;
-    }
-    if (tx.vault === 'PS') {
-      StaticValues.staked = (tx.lastTvl / tx.sharePrice) * 100;
-      StaticValues.farmTotalSupply = tx.sharePrice;
-    }
-    if (tx.vault === 'iPS') {
-      StaticValues.stakedNewPS = (tx.lastTvl / tx.totalAmount) * 100;
     }
     const vaultStats = new VaultStats();
     vaultStats.lpStat = tx.lpStatDto;
@@ -74,31 +72,6 @@ export class PricesCalculationService {
     }
 
     this.lastHardWorks.set(tx.vault, tx);
-  }
-
-  public updateTvls(): void {
-    let allTvls = 0.0;
-    this.vaultStats.forEach((vaultStats: VaultStats, vaultName: string) => {
-      // console.log('vaultName ' + vaultName, vaultStats);
-      this.tvlNames.add(vaultName);
-      const tvl = this.calculateTvl(vaultStats, vaultName);
-      if (tvl) {
-        this.tvls.set(vaultName, tvl);
-        if (vaultName === 'iPS') {
-          return;
-        }
-        allTvls += tvl;
-      }
-    });
-    this.allTvls = allTvls / 1000000;
-    // console.log('allTvls ', this.allTvls);
-  }
-
-  public updatePrices(): void {
-    this.allPrices = Array.from(this.lastPrices.keys()).map(key => ({
-      tokenName: key,
-      tokenPrice: this.getPrice(key).toFixed(2)
-    }));
   }
 
   saveReward(tx: RewardDto): void {
@@ -173,10 +146,6 @@ export class PricesCalculationService {
     return 0;
   }
 
-  weeklyAllIncome(): number {
-    return (this.latestHardWork?.weeklyAllProfit / 0.7);
-  }
-
   lastFarmPrice(): number {
     if (StaticValues.lastPrice != null) {
       return StaticValues.lastPrice;
@@ -184,24 +153,10 @@ export class PricesCalculationService {
     return 0.0;
   }
 
-  lastAllUsersCount(): number {
-    if (!this.latestHarvest || !this.latestHarvest.allOwnersCount) {
-      return 0;
-    }
-    return this.latestHarvest?.allOwnersCount;
-  }
-
-  lastPoolsActiveUsersCount(): number {
-    if (!this.latestHarvest || !this.latestHarvest.allPoolsOwnersCount) {
-      return 0;
-    }
-    return this.latestHarvest?.allPoolsOwnersCount;
-  }
-
   savedGasFees(): number {
     let fees = 0;
     for (const hw of this.lastHardWorks.values()) {
-      if (hw.savedGasFeesSum) {
+      if (hw.network === 'eth' && hw.savedGasFeesSum) {
         fees += hw.savedGasFeesSum;
       } else {
         // this.log.warn('Saved Gas fees not found in ', hw);
@@ -210,36 +165,7 @@ export class PricesCalculationService {
     return fees;
   }
 
-  farmPsStaked(): number {
-    return StaticValues.staked;
-  }
-
-  farmNewPsStaked(): number {
-    return StaticValues.stakedNewPS;
-  }
-
-  farmLpStaked(): number {
-    let farmInLp = 0;
-    let lpStaked = 0;
-    for (const name of StaticValues.farmPools) {
-      const harvest = this.lastHarvests.get(name);
-      if (!harvest) {
-        continue;
-      }
-      if (harvest.lpStatDto.coin1 === 'FARM') {
-        farmInLp += harvest.lpStatDto.amount1;
-      }
-      if (harvest.lpStatDto.coin2 === 'FARM') {
-        farmInLp += harvest.lpStatDto.amount2;
-      }
-    }
-    if (farmInLp !== 0) {
-      lpStaked = (farmInLp / StaticValues.farmTotalSupply) * 100;
-    }
-    return lpStaked;
-  }
-
-  public getPrice(name: string): number {
+  public getPrice(name: string, network: string): number {
     name = StaticValues.mapCoinNameToSimple(name);
     if (StaticValues.isStableCoin(name)) {
       return 1.0;
@@ -247,43 +173,17 @@ export class PricesCalculationService {
     if (name === 'FARM') {
       return this.lastFarmPrice();
     }
-    if (!this.lastPrices.has(name)) {
+    if (!this.lastPrices.get(network).has(name)) {
       return 0;
     }
-    const usdPrice = this.getPrice(this.lastPrices.get(name).otherToken);
-    return this.lastPrices.get(name).price * usdPrice;
-  }
-
-  private calculateTvlForLp(lpStat: LpStat): number {
-    const simpleName1 = StaticValues.mapCoinNameToSimple(lpStat.coin1);
-    const simpleName2 = StaticValues.mapCoinNameToSimple(lpStat.coin2);
-    const price1 = this.getPrice(simpleName1);
-    const price2 = this.getPrice(simpleName2);
-    const amount1 = price1 * lpStat.amount1;
-    const amount2 = price2 * lpStat.amount2;
-    // console.log('calculateTvlForLp ', simpleName1, simpleName2, price1, price2, amount1, amount2);
-    return amount1 + amount2;
-  }
-
-  private calculateTvl(vaultStats: VaultStats, name: string): number {
-    if (name === 'PS') {
-      return vaultStats.tvl * StaticValues.lastPrice;
-    } else if (vaultStats.lpStat) {
-      // console.log('tvl for ' + name);
-      return this.calculateTvlForLp(vaultStats.lpStat);
-    } else if (vaultStats.tvl) {
-      const price = this.getPrice(name);
-      // if (price === 0) {
-      //   console.log('not found price for ' + name);
-      // }
-      return vaultStats.tvl * price;
-    }
-    return 0.0;
+    const tx = this.lastPrices.get(network).get(name);
+    const usdPrice = this.getPrice(tx.otherToken, network);
+    return tx.price * usdPrice;
   }
 
   public savePrice(tx: PricesDto): void {
     const name = StaticValues.mapCoinNameToSimple(tx.token);
-    const lastPriceDto = this.lastPrices.get(name);
+    const lastPriceDto = this.lastPrices.get(tx.network).get(name);
     if (lastPriceDto) {
       if (lastPriceDto.source !== tx.source) {
         this.log.warn('got prices with different sources', lastPriceDto.source, tx.source);
@@ -298,12 +198,16 @@ export class PricesCalculationService {
         this.log.info('New price changed more than 5%', lastPriceDto, tx);
       }
     }
-    this.lastPrices.set(name, tx);
-    this.updateTvls();
-    this.updatePrices();
+    this.lastPrices.get(tx.network).set(name, tx);
   }
 
-  getLastPrices(): Map<string, PricesDto> {
-    return this.lastPrices;
+  private subscribeToPrices() {
+    this.pricesService.subscribeToPrices().subscribe(prices => {
+      this.savePrice(prices);
+    });
+  }
+
+  private subscribeToRewards() {
+    this.rewardsService.subscribeToRewards().subscribe(this.saveReward.bind(this));
   }
 }

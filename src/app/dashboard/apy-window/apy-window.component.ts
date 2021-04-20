@@ -32,10 +32,6 @@ export class ApyWindowComponent implements OnInit {
     this.showModal.emit(false);
   }
 
-  prettyNumber(n: number): string {
-    return Utils.prettifyNumber(n);
-  }
-
   toApy(n: number): number {
     return Utils.aprToApyEveryDayReinvest(n);
   }
@@ -58,10 +54,6 @@ export class ApyWindowComponent implements OnInit {
   }
 
   // ---------------- GETTERS --------------------
-
-  getImgSrc(): string {
-    return StaticValues.getImgSrcForVault(this.poolName);
-  }
 
   get isAutoStakeVault(): boolean {
     return Utils.isAutoStakeVault(this.poolName);

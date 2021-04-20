@@ -1,10 +1,11 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 import {IChartApi} from 'lightweight-charts';
+import {HardworksService} from '../../services/http/hardworks.service';
 
 @Component({
   selector: 'app-hard-work-history-dialog',
@@ -20,7 +21,9 @@ export class HardWorkHistoryDialogComponent extends ChartGeneralMethodsComponent
   constructor(private httpService: HttpService,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
+              private log: NGXLogger,
+              private hardworksService: HardworksService,
+              ) {
                 super();
   }
 
@@ -29,7 +32,7 @@ export class HardWorkHistoryDialogComponent extends ChartGeneralMethodsComponent
   }
 
   private loadData(): void {
-    this.httpService.getHardWorkHistoryData().subscribe(data => {
+    this.hardworksService.getHardWorkHistoryData().subscribe(data => {
       this.log.debug('History of All Hard Works loaded ', data);
       const chartBuilder = new ChartBuilder();
       const hwFees = new Map<number, number>();

@@ -2,6 +2,7 @@ export class PricesDto {
   id: string;
   block: number;
   blockDate: number;
+  network: string;
   token: string;
   tokenAmount: number;
   otherToken: string;
@@ -18,6 +19,7 @@ export class PricesDto {
     tx.id = jsonData.id;
     tx.block = jsonData.block;
     tx.blockDate = jsonData.blockDate;
+    tx.network = jsonData.network;
     tx.token = jsonData.token;
     tx.tokenAmount = jsonData.tokenAmount;
     tx.otherToken = jsonData.otherToken;

@@ -25,7 +25,7 @@
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    padding: 10px 20px;
+    padding: 0.3em 20px;
 
     .title {
       font-weight: bold;
@@ -90,5 +90,30 @@
     text-align: center;
     padding: 20px;
     font-weight: bold;
+  }
+
+
+  .strategy-list-filter-box{
+    margin-bottom: 1em;
+    padding: 0em 1em;
+    display: flex;
+    gap: 1em;
+    @include responsive(small){
+      flex-direction: column;
+    }
+    select, #vaults-search {
+      position: relative;
+      padding: 0.2em;
+      box-sizing: border-box;
+      border-radius: 0.5em;
+      outline: none;
+    }
+
+    #vaults-search{
+      margin-left: auto;
+      @include responsive(small){
+        width: 100%;
+      }
+    }
   }
 }

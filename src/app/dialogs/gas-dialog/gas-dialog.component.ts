@@ -1,10 +1,11 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
 import {StaticValues} from '../../static/static-values';
-import {HttpService} from '../../services/http.service';
+import {HttpService} from '../../services/http/http.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../chart/chart-builder';
 import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component';
+import {HarvestsService} from '../../services/http/harvests.service';
 
 @Component({
   selector: 'app-gas-dialog',
@@ -16,7 +17,7 @@ export class GasDialogComponent extends ChartGeneralMethodsComponent implements 
   @Input('data') public data: Record<any, any>;
   ready = false;
 
-  constructor(private httpService: HttpService,
+  constructor(private harvestsService: HarvestsService,
               public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
@@ -29,7 +30,7 @@ export class GasDialogComponent extends ChartGeneralMethodsComponent implements 
 
   private loadData(): void {
     const currentDate = Math.ceil(new Date().getTime() / 1000);
-    this.httpService.getHarvestTxHistoryByRange(currentDate - StaticValues.SECONDS_OF_MONTH, currentDate).subscribe(data => {
+    this.harvestsService.getHarvestTxHistoryByRange(currentDate - StaticValues.SECONDS_OF_MONTH, currentDate).subscribe(data => {
       this.log.debug('Gas price history ', data);
       const chartBuilder = new ChartBuilder();
       let prevDate = 0;

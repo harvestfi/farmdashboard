@@ -1,7 +1,29 @@
 <div class="custom-table" [class]="vt.getThemeColor() + '-card'">
   <div class="title-bar">
     <h1 class="title">Strategies</h1>
+
+  </div>
+  <div class="strategy-list-filter-box">
+
+    <select [(ngModel)]="networkFilter" name="" id="">
+      <option value="">Network</option>
+      <option value="eth">Ethereum</option>
+      <option value="bsc">Binance</option>
+    </select>
+
+    <select [(ngModel)]="platformFilter" name="" id="">
+      <option value="">Platform</option>
+      <option *ngFor="let platform of platform_list" [value]="platform.prefix">{{platform.name}}</option>
+    </select>
+
+    <select [(ngModel)]="assetFilter" name="" id="">
+      <option value="">Asset</option>
+      <option *ngFor="let asset of asset_list" [value]="asset">{{asset}}</option>
+  
+    </select>
+
     <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
+
   </div>
   <div class="header">
       <div (click)="sortVaultsList('name')" class="header-column">Name <i class="fas fa-sort"></i></div>
@@ -11,56 +33,50 @@
       <div (click)="sortVaultsList('total_earned')" class="header-column desktop-only">Total Earned <i class="fas fa-sort"></i></div>
   </div>
   <div class="content">
-    <div *ngFor="let row of vaults" class="row">
-      <div class="column">
-        <img width="16" [src]="getImgSrc(row)" [alt]="row + ' icon'"> {{row}}
+    <div *ngIf="vaultsList | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
+      <div *ngFor="let row of filteredVaults " class="row">
+        <div class="column">
+          <app-vault-icon [vault]="row.name"></app-vault-icon> {{prettyName(row.name)}}
+        </div>
+        <div class="column">
+          <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row.name]">
+            <app-apy-window (showModal)="toggleAPYWindow(row.name)" [poolName]="row.name"></app-apy-window>
+          </app-draggable-modal>
+          <span class="pointer" (click)="toggleAPYWindow(row.name)" matTooltip="
+          APR: {{vaultFullApy(row.name)}}%
+          Click to open details"
+          matTooltipClass="tooltip-spaced">
+            {{vaultFullApy(row.name)}}% <i class="far fa-window-restore"></i>
+          </span>
+        </div>
+        <div  class="column">
+          <app-custom-modal [name]="'tvlModal_' + row.name">
+            <ng-template>
+              <app-tvl-dialog [data]="{type: row.name}"></app-tvl-dialog>
+            </ng-template>
+          </app-custom-modal>
+          <span
+          class="pointer"
+          (click)="openTvlDialog(row.name)"
+          matTooltip="
+          TVL: {{vaultTvl(row.name, row.network) | number}}M$
+          Click to open TVL history chart"
+          matTooltipClass="tooltip-spaced">
+          ${{vaultTvl(row.name, row.network)| number: '1.1-1'}}M
+          </span>
+        </div>
+        <div class="column desktop-only">
+          {{vaultUsers(row.name)}}
+        </div>
+        <div class="column desktop-only">
+          ${{vaultTotalEarning(row.name) | number: '1.1-1'}}
+        </div>
       </div>
-      <div class="column">
-        <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row]">
-          <app-apy-window (showModal)="toggleAPYWindow(row)" [poolName]="row"></app-apy-window>
-        </app-draggable-modal>
-        <span class="pointer" (click)="toggleAPYWindow(row)" matTooltip="
-        APR: {{vaultFullApy(row)}}%
-        Click to open details"
-        matTooltipClass="tooltip-spaced">
-          {{vaultFullApy(row)}}% <i class="far fa-window-restore"></i>
-        </span>
+
+      <div class="empty-list" *ngIf="!filteredVaults.length">
+        🏜️ No results found 🏜️
       </div>
-      <div  class="column">
-        <app-custom-modal #tvlModal>
-          <ng-template>
-            <app-tvl-dialog [data]="{type: row}"></app-tvl-dialog>
-          </ng-template>
-        </app-custom-modal>
-        <span
-        class="pointer"
-        (click)="openTvlDialog()" 
-        matTooltip="
-        TVL: {{vaultTvl(row) | number}}$ 
-        Click to open TVL history chart"
-        matTooltipClass="tooltip-spaced">
-        ${{vaultTvl(row)| number: '1.1-1'}}M
-        </span>
-      </div>
-      <div class="column desktop-only">
-        {{vaultUsers(row)}}
-      </div>
-      <div class="column desktop-only">
-        ${{vaultTotalEarning(row) | number: '1.1-1'}}
-      </div>
-    </div>
-    <div class="empty-list" *ngIf="!vaults.length">
-      🏜️ No results found for '{{searchTerm}}' 🏜️
     </div>
   </div>
 </div>
-
-<table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard" style="margin-top: 10px;">
-
-  <tr *ngFor="let vault of vaultsList">
-    <td>
-      <app-tvl-box [tvlName]="vault"></app-tvl-box>
-    </td>
-  </tr>
-</table>
 
