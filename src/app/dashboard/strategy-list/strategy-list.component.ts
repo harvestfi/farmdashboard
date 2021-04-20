@@ -6,6 +6,7 @@ import StrategyListCommonMethods from './strategy-list-common-methods.utility';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
 import {NGXLogger} from 'ngx-logger';
+import { HarvestDataService } from 'src/app/services/data/harvest-data.service';
 
 @Component({
   selector: 'app-strategy-list',
@@ -30,10 +31,11 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   constructor(
       public vt: ViewTypeService,
       public pricesCalculationService: PricesCalculationService,
+      public harvestDataService: HarvestDataService,
       private contractsService: ContractsService,
       private log: NGXLogger
   ) {
-    super(pricesCalculationService);
+    super(pricesCalculationService, harvestDataService);
   }
 
   ngAfterViewInit(): void {

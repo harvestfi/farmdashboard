@@ -1,4 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import { HarvestDataService } from 'src/app/services/data/harvest-data.service';
 import {PricesCalculationService} from 'src/app/services/prices-calculation.service';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
 @Pipe({
@@ -6,9 +7,10 @@ import StrategyListCommonMethods from './strategy-list-common-methods.utility';
 })
 export class StrategyListFilterPipe extends StrategyListCommonMethods implements PipeTransform {
     constructor(
-        public pricesCalculationService: PricesCalculationService
+        public pricesCalculationService: PricesCalculationService,
+        public harvestDataService: HarvestDataService
     ) {
-        super(pricesCalculationService);
+        super(pricesCalculationService, harvestDataService);
     }
 
     transform(
@@ -37,7 +39,6 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
             const right = sortDirection === 'asc' ? a : b;
             switch (currentSortingValue) {
               case 'name':
-                console.log(left.name, right.name);
                 if (left.name < right.name) {
                   return -1;
                 }
@@ -45,7 +46,7 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
               case 'apy':
                 return  Number(this.vaultFullApy(right.name)) - Number(this.vaultFullApy(left.name));
               case 'tvl':
-                return this.vaultTvl(right.name) - this.vaultTvl(left.name);
+                return this.vaultTvl(right.name, right.network) - this.vaultTvl(left.name, left.network);
               case 'users':
                 return this.vaultUsers(right.name) - this.vaultUsers(left.name);
               case 'total_earned':

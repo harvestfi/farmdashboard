@@ -1,9 +1,12 @@
+import { HarvestDataService } from 'src/app/services/data/harvest-data.service';
 import { PricesCalculationService } from 'src/app/services/prices-calculation.service';
+
 import {Utils} from '../../static/utils';
 
 abstract class StrategyListCommonMethods {
     constructor(
-        public pricesCalculationService: PricesCalculationService
+        public pricesCalculationService: PricesCalculationService,
+        public harvestDataService: HarvestDataService
     ){}
 
     vaultRewardApyPrettify(tvlName: string): string {
@@ -40,8 +43,8 @@ abstract class StrategyListCommonMethods {
     return Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName));
     }
 
-    vaultTvl(tvlName: string): number {
-    return this.pricesCalculationService.tvls.get(tvlName) / 1000000;
+    vaultTvl(vault_name: string, network: string): number {
+    return (this.harvestDataService.getVaultTvl(vault_name, network) / 1000000) || 0;
     }
 
     vaultTotalEarning(tvlName: string): number {
