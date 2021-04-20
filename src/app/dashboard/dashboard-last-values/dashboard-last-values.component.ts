@@ -53,10 +53,7 @@ export class DashboardLastValuesComponent implements OnInit {
     );
 
     // PRICE LOADING
-    this.pricesService.getLastPrices(StaticValues.NETWORKS.get('eth')).subscribe(data =>
-        data?.forEach(this.handlePrice.bind(this))
-    );
-    this.pricesService.getLastPrices(StaticValues.NETWORKS.get('bsc')).subscribe(data =>
+    this.pricesService.getLastPrices().subscribe(data =>
         data?.forEach(this.handlePrice.bind(this))
     );
     this.pricesService.subscribeToPrices().subscribe(this.handlePrice.bind(this));

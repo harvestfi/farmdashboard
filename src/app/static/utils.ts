@@ -171,4 +171,11 @@ export class Utils {
     .filter(a => !!a)
     .reduce((n, p) => n + p, 0);
   }
+
+  public static prettyVaultName(name: string): string {
+    if (name.split('_').length >= 3) {
+      name = name.replace('ONEINCH_', '');
+    }
+    return name.replace('ONEINCH', '1INCH');
+  }
 }

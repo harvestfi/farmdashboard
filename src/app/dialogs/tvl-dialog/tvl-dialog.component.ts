@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild, Input} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {HarvestTvl} from '../../models/harvest-tvl';
 import {createChart, IChartApi, ISeriesApi, MouseEventParams, SeriesMarker, Time} from 'lightweight-charts';
@@ -70,9 +70,7 @@ export class TvlDialogComponent extends ChartGeneralMethodsComponent implements 
       this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
     } else {
       this.chart = createChart(this.chartEl.nativeElement, options);
-      if (this.vt.isNonScoreboard()) {
-        this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
-      }
+      this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
     }
   }
 
