@@ -17,16 +17,12 @@
 
     <select [(ngModel)]="platformFilter" name="" id="">
       <option value="">Platform</option>
-      <option value="SUSHI_">SUSHI</option>
-      <option value="UNI_">UNISWAP</option>
-      <option value="CRV_">CURVE</option>
-      <option value="ONEINCH_">ONEINCH</option>
-      <option value="DAI_">DAI</option>
+      <option *ngFor="let platform of platform_list" [value]="platform.prefix">{{platform.name}}</option>
     </select>
 
     <select [(ngModel)]="assetFilter" name="" id="">
       <option value="">Asset</option>
-      <option value="USDC">USDC</option>
+      <option *ngFor="let asset of asset_list" [value]="asset">{{asset}}</option>
   
     </select>
 

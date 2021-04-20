@@ -7,7 +7,7 @@ import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
 import {NGXLogger} from 'ngx-logger';
 import { HarvestDataService } from 'src/app/services/data/harvest-data.service';
-
+import {assets, platforms} from './strategy-list.constants';
 @Component({
   selector: 'app-strategy-list',
   templateUrl: './strategy-list.component.html',
@@ -25,6 +25,8 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   // false = desc, true = asc
   public sortDirection = 'desc';
   public currentSortingValue = 'tvl';
+  public platform_list = platforms;
+  public asset_list = assets;
 
   @ViewChildren(CustomModalComponent) private tvlModals: QueryList<CustomModalComponent>;
 
