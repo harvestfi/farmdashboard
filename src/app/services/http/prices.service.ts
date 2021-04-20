@@ -44,8 +44,8 @@ export class PricesService {
         });
     }
 
-    getLastPrices(network?: Network): Observable<PricesDto[]> {
-        return this.httpService.httpGet('/price/token/latest', network);
+    getLastPrices(): Observable<PricesDto[]> {
+        return this.httpService.httpGetWithNetwork('/price/token/latest');
     }
 
 }

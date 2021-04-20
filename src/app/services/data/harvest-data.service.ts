@@ -4,6 +4,7 @@ import {HarvestsService} from '../http/harvests.service';
 import {StaticValues} from '../../static/static-values';
 import {HarvestDto} from '../../models/harvest-dto';
 import {Utils} from '../../static/utils';
+import {VaultStats} from '../../models/vault-stats';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,10 @@ export class HarvestDataService {
   private psFarmTvl = 0;
   private farmTotalSupply = 0;
   private lpFarmStaked = 0;
+  public lastHarvests = new Map<string, HarvestDto>();
+  private latestHarvest: HarvestDto;
+  private lastTvlDates = new Map<string, number>();
+  public vaultStats = new Map<string, VaultStats>();
 
   constructor(private harvestsService: HarvestsService, private log: NGXLogger) {
     this.load();
@@ -42,10 +47,23 @@ export class HarvestDataService {
 
   private handleHarvest(harvest: HarvestDto) {
     HarvestDto.enrich(harvest);
+    if (!this.latestHarvest || this.latestHarvest.blockDate < harvest.blockDate) {
+      this.latestHarvest = harvest;
+    }
+    if (!harvest || this.lastTvlDates.get(harvest.vault) > harvest.blockDate) {
+      return;
+    }
     if (harvest.lastGas.toString() !== 'NaN'
         && harvest.lastGas !== 0) {
       this.lastGas.set(harvest.network, harvest.lastGas);
     }
+    const vaultStats = new VaultStats();
+    vaultStats.lpStat = harvest.lpStatDto;
+    vaultStats.tvl = harvest.lastTvl;
+    vaultStats.owners = harvest.ownerCount;
+    this.vaultStats.set(harvest.vault, vaultStats);
+    this.lastTvlDates.set(harvest.vault, harvest.blockDate);
+    this.lastHarvests.set(harvest.vault, harvest);
     this.poolUsers.set(harvest.network, harvest.allPoolsOwnersCount);
     this.userCounts.set(harvest.network, harvest.allOwnersCount);
     this.updateFarmData(harvest);

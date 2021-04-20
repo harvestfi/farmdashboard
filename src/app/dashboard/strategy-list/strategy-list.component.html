@@ -36,7 +36,7 @@
     <div *ngIf="vaultsList | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
       <div *ngFor="let row of filteredVaults " class="row">
         <div class="column">
-          <app-vault-icon [vault]="row.name"></app-vault-icon> {{row.name}}
+          <app-vault-icon [vault]="row.name"></app-vault-icon> {{prettyName(row.name)}}
         </div>
         <div class="column">
           <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row.name]">

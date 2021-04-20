@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HardWorkDto} from 'src/app/models/hardwork-dto';
+import {Utils} from '../../../static/utils';
 
 @Component({
   selector: 'app-hardwork-trade',
@@ -22,7 +23,7 @@ export class HardworkTradeComponent implements OnInit {
     HardWorkDto.fillBlockDateAdopted(this.dto);
     const temp = this.dto.id.split('_');
     this.hash = temp[0];
-    this.name = this.dto.vault.replace('ONEINCH_', '');
+    this.name = Utils.prettyVaultName(this.dto.vault);
   }
 
 }
