@@ -1,4 +1,5 @@
 import {TransferDto} from '../models/transfer-dto';
+import {HarvestDto} from '../models/harvest-dto';
 
 export class Utils {
 
@@ -163,12 +164,13 @@ export class Utils {
     }
   }
 
-  public static iterableReduce(arr: IterableIterator<number>) {
+  public static iterableReduce(arr: IterableIterator<any>, mapper = a => a): number {
     if (!arr) {
       return 0;
     }
     return Array.from(arr)
     .filter(a => !!a)
+    .map(mapper)
     .reduce((n, p) => n + p, 0);
   }
 
@@ -177,5 +179,20 @@ export class Utils {
       name = name.replace('ONEINCH_', '');
     }
     return name.replace('ONEINCH', '1INCH');
+  }
+
+  public static addInMap(map: Map<any, number>, key: any, value: number): void {
+    if (!!value
+        && value.toString() !== 'NaN'
+        && value !== 0) {
+      map.set(key, value);
+    }
+  }
+
+  public static addInArrayAtTheStart<T>(arr: T[], el: T, max: number = 100): void {
+    arr.unshift(el);
+    if (arr.length > max) {
+      arr.pop();
+    }
   }
 }

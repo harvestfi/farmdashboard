@@ -6,7 +6,7 @@ import {ChartGeneralMethodsComponent} from '../../chart/chart-general-methods.co
 import {IChartApi} from 'lightweight-charts';
 import {HardworksService} from '../../services/http/hardworks.service';
 import {TvlsService} from '../../services/http/tvls.service';
-import {PricesCalculationService} from '../../services/prices-calculation.service';
+import {PriceDataService} from '../../services/data/price-data.service';
 
 @Component({
   selector: 'app-farm-buybacks-dialog',
@@ -24,7 +24,7 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private hardworksService: HardworksService,
-              private priceService: PricesCalculationService,
+              private priceData: PriceDataService,
               private tvlsService: TvlsService,
   ) {
                 super();
@@ -42,7 +42,12 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
       data?.forEach(dto => {
         let bb = dto.farmBuybackSum / 1000;
         if (dto.network === 'bsc') {
-          bb = bb / this.priceService.lastFarmPrice();
+          const farmPrice = this.priceData.getUsdPrice('FARM', 'eth');
+          if (farmPrice && farmPrice !== 0) {
+            bb = bb / farmPrice;
+          } else {
+            bb = 0;
+          }
         }
         chartBuilder.addInData(0, dto.blockDate, bb);
       });

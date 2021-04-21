@@ -14,20 +14,7 @@ export class PricesDto {
   blockDateAdopted: Date;
 
   public static fromJson(data: string): PricesDto {
-    const jsonData = JSON.parse(data);
-    const tx: PricesDto = new PricesDto();
-    tx.id = jsonData.id;
-    tx.block = jsonData.block;
-    tx.blockDate = jsonData.blockDate;
-    tx.network = jsonData.network;
-    tx.token = jsonData.token;
-    tx.tokenAmount = jsonData.tokenAmount;
-    tx.otherToken = jsonData.otherToken;
-    tx.otherTokenAmount = jsonData.otherTokenAmount;
-    tx.price = jsonData.price;
-    tx.buy = jsonData.buy;
-    tx.source = jsonData.source;
-
+    const tx: PricesDto = Object.assign(new PricesDto(), JSON.parse(data));
     PricesDto.fillBlockDateAdopted(tx);
     return tx;
   }

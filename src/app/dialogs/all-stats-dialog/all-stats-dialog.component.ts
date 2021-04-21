@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {StaticValues} from '../../static/static-values';
-import {HardWorkDto} from '../../models/hardwork-dto';
-import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {Sort} from '@angular/material/sort';
-import { ViewTypeService } from 'src/app/services/view-type.service';
+import {ViewTypeService} from 'src/app/services/view-type.service';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
+import {HarvestDataService} from '../../services/data/harvest-data.service';
+import {HardworkDataService} from '../../services/data/hardwork-data.service';
 
 @Component({
   selector: 'app-all-stats-dialog',
@@ -17,25 +16,26 @@ export class AllStatsDialogComponent implements OnInit {
   sortedVaults: string[];
   includeInactive = true;
 
-  constructor(private pricesCalculationService: PricesCalculationService,
+  constructor(private harvestData: HarvestDataService,
+              private hardworkData: HardworkDataService,
               public vt: ViewTypeService,
               private contractsService: ContractsService) {
   }
 
-  get tvls(): Map<string, number> {
-    return this.pricesCalculationService.tvls;
+  tvl(vaultName: string): number {
+    return this.harvestData.getVaultTvl(vaultName, 'eth');
   }
 
-  get hardWorks(): Map<string, HardWorkDto> {
-    return this.pricesCalculationService.lastHardWorks;
+  fullRewardUsdTotal(name: string): number {
+    return 0;
   }
 
   get psIncome(): number {
-    return this.pricesCalculationService.psIncome();
+    return 0;
   }
 
   get psApr(): number {
-    return this.pricesCalculationService.latestHardWork?.psApr;
+    return 0;
   }
 
   ngOnInit(): void {
@@ -46,11 +46,11 @@ export class AllStatsDialogComponent implements OnInit {
   }
 
   users(name: string): number {
-    return this.pricesCalculationService.vaultStats.get(name)?.owners;
+    return this.harvestData.getVaultLastInfo(name, 'eth')?.ownerCount;
   }
 
   incomeApr(tvlName: string): number {
-    return this.pricesCalculationService.incomeApr(tvlName);
+    return 0;
   }
 
   sortData(sort: Sort): void {
@@ -71,19 +71,19 @@ export class AllStatsDialogComponent implements OnInit {
         case 'name':
           return this.compare(a, b, isAsc);
         case 'tvl':
-          return this.compare(this.tvls.get(a), this.tvls.get(b), isAsc);
+          return this.compare(this.tvl(a), this.tvl(b), isAsc);
         case 'users' :
           return this.compare(this.users(a), this.users(b), isAsc);
         case 'income': {
           let incomeA;
           let incomeB;
           if (a !== 'PS') {
-            incomeA = this.hardWorks.get(a)?.fullRewardUsdTotal;
+            incomeA = this.fullRewardUsdTotal(a);
           } else {
             incomeA = this.psIncome;
           }
           if (b !== 'PS') {
-            incomeB = this.hardWorks.get(b)?.fullRewardUsdTotal;
+            incomeB = this.fullRewardUsdTotal(b);
           } else {
             incomeB = this.psIncome;
           }
@@ -93,12 +93,12 @@ export class AllStatsDialogComponent implements OnInit {
           let percA;
           let percB;
           if (a !== 'PS') {
-            percA = this.pricesCalculationService.incomeApr(a);
+            percA = this.incomeApr(a);
           } else {
             percA = this.psApr * 52.14285714285714;
           }
           if (b !== 'PS') {
-            percB = this.pricesCalculationService.incomeApr(b);
+            percB = this.incomeApr(b);
           } else {
             percB = this.psApr * 52.14285714285714;
           }
@@ -138,12 +138,12 @@ export class AllStatsDialogComponent implements OnInit {
           let allAprA;
           let allAprB;
           if (a !== 'PS') {
-            allAprA = this.vaultRewardApr(a) + this.pricesCalculationService.incomeApr(a);
+            allAprA = this.vaultRewardApr(a) + this.incomeApr(a);
           } else {
             allAprA = 0;
           }
           if (b !== 'PS') {
-            allAprB = this.vaultRewardApr(b) + this.pricesCalculationService.incomeApr(b);
+            allAprB = this.vaultRewardApr(b) + this.incomeApr(b);
           } else {
             allAprB = 0;
           }
@@ -160,14 +160,10 @@ export class AllStatsDialogComponent implements OnInit {
   }
 
   vaultReward(tvlName: string): number {
-    return this.pricesCalculationService.vaultReward(tvlName);
-  }
-
-  vaultRewardPeriod(tvlName: string): number {
-    return this.pricesCalculationService.vaultRewardPeriod(tvlName);
+    return 0;
   }
 
   vaultRewardApr(tvlName: string): number {
-    return this.pricesCalculationService.vaultRewardApr(tvlName);
+    return 0;
   }
 }

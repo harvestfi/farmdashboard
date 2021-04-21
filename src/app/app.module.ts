@@ -17,7 +17,6 @@ import { AngularEmojisModule } from 'angular-emojis';
 import { HarvestFilterPipe } from './flow-cards/harvest/harvest-filter.pipe';
 import { UniswapFilterPipe } from './flow-cards/uniswap/uniswap-filter.pipe';
 import { DashboardLastValuesComponent } from './dashboard/dashboard-last-values/dashboard-last-values.component';
-import { TvlBoxComponent } from './dashboard/tvl-box/tvl-box.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TvlDialogComponent } from './dialogs/tvl-dialog/tvl-dialog.component';
@@ -102,7 +101,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HarvestFilterPipe,
     UniswapFilterPipe,
     DashboardLastValuesComponent,
-    TvlBoxComponent,
     TvlDialogComponent,
     MainPageScoreboardComponent,
     MainPageViewComponent,

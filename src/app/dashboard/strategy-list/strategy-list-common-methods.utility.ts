@@ -1,59 +1,63 @@
 import {HarvestDataService} from 'src/app/services/data/harvest-data.service';
-import {PricesCalculationService} from 'src/app/services/prices-calculation.service';
 
 import {Utils} from '../../static/utils';
+import {HardworkDataService} from '../../services/data/hardwork-data.service';
+import {RewardDataService} from '../../services/data/reward-data.service';
 
 abstract class StrategyListCommonMethods {
-  constructor(
-      public pricesCalculationService: PricesCalculationService,
-      public harvestDataService: HarvestDataService
+  protected constructor(
+      public harvestData: HarvestDataService,
+      public hardworkData: HardworkDataService,
+      public rewardData: RewardDataService
   ) {
   }
 
-  vaultRewardApyPrettify(tvlName: string): string {
-    return Utils.prettifyNumber(this.pricesCalculationService.vaultRewardWeeklyApy(tvlName));
+  vaultRewardApyPrettify(name: string, network: string): string {
+    return Utils.prettifyNumber(this.rewardData.getWeeklyApy(name, network));
   }
 
-  vaultRewardAprPrettify(tvlName: string): string {
-    return Utils.prettifyNumber(this.vaultRewardApr(tvlName));
+  vaultRewardAprPrettify(tvlName: string, network: string): string {
+    return Utils.prettifyNumber(this.vaultRewardApr(tvlName, network));
   }
 
-  vaultRewardApr(tvlName: string): number {
-    return this.pricesCalculationService.vaultRewardApr(tvlName);
+  vaultRewardApr(vaultName: string, network: string): number {
+    return this.rewardData.vaultRewardApr(vaultName, network,
+        this.harvestData.getVaultLastInfo(vaultName, network)?.lastUsdTvl);
   }
 
-  vaultFullApy(name: string): string {
+  vaultFullApy(name: string, network: string): string {
     if (name === 'PS') {
-      return this.vaultRewardApyPrettify(name);
+      return this.vaultRewardApyPrettify(name, network);
     }
     if (Utils.isAutoStakeVault(name)) {
-      return this.vaultRewardAprPrettify(name);
+      return this.vaultRewardAprPrettify(name, network);
     }
-    return Utils.prettifyNumber(this.vaultApy(name) + this.vaultRewardApy(name));
+    return Utils.prettifyNumber(this.vaultApy(name, network) + this.vaultRewardApy(name, network));
   }
 
-  vaultApy(tvlName: string): number {
-    return Utils.aprToApyEveryDayReinvest(this.vaultApr(tvlName));
+  vaultApy(tvlName: string, network: string): number {
+    return Utils.aprToApyEveryDayReinvest(this.vaultApr(tvlName, network));
   }
 
-  vaultApr(tvlName: string): number {
-    return Math.max(this.pricesCalculationService.incomeApr(tvlName), 0);
+  vaultApr(tvlName: string, network: string): number {
+    return Math.max(this.hardworkData.getWeeklyApr(tvlName, network), 0);
   }
 
-  vaultRewardApy(tvlName: string): number {
-    return Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName));
+  vaultRewardApy(tvlName: string, network: string): number {
+    return Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName, network));
   }
 
   vaultTvl(vault_name: string, network: string): number {
-    return (this.harvestDataService.getVaultTvl(vault_name, network) / 1000000) || 0;
+    return (this.harvestData.getVaultTvl(vault_name, network) / 1000000) || 0;
   }
 
-  vaultTotalEarning(tvlName: string): number {
-    return (this.pricesCalculationService.lastHardWorks.get(tvlName)?.fullRewardUsdTotal * 0.7) || 0;
+  vaultTotalEarning(vaultName: string, network: string): number {
+    const hw = this.hardworkData.getLastHardWork(vaultName, network);
+    return (hw?.fullRewardUsdTotal * (1 - hw?.profitSharingRate)) || 0;
   }
 
-  vaultUsers(tvlName: string): number {
-    return this.pricesCalculationService.lastHarvests.get(tvlName)?.ownerCount || 0;
+  vaultUsers(vaultName: string, network: string): number {
+    return this.harvestData.getVaultLastInfo(vaultName, network)?.ownerCount || 0;
   }
 
   prettyName(name: string): string {

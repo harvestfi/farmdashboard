@@ -1,22 +1,18 @@
 <div class="custom-table" [class]="vt.getThemeColor() + '-card'">
-  <div class="title-bar">
-    <h1 class="title">Strategies</h1>
-
-  </div>
   <div class="strategy-list-filter-box">
 
-    <select [(ngModel)]="networkFilter" name="" id="">
+    <select [(ngModel)]="networkFilter" name="" id="networkFilter">
       <option value="">Network</option>
       <option value="eth">Ethereum</option>
       <option value="bsc">Binance</option>
     </select>
 
-    <select [(ngModel)]="platformFilter" name="" id="">
+    <select [(ngModel)]="platformFilter" name="" id="platformFilter">
       <option value="">Platform</option>
       <option *ngFor="let platform of platform_list" [value]="platform.prefix">{{platform.name}}</option>
     </select>
 
-    <select [(ngModel)]="assetFilter" name="" id="">
+    <select [(ngModel)]="assetFilter" name="" id="assetFilter">
       <option value="">Asset</option>
       <option *ngFor="let asset of asset_list" [value]="asset">{{asset}}</option>
   
@@ -40,13 +36,14 @@
         </div>
         <div class="column">
           <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row.name]">
-            <app-apy-window (showModal)="toggleAPYWindow(row.name)" [poolName]="row.name"></app-apy-window>
+            <app-apy-window (showModal)="toggleAPYWindow(row.name)"
+                            [vaultName]="row.name" [network]="row.network"></app-apy-window>
           </app-draggable-modal>
           <span class="pointer" (click)="toggleAPYWindow(row.name)" matTooltip="
-          APR: {{vaultFullApy(row.name)}}%
+          APR: {{vaultFullApy(row.name, row.network)}}%
           Click to open details"
           matTooltipClass="tooltip-spaced">
-            {{vaultFullApy(row.name)}}% <i class="far fa-window-restore"></i>
+            {{vaultFullApy(row.name, row.network)}}% <i class="far fa-window-restore"></i>
           </span>
         </div>
         <div  class="column">
@@ -66,10 +63,10 @@
           </span>
         </div>
         <div class="column desktop-only">
-          {{vaultUsers(row.name)}}
+          {{vaultUsers(row.name, row.network)}}
         </div>
         <div class="column desktop-only">
-          ${{vaultTotalEarning(row.name) | number: '1.1-1'}}
+          ${{vaultTotalEarning(row.name, row.network) | number: '1.1-1'}}
         </div>
       </div>
 

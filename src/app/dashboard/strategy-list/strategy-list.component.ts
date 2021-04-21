@@ -1,13 +1,15 @@
 import {AfterViewInit, Component, QueryList, ViewChildren} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
-import {PricesCalculationService} from 'src/app/services/prices-calculation.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
 import {NGXLogger} from 'ngx-logger';
-import { HarvestDataService } from 'src/app/services/data/harvest-data.service';
+import {HarvestDataService} from 'src/app/services/data/harvest-data.service';
 import {assets, platforms} from './strategy-list.constants';
+import {HardworkDataService} from '../../services/data/hardwork-data.service';
+import {RewardDataService} from '../../services/data/reward-data.service';
+
 @Component({
   selector: 'app-strategy-list',
   templateUrl: './strategy-list.component.html',
@@ -29,12 +31,13 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
 
   constructor(
       public vt: ViewTypeService,
-      public pricesCalculationService: PricesCalculationService,
-      public harvestDataService: HarvestDataService,
+      public harvestData: HarvestDataService,
       private contractsService: ContractsService,
+      public hardworkData: HardworkDataService,
+      public rewardData: RewardDataService,
       private log: NGXLogger
   ) {
-    super(pricesCalculationService, harvestDataService);
+    super(harvestData, hardworkData, rewardData);
   }
 
   ngAfterViewInit(): void {
