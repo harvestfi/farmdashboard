@@ -14,9 +14,7 @@ export class RewardDto {
   blockDateAdopted: Date;
 
   public static fromJson(data: string): RewardDto {
-    const tx: RewardDto = new RewardDto();
-    Object.assign(tx, JSON.parse(data));
-
+    const tx: RewardDto = Object.assign(new RewardDto(), JSON.parse(data));
     RewardDto.enrich(tx);
     return tx;
   }

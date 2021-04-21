@@ -40,8 +40,7 @@ export class HardWorkDto {
   blockDateAdopted: Date;
 
   public static fromJson(data: string): HardWorkDto {
-    const tx: HardWorkDto = new HardWorkDto();
-    Object.assign(tx, JSON.parse(data));
+    const tx: HardWorkDto = Object.assign(new HardWorkDto(), JSON.parse(data));
     HardWorkDto.enrich(tx);
     return tx;
   }

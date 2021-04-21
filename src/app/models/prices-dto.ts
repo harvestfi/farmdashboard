@@ -14,8 +14,7 @@ export class PricesDto {
   blockDateAdopted: Date;
 
   public static fromJson(data: string): PricesDto {
-    const tx: PricesDto = new PricesDto();
-    Object.assign(tx, JSON.parse(data));
+    const tx: PricesDto = Object.assign(new PricesDto(), JSON.parse(data));
     PricesDto.fillBlockDateAdopted(tx);
     return tx;
   }

@@ -24,8 +24,7 @@ export class UniswapDto {
   blockDateAdopted: Date;
 
   public static fromJson(data: string): UniswapDto {
-    const tx: UniswapDto = new UniswapDto();
-    Object.assign(tx, JSON.parse(data));
+    const tx: UniswapDto = Object.assign(new UniswapDto(), JSON.parse(data));
     tx.acquired = new Date();
     UniswapDto.round(tx);
     return tx;

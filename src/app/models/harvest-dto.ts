@@ -34,8 +34,7 @@ export class HarvestDto {
   acquired: Date;
 
   public static fromJson(data: string): HarvestDto {
-    const tx: HarvestDto = new HarvestDto();
-    Object.assign(tx, JSON.parse(data));
+    const tx: HarvestDto = Object.assign(new HarvestDto(), JSON.parse(data));
     tx.acquired = new Date();
     HarvestDto.enrich(tx);
     return tx;

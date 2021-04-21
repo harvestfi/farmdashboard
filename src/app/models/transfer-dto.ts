@@ -18,9 +18,7 @@ export class TransferDto {
   blockDateAdopted: Date;
 
   public static fromJson(data: string): TransferDto {
-    const tx: TransferDto = new TransferDto();
-    Object.assign(tx, JSON.parse(data));
-
+    const tx: TransferDto = Object.assign(new TransferDto(), JSON.parse(data));
     TransferDto.enrich(tx);
     return tx;
   }
