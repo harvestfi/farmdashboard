@@ -91,7 +91,7 @@
       <text class="coin-sign">FARM</text>
     </div>
 
-    <app-transaction-link [transactionHash]="transferDto.id.split('_')[0]" [transactionNetwork]="eth"></app-transaction-link>
+    <app-transaction-link [transactionHash]="transferDto.id.split('_')[0]" [network]="eth"></app-transaction-link>
 
   </div>
 
@@ -194,7 +194,7 @@
       <text class="coin-sign">$</text>
     </div>
 
-    <app-transaction-link [transactionHash]="harvestDto.hash" [transactionNetwork]="harvestDto.network"></app-transaction-link>
+    <app-transaction-link [transactionHash]="harvestDto.hash" [network]="harvestDto.network"></app-transaction-link>
 
   </div>
 

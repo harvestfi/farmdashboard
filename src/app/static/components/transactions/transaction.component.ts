@@ -9,12 +9,12 @@ import {ViewTypeService} from '../../../services/view-type.service';
 
 export class TransactionComponent {
     @Input() transactionHash;
-    @Input() transactionNetwork;
+    @Input() network;
 
     constructor(public vt: ViewTypeService) {}
 
     viewNetworkscanTransaction(): void {
-        if (this.transactionNetwork === 'bsc') {
+        if (this.network === 'bsc') {
             window.open('https://www.bscscan.com/tx/' + this.transactionHash, '_blank');
         } else {
             window.open('https://etherscan.io/tx/' + this.transactionHash, '_blank');
