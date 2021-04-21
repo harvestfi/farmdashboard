@@ -4,7 +4,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HarvestDto} from '../../models/harvest-dto';
 import {Utils} from '../../static/utils';
 import {NGXLogger} from 'ngx-logger';
-import {StaticValues} from '../../static/static-values';
 import {TransferDto} from '../../models/transfer-dto';
 import {ChartBuilder} from '../../chart/chart-builder';
 import { IChartApi } from 'lightweight-charts';
@@ -50,15 +49,16 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
   rewardSumUsd = 0;
   transferTypeIncluded: CheckedValue[] = [];
 
-  constructor(private http: HttpService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private cdRef: ChangeDetectorRef,
-              private log: NGXLogger,
-              public vt: ViewTypeService,
-              public harvestsService: HarvestsService,
-              ) {
-                super();
+  constructor(
+    private http: HttpService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private cdRef: ChangeDetectorRef,
+    private log: NGXLogger,
+    public vt: ViewTypeService,
+    public harvestsService: HarvestsService,) 
+  {
+    super();
   }
 
   clear(): void {
@@ -89,25 +89,24 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
       this.address = params.address;
       this.inputAddress = params.address;
       this.harvestsService.getAddressHistoryHarvest(this.address).subscribe(harvests => {
-            this.log.info('Load harvest history', harvests);
-            harvests?.forEach(harvest => {
-              HarvestDto.enrich(harvest);
-              this.fullData.push(harvest);
+        this.log.info('Load harvest history', harvests);
+        harvests?.forEach(harvest => {
+          HarvestDto.enrich(harvest);
+          this.fullData.push(harvest);
+        });
+
+        this.http.getAddressHistoryTransfers(this.address).subscribe(transfers => {
+          this.log.info('Load transfers history', transfers);
+          transfers?.forEach(transfer => {
+            TransferDto.enrich(transfer);
+            this.fullData.push(transfer);
             });
-
-            this.http.getAddressHistoryTransfers(this.address).subscribe(transfers => {
-              this.log.info('Load transfers history', transfers);
-              transfers?.forEach(transfer => {
-                TransferDto.enrich(transfer);
-                this.fullData.push(transfer);
-              });
-
               this.sortValues();
               this.parseValues();
               this.createBalanceChart();
             });
           }
-      );
+        );
       this.cdRef.detectChanges();
     });
   }
@@ -241,9 +240,9 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
 
   private saveTransferBalance(record: TransferDto): void {
     if (record.type === 'PS_EXIT'
-        || record.type === 'PS_STAKE'
-        || record.type === 'LP_ADD'
-        || record.type === 'LP_REM'
+      || record.type === 'PS_STAKE'
+      || record.type === 'LP_ADD'
+      || record.type === 'LP_REM'
     ) {
       return;
     }
