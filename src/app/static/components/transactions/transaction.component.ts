@@ -14,11 +14,11 @@ export class TransactionComponent {
     constructor(public vt: ViewTypeService) {}
 
     viewNetworkscanTransaction(): void {
-        if (this.transactionNetwork == "bsc") {
+        if (this.transactionNetwork === 'bsc') {
             window.open('https://www.bscscan.com/tx/' + this.transactionHash, '_blank');
         } else {
             window.open('https://etherscan.io/tx/' + this.transactionHash, '_blank');
         }
-        
+
     }
 }

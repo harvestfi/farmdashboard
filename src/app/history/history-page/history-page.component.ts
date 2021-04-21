@@ -56,7 +56,7 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
     private cdRef: ChangeDetectorRef,
     private log: NGXLogger,
     public vt: ViewTypeService,
-    public harvestsService: HarvestsService,) 
+    public harvestsService: HarvestsService,)
   {
     super();
   }
