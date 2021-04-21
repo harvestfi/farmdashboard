@@ -84,6 +84,8 @@ import {GasDialogComponent} from './dialogs/gas-dialog/gas-dialog.component';
 import {PaginatorComponent} from './common/paginator/paginator.component';
 import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
 import {SelectElementComponent} from './common/select-element/select-element.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 declare let require: any;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -183,6 +185,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatIconModule,
     AngularEmojisModule,
     SidebarModule.forRoot(),
+    NgbModule,
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,

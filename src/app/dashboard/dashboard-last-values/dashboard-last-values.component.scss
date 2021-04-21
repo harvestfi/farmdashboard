@@ -183,12 +183,3 @@
   }
 
 }
-.network-grid {}
-.network-grid-card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-.network-name, .network-value {
-  font-weight: bolder;
-  text-align: center;
-}
