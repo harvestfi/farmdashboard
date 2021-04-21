@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
@@ -12,6 +11,7 @@ import {PricesDto} from '../../models/prices-dto';
 import {NGXLogger} from 'ngx-logger';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {HarvestDataService} from '../../services/data/harvest-data.service';
+import {PriceDataService} from '../../services/data/price-data.service';
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -32,11 +32,11 @@ export class DashboardLastValuesComponent implements OnInit {
               public dialog: MatDialog,
               public vt: ViewTypeService,
               private uniswapService: UniswapService,
-              private pricesCalculationService: PricesCalculationService,
               private uniswapSubscriberService: UniswapService,
               private pricesService: PricesService,
               private hardworkData: HardworkDataService,
               private harvestData: HarvestDataService,
+              private priceData: PriceDataService,
               private log: NGXLogger
   ) {
   }
@@ -80,14 +80,14 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   farmBuybackSum(network: string): number {
-    if (!this.lastPriceF || this.lastPriceF === 0) {
+    if (!this.farmUsdPrice || this.farmUsdPrice === 0) {
       return 0;
     }
-    let sum = this.hardworkData.getFarmBuybacks(network);
+    let sum = this.hardworkData.getLatestHardWork(network).farmBuybackSum;
     if (network === 'bsc') {
-      sum /= this.lastPriceF;
+      sum /= this.farmUsdPrice;
     }
-    return sum;
+    return sum / 1000;
   }
 
   get totalFarmBuybacks(): number {
@@ -113,11 +113,11 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get psFarmTvl(): number {
-    return this.harvestData.getPsFarmTvl();
+    return this.harvestData.getVaultLastInfo('PS', 'eth')?.lastTvl;
   }
 
   get farmTotalSupply(): number {
-    return this.harvestData.getFarmTotalSupply();
+    return this.harvestData.getVaultLastInfo('PS', 'eth')?.sharePrice;
   }
 
   get lpFarmStaked(): number {
@@ -145,7 +145,7 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   poolUsers(network: string): number {
-    return this.harvestData.getPoolUsers(network);
+    return this.harvestData.getAllVaultsUsers(network);
   }
 
   get poolUsersAllNetwork(): number {
@@ -154,26 +154,22 @@ export class DashboardLastValuesComponent implements OnInit {
     .reduce((p, n) => p + n, 0);
   }
 
-  // --------------------------- OTHER -------------------------
+  // --------------------------- PRICES -------------------------
 
-  get lastPriceF(): number {
-    return this.pricesCalculationService.lastFarmPrice();
+  get farmUsdPrice(): number {
+    return this.priceData.getUsdPrice('FARM', 'eth');
   }
 
-  get btcF(): number {
-    return this.pricesCalculationService.getPrice('BTC', this.config.defaultNetwork);
+  get btcUsdPrice(): number {
+    return this.priceData.getUsdPrice('WBTC', 'eth');
   }
 
-  get ethF(): number {
-    return this.pricesCalculationService.getPrice('ETH', this.config.defaultNetwork);
+  get ethUsdPrice(): number {
+    return this.priceData.getUsdPrice('ETH', 'eth');
   }
 
-  get bnbF(): number {
-    return this.pricesCalculationService.getPrice('WBNB', 'bsc');
-  }
-
-  get psApy(): number {
-    return this.pricesCalculationService.latestHardWork?.psApr;
+  get bnbUsdPrice(): number {
+    return this.priceData.getUsdPrice('WBNB', 'bsc');
   }
 
   // -------------- OPEN MODALS ---------------------

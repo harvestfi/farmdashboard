@@ -1,16 +1,19 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import { HarvestDataService } from 'src/app/services/data/harvest-data.service';
-import {PricesCalculationService} from 'src/app/services/prices-calculation.service';
+import {HarvestDataService} from 'src/app/services/data/harvest-data.service';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
+import {HardworkDataService} from '../../services/data/hardwork-data.service';
+import {RewardDataService} from '../../services/data/reward-data.service';
+
 @Pipe({
-    name: 'strategyListFilter',
+  name: 'strategyListFilter',
 })
 export class StrategyListFilterPipe extends StrategyListCommonMethods implements PipeTransform {
-    constructor(
-        public pricesCalculationService: PricesCalculationService,
-        public harvestDataService: HarvestDataService
-    ) {
-        super(pricesCalculationService, harvestDataService);
+  constructor(
+      public harvestData: HarvestDataService,
+      public hardworkData: HardworkDataService,
+      public rewardData: RewardDataService
+  ) {
+    super(harvestData, hardworkData, rewardData);
     }
 
     transform(
@@ -44,13 +47,13 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
                 }
                 return 1;
               case 'apy':
-                return  Number(this.vaultFullApy(right.name)) - Number(this.vaultFullApy(left.name));
+                return Number(this.vaultFullApy(right.name, right.network)) - Number(this.vaultFullApy(left.name, left.network));
               case 'tvl':
                 return this.vaultTvl(right.name, right.network) - this.vaultTvl(left.name, left.network);
               case 'users':
-                return this.vaultUsers(right.name) - this.vaultUsers(left.name);
+                return this.vaultUsers(right.name, right.network) - this.vaultUsers(left.name, left.network);
               case 'total_earned':
-                return this.vaultTotalEarning(right.name) - this.vaultTotalEarning(left.name);
+                return this.vaultTotalEarning(right.name, right.network) - this.vaultTotalEarning(left.name, left.network);
               default:
                 break;
             }

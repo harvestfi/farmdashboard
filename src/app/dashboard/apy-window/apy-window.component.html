@@ -2,8 +2,8 @@
 
   <div class="row title-row" >
     <div class="title left-border-box">
-      <app-vault-icon [vault]="poolName"></app-vault-icon>
-      {{poolName}}
+      <app-vault-icon [vault]="vaultName"></app-vault-icon>
+      {{vaultName}}
     </div>
     <div (click)="closeModal()" class="close left-border-box">
       <mat-icon class="close-icon">
@@ -14,12 +14,12 @@
 
   <div class="value">
     <span class="value-name">Average TVL(last week): </span>
-    {{poolAvgTvl | number: '1.1-1'}}$
+    {{vaultAvgTvl | number: '1.1-1'}}$
   </div>
 
   <div class="value">
     <span class="value-name">Period of work: </span>
-    <span>{{poolPeriodOfWork | number: '1.1-1'}} days</span>
+    <span>{{vaultPeriodOfWork | number: '1.1-1'}} days</span>
   </div>
 
   <hr>
@@ -28,35 +28,35 @@
 
     <div class="value">
       <span class="value-name">Total earned:</span>
-      {{poolEarned | number: '1.1-1'}}$
+      {{vaultEarned | number: '1.1-1'}}$
     </div>
 
     <div class="value">
       <span class="value-name">Last week earned:</span>
-      {{poolEarnedLastWeek | number: '1.1-1'}}$
+      {{vaultEarnedLastWeek | number: '1.1-1'}}$
     </div>
 
     <div class="value">
       <span class="value-name">Strategy hAPR:</span>
-      {{poolApr | number: '1.1-1'}}%
+      {{vaultApr | number: '1.1-1'}}%
     </div>
 
     <div class="value">
       <span class="value-name">Strategy hAPY:</span>
-      {{toApy(poolApr) | number: '1.1-1'}}%
+      {{toApy(vaultApr) | number: '1.1-1'}}%
     </div>
 
   </div>
 
   <div *ngIf="isAutoStakeVault">
     <div class="only-farm-caption">
-      It's AutoStake pool, only FARM rewards
+      It's AutoStake vault, only FARM rewards
     </div>
   </div>
 
   <div *ngIf="isFarmVault">
     <div class="only-farm-caption">
-      It's Harvest LP, only FARM rewards
+      It's FARM LP, only FARM rewards
     </div>
   </div>
 
@@ -65,39 +65,39 @@
 
   <div class="value">
     <span class="value-name">Reward period:</span>
-    {{poolRewardPeriod | number: '1.0-0'}} day(s)
+    {{vaultRewardPeriod | number: '1.0-0'}} day(s)
   </div>
 
   <div class="value">
     <span class="value-name">FARM rewards:</span>
-    {{poolReward | number: '1.1-1'}} FARM
+    {{vaultReward | number: '1.1-1'}} FARM
   </div>
 
   <div class="value">
     <span class="value-name">FARM reward iAPR:</span>
-    {{poolRewardApr | number: '1.1-1'}}%
+    {{vaultRewardApr | number: '1.1-1'}}%
   </div>
 
   <div class="value">
     <span class="value-name">FARM reward iAPY:</span>
-    {{toApy(poolRewardApr) | number: '1.1-1'}}%
+    {{toApy(vaultRewardApr) | number: '1.1-1'}}%
   </div>
 
   <div class="value" matTooltip="Last week average APY">
     <span class="value-name">FARM reward hAPY:</span>
-    {{poolRewardWeeklyApy | number: '1.1-1'}}%
+    {{vaultRewardWeeklyApy | number: '1.1-1'}}%
   </div>
 
   <hr>
 
   <div class="value">
     <span class="value-name">Total APR:</span>
-    {{(poolRewardApr + poolApr) | number: '1.1-1'}}%
+    {{(vaultRewardApr + vaultApr) | number: '1.1-1'}}%
   </div>
 
   <div class="value">
     <span class="value-name">Total APY:</span>
-    {{(toApy(poolRewardApr) + toApy(poolApr)) | number: '1.1-1'}}%
+    {{(toApy(vaultRewardApr) + toApy(vaultApr)) | number: '1.1-1'}}%
   </div>
 
   <hr>
@@ -109,7 +109,7 @@
   </div>
   <app-custom-modal #incomeModal>
     <ng-template>
-      <app-income-dialog [data]="{title: poolName + ' Income history chart', name: poolName}"></app-income-dialog>
+      <app-income-dialog [data]="{title: vaultName + ' Income history chart', name: vaultName}"></app-income-dialog>
     </ng-template>
   </app-custom-modal>
   

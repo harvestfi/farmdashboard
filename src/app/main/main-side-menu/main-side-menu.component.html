@@ -14,12 +14,13 @@
     </div>
 
     <ul class="main-side-menu-items">
-        <li (click)="openAllStatsDialog()" data-menu-icon="📈" class="main-side-menu-item">Full Strategies Info</li>
-        <app-custom-modal #allStatsDialog>
-            <ng-template >
-                <app-all-stats-dialog></app-all-stats-dialog>
-            </ng-template>
-        </app-custom-modal>
+<!--        TODO should be refactored-->
+<!--        <li (click)="openAllStatsDialog()" data-menu-icon="📈" class="main-side-menu-item">Full Strategies Info</li>-->
+<!--        <app-custom-modal #allStatsDialog>-->
+<!--            <ng-template >-->
+<!--                <app-all-stats-dialog></app-all-stats-dialog>-->
+<!--            </ng-template>-->
+<!--        </app-custom-modal>-->
 
         <li (click)="openTvlDialog()" data-menu-icon="🕐" class="main-side-menu-item">TVL History Info</li>
         <app-custom-modal #tvlDialog>

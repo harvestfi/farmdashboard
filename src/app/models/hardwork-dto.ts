@@ -25,6 +25,17 @@ export class HardWorkDto {
   savedGasFeesSum: number;
   fee: number;
   weeklyAverageTvl: number;
+  farmBuybackEth: number;
+  feeEth: number;
+  gasUsed: number;
+  idleTime: number;
+  invested: number;
+  investmentTarget: number;
+  farmPrice: number;
+  ethPrice: number;
+  profitSharingRate: number;
+  buyBackRate: number;
+  autoStake: number;
 
   blockDateAdopted: Date;
 
@@ -58,6 +69,17 @@ export class HardWorkDto {
     tx.savedGasFeesSum = jsonData.savedGasFeesSum;
     tx.fee = jsonData.fee;
     tx.weeklyAverageTvl = jsonData.weeklyAverageTvl;
+    tx.farmBuybackEth = jsonData.farmBuybackEth;
+    tx.feeEth = jsonData.feeEth;
+    tx.gasUsed = jsonData.gasUsed;
+    tx.idleTime = jsonData.idleTime;
+    tx.invested = jsonData.invested;
+    tx.investmentTarget = jsonData.investmentTarget;
+    tx.farmPrice = jsonData.farmPrice;
+    tx.ethPrice = jsonData.ethPrice;
+    tx.profitSharingRate = jsonData.profitSharingRate;
+    tx.buyBackRate = jsonData.buyBackRate;
+    tx.autoStake = jsonData.autoStake;
 
     HardWorkDto.enrich(tx);
     return tx;

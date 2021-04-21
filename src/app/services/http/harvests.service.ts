@@ -5,6 +5,7 @@ import {HttpService} from './http.service';
 import {WsConsumer} from '../ws-consumer';
 import {WebsocketService} from '../websocket.service';
 import {Network} from '../../models/network';
+import {SnackService} from '../snack.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +16,8 @@ export class HarvestsService implements WsConsumer {
     private subscribed = false;
 
     constructor(private httpService: HttpService,
-                private ws: WebsocketService) {
+                private ws: WebsocketService,
+                private snack: SnackService,) {
         this.ws.registerConsumer(this);
         this.setSubscribed(true);
     }
@@ -30,6 +32,7 @@ export class HarvestsService implements WsConsumer {
 
     subscribeToTopic(): void {
         this.ws.onMessage('/topic/harvest', (m => HarvestDto.fromJson(m.body)))?.subscribe(tx => {
+            this.snack.openSnack(tx.print());
             this.$subscribers.forEach(_ => _.next(tx));
         });
     }
