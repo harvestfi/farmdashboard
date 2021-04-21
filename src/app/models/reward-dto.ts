@@ -14,20 +14,8 @@ export class RewardDto {
   blockDateAdopted: Date;
 
   public static fromJson(data: string): RewardDto {
-    const jsonData = JSON.parse(data);
     const tx: RewardDto = new RewardDto();
-
-    tx.id = jsonData.id;
-    tx.vault = jsonData.vault;
-    tx.block = jsonData.block;
-    tx.blockDate = jsonData.blockDate;
-    tx.reward = jsonData.reward;
-    tx.periodFinish = jsonData.periodFinish;
-    tx.apy = jsonData.apy;
-    tx.weeklyApy = jsonData.weeklyApy;
-    tx.tvl = jsonData.tvl;
-    tx.farmBalance = jsonData.farmBalance;
-    tx.network = jsonData.network;
+    Object.assign(tx, JSON.parse(data));
 
     RewardDto.enrich(tx);
     return tx;

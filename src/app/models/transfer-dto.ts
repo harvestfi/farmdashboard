@@ -18,23 +18,8 @@ export class TransferDto {
   blockDateAdopted: Date;
 
   public static fromJson(data: string): TransferDto {
-    const jsonData = JSON.parse(data);
     const tx: TransferDto = new TransferDto();
-
-    tx.id = jsonData.id;
-    tx.name = jsonData.name;
-    tx.block = jsonData.block;
-    tx.blockDate = jsonData.blockDate;
-    tx.owner = jsonData.owner;
-    tx.recipient = jsonData.recipient;
-    tx.value = jsonData.value;
-    tx.balanceOwner = jsonData.balanceOwner;
-    tx.balanceRecipient = jsonData.balanceRecipient;
-    tx.price = jsonData.price;
-    tx.type = jsonData.type;
-    tx.methodName = jsonData.methodName;
-    tx.profit = jsonData.profit;
-    tx.profitUsd = jsonData.profitUsd;
+    Object.assign(tx, JSON.parse(data));
 
     TransferDto.enrich(tx);
     return tx;
