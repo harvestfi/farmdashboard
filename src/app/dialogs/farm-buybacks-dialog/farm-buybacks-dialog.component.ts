@@ -21,13 +21,13 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
 
 
   constructor(public vt: ViewTypeService,
-              private cdRef: ChangeDetectorRef,
+              public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private hardworksService: HardworksService,
               private priceData: PriceDataService,
               private tvlsService: TvlsService,
   ) {
-                super();
+    super(cdRef, vt);
   }
 
   ngAfterViewInit(): void {
@@ -62,12 +62,5 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
           }
       );
     });
-  }
-
-  private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
-    this.ready = true;
-    this.cdRef.detectChanges();
-    this.chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(this.chart, config);
   }
 }

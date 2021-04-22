@@ -19,7 +19,6 @@ import { UniswapFilterPipe } from './flow-cards/uniswap/uniswap-filter.pipe';
 import { DashboardLastValuesComponent } from './dashboard/dashboard-last-values/dashboard-last-values.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
-import { TvlDialogComponent } from './dialogs/tvl-dialog/tvl-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MainPageScoreboardComponent } from './main/main-page-scoreboard/main-page-scoreboard.component';
 import { MainPageViewComponent } from './main/main-page-view/main-page-view.component';
@@ -84,6 +83,8 @@ import {GasDialogComponent} from './dialogs/gas-dialog/gas-dialog.component';
 import {PaginatorComponent} from './common/paginator/paginator.component';
 import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
 import {SelectElementComponent} from './common/select-element/select-element.component';
+import { TvlV2DialogComponent } from './dialogs/tvl-v2-dialog/tvl-v2-dialog.component';
+import { VaultTvlDialogComponent } from './dialogs/vault-tvl-dialog/vault-tvl-dialog.component';
 declare let require: any;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -101,7 +102,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HarvestFilterPipe,
     UniswapFilterPipe,
     DashboardLastValuesComponent,
-    TvlDialogComponent,
     MainPageScoreboardComponent,
     MainPageViewComponent,
     StrategyListComponent,
@@ -151,7 +151,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     GasDialogComponent,
     PaginatorComponent,
     StrategyListFilterPipe,
-    SelectElementComponent
+    SelectElementComponent,
+    TvlV2DialogComponent,
+    VaultTvlDialogComponent
   ],
   imports: [
     AppRoutingModule,

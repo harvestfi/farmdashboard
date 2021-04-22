@@ -20,11 +20,11 @@ export class HardWorkHistoryDialogComponent extends ChartGeneralMethodsComponent
 
   constructor(private httpService: HttpService,
               public vt: ViewTypeService,
-              private cdRef: ChangeDetectorRef,
+              public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private hardworksService: HardworksService,
               ) {
-                super();
+    super(cdRef, vt);
   }
 
   ngAfterViewInit(): void {
@@ -48,12 +48,4 @@ export class HardWorkHistoryDialogComponent extends ChartGeneralMethodsComponent
       ]);
     });
   }
-
-  private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
-    this.ready = true;
-    this.cdRef.detectChanges();
-    this.chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(this.chart, config);
-  }
-
 }

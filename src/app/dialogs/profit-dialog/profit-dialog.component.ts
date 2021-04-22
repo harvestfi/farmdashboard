@@ -19,11 +19,11 @@ export class ProfitDialogComponent extends ChartGeneralMethodsComponent implemen
   chart: IChartApi;
 
   constructor(public vt: ViewTypeService,
-              private cdRef: ChangeDetectorRef,
+              public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private hardworksService: HardworksService,
               ) {
-                super();
+    super(cdRef, vt);
   }
 
   ngAfterViewInit(): void {
@@ -34,21 +34,13 @@ export class ProfitDialogComponent extends ChartGeneralMethodsComponent implemen
     this.hardworksService.getHardWorkHistoryData().subscribe(data => {
       this.log.debug('History of All Profits loaded ', data);
       const chartBuilder = new ChartBuilder();
-      chartBuilder.initVariables(1);
+      chartBuilder.initVariables(2);
       data?.forEach(dto => chartBuilder.addInData(0, dto.blockDate, (dto.weeklyAllProfit / 0.7) / 1000));
-      // data?.forEach(dto => chartBuilder.addInData(1, dto.blockDate, dto.tvl / 1000000));
+      data?.forEach(dto => chartBuilder.addInData(1, dto.blockDate, dto.allProfit / 1000000));
       this.handleData(chartBuilder, [
         ['Weekly Profit K$', 'right', '#0085ff'],
-        // ['TVL M$', '1', '#7e7e7e']
+        ['All profit M$', '1', '#eeb000']
       ]);
     });
   }
-
-  private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
-    this.ready = true;
-    this.cdRef.detectChanges();
-    this.chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(this.chart, config);
-  }
-
 }

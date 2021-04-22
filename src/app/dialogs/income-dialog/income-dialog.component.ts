@@ -21,10 +21,10 @@ export class IncomeDialogComponent extends ChartGeneralMethodsComponent implemen
 
   constructor(private httpService: HttpService,
               public vt: ViewTypeService,
-              private cdRef: ChangeDetectorRef,
+              public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private hardworksService: HardworksService,) {
-                super();
+    super(cdRef, vt);
   }
 
   ngAfterViewInit(): void {
@@ -47,12 +47,5 @@ export class IncomeDialogComponent extends ChartGeneralMethodsComponent implemen
         ['TVL M$', '2', '#7e7e7e']
       ]);
     });
-  }
-
-  private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
-    this.ready = true;
-    this.cdRef.detectChanges();
-    this.chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(this.chart, config);
   }
 }

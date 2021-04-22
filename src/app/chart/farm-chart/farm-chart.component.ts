@@ -1,9 +1,8 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {UniswapSubscriberService} from '../../flow-cards/uniswap/uniswap-subscriber.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {PriceChartBuilder} from '../price-chart-builder';
-import {HttpService} from '../../services/http/http.service';
 import {ChartGeneralMethodsComponent} from '../chart-general-methods.component';
 import {IChartApi} from 'lightweight-charts';
 import {UniswapService} from '../../services/http/uniswap.service';
@@ -23,8 +22,9 @@ export class FarmChartComponent extends ChartGeneralMethodsComponent implements 
   constructor(private uniswapService: UniswapService,
               private uniswapSubscriberService: UniswapSubscriberService,
               public vt: ViewTypeService,
+              public cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
-                super();
+    super(cdRef, vt);
   }
 
   ngAfterViewInit(): void {

@@ -49,16 +49,15 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
   rewardSumUsd = 0;
   transferTypeIncluded: CheckedValue[] = [];
 
-  constructor(
-    private http: HttpService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private cdRef: ChangeDetectorRef,
-    private log: NGXLogger,
-    public vt: ViewTypeService,
-    public harvestsService: HarvestsService,)
-  {
-    super();
+  constructor(private http: HttpService,
+              private route: ActivatedRoute,
+              private router: Router,
+              public cdRef: ChangeDetectorRef,
+              private log: NGXLogger,
+              public vt: ViewTypeService,
+              public harvestsService: HarvestsService,
+              ) {
+                super(cdRef, vt);
   }
 
   clear(): void {
@@ -118,18 +117,11 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
     this.log.info('Creat balance chart from data', this.balanceHistory);
     const chartBuilder = new ChartBuilder();
     chartBuilder.initVariables(1);
+    chartBuilder.priceLineVisible = false;
     this.balanceHistory.forEach(el => chartBuilder.addInData(0, el[0], el[1]));
     this.handleData(chartBuilder, [
       ['', 'right', '#fc8f34']
     ]);
-  }
-
-  private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
-    this.ready = true;
-    this.cdRef.detectChanges();
-    chartBuilder.priceLineVisible = false;
-    this.chart = chartBuilder.initChart(this.chartEl, ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
-    chartBuilder.addToChart(this.chart, config);
   }
 
   changeAllInclude(): void {

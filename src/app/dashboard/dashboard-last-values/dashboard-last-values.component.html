@@ -84,7 +84,7 @@
     </div>
     <app-custom-modal #FARMStakedModal>
       <ng-template>
-        <app-tvl-dialog [data]="{type: 'income'}"></app-tvl-dialog>
+        <app-vault-tvl-dialog [vault]="'PS'"></app-vault-tvl-dialog>
       </ng-template>
     </app-custom-modal>
 
@@ -146,7 +146,7 @@
     </div>
     <app-custom-modal #tvlModal>
       <ng-template>
-        <app-tvl-dialog [data]="{type: 'All'}"></app-tvl-dialog>
+        <app-tvl-v2-dialog></app-tvl-v2-dialog>
       </ng-template>
     </app-custom-modal>
 

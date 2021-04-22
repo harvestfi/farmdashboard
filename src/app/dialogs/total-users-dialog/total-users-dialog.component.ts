@@ -18,10 +18,10 @@ export class TotalUsersDialogComponent extends ChartGeneralMethodsComponent impl
   ready = false;
 
   constructor(public vt: ViewTypeService,
-              private cdRef: ChangeDetectorRef,
+              public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private tvlService: TvlsService) {
-                super();
+    super(cdRef, vt);
   }
 
   ngAfterViewInit(): void {
@@ -43,12 +43,5 @@ export class TotalUsersDialogComponent extends ChartGeneralMethodsComponent impl
         ['TVL', '1', '#eeb000']
       ]);
     });
-  }
-
-  private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
-    this.ready = true;
-    this.cdRef.detectChanges();
-    this.chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(this.chart, config);
   }
 }

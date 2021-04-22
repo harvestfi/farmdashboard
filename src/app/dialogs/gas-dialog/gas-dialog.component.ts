@@ -19,9 +19,9 @@ export class GasDialogComponent extends ChartGeneralMethodsComponent implements 
 
   constructor(private harvestsService: HarvestsService,
               public vt: ViewTypeService,
-              private cdRef: ChangeDetectorRef,
+              public cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
-                super();
+    super(cdRef, vt);
   }
 
   ngAfterViewInit(): void {
@@ -45,12 +45,5 @@ export class GasDialogComponent extends ChartGeneralMethodsComponent implements 
         ['Gas price', 'right', '#0085ff'],
       ]);
     });
-  }
-
-  private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
-    this.ready = true;
-    this.cdRef.detectChanges();
-    this.chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(this.chart, config);
   }
 }

@@ -20,9 +20,9 @@ export class SimpleChartDialogComponent extends ChartGeneralMethodsComponent imp
 
   constructor(private httpService: HttpService,
               public vt: ViewTypeService,
-              private cdRef: ChangeDetectorRef,
+              public cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
-                super();
+    super(cdRef, vt);
   }
 
   ngAfterViewInit(): void {
@@ -42,13 +42,6 @@ export class SimpleChartDialogComponent extends ChartGeneralMethodsComponent imp
       });
     });
     this.handleData(chartBuilder, this.data.config);
-  }
-
-  private handleData(chartBuilder: ChartBuilder, config: string[][]): void {
-    this.ready = true;
-    this.cdRef.detectChanges();
-    this.chart = chartBuilder.initChart(this.chartEl);
-    chartBuilder.addToChart(this.chart, config);
   }
 
 }
