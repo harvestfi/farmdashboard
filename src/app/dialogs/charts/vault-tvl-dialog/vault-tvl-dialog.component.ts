@@ -5,6 +5,7 @@ import {NGXLogger} from 'ngx-logger';
 import {HardworksService} from '../../../services/http/hardworks.service';
 import {TvlsService} from '../../../services/http/tvls.service';
 import {ChartBuilder} from '../../../chart/chart-builder';
+import {StaticValues} from '../../../static/static-values';
 
 @Component({
   selector: 'app-vault-tvl-dialog',
@@ -13,6 +14,7 @@ import {ChartBuilder} from '../../../chart/chart-builder';
 })
 export class VaultTvlDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @Input('vault') vault: string;
+  @Input('network') networkInput: string;
 
   constructor(public vt: ViewTypeService,
               public cdRef: ChangeDetectorRef,
@@ -22,7 +24,7 @@ export class VaultTvlDialogComponent extends ChartGeneralMethodsComponent implem
     super(cdRef, vt);
   }
 
-  ngAfterViewInit(): void {
+  load() {
     if (this.vault === 'PS') {
       this.loadDataPs();
     } else {
@@ -31,7 +33,7 @@ export class VaultTvlDialogComponent extends ChartGeneralMethodsComponent implem
   }
 
   private loadData(): void {
-    this.tvlService.getHistoryTvlByVault(this.vault).subscribe(data => {
+    this.tvlService.getHistoryTvlByVault(this.vault, StaticValues.NETWORKS.get(this.networkInput)).subscribe(data => {
       this.log.debug('History of ' + this.vault + ' TVL loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(3);

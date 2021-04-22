@@ -6,6 +6,7 @@ import {HarvestDto} from '../../../models/harvest-dto';
 import {HarvestsService} from '../../../services/http/harvests.service';
 import {RewardsService} from '../../../services/http/rewards.service';
 import {ChartGeneralMethodsComponent} from '../../../chart/chart-general-methods.component';
+import {StaticValues} from '../../../static/static-values';
 
 @Component({
   selector: 'app-ps-apy-dialog',
@@ -23,12 +24,8 @@ export class PsApyDialogComponent extends ChartGeneralMethodsComponent implement
     super(cdRef, vt);
   }
 
-  ngAfterViewInit(): void {
-    this.loadData();
-  }
-
-  private loadData(): void {
-    this.rewardsService.getHistoryRewards('PS').subscribe(rewards => {
+  load(): void {
+    this.rewardsService.getHistoryRewards('PS', StaticValues.NETWORKS.get('eth')).subscribe(rewards => {
       this.log.debug('History of All PS Rewards loaded ', rewards);
 
       this.harvestsService.getHarvestHistoryByVault('PS').subscribe(harvests => {

@@ -24,12 +24,12 @@ export class HardworksService implements WsConsumer {
         private ws: WebsocketService) {
     }
 
-    getHardWorkHistoryData(): Observable<HardWorkDto[]> {
-        return this.httpService.httpGetWithNetwork('/api/transactions/history/hardwork');
+    getHardWorkHistoryData(network: Network): Observable<HardWorkDto[]> {
+        return this.httpService.httpGet('/api/transactions/history/hardwork', network);
     }
 
-    getHardWorkHistoryDataByName(name: string): Observable<HardWorkDto[]> {
-        return this.httpService.httpGetWithNetwork(`/api/transactions/history/hardwork/${name}`);
+    getHardWorkHistoryDataByName(name: string, network: Network): Observable<HardWorkDto[]> {
+        return this.httpService.httpGet(`/api/transactions/history/hardwork/${name}`, network);
     }
 
     getAllLastHardWorks(): Observable<HardWorkDto[]> {

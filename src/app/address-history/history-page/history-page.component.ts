@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {HttpService} from '../../services/http/http.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HarvestDto} from '../../models/harvest-dto';
@@ -6,11 +6,10 @@ import {Utils} from '../../static/utils';
 import {NGXLogger} from 'ngx-logger';
 import {TransferDto} from '../../models/transfer-dto';
 import {ChartBuilder} from '../../chart/chart-builder';
-import { IChartApi } from 'lightweight-charts';
-import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component';
-import { ChartsOptionsLight } from 'src/app/chart/charts-options-light';
-import { ViewTypeService } from 'src/app/services/view-type.service';
-import { CustomModalComponent } from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {IChartApi} from 'lightweight-charts';
+import {ChartsOptionsLight} from 'src/app/chart/charts-options-light';
+import {ViewTypeService} from 'src/app/services/view-type.service';
+import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {HarvestsService} from '../../services/http/harvests.service';
 
 class CheckedValue {
@@ -23,7 +22,7 @@ class CheckedValue {
   templateUrl: './history-page.component.html',
   styleUrls: ['./history-page.component.scss']
 })
-export class HistoryPageComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
+export class HistoryPageComponent implements AfterViewInit, OnInit {
   @ViewChild('balance_chart') chartEl: ElementRef;
   @ViewChild('profitHistoryDialog') private profitHistoryDialog: CustomModalComponent;
   @ViewChild('historyDialog') private historyDialog: CustomModalComponent;
@@ -56,8 +55,15 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
               private log: NGXLogger,
               public vt: ViewTypeService,
               public harvestsService: HarvestsService,
-              ) {
-    super(cdRef, vt);
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.vt.events$.subscribe(event => {
+      if (event === 'theme-changed') {
+        this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
+      }
+    });
   }
 
   clear(): void {
@@ -99,15 +105,21 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
           transfers?.forEach(transfer => {
             TransferDto.enrich(transfer);
             this.fullData.push(transfer);
-            });
-              this.sortValues();
-              this.parseValues();
-              this.createBalanceChart();
-            });
+          });
+          this.sortValues();
+          this.parseValues();
+          this.createBalanceChart();
+        });
           }
-        );
+      );
       this.cdRef.detectChanges();
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  handleScreenResize($event: any): void {
+    this.chart?.resize(this.chartEl?.nativeElement?.clientWidth,
+        this.chartEl?.nativeElement?.clientHeight);
   }
 
   private createBalanceChart(): void {

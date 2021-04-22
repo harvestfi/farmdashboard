@@ -6,6 +6,7 @@ import {ChartGeneralMethodsComponent} from '../../../chart/chart-general-methods
 import {HardworksService} from '../../../services/http/hardworks.service';
 import {TvlsService} from '../../../services/http/tvls.service';
 import {PriceDataService} from '../../../services/data/price-data.service';
+import {StaticValues} from '../../../static/static-values';
 
 @Component({
   selector: 'app-farm-buybacks-dialog',
@@ -24,12 +25,8 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
     super(cdRef, vt);
   }
 
-  ngAfterViewInit(): void {
-    this.loadData();
-  }
-
-  private loadData(): void {
-    this.hardworksService.getHardWorkHistoryData().subscribe(data => {
+  load(): void {
+    this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network)).subscribe(data => {
       this.log.debug('History of All Farm buybacks loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(2);

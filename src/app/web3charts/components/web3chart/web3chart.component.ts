@@ -48,4 +48,7 @@ export class Web3chartComponent extends ChartGeneralMethodsComponent implements 
     this.chart = chartBuilder.initChart(this.chartEl);
     chartBuilder.addToChart(this.chart, [[this.title, 'right', '#7e7e7e']]);
   }
+
+  load() {
+  }
 }

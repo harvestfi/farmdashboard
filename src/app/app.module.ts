@@ -45,9 +45,9 @@ import { environment } from '../environments/environment';
 import { WeeklyProfitDialogComponent } from './dialogs/charts/weekly-profit-dialog/weekly-profit-dialog.component';
 import { GrainChartComponent } from './chart/grain-chart/grain-chart.component';
 import { FarmBuybacksDialogComponent } from './dialogs/charts/farm-buybacks-dialog/farm-buybacks-dialog.component';
-import { HistoryPageComponent } from './history/history-page/history-page.component';
+import { HistoryPageComponent } from './address-history/history-page/history-page.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
-import { TradeBoxComponent } from './history/trade-box/trade-box.component';
+import { TradeBoxComponent } from './address-history/trade-box/trade-box.component';
 import { SavedGasFeesDialogComponent } from './dialogs/charts/saved-gas-fees-dialog/saved-gas-fees-dialog.component';
 import { TotalUsersDialogComponent } from './dialogs/charts/total-users-dialog/total-users-dialog.component';
 import { PsApyDialogComponent } from './dialogs/charts/ps-apy-dialog/ps-apy-dialog.component';
@@ -61,7 +61,8 @@ import { CustomModalComponent } from './dialogs/custom-modal/custom-modal.compon
 import { HarvestTradeComponent } from './flow-cards/harvest/harvest-trade/harvest-trade.component';
 import { LinkWindowComponent } from './flow-cards/uniswap/link-window/link-window.component';
 import { ApyWindowComponent } from './dashboard/apy-window/apy-window.component';
-import { HardWorkHistoryListDialogComponent } from './dialogs/history/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
+import { HardWorkHistoryListDialogComponent }
+from './dialogs/history/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
 import { HardworkTradeComponent } from './flow-cards/hardwork/hardwork-trade/hardwork-trade.component';
 import { HardworkFlowTabComponent } from './flow-cards/hardwork/hardwork-flow-tab/hardwork-flow-tab.component';
 import { HardworkTxComponent } from './flow-cards/hardwork/hardwork-tx/hardwork-tx.component';
@@ -86,6 +87,7 @@ import {SelectElementComponent} from './common/select-element/select-element.com
 import { TvlV2DialogComponent } from './dialogs/charts/tvl-v2-dialog/tvl-v2-dialog.component';
 import { VaultTvlDialogComponent } from './dialogs/charts/vault-tvl-dialog/vault-tvl-dialog.component';
 import { ChartGeneralComponent } from './chart/chart-general/chart-general.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 declare let require: any;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -167,6 +169,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatButtonModule,
     MatSidenavModule,
     MatInputModule,
+    MatButtonToggleModule,
     FormsModule,
     CommonModule,
     BrowserModule,

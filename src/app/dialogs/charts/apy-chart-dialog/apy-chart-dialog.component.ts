@@ -7,6 +7,7 @@ import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-method
 import { IChartApi } from 'lightweight-charts';
 import {HarvestsService} from '../../../services/http/harvests.service';
 import {HardworksService} from '../../../services/http/hardworks.service';
+import {StaticValues} from '../../../static/static-values';
 
 @Component({
   selector: 'app-apy-chart-dialog',
@@ -24,12 +25,10 @@ export class ApyChartDialogComponent extends ChartGeneralMethodsComponent implem
     super(cdRef, vt);
   }
 
-  ngAfterViewInit(): void {
-    this.loadData();
-  }
-
-  private loadData(): void {
-    this.hardworksService.getHardWorkHistoryDataByName(this.data.name).subscribe(data => {
+  load(): void {
+    console.log('data', this.data);
+    this.hardworksService.getHardWorkHistoryDataByName(this.data.name,
+        StaticValues.NETWORKS.get(this.data.network)).subscribe(data => {
       this.log.debug('History of All Incomes loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(3);

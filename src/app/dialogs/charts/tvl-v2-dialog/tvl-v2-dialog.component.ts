@@ -23,11 +23,7 @@ export class TvlV2DialogComponent extends ChartGeneralMethodsComponent implement
     super(cdRef, vt);
   }
 
-  ngAfterViewInit(): void {
-    this.loadData();
-  }
-
-  private loadData(): void {
+  load(): void {
     this.tvlService.getHistoryAllTvl(StaticValues.NETWORKS.get(this.network)).subscribe(data => {
       this.log.debug('History of All TVL loaded ', data);
       const chartBuilder = new ChartBuilder();

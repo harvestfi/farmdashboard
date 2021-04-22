@@ -22,11 +22,7 @@ export class SimpleChartDialogComponent extends ChartGeneralMethodsComponent imp
     super(cdRef, vt);
   }
 
-  ngAfterViewInit(): void {
-    this.loadData();
-  }
-
-  private loadData(): void {
+  load(): void {
     this.log.info('Create a chart form', this.data);
     const chartBuilder = new ChartBuilder();
     chartBuilder.initVariables(this.data.data.length);

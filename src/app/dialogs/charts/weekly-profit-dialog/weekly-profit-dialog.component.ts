@@ -6,6 +6,7 @@ import {ChartBuilder} from '../../../chart/chart-builder';
 import {IChartApi} from 'lightweight-charts';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 import {HardworksService} from '../../../services/http/hardworks.service';
+import {StaticValues} from '../../../static/static-values';
 
 @Component({
   selector: 'app-weekly-profit-dialog',
@@ -22,12 +23,8 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
     super(cdRef, vt);
   }
 
-  ngAfterViewInit(): void {
-    this.loadData();
-  }
-
-  private loadData(): void {
-    this.hardworksService.getHardWorkHistoryData().subscribe(data => {
+  load(): void {
+    this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network)).subscribe(data => {
       this.log.debug('History of All Profits loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(2);

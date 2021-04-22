@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {HistoryPageComponent} from '../history/history-page/history-page.component';
+import {HistoryPageComponent} from '../address-history/history-page/history-page.component';
 import {CenterViewComponent} from '../main/center-view/center-view.component';
 import {Web3chartsComponent} from '../web3charts/web3charts.component';
 

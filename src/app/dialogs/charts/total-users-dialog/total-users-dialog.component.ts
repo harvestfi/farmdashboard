@@ -6,6 +6,7 @@ import {ChartBuilder} from '../../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 import {HarvestTvl} from '../../../models/harvest-tvl';
 import {TvlsService} from '../../../services/http/tvls.service';
+import {StaticValues} from '../../../static/static-values';
 
 @Component({
   selector: 'app-total-users-dialog',
@@ -21,12 +22,8 @@ export class TotalUsersDialogComponent extends ChartGeneralMethodsComponent impl
     super(cdRef, vt);
   }
 
-  ngAfterViewInit(): void {
-    this.loadData();
-  }
-
-  private loadData(): void {
-    this.tvlService.getHistoryAllTvl().subscribe(data => {
+  load(): void {
+    this.tvlService.getHistoryAllTvl(StaticValues.NETWORKS.get(this.network)).subscribe(data => {
       this.log.debug('History of All Harvests loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(2);

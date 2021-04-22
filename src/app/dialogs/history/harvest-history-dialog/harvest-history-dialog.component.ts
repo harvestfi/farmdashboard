@@ -48,9 +48,10 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
       return;
     }
     this.harvestsService
-      .getHarvestTxHistoryByRange(this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2), this.lowestBlockDate)
+      .getHarvestTxHistoryByRangeAllNetworks(
+          this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2),
+          this.lowestBlockDate)
       .subscribe(data => {
-
         this.addInArray(data);
       }).add(() => this.disabled = false);
   }
