@@ -17,7 +17,6 @@ import { AngularEmojisModule } from 'angular-emojis';
 import { HarvestFilterPipe } from './flow-cards/harvest/harvest-filter.pipe';
 import { UniswapFilterPipe } from './flow-cards/uniswap/uniswap-filter.pipe';
 import { DashboardLastValuesComponent } from './dashboard/dashboard-last-values/dashboard-last-values.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MainPageViewComponent } from './main/main-page-view/main-page-view.component';
@@ -88,7 +87,7 @@ import { TvlV2DialogComponent } from './dialogs/charts/tvl-v2-dialog/tvl-v2-dial
 import { VaultTvlDialogComponent } from './dialogs/charts/vault-tvl-dialog/vault-tvl-dialog.component';
 import { ChartGeneralComponent } from './chart/chart-general/chart-general.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-declare let require: any;
+import {PopoverComponent} from './common/popover/popover.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -156,7 +155,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SelectElementComponent,
     TvlV2DialogComponent,
     VaultTvlDialogComponent,
-    ChartGeneralComponent
+    ChartGeneralComponent,
+    PopoverComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -182,7 +182,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     }),
     BrowserAnimationsModule,
     MatCardModule,
-    MatTooltipModule,
     MatDialogModule,
     MatSelectModule,
     PerfectScrollbarModule,

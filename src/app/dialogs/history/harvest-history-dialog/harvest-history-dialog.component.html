@@ -2,14 +2,17 @@
     <h1 class="title">Harvest Transaction History</h1>
     <div class="harvest-card">
         <div class="filters-container">
-            <div #tooltip="matTooltip" aria-hidden="false" aria-label="?" class="pool-title" matTooltip="Changes in Harvest vaults.
-            Format: Date | add/remove | Amount in USD | Pool TVL">
+            <app-popover-card aria-hidden="false" aria-label="?" class="pool-title">
+                <ng-template>
+                    <p>Changes in Harvest vaults.</p>
+                    <p>Format: Date | add/remove | Amount in USD | Pool TVL</p>
+                </ng-template>
                 <label class="strategy-selector-label" for="strategy-selector">Pools</label>
                 <select [(ngModel)]="vaultFilter" id="strategy-selector" class="strategy-selector">
                     <option [value]="'all'">All</option>
                     <option *ngFor="let name of tvlNames | async" [value]="name">{{name}}</option>
                 </select>
-            </div>
+            </app-popover-card>
             <input #harvestDtoFilter class="more-than-input" placeholder="More than..." type="number" min="0">
         </div>
       

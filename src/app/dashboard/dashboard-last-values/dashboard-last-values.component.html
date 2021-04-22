@@ -67,27 +67,24 @@
     </div>
 
 
-    <div (click)="openPsTvlDialog()"
-         class="value-card pointer farm-staked"
-         [class]="vt.getThemeColor() + '-card'"
-         [ngbPopover]="farmStakingPopover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
-      <div>
-        <ng-template #farmStakingPopover>
-          <div>
-            <p>FARM staked in pools</p>
-            <p>PS Staked: {{psFarmTvl / farmTotalSupply * 100 | number: '1.0-1'}}%</p>
-            <p>LP Staked: {{lpFarmStaked / farmTotalSupply * 100 | number: '1.0-1'}}%</p>
-          </div>
-        </ng-template>
-        <div class="value-middle">
-          🔒FARM Staked
+    <app-popover-card (click)="openPsTvlDialog()"
+                      class="value-card pointer farm-staked"
+                      [class]="vt.getThemeColor() + '-card'">
+      <ng-template>
+        <div>
+          <p>FARM staked in pools</p>
+          <p>PS Staked: {{psFarmTvl / farmTotalSupply * 100 | number: '1.0-1'}}%</p>
+          <p>LP Staked: {{lpFarmStaked / farmTotalSupply * 100 | number: '1.0-1'}}%</p>
         </div>
-        <div class="value-number-middle">
-          <span>{{(psFarmTvl + lpFarmStaked) / farmTotalSupply * 100 | number: '1.0-1'}}</span>
-          %
-        </div>
+      </ng-template>
+      <div class="value-middle">
+        🔒FARM Staked
       </div>
-    </div>
+      <div class="value-number-middle">
+        <span>{{(psFarmTvl + lpFarmStaked) / farmTotalSupply * 100 | number: '1.0-1'}}</span>
+        %
+      </div>
+    </app-popover-card>
     <app-custom-modal #FARMStakedModal>
       <ng-template>
         <app-vault-tvl-dialog [vault]="'PS'" [network]="'eth'"></app-vault-tvl-dialog>
@@ -95,12 +92,10 @@
     </app-custom-modal>
 
 
-    <div (click)="openWeeklyProfitDialog()"
+    <app-popover-card (click)="openWeeklyProfitDialog()"
          class="value-card pointer weekly-profits"
-         [class]="vt.getThemeColor() + '-card'"
-         [ngbPopover]="weeklyProfitPopover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
-      <div>
-        <ng-template #weeklyProfitPopover>
+         [class]="vt.getThemeColor() + '-card'">
+        <ng-template>
           <div>
             <p>Weekly profits from all vaults by network</p>
             <p>BSC {{weeklyProfits("bsc") / 1000 | number: '1.0-1'}}K$</p>
@@ -114,19 +109,17 @@
           <span>{{totalWeeklyProfits / 1000 | number: '1.0-1'}}</span>
           K$
         </div>
-      </div>
-    </div>
+    </app-popover-card>
     <app-custom-modal #weeklyProfitModal>
       <ng-template>
         <app-weekly-profit-dialog></app-weekly-profit-dialog>
       </ng-template>
     </app-custom-modal>
 
-    <div class="value-card ps-income"
-         [class]="vt.getThemeColor() + '-card'"
-         [ngbPopover]="psIncomePopover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
+    <app-popover-card class="value-card ps-income"
+         [class]="vt.getThemeColor() + '-card'">
       <div>
-        <ng-template #psIncomePopover>Soon</ng-template>
+        <ng-template>Soon</ng-template>
         <div class="value-middle">
           📈P/A Ratio
         </div>
@@ -134,13 +127,12 @@
           -
         </div>
       </div>
-    </div>
+    </app-popover-card>
 
-    <div (click)="openTvlDialog()"
+    <app-popover-card (click)="openTvlDialog()"
          class="value-card pointer tvl"
-         [class]="vt.getThemeColor() + '-card'"
-         [ngbPopover]="tvlPopover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
-      <ng-template #tvlPopover>
+         [class]="vt.getThemeColor() + '-card'">
+      <ng-template>
         <div>
           <p>Total value locked by network</p>
           <p>BSC {{tvlSum('bsc') / 1000000 | number: '1.0-0'}}M$</p>
@@ -155,7 +147,7 @@
         <span class="value-number">{{tvlSumAllNetwork / 1000000 | number: '1.0-0'}}</span>
         <span class="sign">M$</span>
       </div>
-    </div>
+    </app-popover-card>
     <app-custom-modal #tvlModal>
       <ng-template>
         <app-tvl-v2-dialog></app-tvl-v2-dialog>
@@ -163,11 +155,10 @@
     </app-custom-modal>
 
 
-    <div class="value-card farm-holders"
-         [class]="vt.getThemeColor() + '-card'"
-         [ngbPopover]="farmHolderPopover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
+    <app-popover-card class="value-card farm-holders"
+         [class]="vt.getThemeColor() + '-card'">
       <div>
-        <ng-template #farmHolderPopover>
+        <ng-template>
           <p>Accounts with positive (more than 10$) FARM balance</p>
         </ng-template>
         <div class="value-middle">
@@ -177,16 +168,13 @@
           <span>{{farmHolders | number: '1.0-0'}}</span>
         </div>
       </div>
+    </app-popover-card>
 
-
-    </div>
-
-    <div (click)="openFarmBuybacksDialog()"
+    <app-popover-card (click)="openFarmBuybacksDialog()"
          class="value-card pointer farm-buybacks"
-         [class]="vt.getThemeColor() + '-card'"
-         [ngbPopover]="farmBuybackPopover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
+         [class]="vt.getThemeColor() + '-card'">
       <div>
-        <ng-template #farmBuybackPopover>
+        <ng-template>
           <p>30% profit of each ETH HardWork goes to buy FARM</p>
           <p>8% profit of each BSC HardWork goes to buy FARM</p>
           <p>BSC {{farmBuybackSum('bsc') | number: '1.2-2'}}K</p>
@@ -200,19 +188,18 @@
           K
         </div>
       </div>
-    </div>
+    </app-popover-card>
     <app-custom-modal #farmBuybacksModal>
       <ng-template>
         <app-farm-buybacks-dialog></app-farm-buybacks-dialog>
       </ng-template>
     </app-custom-modal>
 
-    <div (click)="openSavedFeesDialog()"
+    <app-popover-card (click)="openSavedFeesDialog()"
          class="value-card pointer saved-fees"
-         [class]="vt.getThemeColor() + '-card'"
-         [ngbPopover]="savedGasPopover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
+         [class]="vt.getThemeColor() + '-card'">
       <div>
-        <ng-template #savedGasPopover>
+        <ng-template>
           <p>How much gas would users spend on<br/> transactions without our project?</p>
           <p>BSC: {{totalGasSaved('bsc') / 1000000 | number: '1.0-2'}} M$</p>
           <p>ETH: {{totalGasSaved('eth') / 1000000 | number: '1.0-2'}} M$</p>
@@ -225,19 +212,18 @@
           M$
         </div>
       </div>
-    </div>
+    </app-popover-card>
     <app-custom-modal #savedFeesModal>
       <ng-template>
         <app-saved-gas-fees-dialog></app-saved-gas-fees-dialog>
       </ng-template>
     </app-custom-modal>
 
-    <div (click)="openTotalUsersDialog()"
+    <app-popover-card (click)="openTotalUsersDialog()"
          class="value-card pointer total-users"
-        [class]="vt.getThemeColor() + '-card'"
-        [ngbPopover]="totalUsersPopover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
+        [class]="vt.getThemeColor() + '-card'">
       <div>
-        <ng-template #totalUsersPopover>
+        <ng-template>
           <p>Total unique accounts interacted with the project</p>
           <p>BSC {{userCount('bsc') | number: '1.0-0'}}</p>
           <p>ETH {{userCount('eth') | number: '1.0-0'}}</p>
@@ -249,7 +235,7 @@
           <span>{{userCountAllNetwork | number: '1.0-0'}}</span>
         </div>
       </div>
-    </div>
+    </app-popover-card>
     <app-custom-modal #totalUsersModal>
       <ng-template>
         <app-total-users-dialog></app-total-users-dialog>
@@ -257,12 +243,10 @@
     </app-custom-modal>
 
 
-    <div class="value-card active-pools"
-         [class]="vt.getThemeColor() + '-card'"
-        matTooltipClass="tooltip-spaced"
-        matTooltip="" [ngbPopover]="poolAcccountsPopover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
+    <app-popover-card class="value-card active-pools"
+         [class]="vt.getThemeColor() + '-card'">
       <div>
-        <ng-template #poolAcccountsPopover>
+        <ng-template>
           <div>
             <p>Accounts staked funds in pools <br/>with balance more than 10$</p>
             <p>BSC {{poolUsers('bsc') | number: '1.0-0'}}</p>
@@ -276,7 +260,7 @@
           <span>{{poolUsersAllNetwork | number: '1.0-0'}}</span>
         </div>
       </div>
-    </div>
+    </app-popover-card>
   </div>
 </div>
 

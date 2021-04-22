@@ -83,10 +83,11 @@
     {{toApy(vaultRewardApr) | number: '1.1-1'}}%
   </div>
 
-  <div class="value" matTooltip="Last week average APY">
+  <app-popover-card class="value">
+    <ng-template>Last week average APY</ng-template>
     <span class="value-name">FARM reward hAPY:</span>
     {{vaultRewardWeeklyApy | number: '1.1-1'}}%
-  </div>
+  </app-popover-card>
 
   <hr>
 
