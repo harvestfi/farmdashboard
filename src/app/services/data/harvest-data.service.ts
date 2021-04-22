@@ -58,6 +58,7 @@ export class HarvestDataService {
       this.latestHarvest.set(dto.network, dto);
     }
     Utils.addInArrayAtTheStart(this.dtos, dto);
+    this.dtos = this.dtos.sort((a,b) => b.blockDate - a.blockDate);
     Utils.addInMap(this.lastGas, dto.network, dto.lastGas);
     Utils.addInMap(this.allVaultsUsers, dto.network, dto.allPoolsOwnersCount);
     Utils.addInMap(this.allUsersQuantity, dto.network, dto.allOwnersCount);

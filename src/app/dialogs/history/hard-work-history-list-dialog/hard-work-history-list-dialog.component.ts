@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 import {HardworksService} from '../../../services/http/hardworks.service';
 import {Paginated} from '../../../models/paginated';
 import {HardWorkDto} from '../../../models/hardwork-dto';
+import {StaticValues} from '../../../static/static-values';
 
 @Component({
   selector: 'app-hard-work-history-list-dialog',
@@ -17,17 +18,20 @@ import {HardWorkDto} from '../../../models/hardwork-dto';
 export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   dtos: Paginated<HardWorkDto>;
   hardWorkIds = new Set<string>();
-  lowestBlockDate = 999999999999;
   vaultFilter = '';
   minAmount = 0;
-  disabled  = false;
+  disabled = false;
   ready = false;
+  networks: string[] = Array.from(StaticValues.NETWORKS.keys());
+  network = 'eth';
+
   constructor(
-    public vt: ViewTypeService,
-    private log: NGXLogger,
-    private contractsService: ContractsService,
-    private hardworksService: HardworksService,
-  ) {}
+      public vt: ViewTypeService,
+      private log: NGXLogger,
+      private contractsService: ContractsService,
+      private hardworksService: HardworksService,
+  ) {
+  }
 
   ngAfterViewInit(): void {
     this.getDtoDataForPage(0);
@@ -35,10 +39,12 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
 
   getDtoDataForPage(page_number: number): void {
     this.hardworksService
-    .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount)
+    .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount, 'desc',
+        StaticValues.NETWORKS.get(this.network))
     .subscribe(response => {
-          if ('data' in response.data) {
-            return this.dtos = response.data;
+          this.log.info('Load hw pages', response);
+          if ('data' in response) {
+            return this.dtos = response;
           }
           this.dtos = {
             currentPage: 0,
@@ -72,6 +78,10 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   }
 
   handleFilterUpdate(_$event): void {
+    this.getDtoDataForPage(0);
+  }
+
+  choseNetwork(): void {
     this.getDtoDataForPage(0);
   }
 }

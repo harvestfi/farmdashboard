@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {map} from 'rxjs/operators';
-import {HardworksService} from '../../../services/http/hardworks.service';
+import {HardworkDataService} from '../../../services/data/hardwork-data.service';
 
 @Component({
   selector: 'app-hardwork-tx',
@@ -16,10 +16,7 @@ import {HardworksService} from '../../../services/http/hardworks.service';
   styleUrls: ['./hardwork-tx.component.scss']
 })
 export class HardworkTxComponent implements AfterViewInit {
-  private maxMessages = 50;
   @ViewChild('hardWorkHistoryListModal') private hardWorkHistoryListModal: CustomModalComponent;
-  dtos: HardWorkDto[] = [];
-  hwIds = new Set<string>();
   vaultFilter = 'all';
 
 
@@ -28,7 +25,7 @@ export class HardworkTxComponent implements AfterViewInit {
       private snack: SnackService,
       private log: NGXLogger,
       private contractsService: ContractsService,
-      private hardworksService: HardworksService,
+      private hardworksData: HardworkDataService
   ) {
   }
 
@@ -39,37 +36,10 @@ export class HardworkTxComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.hardworksService.getLastHardWorks(this.maxMessages).subscribe(data => {
-      this.log.info('hard work history values', data);
-      this.addInArray(data);
-    });
-    this.hardworksService.subscribeToHardworks().subscribe(hardwork => this.addInArray([hardwork]));
   }
 
-  private isUniqHardwork(hw: HardWorkDto): boolean {
-    if (this.hwIds.has(hw.id)) {
-      return false;
-    }
-    this.hwIds.add(hw.id);
-    if (this.hwIds.size > 100_000) {
-      this.hwIds = new Set<string>();
-    }
-    return true;
-  }
-
-  private addInArray(newValues: HardWorkDto[]): void {
-    for (const hardWork of newValues) {
-      HardWorkDto.enrich(hardWork);
-      if (!this.isUniqHardwork(hardWork)) {
-        this.log.error('Not unique hardwork', hardWork);
-        return;
-      }
-      this.dtos.push(hardWork);
-      if (this.dtos.length > this.maxMessages) {
-        this.dtos.shift();
-      }
-    }
-
+  get dtos(): HardWorkDto[] {
+    return this.hardworksData.getDtos();
   }
 
   openHardWorkHistoryListDialog(): void {

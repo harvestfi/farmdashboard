@@ -47,6 +47,7 @@ export class HardworkDataService {
       this.latestHardwork.set(dto.network, dto);
     }
     Utils.addInArrayAtTheStart(this.dtos, dto);
+    this.dtos = this.dtos.sort((a,b) => b.blockDate - a.blockDate);
     this.lastHardworks.get(dto.network).set(dto.vault, dto);
   };
 
