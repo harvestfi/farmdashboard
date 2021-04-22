@@ -28,7 +28,7 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
       this.log.debug('History of All Profits loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(2);
-      data?.forEach(dto => chartBuilder.addInData(0, dto.blockDate, (dto.weeklyAllProfit / 0.7) / 1000));
+      data?.forEach(dto => chartBuilder.addInData(0, dto.blockDate, (dto.weeklyAllProfit) / 1000));
       data?.forEach(dto => chartBuilder.addInData(1, dto.blockDate, dto.allProfit / 1000000));
       this.handleData(chartBuilder, [
         ['Weekly Profit K$', 'right', '#0085ff'],

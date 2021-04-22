@@ -11,7 +11,12 @@
         <option [value]="''">All</option>
         <option *ngFor="let name of vaultNames | async" [value]="name">{{name}}</option>
       </select>
-      <input (input)="handleFilterUpdate($event)" [(ngModel)]="minAmount" class="less-than-filter-field" placeholder="More than..." type="number" min="0">    
+      <input (input)="handleFilterUpdate($event)"
+             [(ngModel)]="minAmount" class="less-than-filter-field"
+             placeholder="More than..." type="number" min="0">
+      <mat-button-toggle-group name="networkToggle" [(ngModel)]="network" (change)="choseNetwork()">
+        <mat-button-toggle *ngFor="let n of networks" value="{{n}}">{{n}}</mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
     <app-hardwork-header [showMoreColumns]='true' ></app-hardwork-header>
     <app-hardwork-flow-tab [dtos]="dtos.data" [showMoreColumns]="true" [showFullDate]="true"></app-hardwork-flow-tab>

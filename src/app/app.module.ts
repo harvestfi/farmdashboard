@@ -20,7 +20,6 @@ import { DashboardLastValuesComponent } from './dashboard/dashboard-last-values/
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
-import { MainPageScoreboardComponent } from './main/main-page-scoreboard/main-page-scoreboard.component';
 import { MainPageViewComponent } from './main/main-page-view/main-page-view.component';
 import { StrategyListComponent } from './dashboard/strategy-list/strategy-list.component';
 import { MainFooterComponent } from './main/main-footer/main-footer.component';
@@ -106,7 +105,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HarvestFilterPipe,
     UniswapFilterPipe,
     DashboardLastValuesComponent,
-    MainPageScoreboardComponent,
     MainPageViewComponent,
     StrategyListComponent,
     MainFooterComponent,
