@@ -57,7 +57,7 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
               public vt: ViewTypeService,
               public harvestsService: HarvestsService,
               ) {
-                super(cdRef, vt);
+    super(cdRef, vt);
   }
 
   clear(): void {
@@ -122,6 +122,13 @@ export class HistoryPageComponent extends ChartGeneralMethodsComponent implement
     this.handleData(chartBuilder, [
       ['', 'right', '#fc8f34']
     ]);
+  }
+
+  handleData(chartBuilder: ChartBuilder, config: string[][]): void {
+    this.ready = true;
+    this.cdRef.detectChanges();
+    this.chart = chartBuilder.initChart(this.chartEl);
+    chartBuilder.addToChart(this.chart, config);
   }
 
   changeAllInclude(): void {

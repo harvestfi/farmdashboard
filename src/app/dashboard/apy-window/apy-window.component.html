@@ -109,13 +109,13 @@
   </div>
   <app-custom-modal #incomeModal>
     <ng-template>
-      <app-income-dialog [data]="{title: vaultName + ' Income history chart', name: vaultName}"></app-income-dialog>
+      <app-apy-chart-dialog [data]="{title: vaultName + ' Income history chart', name: vaultName}"></app-apy-chart-dialog>
     </ng-template>
   </app-custom-modal>
   
   <app-custom-modal #psApyModal>
     <ng-template>
-      <app-rewards-dialog [data]="{title: 'PS APY History'}"></app-rewards-dialog>
+      <app-ps-apy-dialog></app-ps-apy-dialog>
     </ng-template>
   </app-custom-modal>
 

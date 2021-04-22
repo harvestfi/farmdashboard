@@ -38,30 +38,30 @@ import { AllStatsDialogComponent } from './dialogs/all-stats-dialog/all-stats-di
 import { MatSortModule } from '@angular/material/sort';
 import { LoadingSpinnerComponent } from './main/loading-spinner/loading-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { IncomeDialogComponent } from './dialogs/income-dialog/income-dialog.component';
+import { ApyChartDialogComponent } from './dialogs/charts/apy-chart-dialog/apy-chart-dialog.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { environment } from '../environments/environment';
-import { ProfitDialogComponent } from './dialogs/profit-dialog/profit-dialog.component';
+import { WeeklyProfitDialogComponent } from './dialogs/charts/weekly-profit-dialog/weekly-profit-dialog.component';
 import { GrainChartComponent } from './chart/grain-chart/grain-chart.component';
-import { FarmBuybacksDialogComponent } from './dialogs/farm-buybacks-dialog/farm-buybacks-dialog.component';
+import { FarmBuybacksDialogComponent } from './dialogs/charts/farm-buybacks-dialog/farm-buybacks-dialog.component';
 import { HistoryPageComponent } from './history/history-page/history-page.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { TradeBoxComponent } from './history/trade-box/trade-box.component';
-import { HardWorkHistoryDialogComponent } from './dialogs/hard-work-history-dialog/hard-work-history-dialog.component';
-import { TotalUsersDialogComponent } from './dialogs/total-users-dialog/total-users-dialog.component';
-import { RewardsDialogComponent } from './dialogs/rewards-dialog/rewards-dialog.component';
+import { SavedGasFeesDialogComponent } from './dialogs/charts/saved-gas-fees-dialog/saved-gas-fees-dialog.component';
+import { TotalUsersDialogComponent } from './dialogs/charts/total-users-dialog/total-users-dialog.component';
+import { PsApyDialogComponent } from './dialogs/charts/ps-apy-dialog/ps-apy-dialog.component';
 import { MatInputModule } from '@angular/material/input';
-import { HarvestHistoryDialogComponent } from './dialogs/harvest-history-dialog/harvest-history-dialog.component';
-import { SimpleChartDialogComponent } from './dialogs/simple-chart-dialog/simple-chart-dialog.component';
-import { UniHistoryDialogComponent } from './dialogs/uni-history-dialog/uni-history-dialog.component';
+import { HarvestHistoryDialogComponent } from './dialogs/history/harvest-history-dialog/harvest-history-dialog.component';
+import { SimpleChartDialogComponent } from './dialogs/charts/simple-chart-dialog/simple-chart-dialog.component';
+import { UniHistoryDialogComponent } from './dialogs/history/uni-history-dialog/uni-history-dialog.component';
 import { PriceChartComponent } from './chart/price-chart/price-chart.component';
 import { DraggableModalComponent } from './dialogs/draggable-modal/draggable-modal.component';
 import { CustomModalComponent } from './dialogs/custom-modal/custom-modal.component';
 import { HarvestTradeComponent } from './flow-cards/harvest/harvest-trade/harvest-trade.component';
 import { LinkWindowComponent } from './flow-cards/uniswap/link-window/link-window.component';
 import { ApyWindowComponent } from './dashboard/apy-window/apy-window.component';
-import { HardWorkHistoryListDialogComponent } from './dialogs/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
+import { HardWorkHistoryListDialogComponent } from './dialogs/history/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
 import { HardworkTradeComponent } from './flow-cards/hardwork/hardwork-trade/hardwork-trade.component';
 import { HardworkFlowTabComponent } from './flow-cards/hardwork/hardwork-flow-tab/hardwork-flow-tab.component';
 import { HardworkTxComponent } from './flow-cards/hardwork/hardwork-tx/hardwork-tx.component';
@@ -75,16 +75,17 @@ import { UserBalancesDialogComponent } from './dialogs/user-balances-dialog/user
 import { Web3chartsComponent } from './web3charts/web3charts.component';
 import { Web3chartComponent } from './web3charts/components/web3chart/web3chart.component';
 import { DownloadHistoricDataDialogComponent } from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
-import {RewardsHistoryDialogComponent} from './dialogs/rewards-history-dialog/rewards-history-dialog.component';
-import {VaultFilterPipe} from './dialogs/rewards-history-dialog/vault-filter.pipe';
+import {RewardsHistoryDialogComponent} from './dialogs/history/rewards-history-dialog/rewards-history-dialog.component';
+import {VaultFilterPipe} from './dialogs/history/rewards-history-dialog/vault-filter.pipe';
 import {TransactionComponent} from './static/components/transactions/transaction.component';
 import {IconsComponent} from './static/components/icons/icons.component';
-import {GasDialogComponent} from './dialogs/gas-dialog/gas-dialog.component';
+import {GasDialogComponent} from './dialogs/charts/gas-dialog/gas-dialog.component';
 import {PaginatorComponent} from './common/paginator/paginator.component';
 import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
 import {SelectElementComponent} from './common/select-element/select-element.component';
-import { TvlV2DialogComponent } from './dialogs/tvl-v2-dialog/tvl-v2-dialog.component';
-import { VaultTvlDialogComponent } from './dialogs/vault-tvl-dialog/vault-tvl-dialog.component';
+import { TvlV2DialogComponent } from './dialogs/charts/tvl-v2-dialog/tvl-v2-dialog.component';
+import { VaultTvlDialogComponent } from './dialogs/charts/vault-tvl-dialog/vault-tvl-dialog.component';
+import { ChartGeneralComponent } from './chart/chart-general/chart-general.component';
 declare let require: any;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -112,16 +113,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SnackBarComponent,
     AllStatsDialogComponent,
     LoadingSpinnerComponent,
-    IncomeDialogComponent,
-    ProfitDialogComponent,
+    ApyChartDialogComponent,
+    WeeklyProfitDialogComponent,
     GrainChartComponent,
     FarmBuybacksDialogComponent,
     HistoryPageComponent,
     TradeBoxComponent,
-    HardWorkHistoryDialogComponent,
+    SavedGasFeesDialogComponent,
     TotalUsersDialogComponent,
     UniHistoryDialogComponent,
-    RewardsDialogComponent,
+    PsApyDialogComponent,
     RewardsHistoryDialogComponent,
     HarvestHistoryDialogComponent,
     SimpleChartDialogComponent,
@@ -153,7 +154,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     StrategyListFilterPipe,
     SelectElementComponent,
     TvlV2DialogComponent,
-    VaultTvlDialogComponent
+    VaultTvlDialogComponent,
+    ChartGeneralComponent
   ],
   imports: [
     AppRoutingModule,
