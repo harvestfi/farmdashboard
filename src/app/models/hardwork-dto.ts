@@ -40,47 +40,7 @@ export class HardWorkDto {
   blockDateAdopted: Date;
 
   public static fromJson(data: string): HardWorkDto {
-    const jsonData = JSON.parse(data);
-    const tx: HardWorkDto = new HardWorkDto();
-
-    tx.id = jsonData.id;
-    tx.vault = jsonData.vault;
-    tx.block = jsonData.block;
-    tx.blockDate = jsonData.blockDate;
-    tx.network = jsonData.network;
-    tx.shareChange = jsonData.shareChange;
-    tx.fullRewardUsd = jsonData.fullRewardUsd;
-    tx.fullRewardUsdTotal = jsonData.fullRewardUsdTotal;
-    tx.tvl = jsonData.tvl;
-    tx.allProfit = jsonData.allProfit;
-    tx.periodOfWork = jsonData.periodOfWork;
-    tx.psPeriodOfWork = jsonData.psPeriodOfWork;
-    tx.perc = jsonData.perc;
-    tx.apr = jsonData.apr;
-    tx.weeklyProfit = jsonData.weeklyProfit;
-    tx.weeklyAllProfit = jsonData.weeklyAllProfit;
-    tx.psTvlUsd = jsonData.psTvlUsd;
-    tx.psApr = jsonData.psApr;
-    tx.farmBuyback = jsonData.farmBuyback;
-    tx.farmBuybackSum = jsonData.farmBuybackSum;
-    tx.callsQuantity = jsonData.callsQuantity;
-    tx.poolUsers = jsonData.poolUsers;
-    tx.savedGasFees = jsonData.savedGasFees;
-    tx.savedGasFeesSum = jsonData.savedGasFeesSum;
-    tx.fee = jsonData.fee;
-    tx.weeklyAverageTvl = jsonData.weeklyAverageTvl;
-    tx.farmBuybackEth = jsonData.farmBuybackEth;
-    tx.feeEth = jsonData.feeEth;
-    tx.gasUsed = jsonData.gasUsed;
-    tx.idleTime = jsonData.idleTime;
-    tx.invested = jsonData.invested;
-    tx.investmentTarget = jsonData.investmentTarget;
-    tx.farmPrice = jsonData.farmPrice;
-    tx.ethPrice = jsonData.ethPrice;
-    tx.profitSharingRate = jsonData.profitSharingRate;
-    tx.buyBackRate = jsonData.buyBackRate;
-    tx.autoStake = jsonData.autoStake;
-
+    const tx: HardWorkDto = Object.assign(new HardWorkDto(), JSON.parse(data));
     HardWorkDto.enrich(tx);
     return tx;
   }

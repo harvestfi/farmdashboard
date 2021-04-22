@@ -5,6 +5,7 @@ import {HttpService} from './http.service';
 import {HarvestDto} from '../../models/harvest-dto';
 import {WebsocketService} from '../websocket.service';
 import {WsConsumer} from '../ws-consumer';
+import {Network} from '../../models/network';
 
 @Injectable({
     providedIn: 'root'
@@ -23,8 +24,8 @@ export class RewardsService implements WsConsumer {
         return this.httpService.httpGetWithNetwork('/api/transactions/last/reward');
     }
 
-    getHistoryRewards(name: string): Observable<RewardDto[]> {
-        return this.httpService.httpGetWithNetwork('/api/transactions/history/reward/' + name);
+    getHistoryRewards(name: string, network: Network, ): Observable<RewardDto[]> {
+        return this.httpService.httpGet('/api/transactions/history/reward/' + name, network);
     }
 
     getAllHistoryRewards(startTimestamp?: number, endTimestamp?: number): Observable<RewardDto[]> {

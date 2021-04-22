@@ -1,12 +1,11 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {UniswapSubscriberService} from '../../flow-cards/uniswap/uniswap-subscriber.service';
 import {ViewTypeService} from '../../services/view-type.service';
 import {PriceChartBuilder} from '../price-chart-builder';
-import {HttpService} from '../../services/http/http.service';
-import {ChartGeneralMethodsComponent} from '../chart-general-methods.component';
 import {IChartApi} from 'lightweight-charts';
 import {UniswapService} from '../../services/http/uniswap.service';
+import {ChartsOptionsLight} from '../charts-options-light';
 
 
 @Component({
@@ -14,7 +13,7 @@ import {UniswapService} from '../../services/http/uniswap.service';
   templateUrl: './farm-chart.component.html',
   styleUrls: ['./farm-chart.component.css']
 })
-export class FarmChartComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
+export class FarmChartComponent implements AfterViewInit, OnInit {
   @ViewChild('price_chart') chartEl: ElementRef;
   coin = 'FARM';
   otherCoin = 'ETH';
@@ -23,8 +22,16 @@ export class FarmChartComponent extends ChartGeneralMethodsComponent implements 
   constructor(private uniswapService: UniswapService,
               private uniswapSubscriberService: UniswapSubscriberService,
               public vt: ViewTypeService,
+              public cdRef: ChangeDetectorRef,
               private log: NGXLogger) {
-                super();
+  }
+
+  ngOnInit(): void {
+    this.vt.events$.subscribe(event => {
+      if (event === 'theme-changed') {
+        this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -41,5 +48,11 @@ export class FarmChartComponent extends ChartGeneralMethodsComponent implements 
       }
       priceChartBuilder.collectLastUniTx(tx);
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  handleScreenResize($event: any): void {
+    this.chart?.resize(this.chartEl?.nativeElement?.clientWidth,
+        this.chartEl?.nativeElement?.clientHeight);
   }
 }

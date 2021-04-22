@@ -80,11 +80,11 @@ export class ApyWindowComponent implements OnInit {
   // ********* VAULT *************
 
   get vaultEarned(): number {
-    return this.hardwork()?.fullRewardUsdTotal * 0.7;
+    return this.hardwork()?.fullRewardUsdTotal * (1 - this.hardwork()?.profitSharingRate);
   }
 
   get vaultEarnedLastWeek(): number {
-    return this.hardwork()?.weeklyProfit * 0.7;
+    return this.hardwork()?.weeklyProfit * (1 - this.hardwork()?.profitSharingRate);
   }
 
   get vaultAvgTvl(): number {

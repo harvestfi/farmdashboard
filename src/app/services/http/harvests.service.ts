@@ -4,8 +4,8 @@ import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
 import {WsConsumer} from '../ws-consumer';
 import {WebsocketService} from '../websocket.service';
-import {Network} from '../../models/network';
 import {SnackService} from '../snack.service';
+import {Network} from '../../models/network';
 
 @Injectable({
     providedIn: 'root'
@@ -43,7 +43,11 @@ export class HarvestsService implements WsConsumer {
         });
     }
 
-    getHarvestTxHistoryByRange(minBlock: number, maxBlock: number): Observable<HarvestDto[]> {
+    getHarvestTxHistoryByRangeAllNetworks(minBlock: number, maxBlock: number): Observable<HarvestDto[]> {
+        return this.httpService.httpGetWithNetwork(`/api/transactions/history/harvest?from=${minBlock}&to=${maxBlock}`);
+    }
+
+    getHarvestTxHistoryByRange(minBlock: number, maxBlock: number, network: Network): Observable<HarvestDto[]> {
         return this.httpService.httpGetWithNetwork(`/api/transactions/history/harvest?from=${minBlock}&to=${maxBlock}`);
     }
 

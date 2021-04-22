@@ -53,7 +53,7 @@ abstract class StrategyListCommonMethods {
 
   vaultTotalEarning(vaultName: string, network: string): number {
     const hw = this.hardworkData.getLastHardWork(vaultName, network);
-    return (hw?.fullRewardUsdTotal * 0.7) || 0;
+    return (hw?.fullRewardUsdTotal * (1 - hw?.profitSharingRate)) || 0;
   }
 
   vaultUsers(vaultName: string, network: string): number {

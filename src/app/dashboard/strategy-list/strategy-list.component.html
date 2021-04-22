@@ -49,7 +49,7 @@
         <div  class="column">
           <app-custom-modal [name]="'tvlModal_' + row.name">
             <ng-template>
-              <app-tvl-dialog [data]="{type: row.name}"></app-tvl-dialog>
+              <app-vault-tvl-dialog [vault]="row.name" [network]="row.network"></app-vault-tvl-dialog>
             </ng-template>
           </app-custom-modal>
           <span

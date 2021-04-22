@@ -16,10 +16,10 @@ export class Web3chartComponent extends ChartGeneralMethodsComponent implements 
   chart: IChartApi;
 
   constructor(
-      private cdRef: ChangeDetectorRef,
+      public cdRef: ChangeDetectorRef,
       public vt: ViewTypeService
   ) {
-    super();
+    super(cdRef, vt);
   }
 
   ngOnInit(): void {
@@ -47,5 +47,8 @@ export class Web3chartComponent extends ChartGeneralMethodsComponent implements 
     this.cdRef.detectChanges();
     this.chart = chartBuilder.initChart(this.chartEl);
     chartBuilder.addToChart(this.chart, [[this.title, 'right', '#7e7e7e']]);
+  }
+
+  load() {
   }
 }
