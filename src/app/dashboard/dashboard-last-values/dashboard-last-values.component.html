@@ -12,11 +12,10 @@
       </div>
     </div>
 
-    <div class="value-card gas" [class]="vt.getThemeColor() + '-card'"
-         (click)="openGasPriceDialog()"
-         [ngbPopover]="gasPricePopover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
+    <app-popover-card class="value-card gas" [class]="vt.getThemeColor() + '-card'"
+         (click)="openGasPriceDialog()">
       <div class="pointer">
-        <ng-template #gasPricePopover>
+        <ng-template>
           <p>Click to open history chart</p>
         </ng-template>
         <div class="value-middle">
@@ -34,7 +33,7 @@
           <app-gas-dialog></app-gas-dialog>
         </ng-template>
       </app-custom-modal>
-    </div>
+    </app-popover-card>
 
     <div class="value-card native-tokens" [class]="vt.getThemeColor() + '-card'">
       <div>
