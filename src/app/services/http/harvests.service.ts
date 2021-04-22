@@ -4,7 +4,6 @@ import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
 import {WsConsumer} from '../ws-consumer';
 import {WebsocketService} from '../websocket.service';
-import {Network} from '../../models/network';
 import {SnackService} from '../snack.service';
 
 @Injectable({

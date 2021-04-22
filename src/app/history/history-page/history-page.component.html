@@ -12,6 +12,7 @@
   </div>
 
   <div class="history-page-card balance-chart-container" [class]="vt.getThemeColor() + '-card'">
+    <h4 class="title">Account Balance</h4>
     <div *ngIf="address && fullData?.length !== 0" #balance_chart class="balance-chart" id="chart1"></div>
   </div>
   <div class="history-page-card" [class]="vt.getThemeColor() + '-card'">
