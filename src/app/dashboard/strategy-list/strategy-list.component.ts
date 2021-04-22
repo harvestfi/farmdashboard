@@ -9,6 +9,7 @@ import {HarvestDataService} from 'src/app/services/data/harvest-data.service';
 import {assets, platforms} from './strategy-list.constants';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {RewardDataService} from '../../services/data/reward-data.service';
+import {PriceDataService} from '../../services/data/price-data.service';
 
 @Component({
   selector: 'app-strategy-list',
@@ -35,9 +36,10 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
       private contractsService: ContractsService,
       public hardworkData: HardworkDataService,
       public rewardData: RewardDataService,
+      public priceData: PriceDataService,
       private log: NGXLogger
   ) {
-    super(harvestData, hardworkData, rewardData);
+    super(harvestData, hardworkData, rewardData, priceData);
   }
 
   ngAfterViewInit(): void {

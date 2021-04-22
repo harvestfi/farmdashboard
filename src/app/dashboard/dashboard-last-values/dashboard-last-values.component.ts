@@ -125,7 +125,7 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   tvlSum(network: string): number {
-    return this.harvestData.getTvlSum(network);
+    return this.harvestData.getTvlSum(network, this.priceData);
   }
 
   get tvlSumAllNetwork(): number {

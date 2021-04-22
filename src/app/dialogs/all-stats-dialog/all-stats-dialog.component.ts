@@ -23,7 +23,7 @@ export class AllStatsDialogComponent implements OnInit {
   }
 
   tvl(vaultName: string): number {
-    return this.harvestData.getVaultTvl(vaultName, 'eth');
+    return 0;
   }
 
   fullRewardUsdTotal(name: string): number {

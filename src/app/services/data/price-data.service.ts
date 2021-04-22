@@ -51,6 +51,9 @@ export class PriceDataService {
   }
 
   public getUsdPrice(name: string, network: string): number {
+    if (StaticValues.isStableCoin(name)) {
+      return 1;
+    }
     const targetPriceDto = this.prices.get(network)?.get(name);
     if (!targetPriceDto) {
       return 0;

@@ -3,6 +3,7 @@ import {HarvestDataService} from 'src/app/services/data/harvest-data.service';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {RewardDataService} from '../../services/data/reward-data.service';
+import {PriceDataService} from '../../services/data/price-data.service';
 
 @Pipe({
   name: 'strategyListFilter',
@@ -11,9 +12,10 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
   constructor(
       public harvestData: HarvestDataService,
       public hardworkData: HardworkDataService,
-      public rewardData: RewardDataService
+      public rewardData: RewardDataService,
+      public priceData: PriceDataService
   ) {
-    super(harvestData, hardworkData, rewardData);
+    super(harvestData, hardworkData, rewardData, priceData);
     }
 
     transform(

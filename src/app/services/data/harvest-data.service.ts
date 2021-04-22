@@ -4,12 +4,14 @@ import {HarvestsService} from '../http/harvests.service';
 import {StaticValues} from '../../static/static-values';
 import {HarvestDto} from '../../models/harvest-dto';
 import {Utils} from '../../static/utils';
+import {PriceDataService} from './price-data.service';
+import {LpStat} from '../../models/lp-stat';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HarvestDataService {
-
+  private static excludeFromTotalTvl = new Set(['iPS']);
   private dtos: HarvestDto[] = [];
   private lastGas = new Map<string, number>(
       Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0])
@@ -98,12 +100,23 @@ export class HarvestDataService {
     return this.allVaultsUsers.get(network);
   }
 
-  getTvlSum(network: string): number {
-    return Utils.iterableReduce(this.lastHarvests.get(network)?.values(), a => a.lastUsdTvl);
+  getTvlSum(network: string, priceData: PriceDataService): number {
+    let sum = 0;
+    for (const dto of this.lastHarvests.get(network)?.values()) {
+      if (HarvestDataService.excludeFromTotalTvl.has(dto.vault)) {
+        continue;
+      }
+      sum += this.getVaultTvl(dto.vault, network, priceData);
+    }
+    return sum;
   }
 
-  getVaultTvl(vault: string, network: string): number {
-    return this.lastHarvests.get(network)?.get(vault)?.lastUsdTvl;
+  getVaultTvl(vault: string, network: string, priceData: PriceDataService): number {
+    const dto = this.lastHarvests.get(network)?.get(vault);
+    if (!dto) {
+      return 0;
+    }
+    return this.calculateTvl(dto, priceData);
   }
 
   getFarmTotalSupply(): number {
@@ -120,5 +133,35 @@ export class HarvestDataService {
 
   getDtos(): HarvestDto[] {
     return this.dtos;
+  }
+
+  // TODO create normal price resolving!
+  private calculateTvl(dto: HarvestDto, priceData: PriceDataService): number {
+    if (dto.lpStatDto) {
+      const tvl = this.calculateTvlForLp(dto.lpStatDto, priceData, dto.network);
+      if (tvl === 0) {
+        // this.log.warn('zero tvl', dto.vault);
+        return dto.lastUsdTvl;
+      }
+      return tvl;
+    } else if (dto.lastTvl) {
+      const price = priceData.getUsdPrice(StaticValues.mapCoinNameToSimple(dto.vault, dto.network), dto.network);
+      if (price === 0) {
+        // this.log.warn('zero tvl', dto.vault);
+        return dto.lastUsdTvl;
+      }
+      return dto.lastTvl * price;
+    }
+    return 0.0;
+  }
+
+  private calculateTvlForLp(lpStat: LpStat, priceData: PriceDataService, network: string): number {
+    const simpleName1 = StaticValues.mapCoinNameToSimple(lpStat.coin1, network);
+    const simpleName2 = StaticValues.mapCoinNameToSimple(lpStat.coin2, network);
+    const price1 = priceData.getUsdPrice(simpleName1, network);
+    const price2 = priceData.getUsdPrice(simpleName2, network);
+    const amount1 = price1 * lpStat.amount1;
+    const amount2 = price2 * lpStat.amount2;
+    return amount1 + amount2;
   }
 }
