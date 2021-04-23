@@ -1,18 +1,19 @@
 <div class='uni-trades' [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}">
 
-  <div #tooltip="matTooltip"
-       class="trade-date left-border-box trade-field"
-       matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
-                    {{dto.type}}
-                    FARM: {{dto.amount | number}}
-                    Other coin: {{dto.otherAmount | number}}
-                    Price: {{dto.lastPrice | number}}
-                    Last gas: {{dto.lastGas | number}}" matTooltipClass="tooltip-spaced">
+  <app-popover-card class="trade-date left-border-box trade-field">
+    <ng-template>
+      <p>{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}</p>
+      <p>{{dto.type}}</p>
+      <p>FARM: {{dto.amount | number}}</p>
+      <p>Other coin: {{dto.otherAmount | number}}</p>
+      <p>Price: {{dto.lastPrice | number}}</p>
+      <p>Last gas: {{dto.lastGas | number}}</p>
+    </ng-template>
     {{fullDate ?
     (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'):
     (dto.blockDateAdopted | date: 'HH:mm:ss')
     }}
-  </div>
+  </app-popover-card>
 
   <div class="trade-amount left-border-box trade-field">
     {{dto.amount  | number: '1.0-0'}}
@@ -24,10 +25,10 @@
   </div>
 
 
-  <div class="trade-price left-border-box trade-field"
-       matTooltip="{{dto.otherCoin}} price: {{(dto.otherAmount / dto.amount) | number: '1.4-4'}}">
+  <app-popover-card class="trade-price left-border-box trade-field">
+    <ng-template>{{dto.otherCoin}} price: {{(dto.otherAmount / dto.amount) | number: '1.4-4'}}</ng-template>
     {{dto.lastPrice | number: '1.2-2'}}
-  </div>
+  </app-popover-card>
  
   <div class="trade-sign left-border-box trade-field">
 

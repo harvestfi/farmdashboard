@@ -1,10 +1,13 @@
 <div id="top-div-light">
   <div class="harvest-card" [class]="vt.getThemeColor() + '-card'">
     <div class="row title-row">
-      <div #tooltip="matTooltip" aria-hidden="false" aria-label="?" class="pool-title left-border-box" matTooltip="Changes in Harvest vaults.
-          Format: Date | add/remove | Amount in USD | Pool TVL">
+      <app-popover-card aria-hidden="false" aria-label="?" class="pool-title left-border-box">
+        <ng-template>
+          <p>Changes in Harvest vaults.</p>
+          <p>Format: Date | add/remove | Amount in USD | Pool TVL</p>
+        </ng-template>
         <h4 class="title">Pools</h4>
-      </div>
+      </app-popover-card>
       <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
         <option [value]="'all'">All</option>
         <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>

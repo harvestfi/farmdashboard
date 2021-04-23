@@ -50,10 +50,10 @@
       {{getTitle}}
     </div>
 
-    <div #tooltip="matTooltip" class="value amount date-col"
-         matTooltip="{{transferDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
+    <app-popover-card class="value amount date-col">
+      <ng-template>{{transferDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}</ng-template>
       {{transferDto.blockDateAdopted | date: 'dd MMM'}}
-    </div>
+    </app-popover-card>
 
     <div class="value trend-col">
       {{prettyType()}}
@@ -69,22 +69,22 @@
       <text class="coin-sign">$</text>
     </div>
 
-    <div class="value coin-col"
-         matTooltip="{{otherSideAddress}}">
+    <app-popover-card class="value coin-col">
+      <ng-template>{{otherSideAddress}}</ng-template>
       {{otherSideName}}
       <app-vault-icon *ngIf="!otherSideName?.startsWith('0x')" [vault]="otherSideName"></app-vault-icon>
-    </div>
+    </app-popover-card>
 
     <div class="value amount price-coll">
       {{transferDto.price| number: '1.0-2'}}
       <text class="coin-sign">$</text>
     </div>
 
-    <div class="value other-coin-col"
-         matTooltip="{{transferDto.profit | number: '1.0-2'}} FARM">
+    <app-popover-card class="value other-coin-col">
+      <ng-template>{{transferDto.profit | number: '1.0-2'}} FARM</ng-template>
       {{!transferDto.profitUsd ? 0 : transferDto.profitUsd | number: '1.0-2'}}
       <text class="coin-sign">$</text>
-    </div>
+    </app-popover-card>
 
     <div class="value amount balance-coll">
       {{transferBalance(transferDto)| number: '1.0-2'}}
@@ -153,19 +153,19 @@
       {{getTitle}}
     </div>
 
-    <div #tooltip="matTooltip" class="value date-col"
-         matTooltip="{{harvestDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}">
+    <app-popover-card class="value date-col">
+      <ng-template>{{harvestDto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}</ng-template>
       {{harvestDto.blockDateAdopted | date: 'dd MMM'}}
-    </div>
+    </app-popover-card>
 
     <div class="value trend-col">
       {{harvestDto.methodName}}
     </div>
 
-    <div class="value usd-amount-col"
-         matTooltip="{{harvestDto.amount| number: '1.0-8'}}">
+    <app-popover-card class="value usd-amount-col">
+      <ng-template>{{harvestDto.amount| number: '1.0-8'}}</ng-template>
       {{harvestDto.amount  | number: '1.0-2'}}
-    </div>
+    </app-popover-card>
 
     <div class="value usd-amount-col">
       {{harvestDto.usdAmount  | number: '1.0-0'}}
@@ -182,17 +182,17 @@
       <text class="coin-sign">M$</text>
     </div>
 
-    <div class="value amount balance-coll"
-         matTooltip="{{harvestDto.profit| number: '1.0-8'}}">
+    <app-popover-card class="value amount balance-coll">
+      <ng-template>{{harvestDto.profit| number: '1.0-8'}}</ng-template>
       {{harvestDto.profitUsd | number: '1.0-0'}}
       <text *ngIf="harvestDto.profit" class="coin-sign">$</text>
-    </div>
+    </app-popover-card>
 
-    <div class="value other-coin-col"
-         matTooltip="{{harvestDto.ownerBalance | number: '1.0-8'}}">
+    <app-popover-card class="value other-coin-col">
+      <ng-template>{{harvestDto.ownerBalance | number: '1.0-8'}}</ng-template>
       {{harvestDto.ownerBalanceUsd | number: '1.0-0'}}
       <text class="coin-sign">$</text>
-    </div>
+    </app-popover-card>
 
     <app-transaction-link [transactionHash]="harvestDto.hash" [network]="harvestDto.network"></app-transaction-link>
 
