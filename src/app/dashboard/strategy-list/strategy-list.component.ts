@@ -9,6 +9,8 @@ import {HarvestDataService} from 'src/app/services/data/harvest-data.service';
 import {assets, platforms} from './strategy-list.constants';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {RewardDataService} from '../../services/data/reward-data.service';
+import {PriceDataService} from '../../services/data/price-data.service';
+import {Contract} from '../../models/contract';
 
 @Component({
   selector: 'app-strategy-list',
@@ -20,7 +22,7 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   public networkFilter = '';
   public platformFilter = '';
   public assetFilter = '';
-  public vaultsList = [];
+  // public vaultsList: Contract[] = [];
   public apyWindowState: Record<string, boolean> = {};
   public sortDirection = 'desc';
   public currentSortingValue = 'tvl';
@@ -35,16 +37,22 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
       private contractsService: ContractsService,
       public hardworkData: HardworkDataService,
       public rewardData: RewardDataService,
+      public priceData: PriceDataService,
       private log: NGXLogger
   ) {
-    super(harvestData, hardworkData, rewardData);
+    super(harvestData, hardworkData, rewardData, priceData);
   }
 
   ngAfterViewInit(): void {
-    this.contractsService.getContracts(Vault).subscribe(vaults => {
-      this.vaultsList = vaults.filter(_ => _.isActive()).map(v => v.contract);
-      this.log.info('Loaded contracts', this.vaultsList);
-    });
+    // this.vaultsList = this.contractsService.getContractsArray(Vault)
+    // .filter(_ => _.isActive())
+    // .map(v => v.contract);
+  }
+
+  get vaultsList(): Contract[] {
+    return this.contractsService.getContractsArray(Vault)
+    .filter(_ => _.isActive())
+    .map(v => v.contract);
   }
 
   toggleAPYWindow(name: string): void {

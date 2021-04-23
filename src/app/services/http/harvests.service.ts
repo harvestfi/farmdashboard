@@ -19,17 +19,25 @@ export class HarvestsService implements WsConsumer {
                 private ws: WebsocketService,
                 private snack: SnackService,) {
         this.ws.registerConsumer(this);
-        this.setSubscribed(true);
     }
 
+    /**
+     * DON'T USE! for parent class only
+     */
     isSubscribed(): boolean {
         return this.subscribed;
     }
 
+    /**
+     * DON'T USE! for parent class only
+     */
     setSubscribed(s: boolean): void {
         this.subscribed = s;
     }
 
+    /**
+     * DON'T USE! for parent class only
+     */
     subscribeToTopic(): void {
         this.ws.onMessage('/topic/harvest', (m => HarvestDto.fromJson(m.body)))?.subscribe(tx => {
             this.snack.openSnack(tx.print());
@@ -37,18 +45,23 @@ export class HarvestsService implements WsConsumer {
         });
     }
 
+    /**
+     * ONLY FOR DATA SERVICE
+     */
     subscribeToHarvests(): Observable<HarvestDto> {
         return new Observable(subscriber => {
             this.$subscribers.push(subscriber);
         });
     }
 
+    // ------------------- REST REQUESTS ---------------------
+
     getHarvestTxHistoryByRangeAllNetworks(minBlock: number, maxBlock: number): Observable<HarvestDto[]> {
         return this.httpService.httpGetWithNetwork(`/api/transactions/history/harvest?from=${minBlock}&to=${maxBlock}`);
     }
 
     getHarvestTxHistoryByRange(minBlock: number, maxBlock: number, network: Network): Observable<HarvestDto[]> {
-        return this.httpService.httpGetWithNetwork(`/api/transactions/history/harvest?from=${minBlock}&to=${maxBlock}`);
+        return this.httpService.httpGet(`/api/transactions/history/harvest?from=${minBlock}&to=${maxBlock}`, network);
     }
 
     getHarvestHistoryByVault(name: string): Observable<HarvestDto[]> {

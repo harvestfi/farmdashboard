@@ -3,12 +3,14 @@ import {HarvestDataService} from 'src/app/services/data/harvest-data.service';
 import {Utils} from '../../static/utils';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {RewardDataService} from '../../services/data/reward-data.service';
+import {PriceDataService} from '../../services/data/price-data.service';
 
 abstract class StrategyListCommonMethods {
   protected constructor(
       public harvestData: HarvestDataService,
       public hardworkData: HardworkDataService,
-      public rewardData: RewardDataService
+      public rewardData: RewardDataService,
+      public priceData: PriceDataService
   ) {
   }
 
@@ -22,14 +24,15 @@ abstract class StrategyListCommonMethods {
 
   vaultRewardApr(vaultName: string, network: string): number {
     return this.rewardData.vaultRewardApr(vaultName, network,
-        this.harvestData.getVaultLastInfo(vaultName, network)?.lastUsdTvl);
+        this.harvestData.getVaultLastInfo(vaultName, network)?.lastUsdTvl,
+        this.priceData.getLastFarmPrice());
   }
 
   vaultFullApy(name: string, network: string): string {
     if (name === 'PS') {
       return this.vaultRewardApyPrettify(name, network);
     }
-    if (Utils.isAutoStakeVault(name)) {
+    if (Utils.isAutoStakeVault(name) || this.hardworkData.getLastHardWork(name, network)?.autoStake === 1) {
       return this.vaultRewardAprPrettify(name, network);
     }
     return Utils.prettifyNumber(this.vaultApy(name, network) + this.vaultRewardApy(name, network));
@@ -48,7 +51,8 @@ abstract class StrategyListCommonMethods {
   }
 
   vaultTvl(vault_name: string, network: string): number {
-    return (this.harvestData.getVaultTvl(vault_name, network) / 1000000) || 0;
+    const tvl = this.harvestData.getVaultTvl(vault_name, network, this.priceData);
+    return (tvl / 1000000) || 0;
   }
 
   vaultTotalEarning(vaultName: string, network: string): number {

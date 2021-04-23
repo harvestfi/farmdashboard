@@ -25,10 +25,8 @@ export class DownloadHistoricDataDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contractsService.getContracts(Vault).subscribe(vaults => {
-      this.sortedVaults = this.vaults = vaults;
-      this.sortData(null);
-    });
+    this.sortedVaults = this.vaults = this.contractsService.getContractsArray(Vault);
+    this.sortData(null);
   }
 
   sortData(sort: Sort): void {

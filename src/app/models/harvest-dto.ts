@@ -32,6 +32,7 @@ export class HarvestDto {
   lpStatDto: LpStat;
   blockDateAdopted: Date;
   acquired: Date;
+  underlyingName: string;
 
   public static fromJson(data: string): HarvestDto {
     const tx: HarvestDto = Object.assign(new HarvestDto(), JSON.parse(data));

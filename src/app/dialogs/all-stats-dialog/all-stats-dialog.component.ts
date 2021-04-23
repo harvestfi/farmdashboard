@@ -23,7 +23,7 @@ export class AllStatsDialogComponent implements OnInit {
   }
 
   tvl(vaultName: string): number {
-    return this.harvestData.getVaultTvl(vaultName, 'eth');
+    return 0;
   }
 
   fullRewardUsdTotal(name: string): number {
@@ -39,10 +39,10 @@ export class AllStatsDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contractsService.getContracts(Vault).subscribe(vaults => {
-      this.vaults = vaults;
-      this.sortedVaults = vaults.map(_ => _.contract.name);
-    });
+    // this.contractsService.getContracts(Vault).subscribe(vaults => {
+    //   this.vaults = vaults;
+    //   this.sortedVaults = vaults.map(_ => _.contract.name);
+    // });
   }
 
   users(name: string): number {

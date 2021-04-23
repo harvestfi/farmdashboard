@@ -5,6 +5,7 @@ import {TransferDto} from '../../models/transfer-dto';
 import {NGXLogger} from 'ngx-logger';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
+import {IContract} from '../../models/icontract';
 
 @Component({
   selector: 'app-trade-box',
@@ -18,7 +19,8 @@ export class TradeBoxComponent implements OnInit {
   @Input() harvestDto: HarvestDto;
   otherSideAddress: string;
   otherSideName: string;
-  addresses: Map<string,string>;
+  addresses: Map<string, string>;
+  vaults: Map<string, Vault>;
 
   constructor(private log: NGXLogger, private contractsService: ContractsService) {
   }
@@ -37,11 +39,9 @@ export class TradeBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contractsService.getContracts(Vault).subscribe(vaults => {
-      this.addresses = new Map(vaults.map(_ => [_.contract.address, _.contract.name]));
-      this.otherSideAddress = this.getTransferOtherSide();
-      this.otherSideName = this.getTransferOtherSidePretty();
-    });
+    this.vaults = this.contractsService.getContracts(Vault);
+    this.otherSideAddress = this.getTransferOtherSide();
+    this.otherSideName = this.getTransferOtherSidePretty();
   }
 
   transferBalance(t: TransferDto): number {
@@ -99,7 +99,7 @@ export class TradeBoxComponent implements OnInit {
 
   getTransferOtherSidePretty(): string {
     const otherSide = this.getTransferOtherSide();
-    let name = this.addresses.get(otherSide) || otherSide;
+    let name = this.vaults.get(otherSide)?.contract.name || otherSide;
     if (name === otherSide) {
       name = name.slice(0, 6) + '..' + name.slice(name.length - 4);
     }

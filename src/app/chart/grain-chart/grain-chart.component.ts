@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
-import {UniswapSubscriberService} from '../../flow-cards/uniswap/uniswap-subscriber.service';
 import {PriceChartBuilder} from '../price-chart-builder';
-import {HttpService} from '../../services/http/http.service';
-import { IChartApi } from 'lightweight-charts';
+import {IChartApi} from 'lightweight-charts';
 import {UniswapService} from '../../services/http/uniswap.service';
+import {PricesService} from '../../services/http/prices.service';
+import {PriceDataService} from '../../services/data/price-data.service';
 
 @Component({
   selector: 'app-grain-chart',
@@ -18,7 +18,7 @@ export class GrainChartComponent implements AfterViewInit {
   chart: IChartApi;
 
   constructor(private uniswapService: UniswapService,
-              private uniswapSubscriberService: UniswapSubscriberService,
+              private priceData: PriceDataService,
               public vt: ViewTypeService,
               private log: NGXLogger) {
   }
@@ -30,11 +30,11 @@ export class GrainChartComponent implements AfterViewInit {
       priceChartBuilder.addValuesToChart(data, false);
     });
 
-    this.uniswapSubscriberService.handlers.set(this, tx => {
-      if (tx.coin !== this.coin) {
+    this.priceData.subscribeToActual().subscribe(tx => {
+      if (tx.token !== this.coin) {
         return;
       }
-      priceChartBuilder.collectLastUniTx(tx);
+      priceChartBuilder.collectLastTx(tx.price, tx.blockDate);
     });
   }
 }

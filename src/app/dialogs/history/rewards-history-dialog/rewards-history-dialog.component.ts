@@ -19,7 +19,7 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
     ready = false;
     disabled = false;
     vaultFilter = '';
-    filters: string[];
+    vaultNames: string[];
 
     private dayLag = 15;
 
@@ -28,15 +28,14 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
                 private log: NGXLogger,
                 private contractsService: ContractsService,
                 private rewardsService: RewardsService,
-                ) {
+    ) {
     }
 
     ngAfterViewInit(): void {
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - this.dayLag);
-        this.contractsService.getContracts(Vault).subscribe(vaults => {
-            this.filters = vaults.filter(_ => _.isActive()).map(_ => _.contract?.name);
-        });
+        this.vaultNames = this.contractsService.getContractsArray(Vault)
+        .filter(_ => _.isActive()).map(_ => _.contract?.name);
         this.loadRewardsHistory(startDate, new Date());
     }
 
@@ -46,7 +45,10 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
             Math.floor(startDate.getTime() / 1000),
             Math.floor(endDate.getTime() / 1000))
         .subscribe((data) => {
-            this.rewards.push(...(data.filter(r => !Utils.isAutoStakeVault(r.vault)).map(RewardDto.fillBlockDateAdopted).reverse()));
+            this.rewards.push(...(data
+            // .filter(r => !Utils.isAutoStakeVault(r.vault))
+            .map(RewardDto.fillBlockDateAdopted)
+            .reverse()));
             this.ready = true;
             this.disabled = false;
             this.cdRef.detectChanges();
