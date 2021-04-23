@@ -40,7 +40,7 @@ export class PriceDataService {
   private handlePrice(price: PricesDto): Observable<PricesDto> {
     const lastPrice = this.prices.get(price.network).get(price.token);
     if (lastPrice && lastPrice.block > price.block) {
-      this.log.warn('Old price', lastPrice, price);
+      this.log.warn('Price DTO older on ' + (lastPrice.block - price.block), lastPrice, price);
       return new Observable<PricesDto>();
     }
     this.prices.get(price.network).set(price.token, price);
