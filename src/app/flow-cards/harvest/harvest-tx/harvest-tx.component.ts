@@ -8,8 +8,6 @@ import {SnackService} from '../../../services/snack.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 import {HarvestsService} from '../../../services/http/harvests.service';
 import {HarvestDataService} from '../../../services/data/harvest-data.service';
 
@@ -37,10 +35,9 @@ export class HarvestTxComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
 
-  get vaultNames(): Observable<string[]> {
-    return this.contractsService.getContracts(Vault).pipe(
-        map(vaults => vaults.map(_ => _.contract.name))
-    );
+  get vaultNames(): string[] {
+    return this.contractsService.getContractsArray(Vault)
+    .map(_ => _.contract.name);
   }
 
   get dtos(): HarvestDto[] {

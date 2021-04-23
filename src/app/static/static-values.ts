@@ -6,8 +6,6 @@ export class StaticValues {
   public static SECONDS_OF_WEEK = StaticValues.SECONDS_OF_DAY * 7;
   public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
   public static uniInited = false;
-  public static lastPrice = 0.0;
-  public static lastBlockDateAdopted = new Date(0);
 
   private static NETWORK_ETH: Network = {
     blockExplorerUrl: 'https://www.bscscan.com',

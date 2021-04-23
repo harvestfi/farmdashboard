@@ -6,26 +6,18 @@ export class UniswapDto {
   amount: number;
   otherCoin: string;
   otherAmount: number;
-  ethAmount: number;
   hash: string;
   block: string;
   confirmed: boolean;
   lastPrice: number;
   lastGas: number;
   blockDate: number;
-  psWeekApy: number;
-  psIncomeUsd: number;
-  ownerCount: number;
-  ownerBalance: number;
-  ownerBalanceUsd: number;
   methodName: string;
 
-  acquired: Date;
   blockDateAdopted: Date;
 
   public static fromJson(data: string): UniswapDto {
     const tx: UniswapDto = Object.assign(new UniswapDto(), JSON.parse(data));
-    tx.acquired = new Date();
     UniswapDto.round(tx);
     return tx;
   }
@@ -36,9 +28,6 @@ export class UniswapDto {
     tx.otherAmount = Number(tx.otherAmount?.toFixed(2));
     tx.lastPrice = Number(tx.lastPrice?.toFixed(2));
     tx.lastGas = Number(tx.lastGas?.toFixed(0));
-    if (tx.acquired == null) {
-      tx.acquired = new Date();
-    }
     if (tx.blockDateAdopted == null) {
       const d = new Date(0);
       d.setUTCSeconds(tx.blockDate);

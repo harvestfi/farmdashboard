@@ -76,7 +76,7 @@ export class RewardDataService {
     return reward.weeklyApy;
   }
 
-  vaultRewardApr(vaultName: string, network: string, usdTvl: number): number {
+  vaultRewardApr(vaultName: string, network: string, usdTvl: number, farmPrice: number): number {
     const reward = this.lastRewards.get(network).get(vaultName);
     if (!reward || !usdTvl || usdTvl === 0) {
       return 0;
@@ -89,7 +89,7 @@ export class RewardDataService {
       return 0;
     }
     const period = StaticValues.SECONDS_OF_YEAR / (reward.periodFinish - reward.blockDate);
-    const rewardUsd = reward.reward * StaticValues.lastPrice;
+    const rewardUsd = reward.reward * farmPrice;
     return (rewardUsd / usdTvl) * period * 100;
   }
 }

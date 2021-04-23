@@ -3,8 +3,6 @@ import {NGXLogger} from 'ngx-logger';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
 import {HardworksService} from '../../../services/http/hardworks.service';
 import {Paginated} from '../../../models/paginated';
 import {HardWorkDto} from '../../../models/hardwork-dto';
@@ -53,16 +51,16 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
             totalPages: 0,
             data: []
           };
-    }
-      )
+        }
+    )
     .add(() => this.ready = true);
   }
 
-  get vaultNames(): Observable<string[]> {
-    return this.contractsService.getContracts(Vault).pipe(
-        map(vaults => vaults.map(_ => _.contract.name))
-    );
+  get vaultNames(): string[] {
+    return this.contractsService.getContractsArray(Vault)
+    .map(_ => _.contract.name);
   }
+
   // These methods all seem redundant, but I separated them because we may
   // want to add additional logic to the next/prev/select transitions.
   nextPage($event): void {

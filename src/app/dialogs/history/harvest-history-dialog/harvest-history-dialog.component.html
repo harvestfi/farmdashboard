@@ -7,7 +7,7 @@
                 <label class="strategy-selector-label" for="strategy-selector">Pools</label>
                 <select [(ngModel)]="vaultFilter" id="strategy-selector" class="strategy-selector">
                     <option [value]="'all'">All</option>
-                    <option *ngFor="let name of tvlNames | async" [value]="name">{{name}}</option>
+                    <option *ngFor="let name of tvlNames" [value]="name">{{name}}</option>
                 </select>
             </div>
             <input #harvestDtoFilter class="more-than-input" placeholder="More than..." type="number" min="0">

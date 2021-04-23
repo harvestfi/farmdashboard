@@ -24,14 +24,15 @@ abstract class StrategyListCommonMethods {
 
   vaultRewardApr(vaultName: string, network: string): number {
     return this.rewardData.vaultRewardApr(vaultName, network,
-        this.harvestData.getVaultLastInfo(vaultName, network)?.lastUsdTvl);
+        this.harvestData.getVaultLastInfo(vaultName, network)?.lastUsdTvl,
+        this.priceData.getLastFarmPrice());
   }
 
   vaultFullApy(name: string, network: string): string {
     if (name === 'PS') {
       return this.vaultRewardApyPrettify(name, network);
     }
-    if (Utils.isAutoStakeVault(name)) {
+    if (Utils.isAutoStakeVault(name) || this.hardworkData.getLastHardWork(name, network)?.autoStake === 1) {
       return this.vaultRewardAprPrettify(name, network);
     }
     return Utils.prettifyNumber(this.vaultApy(name, network) + this.vaultRewardApy(name, network));

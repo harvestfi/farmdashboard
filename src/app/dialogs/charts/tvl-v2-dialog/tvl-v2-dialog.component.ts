@@ -30,7 +30,7 @@ export class TvlV2DialogComponent extends ChartGeneralMethodsComponent implement
       chartBuilder.initVariables(3);
       data?.forEach(dto => {
         chartBuilder.addInData(0, dto.calculateTime, dto.lastTvl / 1000000);
-        chartBuilder.addInData(1, dto.calculateTime, dto.lastAllOwnersCount);
+        chartBuilder.addInData(1, dto.calculateTime, dto.lastOwnersCount);
         chartBuilder.addInData(2, dto.calculateTime, dto.lastPrice);
       });
       this.handleData(chartBuilder, [

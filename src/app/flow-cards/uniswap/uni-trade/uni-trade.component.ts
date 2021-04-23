@@ -65,7 +65,8 @@ export class UniTradeComponent implements OnInit {
 
   checkImportantOwner(dto: UniswapDto): string {
     const address = dto.owner;
-    if (address === '0xbed04c43e74150794f2ff5b62b4f73820edaf661' || address === '0xed1eac72063476e04997fbefa19dcaea008e2aa5'
+    if (address.toLowerCase() === '0xbed04c43e74150794f2ff5b62b4f73820edaf661'.toLowerCase()
+        || address.toLowerCase() === '0xed1eac72063476e04997fbefa19dcaea008e2aa5'.toLowerCase()
         || dto.methodName === 'doHardWork') {
       return 'doHardWork';
     }

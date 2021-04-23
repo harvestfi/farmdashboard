@@ -1,3 +1,5 @@
+import {UniswapDto} from './uniswap-dto';
+
 export class PricesDto {
   id: string;
   block: number;
@@ -25,5 +27,23 @@ export class PricesDto {
       d.setUTCSeconds(tx.blockDate);
       tx.blockDateAdopted = d;
     }
+  }
+
+  public toUniswap(): UniswapDto {
+    const dto = new UniswapDto();
+    dto.id = this.id;
+    dto.type = this.buy ? 'BUY' : 'SELL';
+    dto.owner = '';
+    dto.coin = this.token;
+    dto.amount = this.tokenAmount;
+    dto.otherCoin = this.otherToken;
+    dto.otherAmount = this.otherTokenAmount;
+    dto.hash = this.id.split('_')[0];
+    dto.block = this.block.toString();
+    dto.confirmed = true;
+    dto.lastPrice = this.price;
+    dto.blockDate = this.blockDate;
+    dto.blockDateAdopted = this.blockDateAdopted;
+    return dto;
   }
 }

@@ -6,6 +6,7 @@ import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {HarvestDataService} from '../../services/data/harvest-data.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {RewardDataService} from '../../services/data/reward-data.service';
+import {PriceDataService} from '../../services/data/price-data.service';
 
 @Component({
   selector: 'app-apy-window',
@@ -22,6 +23,7 @@ export class ApyWindowComponent implements OnInit {
   constructor(private hardworkData: HardworkDataService,
               private harvestData: HarvestDataService,
               private rewardData: RewardDataService,
+              private priceData: PriceDataService,
               private log: NGXLogger) {
   }
 
@@ -60,6 +62,10 @@ export class ApyWindowComponent implements OnInit {
   // ---------------- GETTERS --------------------
 
   get isAutoStakeVault(): boolean {
+    const hw = this.hardworkData.getLastHardWork(this.vaultName, this.network);
+    if(hw?.autoStake === 1) {
+      return true;
+    }
     return Utils.isAutoStakeVault(this.vaultName);
   }
 
@@ -114,7 +120,8 @@ export class ApyWindowComponent implements OnInit {
 
   get vaultRewardApr(): number {
     return this.rewardData.vaultRewardApr(this.vaultName, this.network,
-        this.harvestData.getVaultLastInfo(this.vaultName, this.network)?.lastUsdTvl);
+        this.harvestData.getVaultLastInfo(this.vaultName, this.network)?.lastUsdTvl,
+        this.priceData.getLastFarmPrice());
   }
 
   get vaultRewardWeeklyApy(): number {

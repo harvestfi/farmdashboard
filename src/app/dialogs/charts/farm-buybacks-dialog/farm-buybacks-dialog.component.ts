@@ -33,7 +33,7 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
       data?.forEach(dto => {
         let bb = dto.farmBuybackSum / 1000;
         if (dto.network === 'bsc') {
-          const farmPrice = this.priceData.getUsdPrice('FARM', 'eth');
+          const farmPrice = this.priceData.getLastFarmPrice();
           if (farmPrice && farmPrice !== 0) {
             bb = bb / farmPrice;
           } else {

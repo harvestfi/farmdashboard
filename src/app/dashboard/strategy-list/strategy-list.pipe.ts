@@ -4,6 +4,7 @@ import StrategyListCommonMethods from './strategy-list-common-methods.utility';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
+import {Contract} from '../../models/contract';
 
 @Pipe({
   name: 'strategyListFilter',
@@ -19,14 +20,14 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
     }
 
     transform(
-        vaults: any[],
+        vaults: Contract[],
         network: string,
         platform: string,
         asset: string,
         currentSortingValue: string,
         sortDirection: string,
         searchTerm: string
-        ): any {
+        ): Contract[] {
 
         const newVaults = vaults.filter(vault => {
             const networkMatchesFilter = (network ? vault.network === network : true);

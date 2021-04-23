@@ -4,10 +4,8 @@ import {NGXLogger} from 'ngx-logger';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {SnackService} from '../../../services/snack.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
-import {Observable} from 'rxjs';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
-import {map} from 'rxjs/operators';
 import {HardworkDataService} from '../../../services/data/hardwork-data.service';
 
 @Component({
@@ -29,10 +27,9 @@ export class HardworkTxComponent implements AfterViewInit {
   ) {
   }
 
-  get vaultNames(): Observable<string[]> {
-    return this.contractsService.getContracts(Vault).pipe(
-        map(vaults => vaults.map(_ => _.contract?.name))
-    );
+  get vaultNames(): string[] {
+    return this.contractsService.getContractsArray(Vault)
+    .map(_ => _.contract?.name);
   }
 
   ngAfterViewInit(): void {

@@ -22,7 +22,41 @@ export class HardworksService implements WsConsumer {
         @Inject(APP_CONFIG) public config: AppConfig,
         private httpService: HttpService,
         private ws: WebsocketService) {
+        this.ws.registerConsumer(this);
     }
+
+    /**
+     * DON'T USE! for parent class only
+     */
+    isSubscribed(): boolean {
+        return this.subscribed;
+    }
+
+    /**
+     * DON'T USE! for parent class only
+     */
+    setSubscribed(s: boolean): void {
+        this.subscribed = s;
+    }
+
+    /**
+     * DON'T USE! for parent class only
+     */
+    subscribeToTopic(): void {
+        this.ws.onMessage('/topic/hardwork', (m => HardWorkDto.fromJson(m.body)))
+        ?.subscribe(tx => this.$subscribers.forEach(_ => _.next(tx)));
+    }
+
+    /**
+     * ONLY FOR DATA SERVICE
+     */
+    subscribeToHardworks(): Observable<HardWorkDto> {
+        return new Observable(subscriber => {
+            this.$subscribers.push(subscriber);
+        });
+    }
+
+    // ------------------- REST REQUESTS ---------------------
 
     getHardWorkHistoryData(network: Network): Observable<HardWorkDto[]> {
         return this.httpService.httpGet('/api/transactions/history/hardwork', network);
@@ -74,31 +108,5 @@ export class HardworksService implements WsConsumer {
                 map(el => el?.data)
             );
         }
-    }
-
-    isSubscribed(): boolean {
-        return this.subscribed;
-    }
-
-    setSubscribed(s: boolean): void {
-        this.subscribed = s;
-    }
-
-    public initWs(): void {
-        if (this.ws.registerConsumer(this) && !this.subscribed) {
-            this.subscribeToTopic();
-            this.subscribed = true;
-        }
-    }
-
-    public subscribeToTopic(): void {
-        this.ws.onMessage('/topic/hardwork', (m => HardWorkDto.fromJson(m.body)))
-        ?.subscribe(tx => this.$subscribers.forEach(_ => _.next(tx)));
-    }
-
-    public subscribeToHardworks(): Observable<HardWorkDto> {
-        return new Observable(subscriber => {
-            this.$subscribers.push(subscriber);
-        });
     }
 }

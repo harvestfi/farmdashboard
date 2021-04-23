@@ -3,11 +3,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
-import {UniswapDto} from '../../models/uniswap-dto';
-import {UniswapService} from '../../services/http/uniswap.service';
 import {APP_CONFIG, AppConfig} from '../../../app.config';
 import {PricesService} from '../../services/http/prices.service';
-import {PricesDto} from '../../models/prices-dto';
 import {NGXLogger} from 'ngx-logger';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {HarvestDataService} from '../../services/data/harvest-data.service';
@@ -31,8 +28,6 @@ export class DashboardLastValuesComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               public dialog: MatDialog,
               public vt: ViewTypeService,
-              private uniswapService: UniswapService,
-              private uniswapSubscriberService: UniswapService,
               private pricesService: PricesService,
               private hardworkData: HardworkDataService,
               private harvestData: HarvestDataService,
@@ -41,32 +36,9 @@ export class DashboardLastValuesComponent implements OnInit {
   ) {
   }
 
-  private prices = new Map<string, PricesDto>();
-  farmHolders = 0;
-
   ngOnInit(): void {
-
-    //UNISWAP LOADING
-    this.uniswapSubscriberService.subscribeToUniswapEvents().subscribe(this.handleUniswaps.bind(this));
-    this.uniswapService.getUniswapTxHistoryData().subscribe(data =>
-        data?.forEach(this.handleUniswaps.bind(this))
-    );
-
-    // PRICE LOADING
-    this.pricesService.getLastPrices().subscribe(data =>
-        data?.forEach(this.handlePrice.bind(this))
-    );
-    this.pricesService.subscribeToPrices().subscribe(this.handlePrice.bind(this));
   }
-
-  private handleUniswaps(uniswap: UniswapDto) {
-    this.farmHolders = uniswap.ownerCount;
-  }
-
-  private handlePrice(price: PricesDto) {
-    this.prices.set(price.id, price);
-  }
-
+  // TODO split to classes
   // ------------- HARDWORK DATA ---------------------------
 
   totalGasSaved(network: string): number {
@@ -83,7 +55,7 @@ export class DashboardLastValuesComponent implements OnInit {
     if (!this.farmUsdPrice || this.farmUsdPrice === 0) {
       return 0;
     }
-    let sum = this.hardworkData.getLatestHardWork(network).farmBuybackSum;
+    let sum = this.hardworkData.getLatestHardWork(network)?.farmBuybackSum || 0;
     if (network === 'bsc') {
       sum /= this.farmUsdPrice;
     }
@@ -157,7 +129,7 @@ export class DashboardLastValuesComponent implements OnInit {
   // --------------------------- PRICES -------------------------
 
   get farmUsdPrice(): number {
-    return this.priceData.getUsdPrice('FARM', 'eth');
+    return this.priceData.getLastFarmPrice();
   }
 
   get btcUsdPrice(): number {

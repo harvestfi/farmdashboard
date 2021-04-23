@@ -17,8 +17,41 @@ export class RewardsService implements WsConsumer {
     constructor(private httpService: HttpService,
                 private ws: WebsocketService) {
         this.ws.registerConsumer(this);
-        this.setSubscribed(true);
     }
+
+    /**
+     * DON'T USE! for parent class only
+     */
+    isSubscribed(): boolean {
+        return this.subscribed;
+    }
+
+    /**
+     * DON'T USE! for parent class only
+     */
+    setSubscribed(s: boolean): void {
+        this.subscribed = s;
+    }
+
+    /**
+     * DON'T USE! for parent class only
+     */
+    subscribeToTopic(): void {
+        this.ws.onMessage('/topic/rewards', (m => RewardDto.fromJson(m.body)))?.subscribe(tx => {
+            this.$subscribers.forEach(_ => _.next(tx));
+        });
+    }
+
+    /**
+     * ONLY FOR DATA SERVICE
+     */
+    subscribeToRewards(): Observable<RewardDto> {
+        return new Observable(subscriber => {
+            this.$subscribers.push(subscriber);
+        });
+    }
+
+    // ------------------- REST REQUESTS ---------------------
 
     getLastRewards(): Observable<RewardDto[]> {
         return this.httpService.httpGetWithNetwork('/api/transactions/last/reward');
@@ -33,26 +66,6 @@ export class RewardsService implements WsConsumer {
         endTimestamp = Math.floor(endTimestamp || (Date.now() / 1000));
         return this.httpService.httpGetWithNetwork(
             `/api/transactions/history/reward/?start=${startTimestamp}&end=${endTimestamp}`);
-    }
-
-    subscribeToRewards(): Observable<RewardDto> {
-        return new Observable(subscriber => {
-            this.$subscribers.push(subscriber);
-        });
-    }
-
-    isSubscribed(): boolean {
-        return this.subscribed;
-    }
-
-    setSubscribed(s: boolean): void {
-        this.subscribed = s;
-    }
-
-    subscribeToTopic(): void {
-        this.ws.onMessage('/topic/rewards', (m => RewardDto.fromJson(m.body)))?.subscribe(tx => {
-            this.$subscribers.forEach(_ => _.next(tx));
-        });
     }
 
 }

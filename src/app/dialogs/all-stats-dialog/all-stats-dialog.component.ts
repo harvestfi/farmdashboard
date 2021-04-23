@@ -39,10 +39,10 @@ export class AllStatsDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contractsService.getContracts(Vault).subscribe(vaults => {
-      this.vaults = vaults;
-      this.sortedVaults = vaults.map(_ => _.contract.name);
-    });
+    // this.contractsService.getContracts(Vault).subscribe(vaults => {
+    //   this.vaults = vaults;
+    //   this.sortedVaults = vaults.map(_ => _.contract.name);
+    // });
   }
 
   users(name: string): number {
