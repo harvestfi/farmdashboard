@@ -7,8 +7,8 @@
         "bsc": "https://ethparser-bsc.herokuapp.com/stomp"
     },
     "apiEndpoints": {
-        "eth": "https://ethparser.herokuapp.com",
-        "bsc": "https://ethparser-bsc.herokuapp.com"
+        "eth": "https://ethparser-api.herokuapp.com",
+        "bsc": "https://ethparser-bsc-api.herokuapp.com"
     },
     "multipleSources": true,
     "defaultNetwork": "eth"

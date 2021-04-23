@@ -5,9 +5,9 @@ import * as SockJS from 'sockjs-client';
 import {filter, first, switchMap} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {WsConsumer} from './ws-consumer';
-import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {APP_CONFIG, AppConfig} from 'src/app.config';
+import {Network} from '../models/network';
 import get = Reflect.get;
-import {StaticValues} from '../static/static-values';
 
 export enum SocketClientState {
   ATTEMPTING, CONNECTED
@@ -17,7 +17,7 @@ export enum SocketClientState {
   providedIn: 'root'
 })
 export class WebsocketService implements OnDestroy {
-  private client: Client;
+  private clients = new Map<string, Client>();
   private state: BehaviorSubject<SocketClientState>
       = new BehaviorSubject<SocketClientState>(SocketClientState.ATTEMPTING);
   private recTimeout = null;
@@ -25,7 +25,8 @@ export class WebsocketService implements OnDestroy {
   private subscriptions = new Set<string>();
   private wasConnected = false;
 
-  constructor(@Inject(APP_CONFIG) public config: AppConfig) {}
+  constructor(@Inject(APP_CONFIG) public config: AppConfig) {
+  }
 
   static jsonHandler(message: Message): any {
     return JSON.parse(message.body);
@@ -35,11 +36,12 @@ export class WebsocketService implements OnDestroy {
     this.connect().pipe(first()).subscribe(inst => inst.disconnect(null));
   }
 
-  public connectSockJs(): void {
-    this.client = over(new SockJS(get(this.config.wsEndpoints, StaticValues.NETWORKS.get(this.config.defaultNetwork).ethparserName)));
-    this.client.debug = null;
-    this.client.reconnect_delay = this.config.wsReconnectInterval * 1000;
-    this.client.connect({}, () => {
+  public connectSockJs(network: Network): void {
+    const client = over(new SockJS(get(this.config.wsEndpoints, network.ethparserName)));
+    this.clients.set(network.ethparserName, client);
+    client.debug = null;
+    client.reconnect_delay = this.config.wsReconnectInterval * 1000;
+    client.connect({}, () => {
       clearTimeout(this.recTimeout);
       // reload page not so elegant method, but it should work
       // without connection we have a gap for the data, we should reload
@@ -60,7 +62,7 @@ export class WebsocketService implements OnDestroy {
     }, () => {
       this.consumers.forEach(c => c.setSubscribed(false));
       this.recTimeout = setTimeout(() => {
-        this.connectSockJs();
+        this.connectSockJs(network);
       }, this.config.wsReconnectInterval * 1000);
     });
   }
@@ -78,35 +80,39 @@ export class WebsocketService implements OnDestroy {
       return;
     }
     this.subscriptions.add(topic);
-    return this.connect().pipe(first(), switchMap(inst =>
-      new Observable<any>(observer => {
-        inst.unsubscribe(topic);
-        const subscription: StompSubscription = inst.subscribe(topic, message => {
-          observer.next(handler(message));
-        });
-        return () => inst.unsubscribe(subscription.id);
-      })
-    ));
+    return this.connect().pipe(
+        // first(),
+        switchMap(inst =>
+            new Observable<any>(observer => {
+              inst.unsubscribe(topic);
+              const subscription: StompSubscription = inst.subscribe(topic, message => {
+                observer.next(handler(message));
+              });
+              return () => inst.unsubscribe(subscription.id);
+            })
+        ));
   }
 
-  send(topic: string, payload: any): void {
-    this.connect()
-    .pipe(first())
-    .subscribe(inst => inst.send(topic, {}, JSON.stringify(payload)));
-  }
+  // send(topic: string, payload: any): void {
+  //   this.connect()
+  //   .pipe(first())
+  //   .subscribe(inst => inst.send(topic, {}, JSON.stringify(payload)));
+  // }
 
+  // TODO split
   public isConnected(): boolean {
-    if (this.client) {
-      return this.client?.connected;
-    }
-    return false;
+    return Array.from(this.clients.values())
+    .map(c => c.connected)
+    .filter(c => !c)
+        .length === 0;
   }
 
   private connect(): Observable<Client> {
     return new Observable<Client>(observer => {
-      this.state.pipe(filter(state => state === SocketClientState.CONNECTED)).subscribe(() => {
-        observer.next(this.client);
-      });
+      this.state.pipe(
+          filter(state => state === SocketClientState.CONNECTED)
+      ).subscribe(() =>
+          Array.from(this.clients.values()).forEach(client => observer.next(client)));
     });
   }
 
