@@ -11,6 +11,7 @@ import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Contract} from '../../models/contract';
+import {Token} from '../../models/token';
 
 @Component({
   selector: 'app-strategy-list',
@@ -27,7 +28,6 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   public sortDirection = 'desc';
   public currentSortingValue = 'tvl';
   public platform_list = platforms;
-  public asset_list = assets;
 
   @ViewChildren(CustomModalComponent) private tvlModals: QueryList<CustomModalComponent>;
 
@@ -44,9 +44,13 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   }
 
   ngAfterViewInit(): void {
-    // this.vaultsList = this.contractsService.getContractsArray(Vault)
-    // .filter(_ => _.isActive())
-    // .map(v => v.contract);
+
+  }
+
+  get assetList(): string[] {
+    const result = assets;
+    this.contractsService.getContractsArray(Token)?.forEach(t => result.add(t.contract.name));
+    return Array.from(result.values()).sort((a, b) => b.localeCompare(a));
   }
 
   get vaultsList(): Contract[] {

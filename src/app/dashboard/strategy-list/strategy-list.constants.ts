@@ -15,10 +15,22 @@ export const platforms = [
         name: 'Uniswap',
         prefix: 'UNI_'
     },
+    {
+        name: 'Ellipsis.finance',
+        prefix: 'EPS_'
+    },
+    {
+        name: 'Venus',
+        prefix: 'VENUS_'
+    },
+    {
+        name: 'Pancake',
+        prefix: 'PC_'
+    },
 ];
 
 
-export const assets = [
+export const assets = new Set([
     'USDC',
     'ETH',
     'HBTC',
@@ -48,4 +60,4 @@ export const assets = [
     'KBTC',
     'IPS',
     'PS'
-];
+]);

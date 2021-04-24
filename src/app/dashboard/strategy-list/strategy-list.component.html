@@ -14,7 +14,7 @@
 
     <select [(ngModel)]="assetFilter" name="" id="assetFilter">
       <option value="">Asset</option>
-      <option *ngFor="let asset of asset_list" [value]="asset">{{asset}}</option>
+      <option *ngFor="let asset of assetList" [value]="asset">{{asset}}</option>
   
     </select>
 
@@ -52,10 +52,9 @@
           </app-draggable-modal>
           <app-popover-card class="pointer" (click)="toggleAPYWindow(row.name)">
             <ng-template>
-              <p>APR: {{vaultFullApy(row.name, row.network)}}%</p>
               <p>Click to open details</p>
             </ng-template>
-            {{vaultFullApy(row.name, row.network)}}% <i class="far fa-window-restore"></i>
+            {{prettifyNumber(vaultFullApy(row.name, row.network))}}% <i class="far fa-window-restore"></i>
           </app-popover-card>
         </div>
         <div  class="column">
@@ -66,10 +65,10 @@
           </app-custom-modal>
           <app-popover-card class="pointer" (click)="openTvlDialog(row.name)">
             <ng-template>
-              <p>TVL: {{vaultTvl(row.name, row.network) | number}}M$</p>
+              <p>TVL: {{vaultTvl(row.name, row.network) | number}}$</p>
               <p>Click to open TVL history chart</p>
             </ng-template>
-          ${{vaultTvl(row.name, row.network)| number: '1.1-1'}}M
+          ${{prettifyNumber(vaultTvl(row.name, row.network))}}
           </app-popover-card>
         </div>
         <div class="column desktop-only">

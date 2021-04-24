@@ -10,6 +10,7 @@ export class RewardDto {
   tvl: number;
   farmBalance: number;
   network: string;
+  isWeeklyReward: boolean;
 
   blockDateAdopted: Date;
 

@@ -50,7 +50,7 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
                 }
                 return 1;
               case 'apy':
-                return Number(this.vaultFullApy(right.name, right.network)) - Number(this.vaultFullApy(left.name, left.network));
+                return this.vaultFullApy(right.name, right.network) - this.vaultFullApy(left.name, left.network);
               case 'tvl':
                 return this.vaultTvl(right.name, right.network) - this.vaultTvl(left.name, left.network);
               case 'users':

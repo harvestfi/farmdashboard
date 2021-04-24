@@ -8,7 +8,7 @@ import {RewardDto} from '../../../models/reward-dto';
 export class VaultFilterPipe implements PipeTransform {
 
     transform(dtos: RewardDto[], vault: string): RewardDto[] {
-        if (vault !== '') {
+        if (vault !== '-') {
             return dtos.filter(_ => _.vault === vault);
         }
         return dtos;

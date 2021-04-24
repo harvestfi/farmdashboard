@@ -159,6 +159,8 @@ export class Utils {
       return (n / 1000).toFixed(1) + 'k';
     } else if (n < 1000_000_000) {
       return (n / 1000_000).toFixed(1) + 'm';
+    } else if (n < 1000_000_000_000) {
+      return (n / 1000_000_000).toFixed(1) + 'g';
     } else {
       return '♾️';
     }

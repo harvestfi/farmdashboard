@@ -14,12 +14,8 @@ abstract class StrategyListCommonMethods {
   ) {
   }
 
-  vaultRewardApyPrettify(name: string, network: string): string {
-    return Utils.prettifyNumber(this.rewardData.getWeeklyApy(name, network));
-  }
-
-  vaultRewardAprPrettify(tvlName: string, network: string): string {
-    return Utils.prettifyNumber(this.vaultRewardApr(tvlName, network));
+  prettifyNumber(n: number): string {
+    return Utils.prettifyNumber(n);
   }
 
   vaultRewardApr(vaultName: string, network: string): number {
@@ -28,14 +24,14 @@ abstract class StrategyListCommonMethods {
         this.priceData.getLastFarmPrice());
   }
 
-  vaultFullApy(name: string, network: string): string {
+  vaultFullApy(name: string, network: string): number {
     if (name === 'PS') {
-      return this.vaultRewardApyPrettify(name, network);
+      return this.vaultRewardApy(name, network);
     }
     if (Utils.isAutoStakeVault(name) || this.hardworkData.getLastHardWork(name, network)?.autoStake === 1) {
-      return this.vaultRewardAprPrettify(name, network);
+      return this.vaultRewardApy(name, network);
     }
-    return Utils.prettifyNumber(this.vaultApy(name, network) + this.vaultRewardApy(name, network));
+    return this.vaultApy(name, network) + this.vaultRewardApy(name, network);
   }
 
   vaultApy(tvlName: string, network: string): number {
@@ -52,7 +48,7 @@ abstract class StrategyListCommonMethods {
 
   vaultTvl(vault_name: string, network: string): number {
     const tvl = this.harvestData.getVaultTvl(vault_name, network, this.priceData);
-    return (tvl / 1000000) || 0;
+    return (tvl) || 0;
   }
 
   vaultTotalEarning(vaultName: string, network: string): number {

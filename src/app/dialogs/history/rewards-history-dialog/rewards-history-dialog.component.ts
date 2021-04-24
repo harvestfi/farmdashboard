@@ -18,8 +18,9 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
     rewards: Array<RewardDto> = [];
     ready = false;
     disabled = false;
-    vaultFilter = '';
-    vaultNames: string[];
+    vaultFilter = '-';
+    startDate: Date;
+    endDate: Date;
 
     private dayLag = 15;
 
@@ -32,21 +33,29 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        const startDate = new Date();
-        startDate.setDate(startDate.getDate() - this.dayLag);
-        this.vaultNames = this.contractsService.getContractsArray(Vault)
-        .filter(_ => _.isActive()).map(_ => _.contract?.name);
-        this.loadRewardsHistory(startDate, new Date());
+        this.startDate = new Date();
+        this.startDate.setDate(this.startDate.getDate() - 1);
+        this.endDate = new Date();
+        this.endDate.setDate(this.endDate.getDate() + 1);
+
+        this.startDate.setDate(this.startDate.getDate() - this.dayLag);
+        this.loadRewardsHistory();
+    }
+
+    get vaultNames(): string[] {
+        return this.contractsService.getContractsArray(Vault)
+        .map(_ => _.contract?.name);
     }
 
 
-    private loadRewardsHistory(startDate: Date, endDate: Date): void {
+    private loadRewardsHistory(): void {
         this.rewardsService.getAllHistoryRewards(
-            Math.floor(startDate.getTime() / 1000),
-            Math.floor(endDate.getTime() / 1000))
+            Math.floor(this.startDate.getTime() / 1000),
+            Math.floor(this.endDate.getTime() / 1000))
         .subscribe((data) => {
+            this.log.info('Rewards loaded', data);
             this.rewards.push(...(data
-            // .filter(r => !Utils.isAutoStakeVault(r.vault))
+            .filter(r => !Utils.isAutoStakeVault(r.vault) || r.isWeeklyReward)
             .map(RewardDto.fillBlockDateAdopted)
             .reverse()));
             this.ready = true;
@@ -55,13 +64,11 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         });
     }
 
-    private loadMoreRewardsHistory(): void {
+    loadMoreRewardsHistory(): void {
         this.disabled = true;
-        const endDate = new Date(this.rewards[this.rewards.length - 1]?.blockDate * 1000);
-        endDate.setTime(endDate.getTime() - 1000);
-        const startDate = new Date(endDate.getTime());
-        startDate.setDate(startDate.getDate() - this.dayLag);
-        this.loadRewardsHistory(startDate, endDate);
+        this.endDate.setDate(this.startDate.getDate());
+        this.startDate.setDate(this.endDate.getDate() - this.dayLag);
+        this.loadRewardsHistory();
     }
 
     openEtherscanTx(hash: string): void {

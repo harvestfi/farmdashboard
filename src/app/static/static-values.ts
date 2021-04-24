@@ -86,6 +86,7 @@ export class StaticValues {
   private static mapCoinNameToSimpleBsc(name: string): string {
     name = name
     .replace('PC_', '')
+    .replace('EPS_', '')
     .replace('VENUS_', '');
     switch (name) {
       case 'WETH':
@@ -96,6 +97,11 @@ export class StaticValues {
       case 'CRVRENWBTC':
       case 'WBTC':
         return 'BTCB';
+      case 'POPSICLE_ICE':
+        return 'ICE';
+      case 'EPS_FUSDT':
+      case 'FUSDT':
+        return 'BUSD';
     }
     return name;
   }
