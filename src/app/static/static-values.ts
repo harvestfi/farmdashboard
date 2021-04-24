@@ -5,7 +5,6 @@ export class StaticValues {
   public static SECONDS_OF_MONTH = StaticValues.SECONDS_OF_DAY * 30;
   public static SECONDS_OF_WEEK = StaticValues.SECONDS_OF_DAY * 7;
   public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
-  public static uniInited = false;
 
   private static NETWORK_ETH: Network = {
     blockExplorerUrl: 'https://www.bscscan.com',

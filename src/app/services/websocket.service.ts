@@ -7,6 +7,8 @@ import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {WsConsumer} from './ws-consumer';
 import {APP_CONFIG, AppConfig} from 'src/app.config';
 import {Network} from '../models/network';
+import {NGXLogger} from 'ngx-logger';
+import {StaticValues} from '../static/static-values';
 import get = Reflect.get;
 
 export enum SocketClientState {
@@ -23,9 +25,12 @@ export class WebsocketService implements OnDestroy {
   private recTimeout = null;
   private consumers = new Set<WsConsumer>();
   private subscriptions = new Set<string>();
-  private wasConnected = false;
+  private wasConnected = new Map<string, boolean>(
+      Array.from(StaticValues.NETWORKS.keys()).map(name => [name, false])
+  );
 
-  constructor(@Inject(APP_CONFIG) public config: AppConfig) {
+  constructor(@Inject(APP_CONFIG) public config: AppConfig,
+              private log: NGXLogger) {
   }
 
   static jsonHandler(message: Message): any {
@@ -37,29 +42,39 @@ export class WebsocketService implements OnDestroy {
   }
 
   public connectSockJs(network: Network): void {
-    const client = over(new SockJS(get(this.config.wsEndpoints, network.ethparserName)));
+    const url = get(this.config.wsEndpoints, network.ethparserName);
+    const client = over(new SockJS(url));
     this.clients.set(network.ethparserName, client);
     client.debug = null;
     client.reconnect_delay = this.config.wsReconnectInterval * 1000;
     client.connect({}, () => {
+      this.log.info('WebSocket connected ' + network.ethparserName, url);
       clearTimeout(this.recTimeout);
       // reload page not so elegant method, but it should work
-      // without connection we have a gap for the data, we should reload
-      if (this.wasConnected) {
+      // without connection we have a gap for the data
+      // - so when we have reconnect we reload the page
+      if (this.wasConnected.get(network.ethparserName)) {
+        const delay = (Math.random() * 120000) + 10000;
+        this.log.warn('WS ' + network.ethparserName
+            + 'reconnected! For avoiding a data gap the page will be reloaded in ' + delay);
         // for avoid DDOS on the backend
         setTimeout(() => {
           window.location.reload();
-        }, (Math.random() * 120000) + 10000);
+        }, delay);
       }
-      this.subscriptions.clear();
-      this.state.next(SocketClientState.CONNECTED);
-      this.consumers.forEach(c => {
-        if (!c.isSubscribed()) {
-          c.subscribeToTopic();
-        }
-      });
-      this.wasConnected = true;
-    }, () => {
+      this.wasConnected.set(network.ethparserName, true);
+      if (Array.from(this.wasConnected.values()).filter(c => !c).length === 0) {
+        this.log.info('All WebSocket connections established');
+        this.subscriptions.clear();
+        this.state.next(SocketClientState.CONNECTED);
+        this.consumers.forEach(c => {
+          if (!c.isSubscribed()) {
+            c.subscribeToTopic();
+          }
+        });
+      }
+    }, (e) => {
+      this.log.error('WebSocket error ' + network.ethparserName, e);
       this.consumers.forEach(c => c.setSubscribed(false));
       this.recTimeout = setTimeout(() => {
         this.connectSockJs(network);
