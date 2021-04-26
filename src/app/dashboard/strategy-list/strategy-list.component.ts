@@ -1,55 +1,62 @@
-import {AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, QueryList, ViewChildren} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
-import {PricesCalculationService} from 'src/app/services/prices-calculation.service';
-import {Utils} from '../../static/utils';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
+import StrategyListCommonMethods from './strategy-list-common-methods.utility';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
 import {NGXLogger} from 'ngx-logger';
+import {HarvestDataService} from 'src/app/services/data/harvest-data.service';
+import {assets, platforms} from './strategy-list.constants';
+import {HardworkDataService} from '../../services/data/hardwork-data.service';
+import {RewardDataService} from '../../services/data/reward-data.service';
+import {PriceDataService} from '../../services/data/price-data.service';
+import {Contract} from '../../models/contract';
+import {Token} from '../../models/token';
 
 @Component({
   selector: 'app-strategy-list',
   templateUrl: './strategy-list.component.html',
   styleUrls: ['./strategy-list.component.scss']
 })
-export class StrategyListComponent implements AfterViewInit{
+export class StrategyListComponent extends StrategyListCommonMethods implements AfterViewInit{
   public searchTerm = '';
-  // Mutating the currentVaults in static values before using it so that we
-  // are able to sort this array and not get a new one from the service.
-  public vaultsList = [];
+  public networkFilter = '';
+  public platformFilter = '';
+  public assetFilter = '';
+  // public vaultsList: Contract[] = [];
   public apyWindowState: Record<string, boolean> = {};
-  // false = desc, true = asc
-  public sortDirection = false;
-  private currentSortingValue = 'tvl';
+  public sortDirection = 'desc';
+  public currentSortingValue = 'tvl';
+  public platform_list = platforms;
 
   @ViewChildren(CustomModalComponent) private tvlModals: QueryList<CustomModalComponent>;
 
   constructor(
       public vt: ViewTypeService,
-      public pricesCalculationService: PricesCalculationService,
+      public harvestData: HarvestDataService,
       private contractsService: ContractsService,
+      public hardworkData: HardworkDataService,
+      public rewardData: RewardDataService,
+      public priceData: PriceDataService,
       private log: NGXLogger
   ) {
+    super(harvestData, hardworkData, rewardData, priceData);
   }
 
   ngAfterViewInit(): void {
-    this.contractsService.getContracts(Vault).subscribe(vaults => {
-      this.vaultsList = vaults.filter(_ => _.isActive()).map(v => v.contract?.name);
-      this.log.info('Loaded contracts', this.vaultsList);
-      this.sortVaultsList(this.currentSortingValue);
-    });
+
   }
 
-  get vaults(): string[] {
-    // If there is a search term, we filter, otherwise we return
-    // the vaults list
-    this.sortVaultsList(this.currentSortingValue);
-    if (this.searchTerm) {
-      return this.vaultsList.filter(vault =>
-          vault.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase())
-      );
-    }
-    return this.vaultsList;
+  get assetList(): string[] {
+    const result = assets;
+    this.contractsService.getContractsArray(Token)?.forEach(t => result.add(t.contract.name));
+    return Array.from(result.values()).sort((a, b) => b.localeCompare(a));
+  }
+
+  get vaultsList(): Contract[] {
+    return this.contractsService.getContractsArray(Vault)
+    .filter(_ => _.isActive())
+    .map(v => v.contract);
   }
 
   toggleAPYWindow(name: string): void {
@@ -62,77 +69,7 @@ export class StrategyListComponent implements AfterViewInit{
 
   sortVaultsList(sortBy?: string): void{
     this.currentSortingValue = sortBy;
-    this.vaultsList.sort((a: any, b: any): number => {
-      const left = this.sortDirection  ? a : b;
-      const right = this.sortDirection ? b : a;
-      // This is not ideal, but it's a decent way to handle
-      // sorting given the current data :)
-      switch (sortBy) {
-        case 'name':
-          if (left < right) {
-            return -1;
-          }
-          return 1;
-        case 'apy':
-          return  Number(this.vaultFullApy(right)) - Number(this.vaultFullApy(left));
-        case 'tvl':
-          return this.vaultTvl(right) - this.vaultTvl(left);
-        case 'users':
-          return this.vaultUsers(right) - this.vaultUsers(left);
-        case 'total_earned':
-          return this.vaultTotalEarning(right) - this.vaultTotalEarning(left);
-        default:
-          break;
-      }
-    });
-
-    this.sortDirection = !this.sortDirection;
-  }
-
-  vaultRewardApyPrettify(tvlName: string): string {
-    return Utils.prettifyNumber(this.pricesCalculationService.vaultRewardWeeklyApy(tvlName));
-  }
-
-  vaultRewardAprPrettify(tvlName: string): string {
-    return Utils.prettifyNumber(this.vaultRewardApr(tvlName));
-  }
-
-  vaultRewardApr(tvlName: string): number {
-    return this.pricesCalculationService.vaultRewardApr(tvlName);
-  }
-
-  vaultFullApy(name: string): string {
-    if (name === 'PS') {
-      return this.vaultRewardApyPrettify(name);
-    }
-    if (Utils.isAutoStakeVault(name)) {
-      return this.vaultRewardAprPrettify(name);
-    }
-    return Utils.prettifyNumber(this.vaultApy(name) + this.vaultRewardApy(name));
-  }
-
-  vaultApy(tvlName: string): number {
-    return Utils.aprToApyEveryDayReinvest(this.vaultApr(tvlName));
-  }
-
-  vaultApr(tvlName: string): number {
-    return Math.max(this.pricesCalculationService.incomeApr(tvlName), 0);
-  }
-
-  vaultRewardApy(tvlName: string): number {
-    return Utils.aprToApyEveryDayReinvest(this.vaultRewardApr(tvlName));
-  }
-
-  vaultTvl(tvlName: string): number {
-    return this.pricesCalculationService.tvls.get(tvlName) / 1000000;
-  }
-
-  vaultTotalEarning(tvlName: string): number {
-    return (this.pricesCalculationService.lastHardWorks.get(tvlName)?.fullRewardUsdTotal * 0.7) || 0;
-  }
-
-  vaultUsers(tvlName: string): number {
-    return this.pricesCalculationService.lastHarvests.get(tvlName)?.ownerCount || 0;
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
 
   openTvlDialog(name: string): void {

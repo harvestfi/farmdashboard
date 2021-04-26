@@ -1,7 +1,10 @@
+import {UniswapDto} from './uniswap-dto';
+
 export class PricesDto {
   id: string;
   block: number;
   blockDate: number;
+  network: string;
   token: string;
   tokenAmount: number;
   otherToken: string;
@@ -13,19 +16,7 @@ export class PricesDto {
   blockDateAdopted: Date;
 
   public static fromJson(data: string): PricesDto {
-    const jsonData = JSON.parse(data);
-    const tx: PricesDto = new PricesDto();
-    tx.id = jsonData.id;
-    tx.block = jsonData.block;
-    tx.blockDate = jsonData.blockDate;
-    tx.token = jsonData.token;
-    tx.tokenAmount = jsonData.tokenAmount;
-    tx.otherToken = jsonData.otherToken;
-    tx.otherTokenAmount = jsonData.otherTokenAmount;
-    tx.price = jsonData.price;
-    tx.buy = jsonData.buy;
-    tx.source = jsonData.source;
-
+    const tx: PricesDto = Object.assign(new PricesDto(), JSON.parse(data));
     PricesDto.fillBlockDateAdopted(tx);
     return tx;
   }
@@ -36,5 +27,23 @@ export class PricesDto {
       d.setUTCSeconds(tx.blockDate);
       tx.blockDateAdopted = d;
     }
+  }
+
+  public toUniswap(): UniswapDto {
+    const dto = new UniswapDto();
+    dto.id = this.id;
+    dto.type = this.buy ? 'BUY' : 'SELL';
+    dto.owner = '';
+    dto.coin = this.token;
+    dto.amount = this.tokenAmount;
+    dto.otherCoin = this.otherToken;
+    dto.otherAmount = this.otherTokenAmount;
+    dto.hash = this.id.split('_')[0];
+    dto.block = this.block.toString();
+    dto.confirmed = true;
+    dto.lastPrice = this.price;
+    dto.blockDate = this.blockDate;
+    dto.blockDateAdopted = this.blockDateAdopted;
+    return dto;
   }
 }

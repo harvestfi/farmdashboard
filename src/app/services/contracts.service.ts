@@ -1,16 +1,14 @@
 import {Inject, Injectable} from '@angular/core';
-import {forkJoin, Observable} from 'rxjs';
-import {map, shareReplay} from 'rxjs/operators';
-import {SnackService} from './snack.service';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {Vault} from '../models/vault';
 import {Token} from '../models/token';
 import {Pool} from '../models/pool';
 import {Lps} from '../models/lps';
 import {IContract} from '../models/icontract';
-import {RestResponse} from '../models/rest-response';
 import {APP_CONFIG, AppConfig} from '../../app.config';
 import {HttpService} from './http/http.service';
-import {StaticValues} from '../static/static-values';
+import {NGXLogger} from 'ngx-logger';
 
 /**
  * Usage:
@@ -25,7 +23,7 @@ import {StaticValues} from '../static/static-values';
 })
 export class ContractsService {
 
-    private cache = new Map<IContract, Observable<any[]>>();
+    private cache = new Map<string, Map<string, IContract>>();
     private urlPrefix = 'contracts';
     private typePaths = new Map<IContract, string>(
         [[Vault, 'vault'],
@@ -37,47 +35,39 @@ export class ContractsService {
     constructor(
         @Inject(APP_CONFIG) public config: AppConfig,
         private httpService: HttpService,
-        private snackService: SnackService) {
+        private log: NGXLogger) {
     }
 
     /**
      * Fetch a list of contracts by type, e.g. Vault, Pool, Token, Pair
-     * Uses a cache per type and stores a buffer size of 1 (it's a full list of items)
-     *
-     * @param type
      */
-    getContracts<T extends IContract>(type: new () => T): Observable<T[]> {
-        if (!this.cache.has(type)) {
-            this.cache.set(type, this.requestContracts<T>(type).pipe(shareReplay(1)));
+    getContracts<T extends IContract>(type: new () => T): Map<string, T> {
+        const typeName = this.typePaths.get(type);
+        if (!typeName) {
+            this.log.error('Type not found', new type());
+            return new Map();
         }
-        return this.cache.get(type);
+        if (!this.cache.has(typeName)) {
+            this.cache.set(typeName, new Map());
+            this.requestContracts<T>(type).subscribe(contracts => {
+                this.log.info('Loaded contracts ' + typeName, contracts);
+                contracts.forEach(c => {
+                    this.cache.get(typeName).set((c as any).contract.address, c);
+                });
+            });
+        }
+        // @ts-ignore
+        return this.cache.get(typeName);
+    }
+
+    getContractsArray<T extends IContract>(type: new () => T): T[] {
+        return Array.from(this.getContracts(type)?.values());
     }
 
     private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {
-        if (this.config.multipleSources) {
-            return this.requestContractsMultiple(type);
-        } else {
-            return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}s`)
-            .pipe(
-                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
-            );
-        }
-    }
-
-    private requestContractsMultiple<T extends IContract>(type: new () => T): Observable<T[]> {
-        return forkJoin(
-            this.httpService.httpGet(`/${this.urlPrefix}/${this.typePaths.get(type)}s`,
-                StaticValues.NETWORKS.get('eth'))
-            .pipe(
-                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
-            ),
-            this.httpService.httpGet(`/${this.urlPrefix}/${this.typePaths.get(type)}s`,
-                StaticValues.NETWORKS.get('bsc'))
-            .pipe(
-                map((val: RestResponse<T[]>) => (val.data as T[]).map(o => Object.assign(new type(), o)) as T[])
-            ))
+        return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}s`)
         .pipe(
-            map(x => x.flat())
+            map((val: T[]) => val?.map(o => Object.assign(new type(), o)) as T[])
         );
     }
 

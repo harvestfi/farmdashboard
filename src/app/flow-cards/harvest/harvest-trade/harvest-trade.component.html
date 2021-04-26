@@ -1,18 +1,19 @@
 <div class="harvest-trades" [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.usdAmount, dto.confirmed)}">
-
-  <div class="harvest-field harvest2-date left-border-box"
-         matTooltip="{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}
-                  {{dto.vault}}
-                  {{dto.methodName}}
-                  fAmount: {{dto.amount | number: '1.0-6'}}
-                  amount: {{dto.amountIn | number: '1.0-6'}}
-                  sharePrice: {{dto.sharePrice | number}}
-                  vault tvl: {{dto.lastTvl | number}}" matTooltipClass="tooltip-spaced">
+  <app-popover-card class="harvest-field harvest2-date left-border-box">
+    <ng-template>
+      <p>{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}</p>
+      <p>{{dto.vault}}</p>
+      <p>{{dto.methodName}}</p>
+      <p>fAmount: {{dto.amount | number: '1.0-6'}}</p>
+      <p>amount: {{dto.amountIn | number: '1.0-6'}}</p>
+      <p>sharePrice: {{dto.sharePrice | number}}</p>
+      <p>vault tvl: {{dto.lastTvl | number}}</p>
+    </ng-template>
       {{fullDate ?
         (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss') :
         (dto.blockDateAdopted | date: 'HH:mm:ss')
       }}
-    </div>
+    </app-popover-card>
 
     <div class="harvest-field harvest2-amount left-border-box">
       ${{dto.usdAmount | number: '1.0-0'}}

@@ -2,20 +2,19 @@
   <div *ngIf='moreColumns' class="hardwork-field hardwork-poolCalls">
     {{dto.callsQuantity }}
   </div>
-  <div class="hardwork-field hardwork-date left-border-box"
-       matTooltip="{{dto.blockDateAdopted| date: 'dd.MM.yyyy HH:mm:ss'}}
-    {{dto.vault}}
-    TVL ${{dto.tvl | number: '1.0-0'}}
-    PS APR {{dto.psApr.toFixed(2) | number: '1.0-0'}}%
-
-    " matTooltipClass="tooltip-spaced"
-  >
+  <app-popover-card class="hardwork-field hardwork-date left-border-box">
+    <ng-template>
+      <p>{{dto.blockDateAdopted| date: 'dd.MM.yyyy HH:mm:ss'}}</p>
+      <p>{{dto.vault}}</p>
+      <p>TVL ${{dto.tvl | number: '1.0-0'}}</p>
+      <p>PS APR {{dto.psApr.toFixed(2) | number: '1.0-0'}}%</p>
+    </ng-template>
     {{fullDate ?
       (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss') :
       (dto.blockDateAdopted | date: 'dd-MMM HH:mm')
     }}
 
-  </div>
+  </app-popover-card>
 
   <div class="hardwork-field hardwork-vault-img">
     <app-vault-icon [vault]="dto.vault"></app-vault-icon>
@@ -52,7 +51,7 @@
   </div>
 
   <div class="hardwork-field pointer">
-    <app-transaction-link [transactionHash]="hash"></app-transaction-link>
+    <app-transaction-link [transactionHash]="hash" [network]="network"></app-transaction-link>
   </div>
 
 

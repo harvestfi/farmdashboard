@@ -5,30 +5,22 @@ export class StaticValues {
   public static SECONDS_OF_MONTH = StaticValues.SECONDS_OF_DAY * 30;
   public static SECONDS_OF_WEEK = StaticValues.SECONDS_OF_DAY * 7;
   public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
-  public static uniInited = false;
-  public static lastPrice = 0.0;
-  public static lastGas = 0;
-  public static lastBlockDateAdopted = new Date(0);
-  public static staked = 0.0;
-  public static stakedNewPS = 0.0;
-  public static farmTotalSupply = 0.0;
-  public static farmUsers = 0;
 
   private static NETWORK_ETH: Network = {
     blockExplorerUrl: 'https://www.bscscan.com',
     chainId: 1,
+    ethparserName: 'eth',
     currencySymbol: 'ETH',
     name: 'Ethereum Mainnet',
     rpcUrl: 'https://mainnet.infura.io/v3/undefined',
-    ethparserName: 'eth'
   };
   private static NETWORK_BSC: Network = {
     blockExplorerUrl: 'https://etherscan.io',
     chainId: 56,
+    ethparserName: 'bsc',
     currencySymbol: 'BNB',
     name: 'Binance Smart Chain',
     rpcUrl: 'https://bsc-dataseed.binance.org/',
-    ethparserName: 'bsc'
   };
   public static NETWORKS: Map<string, Network> = new Map<string, Network>([
     ['eth', StaticValues.NETWORK_ETH],
@@ -47,19 +39,36 @@ export class StaticValues {
     'iPS',
   ]);
 
-  public static mapCoinNameToSimple(name: string): string {
+  public static mapCoinNameToSimple(name: string, network: string): string {
+    if (network === 'eth') {
+      return StaticValues.mapCoinNameToSimpleEth(name);
+    } else if (network === 'bsc') {
+      return StaticValues.mapCoinNameToSimpleBsc(name);
+    }
+    return name;
+  }
+
+  private static mapCoinNameToSimpleEth(name: string): string {
+    name = name
+    .replace('CRV_', '');
     switch (name) {
       case 'CRV_STETH':
+      case 'STETH':
       case 'WETH':
       case 'ZERO': // 1inch stubbing
         return 'ETH';
       case 'RENBTC':
+      case 'RENWBTC':
       case 'CRVRENWBTC':
       case 'WBTC':
+      case 'TBTC':
       case 'CRV_TBTC':
+      case 'HBTC':
       case 'CRV_HBTC':
+      case 'OBTC':
       case 'CRV_OBTC':
-        return 'BTC';
+      case 'BTCB':
+        return 'WBTC';
       case 'CRV_EURS':
         return 'EURS';
       case 'PS_V0':
@@ -74,24 +83,54 @@ export class StaticValues {
     return name;
   }
 
+  private static mapCoinNameToSimpleBsc(name: string): string {
+    name = name
+    .replace('PC_', '')
+    .replace('EPS_', '')
+    .replace('VENUS_', '');
+    switch (name) {
+      case 'WETH':
+      case 'ZERO': // 1inch stubbing
+        return 'ETH';
+      case 'RENBTC':
+      case 'RENWBTC':
+      case 'CRVRENWBTC':
+      case 'WBTC':
+        return 'BTCB';
+      case 'POPSICLE_ICE':
+        return 'ICE';
+      case 'EPS_FUSDT':
+      case 'FUSDT':
+        return 'BUSD';
+    }
+    return name;
+  }
+
   public static isStableCoin(name: string): boolean {
-    return 'USD' === name
-        || 'USDC' === name
-        || 'USDT' === name
-        || 'YCRV' === name
-        || '3CRV' === name
-        || 'TUSD' === name
-        || 'DAI' === name
-        || 'CRV_CMPND' === name
-        || 'CRV_BUSD' === name
-        || 'CRV_USDN' === name
-        || 'CRV_HUSD' === name
-        || 'UST_NAME' === name
-        || 'CRV_UST' === name
-        || 'UST' === name
-        || 'CRV_GUSD' === name
-        || 'CRV_AAVE' === name
-        || 'BUSD' === name
-        ;
+    name = name.replace('CRV_', '');
+    switch (name) {
+      case 'USD':
+      case 'USDC':
+      case 'USDT':
+      case 'USDN':
+      case 'USDP':
+      case 'YCRV':
+      case '3CRV':
+      case 'TUSD':
+      case 'DAI':
+      case 'CRV_GUSD':
+      case 'CRV_AAVE':
+      case 'BUSD':
+      case 'EPS_3POOL':
+      case 'CMPND':
+      case '3POOL':
+      case 'HUSD':
+      case 'NAME':
+      case 'GUSD':
+      case 'AAVE':
+        return true;
+      default:
+        return false;
+    }
   }
 }

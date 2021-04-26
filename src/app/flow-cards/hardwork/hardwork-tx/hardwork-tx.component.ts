@@ -3,13 +3,10 @@ import {HardWorkDto} from '../../../models/hardwork-dto';
 import {NGXLogger} from 'ngx-logger';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {SnackService} from '../../../services/snack.service';
-import {HardworkSubscriberService} from '../../../services/hardwork-subscriber.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
-import {Observable} from 'rxjs';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
-import {map} from 'rxjs/operators';
-import {HardworksService} from '../../../services/http/hardworks.service';
+import {HardworkDataService} from '../../../services/data/hardwork-data.service';
 
 @Component({
   selector: 'app-hardwork-tx',
@@ -17,69 +14,29 @@ import {HardworksService} from '../../../services/http/hardworks.service';
   styleUrls: ['./hardwork-tx.component.scss']
 })
 export class HardworkTxComponent implements AfterViewInit {
-  private maxMessages = 50;
   @ViewChild('hardWorkHistoryListModal') private hardWorkHistoryListModal: CustomModalComponent;
-  dtos: HardWorkDto[] = [];
-  hwIds = new Set<string>();
   vaultFilter = 'all';
 
 
   constructor(
-      private hwSubscriber: HardworkSubscriberService,
       public vt: ViewTypeService,
       private snack: SnackService,
       private log: NGXLogger,
       private contractsService: ContractsService,
-      private hardworksService: HardworksService,
+      private hardworksData: HardworkDataService
   ) {
   }
 
-  get vaultNames(): Observable<string[]> {
-    return this.contractsService.getContracts(Vault).pipe(
-        map(vaults => vaults.map(_ => _.contract?.name))
-    );
+  get vaultNames(): string[] {
+    return this.contractsService.getContractsArray(Vault)
+    .map(_ => _.contract?.name);
   }
 
   ngAfterViewInit(): void {
-    this.hardworksService.getPaginatedHardworkHistoryData(50).subscribe(data => {
-      this.log.info('hard work history values', data);
-      this.addInArray(data.data.data);
-    });
-
-    this.hwSubscriber.initWs();
-    this.hwSubscriber.handlers.set(this, (tx) => {
-      try {
-        this.addInArray([tx]);
-      } catch (e) {
-        this.log.error('Error handle hardwork from ws', tx, e);
-      }
-    });
   }
 
-  private isUniqHardwork(hw: HardWorkDto): boolean {
-    if (this.hwIds.has(hw.id)) {
-      return false;
-    }
-    this.hwIds.add(hw.id);
-    if (this.hwIds.size > 100_000) {
-      this.hwIds = new Set<string>();
-    }
-    return true;
-  }
-
-  private addInArray(newValues: HardWorkDto[]): void {
-    for (const hardWork of newValues) {
-      HardWorkDto.enrich(hardWork);
-      if (!this.isUniqHardwork(hardWork)) {
-        this.log.error('Not unique', hardWork);
-        return;
-      }
-      this.dtos.push(hardWork);
-      if (this.dtos.length > this.maxMessages) {
-        this.dtos.shift();
-      }
-    }
-
+  get dtos(): HardWorkDto[] {
+    return this.hardworksData.getDtos();
   }
 
   openHardWorkHistoryListDialog(): void {

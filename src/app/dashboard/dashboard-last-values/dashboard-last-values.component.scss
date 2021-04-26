@@ -1,7 +1,7 @@
 @import "../../../scss/utilities/responsive_utilities.scss";
 .main-top-stats {
     display: grid;
-    grid-template-areas: "farm-price gas-price btc-price eth-price tvl" 
+    grid-template-areas: "farm-price gas-price native-tokens placeholder tvl"
                          "farm-price farm-staked weekly-profit ps-income tvl" 
                          "farm-holders farm-buybacks saved-gas total-users active-pools";
 
@@ -12,7 +12,7 @@
                            "farm-staked weekly-profit"
                            "ps-income farm-buybacks"
                            "total-users active-pools"
-                           "btc-price eth-price"
+                           "native-tokens placeholder"
                            "farm-holders farm-holders"
                            ;
       grid-template-columns: 50% 50%;
@@ -51,8 +51,11 @@
       grid-area: gas-price;
     }
 
-    .btc {
-      grid-area: btc-price;
+    .native-tokens {
+      grid-area: native-tokens;
+      grid-column: auto / span 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
     }
 
     .eth {
@@ -160,7 +163,6 @@
   
   .caption-btc-sign {
     font-size: 3em;
-    color: w
   }
   
   .caption-eth, .caption-eth-value, .caption-eth-sign {
@@ -169,7 +171,6 @@
   
   .caption-eth-sign {
     font-size: 3em;
-    color: w
   }
   
   .caption-ps-value, .caption-ps-sign, .caption-ps {
@@ -180,6 +181,5 @@
     font-size: 4em;
     color: #fff;
   }
-  
-}
 
+}

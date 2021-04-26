@@ -1,9 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Utils} from '../../static/utils';
-import {StaticValues} from '../../static/static-values';
-import {PricesCalculationService} from '../../services/prices-calculation.service';
 import {NGXLogger} from 'ngx-logger';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
+import {HardworkDataService} from '../../services/data/hardwork-data.service';
+import {HarvestDataService} from '../../services/data/harvest-data.service';
+import {HardWorkDto} from '../../models/hardwork-dto';
+import {RewardDataService} from '../../services/data/reward-data.service';
+import {PriceDataService} from '../../services/data/price-data.service';
 
 @Component({
   selector: 'app-apy-window',
@@ -12,28 +15,27 @@ import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.co
 })
 export class ApyWindowComponent implements OnInit {
   @Output() showModal = new EventEmitter<boolean>();
-  @Input() poolName: string;
+  @Input() vaultName: string;
+  @Input() network: string;
   @ViewChild('incomeModal') private incomeModal: CustomModalComponent;
   @ViewChild('psApyModal') private psApyModal: CustomModalComponent;
 
-  constructor(private pricesCalculationService: PricesCalculationService,
+  constructor(private hardworkData: HardworkDataService,
+              private harvestData: HarvestDataService,
+              private rewardData: RewardDataService,
+              private priceData: PriceDataService,
               private log: NGXLogger) {
   }
 
   ngOnInit(): void {
-    this.log.info(this.poolName,
-        this.pricesCalculationService.lastHardWorks.get(this.poolName),
-        this.pricesCalculationService.lastRewards.get(this.poolName),
-        this.pricesCalculationService.lastHarvests.get(this.poolName)
-    );
+  }
+
+  hardwork(): HardWorkDto {
+    return this.hardworkData.getLastHardWork(this.vaultName, this.network);
   }
 
   closeModal(): void {
     this.showModal.emit(false);
-  }
-
-  prettyNumber(n: number): string {
-    return Utils.prettifyNumber(n);
   }
 
   toApy(n: number): number {
@@ -43,7 +45,7 @@ export class ApyWindowComponent implements OnInit {
   // ------------------- DIALOGS --------------------
 
   openIncomeDialog(): void {
-    if (this.poolName === 'PS') {
+    if (this.vaultName === 'PS') {
       this.openPsApyDialog();
       return;
     }
@@ -51,7 +53,7 @@ export class ApyWindowComponent implements OnInit {
   }
 
   private openPsApyDialog(): void {
-    if (this.poolName !== 'PS') {
+    if (this.vaultName !== 'PS') {
       return;
     }
     this.psApyModal.open();
@@ -60,64 +62,70 @@ export class ApyWindowComponent implements OnInit {
   // ---------------- GETTERS --------------------
 
   get isAutoStakeVault(): boolean {
-    return Utils.isAutoStakeVault(this.poolName);
+    const hw = this.hardworkData.getLastHardWork(this.vaultName, this.network);
+    if(hw?.autoStake === 1) {
+      return true;
+    }
+    return Utils.isAutoStakeVault(this.vaultName);
   }
 
   get isFarmVault(): boolean {
-    return Utils.isFarmVault(this.poolName);
+    return Utils.isFarmVault(this.vaultName);
   }
 
   // ********* PS *************
 
   get psIncome(): number {
-    return this.pricesCalculationService.psIncome();
+    return (this.hardwork()?.allProfit / 0.7) * 0.3;
   }
 
   get psApr(): number {
-    return this.pricesCalculationService.latestHardWork?.psApr;
+    return this.hardwork()?.psApr;
   }
 
-  // ********* POOL *************
+  // ********* VAULT *************
 
-  get poolEarned(): number {
-    return this.pricesCalculationService.lastHardWorks.get(this.poolName)?.fullRewardUsdTotal * 0.7;
+  get vaultEarned(): number {
+    return this.hardwork()?.fullRewardUsdTotal * (1 - this.hardwork()?.profitSharingRate);
   }
 
-  get poolEarnedLastWeek(): number {
-    return this.pricesCalculationService.lastHardWorks.get(this.poolName)?.weeklyProfit * 0.7;
+  get vaultEarnedLastWeek(): number {
+    return this.hardwork()?.weeklyProfit * (1 - this.hardwork()?.profitSharingRate);
   }
 
-  get poolAvgTvl(): number {
-    let avgTvl = this.pricesCalculationService.lastHardWorks.get(this.poolName)?.weeklyAverageTvl;
+  get vaultAvgTvl(): number {
+    let avgTvl = this.hardwork()?.weeklyAverageTvl;
     if (!avgTvl || avgTvl === 0) {
-      avgTvl = this.pricesCalculationService.lastHardWorks.get(this.poolName)?.tvl;
+      avgTvl = this.hardwork()?.tvl;
     }
     return avgTvl;
   }
 
-  get poolPeriodOfWork(): number {
-    return this.pricesCalculationService.lastHardWorks.get(this.poolName)?.periodOfWork
+  get vaultPeriodOfWork(): number {
+    return this.hardwork()?.periodOfWork
         / (60 * 60 * 24);
   }
 
-  get poolApr(): number {
-    return Math.max(this.pricesCalculationService.incomeApr(this.poolName), 0);
+  get vaultApr(): number {
+    return Math.max(this.hardworkData.getWeeklyApr(this.vaultName, this.network), 0);
   }
 
-  get poolRewardPeriod(): number {
-    return this.pricesCalculationService.vaultRewardPeriod(this.poolName);
+  get vaultRewardPeriod(): number {
+    return this.rewardData.getRewardPeriod(this.vaultName, this.network);
   }
 
-  get poolReward(): number {
-    return this.pricesCalculationService.vaultReward(this.poolName);
+  get vaultReward(): number {
+    return this.rewardData.getReward(this.vaultName, this.network);
   }
 
-  get poolRewardApr(): number {
-    return this.pricesCalculationService.vaultRewardApr(this.poolName);
+  get vaultRewardApr(): number {
+    return this.rewardData.vaultRewardApr(this.vaultName, this.network,
+        this.harvestData.getVaultLastInfo(this.vaultName, this.network)?.lastUsdTvl,
+        this.priceData.getLastFarmPrice());
   }
 
-  get poolRewardWeeklyApy(): number {
-    return this.pricesCalculationService.vaultRewardWeeklyApy(this.poolName);
+  get vaultRewardWeeklyApy(): number {
+    return this.rewardData.getWeeklyApy(this.vaultName, this.network);
   }
 
 }

@@ -1,4 +1,4 @@
-<div *ngIf="vt.isNonScoreboard()" id="top-div-light">
+<div id="top-div-light">
 
 
   <div class="main-top-stats">
@@ -7,278 +7,259 @@
         FARM Price
       </div>
       <div class="value value-price">
-        <span class="value-number">{{lastPriceF | number: '1.0-2'}}</span>
+        <span class="value-number">{{farmUsdPrice | number: '1.0-2'}}</span>
         <span class="sign">$</span>
       </div>
     </div>
 
-    <div class="value-card gas" [class]="vt.getThemeColor() + '-card'"
-         #tooltip="matTooltip" (click)="openGasPriceDialog()"
-         matTooltip="Click to open history chart">
+    <app-popover-card class="value-card gas" [class]="vt.getThemeColor() + '-card'"
+         (click)="openGasPriceDialog()">
       <div class="pointer">
+        <ng-template>
+          <p>Click to open history chart</p>
+        </ng-template>
         <div class="value-middle">
           <img class="icon" src="assets/icons/gas.svg"/>
           <span class="small-value-caption">ETH Gas price</span>
         </div>
 
         <div class="value-number-middle">
-          <span class="">{{lastGasF | number: '1.0-0'}}</span>
+          <span class="">{{gas('eth') | number: '1.0-0'}}</span>
           gw
         </div>
       </div>
       <app-custom-modal #gasPriceModal>
         <ng-template>
-          <app-gas-dialog [data]="{type: 'income'}"></app-gas-dialog>
+          <app-gas-dialog></app-gas-dialog>
         </ng-template>
       </app-custom-modal>
-    </div>
+    </app-popover-card>
 
-    <div class="value-card btc" [class]="vt.getThemeColor() + '-card'">
+    <div class="value-card native-tokens" [class]="vt.getThemeColor() + '-card'">
       <div>
         <div class="value-middle">
           <img class="icon" src="assets/icons/btc.png"/>
           <span class="small-value-caption">BTC</span>
         </div>
         <div class="value-number-middle">
-          <span>{{btcF | number: '1.0-0'}}</span>
-          $
+          <span>{{btcUsdPrice | number: '1.0-0'}}</span><span class="value-sign">$</span>
         </div>
       </div>
-    </div>
-
-    <div class="value-card eth" [class]="vt.getThemeColor() + '-card'">
       <div>
         <div class="value-middle">
           <img class="icon" src="assets/icons/eth.svg"/>
           <span class="small-value-caption">ETH</span>
         </div>
         <div class="value-number-middle">
-          <span>{{ethF | number: '1.0-0'}}</span>
-          $
+          <span>{{ethUsdPrice | number: '1.0-0'}}</span><span class="value-sign">$</span>
         </div>
       </div>
-    </div>
-
-
-    <div #tooltip="matTooltip" (click)="openPsTvlDialog()"
-         class="value-card pointer farm-staked"
-         [class]="vt.getThemeColor() + '-card'"
-         matTooltipClass="tooltip-spaced"
-         matTooltip="FARM staked in pools
-                             PS Staked: {{farmPsStaked | number: '1.0-1'}}%
-                             LP Staked: {{farmLpStaked | number: '1.0-1'}}%
-               ">
       <div>
         <div class="value-middle">
-          🔒FARM Staked
+          <img class="icon" src="assets/icons/venus-wbnb.png"/>
+          <span class="small-value-caption">BNB</span>
         </div>
         <div class="value-number-middle">
-          <span>{{farmStaked | number: '1.0-1'}}</span>
-          %
+          <span>{{bnbUsdPrice | number: '1.0-0'}}</span><span class="value-sign">$</span>
         </div>
       </div>
     </div>
+
+
+    <app-popover-card (click)="openPsTvlDialog()"
+                      class="value-card pointer farm-staked"
+                      [class]="vt.getThemeColor() + '-card'">
+      <ng-template>
+        <div>
+          <p>FARM staked in pools</p>
+          <p>PS Staked: {{psFarmTvl / farmTotalSupply * 100 | number: '1.0-1'}}%</p>
+          <p>LP Staked: {{lpFarmStaked / farmTotalSupply * 100 | number: '1.0-1'}}%</p>
+        </div>
+      </ng-template>
+      <div class="value-middle">
+        🔒FARM Staked
+      </div>
+      <div class="value-number-middle">
+        <span>{{(psFarmTvl + lpFarmStaked) / farmTotalSupply * 100 | number: '1.0-1'}}</span>
+        %
+      </div>
+    </app-popover-card>
     <app-custom-modal #FARMStakedModal>
       <ng-template>
-        <app-tvl-dialog [data]="{type: 'income'}"></app-tvl-dialog>
+        <app-vault-tvl-dialog [vault]="'PS'" [network]="'eth'"></app-vault-tvl-dialog>
       </ng-template>
     </app-custom-modal>
 
 
-    <div #tooltip="matTooltip" (click)="openWeeklyProfitDialog()"
+    <app-popover-card (click)="openWeeklyProfitDialog()"
          class="value-card pointer weekly-profits"
-         [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Profit from all vaults for the last week">
-      <div>
+         [class]="vt.getThemeColor() + '-card'">
+        <ng-template>
+          <div>
+            <p>Weekly profits from all vaults by network</p>
+            <p>BSC {{weeklyProfits("bsc") / 1000 | number: '1.0-1'}}K$</p>
+            <p>ETH {{weeklyProfits("eth") / 1000 | number: '1.0-1'}}K$</p>
+          </div>
+        </ng-template>
         <div class="value-middle">
           🤑Weekly Profit
         </div>
         <div class="value-number-middle">
-          <span>{{weeklyAllIncome / 1000 | number: '1.0-1'}}</span>
+          <span>{{totalWeeklyProfits / 1000 | number: '1.0-1'}}</span>
           K$
         </div>
-      </div>
-    </div>
+    </app-popover-card>
     <app-custom-modal #weeklyProfitModal>
       <ng-template>
-        <app-profit-dialog [data]="{title: 'Weekly profit history chart'}"></app-profit-dialog>
+        <app-weekly-profit-dialog></app-weekly-profit-dialog>
       </ng-template>
     </app-custom-modal>
 
-    <div #tooltip="matTooltip"
-         (click)="openPsIncomeDialog()"
-         class="value-card pointer ps-income"
-         [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Income from strategies in Profit Share pool, based on all history">
+    <app-popover-card class="value-card ps-income"
+         [class]="vt.getThemeColor() + '-card'">
       <div>
+        <ng-template>Soon</ng-template>
         <div class="value-middle">
-          📈PS Income
+          📈P/A Ratio
         </div>
         <div class="value-number-middle ">
-          <span>{{psApy | number: '1.0-1'}}</span>
-          %
+          -
         </div>
       </div>
-    </div>
-    <app-custom-modal #psIncomeModal>
-      <ng-template>
-        <app-tvl-dialog [data]="{type: 'income'}"></app-tvl-dialog>
-      </ng-template>
-    </app-custom-modal>
+    </app-popover-card>
 
-    <div #tooltip="matTooltip"
-         (click)="openTvlDialog()"
+    <app-popover-card (click)="openTvlDialog()"
          class="value-card pointer tvl"
-         [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Click to open history chart">
+         [class]="vt.getThemeColor() + '-card'">
+      <ng-template>
+        <div>
+          <p>Total value locked by network</p>
+          <p>BSC {{tvlSum('bsc') / 1000000 | number: '1.0-0'}}M$</p>
+          <p>ETH {{tvlSum('eth') / 1000000 | number: '1.0-0'}}M$</p>
+          <p>Click to open history chart</p>
+        </div>
+      </ng-template>
       <div class="value-caption" style="font-size: 1.2em">
         Total Value Locked
       </div>
       <div class="value value-tvl">
-        <span class="value-number">{{allTvlF | number: '1.0-0'}}</span>
+        <span class="value-number">{{tvlSumAllNetwork / 1000000 | number: '1.0-0'}}</span>
         <span class="sign">M$</span>
       </div>
-    </div>
+    </app-popover-card>
     <app-custom-modal #tvlModal>
       <ng-template>
-        <app-tvl-dialog [data]="{type: 'All'}"></app-tvl-dialog>
+        <app-tvl-v2-dialog></app-tvl-v2-dialog>
       </ng-template>
     </app-custom-modal>
 
 
-    <div #tooltip="matTooltip"
-         class="value-card farm-holders"
-         [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Accounts with positive (more than 10$) FARM balance">
+    <app-popover-card class="value-card farm-holders"
+         [class]="vt.getThemeColor() + '-card'">
       <div>
+        <ng-template>
+          <p>Under refactoring</p>
+        </ng-template>
         <div class="value-middle">
           👨‍🌾FARM Holders
         </div>
         <div class="value-number-middle">
-          <span>{{farmActiveUsers | number: '1.0-0'}}</span>
+          <span>-</span>
         </div>
       </div>
+    </app-popover-card>
 
-
-    </div>
-
-    <div #tooltip="matTooltip" (click)="openFarmBuybacksDialog()"
+    <app-popover-card (click)="openFarmBuybacksDialog()"
          class="value-card pointer farm-buybacks"
-         [class]="vt.getThemeColor() + '-card'"
-         matTooltip="30% profit of each HardWork goes to buy FARM">
+         [class]="vt.getThemeColor() + '-card'">
       <div>
+        <ng-template>
+          <p>30% profit of each ETH HardWork goes to buy FARM</p>
+          <p>8% profit of each BSC HardWork goes to buy FARM</p>
+          <p>BSC {{farmBuybackSum('bsc') | number: '1.2-2'}}K</p>
+          <p>ETH {{farmBuybackSum('eth') | number: '1.2-2'}}K</p>
+        </ng-template>
         <div class="value-middle">
           📥Farm buybacks
         </div>
         <div class="value-number-middle">
-          <span class="">{{farmBuybacks | number: '1.2-2'}}</span>
+          <span class="">{{totalFarmBuybacks | number: '1.2-2'}}</span>
           K
         </div>
       </div>
-    </div>
+    </app-popover-card>
     <app-custom-modal #farmBuybacksModal>
       <ng-template>
-        <app-farm-buybacks-dialog [data]="{title: 'FARM Buyback history chart'}"></app-farm-buybacks-dialog>
+        <app-farm-buybacks-dialog></app-farm-buybacks-dialog>
       </ng-template>
     </app-custom-modal>
 
-    <div #tooltip="matTooltip" (click)="openSavedFeesDialog()"
+    <app-popover-card (click)="openSavedFeesDialog()"
          class="value-card pointer saved-fees"
-         [class]="vt.getThemeColor() + '-card'"
-         matTooltip="How much gas would users spend on transactions without our project?">
+         [class]="vt.getThemeColor() + '-card'">
       <div>
+        <ng-template>
+          <p>How much gas would users spend on<br/> transactions without our project?</p>
+          <p>BSC: {{totalGasSaved('bsc') / 1000000 | number: '1.0-2'}} M$</p>
+          <p>ETH: {{totalGasSaved('eth') / 1000000 | number: '1.0-2'}} M$</p>
+        </ng-template>
         <div class="value-middle">
           🛡️Saved gas fees
         </div>
         <div class="value-number-middle">
-          <span>{{savedGasFees / 1000000 | number: '1.0-1'}}</span>
+          <span>{{totalGasSavedAllNetworks() / 1000000 | number: '1.0-1'}}</span>
           M$
         </div>
       </div>
-    </div>
+    </app-popover-card>
     <app-custom-modal #savedFeesModal>
       <ng-template>
-        <app-hard-work-history-dialog [data]="{title: 'Saved Gas Fees History'}"></app-hard-work-history-dialog>
+        <app-saved-gas-fees-dialog></app-saved-gas-fees-dialog>
       </ng-template>
     </app-custom-modal>
 
-    <div #tooltip="matTooltip"
-         (click)="openTotalUsersDialog()"
+    <app-popover-card (click)="openTotalUsersDialog()"
          class="value-card pointer total-users"
-         [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Total unique accounts interacted with the project">
+        [class]="vt.getThemeColor() + '-card'">
       <div>
+        <ng-template>
+          <p>Total unique accounts interacted with the project</p>
+          <p>BSC {{userCount('bsc') | number: '1.0-0'}}</p>
+          <p>ETH {{userCount('eth') | number: '1.0-0'}}</p>
+        </ng-template>
         <div class="value-middle">
           👪Total users
         </div>
         <div class="value-number-middle ">
-          <span>{{allUsersCount | number: '1.0-0'}}</span>
+          <span>{{userCountAllNetwork | number: '1.0-0'}}</span>
         </div>
       </div>
-    </div>
+    </app-popover-card>
     <app-custom-modal #totalUsersModal>
       <ng-template>
-        <app-total-users-dialog [data]="{title: 'Total users history'}"></app-total-users-dialog>
+        <app-total-users-dialog></app-total-users-dialog>
       </ng-template>
     </app-custom-modal>
 
 
-    <div #tooltip="matTooltip"
-         class="value-card active-pools"
-         [class]="vt.getThemeColor() + '-card'"
-         matTooltip="Accounts staked funds in pools with balance more than 10$">
+    <app-popover-card class="value-card active-pools"
+         [class]="vt.getThemeColor() + '-card'">
       <div>
+        <ng-template>
+          <div>
+            <p>Accounts staked funds in pools <br/>with balance more than 10$</p>
+            <p>BSC {{poolUsers('bsc') | number: '1.0-0'}}</p>
+            <p>ETH {{poolUsers('eth') | number: '1.0-0'}}</p>
+          </div>
+        </ng-template>
         <div class="value-middle">
           👨‍🌾Pools active accounts
         </div>
         <div class="value-number-middle">
-          <span>{{poolsActiveUsersCount | number: '1.0-0'}}</span>
+          <span>{{poolUsersAllNetwork | number: '1.0-0'}}</span>
         </div>
       </div>
-    </div>
+    </app-popover-card>
   </div>
 </div>
-
-
-<table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard" class="last-values-table">
-
-  <tr>
-    <td class="caption-font-small">Farm Price</td>
-    <td class="caption-font-small">TVL</td>
-    <td class="caption-font-small right-value">Income APR</td>
-  </tr>
-
-  <tr>
-    <td class="caption-td">
-      <span class="caption-font">{{lastPriceF | number: '1.0-1'}}</span>
-      <span class="last-price-sign">$</span>
-    </td>
-    <td (click)="openTvlDialog()" class="caption-td pointer">
-      <span class="caption-font">{{allTvlF | number: '1.0-1'}}</span>
-      <span class="last-price-sign">M$</span>
-    </td>
-    <td class="caption-td right-value">
-      <span class="caption-font">{{psApy | number: '1.0-1'}}</span>
-      <span class="last-price-sign">%</span>
-    </td>
-  </tr>
-  <tr>
-    <td class="caption-font-small caption-btc">BTC Price</td>
-    <td class="caption-font-small caption-eth">ETH Price</td>
-    <td class="caption-font-small caption-ps">Gas</td>
-  </tr>
-  <tr>
-    <td class="caption-td-middle">
-      <span class="caption-font-middle caption-btc-value">{{btcF | number: '1.0-0'}}</span>
-      <span class="caption-font-middle caption-btc-sign">$</span>
-    </td>
-    <td class="caption-td-middle">
-      <span class="caption-font-middle caption-eth-value">{{ethF | number: '1.0-0'}}</span>
-      <span class="caption-font-middle caption-eth-sign">$</span>
-    </td>
-    <td class="caption-td-middle">
-      <span class="caption-font-middle caption-ps-value">{{lastGasF | number: '1.0-0'}}</span>
-    </td>
-  </tr>
-</table>
 

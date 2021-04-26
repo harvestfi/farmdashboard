@@ -5,9 +5,11 @@ import * as SockJS from 'sockjs-client';
 import {filter, first, switchMap} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import {WsConsumer} from './ws-consumer';
-import { AppConfig, APP_CONFIG } from 'src/app.config';
-import get = Reflect.get;
+import {APP_CONFIG, AppConfig} from 'src/app.config';
+import {Network} from '../models/network';
+import {NGXLogger} from 'ngx-logger';
 import {StaticValues} from '../static/static-values';
+import get = Reflect.get;
 
 export enum SocketClientState {
   ATTEMPTING, CONNECTED
@@ -17,15 +19,19 @@ export enum SocketClientState {
   providedIn: 'root'
 })
 export class WebsocketService implements OnDestroy {
-  private client: Client;
+  private clients = new Map<string, Client>();
   private state: BehaviorSubject<SocketClientState>
       = new BehaviorSubject<SocketClientState>(SocketClientState.ATTEMPTING);
   private recTimeout = null;
   private consumers = new Set<WsConsumer>();
   private subscriptions = new Set<string>();
-  private wasConnected = false;
+  private wasConnected = new Map<string, boolean>(
+      Array.from(StaticValues.NETWORKS.keys()).map(name => [name, false])
+  );
 
-  constructor(@Inject(APP_CONFIG) public config: AppConfig) {}
+  constructor(@Inject(APP_CONFIG) public config: AppConfig,
+              private log: NGXLogger) {
+  }
 
   static jsonHandler(message: Message): any {
     return JSON.parse(message.body);
@@ -35,32 +41,43 @@ export class WebsocketService implements OnDestroy {
     this.connect().pipe(first()).subscribe(inst => inst.disconnect(null));
   }
 
-  public connectSockJs(): void {
-    this.client = over(new SockJS(get(this.config.wsEndpoints, StaticValues.NETWORKS.get(this.config.defaultNetwork).ethparserName)));
-    this.client.debug = null;
-    this.client.reconnect_delay = this.config.wsReconnectInterval * 1000;
-    this.client.connect({}, () => {
+  public connectSockJs(network: Network): void {
+    const url = get(this.config.wsEndpoints, network.ethparserName);
+    const client = over(new SockJS(url));
+    this.clients.set(network.ethparserName, client);
+    client.debug = null;
+    client.reconnect_delay = this.config.wsReconnectInterval * 1000;
+    client.connect({}, () => {
+      this.log.info('WebSocket connected ' + network.ethparserName, url);
       clearTimeout(this.recTimeout);
       // reload page not so elegant method, but it should work
-      // without connection we have a gap for the data, we should reload
-      if (this.wasConnected) {
+      // without connection we have a gap for the data
+      // - so when we have reconnect we reload the page
+      if (this.wasConnected.get(network.ethparserName)) {
+        const delay = (Math.random() * 120000) + 10000;
+        this.log.warn('WS ' + network.ethparserName
+            + 'reconnected! For avoiding a data gap the page will be reloaded in ' + delay);
         // for avoid DDOS on the backend
         setTimeout(() => {
           window.location.reload();
-        }, (Math.random() * 120000) + 10000);
+        }, delay);
       }
-      this.subscriptions.clear();
-      this.state.next(SocketClientState.CONNECTED);
-      this.consumers.forEach(c => {
-        if (!c.isSubscribed()) {
-          c.subscribeToTopic();
-        }
-      });
-      this.wasConnected = true;
-    }, () => {
+      this.wasConnected.set(network.ethparserName, true);
+      if (Array.from(this.wasConnected.values()).filter(c => !c).length === 0) {
+        this.log.info('All WebSocket connections established');
+        this.subscriptions.clear();
+        this.state.next(SocketClientState.CONNECTED);
+        this.consumers.forEach(c => {
+          if (!c.isSubscribed()) {
+            c.subscribeToTopic();
+          }
+        });
+      }
+    }, (e) => {
+      this.log.error('WebSocket error ' + network.ethparserName, e);
       this.consumers.forEach(c => c.setSubscribed(false));
       this.recTimeout = setTimeout(() => {
-        this.connectSockJs();
+        this.connectSockJs(network);
       }, this.config.wsReconnectInterval * 1000);
     });
   }
@@ -78,35 +95,39 @@ export class WebsocketService implements OnDestroy {
       return;
     }
     this.subscriptions.add(topic);
-    return this.connect().pipe(first(), switchMap(inst =>
-      new Observable<any>(observer => {
-        inst.unsubscribe(topic);
-        const subscription: StompSubscription = inst.subscribe(topic, message => {
-          observer.next(handler(message));
-        });
-        return () => inst.unsubscribe(subscription.id);
-      })
-    ));
+    return this.connect().pipe(
+        // first(),
+        switchMap(inst =>
+            new Observable<any>(observer => {
+              inst.unsubscribe(topic);
+              const subscription: StompSubscription = inst.subscribe(topic, message => {
+                observer.next(handler(message));
+              });
+              return () => inst.unsubscribe(subscription.id);
+            })
+        ));
   }
 
-  send(topic: string, payload: any): void {
-    this.connect()
-    .pipe(first())
-    .subscribe(inst => inst.send(topic, {}, JSON.stringify(payload)));
-  }
+  // send(topic: string, payload: any): void {
+  //   this.connect()
+  //   .pipe(first())
+  //   .subscribe(inst => inst.send(topic, {}, JSON.stringify(payload)));
+  // }
 
+  // TODO split
   public isConnected(): boolean {
-    if (this.client) {
-      return this.client?.connected;
-    }
-    return false;
+    return Array.from(this.clients.values())
+    .map(c => c.connected)
+    .filter(c => !c)
+        .length === 0;
   }
 
   private connect(): Observable<Client> {
     return new Observable<Client>(observer => {
-      this.state.pipe(filter(state => state === SocketClientState.CONNECTED)).subscribe(() => {
-        observer.next(this.client);
-      });
+      this.state.pipe(
+          filter(state => state === SocketClientState.CONNECTED)
+      ).subscribe(() =>
+          Array.from(this.clients.values()).forEach(client => observer.next(client)));
     });
   }
 

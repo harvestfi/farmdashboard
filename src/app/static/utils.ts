@@ -1,5 +1,5 @@
-import {HttpErrorResponse} from '@angular/common/http';
 import {TransferDto} from '../models/transfer-dto';
+import {HarvestDto} from '../models/harvest-dto';
 
 export class Utils {
 
@@ -159,8 +159,42 @@ export class Utils {
       return (n / 1000).toFixed(1) + 'k';
     } else if (n < 1000_000_000) {
       return (n / 1000_000).toFixed(1) + 'm';
+    } else if (n < 1000_000_000_000) {
+      return (n / 1000_000_000).toFixed(1) + 'g';
     } else {
       return '♾️';
+    }
+  }
+
+  public static iterableReduce(arr: IterableIterator<any>, mapper = a => a): number {
+    if (!arr) {
+      return 0;
+    }
+    return Array.from(arr)
+    .filter(a => !!a)
+    .map(mapper)
+    .reduce((n, p) => n + p, 0);
+  }
+
+  public static prettyVaultName(name: string): string {
+    if (name.split('_').length >= 3) {
+      name = name.replace('ONEINCH_', '');
+    }
+    return name.replace('ONEINCH', '1INCH');
+  }
+
+  public static addInMap(map: Map<any, number>, key: any, value: number): void {
+    if (!!value
+        && value.toString() !== 'NaN'
+        && value !== 0) {
+      map.set(key, value);
+    }
+  }
+
+  public static addInArrayAtTheStart<T>(arr: T[], el: T, max: number = 100): void {
+    arr.unshift(el);
+    if (arr.length > max) {
+      arr.pop();
     }
   }
 }

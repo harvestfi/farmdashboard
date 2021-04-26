@@ -1,22 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { LastPrice } from 'src/app/models/last-price';
-import { PricesDto } from 'src/app/models/prices-dto';
-import { PricesCalculationService } from 'src/app/services/prices-calculation.service';
+import {Component} from '@angular/core';
+import {PriceDataService} from '../../services/data/price-data.service';
 
 @Component({
   selector: 'app-last-prices-list',
   templateUrl: './last-prices-list.component.html',
   styleUrls: ['./last-prices-list.component.css']
 })
-export class LastPricesListComponent implements OnInit {
+export class LastPricesListComponent {
 
-  constructor(private pricesCalculationService: PricesCalculationService) { }
-
-  ngOnInit(): void {
+  constructor(private pricesData: PriceDataService) {
   }
 
-  get allPrices(): LastPrice[] {
-    return this.pricesCalculationService.allPrices;
+  getAllPrices() {
+    return this.pricesData.getAllPrices();
+  }
+
+  fullNameToName(fName: string): string {
+    return fName.split('&')[1];
+  }
+
+  getPrice(fName: string): number {
+    const tmp = fName.split('&');
+    return this.pricesData.getUsdPrice(tmp[1], tmp[0]);
   }
 
 }

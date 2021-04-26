@@ -32,37 +32,10 @@ export class HarvestDto {
   lpStatDto: LpStat;
   blockDateAdopted: Date;
   acquired: Date;
+  underlyingName: string;
 
   public static fromJson(data: string): HarvestDto {
-    const jsonData = JSON.parse(data);
-    const tx: HarvestDto = new HarvestDto();
-    tx.id = jsonData.id;
-    tx.hash = jsonData.hash;
-    tx.block = jsonData.block;
-    tx.confirmed = jsonData.confirmed;
-    tx.network = jsonData.network;
-    tx.methodName = jsonData.methodName;
-    tx.owner = jsonData.owner;
-    tx.amount = jsonData.amount;
-    tx.amountIn = jsonData.amountIn;
-    tx.vault = jsonData.vault;
-    tx.lastGas = jsonData.lastGas;
-    tx.lastTvl = jsonData.lastTvl;
-    tx.lastUsdTvl = jsonData.lastUsdTvl;
-    tx.ownerCount = jsonData.ownerCount;
-    tx.sharePrice = jsonData.sharePrice;
-    tx.usdAmount = jsonData.usdAmount;
-    tx.blockDate = jsonData.blockDate;
-    tx.lpStat = jsonData.lpStat;
-    tx.ownerBalance = jsonData.ownerBalance;
-    tx.ownerBalanceUsd = jsonData.ownerBalanceUsd;
-    tx.allOwnersCount = jsonData.allOwnersCount;
-    tx.allPoolsOwnersCount = jsonData.allPoolsOwnersCount;
-    tx.underlyingPrice = jsonData.underlyingPrice;
-    tx.profit = jsonData.profit;
-    tx.profitUsd = jsonData.profitUsd;
-    tx.totalAmount = jsonData.totalAmount;
-
+    const tx: HarvestDto = Object.assign(new HarvestDto(), JSON.parse(data));
     tx.acquired = new Date();
     HarvestDto.enrich(tx);
     return tx;

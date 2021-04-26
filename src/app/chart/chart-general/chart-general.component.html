@@ -1,0 +1,27 @@
+<div *ngIf="ready === true; then readyBlock else loadingBlock"></div>
+
+<ng-template #loadingBlock>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+
+<ng-template #readyBlock>
+
+
+  <div id="top-div-light" class="dialog-card" [class]="vt.getThemeColor() + '-card'">
+
+    <div>
+      <div class="title">
+        {{title}}
+        <div *ngIf="multipleNetworks">
+          <mat-button-toggle-group name="networkToggle" (change)="choseNetwork()" [(ngModel)]="chosenNetwork">
+            <mat-button-toggle *ngFor="let n of networks" value="{{n}}">{{n}}</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+      <div #chart class="chart"></div>
+    </div>
+
+  </div>
+
+</ng-template>
+

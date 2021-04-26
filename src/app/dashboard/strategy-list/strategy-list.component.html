@@ -1,66 +1,88 @@
 <div class="custom-table" [class]="vt.getThemeColor() + '-card'">
-  <div class="title-bar">
-    <h1 class="title">Strategies</h1>
+  <div class="strategy-list-filter-box">
+
+    <select [(ngModel)]="networkFilter" name="" id="networkFilter">
+      <option value="">Network</option>
+      <option value="eth">Ethereum</option>
+      <option value="bsc">Binance</option>
+    </select>
+
+    <select [(ngModel)]="platformFilter" name="" id="platformFilter">
+      <option value="">Platform</option>
+      <option *ngFor="let platform of platform_list" [value]="platform.prefix">{{platform.name}}</option>
+    </select>
+
+    <select [(ngModel)]="assetFilter" name="" id="assetFilter">
+      <option value="">Asset</option>
+      <option *ngFor="let asset of assetList" [value]="asset">{{asset}}</option>
+  
+    </select>
+
+    <div class="quantity">
+      Total: {{vaultsList.length}}
+    </div>
+
     <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
+
   </div>
   <div class="header">
       <div (click)="sortVaultsList('name')" class="header-column">Name <i class="fas fa-sort"></i></div>
-      <div (click)="sortVaultsList('apy')" class="header-column" #tooltip="matTooltip" matTooltip="APY with daily restake period">APY % <i class="fas fa-sort"></i></div>
-      <div (click)="sortVaultsList('tvl')" class="header-column" #tooltip="matTooltip" matTooltip="Total Value Locked">TVL M$ <i class="fas fa-sort"></i></div>
+      <app-popover-card (click)="sortVaultsList('apy')" class="header-column">
+        <ng-template>
+        APY with daily restake period
+        </ng-template>
+        APY % <i class="fas fa-sort"></i></app-popover-card>
+      <app-popover-card (click)="sortVaultsList('tvl')" class="header-column">
+        <ng-template>Total Value Locked</ng-template>
+        TVL M$ <i class="fas fa-sort"></i>
+      </app-popover-card>
       <div (click)="sortVaultsList('users')" class="header-column desktop-only">Users <i class="fas fa-sort"></i></div>
       <div (click)="sortVaultsList('total_earned')" class="header-column desktop-only">Total Earned <i class="fas fa-sort"></i></div>
   </div>
   <div class="content">
-    <div *ngFor="let row of vaults" class="row">
-      <div class="column">
-        <app-vault-icon [vault]="row"></app-vault-icon> {{row}}
+    <div *ngIf="vaultsList | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
+      <div *ngFor="let row of filteredVaults " class="row">
+        <div class="column">
+          <app-vault-icon [vault]="row.name"></app-vault-icon> {{prettyName(row.name)}}
+        </div>
+        <div class="column">
+          <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row.name]">
+            <app-apy-window (showModal)="toggleAPYWindow(row.name)"
+                            [vaultName]="row.name" [network]="row.network"></app-apy-window>
+          </app-draggable-modal>
+          <app-popover-card class="pointer" (click)="toggleAPYWindow(row.name)">
+            <ng-template>
+              <p>Click to open details</p>
+            </ng-template>
+            {{prettifyNumber(vaultFullApy(row.name, row.network))}}% <i class="far fa-window-restore"></i>
+          </app-popover-card>
+        </div>
+        <div  class="column">
+          <app-custom-modal [name]="'tvlModal_' + row.name">
+            <ng-template>
+              <app-vault-tvl-dialog [vault]="row.name" [network]="row.network"></app-vault-tvl-dialog>
+            </ng-template>
+          </app-custom-modal>
+          <app-popover-card class="pointer" (click)="openTvlDialog(row.name)">
+            <ng-template>
+              <p>TVL: {{vaultTvl(row.name, row.network) | number}}$</p>
+              <p>Click to open TVL history chart</p>
+            </ng-template>
+          ${{prettifyNumber(vaultTvl(row.name, row.network))}}
+          </app-popover-card>
+        </div>
+        <div class="column desktop-only">
+          {{vaultUsers(row.name, row.network)}}
+        </div>
+        <div class="column desktop-only">
+          ${{vaultTotalEarning(row.name, row.network) | number: '1.1-1'}}
+        </div>
       </div>
-      <div class="column">
-        <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row]">
-          <app-apy-window (showModal)="toggleAPYWindow(row)" [poolName]="row"></app-apy-window>
-        </app-draggable-modal>
-        <span class="pointer" (click)="toggleAPYWindow(row)" matTooltip="
-        APR: {{vaultFullApy(row)}}%
-        Click to open details"
-        matTooltipClass="tooltip-spaced">
-          {{vaultFullApy(row)}}% <i class="far fa-window-restore"></i>
-        </span>
+
+      <div class="empty-list" *ngIf="!filteredVaults.length">
+        🏜️ No results found 🏜️
       </div>
-      <div  class="column">
-        <app-custom-modal [name]="'tvlModal_' + row">
-          <ng-template>
-            <app-tvl-dialog [data]="{type: row}"></app-tvl-dialog>
-          </ng-template>
-        </app-custom-modal>
-        <span
-        class="pointer"
-        (click)="openTvlDialog(row)"
-        matTooltip="
-        TVL: {{vaultTvl(row) | number}}M$
-        Click to open TVL history chart"
-        matTooltipClass="tooltip-spaced">
-        ${{vaultTvl(row)| number: '1.1-1'}}M
-        </span>
-      </div>
-      <div class="column desktop-only">
-        {{vaultUsers(row)}}
-      </div>
-      <div class="column desktop-only">
-        ${{vaultTotalEarning(row) | number: '1.1-1'}}
-      </div>
-    </div>
-    <div class="empty-list" *ngIf="!vaults.length">
-      🏜️ No results found for '{{searchTerm}}' 🏜️
     </div>
   </div>
 </div>
-
-<table *ngIf="!vt.isNonScoreboard()" id="top-div-scoreboard" style="margin-top: 10px;">
-
-  <tr *ngFor="let vault of vaultsList">
-    <td>
-      <app-tvl-box [tvlName]="vault"></app-tvl-box>
-    </td>
-  </tr>
-</table>
 
