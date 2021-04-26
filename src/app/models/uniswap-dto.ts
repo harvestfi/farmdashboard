@@ -38,11 +38,11 @@ export class UniswapDto {
   print(): string {
     // (moment(this.blockDateAdopted)).format('HH:mm:ss')
     return this.typeToString()
-        + ' ' + this.amount
+        + ' ' + this.amount?.toFixed(2)
         + ' ' + this.coin
-        + ' for ' + this.otherAmount
+        + ' for ' + this.otherAmount?.toFixed(2)
         + ' ' + this.otherCoin
-        + ' price ' + this.lastPrice
+        + ' price ' + this.lastPrice?.toFixed(2)
         ;
   }
 

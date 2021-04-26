@@ -39,7 +39,9 @@ export class UniTxComponent implements AfterViewInit {
         }
     );
     this.priceData.subscribeToActual().subscribe(priceDto => {
+      const price = priceDto.price * this.priceData.getUsdPrice(priceDto.otherToken, priceDto.network);
       const tx = priceDto.toUniswap();
+      tx.lastPrice = price;
       if (tx.coin !== 'FARM') {
         return;
       }

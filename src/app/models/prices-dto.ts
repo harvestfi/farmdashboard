@@ -41,7 +41,6 @@ export class PricesDto {
     dto.hash = this.id.split('_')[0];
     dto.block = this.block.toString();
     dto.confirmed = true;
-    dto.lastPrice = this.price;
     dto.blockDate = this.blockDate;
     dto.blockDateAdopted = this.blockDateAdopted;
     return dto;
