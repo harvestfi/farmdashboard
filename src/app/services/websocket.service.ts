@@ -96,14 +96,14 @@ export class WebsocketService implements OnDestroy {
     }
     this.subscriptions.add(topic);
     return this.connect().pipe(
-        // first(),
-        switchMap(inst =>
+        first(),
+        switchMap(client =>
             new Observable<any>(observer => {
-              inst.unsubscribe(topic);
-              const subscription: StompSubscription = inst.subscribe(topic, message => {
+              client.unsubscribe(topic);
+              const subscription: StompSubscription = client.subscribe(topic, message => {
                 observer.next(handler(message));
               });
-              return () => inst.unsubscribe(subscription.id);
+              return () => client.unsubscribe(subscription.id);
             })
         ));
   }
