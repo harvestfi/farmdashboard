@@ -47,7 +47,7 @@ export class PriceDataService {
     if (price.token === 'FARM' && price.otherToken === 'ETH') {
       this.lastFarmPrice = price.price * this.getUsdPrice('ETH', 'eth');
       this.log.info('FARM price updated', this.lastFarmPrice);
-      this.titleService.setTitle(this.lastFarmPrice + ' | ' + this.pureTitle);
+      this.titleService.setTitle(this.lastFarmPrice?.toFixed(2) + ' | ' + this.pureTitle);
     }
     // this.dataFeed;
     return new Observable<PricesDto>(o => o.next(price));
