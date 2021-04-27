@@ -7,16 +7,17 @@ import {HarvestDataService} from '../../services/data/harvest-data.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
+import {Vault} from '../../models/vault';
+import {HarvestDto} from '../../models/harvest-dto';
 
 @Component({
   selector: 'app-apy-window',
   templateUrl: './apy-window.component.html',
-  styleUrls: ['./apy-window.component.css']
+  styleUrls: ['./apy-window.component.scss']
 })
 export class ApyWindowComponent implements OnInit {
   @Output() showModal = new EventEmitter<boolean>();
-  @Input() vaultName: string;
-  @Input() network: string;
+  @Input() vault: Vault;
   @ViewChild('incomeModal') private incomeModal: CustomModalComponent;
   @ViewChild('psApyModal') private psApyModal: CustomModalComponent;
 
@@ -31,7 +32,11 @@ export class ApyWindowComponent implements OnInit {
   }
 
   hardwork(): HardWorkDto {
-    return this.hardworkData.getLastHardWork(this.vaultName, this.network);
+    return this.hardworkData.getLastHardWork(this.vault.contract.name, this.vault.contract.network);
+  }
+
+  harvest(): HarvestDto {
+    return this.harvestData.getVaultLastInfo(this.vault.contract.name, this.vault.contract.network);
   }
 
   closeModal(): void {
@@ -45,7 +50,7 @@ export class ApyWindowComponent implements OnInit {
   // ------------------- DIALOGS --------------------
 
   openIncomeDialog(): void {
-    if (this.vaultName === 'PS') {
+    if (this.vault.contract.name === 'PS') {
       this.openPsApyDialog();
       return;
     }
@@ -53,7 +58,7 @@ export class ApyWindowComponent implements OnInit {
   }
 
   private openPsApyDialog(): void {
-    if (this.vaultName !== 'PS') {
+    if (this.vault.contract.name !== 'PS') {
       return;
     }
     this.psApyModal.open();
@@ -62,15 +67,15 @@ export class ApyWindowComponent implements OnInit {
   // ---------------- GETTERS --------------------
 
   get isAutoStakeVault(): boolean {
-    const hw = this.hardworkData.getLastHardWork(this.vaultName, this.network);
+    const hw = this.hardworkData.getLastHardWork(this.vault.contract.name, this.vault.contract.network);
     if(hw?.autoStake === 1) {
       return true;
     }
-    return Utils.isAutoStakeVault(this.vaultName);
+    return Utils.isAutoStakeVault(this.vault.contract.name);
   }
 
   get isFarmVault(): boolean {
-    return Utils.isFarmVault(this.vaultName);
+    return Utils.isFarmVault(this.vault.contract.name);
   }
 
   // ********* PS *************
@@ -84,6 +89,9 @@ export class ApyWindowComponent implements OnInit {
   }
 
   // ********* VAULT *************
+  get sharePrice(): number {
+    return this.harvest().sharePrice;
+  };
 
   get vaultEarned(): number {
     return this.hardwork()?.fullRewardUsdTotal * (1 - this.hardwork()?.profitSharingRate);
@@ -107,25 +115,32 @@ export class ApyWindowComponent implements OnInit {
   }
 
   get vaultApr(): number {
-    return Math.max(this.hardworkData.getWeeklyApr(this.vaultName, this.network), 0);
+    return Math.max(this.hardworkData.getWeeklyApr(this.vault.contract.name, this.vault.contract.network), 0);
   }
 
   get vaultRewardPeriod(): number {
-    return this.rewardData.getRewardPeriod(this.vaultName, this.network);
+    return this.rewardData.getRewardPeriod(this.vault.contract.name, this.vault.contract.network);
   }
 
   get vaultReward(): number {
-    return this.rewardData.getReward(this.vaultName, this.network);
+    return this.rewardData.getReward(this.vault.contract.name, this.vault.contract.network);
   }
 
   get vaultRewardApr(): number {
-    return this.rewardData.vaultRewardApr(this.vaultName, this.network,
-        this.harvestData.getVaultLastInfo(this.vaultName, this.network)?.lastUsdTvl,
+    return this.rewardData.vaultRewardApr(this.vault.contract.name, this.vault.contract.network,
+        this.harvestData.getVaultLastInfo(this.vault.contract.name, this.vault.contract.network)?.lastUsdTvl,
         this.priceData.getLastFarmPrice());
   }
 
   get vaultRewardWeeklyApy(): number {
-    return this.rewardData.getWeeklyApy(this.vaultName, this.network);
+    return this.rewardData.getWeeklyApy(this.vault.contract.name, this.vault.contract.network);
   }
 
+  viewNetworkAddress(contractLike: {network:string, address: string}) {
+      if (contractLike.network === 'bsc') {
+      window.open('https://www.bscscan.com/address/' + contractLike.address, '_blank');
+    } else {
+      window.open('https://etherscan.io/address/' + contractLike.address, '_blank');
+    }
+  }
 }

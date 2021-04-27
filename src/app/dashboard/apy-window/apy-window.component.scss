@@ -1,3 +1,4 @@
+@import "../../../scss/utilities/responsive_utilities.scss";
 .main-table {
 
   align-items: center;
@@ -15,29 +16,18 @@
 
 .value-name {
   font-weight: normal;
-  /*display: flex;*/
-  /*justify-content: space-between;*/
 }
 
 .title-row {
   margin-top: 10px;
-  /*display:inline-block;*/
 }
 
 .title {
   width: 80%;
-  /*margin: 5px;*/
-  /*padding-left: 10px;*/
-  /*white-space: nowrap;*/
-  /*text-align: center;*/
 }
 
 .close {
-  width: 20%;
   cursor: pointer;
-  /*position: relative;*/
-  /*float: right;*/
-  /*margin-right: 20px;*/
 }
 
 .close-icon {
@@ -80,8 +70,13 @@
   text-align: center;
 }
 
-.tvl-img {
-  width: 15px;
-  height: 15px;
-  margin-right: 5px;
+.apy-window {
+  .apy-card {
+    padding: 10px;
+    min-height: 100px;
+    min-width: 160px;
+  }
+  .sign-icon {
+    font-size: 16px;
+  }
 }

@@ -5,6 +5,7 @@ import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Contract} from '../../models/contract';
+import {Vault} from "../../models/vault";
 
 @Pipe({
   name: 'strategyListFilter',
@@ -20,24 +21,22 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
     }
 
     transform(
-        vaults: Contract[],
+        vaults: Vault[],
         network: string,
         platform: string,
         asset: string,
         currentSortingValue: string,
         sortDirection: string,
         searchTerm: string
-        ): Contract[] {
+        ): Vault[] {
 
         const newVaults = vaults.filter(vault => {
-            const networkMatchesFilter = (network ? vault.network === network : true);
-            const platformMatchesFilter = (platform ? vault.name.startsWith(platform) : true);
-            const assetMatchesFilter = (asset ? vault.name.includes(asset) : true);
+            const networkMatchesFilter = (network ? vault.contract?.network === network : true);
+            const platformMatchesFilter = (platform ? vault.contract?.name.startsWith(platform) : true);
+            const assetMatchesFilter = (asset ? vault.contract?.name.includes(asset) : true);
             const searchTermMatchesFilter = (
-                searchTerm.length ? vault.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()): true);
-            if (networkMatchesFilter && platformMatchesFilter && assetMatchesFilter && searchTermMatchesFilter) {
-                return vault;
-            }
+                searchTerm.length ? vault.contract?.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()): true);
+            return networkMatchesFilter && platformMatchesFilter && assetMatchesFilter && searchTermMatchesFilter;
         });
 
         newVaults.sort((a: any, b: any): number => {
@@ -45,18 +44,18 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
             const right = sortDirection === 'asc' ? a : b;
             switch (currentSortingValue) {
               case 'name':
-                if (left.name < right.name) {
+                if (left.contract?.name < right.contract?.name) {
                   return -1;
                 }
                 return 1;
               case 'apy':
-                return this.vaultFullApy(right.name, right.network) - this.vaultFullApy(left.name, left.network);
+                return this.vaultFullApy(right.contract?.name, right.contract?.network) - this.vaultFullApy(left.contract?.name, left.contract?.network);
               case 'tvl':
-                return this.vaultTvl(right.name, right.network) - this.vaultTvl(left.name, left.network);
+                return this.vaultTvl(right.contract?.name, right.contract?.network) - this.vaultTvl(left.contract?.name, left.contract?.network);
               case 'users':
-                return this.vaultUsers(right.name, right.network) - this.vaultUsers(left.name, left.network);
+                return this.vaultUsers(right.contract?.name, right.contract?.network) - this.vaultUsers(left.contract?.name, left.contract?.network);
               case 'total_earned':
-                return this.vaultTotalEarning(right.name, right.network) - this.vaultTotalEarning(left.name, left.network);
+                return this.vaultTotalEarning(right.contract?.name, right.contract?.network) - this.vaultTotalEarning(left.contract?.name, left.contract?.network);
               default:
                 break;
             }

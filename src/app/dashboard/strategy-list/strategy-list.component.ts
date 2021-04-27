@@ -53,10 +53,9 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     return Array.from(result.values()).sort((a, b) => b.localeCompare(a));
   }
 
-  get vaultsList(): Contract[] {
+  get vaultsList(): Vault[] {
     return this.contractsService.getContractsArray(Vault)
-    .filter(_ => _.isActive())
-    .map(v => v.contract);
+    .filter(_ => _.isActive());
   }
 
   toggleAPYWindow(name: string): void {
