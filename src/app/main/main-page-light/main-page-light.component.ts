@@ -9,24 +9,11 @@ import {StaticValues} from '../../static/static-values';
   styleUrls: ['./main-page-light.component.css']
 })
 export class MainPageLightComponent implements OnInit {
-  opened = false;
 
   constructor(public vt: ViewTypeService,
               public ws: WebsocketService) {
   }
 
   ngOnInit(): void {
-  }
-
-  toggleSidebar(): void {
-    this.opened = !this.opened;
-  }
-
-  toggleTheme(): void {
-    this.vt.toggleTheme();
-  }
-
-  uniInited(): boolean {
-    return StaticValues.uniInited;
   }
 }

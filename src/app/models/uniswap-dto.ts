@@ -6,48 +6,18 @@ export class UniswapDto {
   amount: number;
   otherCoin: string;
   otherAmount: number;
-  ethAmount: number;
   hash: string;
   block: string;
   confirmed: boolean;
   lastPrice: number;
   lastGas: number;
   blockDate: number;
-  psWeekApy: number;
-  psIncomeUsd: number;
-  ownerCount: number;
-  ownerBalance: number;
-  ownerBalanceUsd: number;
   methodName: string;
 
-  acquired: Date;
   blockDateAdopted: Date;
 
   public static fromJson(data: string): UniswapDto {
-    const jsonData = JSON.parse(data);
-    const tx: UniswapDto = new UniswapDto();
-    tx.id = jsonData.id;
-    tx.type = jsonData.type;
-    tx.owner = jsonData.owner;
-    tx.coin = jsonData.coin;
-    tx.amount = jsonData.amount;
-    tx.otherCoin = jsonData.otherCoin;
-    tx.otherAmount = jsonData.otherAmount;
-    tx.ethAmount = jsonData.ethAmount;
-    tx.hash = jsonData.hash;
-    tx.block = jsonData.block;
-    tx.confirmed = jsonData.confirmed;
-    tx.lastPrice = jsonData.lastPrice;
-    tx.lastGas = jsonData.lastGas;
-    tx.blockDate = jsonData.blockDate;
-    tx.psWeekApy = jsonData.psWeekApy;
-    tx.psIncomeUsd = jsonData.psIncomeUsd;
-    tx.ownerCount = jsonData.ownerCount;
-    tx.ownerBalance = jsonData.ownerBalance;
-    tx.ownerBalanceUsd = jsonData.ownerBalanceUsd;
-    tx.methodName = jsonData.methodName;
-
-    tx.acquired = new Date();
+    const tx: UniswapDto = Object.assign(new UniswapDto(), JSON.parse(data));
     UniswapDto.round(tx);
     return tx;
   }
@@ -58,9 +28,6 @@ export class UniswapDto {
     tx.otherAmount = Number(tx.otherAmount?.toFixed(2));
     tx.lastPrice = Number(tx.lastPrice?.toFixed(2));
     tx.lastGas = Number(tx.lastGas?.toFixed(0));
-    if (tx.acquired == null) {
-      tx.acquired = new Date();
-    }
     if (tx.blockDateAdopted == null) {
       const d = new Date(0);
       d.setUTCSeconds(tx.blockDate);
@@ -71,11 +38,11 @@ export class UniswapDto {
   print(): string {
     // (moment(this.blockDateAdopted)).format('HH:mm:ss')
     return this.typeToString()
-        + ' ' + this.amount
+        + ' ' + this.amount?.toFixed(2)
         + ' ' + this.coin
-        + ' for ' + this.otherAmount
+        + ' for ' + this.otherAmount?.toFixed(2)
         + ' ' + this.otherCoin
-        + ' price ' + this.lastPrice
+        + ' price ' + this.lastPrice?.toFixed(2)
         ;
   }
 

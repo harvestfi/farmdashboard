@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {StaticValues} from '../../static/static-values';
 import {Sort} from '@angular/material/sort';
 import {ViewTypeService} from '../../services/view-type.service';
-import { AppConfig, APP_CONFIG } from 'src/app.config';
+import {APP_CONFIG, AppConfig} from 'src/app.config';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
+import {StaticValues} from '../../static/static-values';
+import get = Reflect.get;
 
 @Component({
   selector: 'app-download-historic-data-dialog',
@@ -15,17 +16,17 @@ export class DownloadHistoricDataDialogComponent implements OnInit {
   sortedVaults: Vault[];
   vaults: Vault[];
   includeInactive = false;
-  apiEndpoint: string;
 
-  constructor(@Inject(APP_CONFIG) public config: AppConfig, public vt: ViewTypeService, private contractsService: ContractsService) {
-    this.apiEndpoint = config.apiEndpoint;
+  constructor(
+      @Inject(APP_CONFIG) public config: AppConfig,
+      public vt: ViewTypeService,
+      private contractsService: ContractsService
+  ) {
   }
 
   ngOnInit(): void {
-    this.contractsService.getContracts(Vault).subscribe(vaults => {
-      this.sortedVaults = this.vaults = vaults;
-      this.sortData(null);
-    });
+    this.sortedVaults = this.vaults = this.contractsService.getContractsArray(Vault);
+    this.sortData(null);
   }
 
   sortData(sort: Sort): void {
@@ -53,5 +54,9 @@ export class DownloadHistoricDataDialogComponent implements OnInit {
 
   compare(a: number | string, b: number | string, isAsc: boolean): number {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  getApiEndpoint(network: string): string {
+    return get(this.config.apiEndpoints, StaticValues.NETWORKS.get(network).ethparserName);
   }
 }

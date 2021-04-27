@@ -5,24 +5,9 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ViewTypeService {
-  private themeScoreboard = 'scoreboard';
-  private themeLight = 'light';
   private subject = new Subject<any>();
 
   constructor() {
-  }
-
-  toggleTheme(): void {
-    if (UserSettings.getTheme() === this.themeLight) {
-      UserSettings.setTheme(this.themeScoreboard);
-    } else {
-      UserSettings.setTheme(this.themeLight);
-    }
-    window.location.reload();
-  }
-
-  public isNonScoreboard(): boolean {
-    return UserSettings.getTheme() !== this.themeScoreboard;
   }
 
   public getThemeColor(): string {

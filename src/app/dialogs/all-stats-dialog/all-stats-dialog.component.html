@@ -31,7 +31,7 @@
         </td>
   
         <td class="tvl-value">
-          {{tvls.get(tvlName) / 1000000 | number: '1.0-1'}}M$
+          {{tvl(tvlName) / 1000000 | number: '1.0-1'}}M$
         </td>
   
         <td class="owners-value">
@@ -41,7 +41,7 @@
         <td class="income-value">
   
           <div *ngIf="tvlName !== 'PS'; else psBlockIncome" id="hardwork-id">
-            {{(hardWorks.get(tvlName)?.fullRewardUsdTotal * 0.7) / 1000 | number: '1.0-1'}}K$
+            {{(fullRewardUsdTotal(tvlName) * 0.7) / 1000 | number: '1.0-1'}}K$
           </div>
           <ng-template #psBlockIncome>
             <div>

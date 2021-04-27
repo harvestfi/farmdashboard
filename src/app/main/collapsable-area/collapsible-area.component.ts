@@ -7,7 +7,7 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./collapsible-area.component.scss']
 })
 
-export class CollapsibleAreComponent {
+export class CollapsibleAreaComponent {
     public isOpen = false;
 
 

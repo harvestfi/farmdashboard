@@ -1,0 +1,48 @@
+<div *ngIf="ready === true; then readyBlock else loadingBlock" id="load"></div>
+
+<ng-template #loadingBlock>
+    <app-loading-spinner></app-loading-spinner>
+</ng-template>
+
+<ng-template #readyBlock>
+    <div class="dialog-card" [class]="vt.getThemeColor() + '-card'">
+        <div class="title">Rewards History</div>
+        <div  class="filters">
+            <div>
+                <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
+                    <option [value]="'-'">-</option>
+                    <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="headers">
+            <div class="header-field">Date</div>
+            <div class="header-field">Vault</div>
+            <div class="header-field">Reward</div>
+            <div class="header-field">Period Finish</div>
+            <div class="header-field"></div>
+        </div>
+        <div class="scroller">
+            <div class="values" *ngFor="let reward of rewards | vaultFilter: vaultFilter">
+                <div class="value-field">{{reward.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
+                <div class="value-field">
+                    <app-vault-icon [vault]="reward.vault"></app-vault-icon>
+                    {{reward.vault}}
+                </div>
+                <div class="value-field">{{reward.reward | number: '1.1-1'}}</div>
+                <div class="value-field">{{reward.periodFinish*1000 | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
+                <div class="value-field">
+                    <mat-icon (click)="openEtherscanTx(reward.id.split('_')[0])" [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="show-even-more" (click)="loadMoreRewardsHistory()" [disabled]="disabled" [ngStyle]="{
+                'pointer-events': disabled ? 'none' : 'auto',
+                'cursor': disabled ? 'wait' : 'pointer',
+                'background-color': disabled ? '#eebf65' : '#eebf65'
+            }">{{disabled ? 'please wait' : 'load more'}}</button>
+        </div>
+    </div>
+
+</ng-template>

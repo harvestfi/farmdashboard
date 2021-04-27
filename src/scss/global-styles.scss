@@ -197,4 +197,20 @@ body {
   .pointer {
     cursor: pointer;
   }
-  
+
+  ngb-popover-window.popover {
+
+    .arrow {
+      display: none;
+    }
+    opacity: 0.9;
+    background: #6b6b6b;
+    line-height: 1em;
+    $color: white;
+    color: $color;
+    * {
+      color: $color;
+    }
+    padding: 10px;
+    border-radius: 5px;
+  }

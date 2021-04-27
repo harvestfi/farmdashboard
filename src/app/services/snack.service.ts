@@ -19,14 +19,8 @@ export class SnackService {
   }
 
   public openSnack(message): void {
-    let className = '';
-    if (this.vt.isNonScoreboard()) {
-      className = 'snack-bar';
-    } else {
-      className = 'snack-bar-dark';
-    }
     this.snackBar.openFromComponent(SnackBarComponent, {
-      panelClass: className,
+      panelClass: 'snack-bar',
       duration: 10000,
       data: message,
       horizontalPosition: this.horizontalPosition,

@@ -27,13 +27,13 @@
         </td>
   
         <td class="transactions">
-          <a href='{{apiEndpoint}}/csv/transactions/history/harvest/{{vault.contract.name}}' target='_blank' class="download-link">Transactions</a>
+          <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/harvest/{{vault.contract.name}}' target='_blank' class="download-link">Transactions</a>
         </td>
         <td class="hardwork">
-          <a href='{{apiEndpoint}}/csv/transactions/history/hardwork/{{vault.contract.name}}' target='_blank' class="download-link">Hardwork</a>
+          <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/hardwork/{{vault.contract.name}}' target='_blank' class="download-link">Hardwork</a>
         </td>
         <td class="tvl">
-          <a href='{{apiEndpoint}}/csv/transactions/history/tvl/{{vault.contract.name}}' target='_blank' class="download-link">TVL</a>
+          <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/tvl/{{vault.contract.name}}' target='_blank' class="download-link">TVL</a>
         </td>  
       </tr>
     </table>

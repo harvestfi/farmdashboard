@@ -1,7 +1,15 @@
 {
     "debugLevel": 0,
-    "wsEndpoint": "http://localhost:4142/stomp",
-    "apiEndpoint": "http://localhost:4142",
     "wsReconnectInterval": 15,
-    "web3Url": "wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz"
+    "web3Url": "wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz",
+    "wsEndpoints": {
+        "eth": "http://localhost:4142/stomp",
+        "bsc": "http://localhost:4142/stomp"
+    },
+    "apiEndpoints": {
+        "eth": "http://localhost:4142",
+        "bsc": "http://localhost:4142"
+    },
+    "multipleSources": true,
+    "defaultNetwork": "eth"
 }

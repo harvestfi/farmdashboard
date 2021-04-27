@@ -5,7 +5,8 @@ import {createChart, IChartApi} from 'lightweight-charts';
 import {NGXLogger} from 'ngx-logger';
 import {LightweightChartsOptions} from './lightweight-charts-options';
 import {ViewTypeService} from '../services/view-type.service';
-import { ChartsOptionsLight } from './charts-options-light';
+import {ChartsOptionsLight} from './charts-options-light';
+import {PricesDto} from '../models/prices-dto';
 
 export class PriceChartBuilder {
   lastDate = 0;
@@ -19,56 +20,41 @@ export class PriceChartBuilder {
   constructor(private log: NGXLogger, coin: string, chartEl: ElementRef, public vt: ViewTypeService) {
     this.coin = coin;
     this.chart = createChart(chartEl.nativeElement, LightweightChartsOptions.getOptions());
-    if (this.vt.isNonScoreboard()) {
-      this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
-    } else {
-      this.chart.applyOptions({
-        // rightPriceScale: {
-        //   autoScale: true
-        // },
-        height: 500,
-        timeScale: {
-          rightOffset: 10,
-          // fixLeftEdge: true,
-        }
-      });
-    }
+    this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
   }
 
-  public collectLastUniTx(uniDto: UniswapDto): void {
+  public collectLastTx(price: number, blockDate: number): void {
     if (!this.lastDate) {
       this.log.debug('First data price not collected');
       return;
     }
-    const dtoDate = uniDto?.blockDate;
-    const dtoPrice = uniDto?.lastPrice;
-    if (dtoPrice !== this.lastUpdatedPrice) {
-      this.lastUpdatedPrice = dtoPrice;
+    if (price !== this.lastUpdatedPrice) {
+      this.lastUpdatedPrice = price;
     } else {
       return;
     }
 
     const dto = new OhlcDto();
-    if (dtoDate - this.lastOhlc.timestamp > this.candleTime) { // new candle
-      dto.timestamp = Math.round(dtoDate / this.candleTime) * this.candleTime;
-      dto.open = dtoPrice;
-      dto.high = dtoPrice;
-      dto.low = dtoPrice;
-      dto.close = dtoPrice;
+    if (blockDate - this.lastOhlc.timestamp > this.candleTime) { // new candle
+      dto.timestamp = Math.round(blockDate / this.candleTime) * this.candleTime;
+      dto.open = price;
+      dto.high = price;
+      dto.low = price;
+      dto.close = price;
     } else {
       dto.timestamp = this.lastOhlc.timestamp;
       dto.open = this.lastOhlc.open;
-      if (dtoPrice > this.lastOhlc.high) {
-        dto.high = dtoPrice;
+      if (price > this.lastOhlc.high) {
+        dto.high = price;
       } else {
         dto.high = this.lastOhlc.high;
       }
-      if (dtoPrice < this.lastOhlc.low) {
-        dto.low = dtoPrice;
+      if (price < this.lastOhlc.low) {
+        dto.low = price;
       } else {
         dto.low = this.lastOhlc.low;
       }
-      dto.close = dtoPrice;
+      dto.close = price;
     }
     const dtos: OhlcDto[] = [dto];
     this.addValuesToChart(dtos, true);

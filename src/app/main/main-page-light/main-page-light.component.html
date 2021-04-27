@@ -8,10 +8,7 @@
       </div>
 
       <div class="left-border-box top-title-div">
-        <div *ngIf="uniInited()" id="top-title1">
-          Welcome to the Harvest Live dashboard. Refresh page not necessary!
-        </div>
-        <div *ngIf="!uniInited()" id="top-title2">
+        <div id="top-title2">
           &nbsp;
         </div>
       </div>
@@ -19,7 +16,7 @@
       <div class="left-border-box connection-state-div">
         <div class="row connection-state-row">
           <div>
-            <mat-icon [ngStyle]="{'color': ws.isConnected() ? '#479d43' : '#b51919'}" aria-hidden="false"
+            <mat-icon [ngStyle]="{'color': ws.isConnected() ? '#479d43' : '#b51919'}" aria-hidden="true"
               aria-label="Connected" class="connect-sign">
               online_prediction
             </mat-icon>

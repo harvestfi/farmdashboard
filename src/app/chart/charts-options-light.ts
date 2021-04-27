@@ -26,7 +26,7 @@ export class ChartsOptionsLight {
         },
         timeScale: {
           borderColor: 'rgb(169,168,168)',
-          rightOffset: 50
+          rightOffset: 20
         }
       },
       dark: {
@@ -54,7 +54,7 @@ export class ChartsOptionsLight {
         },
         timeScale: {
           borderColor: '#333535',
-          rightOffset: 50
+          rightOffset: 20
         }
       }
     };
