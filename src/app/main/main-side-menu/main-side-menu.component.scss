@@ -120,7 +120,7 @@
 
         .main-side-menu-item {
             margin: 40px 0;
-            font-size: 18px;
+            font-size: 1.2em;
             cursor: pointer;
             font-weight: bold;
             transition: margin 0.5s;
@@ -134,12 +134,17 @@
                 content: attr(data-menu-icon);
                 margin: 0 10px;
             }
+
+            &.nested {
+                margin-left: 25px;
+            }
         }
     }
 
     .botton-social-icons {
         display: flex;
         justify-content: space-evenly;
+        margin-top: auto;
 
         .social-link i {
             font-size: 34px;
