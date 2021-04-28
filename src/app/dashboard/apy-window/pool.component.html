@@ -1,9 +1,3 @@
-<div *ngIf="!isAutoStakeVault && !isFarmVault">
-    <p>Total earned: {{vaultEarned | number: '1.1-1'}}$</p>
-    <p>Last week earned: {{vaultEarnedLastWeek | number: '1.1-1'}}$</p>
-    <p>Strategy hAPR:{{vaultApr | number: '1.1-1'}}%</p>
-    <p>Strategy hAPY: {{toApy(vaultApr) | number: '1.1-1'}}%</p>
-</div>
 <div *ngIf="isAutoStakeVault">
     <div class="only-farm-caption">
         <p>It's AutoStake vault, only FARM rewards</p>
@@ -13,6 +7,9 @@
     <div class="only-farm-caption">
         <p>It's FARM LP, only FARM rewards</p>
     </div>
+</div>
+<div *ngIf="!isFarmVault && !isAutoStakeVault">
+    <p>Pool Address: <app-address-link [contract]="pool?.contract"></app-address-link></p>
 </div>
 <p>Reward period: {{vaultRewardPeriod | number: '1.0-0'}} day(s)</p>
 <p>FARM rewards: {{vaultReward | number: '1.1-1'}} FARM</p>

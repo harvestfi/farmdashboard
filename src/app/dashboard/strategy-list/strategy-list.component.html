@@ -48,7 +48,7 @@
         <div class="column">
           <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row.contract.name]">
             <app-apy-window (showModal)="toggleAPYWindow(row.contract.name)"
-                            [vault]="row"></app-apy-window>
+                            [vault]="row" [pool]="poolsList().get(row.contract.address)"></app-apy-window>
           </app-draggable-modal>
           <app-popover-card class="pointer" (click)="toggleAPYWindow(row.contract.name)">
             <ng-template>

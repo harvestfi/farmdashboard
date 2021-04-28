@@ -9,6 +9,8 @@ import {Vault} from '../../models/vault';
 import {CustomModalComponent} from '../../dialogs/custom-modal/custom-modal.component';
 import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
+import {Pool} from '../../models/pool';
+import {ContractsService} from '../../services/contracts.service';
 
 @Component({
     selector: 'app-pool',
@@ -17,6 +19,7 @@ import {PriceDataService} from '../../services/data/price-data.service';
 })
 export class PoolComponent implements OnInit {
     @Input() vault: Vault;
+    @Input() pool: Pool;
     @ViewChild('incomeModal') private incomeModal: CustomModalComponent;
     @ViewChild('psApyModal') private psApyModal: CustomModalComponent;
 
@@ -71,32 +74,6 @@ export class PoolComponent implements OnInit {
 
     get isFarmVault(): boolean {
         return Utils.isFarmVault(this.vault.contract.name);
-    }
-
-    // ********* VAULT *************
-    get vaultEarned(): number {
-        return this.hardwork()?.fullRewardUsdTotal * (1 - this.hardwork()?.profitSharingRate);
-    }
-
-    get vaultEarnedLastWeek(): number {
-        return this.hardwork()?.weeklyProfit * (1 - this.hardwork()?.profitSharingRate);
-    }
-
-    get vaultAvgTvl(): number {
-        let avgTvl = this.hardwork()?.weeklyAverageTvl;
-        if (!avgTvl || avgTvl === 0) {
-            avgTvl = this.hardwork()?.tvl;
-        }
-        return avgTvl;
-    }
-
-    get vaultPeriodOfWork(): number {
-        return this.hardwork()?.periodOfWork
-            / (60 * 60 * 24);
-    }
-
-    get vaultApr(): number {
-        return Math.max(this.hardworkData.getWeeklyApr(this.vault.contract.name, this.vault.contract.network), 0);
     }
 
     get vaultRewardPeriod(): number {

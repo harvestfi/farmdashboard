@@ -49,6 +49,10 @@ export class VaultComponent implements OnInit {
         return this.harvest().sharePrice;
     };
 
+    get currentTvl(): number {
+        return this.hardwork()?.tvl;
+    };
+
     get vaultAvgTvl(): number {
         let avgTvl = this.hardwork()?.weeklyAverageTvl;
         if (!avgTvl || avgTvl === 0) {

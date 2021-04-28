@@ -45,4 +45,34 @@ export class StrategyComponent implements OnInit {
         return Utils.isFarmVault(this.contract.name);
     }
 
+
+    toApy(n: number): number {
+        return Utils.aprToApyEveryDayReinvest(n);
+    }
+
+    get vaultEarned(): number {
+        return this.hardwork()?.fullRewardUsdTotal * (1 - this.hardwork()?.profitSharingRate);
+    }
+
+    get vaultEarnedLastWeek(): number {
+        return this.hardwork()?.weeklyProfit * (1 - this.hardwork()?.profitSharingRate);
+    }
+
+    get vaultPeriodOfWork(): number {
+        return this.hardwork()?.periodOfWork
+            / (60 * 60 * 24);
+    }
+
+    get vaultApr(): number {
+        return Math.max(this.hardworkData.getWeeklyApr(this.contract.name, this.contract.network), 0);
+    }
+
+    viewNetworkAddress(contractLike: {network: string; address: string}) {
+        if (contractLike.network === 'bsc') {
+            window.open('https://www.bscscan.com/address/' + contractLike.address, '_blank');
+        } else {
+            window.open('https://etherscan.io/address/' + contractLike.address, '_blank');
+        }
+    }
+
 }

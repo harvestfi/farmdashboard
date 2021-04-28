@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
@@ -12,13 +12,14 @@ import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Contract} from '../../models/contract';
 import {Token} from '../../models/token';
+import {Pool} from "../../models/pool";
 
 @Component({
   selector: 'app-strategy-list',
   templateUrl: './strategy-list.component.html',
   styleUrls: ['./strategy-list.component.scss']
 })
-export class StrategyListComponent extends StrategyListCommonMethods implements AfterViewInit{
+export class StrategyListComponent extends StrategyListCommonMethods implements AfterViewInit, OnInit {
   public searchTerm = '';
   public networkFilter = '';
   public platformFilter = '';
@@ -44,7 +45,10 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   }
 
   ngAfterViewInit(): void {
+  }
 
+  ngOnInit(): void {
+    this.poolsList();
   }
 
   get assetList(): string[] {
@@ -56,6 +60,13 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   get vaultsList(): Vault[] {
     return this.contractsService.getContractsArray(Vault)
     .filter(_ => _.isActive());
+  }
+
+  poolsList(): Map<string,Pool> {
+    return Array.from(this.contractsService.getContracts(Pool).values()).reduce((m, pool) => {
+      m.set(pool.lpToken.address, pool);
+      return m;
+    }, new Map<string,Pool>());
   }
 
   toggleAPYWindow(name: string): void {

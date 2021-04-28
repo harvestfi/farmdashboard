@@ -92,6 +92,7 @@ import {CollapsibleAreaComponent} from './main/collapsable-area/collapsible-area
 import {VaultComponent} from './dashboard/apy-window/vault.component';
 import {StrategyComponent} from './dashboard/apy-window/strategy.component';
 import {PoolComponent} from './dashboard/apy-window/pool.component';
+import {AddressComponent} from "./static/components/addresses/address.component";
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -166,6 +167,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     VaultComponent,
     StrategyComponent,
     PoolComponent,
+    AddressComponent,
   ],
   imports: [
     AppRoutingModule,
