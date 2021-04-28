@@ -34,16 +34,10 @@
   font-size: 1em;
 }
 
-.link {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  white-space: nowrap;
-  text-align: center;
-}
-
 .link a {
+  &:first-child {
+    margin-left: 0;
+  }
   /*width: 80%;*/
   text-decoration: none;
   background-color: #EEBF65;

@@ -35,150 +35,49 @@
     </mat-tab>
     <mat-tab label="Pool">
       <div class="apy-card pool-card">
-        <p>Total earned: {{vaultEarned | number: '1.1-1'}}$</p>
-        <p>Last week earned: {{vaultEarnedLastWeek | number: '1.1-1'}}$</p>
-        <p>Strategy hAPR:{{vaultApr | number: '1.1-1'}}%</p>
-        <p>Strategy hAPY: {{toApy(vaultApr) | number: '1.1-1'}}%</p>
+        <div *ngIf="!isAutoStakeVault && !isFarmVault">
+          <p>Total earned: {{vaultEarned | number: '1.1-1'}}$</p>
+          <p>Last week earned: {{vaultEarnedLastWeek | number: '1.1-1'}}$</p>
+          <p>Strategy hAPR:{{vaultApr | number: '1.1-1'}}%</p>
+          <p>Strategy hAPY: {{toApy(vaultApr) | number: '1.1-1'}}%</p>
+        </div>
+        <div *ngIf="isAutoStakeVault">
+          <div class="only-farm-caption">
+            <p>It's AutoStake vault, only FARM rewards</p>
+          </div>
+        </div>
+        <div *ngIf="isFarmVault">
+          <div class="only-farm-caption">
+            <p>It's FARM LP, only FARM rewards</p>
+          </div>
+        </div>
         <p>Reward period: {{vaultRewardPeriod | number: '1.0-0'}} day(s)</p>
         <p>FARM rewards: {{vaultReward | number: '1.1-1'}} FARM</p>
         <p>FARM reward iAPR: {{vaultRewardApr | number: '1.1-1'}}%</p>
         <p>FARM reward iAPY:{{toApy(vaultRewardApr) | number: '1.1-1'}}%</p>
         <app-popover-card>
           <ng-template>Last week average APY</ng-template>
-          FARM reward hAPY: {{vaultRewardWeeklyApy | number: '1.1-1'}}%
+          <p>FARM reward hAPY: {{vaultRewardWeeklyApy | number: '1.1-1'}}%</p>
         </app-popover-card>
+        <p class="link pointer">
+          <a (click)="openIncomeDialog()">Chart</a>  <a href='https://www.notion.so/harvestfinance/APY-Calculation-bd7a8082f76541e79fe49d8d928a2c93' target='_blank'>
+            Interest rate guide
+          </a>
+        </p>
       </div>
     </mat-tab>
   </mat-tab-group>
 </div>
 
-<!--<div class="main-table">-->
+<app-custom-modal #incomeModal>
+  <ng-template>
+    <app-apy-chart-dialog [data]="{title: vault.name + ' Income history chart', name: vault.contract.name, network: vault.contract.network}"></app-apy-chart-dialog>
+  </ng-template>
+</app-custom-modal>
 
-<!--  <div class="row title-row" >-->
-<!--    <div class="title left-border-box">-->
-<!--      <app-vault-icon [vault]="vault.contract.name"></app-vault-icon>-->
-<!--      {{vault.name}}-->
-<!--    </div>-->
-<!--    <div (click)="closeModal()" class="close left-border-box">-->
-<!--      <mat-icon class="close-icon">-->
-<!--        close-->
-<!--      </mat-icon>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <div class="value">-->
-<!--    <span class="value-name">Average TVL(last week): </span>-->
-<!--    {{vaultAvgTvl | number: '1.1-1'}}$-->
-<!--  </div>-->
-
-<!--  <div class="value">-->
-<!--    <span class="value-name">Period of work: </span>-->
-<!--    <span>{{vaultPeriodOfWork | number: '1.1-1'}} days</span>-->
-<!--  </div>-->
-
-<!--  <hr>-->
-<!--  &lt;!&ndash; **************STRATEGY INCOME**************** &ndash;&gt;-->
-<!--  <div *ngIf="!isAutoStakeVault && !isFarmVault">-->
-
-<!--    <div class="value">-->
-<!--      <span class="value-name">Total earned:</span>-->
-<!--      {{vaultEarned | number: '1.1-1'}}$-->
-<!--    </div>-->
-
-<!--    <div class="value">-->
-<!--      <span class="value-name">Last week earned:</span>-->
-<!--      {{vaultEarnedLastWeek | number: '1.1-1'}}$-->
-<!--    </div>-->
-
-<!--    <div class="value">-->
-<!--      <span class="value-name">Strategy hAPR:</span>-->
-<!--      {{vaultApr | number: '1.1-1'}}%-->
-<!--    </div>-->
-
-<!--    <div class="value">-->
-<!--      <span class="value-name">Strategy hAPY:</span>-->
-<!--      {{toApy(vaultApr) | number: '1.1-1'}}%-->
-<!--    </div>-->
-
-<!--  </div>-->
-
-<!--  <div *ngIf="isAutoStakeVault">-->
-<!--    <div class="only-farm-caption">-->
-<!--      It's AutoStake vault, only FARM rewards-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <div *ngIf="isFarmVault">-->
-<!--    <div class="only-farm-caption">-->
-<!--      It's FARM LP, only FARM rewards-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <hr>-->
-<!--  &lt;!&ndash; **************WEEKLY FARM REWARDS**************** &ndash;&gt;-->
-
-<!--  <div class="value">-->
-<!--    <span class="value-name">Reward period:</span>-->
-<!--    {{vaultRewardPeriod | number: '1.0-0'}} day(s)-->
-<!--  </div>-->
-
-<!--  <div class="value">-->
-<!--    <span class="value-name">FARM rewards:</span>-->
-<!--    {{vaultReward | number: '1.1-1'}} FARM-->
-<!--  </div>-->
-
-<!--  <div class="value">-->
-<!--    <span class="value-name">FARM reward iAPR:</span>-->
-<!--    {{vaultRewardApr | number: '1.1-1'}}%-->
-<!--  </div>-->
-
-<!--  <div class="value">-->
-<!--    <span class="value-name">FARM reward iAPY:</span>-->
-<!--    {{toApy(vaultRewardApr) | number: '1.1-1'}}%-->
-<!--  </div>-->
-
-<!--  <app-popover-card class="value">-->
-<!--    <ng-template>Last week average APY</ng-template>-->
-<!--    <span class="value-name">FARM reward hAPY:</span>-->
-<!--    {{vaultRewardWeeklyApy | number: '1.1-1'}}%-->
-<!--  </app-popover-card>-->
-
-<!--  <hr>-->
-
-<!--  <div class="value">-->
-<!--    <span class="value-name">Total APR:</span>-->
-<!--    {{(vaultRewardApr + vaultApr) | number: '1.1-1'}}%-->
-<!--  </div>-->
-
-<!--  <div class="value">-->
-<!--    <span class="value-name">Total APY:</span>-->
-<!--    {{(toApy(vaultRewardApr) + toApy(vaultApr)) | number: '1.1-1'}}%-->
-<!--  </div>-->
-
-<!--  <hr>-->
-
-<!--  <div class="link pointer">-->
-<!--    <a (click)="openIncomeDialog()">-->
-<!--      Chart-->
-<!--    </a>-->
-
-<!--    <a href='https://www.notion.so/harvestfinance/APY-Calculation-bd7a8082f76541e79fe49d8d928a2c93'-->
-<!--       target='_blank'>-->
-<!--      Interest rate guide-->
-<!--    </a>-->
-<!--  </div>-->
-
-<!--  <app-custom-modal #incomeModal>-->
-<!--    <ng-template>-->
-<!--      <app-apy-chart-dialog [data]="{title: vault.name + ' Income history chart', name: vault.name, network: vault.network}"></app-apy-chart-dialog>-->
-<!--    </ng-template>-->
-<!--  </app-custom-modal>-->
-<!--  -->
-<!--  <app-custom-modal #psApyModal>-->
-<!--    <ng-template>-->
-<!--      <app-ps-apy-dialog></app-ps-apy-dialog>-->
-<!--    </ng-template>-->
-<!--  </app-custom-modal>-->
-
-<!--</div>-->
+<app-custom-modal #psApyModal>
+  <ng-template>
+    <app-ps-apy-dialog></app-ps-apy-dialog>
+  </ng-template>
+</app-custom-modal>
 
