@@ -89,6 +89,9 @@ import { ChartGeneralComponent } from './chart/chart-general/chart-general.compo
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {PopoverComponent} from './common/popover/popover.component';
 import {CollapsibleAreaComponent} from './main/collapsable-area/collapsible-area.component';
+import {VaultComponent} from './dashboard/apy-window/vault.component';
+import {StrategyComponent} from './dashboard/apy-window/strategy.component';
+import {PoolComponent} from './dashboard/apy-window/pool.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -159,7 +162,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     VaultTvlDialogComponent,
     ChartGeneralComponent,
     PopoverComponent,
-    CollapsibleAreaComponent
+    CollapsibleAreaComponent,
+    VaultComponent,
+    StrategyComponent,
+    PoolComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -1,0 +1,38 @@
+<div *ngIf="!isAutoStakeVault && !isFarmVault">
+    <p>Total earned: {{vaultEarned | number: '1.1-1'}}$</p>
+    <p>Last week earned: {{vaultEarnedLastWeek | number: '1.1-1'}}$</p>
+    <p>Strategy hAPR:{{vaultApr | number: '1.1-1'}}%</p>
+    <p>Strategy hAPY: {{toApy(vaultApr) | number: '1.1-1'}}%</p>
+</div>
+<div *ngIf="isAutoStakeVault">
+    <div class="only-farm-caption">
+        <p>It's AutoStake vault, only FARM rewards</p>
+    </div>
+</div>
+<div *ngIf="isFarmVault">
+    <div class="only-farm-caption">
+        <p>It's FARM LP, only FARM rewards</p>
+    </div>
+</div>
+<p>Reward period: {{vaultRewardPeriod | number: '1.0-0'}} day(s)</p>
+<p>FARM rewards: {{vaultReward | number: '1.1-1'}} FARM</p>
+<p>FARM reward iAPR: {{vaultRewardApr | number: '1.1-1'}}%</p>
+<p>FARM reward iAPY:{{toApy(vaultRewardApr) | number: '1.1-1'}}%</p>
+<p>FARM reward hAPY: {{vaultRewardWeeklyApy | number: '1.1-1'}}%</p>
+<p class="link pointer">
+    <a (click)="openIncomeDialog()">Chart</a>
+    <a href='https://www.notion.so/harvestfinance/APY-Calculation-bd7a8082f76541e79fe49d8d928a2c93' target='_blank'>
+    Interest rate guide</a>
+</p>
+
+<app-custom-modal #incomeModal>
+    <ng-template>
+        <app-apy-chart-dialog [data]="{title: vault.name + ' Income history chart', name: vault.contract.name, network: vault.contract.network}"></app-apy-chart-dialog>
+    </ng-template>
+</app-custom-modal>
+
+<app-custom-modal #psApyModal>
+    <ng-template>
+        <app-ps-apy-dialog></app-ps-apy-dialog>
+    </ng-template>
+</app-custom-modal>

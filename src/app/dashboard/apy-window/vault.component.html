@@ -1,0 +1,12 @@
+<div>
+    <p><app-vault-icon [vault]="vault"></app-vault-icon> {{vault.contract.name}}</p>
+    <p>Vault Address: <a (click)="viewNetworkAddress(vault.contract)">{{vault.contract.address| slice: 0:4}}...{{vault.contract.address| slice: -4}}
+        <mat-icon [ngStyle]="{'font-size':'16px','color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon></a>
+    </p>
+    <div *ngIf="!isAutoStakeVault && !isFarmVault">
+        <p>Average TVL (last week): ${{vaultAvgTvl | number: '1.0-0'}}</p>
+        <p>Share price: {{sharePrice | number: '1.0-8'}}</p>
+        <p>Underlying token: {{vault.underlying?.name}} <a (click)="viewNetworkAddress(vault.underlying)">{{vault.underlying?.address| slice: 0:4}}...{{vault.underlying?.address| slice: -4}}
+        <mat-icon [ngStyle]="{'font-size':'16px','color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon></a></p>
+    </div>
+</div>

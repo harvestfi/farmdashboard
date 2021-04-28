@@ -1,0 +1,14 @@
+.link a {
+  &:first-child {
+    margin-left: 0;
+  }
+  text-decoration: none;
+  background-color: #EEBF65;
+  color: black;
+  position: relative;
+  font-size: 12px;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 3px;
+  transition: all .2s ease-out;
+}

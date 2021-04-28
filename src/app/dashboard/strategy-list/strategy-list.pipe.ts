@@ -5,7 +5,7 @@ import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Contract} from '../../models/contract';
-import {Vault} from "../../models/vault";
+import {Vault} from '../../models/vault';
 
 @Pipe({
   name: 'strategyListFilter',
@@ -49,13 +49,17 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
                 }
                 return 1;
               case 'apy':
-                return this.vaultFullApy(right.contract?.name, right.contract?.network) - this.vaultFullApy(left.contract?.name, left.contract?.network);
+                return this.vaultFullApy(right.contract?.name, right.contract?.network)
+                    - this.vaultFullApy(left.contract?.name, left.contract?.network);
               case 'tvl':
-                return this.vaultTvl(right.contract?.name, right.contract?.network) - this.vaultTvl(left.contract?.name, left.contract?.network);
+                return this.vaultTvl(right.contract?.name, right.contract?.network)
+                    - this.vaultTvl(left.contract?.name, left.contract?.network);
               case 'users':
-                return this.vaultUsers(right.contract?.name, right.contract?.network) - this.vaultUsers(left.contract?.name, left.contract?.network);
+                return this.vaultUsers(right.contract?.name, right.contract?.network)
+                    - this.vaultUsers(left.contract?.name, left.contract?.network);
               case 'total_earned':
-                return this.vaultTotalEarning(right.contract?.name, right.contract?.network) - this.vaultTotalEarning(left.contract?.name, left.contract?.network);
+                return this.vaultTotalEarning(right.contract?.name, right.contract?.network)
+                    - this.vaultTotalEarning(left.contract?.name, left.contract?.network);
               default:
                 break;
             }

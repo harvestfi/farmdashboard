@@ -8,76 +8,20 @@
   <mat-tab-group>
     <mat-tab label="Vault">
       <div class="apy-card vault-card">
-        <p><app-vault-icon [vault]="vault"></app-vault-icon> {{vault.contract.name}}</p>
-        <p>Vault Address: <a (click)="viewNetworkAddress(vault.contract)">{{vault.contract.address| slice: 0:4}}...{{vault.contract.address| slice: -4}}
-          <mat-icon [ngStyle]="{'font-size':'16px','color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon></a></p>
-        <p>TVL ${{vaultAvgTvl | number: '1.0-0'}}</p>
-        <p>Share price {{sharePrice | number: '1.0-8'}}</p>
-        <p>Underlying token {{vault.underlying.name}} <a (click)="viewNetworkAddress(vault.underlying)">{{vault.underlying.address| slice: 0:4}}...{{vault.underlying.address| slice: -4}}
-          <mat-icon [ngStyle]="{'font-size':'16px','color': '#b5b4b4'}" class="sign-icon">open_in_new</mat-icon></a></p>
+        <app-vault [vault]="vault"></app-vault>
       </div>
     </mat-tab>
     <mat-tab label="Strategy">
       <div class="apy-card strategy-card">
-        <p>Coming soon...</p>
-        <div *ngIf="isAutoStakeVault">
-          <div class="only-farm-caption">
-            It's AutoStake vault, only FARM rewards
-          </div>
-        </div>
-
-        <div *ngIf="isFarmVault">
-          <div class="only-farm-caption">
-            It's FARM LP, only FARM rewards
-          </div>
-        </div>
+        <app-strategy [contract]="vault.contract"></app-strategy>
       </div>
     </mat-tab>
     <mat-tab label="Pool">
       <div class="apy-card pool-card">
-        <div *ngIf="!isAutoStakeVault && !isFarmVault">
-          <p>Total earned: {{vaultEarned | number: '1.1-1'}}$</p>
-          <p>Last week earned: {{vaultEarnedLastWeek | number: '1.1-1'}}$</p>
-          <p>Strategy hAPR:{{vaultApr | number: '1.1-1'}}%</p>
-          <p>Strategy hAPY: {{toApy(vaultApr) | number: '1.1-1'}}%</p>
-        </div>
-        <div *ngIf="isAutoStakeVault">
-          <div class="only-farm-caption">
-            <p>It's AutoStake vault, only FARM rewards</p>
-          </div>
-        </div>
-        <div *ngIf="isFarmVault">
-          <div class="only-farm-caption">
-            <p>It's FARM LP, only FARM rewards</p>
-          </div>
-        </div>
-        <p>Reward period: {{vaultRewardPeriod | number: '1.0-0'}} day(s)</p>
-        <p>FARM rewards: {{vaultReward | number: '1.1-1'}} FARM</p>
-        <p>FARM reward iAPR: {{vaultRewardApr | number: '1.1-1'}}%</p>
-        <p>FARM reward iAPY:{{toApy(vaultRewardApr) | number: '1.1-1'}}%</p>
-        <app-popover-card>
-          <ng-template>Last week average APY</ng-template>
-          <p>FARM reward hAPY: {{vaultRewardWeeklyApy | number: '1.1-1'}}%</p>
-        </app-popover-card>
-        <p class="link pointer">
-          <a (click)="openIncomeDialog()">Chart</a>  <a href='https://www.notion.so/harvestfinance/APY-Calculation-bd7a8082f76541e79fe49d8d928a2c93' target='_blank'>
-            Interest rate guide
-          </a>
-        </p>
+        <app-pool [vault]="vault"></app-pool>
       </div>
     </mat-tab>
   </mat-tab-group>
 </div>
 
-<app-custom-modal #incomeModal>
-  <ng-template>
-    <app-apy-chart-dialog [data]="{title: vault.name + ' Income history chart', name: vault.contract.name, network: vault.contract.network}"></app-apy-chart-dialog>
-  </ng-template>
-</app-custom-modal>
-
-<app-custom-modal #psApyModal>
-  <ng-template>
-    <app-ps-apy-dialog></app-ps-apy-dialog>
-  </ng-template>
-</app-custom-modal>
 
