@@ -13,11 +13,11 @@ import {Pool} from '../../models/pool';
 import {ContractsService} from '../../services/contracts.service';
 
 @Component({
-    selector: 'app-pool',
-    templateUrl: './pool.component.html',
-    styleUrls: ['./pool.component.scss']
+    selector: 'app-apy-common',
+    templateUrl: './common.component.html',
+    styleUrls: ['./common.component.scss']
 })
-export class PoolComponent implements OnInit {
+export class CommonComponent implements OnInit {
     @Input() vault: Vault;
     @Input() pool: Pool;
 

@@ -8,6 +8,7 @@
         <p>It's FARM LP, only FARM rewards</p>
     </div>
 </div>
+<p><app-vault-icon [vault]="vault"></app-vault-icon> {{pool.contract.name}}</p>
 <div *ngIf="!isFarmVault && !isAutoStakeVault">
     <p>Pool Address: <app-address-link [contract]="pool?.contract"></app-address-link></p>
 </div>
