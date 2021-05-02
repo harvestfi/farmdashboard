@@ -80,6 +80,9 @@ export class PriceDataService {
       const otherTokenUsdPrice = this.getUsdPrice(targetPriceDto.otherToken, network);
       price *= otherTokenUsdPrice;
     }
+    if (price === Infinity) {
+      return 0;
+    }
     return price;
   }
 
