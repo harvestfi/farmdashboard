@@ -67,12 +67,4 @@ export class StrategyComponent implements OnInit {
         return Math.max(this.hardworkData.getWeeklyApr(this.contract.name, this.contract.network), 0);
     }
 
-    viewNetworkAddress(contractLike: {network: string; address: string}) {
-        if (contractLike.network === 'bsc') {
-            window.open('https://www.bscscan.com/address/' + contractLike.address, '_blank');
-        } else {
-            window.open('https://etherscan.io/address/' + contractLike.address, '_blank');
-        }
-    }
-
 }

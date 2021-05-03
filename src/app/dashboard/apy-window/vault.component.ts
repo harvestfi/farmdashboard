@@ -61,11 +61,4 @@ export class VaultComponent implements OnInit {
         return avgTvl;
     }
 
-    viewNetworkAddress(contractLike: {network: string; address: string}) {
-        if (contractLike.network === 'bsc') {
-            window.open('https://www.bscscan.com/address/' + contractLike.address, '_blank');
-        } else {
-            window.open('https://etherscan.io/address/' + contractLike.address, '_blank');
-        }
-    }
 }
