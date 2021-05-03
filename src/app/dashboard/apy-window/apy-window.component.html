@@ -9,6 +9,10 @@
     <p><app-vault-icon [vault]="vault"></app-vault-icon> {{vault.contract.name}}</p>
   </div>
 
+  <div>
+    <app-apy-common [vault]="vault"></app-apy-common>
+  </div>
+
   <mat-tab-group>
     <mat-tab label="Vault">
       <div class="apy-card vault-card">
