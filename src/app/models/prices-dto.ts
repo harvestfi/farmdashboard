@@ -5,6 +5,7 @@ export class PricesDto {
   block: number;
   blockDate: number;
   network: string;
+  owner: string;
   token: string;
   tokenAmount: number;
   otherToken: string;
@@ -33,7 +34,7 @@ export class PricesDto {
     const dto = new UniswapDto();
     dto.id = this.id;
     dto.type = this.buy ? 'BUY' : 'SELL';
-    dto.owner = '';
+    dto.owner = this.owner ?? '';
     dto.coin = this.token;
     dto.amount = this.tokenAmount;
     dto.otherCoin = this.otherToken;

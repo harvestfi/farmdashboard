@@ -33,7 +33,7 @@
   <div class="trade-sign left-border-box trade-field">
 
     <app-simple-modal *ngIf="openModal">
-      <app-link-window (showModal)="hideTradeLinks($event)"
+      <app-link-window (showModal)="hideTradeLinks($event)" [network]="'eth'"
                        [hash]='dto.hash' [owner]='dto.owner'>
 
       </app-link-window>
