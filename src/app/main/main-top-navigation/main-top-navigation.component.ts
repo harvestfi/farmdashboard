@@ -17,14 +17,6 @@ export class MainTopNavigationComponent {
         name: 'bsc',
         icon: 'assets/icons/venus-wbnb.png'
       }
-
-
-      ]
-    constructor(
-      public ws: WebsocketService,
-      public vt: ViewTypeService
-      ){
-        
-    }
-
+    ];
+    constructor(public ws: WebsocketService, public vt: ViewTypeService){}
 }

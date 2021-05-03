@@ -126,7 +126,10 @@ export class WebsocketService implements OnDestroy {
     if(this.clients.has(network)){
       return this.clients.get(network).connected;
     }
-    throw new Error(`isNetworkConnected() expected a valid network but received '${network}' instead. Please make sure that '${network}' is part of the clients map`);
+    throw new Error(
+      `isNetworkConnected() expected a valid network but received '${network}' 
+      instead. Please make sure that '${network}' is part of the clients map`
+      );
   }
 
   private connect(): Observable<Client> {
