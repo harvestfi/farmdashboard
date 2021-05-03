@@ -96,14 +96,14 @@ export class WebsocketService implements OnDestroy {
     }
     this.subscriptions.add(topic);
     return this.connect().pipe(
-        // first(),
-        switchMap(inst =>
+        first(),
+        switchMap(client =>
             new Observable<any>(observer => {
-              inst.unsubscribe(topic);
-              const subscription: StompSubscription = inst.subscribe(topic, message => {
+              client.unsubscribe(topic);
+              const subscription: StompSubscription = client.subscribe(topic, message => {
                 observer.next(handler(message));
               });
-              return () => inst.unsubscribe(subscription.id);
+              return () => client.unsubscribe(subscription.id);
             })
         ));
   }
@@ -120,6 +120,16 @@ export class WebsocketService implements OnDestroy {
     .map(c => c.connected)
     .filter(c => !c)
         .length === 0;
+  }
+
+  public isNetworkConnected(network: string): boolean {
+    if(this.clients.has(network)){
+      return this.clients.get(network).connected;
+    }
+    throw new Error(
+      `isNetworkConnected() expected a valid network but received '${network}' 
+      instead. Please make sure that '${network}' is part of the clients map`
+      );
   }
 
   private connect(): Observable<Client> {

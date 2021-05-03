@@ -1,41 +1,13 @@
 <ng-sidebar-container class="sidebar-container" [class]="vt.getThemeColor() + '-background'">
   <div ng-sidebar-content style="min-height: 100%">
 
-    <div class="top-menu row middle">
-
-      <div class="left-border-box button-menu-div">
-        <app-main-side-menu></app-main-side-menu>
-      </div>
-
-      <div class="left-border-box top-title-div">
-        <div id="top-title2">
-          &nbsp;
-        </div>
-      </div>
-
-      <div class="left-border-box connection-state-div">
-        <div class="row connection-state-row">
-          <div>
-            <mat-icon [ngStyle]="{'color': ws.isConnected() ? '#479d43' : '#b51919'}" aria-hidden="true"
-              aria-label="Connected" class="connect-sign">
-              online_prediction
-            </mat-icon>
-          </div>
-
-          <div *ngIf="ws.isConnected()" id="online" class="connect-title">
-            Online
-          </div>
-          <div *ngIf="!ws.isConnected()" id="offline" class="connect-title">
-            Offline
-          </div>
-
-        </div>
-      </div>
-    </div>
+    
 
 
     <div class="main-row">
       <div class="middle">
+        <app-main-top-navigation></app-main-top-navigation>
+
         <router-outlet></router-outlet>
       </div>
     </div>

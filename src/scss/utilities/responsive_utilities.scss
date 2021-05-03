@@ -1,12 +1,12 @@
-@mixin responsive($size){
 
-    $screen_sizes: (
-        phone:   "(max-width: 600px)",
-        tablet:  "(min-width: 700px)",
-        small:   "(max-width: 900px)",
-        medium:  "(max-width: 1250px)",
-        large:   "(max-width: 1600px)",
-    );
+$screen_sizes: (
+    phone:   "(max-width: 600px)",
+    tablet:  "(min-width: 700px)",
+    small:   "(max-width: 900px)",
+    medium:  "(max-width: 1250px)",
+    large:   "(max-width: 1600px)",
+);
+@mixin responsive($size){
 
     $query_value: map-get($screen_sizes, $size); 
 
@@ -21,3 +21,18 @@
         visibility: hidden;
     }
 }
+
+@each $size, $value in $screen_sizes {
+    .hide-on-#{$size} {
+        @include responsive($size){
+            display: none;
+        }
+    }
+
+    .show-on-#{$size}{
+        @include responsive($size){
+            display: inline-block;
+        }
+    }
+}
+

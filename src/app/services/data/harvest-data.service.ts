@@ -150,7 +150,11 @@ export class HarvestDataService {
         // this.log.warn('zero tvl', dto.vault);
         return dto.lastUsdTvl;
       }
-      return dto.lastTvl * price;
+      const tvl = dto.lastTvl * price;
+      if (tvl === Infinity) {
+        return 0;
+      }
+      return tvl;
     }
     return 0.0;
   }
