@@ -12,6 +12,7 @@ export class MainPageLightComponent implements OnInit {
 
   constructor(public vt: ViewTypeService,
               public ws: WebsocketService) {
+                console.log(ws.isConnected());
   }
 
   ngOnInit(): void {

@@ -89,7 +89,7 @@ import { ChartGeneralComponent } from './chart/chart-general/chart-general.compo
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {PopoverComponent} from './common/popover/popover.component';
 import {CollapsibleAreaComponent} from './main/collapsable-area/collapsible-area.component';
-
+import {MainTopNavigationComponent} from './main/main-top-navigation/main-top-navigation.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -159,7 +159,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     VaultTvlDialogComponent,
     ChartGeneralComponent,
     PopoverComponent,
-    CollapsibleAreaComponent
+    CollapsibleAreaComponent,
+    MainTopNavigationComponent
   ],
   imports: [
     AppRoutingModule,
