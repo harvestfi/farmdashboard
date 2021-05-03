@@ -22,6 +22,8 @@ export class ApyCommonComponent implements OnInit {
 
     constructor(private hardworkData: HardworkDataService,
                 private harvestData: HarvestDataService,
+                private rewardData: RewardDataService,
+                private priceData: PriceDataService,
                 private log: NGXLogger) {
     }
 
@@ -34,6 +36,20 @@ export class ApyCommonComponent implements OnInit {
 
     harvest(): HarvestDto {
         return this.harvestData.getVaultLastInfo(this.vault.contract.name, this.vault.contract.network);
+    }
+
+    toApy(n: number): number {
+        return Utils.aprToApyEveryDayReinvest(n);
+    }
+
+    get vaultRewardApr(): number {
+        return this.rewardData.vaultRewardApr(this.vault.contract.name, this.vault.contract.network,
+            this.harvestData.getVaultLastInfo(this.vault.contract.name, this.vault.contract.network)?.lastUsdTvl,
+            this.priceData.getLastFarmPrice());
+    }
+
+    get vaultApr(): number {
+        return Math.max(this.hardworkData.getWeeklyApr(this.vault.contract.name, this.vault.contract.network), 0);
     }
 
 }
