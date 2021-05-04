@@ -10,9 +10,8 @@ import {assets, platforms} from './strategy-list.constants';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
-import {Contract} from '../../models/contract';
 import {Token} from '../../models/token';
-import {Pool} from "../../models/pool";
+import {Pool} from '../../models/pool';
 
 @Component({
   selector: 'app-strategy-list',
