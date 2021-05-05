@@ -6,6 +6,8 @@ export class StaticValues {
   public static SECONDS_OF_WEEK = StaticValues.SECONDS_OF_DAY * 7;
   public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
 
+  public static FARM_ADDRESS = '0xa0246c9032bc3a600820415ae600c6388619a14d';
+
   private static NETWORK_ETH: Network = {
     blockExplorerUrl: 'https://www.bscscan.com',
     chainId: 1,
