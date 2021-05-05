@@ -12,14 +12,13 @@
     border: 1px solid #7e7e7e;
 }
 
-.custom-modal:hover {
-    cursor: -webkit-grab;
-    cursor: grab;
-}
+/*.custom-modal:hover {*/
+/*    cursor: -webkit-grab;*/
+/*    cursor: grab;*/
+/*}*/
 
-.custom-modal:active {
-    cursor: -webkit-grabbing;
-    cursor: grabbing;
-    box-shadow: -11px 11px 8px -4px rgba(0, 0, 0, 0.2)!important;
-
-}
+/*.custom-modal:active {*/
+/*    cursor: -webkit-grabbing;*/
+/*    cursor: grabbing;*/
+/*    box-shadow: -11px 11px 8px -4px rgba(0, 0, 0, 0.2)!important;*/
+/*}*/

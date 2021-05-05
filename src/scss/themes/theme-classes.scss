@@ -33,6 +33,12 @@ $variables in $themes_colors {
         .mat-tab-label, .mat-tab-link {
             color: inherit!important;
         }
+        .mat-tab-label  {
+            height: 24px;
+            min-width: 80px;
+            margin: 0;
+            padding: 0;
+        }
     }
 
     .#{$color}-background {
