@@ -11,8 +11,6 @@ export class HardWorkDto {
   allProfit: number;
   periodOfWork: number;
   psPeriodOfWork: number;
-  perc: number;
-  apr: number;
   weeklyProfit: number;
   weeklyAllProfit: number;
   psTvlUsd: number;

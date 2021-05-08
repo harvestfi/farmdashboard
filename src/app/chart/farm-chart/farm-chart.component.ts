@@ -52,7 +52,7 @@ export class FarmChartComponent implements AfterViewInit, OnInit {
       if (tx.token !== this.coin || tx.otherToken !== this.otherCoin) {
         return;
       }
-      const price = tx.price * this.priceData.getUsdPrice(tx.otherToken, tx.network);
+      const price = tx.price * this.priceData.getUsdPrice(tx.otherTokenAddress, tx.network);
       priceChartBuilder.collectLastTx(price, tx.blockDate);
     });
   }

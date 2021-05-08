@@ -61,11 +61,20 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     .filter(_ => _.isActive());
   }
 
-  poolsList(): Map<string,Pool> {
+  prettyNetwork(name: string): string {
+    if (name === 'eth') {
+      return 'Ethereum';
+    } else if (name === 'bsc') {
+      return 'Binance';
+    }
+    return name;
+  }
+
+  poolsList(): Map<string, Pool> {
     return Array.from(this.contractsService.getContracts(Pool).values()).reduce((m, pool) => {
       m.set(pool.lpToken.address, pool);
       return m;
-    }, new Map<string,Pool>());
+    }, new Map<string, Pool>());
   }
 
   toggleAPYWindow(name: string): void {

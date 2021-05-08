@@ -176,6 +176,11 @@ export class Utils {
   }
 
   public static prettyVaultName(name: string): string {
+    switch (name) {
+      case 'CRV_YDAI_YUSDC_YUSDT_YTUSD':
+        name = 'YCRV';
+    }
+
     if (name.split('_').length >= 3) {
       name = name.replace('ONEINCH_', '');
     }

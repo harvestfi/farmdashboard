@@ -7,8 +7,10 @@ export class PricesDto {
   network: string;
   owner: string;
   token: string;
+  tokenAddress: string;
   tokenAmount: number;
   otherToken: string;
+  otherTokenAddress: string;
   otherTokenAmount: number;
   price: number;
   buy: boolean;

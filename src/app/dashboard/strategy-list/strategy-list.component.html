@@ -26,6 +26,7 @@
 
   </div>
   <div class="header">
+      <div class="header-column desktop-only">Network <i class="fas fa-sort"></i></div>
       <div (click)="sortVaultsList('name')" class="header-column">Name <i class="fas fa-sort"></i></div>
       <app-popover-card (click)="sortVaultsList('apy')" class="header-column">
         <ng-template>
@@ -42,6 +43,9 @@
   <div class="content">
     <div *ngIf="vaultsList | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
       <div *ngFor="let row of filteredVaults" class="row">
+        <div class="column desktop-only">
+          {{prettyNetwork(row.contract.network)}}
+        </div>
         <div class="column">
           <app-vault-icon [vault]="row.contract.name"></app-vault-icon> {{prettyName(row.contract.name)}}
         </div>

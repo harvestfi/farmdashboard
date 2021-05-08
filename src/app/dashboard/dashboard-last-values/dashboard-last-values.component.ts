@@ -9,6 +9,7 @@ import {NGXLogger} from 'ngx-logger';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {HarvestDataService} from '../../services/data/harvest-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
+import {Addresses} from '../../static/addresses';
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -133,15 +134,15 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get btcUsdPrice(): number {
-    return this.priceData.getUsdPrice('WBTC', 'eth');
+    return this.priceData.getUsdPrice(Addresses.ADDRESSES.get('WBTC'), 'eth');
   }
 
   get ethUsdPrice(): number {
-    return this.priceData.getUsdPrice('ETH', 'eth');
+    return this.priceData.getUsdPrice(Addresses.ADDRESSES.get('WETH'), 'eth');
   }
 
   get bnbUsdPrice(): number {
-    return this.priceData.getUsdPrice('WBNB', 'bsc');
+    return this.priceData.getUsdPrice(Addresses.ADDRESSES.get('WBNB'), 'bsc');
   }
 
   // -------------- OPEN MODALS ---------------------

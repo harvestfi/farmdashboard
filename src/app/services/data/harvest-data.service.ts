@@ -6,6 +6,9 @@ import {HarvestDto} from '../../models/harvest-dto';
 import {Utils} from '../../static/utils';
 import {PriceDataService} from './price-data.service';
 import {LpStat} from '../../models/lp-stat';
+import {ContractsService} from '../contracts.service';
+import {Vault} from '../../models/vault';
+import {Token} from '../../models/token';
 
 @Injectable({
   providedIn: 'root'
@@ -31,17 +34,29 @@ export class HarvestDataService {
       Array.from(StaticValues.NETWORKS.keys()).map(name => [name, null])
   );
 
-  constructor(private harvestsService: HarvestsService, private log: NGXLogger) {
+  constructor(
+      private harvestsService: HarvestsService,
+      private contractService: ContractsService,
+      private log: NGXLogger
+  ) {
     this.load();
   }
 
   private load() {
-    this.harvestsService.getLastTvls().subscribe(harvests => {
-          this.log.info('Last TVLs loaded', harvests);
+    this.harvestsService.getHarvestTxHistoryData().subscribe(harvests => {
+          this.log.info('Last 100 vault actions loaded', harvests);
           return harvests?.sort((a, b) => a.block > b.block ? 1 : -1)
           ?.forEach(this.handleHarvest.bind(this));
         }
-    );
+    ).add(() => {
+      this.harvestsService.getLastTvls().subscribe(harvests => {
+            this.log.info('Last Vault Actions loaded', harvests);
+            return harvests?.sort((a, b) => a.block > b.block ? 1 : -1)
+            ?.forEach(this.handleHarvest.bind(this));
+          }
+      );
+    });
+
     this.harvestsService.subscribeToHarvests().subscribe(this.handleHarvest.bind(this));
   }
 
@@ -69,6 +84,7 @@ export class HarvestDataService {
     if (dto.vault === 'PS') {
       this.log.info('PS loaded', this.lastHarvests.get(dto.network)?.get(dto.vault), dto);
     }
+    // this.log.debug('Handled vault action', dto, this.dtos);
   }
 
   private isNotActual(dto: HarvestDto): boolean {
@@ -145,7 +161,13 @@ export class HarvestDataService {
       }
       return tvl;
     } else if (dto.lastTvl) {
-      const price = priceData.getUsdPrice(StaticValues.mapCoinNameToSimple(dto.vault, dto.network), dto.network);
+      const vaultContract = this.contractService.getContracts(Vault).get(dto.vaultAddress);
+      let underlyingAddress = vaultContract.underlying.address;
+      const curveUnderlying = this.getCurveUnderlying(vaultContract.underlying.address);
+      if (curveUnderlying) {
+        underlyingAddress = curveUnderlying;
+      }
+      const price = priceData.getUsdPrice(underlyingAddress, dto.network);
       if (price === 0) {
         // this.log.warn('zero tvl', dto.vault);
         return dto.lastUsdTvl;
@@ -159,11 +181,14 @@ export class HarvestDataService {
     return 0.0;
   }
 
+  private getCurveUnderlying(address: string) {
+    const tokenContract = this.contractService.getContracts(Token).get(address);
+    return tokenContract.curveUnderlying;
+  }
+
   private calculateTvlForLp(lpStat: LpStat, priceData: PriceDataService, network: string): number {
-    const simpleName1 = StaticValues.mapCoinNameToSimple(lpStat.coin1, network);
-    const simpleName2 = StaticValues.mapCoinNameToSimple(lpStat.coin2, network);
-    const price1 = priceData.getUsdPrice(simpleName1, network);
-    const price2 = priceData.getUsdPrice(simpleName2, network);
+    const price1 = priceData.getUsdPrice(lpStat.coin1Address, network);
+    const price2 = priceData.getUsdPrice(lpStat.coin2Address, network);
     const amount1 = price1 * lpStat.amount1;
     const amount2 = price2 * lpStat.amount2;
     return amount1 + amount2;

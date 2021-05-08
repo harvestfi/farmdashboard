@@ -8,4 +8,5 @@ export class Token implements IContract{
     name: string;
     symbol: string;
     decimals: number;
+    curveUnderlying: string;
 }

@@ -1,4 +1,5 @@
 import {Network} from '../models/network';
+import {Addresses} from './addresses';
 
 export class StaticValues {
   public static SECONDS_OF_DAY = 60 * 60 * 24;
@@ -108,28 +109,11 @@ export class StaticValues {
     return name;
   }
 
-  public static isStableCoin(name: string): boolean {
-    name = name.replace('CRV_', '');
-    switch (name) {
-      case 'USD':
-      case 'USDC':
-      case 'USDT':
-      case 'USDN':
-      case 'USDP':
-      case 'YCRV':
-      case '3CRV':
-      case 'TUSD':
-      case 'DAI':
-      case 'CRV_GUSD':
-      case 'CRV_AAVE':
-      case 'BUSD':
-      case 'EPS_3POOL':
-      case 'CMPND':
-      case '3POOL':
-      case 'HUSD':
-      case 'NAME':
-      case 'GUSD':
-      case 'AAVE':
+  public static isStableCoin(address: string): boolean {
+    switch (address.toLowerCase()) {
+      case Addresses.ADDRESSES.get('USDC'):
+      case Addresses.ADDRESSES.get('BUSD'):
+      case Addresses.ADDRESSES.get('USDT'):
         return true;
       default:
         return false;
