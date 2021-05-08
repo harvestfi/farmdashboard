@@ -77,6 +77,9 @@ export class PriceDataService {
   }
 
   public getUsdPrice(address: string, network: string): number {
+    if (!address) {
+      return 0;
+    }
     if (StaticValues.isStableCoin(address)) {
       return 1;
     }

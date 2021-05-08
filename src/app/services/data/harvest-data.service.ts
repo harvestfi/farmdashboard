@@ -162,8 +162,11 @@ export class HarvestDataService {
       return tvl;
     } else if (dto.lastTvl) {
       const vaultContract = this.contractService.getContracts(Vault).get(dto.vaultAddress);
-      let underlyingAddress = vaultContract.underlying.address;
-      const curveUnderlying = this.getCurveUnderlying(vaultContract.underlying.address);
+      if(!vaultContract) {
+        return dto.lastUsdTvl;
+      }
+      let underlyingAddress = vaultContract?.underlying?.address;
+      const curveUnderlying = this.getCurveUnderlying(underlyingAddress);
       if (curveUnderlying) {
         underlyingAddress = curveUnderlying;
       }
