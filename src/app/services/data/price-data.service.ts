@@ -29,7 +29,8 @@ export class PriceDataService {
   private load(): void {
     this.pricesService.getLastPrices().subscribe(prices => {
       this.log.info('Load last prices', prices);
-      prices.forEach(this.handlePrice.bind(this));
+      prices.sort((a,b) => a.token.localeCompare(b.token))
+      .forEach(this.handlePrice.bind(this));
     });
     this.dataFeed = this.pricesService.subscribeToPrices()
     .pipe(
