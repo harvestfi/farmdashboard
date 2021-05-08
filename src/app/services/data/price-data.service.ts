@@ -29,9 +29,12 @@ export class PriceDataService {
   private load(): void {
     this.pricesService.getLastPrices().subscribe(prices => {
       this.log.info('Load last prices', prices);
-      prices.sort((a,b) => a.token.localeCompare(b.token))
-      .forEach(this.handlePrice.bind(this));
+      prices.forEach(this.handlePrice.bind(this));
+      // load last farm again for avoid errors with otherToken price calculation
+      this.pricesService.getLastPrice(StaticValues.FARM_ADDRESS, StaticValues.NETWORKS.get('eth'))
+      .subscribe(p => this.handlePrice(p));
     });
+
     this.dataFeed = this.pricesService.subscribeToPrices()
     .pipe(
         flatMap(price => this.handlePrice(price))
@@ -47,7 +50,7 @@ export class PriceDataService {
     this.prices.get(price.network).set(price.token, price);
     if (price.token === 'FARM' && price.otherToken === 'ETH') {
       this.lastFarmPrice = price.price * this.getUsdPrice('ETH', 'eth');
-      this.log.info('FARM price updated', this.lastFarmPrice);
+      this.log.info('FARM price updated', this.lastFarmPrice, price.price, this.getUsdPrice('ETH', 'eth'));
       this.titleService.setTitle(this.lastFarmPrice?.toFixed(2) + ' | ' + this.pureTitle);
     }
     // this.dataFeed;

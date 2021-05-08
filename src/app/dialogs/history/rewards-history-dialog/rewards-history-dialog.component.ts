@@ -71,7 +71,7 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         this.loadRewardsHistory();
     }
 
-    openEtherscanTx(hash: string): void {
-        return Utils.openEtherscanTx(hash);
+    openNetworkScanTx(hash: string, network: string): void {
+        return Utils.openNetworkScanTx(hash, network);
     }
 }

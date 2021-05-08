@@ -1,5 +1,4 @@
 import {TransferDto} from '../models/transfer-dto';
-import {HarvestDto} from '../models/harvest-dto';
 
 export class Utils {
 
@@ -55,8 +54,8 @@ export class Utils {
     return Utils.transferBalance(t, address) * t.price;
   }
 
-  public static openEtherscanTx(hash: string): void {
-    window.open('https://etherscan.io/tx/' + hash, '_blank');
+  public static openNetworkScanTx(hash: string, network: string): void {
+    window.open(this.getNetworkScanUrl(network) + '/tx/' + hash, '_blank');
   }
 
   public static openHistory(hash: string): void {
@@ -195,6 +194,14 @@ export class Utils {
     arr.unshift(el);
     if (arr.length > max) {
       arr.pop();
+    }
+  }
+
+  public static getNetworkScanUrl(network: string): string {
+    if (network === 'bsc') {
+      return 'https://bscscan.com';
+    } else {
+      return 'https://etherscan.io';
     }
   }
 }

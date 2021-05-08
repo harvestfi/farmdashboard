@@ -4,6 +4,7 @@ import {HttpService} from './http.service';
 import {PricesDto} from '../../models/prices-dto';
 import {WebsocketService} from '../websocket.service';
 import {WsConsumer} from '../ws-consumer';
+import {Network} from '../../models/network';
 
 @Injectable({
     providedIn: 'root'
@@ -53,6 +54,10 @@ export class PricesService implements WsConsumer {
 
     public getLastPrices(): Observable<PricesDto[]> {
         return this.httpService.httpGetWithNetwork('/price/token/latest');
+    }
+
+    public getLastPrice(address: string, network: Network): Observable<PricesDto> {
+        return this.httpService.httpGet('/price/token/dto/' + address, network);
     }
 
 }
