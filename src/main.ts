@@ -4,7 +4,7 @@ import { environment } from './environments/environment';
 import { APP_CONFIG } from './app.config';
 import { AppModule } from './app/app.module';
 
-fetch('/assets/config.prod.json')
+fetch('/assets/config.json')
   .then((response) => response.json())
   .then((config) => {
     if (environment.production) {
