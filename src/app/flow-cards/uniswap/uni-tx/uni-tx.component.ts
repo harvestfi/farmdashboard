@@ -69,9 +69,9 @@ export class UniTxComponent implements AfterViewInit {
     if (tx.type === 'ADD' || tx.type === 'REM') {
       return;
     }
-    arr.unshift(tx);
+    arr.push(tx);
     if (arr.length > this.maxMessages) {
-      arr.pop();
+      arr.shift();
     }
   }
 
