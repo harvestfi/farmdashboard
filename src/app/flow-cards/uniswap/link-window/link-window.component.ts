@@ -1,4 +1,5 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Utils} from '../../../static/utils';
 
 @Component({
   selector: 'app-link-window',
@@ -7,15 +8,21 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 })
 export class LinkWindowComponent implements OnInit {
   @Output() showModal = new EventEmitter<boolean>();
+  @Input() network: string;
   @Input() hash: string;
   @Input() owner: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
 
   closeModal(): void {
     this.showModal.emit(false);
+  }
+
+  networkScan(): string {
+    return Utils.getNetworkScanUrl(this.network) + '/tx/' + this.hash;
   }
 }

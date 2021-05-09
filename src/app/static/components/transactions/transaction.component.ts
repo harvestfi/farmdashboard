@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ViewTypeService} from '../../../services/view-type.service';
+import {Utils} from '../../utils';
 
 @Component({
     selector: 'app-transaction-link',
@@ -14,11 +15,6 @@ export class TransactionComponent {
     constructor(public vt: ViewTypeService) {}
 
     viewNetworkscanTransaction(): void {
-        if (this.network === 'bsc') {
-            window.open('https://www.bscscan.com/tx/' + this.transactionHash, '_blank');
-        } else {
-            window.open('https://etherscan.io/tx/' + this.transactionHash, '_blank');
-        }
-
+        Utils.openNetworkScanTx(this.transactionHash, this.network);
     }
 }

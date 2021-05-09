@@ -30,9 +30,8 @@
 
     <div class="harvest-field harvest2-type left-border-box pointer ">
       <app-simple-modal *ngIf="openModal">
-        <app-link-window (showModal)="hideTradeLinks($event)"
+        <app-link-window (showModal)="hideTradeLinks($event)" [network]="dto.network"
                          [hash]='dto.hash' [owner]='dto.owner'>
-
         </app-link-window>
       </app-simple-modal>
         <mat-icon (click)="showTradeLinks()"

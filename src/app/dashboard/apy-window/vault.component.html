@@ -1,0 +1,10 @@
+<div>
+    <p>fToken: {{vault.symbol || vault.name}}</p>
+    <p>Vault Address: <app-address-link [contract]="vault.contract"></app-address-link></p>
+    <div *ngIf="!isAutoStakeVault && !isFarmVault">
+        <p>Current TVL: ${{currentTvl | number: '1.0-0'}}</p>
+        <p>Average TVL: ${{vaultAvgTvl | number: '1.0-0'}}</p>
+        <p>Share price: {{sharePrice | number: '1.0-8'}}</p>
+        <p>Underlying token: {{vault.underlying?.name}} <app-address-link [contract]="vault.underlying"></app-address-link></p>
+    </div>
+</div>

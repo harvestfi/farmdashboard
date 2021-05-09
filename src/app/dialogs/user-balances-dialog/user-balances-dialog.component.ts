@@ -3,6 +3,7 @@ import {HttpService} from '../../services/http/http.service';
 import {NGXLogger} from 'ngx-logger';
 import {Balance} from '../../models/balance';
 import { ViewTypeService } from 'src/app/services/view-type.service';
+import {Utils} from '../../static/utils';
 
 @Component({
   selector: 'app-user-balances-dialog',
@@ -31,5 +32,9 @@ export class UserBalancesDialogComponent implements AfterViewInit {
 
   shortAddress(address: string): string {
     return address.slice(0, 5) + '...' + address.slice(address.length - 4);
+  }
+
+  getNetworkScan() {
+    return Utils.getNetworkScanUrl('eth');
   }
 }

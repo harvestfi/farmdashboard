@@ -89,7 +89,12 @@ import { ChartGeneralComponent } from './chart/chart-general/chart-general.compo
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {PopoverComponent} from './common/popover/popover.component';
 import {CollapsibleAreaComponent} from './main/collapsable-area/collapsible-area.component';
+import {VaultComponent} from './dashboard/apy-window/vault.component';
+import {StrategyComponent} from './dashboard/apy-window/strategy.component';
+import {PoolComponent} from './dashboard/apy-window/pool.component';
+import {AddressComponent} from './static/components/addresses/address.component';
 import {MainTopNavigationComponent} from './main/main-top-navigation/main-top-navigation.component';
+import {ApyCommonComponent} from './dashboard/apy-window/apy-common.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -160,6 +165,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChartGeneralComponent,
     PopoverComponent,
     CollapsibleAreaComponent,
+    VaultComponent,
+    StrategyComponent,
+    PoolComponent,
+    AddressComponent,
+    ApyCommonComponent,
     MainTopNavigationComponent
   ],
   imports: [
