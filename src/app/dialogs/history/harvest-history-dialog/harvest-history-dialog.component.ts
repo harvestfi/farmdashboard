@@ -9,6 +9,7 @@ import {Vault} from '../../../models/vault';
 import {map} from 'rxjs/operators';
 import {ContractsService} from '../../../services/contracts.service';
 import {HarvestsService} from '../../../services/http/harvests.service';
+import { Paginated } from 'src/app/models/paginated';
 
 
 @Component({
@@ -19,6 +20,15 @@ import {HarvestsService} from '../../../services/http/harvests.service';
 export class HarvestHistoryDialogComponent implements AfterViewInit {
   vaultFilter = 'all';
   dtos: HarvestDto[] = [];
+  paginated_dtos: Paginated<HarvestDto> = {
+    currentPage: 0,
+    nextPage: -1,
+    previousPage: -1,
+    totalPages: 0,
+    data: []
+  };
+  minAmount = 0;
+  filterByVault = '';
   harvestTxIds = new Set<string>();
   lowestBlockDate = 999999999999;
   disabled = false;
@@ -36,9 +46,7 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.harvestsService.getHarvestTxHistoryData().subscribe(data => {
-      this.addInArray(data);
-    });
+    this.getHarvestHistoryForPage(0);
   }
 
   getOlderTransactions(): void {
@@ -79,8 +87,40 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
         this.lowestBlockDate = tx.blockDate;
       }
       HarvestDto.enrich(tx);
-      this.dtos.push(tx);
+      this.paginated_dtos.data.push(tx);
 
     }
+  }
+
+  getHarvestHistoryForPage(page_number){
+    this.harvestTxIds = new Set();
+    this.harvestsService.getHarvestPaginatedTxHistoryData(
+      page_number,
+      10,
+      this.minAmount,
+      this.vaultFilter
+    )
+    .then(data => {
+      const d = data.data;
+      this.paginated_dtos = data;
+      this.paginated_dtos.data = [];
+      this.addInArray(d);
+    });
+  }
+
+  nextPage($event): void {
+    this.getHarvestHistoryForPage($event);
+  }
+
+  previousPage($event): void {
+    this.getHarvestHistoryForPage($event);
+  }
+
+  selectPage($event): void {
+    this.getHarvestHistoryForPage($event);
+  }
+
+  handleFilterUpdate(_$event): void {
+    this.getHarvestHistoryForPage(0);
   }
 }

@@ -37,12 +37,7 @@ export class UniHistoryDialogComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     // TODO: This needs to use the actual endpoint :)
-    this.txHistory.getUniswapPaginatedTxHistoryData().then(data =>{
-      const d = data.data;
-      this.paginated_dtos = data;
-      this.paginated_dtos.data = [];
-      this.addInPaginatedArray(d);
-    });
+    this.getUniDataForPage(0);
     // this.txHistory.getUniswapTxHistoryData().subscribe(data => this.addInArray(data));
   }
 
@@ -101,7 +96,6 @@ export class UniHistoryDialogComponent implements AfterViewInit {
       }
       UniswapDto.round(tx);
       this.dtos.push(tx);
-
     }
   }
 
@@ -112,7 +106,6 @@ export class UniHistoryDialogComponent implements AfterViewInit {
       const d = data.data;
       this.paginated_dtos = data;
       this.paginated_dtos.data = [];
-      console.log(d);
       this.addInPaginatedArray(d);
     });
   }
@@ -125,9 +118,7 @@ export class UniHistoryDialogComponent implements AfterViewInit {
   }
   selectPage($event): void {
     this.getUniDataForPage($event);
-
   }
-
   handleFilterUpdate(_$event): void {
     this.getUniDataForPage(0);
   }

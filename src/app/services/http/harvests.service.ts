@@ -80,5 +80,23 @@ export class HarvestsService implements WsConsumer {
         return this.httpService.httpGetWithNetwork(`/api/transactions/history/harvest`);
     }
 
+    getHarvestPaginatedTxHistoryData(
+        page_number: number = 1,
+        page_size: number = 10,
+        min_amount: number = 0,
+        vault?: string,
+        ordering: string = 'desc'
+    ): Promise<any> {
+        // eslint-disable-next-line max-len
+        return fetch(`http://localhost:3000/harvest?_page=${page_number}&_limit=${page_size}&_sort=amount&_order=${ordering}?amount_gte=${min_amount}`)
+        .then(r => r.json())
+        .then((data) => ({
+                currentPage: page_number,
+                nextPage: page_number + 1 > 10 ? -1 : page_number + 1,
+                previousPage: page_number -1,
+                totalPages: 10,
+                data
+            }));
+    }
 
 }
