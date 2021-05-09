@@ -31,7 +31,7 @@ export class UniTxComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.uniswapService.getUniswapTxHistoryData().subscribe(
         (data) => {
-          this.log.debug('tx data fetched', data?.length);
+          this.log.debug('tx data fetched', data);
           data?.forEach((tx) => {
             UniswapDto.round(tx);
             this.addInArray(this.dtos, tx);
@@ -71,7 +71,7 @@ export class UniTxComponent implements AfterViewInit {
     }
     arr.push(tx);
     if (arr.length > this.maxMessages) {
-      arr.shift();
+      arr.pop();
     }
   }
 
