@@ -66,7 +66,7 @@ export class UniTxComponent implements AfterViewInit {
   }
 
   private addInArray(arr: UniswapDto[], tx: UniswapDto): void {
-    if (tx.type === 'ADD' || tx.type === 'REM') {
+    if (tx.type === 'ADD' || tx.type === 'REM' || tx.coin !== 'FARM') {
       return;
     }
     arr.push(tx);
