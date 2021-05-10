@@ -25,7 +25,7 @@ export class UniswapService {
     }
 
     getUniswapPaginatedTxHistoryData(
-        page_number: number = 1,
+        page_number: number = 0,
         page_size: number = 10,
         min_amount: number = 0,
         ordering: string = 'desc'

@@ -6,6 +6,7 @@ import {WsConsumer} from '../ws-consumer';
 import {WebsocketService} from '../websocket.service';
 import {SnackService} from '../snack.service';
 import {Network} from '../../models/network';
+import { Paginated } from 'src/app/models/paginated';
 
 @Injectable({
     providedIn: 'root'
@@ -86,17 +87,9 @@ export class HarvestsService implements WsConsumer {
         min_amount: number = 0,
         vault?: string,
         ordering: string = 'desc'
-    ): Promise<any> {
+    ): Observable<Paginated<HarvestDto>> {
         // eslint-disable-next-line max-len
-        return fetch(`http://localhost:3000/harvest?_page=${page_number}&_limit=${page_size}&_sort=amount&_order=${ordering}?amount_gte=${min_amount}`)
-        .then(r => r.json())
-        .then((data) => ({
-                currentPage: page_number,
-                nextPage: page_number + 1 > 10 ? -1 : page_number + 1,
-                previousPage: page_number -1,
-                totalPages: 10,
-                data
-            }));
+        return this.httpService.httpGet(`/harvest/pages?pageSize=${page_size}&page=${page_number}&minAmount=${min_amount}${vault && ('vault=' + vault)}&ordering=${ordering}`);
     }
 
 }
