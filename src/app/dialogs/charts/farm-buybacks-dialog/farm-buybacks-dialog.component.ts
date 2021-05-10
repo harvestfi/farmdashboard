@@ -7,6 +7,8 @@ import {HardworksService} from '../../../services/http/hardworks.service';
 import {TvlsService} from '../../../services/http/tvls.service';
 import {PriceDataService} from '../../../services/data/price-data.service';
 import {StaticValues} from '../../../static/static-values';
+import {RewardsService} from '../../../services/http/rewards.service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-farm-buybacks-dialog',
@@ -21,37 +23,50 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
               private hardworksService: HardworksService,
               private priceData: PriceDataService,
               private tvlsService: TvlsService,
+              private rewardsService: RewardsService,
   ) {
     super(cdRef, vt);
   }
 
   load(): void {
-    this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network)).subscribe(data => {
-      this.log.debug('History of All Farm buybacks loaded ', data);
-      const chartBuilder = new ChartBuilder();
-      chartBuilder.initVariables(2);
-      data?.forEach(dto => {
-        let bb = dto.farmBuybackSum / 1000;
-        if (dto.network === 'bsc') {
-          const farmPrice = this.priceData.getLastFarmPrice();
-          if (farmPrice && farmPrice !== 0) {
-            bb = bb / farmPrice;
-          } else {
-            bb = 0;
-          }
-        }
-        chartBuilder.addInData(0, dto.blockDate, bb);
-      });
+    const rewardsRequest = this.rewardsService.getHistoryRewards('PS', StaticValues.NETWORKS.get(this.network));
+    const hardworkRequest = this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network));
+    const historyTvlRequest = this.tvlsService.getHistoryTvlByVault('PS');
 
-      this.tvlsService.getHistoryTvlByVault('PS').subscribe(vaultData => {
-            this.log.debug('History of PS TVL loaded ', vaultData);
-            vaultData?.forEach(dto => chartBuilder.addInData(1, dto.calculateTime, dto.sharePrice / 1000));
-            this.handleData(chartBuilder, [
-              ['FARM Buyback K', 'right', '#0085ff'],
-              ['All supply K', '1', '#efa4a4']
-            ]);
+    forkJoin([rewardsRequest, hardworkRequest, historyTvlRequest])
+      .subscribe(([rewards, data, vaultData]) => {
+        this.log.debug('History of All rewards ', rewards);
+        this.log.debug('History of All Farm buybacks loaded ', data);
+        this.log.debug('History of PS TVL loaded ', vaultData);
+
+        const totalReward = rewards
+          .filter((reward) => reward.isWeeklyReward)
+          .reduce((acc, obj) => acc + obj.reward, 0);
+
+        const chartBuilder = new ChartBuilder();
+        chartBuilder.initVariables(3);
+
+        data?.forEach(dto => {
+          let bb = dto.farmBuybackSum / 1000;
+          if (dto.network === 'bsc') {
+            const farmPrice = this.priceData.getLastFarmPrice();
+            if (farmPrice && farmPrice !== 0) {
+              bb = bb / farmPrice;
+            } else {
+              bb = 0;
+            }
           }
-      );
-    });
+          chartBuilder.addInData(0, dto.blockDate, bb);
+          chartBuilder.addInData(1, dto.blockDate, totalReward / dto.farmBuybackSum);
+        });
+
+        vaultData?.forEach(dto => chartBuilder.addInData(2, dto.calculateTime, dto.sharePrice / 1000));
+
+        this.handleData(chartBuilder, [
+          ['FARM Buyback K', 'right', '#0085ff'],
+          ['Comparison K', '1', '#28a69a'],
+          ['All supply K', '2', '#efa4a4'],
+        ]);
+      });
   }
 }
