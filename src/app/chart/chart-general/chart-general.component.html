@@ -12,10 +12,16 @@
     <div>
       <div class="title">
         {{title}}
+      </div>
+      <div class="network-toggle">
         <div *ngIf="multipleNetworks">
-          <mat-button-toggle-group name="networkToggle" (change)="choseNetwork()" [(ngModel)]="chosenNetwork">
-            <mat-button-toggle *ngFor="let n of networks" value="{{n}}">{{n}}</mat-button-toggle>
-          </mat-button-toggle-group>
+          <span *ngFor="let n of networks">
+            <input [id]="n" class="network-input" (change)="choseNetwork()" [value]="n" [(ngModel)]="chosenNetwork" [checked]="n == chosenNetwork" type="radio" name="network" >
+            <label class="network-label" [class]="vt.getThemeColor()" [for]="n">
+              <img class="networi-icon" [src]="network_icons.get(n)" alt="{{n}} icon">
+              {{n}}
+            </label>
+          </span>
         </div>
       </div>
       <div #chart class="chart"></div>

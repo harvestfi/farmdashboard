@@ -28,6 +28,48 @@
       padding: 10px 0;
     }
 
+
+.network-toggle {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px 0;
+
+  .network-input {
+    display: none;
+
+    &:checked ~ .network-label {
+      &.dark {
+        background: #696969;
+      }
+
+      &.light {
+        background: #fff9cd;
+
+      }
+    }
+  }
+
+  .network-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    border-radius: 14px;
+    margin: 0 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid #848484;
+
+
+    .networi-icon{
+      width: 15px;
+      height: 15px;
+      object-fit: contain;
+    }
+  }
+}
+
+
     .fields-container {
       display: -webkit-box;
       display: -ms-flexbox;

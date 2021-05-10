@@ -9,7 +9,7 @@ export class UniswapFilterPipe implements PipeTransform {
   tmp = [];
 
   transform(dtos: UniswapDto[], minAmount: number): UniswapDto[] {
-    if (!dtos || !minAmount) {
+    if (!dtos || !minAmount || minAmount === 0) {
       return dtos;
     }
     this.tmp = [];

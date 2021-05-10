@@ -30,6 +30,11 @@ export class StaticValues {
     ['bsc', StaticValues.NETWORK_BSC]
   ]);
 
+  public static NETWORK_ICON: Map<string, string> = new Map<string, string>([
+    ['eth', 'assets/icons/eth.svg'],
+    ['bsc', 'assets/icons/venus-wbnb.png']
+  ]);
+
   public static farmPools: string[] = [
     'UNI_LP_USDC_FARM',
     'UNI_LP_WETH_FARM',
