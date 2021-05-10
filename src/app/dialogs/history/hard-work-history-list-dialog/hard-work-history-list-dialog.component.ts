@@ -21,6 +21,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   disabled = false;
   ready = false;
   networks: string[] = Array.from(StaticValues.NETWORKS.keys());
+  network_icons: Map<string, string> = StaticValues.NETWORK_ICON;
   network = 'eth';
 
   constructor(
