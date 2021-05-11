@@ -129,7 +129,11 @@ export class HarvestDataService {
       if (HarvestDataService.excludeFromTotalTvl.has(dto.vaultAddress)) {
         continue;
       }
-      sum += this.getVaultTvl(dto.vaultAddress, network, priceData);
+      const tvl = this.getVaultTvl(dto.vaultAddress, network, priceData);
+      if (!tvl || Infinity === tvl) {
+        continue;
+      }
+      sum += tvl;
     }
     return sum;
   }

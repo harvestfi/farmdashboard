@@ -53,12 +53,10 @@ export class PriceDataService {
       return new Observable<PricesDto>();
     }
     this.prices.get(price.network).set(price.tokenAddress?.toLowerCase(), price);
-    if (price.tokenAddress === Addresses.ADDRESSES.get('FARM')
-        && price.otherTokenAddress === Addresses.ADDRESSES.get('WETH')) {
-      const otherTokenPrice = this.getUsdPrice(price.otherTokenAddress, 'eth');
-      this.lastFarmPrice = price.price * otherTokenPrice;
-      this.log.info('FARM price updated', this.lastFarmPrice, price.price, otherTokenPrice);
+    if (price.tokenAddress === Addresses.ADDRESSES.get('FARM')) {
+      this.lastFarmPrice = this.getUsdPrice(Addresses.ADDRESSES.get('FARM'), 'eth');
       this.titleService.setTitle(this.lastFarmPrice?.toFixed(2) + ' | ' + this.pureTitle);
+      this.log.info('FARM price updated', price);
     }
     // this.dataFeed;
     return new Observable<PricesDto>(o => o.next(price));

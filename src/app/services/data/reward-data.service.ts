@@ -5,6 +5,7 @@ import {RewardsService} from '../http/rewards.service';
 import {NGXLogger} from 'ngx-logger';
 import {ContractsService} from '../contracts.service';
 import {Vault} from '../../models/vault';
+import {Addresses} from '../../static/addresses';
 
 @Injectable({
   providedIn: 'root'
@@ -82,17 +83,15 @@ export class RewardDataService {
   vaultRewardApr(vaultAddress: string, network: string, usdTvl: number, farmPrice: number): number {
     const reward = this.lastRewards.get(network).get(vaultAddress);
     if (!reward || !usdTvl || usdTvl === 0) {
-      if (!this.rewardEnded.has(vaultAddress)) {
-        this.log.warn(this.contractService.getContracts(Vault).get(vaultAddress)?.name
-            + ' not found rewards');
-        this.rewardEnded.add(vaultAddress);
-      }
       return 0;
     }
     if ((Date.now() / 1000) > reward.periodFinish && !StaticValues.isPS.has(vaultAddress)) {
       if (!this.rewardEnded.has(vaultAddress)) {
-        this.log.warn(this.contractService.getContracts(Vault).get(vaultAddress)?.name
-            + ' reward setup zero, it is ended');
+        this.log.warn('Reward setup zero, it is ended',
+            this.contractService.getContracts(Vault).get(vaultAddress)?.contract?.name,
+            this.contractService.getContracts(Vault).get(vaultAddress),
+            reward);
+        this.rewardEnded.add(vaultAddress);
         this.rewardEnded.add(vaultAddress);
       }
       return 0;
