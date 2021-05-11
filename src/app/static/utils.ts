@@ -1,4 +1,5 @@
 import {TransferDto} from '../models/transfer-dto';
+import {Addresses} from './addresses';
 
 export class Utils {
 
@@ -118,33 +119,11 @@ export class Utils {
   }
 
   public static isAutoStakeVault(name: string): boolean {
-    return name === 'PS'
-        || name === 'DAI_BSG'
-        || name === 'DAI_BSGS'
-        || name === 'SUSHI_MIC_USDT'
-        || name === 'SUSHI_MIS_USDT'
-        || name === 'MAAPL_UST'
-        || name === 'MAAPL_UST'
-        || name === 'MAMZN_UST'
-        || name === 'MGOOGL_UST'
-        || name === 'MTSLA_UST'
-        || name === 'MNFLX_UST'
-        || name === 'MTWTR_UST'
-        || name === 'UNI_BAC_DAI'
-        || name === 'UNI_DAI_BAS'
-        || name === 'UNI_WBTC_KLON'
-        || name === 'UNI_WBTC_KBTC'
-        || name === 'SUSHI_HODL'
-        || name === 'ETH_DAI_HODL'
-        || name === 'ETH_USDC_HODL'
-        || name === 'ETH_USDT_HODL'
-        || name === 'ETH_WBTC_HODL'
-        || name === 'MUSE_ETH'
-        || name === 'DUDES20_ETH'
-        || name === 'MASK20_ETH'
-        || name === 'ROPE20_ETH'
-        || name === 'MCAT20_ETH'
-        ;
+    switch (name) {
+      case Addresses.ADDRESSES.get('PS'):
+        return true;
+    }
+    return false;
   }
 
   public static isFarmVault(name: string): boolean {

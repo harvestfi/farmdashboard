@@ -6,6 +6,7 @@ import {IChartApi} from 'lightweight-charts';
 import {UniswapService} from '../../services/http/uniswap.service';
 import {ChartsOptionsLight} from '../charts-options-light';
 import {PriceDataService} from '../../services/data/price-data.service';
+import {Addresses} from '../../static/addresses';
 
 
 @Component({
@@ -15,8 +16,8 @@ import {PriceDataService} from '../../services/data/price-data.service';
 })
 export class FarmChartComponent implements AfterViewInit, OnInit {
   @ViewChild('price_chart') chartEl: ElementRef;
-  coin = 'FARM';
-  otherCoin = 'ETH';
+  coin = Addresses.ADDRESSES.get('FARM');
+  otherCoin = Addresses.ADDRESSES.get('WETH');
   chart: IChartApi;
 
   constructor(private uniswapService: UniswapService,
@@ -49,7 +50,7 @@ export class FarmChartComponent implements AfterViewInit, OnInit {
     });
 
     this.priceData.subscribeToActual().subscribe(tx => {
-      if (tx.token !== this.coin || tx.otherToken !== this.otherCoin) {
+      if (tx.tokenAddress !== this.coin || tx.otherTokenAddress !== this.otherCoin) {
         return;
       }
       const price = tx.price * this.priceData.getUsdPrice(tx.otherTokenAddress, tx.network);

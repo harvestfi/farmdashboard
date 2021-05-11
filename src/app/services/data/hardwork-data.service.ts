@@ -19,6 +19,8 @@ export class HardworkDataService {
       Array.from(StaticValues.NETWORKS.keys()).map(name => [name, null])
   );
 
+  private handledIds = new Set<string>();
+
   constructor(private hardworksService: HardworksService, private log: NGXLogger) {
     this.load();
   }
@@ -44,6 +46,10 @@ export class HardworkDataService {
       return;
     }
     HardWorkDto.enrich(dto);
+    if (this.handledIds.has(dto.id)) {
+      // this.log.warn('Duplicate record', dto);
+      return;
+    }
     if (!dto.network || dto.network === '') {
       this.log.warn('Empty network', dto);
       return;
@@ -58,16 +64,17 @@ export class HardworkDataService {
     }
     Utils.addInArrayAtTheStart(this.dtos, dto);
     this.dtos = this.dtos.sort((a,b) => b.blockDate - a.blockDate);
-    this.lastHardworks.get(dto.network)?.set(dto.vault, dto);
+    this.lastHardworks.get(dto.network)?.set(dto.vaultAddress, dto);
+    this.handledIds.add(dto.id);
   };
 
   private isNotActual(dto: HardWorkDto): boolean {
     return !dto
-        || this.lastHardworks.get(dto.network)?.get(dto.vault)?.blockDate > dto.blockDate;
+        || this.lastHardworks.get(dto.network)?.get(dto.vaultAddress)?.blockDate > dto.blockDate;
   }
 
-  getLastHardWork(name: string, network: string): HardWorkDto {
-    return this.lastHardworks.get(network)?.get(name);
+  getLastHardWork(address: string, network: string): HardWorkDto {
+    return this.lastHardworks.get(network)?.get(address);
   }
 
   getLatestHardWork(network: string): HardWorkDto {
@@ -82,8 +89,8 @@ export class HardworkDataService {
     return this.latestHardwork.get(network)?.weeklyAllProfit;
   }
 
-  getWeeklyApr(name: string, network: string): number {
-    const hardWork = this.lastHardworks.get(network).get(name);
+  getWeeklyApr(address: string, network: string): number {
+    const hardWork = this.lastHardworks.get(network).get(address);
     if (!hardWork) {
       return 0;
     }

@@ -1,6 +1,7 @@
 export class HardWorkDto {
   id: string;
   vault: string;
+  vaultAddress: string;
   block: number;
   blockDate: number;
   network: string;

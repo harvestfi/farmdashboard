@@ -199,16 +199,16 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
   }
 
   private parseHarvest(record: HarvestDto): void {
-    const harvest = this.lastStaked.get(record.vault);
+    const harvest = this.lastStaked.get(record.vaultAddress);
     this.addInCheckedArr(this.vaults, record.vault, false);
     this.saveHarvestBalance(record);
     // this.profit += record
     if (harvest) {
       if (harvest.blockDate < record.blockDate) {
-        this.lastStaked.set(record.vault, record);
+        this.lastStaked.set(record.vaultAddress, record);
       }
     } else {
-      this.lastStaked.set(record.vault, record);
+      this.lastStaked.set(record.vaultAddress, record);
     }
   }
 
@@ -236,17 +236,17 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
   }
 
   private saveHarvestBalance(record: HarvestDto): void {
-    if (this.balances.has(record.vault)) {
-      const oldBalance = this.balances.get(record.vault);
+    if (this.balances.has(record.vaultAddress)) {
+      const oldBalance = this.balances.get(record.vaultAddress);
       const balanceDiff = record.ownerBalanceUsd - oldBalance;
       this.balance += balanceDiff;
-      this.balances.set(record.vault, record.ownerBalanceUsd);
+      this.balances.set(record.vaultAddress, record.ownerBalanceUsd);
     } else {
-      this.balances.set(record.vault, record.ownerBalanceUsd);
+      this.balances.set(record.vaultAddress, record.ownerBalanceUsd);
       this.balance += record.ownerBalanceUsd;
     }
     this.balanceHistory.push([record.blockDate, this.balance]);
-    this.saveBalanceBySource(record.vault, record.blockDate, record.ownerBalanceUsd);
+    this.saveBalanceBySource(record.vaultAddress, record.blockDate, record.ownerBalanceUsd);
   }
 
   private saveTransferBalance(record: TransferDto): void {
@@ -272,13 +272,13 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
     this.saveBalanceBySource(record.name, record.blockDate, addressBalance);
   }
 
-  private saveBalanceBySource(name: string, blockDate: number, balance: number): void {
-    if (this.balanceHistoryBySource.has(name)) {
-      this.balanceHistoryBySource.get(name).push([blockDate, balance]);
+  private saveBalanceBySource(address: string, blockDate: number, balance: number): void {
+    if (this.balanceHistoryBySource.has(address)) {
+      this.balanceHistoryBySource.get(address).push([blockDate, balance]);
     } else {
       const arr = [];
       arr.push([blockDate, balance]);
-      this.balanceHistoryBySource.set(name, arr);
+      this.balanceHistoryBySource.set(address, arr);
     }
   }
 

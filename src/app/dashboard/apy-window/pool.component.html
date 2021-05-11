@@ -1,14 +1,4 @@
-<div *ngIf="isAutoStakeVault">
-    <div class="only-farm-caption">
-        <p>It's AutoStake vault, only FARM rewards</p>
-    </div>
-</div>
-<div *ngIf="isFarmVault">
-    <div class="only-farm-caption">
-        <p>It's FARM LP, only FARM rewards</p>
-    </div>
-</div>
-<div *ngIf="!isFarmVault && !isAutoStakeVault">
+<div>
     <p>Pool Address: <app-address-link [contract]="pool?.contract"></app-address-link></p>
 </div>
 <p>Reward period: {{vaultRewardPeriod | number: '1.0-0'}} day(s)</p>

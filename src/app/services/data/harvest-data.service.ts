@@ -9,12 +9,13 @@ import {LpStat} from '../../models/lp-stat';
 import {ContractsService} from '../contracts.service';
 import {Vault} from '../../models/vault';
 import {Token} from '../../models/token';
+import {Addresses} from '../../static/addresses';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HarvestDataService {
-  private static excludeFromTotalTvl = new Set(['iPS']);
+  private static excludeFromTotalTvl = new Set([Addresses.ADDRESSES.get('iPS')]);
   private dtos: HarvestDto[] = [];
   private lastGas = new Map<string, number>(
       Array.from(StaticValues.NETWORKS.keys()).map(name => [name, 0])
@@ -33,6 +34,7 @@ export class HarvestDataService {
   private latestHarvest = new Map<string, HarvestDto>(
       Array.from(StaticValues.NETWORKS.keys()).map(name => [name, null])
   );
+  private handledIds = new Set<string>();
 
   constructor(
       private harvestsService: HarvestsService,
@@ -62,6 +64,10 @@ export class HarvestDataService {
 
   private handleHarvest(dto: HarvestDto) {
     HarvestDto.enrich(dto);
+    if (this.handledIds.has(dto.id)) {
+      // this.log.warn('Duplicate record', dto);
+      return;
+    }
     if (!dto.network || dto.network === '') {
       this.log.warn('Empty network', dto);
       return;
@@ -79,23 +85,24 @@ export class HarvestDataService {
     Utils.addInMap(this.lastGas, dto.network, dto.lastGas);
     Utils.addInMap(this.allVaultsUsers, dto.network, dto.allPoolsOwnersCount);
     Utils.addInMap(this.allUsersQuantity, dto.network, dto.allOwnersCount);
-    this.lastHarvests.get(dto.network)?.set(dto.vault, dto);
+    this.lastHarvests.get(dto.network)?.set(dto.vaultAddress, dto);
     this.updateFarmData(dto);
-    if (dto.vault === 'PS') {
-      this.log.info('PS loaded', this.lastHarvests.get(dto.network)?.get(dto.vault), dto);
+    if (dto.vaultAddress === Addresses.ADDRESSES.get('PS')) {
+      this.log.info('PS loaded', this.lastHarvests.get(dto.network)?.get(dto.vaultAddress), dto);
     }
     // this.log.debug('Handled vault action', dto, this.dtos);
+    this.handledIds.add(dto.id);
   }
 
   private isNotActual(dto: HarvestDto): boolean {
     return !dto
-        || this.lastHarvests.get(dto.network)?.get(dto.vault)?.blockDate > dto.blockDate;
+        || this.lastHarvests.get(dto.network)?.get(dto.vaultAddress)?.blockDate > dto.blockDate;
   }
 
   private updateFarmData(harvest: HarvestDto) {
-    if (StaticValues.farmPools.findIndex(farmPool => farmPool === harvest.vault) >= 0) {
+    if (StaticValues.farmPools.findIndex(farmPool => farmPool === harvest.vaultAddress) >= 0) {
       this.lpFarmStaked = [1, 2].reduce((prev, i) => {
-        if (harvest.lpStatDto[`coin${i}`] === 'FARM') {
+        if (harvest.lpStatDto[`coin${i}Address`] === Addresses.ADDRESSES.get('FARM')) {
           return harvest.lpStatDto[`amount${i}`];
         }
         return prev;
@@ -119,16 +126,16 @@ export class HarvestDataService {
   getTvlSum(network: string, priceData: PriceDataService): number {
     let sum = 0;
     for (const dto of this.lastHarvests.get(network)?.values()) {
-      if (HarvestDataService.excludeFromTotalTvl.has(dto.vault)) {
+      if (HarvestDataService.excludeFromTotalTvl.has(dto.vaultAddress)) {
         continue;
       }
-      sum += this.getVaultTvl(dto.vault, network, priceData);
+      sum += this.getVaultTvl(dto.vaultAddress, network, priceData);
     }
     return sum;
   }
 
-  getVaultTvl(vault: string, network: string, priceData: PriceDataService): number {
-    const dto = this.lastHarvests.get(network)?.get(vault);
+  getVaultTvl(vaultAddress: string, network: string, priceData: PriceDataService): number {
+    const dto = this.lastHarvests.get(network)?.get(vaultAddress);
     if (!dto) {
       return 0;
     }
@@ -143,8 +150,8 @@ export class HarvestDataService {
     return this.lpFarmStaked;
   }
 
-  getVaultLastInfo(name: string, network: string): HarvestDto {
-    return this.lastHarvests.get(network)?.get(name);
+  getVaultLastInfo(address: string, network: string): HarvestDto {
+    return this.lastHarvests.get(network)?.get(address);
   }
 
   getDtos(): HarvestDto[] {
@@ -184,9 +191,9 @@ export class HarvestDataService {
     return 0.0;
   }
 
-  private getCurveUnderlying(address: string) {
+  private getCurveUnderlying(address: string): string {
     const tokenContract = this.contractService.getContracts(Token).get(address);
-    return tokenContract.curveUnderlying;
+    return tokenContract?.curveUnderlying;
   }
 
   private calculateTvlForLp(lpStat: LpStat, priceData: PriceDataService, network: string): number {

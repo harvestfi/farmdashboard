@@ -36,15 +36,15 @@ export class StaticValues {
   ]);
 
   public static farmPools: string[] = [
-    'UNI_LP_USDC_FARM',
-    'UNI_LP_WETH_FARM',
-    'UNI_LP_GRAIN_FARM'
+    Addresses.ADDRESSES.get('UNI_LP_USDC_FARM'),
+    Addresses.ADDRESSES.get('UNI_LP_WETH_FARM'),
+    Addresses.ADDRESSES.get('UNI_LP_GRAIN_FARM')
   ];
 
   public static isPS: Set<string> = new Set<string>([
-    'PS_V0',
-    'PS',
-    'iPS',
+    Addresses.ADDRESSES.get('PS_V0'),
+    Addresses.ADDRESSES.get('PS'),
+    Addresses.ADDRESSES.get('iPS'),
   ]);
 
   public static mapCoinNameToSimple(name: string, network: string): string {

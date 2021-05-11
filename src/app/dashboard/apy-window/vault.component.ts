@@ -24,16 +24,16 @@ export class VaultComponent implements OnInit {
     }
 
     hardwork(): HardWorkDto {
-        return this.hardworkData.getLastHardWork(this.vault.contract.name, this.vault.contract.network);
+        return this.hardworkData.getLastHardWork(this.vault.contract.address, this.vault.contract.network);
     }
 
     harvest(): HarvestDto {
-        return this.harvestData.getVaultLastInfo(this.vault.contract.name, this.vault.contract.network);
+        return this.harvestData.getVaultLastInfo(this.vault.contract.address, this.vault.contract.network);
     }
     // ---------------- GETTERS --------------------
 
     get isAutoStakeVault(): boolean {
-        const hw = this.hardworkData.getLastHardWork(this.vault.contract.name, this.vault.contract.network);
+        const hw = this.hardworkData.getLastHardWork(this.vault.contract.address, this.vault.contract.network);
         if(hw?.autoStake === 1) {
             return true;
         }

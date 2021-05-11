@@ -47,16 +47,17 @@ export class PriceDataService {
     if (!price) {
       return new Observable<PricesDto>();
     }
-    const lastPrice = this.prices.get(price?.network)?.get(price?.tokenAddress.toLowerCase());
+    const lastPrice = this.prices.get(price?.network)?.get(price?.tokenAddress?.toLowerCase());
     if (lastPrice && lastPrice.block > price.block) {
       this.log.warn('Price DTO older on ' + (lastPrice.block - price.block), lastPrice, price);
       return new Observable<PricesDto>();
     }
-    this.prices.get(price.network).set(price.tokenAddress.toLowerCase(), price);
-    if (price.token === 'FARM' && price.otherToken === 'ETH') {
-      const ethPrice = this.getUsdPrice(Addresses.ADDRESSES.get('WETH'), 'eth');
-      this.lastFarmPrice = price.price * ethPrice;
-      this.log.info('FARM price updated', this.lastFarmPrice, price.price, ethPrice);
+    this.prices.get(price.network).set(price.tokenAddress?.toLowerCase(), price);
+    if (price.tokenAddress === Addresses.ADDRESSES.get('FARM')
+        && price.otherTokenAddress === Addresses.ADDRESSES.get('WETH')) {
+      const otherTokenPrice = this.getUsdPrice(price.otherTokenAddress, 'eth');
+      this.lastFarmPrice = price.price * otherTokenPrice;
+      this.log.info('FARM price updated', this.lastFarmPrice, price.price, otherTokenPrice);
       this.titleService.setTitle(this.lastFarmPrice?.toFixed(2) + ' | ' + this.pureTitle);
     }
     // this.dataFeed;
@@ -88,7 +89,7 @@ export class PriceDataService {
     if (!targetPriceDto) {
       return 0;
     }
-    const otherTokenPrice = this.getUsdPrice(targetPriceDto.otherTokenAddress.toLowerCase(), network);
+    const otherTokenPrice = this.getUsdPrice(targetPriceDto.otherTokenAddress?.toLowerCase(), network);
     const price = targetPriceDto.price * otherTokenPrice;
     if (price === Infinity) {
       return 0;

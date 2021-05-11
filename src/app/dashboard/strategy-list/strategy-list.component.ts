@@ -77,12 +77,12 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     }, new Map<string, Pool>());
   }
 
-  toggleAPYWindow(name: string): void {
-    if (!(name in this.apyWindowState)) {
-      this.apyWindowState[name] = true;
+  toggleAPYWindow(address: string): void {
+    if (!(address in this.apyWindowState)) {
+      this.apyWindowState[address] = true;
       return;
     }
-    this.apyWindowState[name] = !this.apyWindowState[name];
+    this.apyWindowState[address] = !this.apyWindowState[address];
   }
 
   sortVaultsList(sortBy?: string): void{
@@ -90,9 +90,9 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
 
-  openTvlDialog(name: string): void {
+  openTvlDialog(address: string): void {
     this.tvlModals
-    .find(e => e.name === 'tvlModal_' + name)
+    .find(e => e.name === 'tvlModal_' + address)
     ?.open();
   }
 }
