@@ -6,6 +6,8 @@ import {Utils} from '../../../static/utils';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {RewardsService} from '../../../services/http/rewards.service';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-rewards-history-dialog',
@@ -42,9 +44,10 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         this.loadRewardsHistory();
     }
 
-    get vaultNames(): string[] {
-        return this.contractsService.getContractsArray(Vault)
-        .map(_ => _.contract?.name);
+    get vaultNames(): Observable<string[]> {
+        return this.contractsService.getContractsArray(Vault).pipe(
+            map(_ => _.map(v => v.contract?.name))
+        );
     }
 
 

@@ -30,9 +30,10 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
     private harvestsService: HarvestsService
   ) {}
 
-  get tvlNames(): string[] {
-    return this.contractsService.getContractsArray(Vault)
-        .map(_ => _.contract.name);
+  get tvlNames(): Observable<string[]> {
+    return this.contractsService.getContractsArray(Vault).pipe(
+        map(_ => _.map(v => v.contract.name))
+    );
   }
 
   ngAfterViewInit(): void {

@@ -10,6 +10,8 @@ import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {HarvestsService} from '../../../services/http/harvests.service';
 import {HarvestDataService} from '../../../services/data/harvest-data.service';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-harvest-tx',
@@ -35,9 +37,10 @@ export class HarvestTxComponent implements AfterViewInit {
   ngAfterViewInit(): void {
   }
 
-  get vaultNames(): string[] {
-    return this.contractsService.getContractsArray(Vault)
-    .map(_ => _.contract.name);
+  get vaultNames(): Observable<string[]> {
+    return this.contractsService.getContractsArray(Vault).pipe(
+        map(_ => _.map(v => v.contract.name))
+    );
   }
 
   get dtos(): HarvestDto[] {

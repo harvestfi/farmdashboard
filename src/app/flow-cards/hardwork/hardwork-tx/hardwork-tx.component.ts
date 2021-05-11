@@ -7,6 +7,8 @@ import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.co
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {HardworkDataService} from '../../../services/data/hardwork-data.service';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-hardwork-tx',
@@ -27,9 +29,10 @@ export class HardworkTxComponent implements AfterViewInit {
   ) {
   }
 
-  get vaultNames(): string[] {
-    return this.contractsService.getContractsArray(Vault)
-    .map(_ => _.contract?.name);
+  get vaultNames(): Observable<string[]> {
+    return this.contractsService.getContractsArray(Vault).pipe(
+        map(_ => _.map(v => v.contract?.name))
+    );
   }
 
   ngAfterViewInit(): void {

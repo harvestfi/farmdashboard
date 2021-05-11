@@ -5,7 +5,7 @@
         <h4 class="title">doHardWorks</h4>
         <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
           <option [value]="'all'">All</option>
-          <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
+          <option *ngFor="let name of vaultNames|async" [value]="name">{{name}}</option>
         </select>
   
         <input type="number" min="0" #hardworkDtoFilter class="input-less-than left-border-box" placeholder="More than...">

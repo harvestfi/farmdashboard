@@ -95,6 +95,7 @@ import {PoolComponent} from './dashboard/apy-window/pool.component';
 import {AddressComponent} from './static/components/addresses/address.component';
 import {MainTopNavigationComponent} from './main/main-top-navigation/main-top-navigation.component';
 import {ApyCommonComponent} from './dashboard/apy-window/apy-common.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -203,6 +204,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AngularEmojisModule,
     SidebarModule.forRoot(),
     NgbModule,
+    MatProgressBarModule,
   ],
   providers: [{
     provide: PERFECT_SCROLLBAR_CONFIG,

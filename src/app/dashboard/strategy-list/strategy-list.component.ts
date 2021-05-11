@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
@@ -12,6 +12,9 @@ import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Token} from '../../models/token';
 import {Pool} from '../../models/pool';
+import {map, tap} from 'rxjs/operators';
+import {forkJoin, Observable} from 'rxjs';
+import {HttpMetricsService} from '../../services/http-metrics.service';
 
 @Component({
   selector: 'app-strategy-list',
@@ -47,25 +50,34 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   }
 
   ngOnInit(): void {
-    this.poolsList();
+    // forkJoin([this.poolsList(), this.vaultsList(), this.assetList()])
+    //     .subscribe(([pools, vaults, assets]) => {
+    //   this.pools = pools;
+    //   this.vaults = vaults;
+    //   this.assets = assets;
+    //   this.loading = false;
+    // });
+  };
+
+  get assetList(): Observable<string[]> {
+    return this.contractsService.getContracts(Token).pipe(
+      map(tokens => Array.from(tokens.keys()).sort((a, b) => b.localeCompare(a))),
+    );
   }
 
-  get assetList(): string[] {
-    const result = assets;
-    this.contractsService.getContractsArray(Token)?.forEach(t => result.add(t.contract.name));
-    return Array.from(result.values()).sort((a, b) => b.localeCompare(a));
+  get vaultsList(): Observable<Vault[]> {
+    return this.contractsService.getContractsArray(Vault).pipe(
+        map(_ => _.filter(v => v.isActive())),
+    );
   }
 
-  get vaultsList(): Vault[] {
-    return this.contractsService.getContractsArray(Vault)
-    .filter(_ => _.isActive());
-  }
-
-  poolsList(): Map<string,Pool> {
-    return Array.from(this.contractsService.getContracts(Pool).values()).reduce((m, pool) => {
-      m.set(pool.lpToken.address, pool);
-      return m;
-    }, new Map<string,Pool>());
+  get poolsList(): Observable<Map<string,Pool>> {
+    return this.contractsService.getContractsArray(Pool).pipe(
+        map(pools => pools.reduce((m, p) => {
+            m.set(p.lpToken.address, p);
+            return m;
+          }, new Map<string,Pool>())),
+    );
   }
 
   toggleAPYWindow(name: string): void {

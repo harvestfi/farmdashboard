@@ -14,12 +14,11 @@
 
     <select [(ngModel)]="assetFilter" name="" id="assetFilter">
       <option value="">Asset</option>
-      <option *ngFor="let asset of assetList" [value]="asset">{{asset}}</option>
-  
+      <option *ngFor="let asset of assetList | async" [value]="asset">{{asset}}</option>
     </select>
 
     <div class="quantity">
-      Total: {{vaultsList.length}}
+      Total: {{(vaultsList | async).length}}
     </div>
 
     <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
@@ -40,7 +39,7 @@
       <div (click)="sortVaultsList('total_earned')" class="header-column desktop-only">Total Earned <i class="fas fa-sort"></i></div>
   </div>
   <div class="content">
-    <div *ngIf="vaultsList | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
+    <div *ngIf="vaultsList | async | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
       <div *ngFor="let row of filteredVaults" class="row">
         <div class="column">
           <app-vault-icon [vault]="row.contract.name"></app-vault-icon> {{prettyName(row.contract.name)}}
@@ -48,7 +47,7 @@
         <div class="column">
           <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row.contract.name]">
             <app-apy-window (showModal)="toggleAPYWindow(row.contract.name)"
-                            [vault]="row" [pool]="poolsList().get(row.contract.address)"></app-apy-window>
+                            [vault]="row" [pool]="(poolsList |async).get(row.contract.address)"></app-apy-window>
           </app-draggable-modal>
           <app-popover-card class="pointer" (click)="toggleAPYWindow(row.contract.name)">
             <ng-template>

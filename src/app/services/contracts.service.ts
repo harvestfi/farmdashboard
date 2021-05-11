@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, shareReplay} from 'rxjs/operators';
 import {Vault} from '../models/vault';
 import {Token} from '../models/token';
 import {Pool} from '../models/pool';
@@ -23,7 +23,7 @@ import {NGXLogger} from 'ngx-logger';
 })
 export class ContractsService {
 
-    private cache = new Map<string, Map<string, IContract>>();
+    private cache = new Map<string, Observable<Map<string, IContract>>>();
     private urlPrefix = 'contracts';
     private typePaths = new Map<IContract, string>(
         [[Vault, 'vault'],
@@ -41,27 +41,34 @@ export class ContractsService {
     /**
      * Fetch a list of contracts by type, e.g. Vault, Pool, Token, Pair
      */
-    getContracts<T extends IContract>(type: new () => T): Map<string, T> {
+    getContracts<T extends IContract>(type: new () => T): Observable<Map<string, T>> {
         const typeName = this.typePaths.get(type);
         if (!typeName) {
             this.log.error('Type not found', new type());
-            return new Map();
+            throw new Error(`Invalid type ${type}`);
         }
         if (!this.cache.has(typeName)) {
-            this.cache.set(typeName, new Map());
-            this.requestContracts<T>(type).subscribe(contracts => {
-                this.log.info('Loaded contracts ' + typeName, contracts);
-                contracts.forEach(c => {
-                    this.cache.get(typeName).set((c as any).contract.address, c);
-                });
-            });
+            const obs = this.requestContracts<T>(type)
+                .pipe(
+                    shareReplay(1),
+                    map(_ => {
+                        const m = new Map<string,T>();
+                        (_ as any[]).forEach(v => {
+                            m.set(v?.contract?.name, v);
+                        });
+                        return m;
+                    })
+                );
+            this.cache.set(typeName, obs);
         }
         // @ts-ignore
         return this.cache.get(typeName);
     }
 
-    getContractsArray<T extends IContract>(type: new () => T): T[] {
-        return Array.from(this.getContracts(type)?.values());
+    getContractsArray<T extends IContract>(type: new () => T): Observable<T[]> {
+        return this.getContracts(type)?.pipe(
+            map(_ => Array.from(_.values()))
+        );
     }
 
     private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {

@@ -7,6 +7,8 @@ import {HardworksService} from '../../../services/http/hardworks.service';
 import {Paginated} from '../../../models/paginated';
 import {HardWorkDto} from '../../../models/hardwork-dto';
 import {StaticValues} from '../../../static/static-values';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-hard-work-history-list-dialog',
@@ -57,9 +59,10 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
     .add(() => this.ready = true);
   }
 
-  get vaultNames(): string[] {
-    return this.contractsService.getContractsArray(Vault)
-    .map(_ => _.contract.name);
+  get vaultNames(): Observable<string[]> {
+    return this.contractsService.getContractsArray(Vault).pipe(
+      map(vaults => vaults.map(_ => _.contract.name))
+    );
   }
 
   // These methods all seem redundant, but I separated them because we may

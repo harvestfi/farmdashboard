@@ -10,7 +10,7 @@
       </app-popover-card>
       <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
         <option [value]="'all'">All</option>
-        <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
+        <option *ngFor="let name of vaultNames|async" [value]="name">{{name}}</option>
       </select>
       <input #harvestDtoFilter class="input-less-than left-border-box" placeholder="More than..." type="number">
     </div>
