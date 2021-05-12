@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {UniswapService} from '../../../services/http/uniswap.service';
 import {PriceDataService} from '../../../services/data/price-data.service';
+import {Addresses} from '../../../static/addresses';
 
 @Component({
   selector: 'app-uni-tx',
@@ -39,12 +40,13 @@ export class UniTxComponent implements AfterViewInit {
         }
     );
     this.priceData.subscribeToActual().subscribe(priceDto => {
+      if (priceDto.tokenAddress !== Addresses.ADDRESSES.get('FARM')) {
+        return;
+      }
       const price = priceDto.price * this.priceData.getUsdPrice(priceDto.otherTokenAddress, priceDto.network);
       const tx = priceDto.toUniswap();
       tx.lastPrice = price;
-      if (tx.coin !== 'FARM') {
-        return;
-      }
+
       if (!this.isUniqTx(tx)) {
         this.log.error('Not unique', tx);
         return;

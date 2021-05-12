@@ -47,6 +47,10 @@ export class PriceDataService {
     if (!price) {
       return new Observable<PricesDto>();
     }
+    if (price.tokenAmount === 0 || price.otherTokenAmount === 0) {
+      this.log.info('Skip zero price', price);
+      return new Observable<PricesDto>();
+    }
     const lastPrice = this.prices.get(price?.network)?.get(price?.tokenAddress?.toLowerCase());
     if (lastPrice && lastPrice.block > price.block) {
       this.log.warn('Price DTO older on ' + (lastPrice.block - price.block), lastPrice, price);
