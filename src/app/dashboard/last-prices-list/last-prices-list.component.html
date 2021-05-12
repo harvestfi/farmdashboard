@@ -1,24 +1,24 @@
 <div class="row main-row">
   <div class="first">
-    <div *ngFor="let fullName of getAllPrices()">
+    <div *ngFor="let price of getAllPrices()">
       <div class="value-card">
         <div class="name">
-          <text>{{fullNameToName(fullName)}}</text>
+          <text>{{price.token}}</text>
         </div>
         <div>
-          <text class="">${{ getPrice(fullName) | number: '1.0-1' }}</text>
+          <text class="">${{ getPrice(price) | number: '1.0-1' }}</text>
         </div>
       </div>
     </div>
   </div>
   <div class="second">
-    <div *ngFor="let fullName of getAllPrices()">
+    <div *ngFor="let price of getAllPrices()">
       <div class="value-card">
         <div class="name">
-          <text>{{ fullNameToName(fullName) }}</text>
+          <text>{{ price.token}}</text>
         </div>
         <div>
-          <text class="">${{ getPrice(fullName) | number: '1.0-1' }}</text>
+          <text class="">${{ getPrice(price) | number: '1.0-1' }}</text>
         </div>
       </div>
     </div>

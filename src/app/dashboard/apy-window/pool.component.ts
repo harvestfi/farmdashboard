@@ -32,11 +32,11 @@ export class PoolComponent implements OnInit {
     }
 
     hardwork(): HardWorkDto {
-        return this.hardworkData.getLastHardWork(this.vault.contract.name, this.vault.contract.network);
+        return this.hardworkData.getLastHardWork(this.vault.contract.address, this.vault.contract.network);
     }
 
     harvest(): HarvestDto {
-        return this.harvestData.getVaultLastInfo(this.vault.contract.name, this.vault.contract.network);
+        return this.harvestData.getVaultLastInfo(this.vault.contract.address, this.vault.contract.network);
     }
 
     toApy(n: number): number {
@@ -45,34 +45,22 @@ export class PoolComponent implements OnInit {
 
     // ---------------- GETTERS --------------------
 
-    get isAutoStakeVault(): boolean {
-        const hw = this.hardworkData.getLastHardWork(this.vault.contract.name, this.vault.contract.network);
-        if(hw?.autoStake === 1) {
-            return true;
-        }
-        return Utils.isAutoStakeVault(this.vault.contract.name);
-    }
-
-    get isFarmVault(): boolean {
-        return Utils.isFarmVault(this.vault.contract.name);
-    }
-
     get vaultRewardPeriod(): number {
-        return this.rewardData.getRewardPeriod(this.vault.contract.name, this.vault.contract.network);
+        return this.rewardData.getRewardPeriod(this.vault.contract.address, this.vault.contract.network);
     }
 
     get vaultReward(): number {
-        return this.rewardData.getReward(this.vault.contract.name, this.vault.contract.network);
+        return this.rewardData.getReward(this.vault.contract.address, this.vault.contract.network);
     }
 
     get vaultRewardApr(): number {
-        return this.rewardData.vaultRewardApr(this.vault.contract.name, this.vault.contract.network,
-            this.harvestData.getVaultLastInfo(this.vault.contract.name, this.vault.contract.network)?.lastUsdTvl,
+        return this.rewardData.vaultRewardApr(this.vault.contract.address, this.vault.contract.network,
+            this.harvestData.getVaultLastInfo(this.vault.contract.address, this.vault.contract.network)?.lastUsdTvl,
             this.priceData.getLastFarmPrice());
     }
 
     get vaultRewardWeeklyApy(): number {
-        return this.rewardData.getWeeklyApy(this.vault.contract.name, this.vault.contract.network);
+        return this.rewardData.getWeeklyApy(this.vault.contract.address, this.vault.contract.network);
     }
 
 }

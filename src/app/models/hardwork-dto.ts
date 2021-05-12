@@ -1,6 +1,7 @@
 export class HardWorkDto {
   id: string;
   vault: string;
+  vaultAddress: string;
   block: number;
   blockDate: number;
   network: string;
@@ -11,8 +12,6 @@ export class HardWorkDto {
   allProfit: number;
   periodOfWork: number;
   psPeriodOfWork: number;
-  perc: number;
-  apr: number;
   weeklyProfit: number;
   weeklyAllProfit: number;
   psTvlUsd: number;

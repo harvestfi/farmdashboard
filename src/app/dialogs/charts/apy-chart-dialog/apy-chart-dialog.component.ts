@@ -34,12 +34,12 @@ export class ApyChartDialogComponent extends ChartGeneralMethodsComponent implem
       chartBuilder.initVariables(3);
       data?.forEach(dto => {
         chartBuilder.addInData(0, dto.blockDate, (dto.fullRewardUsdTotal * (1 - dto.profitSharingRate)) / 1000);
-        chartBuilder.addInData(1, dto.blockDate, dto.apr);
+        chartBuilder.addInData(1, dto.blockDate, dto.fullRewardUsd);
         chartBuilder.addInData(2, dto.blockDate, dto.tvl / 1000000);
       });
       this.handleData(chartBuilder, [
         ['Profit K$', 'right', '#0085ff'],
-        ['Call APR %', '1', '#eeb000'],
+        ['Reward $', '1', '#eeb000'],
         ['TVL M$', '2', '#7e7e7e']
       ]);
     });

@@ -26,6 +26,7 @@
 
   </div>
   <div class="header">
+      <div class="header-column desktop-only">Network <i class="fas fa-sort"></i></div>
       <div (click)="sortVaultsList('name')" class="header-column">Name <i class="fas fa-sort"></i></div>
       <app-popover-card (click)="sortVaultsList('apy')" class="header-column">
         <ng-template>
@@ -42,40 +43,43 @@
   <div class="content">
     <div *ngIf="vaultsList | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
       <div *ngFor="let row of filteredVaults" class="row">
+        <div class="column desktop-only">
+          {{prettyNetwork(row.contract.network)}}
+        </div>
         <div class="column">
           <app-vault-icon [vault]="row.contract.name"></app-vault-icon> {{prettyName(row.contract.name)}}
         </div>
         <div class="column">
-          <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row.contract.name]">
-            <app-apy-window (showModal)="toggleAPYWindow(row.contract.name)"
+          <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row.contract.address]">
+            <app-apy-window (showModal)="toggleAPYWindow(row.contract.address)"
                             [vault]="row" [pool]="poolsList().get(row.contract.address)"></app-apy-window>
           </app-draggable-modal>
-          <app-popover-card class="pointer" (click)="toggleAPYWindow(row.contract.name)">
+          <app-popover-card class="pointer" (click)="toggleAPYWindow(row.contract.address)">
             <ng-template>
               <p>Click to open details</p>
             </ng-template>
-            {{prettifyNumber(vaultFullApy(row.contract.name, row.contract.network))}}% <i class="far fa-window-restore"></i>
+            {{prettifyNumber(vaultFullApy(row.contract.address, row.contract.network))}}% <i class="far fa-window-restore"></i>
           </app-popover-card>
         </div>
         <div  class="column">
-          <app-custom-modal [name]="'tvlModal_' + row.contract.name">
+          <app-custom-modal [name]="'tvlModal_' + row.contract.address">
             <ng-template>
-              <app-vault-tvl-dialog [vault]="row.contract.name" [network]="row.contract.network"></app-vault-tvl-dialog>
+              <app-vault-tvl-dialog [vault]="row.contract.address" [network]="row.contract.network"></app-vault-tvl-dialog>
             </ng-template>
           </app-custom-modal>
-          <app-popover-card class="pointer" (click)="openTvlDialog(row.contract.name)">
+          <app-popover-card class="pointer" (click)="openTvlDialog(row.contract.address)">
             <ng-template>
-              <p>TVL: {{vaultTvl(row.contract.name, row.contract.network) | number}}$</p>
+              <p>TVL: {{vaultTvl(row.contract.address, row.contract.network) | number}}$</p>
               <p>Click to open TVL history chart</p>
             </ng-template>
-          ${{prettifyNumber(vaultTvl(row.contract.name, row.contract.network))}}
+          ${{prettifyNumber(vaultTvl(row.contract.address, row.contract.network))}}
           </app-popover-card>
         </div>
         <div class="column desktop-only">
-          {{vaultUsers(row.contract.name, row.contract.network)}}
+          {{vaultUsers(row.contract.address, row.contract.network)}}
         </div>
         <div class="column desktop-only">
-          ${{vaultTotalEarning(row.contract.name, row.contract.network) | number: '1.1-1'}}
+          ${{vaultTotalEarning(row.contract.address, row.contract.network) | number: '1.1-1'}}
         </div>
       </div>
 

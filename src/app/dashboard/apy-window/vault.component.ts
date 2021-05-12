@@ -5,7 +5,6 @@ import {HarvestDataService} from '../../services/data/harvest-data.service';
 import {HardWorkDto} from '../../models/hardwork-dto';
 import {Vault} from '../../models/vault';
 import {HarvestDto} from '../../models/harvest-dto';
-import {Utils} from '../../static/utils';
 
 @Component({
     selector: 'app-vault',
@@ -24,24 +23,11 @@ export class VaultComponent implements OnInit {
     }
 
     hardwork(): HardWorkDto {
-        return this.hardworkData.getLastHardWork(this.vault.contract.name, this.vault.contract.network);
+        return this.hardworkData.getLastHardWork(this.vault.contract.address, this.vault.contract.network);
     }
 
     harvest(): HarvestDto {
-        return this.harvestData.getVaultLastInfo(this.vault.contract.name, this.vault.contract.network);
-    }
-    // ---------------- GETTERS --------------------
-
-    get isAutoStakeVault(): boolean {
-        const hw = this.hardworkData.getLastHardWork(this.vault.contract.name, this.vault.contract.network);
-        if(hw?.autoStake === 1) {
-            return true;
-        }
-        return Utils.isAutoStakeVault(this.vault.contract.name);
-    }
-
-    get isFarmVault(): boolean {
-        return Utils.isFarmVault(this.vault.contract.name);
+        return this.harvestData.getVaultLastInfo(this.vault.contract.address, this.vault.contract.network);
     }
 
     // ********* VAULT *************
@@ -50,13 +36,13 @@ export class VaultComponent implements OnInit {
     };
 
     get currentTvl(): number {
-        return this.hardwork()?.tvl;
+        return this.harvest()?.lastUsdTvl;
     };
 
     get vaultAvgTvl(): number {
         let avgTvl = this.hardwork()?.weeklyAverageTvl;
         if (!avgTvl || avgTvl === 0) {
-            avgTvl = this.hardwork()?.tvl;
+            avgTvl = this.currentTvl;
         }
         return avgTvl;
     }

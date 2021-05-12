@@ -3,8 +3,10 @@ export class UniswapDto {
   type: string;
   owner: string;
   coin: string;
+  coinAddress: string;
   amount: number;
   otherCoin: string;
+  otherCoinAddress: string;
   otherAmount: number;
   hash: string;
   block: string;
