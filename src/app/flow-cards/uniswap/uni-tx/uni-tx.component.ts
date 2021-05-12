@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {UniswapService} from '../../../services/http/uniswap.service';
 import {PriceDataService} from '../../../services/data/price-data.service';
+import {Addresses} from '../../../static/addresses';
 
 @Component({
   selector: 'app-uni-tx',
@@ -31,7 +32,7 @@ export class UniTxComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.uniswapService.getUniswapTxHistoryData().subscribe(
         (data) => {
-          this.log.debug('tx data fetched', data?.length);
+          this.log.debug('tx data fetched', data);
           data?.forEach((tx) => {
             UniswapDto.round(tx);
             this.addInArray(this.dtos, tx);
@@ -39,12 +40,13 @@ export class UniTxComponent implements AfterViewInit {
         }
     );
     this.priceData.subscribeToActual().subscribe(priceDto => {
-      const price = priceDto.price * this.priceData.getUsdPrice(priceDto.otherToken, priceDto.network);
-      const tx = priceDto.toUniswap();
-      tx.lastPrice = price;
-      if (tx.coin !== 'FARM') {
+      if (priceDto.tokenAddress !== Addresses.ADDRESSES.get('FARM')) {
         return;
       }
+      const price = priceDto.price * this.priceData.getUsdPrice(priceDto.otherTokenAddress, priceDto.network);
+      const tx = priceDto.toUniswap();
+      tx.lastPrice = price;
+
       if (!this.isUniqTx(tx)) {
         this.log.error('Not unique', tx);
         return;
@@ -66,10 +68,10 @@ export class UniTxComponent implements AfterViewInit {
   }
 
   private addInArray(arr: UniswapDto[], tx: UniswapDto): void {
-    if (tx.type === 'ADD' || tx.type === 'REM') {
+    if (tx.type === 'ADD' || tx.type === 'REM' || tx.coin !== 'FARM') {
       return;
     }
-    arr.unshift(tx);
+    arr.push(tx);
     if (arr.length > this.maxMessages) {
       arr.pop();
     }

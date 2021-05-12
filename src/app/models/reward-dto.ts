@@ -1,6 +1,7 @@
 export class RewardDto {
   id: string;
   vault: string;
+  vaultAddress: string;
   block: number;
   blockDate: number;
   reward: number;

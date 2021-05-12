@@ -6,6 +6,7 @@ import {IChartApi} from 'lightweight-charts';
 import {UniswapService} from '../../services/http/uniswap.service';
 import {PricesService} from '../../services/http/prices.service';
 import {PriceDataService} from '../../services/data/price-data.service';
+import {Addresses} from '../../static/addresses';
 
 @Component({
   selector: 'app-grain-chart',
@@ -14,7 +15,7 @@ import {PriceDataService} from '../../services/data/price-data.service';
 })
 export class GrainChartComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
-  coin = 'GRAIN';
+  coin = Addresses.ADDRESSES.get('GRAIN');
   chart: IChartApi;
 
   constructor(private uniswapService: UniswapService,
@@ -31,7 +32,7 @@ export class GrainChartComponent implements AfterViewInit {
     });
 
     this.priceData.subscribeToActual().subscribe(tx => {
-      if (tx.token !== this.coin) {
+      if (tx.tokenAddress !== this.coin) {
         return;
       }
       priceChartBuilder.collectLastTx(tx.price, tx.blockDate);

@@ -1,9 +1,8 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { HttpService } from '../../../services/http/http.service';
-import { StaticValues } from 'src/app/static/static-values';
-import { ViewTypeService } from '../../../services/view-type.service';
-import { NGXLogger } from 'ngx-logger';
-import { UniswapDto } from '../../../models/uniswap-dto';
+import {AfterViewInit, Component} from '@angular/core';
+import {StaticValues} from 'src/app/static/static-values';
+import {ViewTypeService} from '../../../services/view-type.service';
+import {NGXLogger} from 'ngx-logger';
+import {UniswapDto} from '../../../models/uniswap-dto';
 import {UniswapService} from '../../../services/http/uniswap.service';
 
 
@@ -50,6 +49,10 @@ export class UniHistoryDialogComponent implements AfterViewInit {
       this.txIds = new Set<string>();
     }
     return true;
+  }
+
+  getDtos() {
+    return this.dtos.sort((a, b) => b.blockDate - a.blockDate);
   }
 
   private addInArray(newValues: UniswapDto[]): void {

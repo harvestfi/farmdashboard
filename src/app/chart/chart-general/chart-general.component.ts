@@ -5,7 +5,7 @@ import {StaticValues} from '../../static/static-values';
 @Component({
   selector: 'app-chart-general',
   templateUrl: './chart-general.component.html',
-  styleUrls: ['./chart-general.component.css']
+  styleUrls: ['./chart-general.component.scss']
 })
 export class ChartGeneralComponent implements OnInit {
 
@@ -15,6 +15,7 @@ export class ChartGeneralComponent implements OnInit {
   @Output() network = new EventEmitter<string>();
   @ViewChild('chart') chartEl;
   networks: string[] = Array.from(StaticValues.NETWORKS.keys());
+  network_icons: Map<string, string> = StaticValues.NETWORK_ICON;
   chosenNetwork = 'eth';
 
   constructor(public vt: ViewTypeService) {

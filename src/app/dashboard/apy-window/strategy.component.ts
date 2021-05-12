@@ -24,27 +24,14 @@ export class StrategyComponent implements OnInit {
     }
 
     hardwork(): HardWorkDto {
-        return this.hardworkData.getLastHardWork(this.contract.name, this.contract.network);
+        return this.hardworkData.getLastHardWork(this.contract.address, this.contract.network);
     }
 
     harvest(): HarvestDto {
-        return this.harvestData.getVaultLastInfo(this.contract.name, this.contract.network);
+        return this.harvestData.getVaultLastInfo(this.contract.address, this.contract.network);
     }
 
     // ---------------- GETTERS --------------------
-
-    get isAutoStakeVault(): boolean {
-        const hw = this.hardworkData.getLastHardWork(this.contract.name, this.contract.network);
-        if(hw?.autoStake === 1) {
-            return true;
-        }
-        return Utils.isAutoStakeVault(this.contract.name);
-    }
-
-    get isFarmVault(): boolean {
-        return Utils.isFarmVault(this.contract.name);
-    }
-
 
     toApy(n: number): number {
         return Utils.aprToApyEveryDayReinvest(n);
@@ -64,7 +51,7 @@ export class StrategyComponent implements OnInit {
     }
 
     get vaultApr(): number {
-        return Math.max(this.hardworkData.getWeeklyApr(this.contract.name, this.contract.network), 0);
+        return Math.max(this.hardworkData.getWeeklyApr(this.contract.address, this.contract.network), 0);
     }
 
 }

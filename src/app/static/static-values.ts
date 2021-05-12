@@ -1,4 +1,5 @@
 import {Network} from '../models/network';
+import {Addresses} from './addresses';
 
 export class StaticValues {
   public static SECONDS_OF_DAY = 60 * 60 * 24;
@@ -29,16 +30,21 @@ export class StaticValues {
     ['bsc', StaticValues.NETWORK_BSC]
   ]);
 
+  public static NETWORK_ICON: Map<string, string> = new Map<string, string>([
+    ['eth', 'assets/icons/eth.svg'],
+    ['bsc', 'assets/icons/venus-wbnb.png']
+  ]);
+
   public static farmPools: string[] = [
-    'UNI_LP_USDC_FARM',
-    'UNI_LP_WETH_FARM',
-    'UNI_LP_GRAIN_FARM'
+    Addresses.ADDRESSES.get('UNI_LP_USDC_FARM'),
+    Addresses.ADDRESSES.get('UNI_LP_WETH_FARM'),
+    Addresses.ADDRESSES.get('UNI_LP_GRAIN_FARM')
   ];
 
   public static isPS: Set<string> = new Set<string>([
-    'PS_V0',
-    'PS',
-    'iPS',
+    Addresses.ADDRESSES.get('PS_V0'),
+    Addresses.ADDRESSES.get('PS'),
+    Addresses.ADDRESSES.get('iPS'),
   ]);
 
   public static mapCoinNameToSimple(name: string, network: string): string {
@@ -108,28 +114,11 @@ export class StaticValues {
     return name;
   }
 
-  public static isStableCoin(name: string): boolean {
-    name = name.replace('CRV_', '');
-    switch (name) {
-      case 'USD':
-      case 'USDC':
-      case 'USDT':
-      case 'USDN':
-      case 'USDP':
-      case 'YCRV':
-      case '3CRV':
-      case 'TUSD':
-      case 'DAI':
-      case 'CRV_GUSD':
-      case 'CRV_AAVE':
-      case 'BUSD':
-      case 'EPS_3POOL':
-      case 'CMPND':
-      case '3POOL':
-      case 'HUSD':
-      case 'NAME':
-      case 'GUSD':
-      case 'AAVE':
+  public static isStableCoin(address: string): boolean {
+    switch (address.toLowerCase()) {
+      case Addresses.ADDRESSES.get('USDC'):
+      case Addresses.ADDRESSES.get('BUSD'):
+      case Addresses.ADDRESSES.get('USDT'):
         return true;
       default:
         return false;

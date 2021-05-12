@@ -9,7 +9,7 @@ export class HarvestFilterPipe implements PipeTransform {
   tmp = [];
 
   transform(dtos: HarvestDto[], minUsdAmount: number, vault: string): HarvestDto[] {
-    if (!dtos || (!minUsdAmount && !vault)) {
+    if (!dtos || ((!minUsdAmount || minUsdAmount === 0) && (!vault || vault === 'all'))) {
       return dtos;
     }
     this.tmp = [];

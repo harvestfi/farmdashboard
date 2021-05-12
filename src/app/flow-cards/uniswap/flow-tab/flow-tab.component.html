@@ -2,7 +2,7 @@
 
   <div id="top-div-light">
 
-    <div class="trade-row" *ngFor="let dto of dtos | uniswapFilter:minAmount">
+    <div class="trade-row" *ngFor="let dto of getDtos() | uniswapFilter:minAmount">
       <app-uni-trade [fullDate]="showFullDate" [dto]="dto"></app-uni-trade>
     </div>
 

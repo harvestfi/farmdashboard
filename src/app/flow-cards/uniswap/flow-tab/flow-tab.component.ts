@@ -8,7 +8,7 @@ import {ViewTypeService} from '../../../services/view-type.service';
   styleUrls: ['./flow-tab.component.css']
 })
 export class FlowTabComponent implements OnInit {
-  @Input() dtos: UniswapDto[] = [];
+  @Input() private dtos: UniswapDto[] = [];
   @Input() maxHeight = 400;
   @Input() minAmount = 0;
   @Input() showFullDate = false;
@@ -59,6 +59,10 @@ export class FlowTabComponent implements OnInit {
       return 'devs';
     }
     return 'normal';
+  }
+
+  getDtos() {
+    return this.dtos.sort((a, b) => b.blockDate - a.blockDate);
   }
 
 }

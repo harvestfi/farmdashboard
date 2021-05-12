@@ -7,8 +7,10 @@ export class PricesDto {
   network: string;
   owner: string;
   token: string;
+  tokenAddress: string;
   tokenAmount: number;
   otherToken: string;
+  otherTokenAddress: string;
   otherTokenAmount: number;
   price: number;
   buy: boolean;
@@ -36,8 +38,10 @@ export class PricesDto {
     dto.type = this.buy ? 'BUY' : 'SELL';
     dto.owner = this.owner ?? '';
     dto.coin = this.token;
+    dto.coinAddress = this.tokenAddress;
     dto.amount = this.tokenAmount;
     dto.otherCoin = this.otherToken;
+    dto.otherCoinAddress = this.otherTokenAddress;
     dto.otherAmount = this.otherTokenAmount;
     dto.hash = this.id.split('_')[0];
     dto.block = this.block.toString();
