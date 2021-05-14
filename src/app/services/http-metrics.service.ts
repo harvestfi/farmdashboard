@@ -1,39 +1,44 @@
 import {EventEmitter, Inject, Injectable, OnDestroy} from '@angular/core';
 import {APP_CONFIG, AppConfig} from 'src/app.config';
 import {NGXLogger} from 'ngx-logger';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {catchError, finalize, tap} from 'rxjs/operators';
+import {BusyNotifierService} from './busy-notifier.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class HttpMetricsService {
+export class HttpMetricsService implements HttpInterceptor {
 
-    private bufferSize = 0;
-    private totalCompleted = 0;
-    public events = new EventEmitter<boolean>();
-    private callCounter = 0;
+    private requestCounter = 0;
 
-    constructor(@Inject(APP_CONFIG) public config: AppConfig,
-                private log: NGXLogger) {
+    constructor(private log: NGXLogger, private notifier: BusyNotifierService) {
     }
 
-    register(buffer): void {
-        this.bufferSize += buffer;
-        console.log(`===> Buffer is ${this.bufferSize}`);
-        this.events.emit(this.isBuffering());
-        console.log(`===> is buffer`, this.isBuffering());
+    private beginRequest() {
+        this.requestCounter += 1;
+        this.determineBusy();
     }
 
-    completed(amount: number) {
-        this.totalCompleted += amount;
-        this.callCounter += 1;
-        console.log(`Call counter`, this.callCounter, amount);
-        console.log(`===> Completed is ${this.bufferSize}`);
-        this.events.emit(this.isBuffering());
-        console.log(`===> is buffer`, this.isBuffering());
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        this.beginRequest();
+        return next.handle(req).pipe(
+            catchError((err, caught) => {
+                this.notifier.failure(err);
+                return caught;
+            }),
+            finalize(() => this.endRequest())
+        );
     }
 
-    private isBuffering(): boolean {
-        return this.totalCompleted < this.bufferSize;
+    private endRequest() {
+        this.requestCounter -= 1;
+        this.determineBusy();
     }
 
+    private determineBusy(){
+        this.notifier.setBusy(this.requestCounter > 0);
+        console.log(`=====> Busy: ${this.requestCounter === 0}`);
+    }
 }

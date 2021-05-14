@@ -22,7 +22,6 @@ export class HttpService {
       @Inject(APP_CONFIG) public config: AppConfig,
       private http: HttpClient,
       private snackService: SnackService,
-      private loadingService: HttpMetricsService,
       private log: NGXLogger
   ) {
   }
@@ -37,7 +36,6 @@ export class HttpService {
     }
     let request: Observable<T>;
     if (this.config.multipleSources) {
-      this.loadingService.register(1);
       const observables: Observable<T>[] = [];
       Object.keys(this.config.apiEndpoints)
       ?.forEach(netName => {
@@ -58,13 +56,11 @@ export class HttpService {
             return x;
           }),
           map(x => x.flat()),
-          tap(_ => this.loadingService.completed(1))
       );
     } else {
       const url = get(this.config.apiEndpoints, this.config.defaultNetwork)
           + `${urlAtr}network=${this.config.defaultNetwork}`;
       this.log.debug('HTTP get for network ' + this.config.defaultNetwork, url);
-      this.loadingService.register(1);
       request = this.http.get<T>(url).pipe(
           map(x => {
             // this.log.info('loaded by ' + url, x);
@@ -74,7 +70,6 @@ export class HttpService {
             }
             return x;
           }),
-          tap(_ => this.loadingService.completed(1)),
       );
     }
 
@@ -93,7 +88,6 @@ export class HttpService {
     } else {
       urlAtr += '&';
     }
-    this.loadingService.register(1);
     const url = get(this.config.apiEndpoints, network.ethparserName)
         + `${urlAtr}network=${network.ethparserName}`;
     this.log.debug('HTTP simple get for network ' + network.ethparserName, url);
@@ -104,7 +98,6 @@ export class HttpService {
           }
           return x;
         }),
-        tap(_ => this.loadingService.completed(1)),
         catchError(this.snackService.handleError<T>(url + ' error'))
     );
   }
