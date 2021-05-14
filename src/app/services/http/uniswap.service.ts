@@ -30,7 +30,10 @@ export class UniswapService {
         min_amount: number = 0,
         ordering: string = 'desc'
     ): Observable<Paginated<UniswapDto>> {
-        return this.httpService.httpGet(`/uni/pages?pageSize=${page_size}&page${page_number}&minAmount=${min_amount}&ordering=${ordering}`);
+        const apiUrl = `/uni/pages?pageSize=${page_size}` +
+                        `&page=${page_number}&minAmount=${min_amount}&ordering=${ordering}`;
+
+        return this.httpService.httpGet(apiUrl);
     }
 
     getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
