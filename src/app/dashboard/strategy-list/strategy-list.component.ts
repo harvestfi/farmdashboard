@@ -61,19 +61,28 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     .filter(_ => _.isActive());
   }
 
-  poolsList(): Map<string,Pool> {
+  prettyNetwork(name: string): string {
+    if (name === 'eth') {
+      return 'Ethereum';
+    } else if (name === 'bsc') {
+      return 'Binance';
+    }
+    return name;
+  }
+
+  poolsList(): Map<string, Pool> {
     return Array.from(this.contractsService.getContracts(Pool).values()).reduce((m, pool) => {
       m.set(pool.lpToken.address, pool);
       return m;
-    }, new Map<string,Pool>());
+    }, new Map<string, Pool>());
   }
 
-  toggleAPYWindow(name: string): void {
-    if (!(name in this.apyWindowState)) {
-      this.apyWindowState[name] = true;
+  toggleAPYWindow(address: string): void {
+    if (!(address in this.apyWindowState)) {
+      this.apyWindowState[address] = true;
       return;
     }
-    this.apyWindowState[name] = !this.apyWindowState[name];
+    this.apyWindowState[address] = !this.apyWindowState[address];
   }
 
   sortVaultsList(sortBy?: string): void{
@@ -81,9 +90,9 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
 
-  openTvlDialog(name: string): void {
+  openTvlDialog(address: string): void {
     this.tvlModals
-    .find(e => e.name === 'tvlModal_' + name)
+    .find(e => e.name === 'tvlModal_' + address)
     ?.open();
   }
 }

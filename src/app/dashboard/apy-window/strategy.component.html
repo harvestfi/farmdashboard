@@ -1,12 +1,4 @@
-<div *ngIf="isAutoStakeVault">
-    <p>It's AutoStake vault, only FARM rewards.</p>
-</div>
-
-<div *ngIf="isFarmVault">
-    <p>It's FARM LP, only FARM rewards</p>
-</div>
-
-<div *ngIf="!isAutoStakeVault && !isFarmVault">
+<div>
     <p>Strategy Address: <app-address-link [contract]="contract"></app-address-link></p>
     <p>Total earned: {{vaultEarned | number: '1.1-1'}}$</p>
     <p>Last week earned: {{vaultEarnedLastWeek | number: '1.1-1'}}$</p>

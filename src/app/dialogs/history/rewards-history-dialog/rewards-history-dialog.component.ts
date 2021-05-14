@@ -55,7 +55,7 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         .subscribe((data) => {
             this.log.info('Rewards loaded', data);
             this.rewards.push(...(data
-            .filter(r => !Utils.isAutoStakeVault(r.vault) || r.isWeeklyReward)
+            .filter(r => !Utils.isAutoStakeVault(r.vaultAddress) || r.isWeeklyReward)
             .map(RewardDto.fillBlockDateAdopted)
             .reverse()));
             this.ready = true;
