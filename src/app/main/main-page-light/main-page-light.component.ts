@@ -23,13 +23,11 @@ export class MainPageLightComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadingService.busy.subscribe(buffering => {
-      console.log('====> setting buffering to', buffering);
       this.buffering = buffering;
     });
     this.loadingService.failures.subscribe(err => {
       if(err instanceof Error){
         this.dialog.open(ApplicationErrorDialog);
-        console.log(`ERROR HAPPENED: ${err}`);
       }
     });
   }
