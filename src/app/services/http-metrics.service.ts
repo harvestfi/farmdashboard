@@ -39,6 +39,5 @@ export class HttpMetricsService implements HttpInterceptor {
 
     private determineBusy(){
         this.notifier.setBusy(this.requestCounter > 0);
-        console.log(`=====> Busy: ${this.requestCounter === 0}`);
     }
 }
