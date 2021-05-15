@@ -6,8 +6,6 @@ import {Utils} from '../../../static/utils';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {RewardsService} from '../../../services/http/rewards.service';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-rewards-history-dialog',
@@ -44,10 +42,9 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         this.loadRewardsHistory();
     }
 
-    get vaultNames(): Observable<string[]> {
-        return this.contractsService.getContractsArray(Vault).pipe(
-            map(_ => _.map(v => v.contract?.name))
-        );
+    get vaultNames(): string[] {
+        return this.contractsService.getContractsArray(Vault)
+            .map(_ => _.contract?.name);
     }
 
 
@@ -55,16 +52,16 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         this.rewardsService.getAllHistoryRewards(
             Math.floor(this.startDate.getTime() / 1000),
             Math.floor(this.endDate.getTime() / 1000))
-        .subscribe((data) => {
-            this.log.info('Rewards loaded', data);
-            this.rewards.push(...(data
-            .filter(r => !Utils.isAutoStakeVault(r.vault) || r.isWeeklyReward)
-            .map(RewardDto.fillBlockDateAdopted)
-            .reverse()));
-            this.ready = true;
-            this.disabled = false;
-            this.cdRef.detectChanges();
-        });
+            .subscribe((data) => {
+                this.log.info('Rewards loaded', data);
+                this.rewards.push(...(data
+                    .filter(r => !Utils.isAutoStakeVault(r.vault) || r.isWeeklyReward)
+                    .map(RewardDto.fillBlockDateAdopted)
+                    .reverse()));
+                this.ready = true;
+                this.disabled = false;
+                this.cdRef.detectChanges();
+            });
     }
 
     loadMoreRewardsHistory(): void {

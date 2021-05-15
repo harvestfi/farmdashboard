@@ -7,8 +7,6 @@ import {HardworksService} from '../../../services/http/hardworks.service';
 import {Paginated} from '../../../models/paginated';
 import {HardWorkDto} from '../../../models/hardwork-dto';
 import {StaticValues} from '../../../static/static-values';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-hard-work-history-list-dialog',
@@ -40,29 +38,28 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
 
   getDtoDataForPage(page_number: number): void {
     this.hardworksService
-    .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount, 'desc',
-        StaticValues.NETWORKS.get(this.network))
-    .subscribe(response => {
-          this.log.info('Load hw pages', response);
-          if ('data' in response) {
-            return this.dtos = response;
-          }
-          this.dtos = {
-            currentPage: 0,
-            nextPage: -1,
-            previousPage: -1,
-            totalPages: 0,
-            data: []
-          };
-        }
-    )
-    .add(() => this.ready = true);
+        .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount, 'desc',
+            StaticValues.NETWORKS.get(this.network))
+        .subscribe(response => {
+              this.log.info('Load hw pages', response);
+              if ('data' in response) {
+                return this.dtos = response;
+              }
+              this.dtos = {
+                currentPage: 0,
+                nextPage: -1,
+                previousPage: -1,
+                totalPages: 0,
+                data: []
+              };
+            }
+        )
+        .add(() => this.ready = true);
   }
 
-  get vaultNames(): Observable<string[]> {
-    return this.contractsService.getContractsArray(Vault).pipe(
-      map(vaults => vaults.map(_ => _.contract.name))
-    );
+  get vaultNames(): string[] {
+    return this.contractsService.getContractsArray(Vault)
+        .map(_ => _.contract.name);
   }
 
   // These methods all seem redundant, but I separated them because we may

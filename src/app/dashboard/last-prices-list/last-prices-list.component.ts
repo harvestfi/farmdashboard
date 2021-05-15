@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {PriceDataService} from '../../services/data/price-data.service';
+import {PricesDto} from '../../models/prices-dto';
 
 @Component({
   selector: 'app-last-prices-list',
@@ -15,13 +16,8 @@ export class LastPricesListComponent {
     return this.pricesData.getAllPrices();
   }
 
-  fullNameToName(fName: string): string {
-    return fName.split('&')[1];
-  }
-
-  getPrice(fName: string): number {
-    const tmp = fName.split('&');
-    return this.pricesData.getUsdPrice(tmp[1], tmp[0]);
+  getPrice(priceDto: PricesDto): number {
+    return this.pricesData.getUsdPrice(priceDto.tokenAddress, priceDto.network);
   }
 
 }

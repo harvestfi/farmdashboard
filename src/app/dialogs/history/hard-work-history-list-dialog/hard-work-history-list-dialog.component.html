@@ -9,13 +9,13 @@
     <div class="fields-container">
       <select (change)="handleFilterUpdate($event)" [(ngModel)]="vaultFilter" class="strategy-select-field">
         <option [value]="''">All</option>
-        <option *ngFor="let name of vaultNames | async" [value]="name">{{name}}</option>
+        <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
       </select>
       <input (input)="handleFilterUpdate($event)"
              [(ngModel)]="minAmount" class="less-than-filter-field"
              placeholder="More than..." type="number" min="0">
 
-        <div class="network-toggle">
+      <div class="network-toggle">
           <span *ngFor="let n of networks">
             <input [id]="n" class="network-input" (change)="choseNetwork()" [value]="n" [(ngModel)]="network" [checked]="n == network" type="radio" name="network" >
             <label class="network-label" [class]="vt.getThemeColor()" [for]="n">
@@ -31,5 +31,5 @@
     <app-paginator (selectPage)="selectPage($event)" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)" [pageObject]="dtos"></app-paginator>
   </ng-template>
 
-  
+
 </div>

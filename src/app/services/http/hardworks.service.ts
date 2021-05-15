@@ -74,7 +74,7 @@ export class HardworksService implements WsConsumer {
         page_size: number = 10,
         page_number: number = 0,
         vault?: string,
-        minAmount: number = 0,
+        minAmount: number = -1,
         ordering: string = 'desc',
         network: Network = StaticValues.NETWORKS.get('eth')):
         Observable<Paginated<HardWorkDto>> {
@@ -95,9 +95,9 @@ export class HardworksService implements WsConsumer {
         if (this.config.multipleSources) {
             return forkJoin([
                 this.getPaginatedHardworkHistoryData(
-                    size, 0, '', 0, 'desc', StaticValues.NETWORKS.get('eth')),
+                    size, 0, '', -1, 'desc', StaticValues.NETWORKS.get('eth')),
                 this.getPaginatedHardworkHistoryData(
-                    size, 0, '', 0, 'desc', StaticValues.NETWORKS.get('bsc'))
+                    size, 0, '', -1, 'desc', StaticValues.NETWORKS.get('bsc'))
             ]).pipe(
                 map(restResponses => restResponses.map(resp => resp?.data)),
                 map(x => x.flat())

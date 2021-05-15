@@ -32,7 +32,6 @@ import { SidebarModule } from 'ng-sidebar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SnackBarComponent } from './main/snack-bar/snack-bar.component';
-import { AllStatsDialogComponent } from './dialogs/all-stats-dialog/all-stats-dialog.component';
 import { MatSortModule } from '@angular/material/sort';
 import { LoadingSpinnerComponent } from './main/loading-spinner/loading-spinner.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -118,7 +117,6 @@ import {ApplicationErrorDialog} from './main/main-page-light/application-error-d
     CenterViewComponent,
     UniTradeComponent,
     SnackBarComponent,
-    AllStatsDialogComponent,
     LoadingSpinnerComponent,
     ApyChartDialogComponent,
     WeeklyProfitDialogComponent,

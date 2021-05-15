@@ -24,16 +24,15 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
   disabled = false;
 
   constructor(
-    public vt: ViewTypeService,
-    private log: NGXLogger,
-    private contractsService: ContractsService,
-    private harvestsService: HarvestsService
+      public vt: ViewTypeService,
+      private log: NGXLogger,
+      private contractsService: ContractsService,
+      private harvestsService: HarvestsService
   ) {}
 
-  get tvlNames(): Observable<string[]> {
-    return this.contractsService.getContractsArray(Vault).pipe(
-        map(_ => _.map(v => v.contract.name))
-    );
+  get tvlNames(): string[] {
+    return this.contractsService.getContractsArray(Vault)
+        .map(_ => _.contract.name);
   }
 
   ngAfterViewInit(): void {
@@ -48,12 +47,12 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
       return;
     }
     this.harvestsService
-      .getHarvestTxHistoryByRangeAllNetworks(
-          this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2),
-          this.lowestBlockDate)
-      .subscribe(data => {
-        this.addInArray(data);
-      }).add(() => this.disabled = false);
+        .getHarvestTxHistoryByRangeAllNetworks(
+            this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2),
+            this.lowestBlockDate)
+        .subscribe(data => {
+          this.addInArray(data);
+        }).add(() => this.disabled = false);
   }
 
   private isUniqTx(tx: HarvestDto): boolean {

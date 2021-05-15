@@ -50,42 +50,42 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   }
 
   ngOnInit(): void {
-    // forkJoin([this.poolsList(), this.vaultsList(), this.assetList()])
-    //     .subscribe(([pools, vaults, assets]) => {
-    //   this.pools = pools;
-    //   this.vaults = vaults;
-    //   this.assets = assets;
-    //   this.loading = false;
-    // });
+    this.poolsList();
   };
 
-  get assetList(): Observable<string[]> {
-    return this.contractsService.getContracts(Token).pipe(
-      map(tokens => Array.from(tokens.keys()).sort((a, b) => b.localeCompare(a))),
-    );
+  get assetList(): string[] {
+    const result = assets;
+    this.contractsService.getContractsArray(Token)?.forEach(t => result.add(t.contract.name));
+    return Array.from(result.values()).sort((a, b) => b.localeCompare(a));
   }
 
-  get vaultsList(): Observable<Vault[]> {
-    return this.contractsService.getContractsArray(Vault).pipe(
-        map(_ => _.filter(v => v.isActive())),
-    );
+  get vaultsList(): Vault[] {
+    return this.contractsService.getContractsArray(Vault)
+        .filter(_ => _.isActive());
   }
 
-  get poolsList(): Observable<Map<string,Pool>> {
-    return this.contractsService.getContractsArray(Pool).pipe(
-        map(pools => pools.reduce((m, p) => {
-            m.set(p.lpToken.address, p);
-            return m;
-          }, new Map<string,Pool>())),
-    );
+  poolsList(): Map<string,Pool> {
+    return Array.from(this.contractsService.getContracts(Pool).values()).reduce((m, pool) => {
+      m.set(pool.lpToken.address, pool);
+      return m;
+    }, new Map<string,Pool>());
   }
 
-  toggleAPYWindow(name: string): void {
-    if (!(name in this.apyWindowState)) {
-      this.apyWindowState[name] = true;
+  prettyNetwork(name: string): string {
+    if (name === 'eth') {
+      return 'Ethereum';
+    } else if (name === 'bsc') {
+      return 'Binance';
+    }
+    return name;
+  }
+
+  toggleAPYWindow(address: string): void {
+    if (!(address in this.apyWindowState)) {
+      this.apyWindowState[address] = true;
       return;
     }
-    this.apyWindowState[name] = !this.apyWindowState[name];
+    this.apyWindowState[address] = !this.apyWindowState[address];
   }
 
   sortVaultsList(sortBy?: string): void{
@@ -93,9 +93,9 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
 
-  openTvlDialog(name: string): void {
+  openTvlDialog(address: string): void {
     this.tvlModals
-    .find(e => e.name === 'tvlModal_' + name)
+    .find(e => e.name === 'tvlModal_' + address)
     ?.open();
   }
 }

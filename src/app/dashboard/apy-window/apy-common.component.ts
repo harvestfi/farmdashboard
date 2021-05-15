@@ -31,11 +31,11 @@ export class ApyCommonComponent implements OnInit {
     }
 
     hardwork(): HardWorkDto {
-        return this.hardworkData.getLastHardWork(this.vault.contract.name, this.vault.contract.network);
+        return this.hardworkData.getLastHardWork(this.vault.contract.address, this.vault.contract.network);
     }
 
     harvest(): HarvestDto {
-        return this.harvestData.getVaultLastInfo(this.vault.contract.name, this.vault.contract.network);
+        return this.harvestData.getVaultLastInfo(this.vault.contract.address, this.vault.contract.network);
     }
 
     toApy(n: number): number {
@@ -43,13 +43,13 @@ export class ApyCommonComponent implements OnInit {
     }
 
     get vaultRewardApr(): number {
-        return this.rewardData.vaultRewardApr(this.vault.contract.name, this.vault.contract.network,
-            this.harvestData.getVaultLastInfo(this.vault.contract.name, this.vault.contract.network)?.lastUsdTvl,
+        return this.rewardData.vaultRewardApr(this.vault.contract.address, this.vault.contract.network,
+            this.harvestData.getVaultLastInfo(this.vault.contract.address, this.vault.contract.network)?.lastUsdTvl,
             this.priceData.getLastFarmPrice());
     }
 
     get vaultApr(): number {
-        return Math.max(this.hardworkData.getWeeklyApr(this.vault.contract.name, this.vault.contract.network), 0);
+        return Math.max(this.hardworkData.getWeeklyApr(this.vault.contract.address, this.vault.contract.network), 0);
     }
 
 }

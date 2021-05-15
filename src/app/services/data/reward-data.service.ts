@@ -3,6 +3,9 @@ import {RewardDto} from '../../models/reward-dto';
 import {StaticValues} from '../../static/static-values';
 import {RewardsService} from '../http/rewards.service';
 import {NGXLogger} from 'ngx-logger';
+import {ContractsService} from '../contracts.service';
+import {Vault} from '../../models/vault';
+import {Addresses} from '../../static/addresses';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +19,7 @@ export class RewardDataService {
 
   constructor(
       private rewardService: RewardsService,
+      private contractService: ContractsService,
       private log: NGXLogger
   ) {
     this.load();
@@ -40,51 +44,55 @@ export class RewardDataService {
       this.log.warn('Old vault info', dto);
       return;
     }
-    this.lastRewards.get(dto.network).set(dto.vault, dto);
+    this.lastRewards.get(dto.network).set(dto.vaultAddress, dto);
   }
 
   private isNotActual(dto: RewardDto): boolean {
     return !dto
-        || this.lastRewards.get(dto.network)?.get(dto.vault)?.blockDate > dto.blockDate;
+        || this.lastRewards.get(dto.network)?.get(dto.vaultAddress)?.blockDate > dto.blockDate;
   }
 
-  public getLastReward(name: string, network: string): RewardDto {
-    return this.lastRewards.get(network).get(name);
+  public getLastReward(address: string, network: string): RewardDto {
+    return this.lastRewards.get(network).get(address);
   }
 
-  public getRewardPeriod(name: string, network: string): number {
-    const reward = this.lastRewards.get(network).get(name);
+  public getRewardPeriod(address: string, network: string): number {
+    const reward = this.lastRewards.get(network).get(address);
     if (!reward || (Date.now() / 1000) > reward.periodFinish) {
       return 0;
     }
     return ((reward.periodFinish - reward.blockDate) / 60 / 60 / 24);
   }
 
-  public getReward(name: string, network: string): number {
-    const reward = this.lastRewards.get(network).get(name);
+  public getReward(address: string, network: string): number {
+    const reward = this.lastRewards.get(network).get(address);
     if (!reward || (Date.now() / 1000) > reward.periodFinish) {
       return 0;
     }
     return reward.reward;
   }
 
-  public getWeeklyApy(name: string, network: string): number {
-    const reward = this.lastRewards.get(network).get(name);
+  public getWeeklyApy(address: string, network: string): number {
+    const reward = this.lastRewards.get(network).get(address);
     if (!reward || (Date.now() / 1000) > reward.periodFinish) {
       return 0;
     }
     return reward.weeklyApy;
   }
 
-  vaultRewardApr(vaultName: string, network: string, usdTvl: number, farmPrice: number): number {
-    const reward = this.lastRewards.get(network).get(vaultName);
+  vaultRewardApr(vaultAddress: string, network: string, usdTvl: number, farmPrice: number): number {
+    const reward = this.lastRewards.get(network).get(vaultAddress);
     if (!reward || !usdTvl || usdTvl === 0) {
       return 0;
     }
-    if ((Date.now() / 1000) > reward.periodFinish && !StaticValues.isPS.has(vaultName)) {
-      if (!this.rewardEnded.has(vaultName)) {
-        this.log.warn(vaultName + ' reward setup zero, it is ended');
-        this.rewardEnded.add(vaultName);
+    if ((Date.now() / 1000) > reward.periodFinish && !StaticValues.isPS.has(vaultAddress)) {
+      if (!this.rewardEnded.has(vaultAddress)) {
+        this.log.warn('Reward setup zero, it is ended',
+            this.contractService.getContracts(Vault).get(vaultAddress)?.contract?.name,
+            this.contractService.getContracts(Vault).get(vaultAddress),
+            reward);
+        this.rewardEnded.add(vaultAddress);
+        this.rewardEnded.add(vaultAddress);
       }
       return 0;
     }

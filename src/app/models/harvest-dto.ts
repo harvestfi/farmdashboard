@@ -1,5 +1,5 @@
-import {PricesDto} from './prices-dto';
 import {LpStat} from './lp-stat';
+import {Utils} from '../static/utils';
 
 export class HarvestDto {
   id: string;
@@ -13,6 +13,7 @@ export class HarvestDto {
   amount: number;
   amountIn: number;
   vault: string;
+  vaultAddress: string;
   lastGas: number;
   lastTvl: number;
   lastUsdTvl: number;
@@ -67,4 +68,9 @@ export class HarvestDto {
         + ' TVL is ' + this.lastUsdTvl?.toFixed(2) + '$'
         ;
   }
+
+  public get prettyName(): string {
+    return Utils.prettyVaultName(this.vault);
+  }
+
 }

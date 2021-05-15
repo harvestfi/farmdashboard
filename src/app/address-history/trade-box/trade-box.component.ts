@@ -39,9 +39,7 @@ export class TradeBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contractsService.getContracts(Vault).subscribe(obs => {
-      this.vaults = obs;
-    });
+    this.vaults = this.contractsService.getContracts(Vault);
     this.otherSideAddress = this.getTransferOtherSide();
     this.otherSideName = this.getTransferOtherSidePretty();
   }
