@@ -15,6 +15,7 @@
             </app-popover-card>
             <input #harvestDtoFilter class="more-than-input" placeholder="More than..." type="number" min="0">
         </div>
+
         <app-harvest-flow-tab [dtos]="dtos" [minAmount]="+harvestDtoFilter.value" [vaultFilter]="vaultFilter"
             [showFullDate]=true>
         </app-harvest-flow-tab>
