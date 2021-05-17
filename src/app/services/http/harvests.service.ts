@@ -89,9 +89,8 @@ export class HarvestsService implements WsConsumer {
         vault?: string,
         ordering: string = 'desc'
     ): Observable<Paginated<HarvestDto>> {
-        // eslint-disable-next-line max-len
-        const api_url = `harvest/pages?pageSize=${page_size}&token=${Addresses.ADDRESSES.get('FARM')}` +
-                        `&page=${page_number}&minAmount=${min_amount}${vault && ('&vault=' + vault)}&ordering=${ordering}`;
+        const api_url = `/harvest/pages?pageSize=${page_size}&page=${page_number}&minAmount=${min_amount}` +
+                        `&ordering=${ordering}&token=${Addresses.ADDRESSES.get('FARM')}`;
         return this.httpService.httpGet(api_url);
     }
 

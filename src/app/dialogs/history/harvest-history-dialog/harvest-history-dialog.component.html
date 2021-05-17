@@ -13,7 +13,7 @@
                     <option *ngFor="let name of tvlNames" [value]="name">{{name}}</option>
                 </select>
             </app-popover-card>
-            <input (change)="handleFilterUpdate($event)" #harvestDtoFilter class="more-than-input" placeholder="More than..." type="number" min="0">
+            <input (change)="handleFilterUpdate($event)" [(ngModel)]="minAmount" #harvestDtoFilter class="more-than-input" placeholder="More than..." type="number" min="0">
         </div>
       
         <app-harvest-flow-tab [dtos]="paginated_dtos.data" [showFullDate]=true></app-harvest-flow-tab>
