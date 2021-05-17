@@ -15,6 +15,8 @@ export class UniswapDto {
   lastGas: number;
   blockDate: number;
   methodName: string;
+  lp: string;
+  lpAddress: string;
 
   blockDateAdopted: Date;
 

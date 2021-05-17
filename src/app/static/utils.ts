@@ -126,10 +126,6 @@ export class Utils {
     return false;
   }
 
-  public static isFarmVault(name: string): boolean {
-    return name.indexOf('FARM') >= 0;
-  }
-
   public static prettifyNumber(n: number): string {
     if (n < 1000) {
       return n.toFixed(1);
@@ -155,13 +151,38 @@ export class Utils {
   }
 
   public static prettyVaultName(name: string): string {
+    let postfix = '';
+    if (!!name && name.split('_#').length === 2) {
+      postfix = '_' + name.split('_#')[1];
+      name = name.split('_#')[0];
+    }
     switch (name) {
       case 'CRV_YDAI_YUSDC_YUSDT_YTUSD':
         name = 'YCRV';
+        break;
+      case 'yDAI_yUSDC_yUSDT_yBUSD':
+      case 'CRV_yDAI_yUSDC_yUSDT_yBUSD':
+        name = 'CRV_BUSD';
+        break;
+      case 'BELT_bDAI_bUSDC_bUSDT_bBUSD':
+        name = 'BELT_BUSD';
+        break;
+      case 'CRV_yDAI_yUSDC_yUSDT_yTUSD':
+        name = 'CRV_TUSD';
+        break;
+      case 'CRV_oBTC_sbtcCRV':
+        name = 'CRV_sBTC';
+        break;
     }
 
     if (name.split('_').length >= 3) {
-      name = name.replace('ONEINCH_', '');
+      name = name.replace('ONEINCH_', '')
+          .replace('1INCH', '')
+          .replace('SUSHI_', '')
+          .replace('UNI_', '')
+          .replace('PCS_', '')
+          + postfix
+      ;
     }
     return name.replace('ONEINCH', '1INCH');
   }

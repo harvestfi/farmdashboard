@@ -32,7 +32,7 @@ export class VaultComponent implements OnInit {
 
     // ********* VAULT *************
     get sharePrice(): number {
-        return this.harvest().sharePrice;
+        return this.harvest()?.sharePrice;
     };
 
     get currentTvl(): number {

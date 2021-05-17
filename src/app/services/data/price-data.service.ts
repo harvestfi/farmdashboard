@@ -33,7 +33,7 @@ export class PriceDataService {
       prices.sort((a,b) => a.token.localeCompare(b.token))
       .forEach(this.handlePrice.bind(this));
       // load last farm again for avoid errors with otherToken price calculation
-      this.pricesService.getLastPrice(StaticValues.FARM_ADDRESS, StaticValues.NETWORKS.get('eth'))
+      this.pricesService.getLastPrice(Addresses.ADDRESSES.get('FARM'), StaticValues.NETWORKS.get('eth'))
       .subscribe(p => this.handlePrice(p));
     });
 

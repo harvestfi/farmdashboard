@@ -40,6 +40,9 @@
       <div (click)="sortVaultsList('users')" class="header-column desktop-only">Users <i class="fas fa-sort"></i></div>
       <div (click)="sortVaultsList('total_earned')" class="header-column desktop-only">Total Earned <i class="fas fa-sort"></i></div>
   </div>
+
+<!--  ******** VALUES ************** -->
+
   <div class="content">
     <div *ngIf="vaultsList | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
       <div *ngFor="let row of filteredVaults" class="row">
