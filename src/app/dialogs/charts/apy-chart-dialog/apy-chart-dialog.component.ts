@@ -1,11 +1,9 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {HttpService} from '../../../services/http/http.service';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../../chart/chart-builder';
-import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component';
-import { IChartApi } from 'lightweight-charts';
-import {HarvestsService} from '../../../services/http/harvests.service';
+import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 import {HardworksService} from '../../../services/http/hardworks.service';
 import {StaticValues} from '../../../static/static-values';
 
@@ -26,7 +24,7 @@ export class ApyChartDialogComponent extends ChartGeneralMethodsComponent implem
   }
 
   load(): void {
-    console.log('data', this.data);
+    this.log.info('APY window data', this.data);
     this.hardworksService.getHardWorkHistoryDataByAddress(this.data.address,
         StaticValues.NETWORKS.get(this.data.network)).subscribe(data => {
       this.log.debug('History of All Incomes loaded ', data);

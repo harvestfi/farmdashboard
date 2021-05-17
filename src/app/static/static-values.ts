@@ -39,7 +39,7 @@ export class StaticValues {
     Addresses.ADDRESSES.get('UNI_LP_GRAIN_FARM')
   ];
 
-  public static isPS: Set<string> = new Set<string>([
+  public static PS_VAULTS: Set<string> = new Set<string>([
     Addresses.ADDRESSES.get('PS_V0'),
     Addresses.ADDRESSES.get('PS'),
     Addresses.ADDRESSES.get('iPS'),
