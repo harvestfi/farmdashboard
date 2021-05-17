@@ -38,23 +38,23 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
 
   getDtoDataForPage(page_number: number): void {
     this.hardworksService
-        .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount, 'desc',
-            StaticValues.NETWORKS.get(this.network))
-        .subscribe(response => {
-              this.log.info('Load hw pages', response);
-              if ('data' in response) {
-                return this.dtos = response;
-              }
-              this.dtos = {
-                currentPage: 0,
-                nextPage: -1,
-                previousPage: -1,
-                totalPages: 0,
-                data: []
-              };
-            }
-        )
-        .add(() => this.ready = true);
+    .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount, 'desc',
+        StaticValues.NETWORKS.get(this.network))
+    .subscribe(response => {
+          this.log.info('Load hw pages', response);
+          if ('data' in response) {
+            return this.dtos = response;
+          }
+          this.dtos = {
+            currentPage: 0,
+            nextPage: -1,
+            previousPage: -1,
+            totalPages: 0,
+            data: []
+          };
+        }
+    )
+    .add(() => this.ready = true);
   }
 
   get vaultNames(): string[] {
