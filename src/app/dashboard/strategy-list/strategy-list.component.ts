@@ -12,9 +12,6 @@ import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Token} from '../../models/token';
 import {Pool} from '../../models/pool';
-import {map, tap} from 'rxjs/operators';
-import {forkJoin, Observable} from 'rxjs';
-import {HttpMetricsService} from '../../services/http-metrics.service';
 
 @Component({
   selector: 'app-strategy-list',

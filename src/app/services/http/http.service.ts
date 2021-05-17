@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SnackService} from '../snack.service';
 import {forkJoin, Observable} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {TransferDto} from '../../models/transfer-dto';
 import {Balance} from '../../models/balance';
 import {Network} from '../../models/network';
@@ -11,7 +11,6 @@ import {APP_CONFIG, AppConfig} from 'src/app.config';
 import {NGXLogger} from 'ngx-logger';
 import get = Reflect.get;
 import {RestResponse} from '../../models/rest-response';
-import {HttpMetricsService} from '../http-metrics.service';
 
 @Injectable({
   providedIn: 'root'
