@@ -13,6 +13,7 @@ import {ApplicationErrorDialog} from './application-error-dialog';
 export class MainPageLightComponent implements OnInit {
 
   buffering = true;
+  private errored = false;
 
   constructor(public vt: ViewTypeService,
               public ws: WebsocketService,
@@ -26,7 +27,8 @@ export class MainPageLightComponent implements OnInit {
       this.buffering = buffering;
     });
     this.loadingService.failures.subscribe(err => {
-      if(err instanceof Error){
+      if(!this.errored && err instanceof Error){
+        this.errored = true;
         this.dialog.open(ApplicationErrorDialog);
       }
     });
