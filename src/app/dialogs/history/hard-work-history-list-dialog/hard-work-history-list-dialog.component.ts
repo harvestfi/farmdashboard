@@ -59,7 +59,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
 
   get vaultNames(): string[] {
     return this.contractsService.getContractsArray(Vault)
-        .map(_ => _.contract.name);
+    .map(_ => _.contract.name);
   }
 
   // These methods all seem redundant, but I separated them because we may
