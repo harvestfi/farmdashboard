@@ -40,7 +40,7 @@
 
     <app-custom-modal #incomeModal>
       <ng-template>
-        <app-apy-chart-dialog [data]="{title: vault.name + ' Income history chart', name: vault.contract.name, network: vault.contract.network}"></app-apy-chart-dialog>
+        <app-apy-chart-dialog [data]="{title: vault.name + ' Income history chart', address: vault.contract.address, network: vault.contract.network}"></app-apy-chart-dialog>
       </ng-template>
     </app-custom-modal>
 

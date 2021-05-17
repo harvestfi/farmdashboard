@@ -3,9 +3,10 @@
   <app-popover-card class="trade-date left-border-box trade-field">
     <ng-template>
       <p>{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}</p>
+      <p>{{dto.lp}}</p>
       <p>{{dto.type}}</p>
-      <p>FARM: {{dto.amount | number}}</p>
-      <p>Other coin: {{dto.otherAmount | number}}</p>
+      <p>{{dto.coin}}: {{dto.amount | number}}</p>
+      <p>{{dto.otherCoin}}: {{dto.otherAmount | number}}</p>
       <p>Price: {{dto.lastPrice | number}}</p>
       <p>Last gas: {{dto.lastGas | number}}</p>
     </ng-template>

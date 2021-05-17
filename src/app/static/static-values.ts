@@ -7,8 +7,6 @@ export class StaticValues {
   public static SECONDS_OF_WEEK = StaticValues.SECONDS_OF_DAY * 7;
   public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
 
-  public static FARM_ADDRESS = '0xa0246c9032bc3a600820415ae600c6388619a14d';
-
   private static NETWORK_ETH: Network = {
     blockExplorerUrl: 'https://www.bscscan.com',
     chainId: 1,
@@ -31,8 +29,8 @@ export class StaticValues {
   ]);
 
   public static NETWORK_ICON: Map<string, string> = new Map<string, string>([
-    ['eth', 'assets/icons/eth.svg'],
-    ['bsc', 'assets/icons/venus-wbnb.png']
+    ['eth', 'assets/icons/common/eth.svg'],
+    ['bsc', 'assets/icons/common/wbnb.png']
   ]);
 
   public static farmPools: string[] = [
@@ -46,73 +44,6 @@ export class StaticValues {
     Addresses.ADDRESSES.get('PS'),
     Addresses.ADDRESSES.get('iPS'),
   ]);
-
-  public static mapCoinNameToSimple(name: string, network: string): string {
-    if (network === 'eth') {
-      return StaticValues.mapCoinNameToSimpleEth(name);
-    } else if (network === 'bsc') {
-      return StaticValues.mapCoinNameToSimpleBsc(name);
-    }
-    return name;
-  }
-
-  private static mapCoinNameToSimpleEth(name: string): string {
-    name = name
-    .replace('CRV_', '');
-    switch (name) {
-      case 'CRV_STETH':
-      case 'STETH':
-      case 'WETH':
-      case 'ZERO': // 1inch stubbing
-        return 'ETH';
-      case 'RENBTC':
-      case 'RENWBTC':
-      case 'CRVRENWBTC':
-      case 'WBTC':
-      case 'TBTC':
-      case 'CRV_TBTC':
-      case 'HBTC':
-      case 'CRV_HBTC':
-      case 'OBTC':
-      case 'CRV_OBTC':
-      case 'BTCB':
-        return 'WBTC';
-      case 'CRV_EURS':
-        return 'EURS';
-      case 'PS_V0':
-      case 'PS':
-      case 'iPS':
-        return 'FARM';
-      case 'CRV_LINK':
-        return 'LINK';
-      case 'SUSHI_HODL':
-        return 'SUSHI';
-    }
-    return name;
-  }
-
-  private static mapCoinNameToSimpleBsc(name: string): string {
-    name = name
-    .replace('PC_', '')
-    .replace('EPS_', '')
-    .replace('VENUS_', '');
-    switch (name) {
-      case 'WETH':
-      case 'ZERO': // 1inch stubbing
-        return 'ETH';
-      case 'RENBTC':
-      case 'RENWBTC':
-      case 'CRVRENWBTC':
-      case 'WBTC':
-        return 'BTCB';
-      case 'POPSICLE_ICE':
-        return 'ICE';
-      case 'EPS_FUSDT':
-      case 'FUSDT':
-        return 'BUSD';
-    }
-    return name;
-  }
 
   public static isStableCoin(address: string): boolean {
     switch (address.toLowerCase()) {

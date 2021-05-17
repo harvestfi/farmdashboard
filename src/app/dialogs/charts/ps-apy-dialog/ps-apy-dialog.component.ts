@@ -7,6 +7,7 @@ import {HarvestsService} from '../../../services/http/harvests.service';
 import {RewardsService} from '../../../services/http/rewards.service';
 import {ChartGeneralMethodsComponent} from '../../../chart/chart-general-methods.component';
 import {StaticValues} from '../../../static/static-values';
+import {Addresses} from '../../../static/addresses';
 
 @Component({
   selector: 'app-ps-apy-dialog',
@@ -25,10 +26,12 @@ export class PsApyDialogComponent extends ChartGeneralMethodsComponent implement
   }
 
   load(): void {
-    this.rewardsService.getHistoryRewards('PS', StaticValues.NETWORKS.get('eth')).subscribe(rewards => {
+    this.rewardsService.getHistoryRewards(Addresses.ADDRESSES.get('PS')
+        , StaticValues.NETWORKS.get('eth')).subscribe(rewards => {
       this.log.debug('History of All PS Rewards loaded ', rewards);
 
-      this.harvestsService.getHarvestHistoryByVault('PS').subscribe(harvests => {
+      this.harvestsService.getHarvestHistoryByVault(
+          Addresses.ADDRESSES.get('PS')).subscribe(harvests => {
         this.log.debug('History of All PS Harvests loaded ', harvests);
 
         const chartBuilder = new ChartBuilder();

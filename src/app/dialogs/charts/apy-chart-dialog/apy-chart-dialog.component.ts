@@ -27,7 +27,7 @@ export class ApyChartDialogComponent extends ChartGeneralMethodsComponent implem
 
   load(): void {
     console.log('data', this.data);
-    this.hardworksService.getHardWorkHistoryDataByName(this.data.name,
+    this.hardworksService.getHardWorkHistoryDataByAddress(this.data.address,
         StaticValues.NETWORKS.get(this.data.network)).subscribe(data => {
       this.log.debug('History of All Incomes loaded ', data);
       const chartBuilder = new ChartBuilder();

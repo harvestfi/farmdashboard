@@ -29,7 +29,7 @@ export class ContractsService {
         [[Vault, 'vault'],
             [Pool, 'pool'],
             [Token, 'token'],
-            [Lps, 'unipair']]
+            [Lps, 'lp']]
     );
 
     constructor(
@@ -62,6 +62,18 @@ export class ContractsService {
 
     getContractsArray<T extends IContract>(type: new () => T): T[] {
         return Array.from(this.getContracts(type)?.values());
+    }
+
+    getContractName(address: string) {
+        if (this.getContracts(Vault).has(address)) {
+            return this.getContracts(Vault).get(address).contract.name;
+        } else if (this.getContracts(Token).has(address)) {
+            return this.getContracts(Token).get(address).contract.name;
+        } else if (this.getContracts(Pool).has(address)) {
+            return this.getContracts(Pool).get(address).contract.name;
+        } else if (this.getContracts(Lps).has(address)) {
+            return this.getContracts(Lps).get(address).contract.name;
+        }
     }
 
     private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {

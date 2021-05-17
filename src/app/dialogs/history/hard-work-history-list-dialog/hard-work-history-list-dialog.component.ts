@@ -16,7 +16,7 @@ import {StaticValues} from '../../../static/static-values';
 export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   dtos: Paginated<HardWorkDto>;
   hardWorkIds = new Set<string>();
-  vaultFilter = '';
+  vaultFilter;
   minAmount = 0;
   disabled = false;
   ready = false;
@@ -38,7 +38,8 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
 
   getDtoDataForPage(page_number: number): void {
     this.hardworksService
-    .getPaginatedHardworkHistoryData(10, page_number, this.vaultFilter, this.minAmount, 'desc',
+    .getPaginatedHardworkHistoryData(10, page_number,
+        this.vaultFilter?.contract?.address, this.minAmount, 'desc',
         StaticValues.NETWORKS.get(this.network))
     .subscribe(response => {
           this.log.info('Load hw pages', response);
@@ -57,9 +58,8 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
     .add(() => this.ready = true);
   }
 
-  get vaultNames(): string[] {
-    return this.contractsService.getContractsArray(Vault)
-    .map(_ => _.contract.name);
+  get vaults(): Vault[] {
+    return this.contractsService.getContractsArray(Vault);
   }
 
   // These methods all seem redundant, but I separated them because we may

@@ -11,11 +11,11 @@ export class MainTopNavigationComponent {
     public networks = [
       {
         name: 'eth',
-        icon: 'assets/icons/eth.svg'
+        icon: 'assets/icons/common/eth.svg'
       },
       {
         name: 'bsc',
-        icon: 'assets/icons/venus-wbnb.png'
+        icon: 'assets/icons/common/wbnb.png'
       }
     ];
     constructor(public ws: WebsocketService, public vt: ViewTypeService){}
