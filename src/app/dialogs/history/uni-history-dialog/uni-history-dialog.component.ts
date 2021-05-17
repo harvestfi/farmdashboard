@@ -41,6 +41,11 @@ export class UniHistoryDialogComponent implements AfterViewInit {
   getUniDataForPage(page_number): void {
     this.txHistory.getUniswapPaginatedTxHistoryData(page_number, 10, this.minAmount)
     .subscribe(response => {
+      const mappedDtos = response.data.map(dto => {
+        UniswapDto.round(dto);
+        return dto;
+      });
+      response.data = mappedDtos;
       this.paginated_dtos = response;
     });
   }

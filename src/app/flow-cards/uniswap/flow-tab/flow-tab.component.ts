@@ -8,10 +8,10 @@ import {ViewTypeService} from '../../../services/view-type.service';
   styleUrls: ['./flow-tab.component.css']
 })
 export class FlowTabComponent implements OnInit {
-  @Input() private dtos: UniswapDto[] = [];
+  @Input() public dtos: UniswapDto[] = [];
   @Input() maxHeight = 400;
   @Input() minAmount = 0;
-  @Input() showFullDate = false;
+  @Input() showFullDate = true;
 
   constructor(public vt: ViewTypeService) {
   }
