@@ -85,7 +85,7 @@ export class RewardDataService {
     if (!reward || !usdTvl || usdTvl === 0) {
       return 0;
     }
-    if ((Date.now() / 1000) > reward.periodFinish && !StaticValues.isPS.has(vaultAddress)) {
+    if ((Date.now() / 1000) > reward.periodFinish && !StaticValues.PS_VAULTS.has(vaultAddress)) {
       if (!this.rewardEnded.has(vaultAddress)) {
         this.log.warn('Reward setup zero, it is ended',
             this.contractService.getContracts(Vault).get(vaultAddress)?.contract?.name,

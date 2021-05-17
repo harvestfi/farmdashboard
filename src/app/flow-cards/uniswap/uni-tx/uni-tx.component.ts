@@ -73,7 +73,7 @@ export class UniTxComponent implements AfterViewInit {
     }
     arr.push(tx);
     if (arr.length > this.maxMessages) {
-      arr.pop();
+      arr.unshift();
     }
   }
 

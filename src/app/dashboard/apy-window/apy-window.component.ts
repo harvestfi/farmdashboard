@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {Vault} from '../../models/vault';
 import {Pool} from '../../models/pool';
 import {CustomModalComponent} from '../../dialogs/custom-modal/custom-modal.component';
+import {StaticValues} from '../../static/static-values';
 
 @Component({
   selector: 'app-apy-window',
@@ -29,7 +30,7 @@ export class ApyWindowComponent implements OnInit {
   // ------------------- DIALOGS --------------------
 
   openIncomeDialog(): void {
-    if (this.vault.contract.name === 'PS') {
+    if (StaticValues.PS_VAULTS.has(this.vault.contract.address)) {
       this.openPsApyDialog();
       return;
     }
@@ -37,9 +38,6 @@ export class ApyWindowComponent implements OnInit {
   }
 
   private openPsApyDialog(): void {
-    if (this.vault.contract.name !== 'PS') {
-      return;
-    }
     this.psApyModal.open();
   }
 }

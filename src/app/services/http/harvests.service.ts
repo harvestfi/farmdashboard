@@ -64,8 +64,8 @@ export class HarvestsService implements WsConsumer {
         return this.httpService.httpGet(`/api/transactions/history/harvest?from=${minBlock}&to=${maxBlock}`, network);
     }
 
-    getHarvestHistoryByVault(name: string): Observable<HarvestDto[]> {
-        return this.httpService.httpGetWithNetwork(`/api/transactions/history/harvest/${name}`);
+    getHarvestHistoryByVault(address: string, network: Network): Observable<HarvestDto[]> {
+        return this.httpService.httpGet(`/api/transactions/history/harvest/${address}`, network);
     }
 
     getLastTvls(): Observable<HarvestDto[]> {
