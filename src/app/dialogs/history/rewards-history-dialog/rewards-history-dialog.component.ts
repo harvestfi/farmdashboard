@@ -52,16 +52,16 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
         this.rewardsService.getAllHistoryRewards(
             Math.floor(this.startDate.getTime() / 1000),
             Math.floor(this.endDate.getTime() / 1000))
-            .subscribe((data) => {
-                this.log.info('Rewards loaded', data);
-                this.rewards.push(...(data
-                    .filter(r => !Utils.isAutoStakeVault(r.vaultAddress) || r.isWeeklyReward)
-                    .map(RewardDto.fillBlockDateAdopted)
-                    .reverse()));
-                this.ready = true;
-                this.disabled = false;
-                this.cdRef.detectChanges();
-            });
+        .subscribe((data) => {
+            this.log.info('Rewards loaded', data);
+            this.rewards.push(...(data
+            .filter(r => !Utils.isAutoStakeVault(r.vaultAddress) || r.isWeeklyReward)
+            .map(RewardDto.fillBlockDateAdopted)
+            .reverse()));
+            this.ready = true;
+            this.disabled = false;
+            this.cdRef.detectChanges();
+        });
     }
 
     loadMoreRewardsHistory(): void {
