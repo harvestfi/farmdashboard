@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
@@ -48,7 +48,7 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
 
   ngOnInit(): void {
     this.poolsList();
-  };
+  }
 
   get assetList(): string[] {
     const result = assets;
@@ -61,13 +61,6 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
         .filter(_ => _.isActive());
   }
 
-  poolsList(): Map<string,Pool> {
-    return Array.from(this.contractsService.getContracts(Pool).values()).reduce((m, pool) => {
-      m.set(pool.lpToken.address, pool);
-      return m;
-    }, new Map<string,Pool>());
-  }
-
   prettyNetwork(name: string): string {
     if (name === 'eth') {
       return 'Ethereum';
@@ -75,6 +68,13 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
       return 'Binance';
     }
     return name;
+  }
+
+  poolsList(): Map<string,Pool> {
+    return Array.from(this.contractsService.getContracts(Pool).values()).reduce((m, pool) => {
+      m.set(pool.lpToken.address, pool);
+      return m;
+    }, new Map<string,Pool>());
   }
 
   toggleAPYWindow(address: string): void {
