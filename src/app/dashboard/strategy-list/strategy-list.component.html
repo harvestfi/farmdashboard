@@ -15,7 +15,7 @@
     <select [(ngModel)]="assetFilter" name="" id="assetFilter">
       <option value="">Asset</option>
       <option *ngFor="let asset of assetList" [value]="asset">{{asset}}</option>
-  
+
     </select>
 
     <div class="quantity">
@@ -40,6 +40,9 @@
       <div (click)="sortVaultsList('users')" class="header-column desktop-only">Users <i class="fas fa-sort"></i></div>
       <div (click)="sortVaultsList('total_earned')" class="header-column desktop-only">Total Earned <i class="fas fa-sort"></i></div>
   </div>
+
+<!--  ******** VALUES ************** -->
+
   <div class="content">
     <div *ngIf="vaultsList | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
       <div *ngFor="let row of filteredVaults" class="row">

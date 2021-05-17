@@ -9,7 +9,7 @@
     <div class="fields-container">
       <select (change)="handleFilterUpdate($event)" [(ngModel)]="vaultFilter" class="strategy-select-field">
         <option [value]="''">All</option>
-        <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
+        <option *ngFor="let vault of vaults" [ngValue]="vault">{{vault.contract.name}}</option>
       </select>
       <input (input)="handleFilterUpdate($event)"
              [(ngModel)]="minAmount" class="less-than-filter-field"
@@ -31,5 +31,5 @@
     <app-paginator (selectPage)="selectPage($event)" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)" [pageObject]="dtos"></app-paginator>
   </ng-template>
 
-  
+
 </div>

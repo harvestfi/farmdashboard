@@ -8,6 +8,7 @@ import {RewardsService} from '../../../services/http/rewards.service';
 import {ChartGeneralMethodsComponent} from '../../../chart/chart-general-methods.component';
 import {StaticValues} from '../../../static/static-values';
 import {forkJoin} from 'rxjs';
+import {Addresses} from '../../../static/addresses';
 
 @Component({
   selector: 'app-ps-apy-dialog',
@@ -28,8 +29,8 @@ export class PsApyDialogComponent extends ChartGeneralMethodsComponent implement
   load(): void {
 
     forkJoin([
-      this.rewardsService.getHistoryRewards('PS', StaticValues.NETWORKS.get('eth')),
-      this.harvestsService.getHarvestHistoryByVault('PS', StaticValues.NETWORKS.get('eth'))
+      this.rewardsService.getHistoryRewards(Addresses.ADDRESSES.get('PS'), StaticValues.NETWORKS.get('eth')),
+      this.harvestsService.getHarvestHistoryByVault(Addresses.ADDRESSES.get('PS'), StaticValues.NETWORKS.get('eth'))
     ]).subscribe(([rewards, harvests]) => {
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(2);

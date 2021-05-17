@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {WebsocketService} from '../../services/websocket.service';
-import {StaticValues} from '../../static/static-values';
+import {BusyNotifierService} from '../../services/busy-notifier.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ApplicationErrorDialog} from './application-error-dialog';
 
 @Component({
   selector: 'app-main-page-light',
@@ -10,11 +12,27 @@ import {StaticValues} from '../../static/static-values';
 })
 export class MainPageLightComponent implements OnInit {
 
+  buffering = true;
+  private errored = false;
+
   constructor(public vt: ViewTypeService,
-              public ws: WebsocketService) {
+              public ws: WebsocketService,
+              public dialog: MatDialog,
+              private loadingService: BusyNotifierService) {
                 console.log(ws.isConnected());
   }
 
   ngOnInit(): void {
+    this.loadingService.busy.subscribe(buffering => {
+      this.buffering = buffering;
+    });
+    this.loadingService.failures.subscribe(err => {
+      if(!this.errored && err instanceof Error){
+        this.errored = true;
+        this.dialog.open(ApplicationErrorDialog);
+      }
+    });
   }
+
 }
+

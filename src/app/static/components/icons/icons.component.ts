@@ -1,7 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {AfterContentInit, Component, Input} from '@angular/core';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {Pool} from '../../../models/pool';
 import {Vault} from '../../../models/vault';
+import {ContractsService} from '../../../services/contracts.service';
 
 @Component({
     selector: 'app-vault-icon',
@@ -9,14 +10,39 @@ import {Vault} from '../../../models/vault';
     styleUrls: ['./icons.component.css']
 })
 
-export class IconsComponent {
+export class IconsComponent implements AfterContentInit {
     @Input() vault: string | Vault | Pool;
+    iconUrl: string;
 
-    constructor(public vt: ViewTypeService) {}
+    constructor(
+        public vt: ViewTypeService,
+        private contractService: ContractsService
+    ) {
+    }
 
-    iconImageSrc(): string {
-        const name = (this.vault instanceof Vault || this.vault instanceof Pool ? (this.vault?.contract?.name) : this.vault)
-            ?.toLowerCase().replace(/_/g, '-');
-        return `/assets/icons/${name}.png`;
+    ngAfterContentInit(): void {
+        this.iconImageSrc();
+    }
+
+    iconImageSrc(): void {
+        let name;
+        if (this.vault instanceof Vault) {
+            name = this.vault?.contract?.name;
+        } else if (this.vault instanceof Pool) {
+            name = this.vault?.contract?.name.replace('ST_', '');
+        } else if (this.vault.startsWith('0x')) {
+            name = this.contractService.getContractName(this.vault);
+        } else {
+            name = this.vault;
+        }
+        if (!name) {
+            name = 'UNKNOWN';
+        }
+        name = name.split('_#').length === 2 ? name.split('_#')[0] : name;
+        this.iconUrl = `/assets/icons/vaults/${name}.png`;
+    }
+
+    defaultUrl(): void {
+        this.iconUrl = `/assets/icons/vaults/UNKNOWN.png`;
     }
 }
