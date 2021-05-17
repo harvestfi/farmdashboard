@@ -58,7 +58,7 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
 
   get vaultsList(): Vault[] {
     return this.contractsService.getContractsArray(Vault)
-        .filter(_ => _.isActive());
+    .filter(_ => _.isActive());
   }
 
   prettyNetwork(name: string): string {
@@ -70,11 +70,11 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     return name;
   }
 
-  poolsList(): Map<string,Pool> {
+  poolsList(): Map<string, Pool> {
     return Array.from(this.contractsService.getContracts(Pool).values()).reduce((m, pool) => {
       m.set(pool.lpToken.address, pool);
       return m;
-    }, new Map<string,Pool>());
+    }, new Map<string, Pool>());
   }
 
   toggleAPYWindow(address: string): void {

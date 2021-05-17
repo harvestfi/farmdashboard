@@ -37,7 +37,7 @@ export class HarvestTxComponent implements AfterViewInit {
 
   get vaultNames(): string[] {
     return this.contractsService.getContractsArray(Vault)
-        .map(_ => _.contract.name);
+    .map(_ => _.contract.name);
   }
 
   get dtos(): HarvestDto[] {
