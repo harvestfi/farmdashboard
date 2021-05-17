@@ -89,7 +89,7 @@ export class HarvestsService implements WsConsumer {
         ordering: string = 'desc'
     ): Observable<Paginated<HarvestDto>> {
         // eslint-disable-next-line max-len
-        return this.httpService.httpGet(`/harvest/pages?pageSize=${page_size}&page=${page_number}&minAmount=${min_amount}${vault && ('vault=' + vault)}&ordering=${ordering}`);
+        return this.httpService.httpGet(`/harvest/pages?pageSize=${page_size}&page=${page_number}&minAmount=${min_amount}${vault && ('&vault=' + vault)}&ordering=${ordering}`);
     }
 
 }
