@@ -7,6 +7,7 @@ import {HarvestsService} from '../../../services/http/harvests.service';
 import {RewardsService} from '../../../services/http/rewards.service';
 import {ChartGeneralMethodsComponent} from '../../../chart/chart-general-methods.component';
 import {StaticValues} from '../../../static/static-values';
+import {forkJoin} from 'rxjs';
 import {Addresses} from '../../../static/addresses';
 
 @Component({
@@ -26,42 +27,37 @@ export class PsApyDialogComponent extends ChartGeneralMethodsComponent implement
   }
 
   load(): void {
-    this.rewardsService.getHistoryRewards(Addresses.ADDRESSES.get('PS')
-        , StaticValues.NETWORKS.get('eth')).subscribe(rewards => {
-      this.log.debug('History of All PS Rewards loaded ', rewards);
 
-      this.harvestsService.getHarvestHistoryByVault(
-          Addresses.ADDRESSES.get('PS')).subscribe(harvests => {
-        this.log.debug('History of All PS Harvests loaded ', harvests);
+    forkJoin([
+      this.rewardsService.getHistoryRewards(Addresses.ADDRESSES.get('PS'), StaticValues.NETWORKS.get('eth')),
+      this.harvestsService.getHarvestHistoryByVault(Addresses.ADDRESSES.get('PS'), StaticValues.NETWORKS.get('eth'))
+    ]).subscribe(([rewards, harvests]) => {
+      const chartBuilder = new ChartBuilder();
+      chartBuilder.initVariables(2);
 
-        const chartBuilder = new ChartBuilder();
-        chartBuilder.initVariables(2);
-
-        rewards?.forEach(reward => {
-          let harvest: HarvestDto = null;
-          for (let i = 1; i < harvests.length; i++) {
-            if (harvests[i].blockDate - reward.blockDate >= 0) {
-              harvest = harvests[i - 1];
-              harvests = harvests.slice(i - 1, harvests.length);
-              break;
-            }
+      rewards?.forEach(reward => {
+        let harvest: HarvestDto = null;
+        for (let i = 1; i < harvests.length; i++) {
+          if (harvests[i].blockDate - reward.blockDate >= 0) {
+            harvest = harvests[i - 1];
+            harvests = harvests.slice(i - 1, harvests.length);
+            break;
           }
-          if (harvest == null) {
-            this.log.info('Not found harvest for reward');
-            return;
-          }
+        }
+        if (harvest == null) {
+          this.log.info('Not found harvest for reward');
+          return;
+        }
 
-          chartBuilder.addInData(0, reward.blockDate, reward.weeklyApy);
-          chartBuilder.addInData(1, reward.blockDate, harvest.lastUsdTvl / 1000000);
+        chartBuilder.addInData(0, reward.blockDate, reward.weeklyApy);
+        chartBuilder.addInData(1, reward.blockDate, harvest.lastUsdTvl / 1000000);
 
-        });
-
-        this.handleData(chartBuilder, [
-          ['Weekly APY %', 'right', '#0085ff'],
-          ['TVL M$', '1', '#eeb000']
-        ]);
       });
 
+      this.handleData(chartBuilder, [
+        ['Weekly APY %', 'right', '#0085ff'],
+        ['TVL M$', '1', '#eeb000']
+      ]);
     });
   }
 }

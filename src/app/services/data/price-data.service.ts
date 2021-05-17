@@ -80,18 +80,27 @@ export class PriceDataService {
     return this.prices.get(network).get(address.toLowerCase());
   }
 
-  public getUsdPrice(address: string, network: string): number {
+  public getUsdPrice(address: string, network: string, checked: Set<string> = new Set<string>()): number {
     if (!address) {
       return 0;
     }
     if (StaticValues.isStableCoin(address)) {
       return 1;
     }
+    if (checked.has(address)) {
+      this.log.error('Price recursion', Array.from(checked.values())
+      .map(adr => this.prices.get(network)?.get(adr).source)
+          .toString()
+          , address);
+      return 1;
+    }
     const targetPriceDto = this.prices.get(network)?.get(address.toLowerCase());
     if (!targetPriceDto) {
       return 0;
     }
-    const otherTokenPrice = this.getUsdPrice(targetPriceDto.otherTokenAddress?.toLowerCase(), network);
+    checked.add(address.toLowerCase());
+    const otherTokenPrice = this.getUsdPrice(targetPriceDto.otherTokenAddress?.toLowerCase(),
+        network, checked);
     const price = targetPriceDto.price * otherTokenPrice;
     if (price === Infinity) {
       return 0;
