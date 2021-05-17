@@ -177,14 +177,13 @@ export class Utils {
 
     if (name.split('_').length >= 3) {
       name = name.replace('ONEINCH_', '')
-          .replace('1INCH', '')
+      .replace('1INCH_', '')
           .replace('SUSHI_', '')
           .replace('UNI_', '')
           .replace('PCS_', '')
-          + postfix
       ;
     }
-    return name.replace('ONEINCH', '1INCH');
+    return name.replace('ONEINCH', '1INCH') + postfix;
   }
 
   public static addInMap(map: Map<any, number>, key: any, value: number): void {

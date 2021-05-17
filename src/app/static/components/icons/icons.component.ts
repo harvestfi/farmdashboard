@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {AfterContentInit, Component, Input} from '@angular/core';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {Pool} from '../../../models/pool';
 import {Vault} from '../../../models/vault';
@@ -10,8 +10,9 @@ import {ContractsService} from '../../../services/contracts.service';
     styleUrls: ['./icons.component.css']
 })
 
-export class IconsComponent {
+export class IconsComponent implements AfterContentInit {
     @Input() vault: string | Vault | Pool;
+    iconUrl: string;
 
     constructor(
         public vt: ViewTypeService,
@@ -19,7 +20,11 @@ export class IconsComponent {
     ) {
     }
 
-    iconImageSrc(): string {
+    ngAfterContentInit(): void {
+        this.iconImageSrc();
+    }
+
+    iconImageSrc(): void {
         let name;
         if (this.vault instanceof Vault) {
             name = this.vault?.contract?.name;
@@ -34,6 +39,10 @@ export class IconsComponent {
             name = 'UNKNOWN';
         }
         name = name.split('_#').length === 2 ? name.split('_#')[0] : name;
-        return `/assets/icons/vaults/${name}.png`;
+        this.iconUrl = `/assets/icons/vaults/${name}.png`;
+    }
+
+    defaultUrl(): void {
+        this.iconUrl = `/assets/icons/vaults/UNKNOWN.png`;
     }
 }
