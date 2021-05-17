@@ -14,7 +14,7 @@ import { Paginated } from 'src/app/models/paginated';
   styleUrls: ['./harvest-history-dialog.component.scss']
 })
 export class HarvestHistoryDialogComponent implements AfterViewInit {
-  vaultFilter = 'all';
+  vaultFilter = '';
   dtos: HarvestDto[] = [];
   paginated_dtos: Paginated<HarvestDto> = {
     currentPage: 0,
@@ -53,6 +53,11 @@ export class HarvestHistoryDialogComponent implements AfterViewInit {
       this.minAmount,
       this.vaultFilter
     ).subscribe(response => {
+      const mappedDtos= response.data.map(dto => {
+        	HarvestDto.enrich(dto);
+          return dto;
+      });
+      response.data = mappedDtos;
       this.paginated_dtos = response;
     });
   }
