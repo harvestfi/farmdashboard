@@ -54,7 +54,7 @@ export class HttpService {
             }
             return x;
           }),
-          map(x => x.flat()),
+          map(x => x.flat())
       );
     } else {
       const url = get(this.config.apiEndpoints, this.config.defaultNetwork)

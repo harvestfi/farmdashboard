@@ -66,9 +66,9 @@ export class ContractsService {
 
     private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {
         return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}s`)
-            .pipe(
-                map((val: T[]) => val?.map(o => Object.assign(new type(), o)) as T[])
-            );
+        .pipe(
+            map((val: T[]) => val?.map(o => Object.assign(new type(), o)) as T[])
+        );
     }
 
 }
