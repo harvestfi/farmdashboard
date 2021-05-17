@@ -19,7 +19,6 @@ import {Addresses} from '../../static/addresses';
 export class DashboardLastValuesComponent implements OnInit {
   @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
   @ViewChild('weeklyProfitModal') private weeklyProfitModal: CustomModalComponent;
-  @ViewChild('psIncomeModal') private psIncomeModal: CustomModalComponent;
   @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
   @ViewChild('farmBuybacksModal') private farmBuybacksModal: CustomModalComponent;
   @ViewChild('savedFeesModal') private savedFeesModal: CustomModalComponent;
@@ -149,10 +148,6 @@ export class DashboardLastValuesComponent implements OnInit {
 
   openTvlDialog(): void {
     this.tvlModal.open();
-  }
-
-  openPsIncomeDialog(): void {
-    this.psIncomeModal.open();
   }
 
   openWeeklyProfitDialog(): void {

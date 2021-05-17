@@ -23,7 +23,7 @@ import { MainPageViewComponent } from './main/main-page-view/main-page-view.comp
 import { StrategyListComponent } from './dashboard/strategy-list/strategy-list.component';
 import { MainFooterComponent } from './main/main-footer/main-footer.component';
 import { CommonModule } from '@angular/common';
-import { MainPageLightComponent } from './main/main-page-light/main-page-light.component';
+import {MainPageLightComponent} from './main/main-page-light/main-page-light.component';
 import { CenterViewComponent } from './main/center-view/center-view.component';
 import { UniTradeComponent } from './flow-cards/uniswap/uni-trade/uni-trade.component';
 import { FormsModule } from '@angular/forms';
@@ -94,10 +94,10 @@ import {PoolComponent} from './dashboard/apy-window/pool.component';
 import {AddressComponent} from './static/components/addresses/address.component';
 import {MainTopNavigationComponent} from './main/main-top-navigation/main-top-navigation.component';
 import {ApyCommonComponent} from './dashboard/apy-window/apy-common.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {interceptorProviders} from './interceptors';
+import {ApplicationErrorDialog} from './main/main-page-light/application-error-dialog';
 
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
 
 @NgModule({
   declarations: [
@@ -168,7 +168,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PoolComponent,
     AddressComponent,
     ApyCommonComponent,
-    MainTopNavigationComponent
+    MainTopNavigationComponent,
+    ApplicationErrorDialog
   ],
   imports: [
     AppRoutingModule,
@@ -201,11 +202,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AngularEmojisModule,
     SidebarModule.forRoot(),
     NgbModule,
+    MatProgressBarModule,
   ],
-  providers: [{
-    provide: PERFECT_SCROLLBAR_CONFIG,
-    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-  }
+  providers: [
+  interceptorProviders
 ],
   bootstrap: [AppComponent],
 })
