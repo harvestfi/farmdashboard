@@ -85,11 +85,11 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get psFarmTvl(): number {
-    return this.harvestData.getVaultLastInfo(Addresses.ADDRESSES.get('PS'), 'eth')?.lastTvl;
+    return this.harvestData.getVaultLastInfo(this.psAddress, 'eth')?.lastTvl;
   }
 
   get farmTotalSupply(): number {
-    return this.harvestData.getVaultLastInfo(Addresses.ADDRESSES.get('PS'), 'eth')?.sharePrice;
+    return this.harvestData.getVaultLastInfo(this.psAddress, 'eth')?.sharePrice;
   }
 
   get lpFarmStaked(): number {
@@ -172,6 +172,10 @@ export class DashboardLastValuesComponent implements OnInit {
 
   openGasPriceDialog(): void {
     this.gasPriceModal.open();
+  }
+
+  get psAddress() {
+    return Addresses.ADDRESSES.get('PS');
   }
 
 }

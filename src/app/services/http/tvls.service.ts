@@ -19,7 +19,7 @@ export class TvlsService {
     }
 
     getHistoryTvlByVault(vault: string, network: Network = StaticValues.NETWORKS.get('eth')): Observable<HarvestTvl[]> {
-        return this.httpService.httpGet(`/api/transactions/history/tvl/${vault}`, network);
+        return this.httpService.httpGet(`/api/transactions/history/tvl/${vault}?reduce=10`, network);
     }
 
 }

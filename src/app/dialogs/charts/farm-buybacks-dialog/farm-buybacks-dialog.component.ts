@@ -7,6 +7,8 @@ import {HardworksService} from '../../../services/http/hardworks.service';
 import {TvlsService} from '../../../services/http/tvls.service';
 import {PriceDataService} from '../../../services/data/price-data.service';
 import {StaticValues} from '../../../static/static-values';
+import {Addresses} from '../../../static/addresses';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-farm-buybacks-dialog',
@@ -26,11 +28,16 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
   }
 
   load(): void {
-    this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network)).subscribe(data => {
-      this.log.debug('History of All Farm buybacks loaded ', data);
+    forkJoin([
+      this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network)),
+      this.tvlsService.getHistoryTvlByVault(Addresses.ADDRESSES.get('PS'))
+    ]).subscribe(([hardWorks, vaultData]) => {
+      this.log.debug('History of All Farm buybacks loaded ', hardWorks);
+
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(2);
-      data?.forEach(dto => {
+
+      hardWorks?.forEach(dto => {
         let bb = dto.farmBuybackSum / 1000;
         if (dto.network === 'bsc') {
           const farmPrice = this.priceData.getLastFarmPrice();
@@ -43,15 +50,13 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
         chartBuilder.addInData(0, dto.blockDate, bb);
       });
 
-      this.tvlsService.getHistoryTvlByVault('PS').subscribe(vaultData => {
-            this.log.debug('History of PS TVL loaded ', vaultData);
-            vaultData?.forEach(dto => chartBuilder.addInData(1, dto.calculateTime, dto.sharePrice / 1000));
-            this.handleData(chartBuilder, [
-              ['FARM Buyback K', 'right', '#0085ff'],
-              ['All supply K', '1', '#efa4a4']
-            ]);
-          }
-      );
+      this.log.debug('History of PS TVL loaded ', vaultData);
+      vaultData?.forEach(dto => chartBuilder.addInData(1, dto.calculateTime, dto.sharePrice / 1000));
+
+      this.handleData(chartBuilder, [
+        ['FARM Buyback K', 'right', '#0085ff'],
+        ['All supply K', '1', '#efa4a4']
+      ]);
     });
   }
 }

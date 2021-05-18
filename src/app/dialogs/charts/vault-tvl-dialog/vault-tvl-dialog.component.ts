@@ -6,6 +6,9 @@ import {HardworksService} from '../../../services/http/hardworks.service';
 import {TvlsService} from '../../../services/http/tvls.service';
 import {ChartBuilder} from '../../../chart/chart-builder';
 import {StaticValues} from '../../../static/static-values';
+import {Addresses} from '../../../static/addresses';
+import {ContractsService} from '../../../services/contracts.service';
+import {Vault} from '../../../models/vault';
 
 @Component({
   selector: 'app-vault-tvl-dialog',
@@ -20,16 +23,21 @@ export class VaultTvlDialogComponent extends ChartGeneralMethodsComponent implem
               public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private hardworksService: HardworksService,
+              private contractService: ContractsService,
               private tvlService: TvlsService,) {
     super(cdRef, vt);
   }
 
   load() {
-    if (this.vault === 'PS') {
+    if (this.vault === Addresses.ADDRESSES.get('PS')) {
       this.loadDataPs();
     } else {
       this.loadData();
     }
+  }
+
+  get vaultName(): string {
+    return this.contractService.getContracts(Vault).get(this.vault)?.contract?.name;
   }
 
   private loadData(): void {

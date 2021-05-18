@@ -58,7 +58,7 @@ export class RewardsService implements WsConsumer {
     }
 
     getHistoryRewards(name: string, network: Network, ): Observable<RewardDto[]> {
-        return this.httpService.httpGet('/api/transactions/history/reward/' + name, network);
+        return this.httpService.httpGet('/api/transactions/history/reward/' + name + '?reduce=10', network);
     }
 
     getAllHistoryRewards(startTimestamp?: number, endTimestamp?: number): Observable<RewardDto[]> {

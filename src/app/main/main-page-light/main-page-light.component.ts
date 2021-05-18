@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {WebsocketService} from '../../services/websocket.service';
 import {BusyNotifierService} from '../../services/busy-notifier.service';
@@ -10,7 +10,7 @@ import {ApplicationErrorDialog} from './application-error-dialog';
   templateUrl: './main-page-light.component.html',
   styleUrls: ['./main-page-light.component.css']
 })
-export class MainPageLightComponent implements OnInit {
+export class MainPageLightComponent implements AfterContentInit {
 
   buffering = true;
   private errored = false;
@@ -18,13 +18,15 @@ export class MainPageLightComponent implements OnInit {
   constructor(public vt: ViewTypeService,
               public ws: WebsocketService,
               public dialog: MatDialog,
-              private loadingService: BusyNotifierService) {
-                console.log(ws.isConnected());
+              private loadingService: BusyNotifierService,
+              private cdref: ChangeDetectorRef
+              ) {
   }
 
-  ngOnInit(): void {
+  ngAfterContentInit(): void {
     this.loadingService.busy.subscribe(buffering => {
       this.buffering = buffering;
+      this.cdref.detectChanges();
     });
     this.loadingService.failures.subscribe(err => {
       if(!this.errored && err instanceof Error){
