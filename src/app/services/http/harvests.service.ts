@@ -6,8 +6,7 @@ import {WsConsumer} from '../ws-consumer';
 import {WebsocketService} from '../websocket.service';
 import {SnackService} from '../snack.service';
 import {Network} from '../../models/network';
-import { Paginated } from 'src/app/models/paginated';
-import { Addresses } from 'src/app/static/addresses';
+import {Paginated} from 'src/app/models/paginated';
 
 @Injectable({
     providedIn: 'root'
@@ -83,15 +82,15 @@ export class HarvestsService implements WsConsumer {
     }
 
     getHarvestPaginatedTxHistoryData(
-        page_number: number = 1,
-        page_size: number = 10,
-        min_amount: number = 0,
+        pageNumber: number = 1,
+        pageSize: number = 10,
+        minAmount: number = 0,
         vault?: string,
         ordering: string = 'desc'
     ): Observable<Paginated<HarvestDto>> {
-        const api_url = `/harvest/pages?pageSize=${page_size}&page=${page_number}&minAmount=${min_amount}` +
-                        `&ordering=${ordering}&token=${Addresses.ADDRESSES.get('FARM')}`;
-        return this.httpService.httpGet(api_url);
+        const apiUrl = `/harvest/pages?pageSize=${pageSize}&page=${pageNumber}&minAmount=${minAmount}` +
+            `&ordering=${ordering}${vault ? '&vault=' + vault : ''}`;
+        return this.httpService.httpGet(apiUrl);
     }
 
 }

@@ -11,7 +11,7 @@
       <p>Last gas: {{dto.lastGas | number}}</p>
     </ng-template>
     {{fullDate ?
-    (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'):
+    (dto.blockDateAdopted | date: 'dd-MMM HH:mm'):
     (dto.blockDateAdopted | date: 'HH:mm:ss')
     }}
   </app-popover-card>

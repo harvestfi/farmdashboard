@@ -1,11 +1,11 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { ViewTypeService } from '../../../services/view-type.service';
-import { NGXLogger } from 'ngx-logger';
-import { HarvestDto } from '../../../models/harvest-dto';
+import {AfterContentInit, AfterViewInit, Component} from '@angular/core';
+import {ViewTypeService} from '../../../services/view-type.service';
+import {NGXLogger} from 'ngx-logger';
+import {HarvestDto} from '../../../models/harvest-dto';
 import {Vault} from '../../../models/vault';
 import {ContractsService} from '../../../services/contracts.service';
 import {HarvestsService} from '../../../services/http/harvests.service';
-import { Paginated } from 'src/app/models/paginated';
+import {Paginated} from 'src/app/models/paginated';
 
 
 @Component({
@@ -13,52 +13,37 @@ import { Paginated } from 'src/app/models/paginated';
   templateUrl: './harvest-history-dialog.component.html',
   styleUrls: ['./harvest-history-dialog.component.scss']
 })
-export class HarvestHistoryDialogComponent implements AfterViewInit {
-  vaultFilter = '';
-  dtos: HarvestDto[] = [];
-  paginated_dtos: Paginated<HarvestDto> = {
-    currentPage: 0,
-    nextPage: -1,
-    previousPage: -1,
-    totalPages: 0,
-    data: []
-  };
+export class HarvestHistoryDialogComponent implements AfterContentInit {
+  vaultFilter: Vault;
+  paginatedDtos: Paginated<HarvestDto> = Paginated.empty();
   minAmount = 0;
-  filterByVault = '';
-  harvestTxIds = new Set<string>();
-  lowestBlockDate = 999999999999;
-  disabled = false;
 
   constructor(
-    public vt: ViewTypeService,
-    private log: NGXLogger,
-    private contractsService: ContractsService,
-    private harvestsService: HarvestsService
-  ) {}
-
-  get tvlNames(): string[] {
-    return this.contractsService.getContractsArray(Vault)
-        .map(_ => _.contract.name);
+      public vt: ViewTypeService,
+      private log: NGXLogger,
+      private contractsService: ContractsService,
+      private harvestsService: HarvestsService
+  ) {
   }
 
-  ngAfterViewInit(): void {
+  ngAfterContentInit(): void {
     this.getHarvestHistoryForPage(0);
   }
 
-  getHarvestHistoryForPage(page_number){
+  get vaults(): Vault[] {
+    return this.contractsService.getContractsArray(Vault);
+  }
 
+  getHarvestHistoryForPage(pageNumber) {
     this.harvestsService.getHarvestPaginatedTxHistoryData(
-      page_number,
-      10,
-      this.minAmount,
-      this.vaultFilter
+        pageNumber,
+        10,
+        this.minAmount,
+        this.vaultFilter?.contract?.address
     ).subscribe(response => {
-      const mappedDtos= response.data.map(dto => {
-        	HarvestDto.enrich(dto);
-          return dto;
-      });
-      response.data = mappedDtos;
-      this.paginated_dtos = response;
+      this.log.info('Harvest page response', response);
+      response?.data?.forEach(dto => HarvestDto.enrich(dto));
+      this.paginatedDtos = response;
     });
   }
 
