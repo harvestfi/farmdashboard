@@ -6,6 +6,10 @@
       <app-uni-trade [fullDate]="showFullDate" [dto]="dto"></app-uni-trade>
     </div>
 
+    <div *ngIf="!dtos.length" class="empty-vault">
+      🏜️ Loading... 🏜️
+    </div>
+
   </div>
 
 </perfect-scrollbar>
