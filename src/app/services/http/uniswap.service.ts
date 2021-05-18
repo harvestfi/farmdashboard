@@ -4,8 +4,8 @@ import {Observable} from 'rxjs';
 import {UniswapDto} from '../../models/uniswap-dto';
 import {HttpService} from './http.service';
 import {OhlcDto} from '../../models/ohlc-dto';
-import { Paginated } from 'src/app/models/paginated';
-import { Addresses } from 'src/app/static/addresses';
+import {Paginated} from 'src/app/models/paginated';
+import {Addresses} from 'src/app/static/addresses';
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +33,8 @@ export class UniswapService {
         ordering: string = 'desc'
     ): Observable<Paginated<UniswapDto>> {
         const apiUrl = `/uni/pages?pageSize=${page_size}` +
-                        `&page=${page_number}&minAmount=${min_amount}&ordering=${ordering}?token=${Addresses.ADDRESSES.get('FARM')}`;
+            `&page=${page_number}&minAmount=${min_amount}&ordering=${ordering}` +
+            `&token=${Addresses.ADDRESSES.get('FARM')}`;
 
         return this.httpService.httpGet(apiUrl);
     }
