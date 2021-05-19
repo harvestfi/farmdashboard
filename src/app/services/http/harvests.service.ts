@@ -84,8 +84,12 @@ export class HarvestsService implements WsConsumer {
       vault?: string,
       ordering: string = 'desc'
   ): Observable<Paginated<HarvestDto>> {
-    const apiUrl = `/harvest/pages?pageSize=${pageSize}&page=${pageNumber}&minAmount=${minAmount}` +
-        `&ordering=${ordering}${vault ? '&vault=' + vault : ''}`;
+    const apiUrl = `/harvest/pages?`
+        + `pageSize=${pageSize}`
+        + `&page=${pageNumber}`
+        + `${minAmount ? '&minAmount=' + minAmount : ''}`
+        + `${vault ? '&vault=' + vault : ''}`
+        + `&ordering=${ordering}`;
     return this.httpService.httpGet(apiUrl);
   }
 

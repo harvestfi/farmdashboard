@@ -82,7 +82,7 @@ export class HardworksService implements WsConsumer {
         `?pageSize=${page_size}`
         + `&page=${page_number}`
         + `${vault ? `&vault=${vault}` : ''}`
-        + `&minAmount=${minAmount}`
+        + `${minAmount ? `&minAmount=${minAmount}` : ''}`
         + `&ordering=${ordering}`;
     if (this.config.multipleSources) {
       return this.httpService.httpGet(urlAtr, network);

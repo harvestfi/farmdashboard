@@ -10,6 +10,6 @@
     "eth": "https://ethparser-hv3.harvestfi.builders",
     "bsc": "https://ethparser-hv3.harvestfi.builders"
   },
-  "multipleSources": false,
+  "multipleSources": true,
   "defaultNetwork": "eth"
 }

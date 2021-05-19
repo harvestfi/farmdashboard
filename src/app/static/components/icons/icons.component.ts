@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {Pool} from '../../../models/pool';
 import {Vault} from '../../../models/vault';
@@ -13,6 +13,7 @@ import {NGXLogger} from 'ngx-logger';
 
 export class IconsComponent {
   @Input() vault: string | Vault | Pool;
+  error = false;
 
   constructor(
       public vt: ViewTypeService,
@@ -23,19 +24,25 @@ export class IconsComponent {
 
   get iconUrl(): string {
     let name;
-    if (this.vault instanceof Vault) {
-      name = this.vault?.contract?.name;
-    } else if (this.vault instanceof Pool) {
-      name = this.vault?.contract?.name.replace('ST_', '');
-    } else if (this.vault?.startsWith('0x')) {
-      name = this.contractService.getContractName(this.vault);
-    } else {
-      name = this.vault;
+    if (!this.error) {
+      if (this.vault instanceof Vault) {
+        name = this.vault?.contract?.name;
+      } else if (this.vault instanceof Pool) {
+        name = this.vault?.contract?.name.replace('ST_', '');
+      } else if (this.vault?.startsWith('0x')) {
+        name = this.contractService.getContractName(this.vault);
+      } else {
+        name = this.vault;
+      }
     }
     if (!name) {
       name = 'UNKNOWN';
     }
     name = name.split('_#').length === 2 ? name.split('_#')[0] : name;
     return `/assets/icons/vaults/${name}.png`;
+  }
+
+  errorIcon() {
+    this.error = true;
   }
 }

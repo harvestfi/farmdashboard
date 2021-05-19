@@ -27,20 +27,25 @@ export class UniswapService {
   }
 
   getUniswapPaginatedTxHistoryData(
-      page_number: number = 0,
-      page_size: number = 10,
-      min_amount: number = 0,
+      pageNumber: number = 0,
+      pageSize: number = 10,
+      minAmount: number = 0,
       ordering: string = 'desc'
   ): Observable<Paginated<UniswapDto>> {
-    const apiUrl = `/uni/pages?pageSize=${page_size}` +
-        `&page=${page_number}&minAmount=${min_amount}&ordering=${ordering}` +
+    const apiUrl = `/uni/pages?`
+        + `pageSize=${pageSize}`
+        + `&page=${pageNumber}`
+        + `${minAmount ? '&minAmount=' + minAmount : ''}`
+        + `&ordering=${ordering}` +
         `&token=${Addresses.ADDRESSES.get('FARM')}`;
 
     return this.httpService.httpGet(apiUrl);
   }
 
   getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
-    return this.httpService.httpGet(`/api/transactions/history/uni?from=${minBlock}&to=${maxBlock}`);
+    return this.httpService.httpGet(`/api/transactions/history/uni?`
+        + `from=${minBlock}`
+        + `&to=${maxBlock}`);
   }
 
   getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
