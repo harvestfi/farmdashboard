@@ -11,8 +11,12 @@ import {ChartsOptionsLight} from 'src/app/chart/charts-options-light';
 import {ViewTypeService} from 'src/app/services/view-type.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {HarvestsService} from '../../services/http/harvests.service';
+import {Vault} from '../../models/vault';
+import {ContractsService} from '../../services/contracts.service';
+import {Addresses} from '../../static/addresses';
 
 class CheckedValue {
+  name: string;
   value: string;
   checked: boolean;
 }
@@ -55,6 +59,7 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
               private log: NGXLogger,
               public vt: ViewTypeService,
               public harvestsService: HarvestsService,
+              private contractService: ContractsService
   ) {
   }
 
@@ -94,22 +99,22 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
       this.address = params.address;
       this.inputAddress = params.address;
       this.harvestsService.getAddressHistoryHarvest(this.address).subscribe(harvests => {
-        this.log.info('Load harvest history', harvests);
-        harvests?.forEach(harvest => {
-          HarvestDto.enrich(harvest);
-          this.fullData.push(harvest);
-        });
+            this.log.info('Load harvest history', harvests);
+            harvests?.forEach(harvest => {
+              HarvestDto.enrich(harvest);
+              this.fullData.push(harvest);
+            });
 
-        this.http.getAddressHistoryTransfers(this.address).subscribe(transfers => {
-          this.log.info('Load transfers history', transfers);
-          transfers?.forEach(transfer => {
-            TransferDto.enrich(transfer);
-            this.fullData.push(transfer);
-          });
-          this.sortValues();
-          this.parseValues();
-          this.createBalanceChart();
-        });
+            this.http.getAddressHistoryTransfers(this.address).subscribe(transfers => {
+              this.log.info('Load transfers history', transfers);
+              transfers?.forEach(transfer => {
+                TransferDto.enrich(transfer);
+                this.fullData.push(transfer);
+              });
+              this.sortValues();
+              this.parseValues();
+              this.createBalanceChart();
+            });
           }
       );
       this.cdRef.detectChanges();
@@ -156,7 +161,7 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
   sortValues(): void {
     this.sortedData = [];
     this.fullData.forEach(record => {
-      if (Utils.isHarvest(record) && this.includeIn(this.vaults, record.vault)) {
+      if (Utils.isHarvest(record) && this.includeIn(this.vaults, record.vaultAddress)) {
         this.sortedData.push(record);
       } else if (Utils.isTransfer(record) && this.includeTransfers
           && this.includeIn(this.transferTypeIncluded, record.type)) {
@@ -166,8 +171,8 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
     this.sortedData.sort((o1, o2) => o2.blockDate - o1.blockDate);
   }
 
-  includeIn(arr: CheckedValue[], name: string): boolean {
-    const c = arr.find(el => el.value === name);
+  includeIn(arr: CheckedValue[], value: string): boolean {
+    const c = arr.find(el => el.value === value);
     if (c) {
       return c.checked;
     }
@@ -200,7 +205,7 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
 
   private parseHarvest(record: HarvestDto): void {
     const harvest = this.lastStaked.get(record.vaultAddress);
-    this.addInCheckedArr(this.vaults, record.vault, false);
+    this.addInCheckedArr(this.vaults, record.vault, record.vaultAddress, false);
     this.saveHarvestBalance(record);
     // this.profit += record
     if (harvest) {
@@ -215,7 +220,7 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
   private parseTransfer(record: TransferDto): void {
     // todo need to investigate the problem with whole balance
     // this.saveTransferBalance(record);
-    this.addInCheckedArr(this.transferTypeIncluded, record.type, true);
+    this.addInCheckedArr(this.transferTypeIncluded, record.type, record.type, true);
     if (record.type === 'PS_EXIT' || record.type === 'REWARD') {
       this.saveReward(record.blockDate, record.profit, record.profit * record.price);
     }
@@ -251,9 +256,9 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
 
   private saveTransferBalance(record: TransferDto): void {
     if (record.type === 'PS_EXIT'
-      || record.type === 'PS_STAKE'
-      || record.type === 'LP_ADD'
-      || record.type === 'LP_REM'
+        || record.type === 'PS_STAKE'
+        || record.type === 'LP_ADD'
+        || record.type === 'LP_REM'
     ) {
       return;
     }
@@ -282,12 +287,13 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
     }
   }
 
-  private addInCheckedArr(arr: CheckedValue[], name: string, defaultValue: boolean): void {
-    if (arr.find(el => el.value === name)) {
+  private addInCheckedArr(arr: CheckedValue[], name: string, value: string, defaultValue: boolean): void {
+    if (arr.find(el => el.value === value)) {
       return;
     }
     const c = new CheckedValue();
-    c.value = name;
+    c.name = name;
+    c.value = value;
     c.checked = defaultValue;
     arr.push(c);
   }
@@ -325,5 +331,12 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
       return;
     }
     this.router.navigateByUrl('/history/' + address);
+  }
+
+  getVault(address: string): Vault {
+    if (!address.startsWith('0x')) {
+      address = Addresses.ADDRESSES.get(address);
+    }
+    return this.contractService.getContracts(Vault).get(address);
   }
 }

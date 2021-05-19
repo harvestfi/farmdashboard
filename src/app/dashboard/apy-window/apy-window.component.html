@@ -6,7 +6,9 @@
   </div>
 
   <div class="apy-window-header">
-    <p><app-vault-icon [vault]="vault"></app-vault-icon> {{vault.contract.name}}</p>
+    <p>
+      <app-vault-icon [vault]="vault"></app-vault-icon>
+      {{vault.contract.name}}</p>
   </div>
 
   <div>
@@ -40,7 +42,8 @@
 
     <app-custom-modal #incomeModal>
       <ng-template>
-        <app-apy-chart-dialog [data]="{title: vault.name + ' Income history chart', address: vault.contract.address, network: vault.contract.network}"></app-apy-chart-dialog>
+        <app-apy-chart-dialog
+            [data]="{title: vault.name + ' Income history chart', address: vault.contract.address, network: vault.contract.network}"></app-apy-chart-dialog>
       </ng-template>
     </app-custom-modal>
 

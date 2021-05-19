@@ -53,12 +53,11 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   get assetList(): string[] {
     const result = assets;
     this.contractsService.getContractsArray(Token)?.forEach(t => result.add(t.contract.name));
-    return Array.from(result.values()).sort((a, b) => b.localeCompare(a));
+    return Array.from(result.values()).sort((a, b) => a.localeCompare(b));
   }
 
   get vaultsList(): Vault[] {
-    return this.contractsService.getContractsArray(Vault)
-    .filter(_ => _.isActive());
+    return this.contractsService.getContractsArray(Vault);
   }
 
   prettyNetwork(name: string): string {
@@ -85,7 +84,7 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     this.apyWindowState[address] = !this.apyWindowState[address];
   }
 
-  sortVaultsList(sortBy?: string): void{
+  sortVaultsList(sortBy?: string): void {
     this.currentSortingValue = sortBy;
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
@@ -94,5 +93,10 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     this.tvlModals
     .find(e => e.name === 'tvlModal_' + address)
     ?.open();
+  }
+
+  isWeeklyRewardActive(vault: Vault): boolean {
+    const reward = this.rewardData.getReward(vault?.contract?.address, vault?.contract?.network);
+    return !!reward && reward !== 0;
   }
 }

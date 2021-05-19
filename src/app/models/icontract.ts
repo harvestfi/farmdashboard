@@ -1,2 +1,3 @@
 // tslint:disable-next-line
-export interface IContract {}
+export interface IContract {
+}

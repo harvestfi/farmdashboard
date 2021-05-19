@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ChartGeneralComponent } from './chart-general.component';
+import {ChartGeneralComponent} from './chart-general.component';
 
 describe('ChartGeneralComponent', () => {
   let component: ChartGeneralComponent;
@@ -8,7 +8,7 @@ describe('ChartGeneralComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChartGeneralComponent ]
+      declarations: [ChartGeneralComponent]
     })
     .compileComponents();
   });

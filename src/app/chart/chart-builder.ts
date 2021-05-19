@@ -2,7 +2,7 @@ import {ElementRef} from '@angular/core';
 import {createChart, IChartApi, ISeriesApi, MouseEventParams, SeriesMarker, Time} from 'lightweight-charts';
 import {LightweightChartsOptions} from './lightweight-charts-options';
 import {ChartsOptionsLight} from './charts-options-light';
-import { ViewTypeService } from '../services/view-type.service';
+import {ViewTypeService} from '../services/view-type.service';
 
 export class ChartBuilder {
   chartData = [[]];

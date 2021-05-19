@@ -3,6 +3,7 @@ mat-dialog-content {
     //-webkit-animation: rotate 4s infinite;
     animation: rotate 4s steps(4) infinite;
   }
+
   @keyframes rotate {
     0% {
       transform: rotate(0deg);

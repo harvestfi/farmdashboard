@@ -29,8 +29,8 @@ export class PriceDataService {
 
   private load(): void {
     this.pricesService.getLastPrices().subscribe(prices => {
-      this.log.info('Load last prices', prices);
-      prices.sort((a,b) => a.token.localeCompare(b.token))
+      this.log.debug('Load last prices', prices);
+      prices.sort((a, b) => a.token.localeCompare(b.token))
       .forEach(this.handlePrice.bind(this));
       // load last farm again for avoid errors with otherToken price calculation
       this.pricesService.getLastPrice(Addresses.ADDRESSES.get('FARM'), StaticValues.NETWORKS.get('eth'))
@@ -53,14 +53,14 @@ export class PriceDataService {
     }
     const lastPrice = this.prices.get(price?.network)?.get(price?.tokenAddress?.toLowerCase());
     if (lastPrice && lastPrice.block > price.block) {
-      this.log.warn('Price DTO older on ' + (lastPrice.block - price.block), lastPrice, price);
+      this.log.debug('Price DTO older on ' + (lastPrice.block - price.block), lastPrice, price);
       return new Observable<PricesDto>();
     }
     this.prices.get(price.network).set(price.tokenAddress?.toLowerCase(), price);
     if (price.tokenAddress === Addresses.ADDRESSES.get('FARM')) {
       this.lastFarmPrice = this.getUsdPrice(Addresses.ADDRESSES.get('FARM'), 'eth');
       this.titleService.setTitle(this.lastFarmPrice?.toFixed(2) + ' | ' + this.pureTitle);
-      this.log.info('FARM price updated', price);
+      this.log.debug('FARM price updated', price);
     }
     // this.dataFeed;
     return new Observable<PricesDto>(o => o.next(price));
@@ -89,7 +89,7 @@ export class PriceDataService {
     }
     if (checked.has(address)) {
       this.log.error('Price recursion', Array.from(checked.values())
-      .map(adr => this.prices.get(network)?.get(adr).source)
+          .map(adr => this.prices.get(network)?.get(adr).source)
           .toString()
           , address);
       return 1;

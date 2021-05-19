@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { SimpleModalComponent } from './simple-modal.component';
+import {SimpleModalComponent} from './simple-modal.component';
 
 describe('SimpleModalComponent', () => {
   let component: SimpleModalComponent;
@@ -8,7 +8,7 @@ describe('SimpleModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SimpleModalComponent ]
+      declarations: [SimpleModalComponent]
     })
     .compileComponents();
   }));

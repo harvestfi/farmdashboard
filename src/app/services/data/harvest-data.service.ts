@@ -46,13 +46,13 @@ export class HarvestDataService {
 
   private load() {
     this.harvestsService.getHarvestTxHistoryData().subscribe(harvests => {
-          this.log.info('Last 100 vault actions loaded', harvests);
+          this.log.debug('Last 100 vault actions loaded', harvests);
           return harvests?.sort((a, b) => a.block > b.block ? 1 : -1)
           ?.forEach(this.handleHarvest.bind(this));
         }
     ).add(() => {
       this.harvestsService.getLastTvls().subscribe(harvests => {
-            this.log.info('Last Vault Actions loaded', harvests);
+            this.log.debug('Last Vault Actions loaded', harvests);
             return harvests?.sort((a, b) => a.block > b.block ? 1 : -1)
             ?.forEach(this.handleHarvest.bind(this));
           }
@@ -81,14 +81,14 @@ export class HarvestDataService {
       this.latestHarvest.set(dto.network, dto);
     }
     Utils.addInArrayAtTheStart(this.dtos, dto);
-    this.dtos = this.dtos.sort((a,b) => b.blockDate - a.blockDate);
+    this.dtos = this.dtos.sort((a, b) => b.blockDate - a.blockDate);
     Utils.addInMap(this.lastGas, dto.network, dto.lastGas);
     Utils.addInMap(this.allVaultsUsers, dto.network, dto.allPoolsOwnersCount);
     Utils.addInMap(this.allUsersQuantity, dto.network, dto.allOwnersCount);
     this.lastHarvests.get(dto.network)?.set(dto.vaultAddress, dto);
     this.updateFarmData(dto);
     if (dto.vaultAddress === Addresses.ADDRESSES.get('PS')) {
-      this.log.info('PS loaded', this.lastHarvests.get(dto.network)?.get(dto.vaultAddress), dto);
+      this.log.debug('PS loaded', this.lastHarvests.get(dto.network)?.get(dto.vaultAddress), dto);
     }
     // this.log.debug('Handled vault action', dto, this.dtos);
     this.handledIds.add(dto.id);
@@ -173,7 +173,7 @@ export class HarvestDataService {
       return tvl;
     } else if (dto.lastTvl) {
       const vaultContract = this.contractService.getContracts(Vault).get(dto.vaultAddress);
-      if(!vaultContract) {
+      if (!vaultContract) {
         return dto.lastUsdTvl;
       }
       let underlyingAddress = vaultContract?.underlying?.address;

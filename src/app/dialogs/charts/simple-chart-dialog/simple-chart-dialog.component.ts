@@ -1,11 +1,10 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {HttpService} from '../../../services/http/http.service';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../../chart/chart-builder';
 import {DialogData} from '../../dialog-data';
-import { ChartGeneralMethodsComponent } from 'src/app/chart/chart-general-methods.component';
-import { IChartApi } from 'lightweight-charts';
+import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 
 @Component({
   selector: 'app-simple-chart-dialog',

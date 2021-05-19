@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { VaultTvlDialogComponent } from './vault-tvl-dialog.component';
+import {VaultTvlDialogComponent} from './vault-tvl-dialog.component';
 
 describe('VaultTvlDialogComponent', () => {
   let component: VaultTvlDialogComponent;
@@ -8,7 +8,7 @@ describe('VaultTvlDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VaultTvlDialogComponent ]
+      declarations: [VaultTvlDialogComponent]
     })
     .compileComponents();
   });

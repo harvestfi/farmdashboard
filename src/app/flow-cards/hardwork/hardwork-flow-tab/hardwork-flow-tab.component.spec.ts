@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { HardworkFlowTabComponent } from './hardwork-flow-tab.component';
+import {HardworkFlowTabComponent} from './hardwork-flow-tab.component';
 
 describe('HardworkFlowTabComponent', () => {
   let component: HardworkFlowTabComponent;
@@ -8,7 +8,7 @@ describe('HardworkFlowTabComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ HardworkFlowTabComponent ]
+      declarations: [HardworkFlowTabComponent]
     })
     .compileComponents();
   }));

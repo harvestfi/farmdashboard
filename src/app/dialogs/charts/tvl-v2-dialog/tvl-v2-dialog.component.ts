@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import {ChartGeneralMethodsComponent} from '../../../chart/chart-general-methods.component';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
@@ -6,7 +6,6 @@ import {HardworksService} from '../../../services/http/hardworks.service';
 import {TvlsService} from '../../../services/http/tvls.service';
 import {ChartBuilder} from '../../../chart/chart-builder';
 import {StaticValues} from '../../../static/static-values';
-import {ChartGeneralComponent} from '../../../chart/chart-general/chart-general.component';
 
 @Component({
   selector: 'app-tvl-v2-dialog',

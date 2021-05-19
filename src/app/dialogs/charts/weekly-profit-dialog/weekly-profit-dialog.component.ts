@@ -1,9 +1,7 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {HttpService} from '../../../services/http/http.service';
+import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../../chart/chart-builder';
-import {IChartApi} from 'lightweight-charts';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
 import {HardworksService} from '../../../services/http/hardworks.service';
 import {StaticValues} from '../../../static/static-values';
@@ -19,7 +17,7 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
               public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private hardworksService: HardworksService,
-              ) {
+  ) {
     super(cdRef, vt);
   }
 

@@ -14,9 +14,11 @@ export class DraggableModalComponent implements AfterViewInit {
   private positionFour = 0;
   private isMouseDown = false;
 
-  constructor(public vt: ViewTypeService){}
+  constructor(public vt: ViewTypeService) {
+  }
+
   ngAfterViewInit(): void {
-    const style =  this.modal.nativeElement.style;
+    const style = this.modal.nativeElement.style;
     style.top = '50%';
     style.left = '50%';
     style.transform = 'translate(-50%, -50%)';
@@ -34,9 +36,11 @@ export class DraggableModalComponent implements AfterViewInit {
       this.isMouseDown = true;
     }
   }
+
   mouseup(): void {
     this.isMouseDown = false;
   }
+
   @HostListener('document:mousemove', ['$event'])
   @HostListener('document:touchmove', ['$event'])
   mousemove(event): void {
@@ -66,6 +70,7 @@ export class DraggableModalComponent implements AfterViewInit {
       element.style.left = element.offsetLeft - this.positionOne + 'px';
     }
   }
+
   @HostListener('window:resize', ['$event'])
   handleWindowResize(): void {
     const xLimit = window.innerWidth;

@@ -4,7 +4,6 @@ import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {APP_CONFIG, AppConfig} from '../../../app.config';
-import {PricesService} from '../../services/http/prices.service';
 import {NGXLogger} from 'ngx-logger';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {HarvestDataService} from '../../services/data/harvest-data.service';
@@ -28,7 +27,6 @@ export class DashboardLastValuesComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               public dialog: MatDialog,
               public vt: ViewTypeService,
-              private pricesService: PricesService,
               private hardworkData: HardworkDataService,
               private harvestData: HarvestDataService,
               private priceData: PriceDataService,
@@ -38,6 +36,7 @@ export class DashboardLastValuesComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   // TODO split to classes
   // ------------- HARDWORK DATA ---------------------------
 

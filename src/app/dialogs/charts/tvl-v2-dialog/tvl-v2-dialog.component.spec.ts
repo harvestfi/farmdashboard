@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TvlV2DialogComponent } from './tvl-v2-dialog.component';
+import {TvlV2DialogComponent} from './tvl-v2-dialog.component';
 
 describe('TvlV2DialogComponent', () => {
   let component: TvlV2DialogComponent;
@@ -8,7 +8,7 @@ describe('TvlV2DialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TvlV2DialogComponent ]
+      declarations: [TvlV2DialogComponent]
     })
     .compileComponents();
   });

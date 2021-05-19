@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, Component} from '@angular/core';
+import {AfterContentInit, Component} from '@angular/core';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {HarvestDto} from '../../../models/harvest-dto';

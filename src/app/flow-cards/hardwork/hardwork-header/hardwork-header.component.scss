@@ -1,23 +1,26 @@
 
 :host {
-    width: 100%;
+  width: 100%;
 }
+
 .hardwork-headers {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: sticky;
+  width: 100%;
+
+  .hardwork-header {
     width: 100%;
-    .hardwork-header {
-        width: 100%;
-        text-align: center;
-        font-weight: bold;
-        font-size: 1em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1em;
+
     &.link {
-        opacity: 0;
-        cursor: none;
-    }  
+      opacity: 0;
+      cursor: none;
     }
-    
+  }
+
 }
 

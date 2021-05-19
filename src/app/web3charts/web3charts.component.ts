@@ -110,11 +110,11 @@ export class Web3chartsComponent implements AfterViewInit {
     });
   }
 
-  async getPrice<TP extends number >(
-    contractId,
-    timePeriod: TP,
-    blocksPeriod: typeof ethblocksperday | typeof ethblocksperhour,
-    contractMethod: 'shares' | 'tvl'
+  async getPrice<TP extends number>(
+      contractId,
+      timePeriod: TP,
+      blocksPeriod: typeof ethblocksperday | typeof ethblocksperhour,
+      contractMethod: 'shares' | 'tvl'
   ): Promise<ChartData[]> {
     const contract = this.web3service.contracts.find(el => el.contract.id === contractId);
 

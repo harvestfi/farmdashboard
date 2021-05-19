@@ -1,10 +1,8 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
-import {HttpService} from '../../../services/http/http.service';
+import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
-import {HarvestTvl} from '../../../models/harvest-tvl';
 import {TvlsService} from '../../../services/http/tvls.service';
 import {StaticValues} from '../../../static/static-values';
 

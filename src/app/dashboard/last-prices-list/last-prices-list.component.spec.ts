@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { LastPricesListComponent } from './last-prices-list.component';
+import {LastPricesListComponent} from './last-prices-list.component';
 
 describe('LastPricesListComponent', () => {
   let component: LastPricesListComponent;
@@ -8,7 +8,7 @@ describe('LastPricesListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LastPricesListComponent ]
+      declarations: [LastPricesListComponent]
     })
     .compileComponents();
   }));

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { ApyWindowComponent } from './apy-window.component';
+import {ApyWindowComponent} from './apy-window.component';
 
 describe('ApyWindowComponent', () => {
   let component: ApyWindowComponent;
@@ -8,7 +8,7 @@ describe('ApyWindowComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ApyWindowComponent ]
+      declarations: [ApyWindowComponent]
     })
     .compileComponents();
   }));

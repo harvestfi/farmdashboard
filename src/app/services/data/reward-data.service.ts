@@ -5,7 +5,6 @@ import {RewardsService} from '../http/rewards.service';
 import {NGXLogger} from 'ngx-logger';
 import {ContractsService} from '../contracts.service';
 import {Vault} from '../../models/vault';
-import {Addresses} from '../../static/addresses';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +26,7 @@ export class RewardDataService {
 
   private load(): void {
     this.rewardService.getLastRewards().subscribe(data => {
-          this.log.info('All last rewards loaded', data);
+          this.log.debug('All last rewards loaded', data);
           return data?.forEach(this.handle.bind(this));
         }
     );
@@ -87,12 +86,13 @@ export class RewardDataService {
     }
     if ((Date.now() / 1000) > reward.periodFinish && !StaticValues.PS_VAULTS.has(vaultAddress)) {
       if (!this.rewardEnded.has(vaultAddress)) {
-        this.log.warn('Reward setup zero, it is ended',
+        this.log.debug('Reward setup zero, it is ended',
             this.contractService.getContracts(Vault).get(vaultAddress)?.contract?.name,
             this.contractService.getContracts(Vault).get(vaultAddress),
             reward);
         this.rewardEnded.add(vaultAddress);
         this.rewardEnded.add(vaultAddress);
+        ``;
       }
       return 0;
     }

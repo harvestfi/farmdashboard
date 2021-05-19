@@ -1,15 +1,15 @@
 .custom-modal {
-    position: fixed;
-    z-index: 1000;
-    padding: 10px;
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
-    transition: none;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    border: 1px solid #7e7e7e;
+  position: fixed;
+  z-index: 1000;
+  padding: 10px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  transition: none;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  border: 1px solid #7e7e7e;
 }
 
 /*.custom-modal:hover {*/

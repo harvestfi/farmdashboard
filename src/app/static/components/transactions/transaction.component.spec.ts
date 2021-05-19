@@ -1,4 +1,4 @@
-import {waitForAsync, TestBed} from '@angular/core/testing';
+import {TestBed, waitForAsync} from '@angular/core/testing';
 import {TransactionComponent} from './transaction.component';
 
 describe('RewardsDialogComponent', () => {

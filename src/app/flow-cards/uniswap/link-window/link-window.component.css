@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: space-evenly;
 }
+
 .price-trend {
   position: relative;
   bottom: 3px;
@@ -13,6 +14,7 @@
   display: inline-block;
   align-items: center;
 }
+
 .links a {
   width: 80%;
   text-decoration: none;

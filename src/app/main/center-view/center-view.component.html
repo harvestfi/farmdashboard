@@ -10,16 +10,20 @@
 
   <div class="left-border-box middle">
     <div class="row charts-row">
-
       <app-price-chart></app-price-chart>
-
     </div>
-
   </div>
 
-  <app-flow-cards-view></app-flow-cards-view>
+  <div>
+        <app-flow-cards-view></app-flow-cards-view>
+  </div>
 
   <div class="left-border-box left">
     <app-last-prices-list></app-last-prices-list>
   </div>
+
+</div>
+
+<div *ngIf="loading" class="loading-screen">
+
 </div>

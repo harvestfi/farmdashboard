@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 
-import {HarvestDataService} from './harvest-data.service';
+import {UniswapDataService} from './uniswap-data.service';
 
-describe('HarvestDataService', () => {
-  let service: HarvestDataService;
+describe('UniswapDataService', () => {
+  let service: UniswapDataService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(HarvestDataService);
+    service = TestBed.inject(UniswapDataService);
   });
 
   it('should be created', () => {

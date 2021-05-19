@@ -1,10 +1,9 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
 import {HttpService} from '../../../services/http/http.service';
 import {ViewTypeService} from '../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '../../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
-import {IChartApi} from 'lightweight-charts';
 import {HardworksService} from '../../../services/http/hardworks.service';
 import {StaticValues} from '../../../static/static-values';
 
@@ -20,7 +19,7 @@ export class SavedGasFeesDialogComponent extends ChartGeneralMethodsComponent im
               public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private hardworksService: HardworksService,
-              ) {
+  ) {
     super(cdRef, vt);
   }
 

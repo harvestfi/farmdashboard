@@ -34,11 +34,11 @@ export class Utils {
     return Utils.isUni(record) && (record.type === 'BUY' || record.type === 'ADD');
   }
 
-  public static isHarvest(record: {vault: string}): boolean {
+  public static isHarvest(record: { vault: string }): boolean {
     return !!record.vault;
   }
 
-  public static isHarvestPositive(record: {vault: string; methodName: string}): boolean {
+  public static isHarvestPositive(record: { vault: string; methodName: string }): boolean {
     return Utils.isHarvest(record) && record.methodName === 'Deposit';
   }
 
@@ -178,9 +178,9 @@ export class Utils {
     if (name.split('_').length >= 3) {
       name = name.replace('ONEINCH_', '')
       .replace('1INCH_', '')
-          .replace('SUSHI_', '')
-          .replace('UNI_', '')
-          .replace('PCS_', '')
+      .replace('SUSHI_', '')
+      .replace('UNI_', '')
+      .replace('PCS_', '')
       ;
     }
     return name.replace('ONEINCH', '1INCH') + postfix;

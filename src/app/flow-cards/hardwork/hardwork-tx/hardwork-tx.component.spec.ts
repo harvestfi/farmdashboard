@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { HardworkTxComponent } from './hardwork-tx.component';
+import {HardworkTxComponent} from './hardwork-tx.component';
 
 describe('HardworkTxComponent', () => {
   let component: HardworkTxComponent;
@@ -8,7 +8,7 @@ describe('HardworkTxComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ HardworkTxComponent ]
+      declarations: [HardworkTxComponent]
     })
     .compileComponents();
   }));

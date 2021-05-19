@@ -107,7 +107,6 @@ export class HttpService {
 
   private handleResponse(x: any, url: string) {
     if (RestResponse.isRestResponse(x)) {
-      console.log('resp', x);
       if (get(x as any, 'code') === '200') {
         return get(x as any, 'data');
       } else {

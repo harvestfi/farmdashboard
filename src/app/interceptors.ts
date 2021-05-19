@@ -4,12 +4,12 @@ import {HttpMetricsService} from './services/http/interceptors/http-metrics.serv
 import {ErrorHandlerService} from './services/http/interceptors/error-handler.service';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-    suppressScrollX: true
+  suppressScrollX: true
 };
 
 export const interceptorProviders =
     [
-        {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
-        {provide: HTTP_INTERCEPTORS, useClass: HttpMetricsService, multi: true},
-        {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerService, multi: true},
+      {provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
+      {provide: HTTP_INTERCEPTORS, useClass: HttpMetricsService, multi: true},
+      {provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerService, multi: true},
     ];

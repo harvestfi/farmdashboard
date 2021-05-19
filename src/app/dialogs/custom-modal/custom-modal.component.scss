@@ -1,18 +1,18 @@
-.custom-modal-container{
-    overflow: hidden;
-    position: relative;
+.custom-modal-container {
+  overflow: hidden;
+  position: relative;
 
-    .custom-modal-btn-close{
-        position: absolute;
-        top: 0;
-        right: 0;        
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        outline: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        color: #959595;
-    }
+  .custom-modal-btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    outline: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #959595;
+  }
 }

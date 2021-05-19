@@ -1,9 +1,11 @@
 <div class="uni-tx-hist" [class]="vt.getThemeColor() + '-card'">
-        <h1 class="title">Uniswap Transaction History</h1>
-        <input class="filter-input" (input)="handleFilterUpdate($event)" [(ngModel)]="minAmount" placeholder="More than..." type="number">
-        <app-flow-tab [dtos]="paginated_dtos.data" [showFullDate]=true></app-flow-tab>
-        <div class="paginator-area">
-                <app-paginator (selectPage)="selectPage($event)" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)" [pageObject]="paginated_dtos"></app-paginator>
-        </div>
+  <h1 class="title">Uniswap Transaction History</h1>
+  <input class="filter-input" (input)="handleFilterUpdate($event)" [(ngModel)]="minAmount" placeholder="More than..."
+         type="number">
+  <app-flow-tab [dtos]="paginated_dtos.data" [showFullDate]=true></app-flow-tab>
+  <div class="paginator-area">
+    <app-paginator (selectPage)="selectPage($event)" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)"
+                   [pageObject]="paginated_dtos"></app-paginator>
+  </div>
 
 </div>

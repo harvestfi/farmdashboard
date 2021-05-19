@@ -12,7 +12,7 @@ export class UserSettings {
     localStorage.setItem('color', color);
   }
 
-  public static getColor(): string{
+  public static getColor(): string {
     return localStorage.getItem('color');
   }
 }

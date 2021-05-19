@@ -1,4 +1,4 @@
-import { HardworkFilterPipe } from './hardwork-filter.pipe';
+import {HardworkFilterPipe} from './hardwork-filter.pipe';
 
 describe('HardworkFilterPipe', () => {
   it('create an instance', () => {

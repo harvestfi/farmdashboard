@@ -1,115 +1,112 @@
 <div (click)="toggleMenu()" *ngIf="showSideMenu" id="side-menu-backdrop"></div>
 <button id="menu-button-toggle" (click)="toggleMenu()"><i class="fas fa-bars"></i></button>
-<div [@openMenu]="showSideMenu ? 'open' : 'closed'" id="main-side-menu" [class]="viewTypeService.getThemeColor() + '-card'">
-    <div class="main-side-menu-logo-container">
-        <div class="branding-box">
-            <img class="main-side-menu-logo" src="/assets/harvest_logo.png" alt="Harvest Logo">
-            <h4 class="main-side-menu-logo-text">Harvest</h4>
-        </div>
-
-        <div class="dark-mode-toggle-container">
-            <input [checked]="isDarkTheme" type="checkbox" name="darkmode toggle" id="dark-mode-toggle-checkbox">
-            <label title="Switch Theme" (click)="toggleTheme()"  for="dark-mode-toggle-checkbox" class="dark-mode-toggle-label"></label>
-        </div>
+<div [@openMenu]="showSideMenu ? 'open' : 'closed'" id="main-side-menu"
+     [class]="viewTypeService.getThemeColor() + '-card'">
+  <div class="main-side-menu-logo-container">
+    <div class="branding-box">
+      <img class="main-side-menu-logo" src="/assets/harvest_logo.png" alt="Harvest Logo">
+      <h4 class="main-side-menu-logo-text">Harvest</h4>
     </div>
 
-    <ul class="main-side-menu-items">
-<!--        TODO should be refactored-->
-<!--        <li (click)="openAllStatsDialog()" data-menu-icon="📈" class="main-side-menu-item">Full Strategies Info</li>-->
-<!--        <app-custom-modal #allStatsDialog>-->
-<!--            <ng-template >-->
-<!--                <app-all-stats-dialog></app-all-stats-dialog>-->
-<!--            </ng-template>-->
-<!--        </app-custom-modal>-->
+    <div class="dark-mode-toggle-container">
+      <input [checked]="isDarkTheme" type="checkbox" name="darkmode toggle" id="dark-mode-toggle-checkbox">
+      <label title="Switch Theme" (click)="toggleTheme()" for="dark-mode-toggle-checkbox"
+             class="dark-mode-toggle-label"></label>
+    </div>
+  </div>
 
-<!--        <li (click)="openTvlDialog()" data-menu-icon="🕐" class="main-side-menu-item">TVL History Info</li>-->
-<!--        <app-custom-modal #tvlDialog>-->
-<!--            <ng-template >-->
-<!--                <app-tvl-dialog [data]="{type: 'PS'}"></app-tvl-dialog>-->
-<!--            </ng-template>-->
-<!--        </app-custom-modal>-->
-        
-<!--        <li (click)="openIncomeDialog()" data-menu-icon="💸" class="main-side-menu-item">Income History Info</li>-->
-<!--        <app-custom-modal #incomeDialog>-->
-<!--            <ng-template >-->
-<!--                <app-tvl-dialog [data]="{type: 'income'}"></app-tvl-dialog>-->
-<!--            </ng-template>-->
-<!--        </app-custom-modal>-->
+  <ul class="main-side-menu-items">
+    <!--        TODO should be refactored-->
+    <!--        <li (click)="openAllStatsDialog()" data-menu-icon="📈" class="main-side-menu-item">Full Strategies Info</li>-->
+    <!--        <app-custom-modal #allStatsDialog>-->
+    <!--            <ng-template >-->
+    <!--                <app-all-stats-dialog></app-all-stats-dialog>-->
+    <!--            </ng-template>-->
+    <!--        </app-custom-modal>-->
 
-        <app-collapsible-area>
-            <header>
-                <li class="main-side-menu-item" data-menu-icon="📈">Charts</li>
-            </header>
-            
-            <content>
-                <li (click)="openPsApyDialog()" data-menu-icon="📅" class="main-side-menu-item nested nested">PS APY History</li>
-                <app-custom-modal #psApyDialog>
-                    <ng-template >
-                        <app-ps-apy-dialog></app-ps-apy-dialog>
-                    </ng-template>
-                </app-custom-modal>
-                
-                <li (click)="openWeeklyProfitDialog()" data-menu-icon="🔒" class="main-side-menu-item nested">Weekly Profit History</li>
-                <app-custom-modal #weeklyProfitDialog>
-                    <ng-template >
-                        <app-weekly-profit-dialog></app-weekly-profit-dialog>
-                    </ng-template>
-                </app-custom-modal>
+    <!--        <li (click)="openTvlDialog()" data-menu-icon="🕐" class="main-side-menu-item">TVL History Info</li>-->
+    <!--        <app-custom-modal #tvlDialog>-->
+    <!--            <ng-template >-->
+    <!--                <app-tvl-dialog [data]="{type: 'PS'}"></app-tvl-dialog>-->
+    <!--            </ng-template>-->
+    <!--        </app-custom-modal>-->
 
-                <li (click)="openFarmBuybacksDialog()" data-menu-icon="📥" class="main-side-menu-item nested">FARM Buybacks</li>
-                <app-custom-modal #farmBuybackDialog>
-                    <ng-template >
-                        <app-farm-buybacks-dialog></app-farm-buybacks-dialog>
-                    </ng-template>
-                </app-custom-modal>
+    <!--        <li (click)="openIncomeDialog()" data-menu-icon="💸" class="main-side-menu-item">Income History Info</li>-->
+    <!--        <app-custom-modal #incomeDialog>-->
+    <!--            <ng-template >-->
+    <!--                <app-tvl-dialog [data]="{type: 'income'}"></app-tvl-dialog>-->
+    <!--            </ng-template>-->
+    <!--        </app-custom-modal>-->
 
-                <li (click)="openSavedFeesDialog()" data-menu-icon="🛡️" class="main-side-menu-item nested">Saved Gas Fees</li>
-                <app-custom-modal #savedFeesDialog>
-                    <ng-template >
-                        <app-saved-gas-fees-dialog></app-saved-gas-fees-dialog>
-                    </ng-template>
-                </app-custom-modal>
+    <app-collapsible-area>
+      <header>
+        <li class="main-side-menu-item" data-menu-icon="📈">Charts</li>
+      </header>
 
-            </content>
-        </app-collapsible-area>
-
-
-        
-
-        <li (click)="openWeeklyRewardsDialog()" data-menu-icon="🏆" class="main-side-menu-item">Weekly Rewards History</li>
-        <app-custom-modal #weeklyRewardsDialog>
-            <ng-template >
-                <app-rewards-history-dialog [data]="{title: 'Weekly rewards history chart'}"></app-rewards-history-dialog>
-            </ng-template>
+      <content>
+        <li (click)="openPsApyDialog()" data-menu-icon="📅" class="main-side-menu-item nested nested">PS APY History
+        </li>
+        <app-custom-modal #psApyDialog>
+          <ng-template>
+            <app-ps-apy-dialog></app-ps-apy-dialog>
+          </ng-template>
         </app-custom-modal>
 
-        <li (click)="openSavedFeesDialog()" data-menu-icon="🛡️" class="main-side-menu-item">Saved Gas Fees</li>
+        <li (click)="openWeeklyProfitDialog()" data-menu-icon="🔒" class="main-side-menu-item nested">Weekly Profit
+          History
+        </li>
+        <app-custom-modal #weeklyProfitDialog>
+          <ng-template>
+            <app-weekly-profit-dialog></app-weekly-profit-dialog>
+          </ng-template>
+        </app-custom-modal>
+
+        <li (click)="openFarmBuybacksDialog()" data-menu-icon="📥" class="main-side-menu-item nested">FARM Buybacks</li>
+        <app-custom-modal #farmBuybackDialog>
+          <ng-template>
+            <app-farm-buybacks-dialog></app-farm-buybacks-dialog>
+          </ng-template>
+        </app-custom-modal>
+
+        <li (click)="openSavedFeesDialog()" data-menu-icon="🛡️" class="main-side-menu-item nested">Saved Gas Fees</li>
         <app-custom-modal #savedFeesDialog>
-            <ng-template >
-                <app-saved-gas-fees-dialog></app-saved-gas-fees-dialog>
-            </ng-template>
-        </app-custom-modal>
-        
-        <li (click)="openDownloadHistoricDataDialog()" data-menu-icon="🗄️" class="main-side-menu-item">Download</li>
-        <app-custom-modal #downloadHistoricDataDialog>
-            <ng-template >
-                <app-download-historic-data-dialog [data]="{title: 'Download Historic Data'}"></app-download-historic-data-dialog>
-            </ng-template>
+          <ng-template>
+            <app-saved-gas-fees-dialog></app-saved-gas-fees-dialog>
+          </ng-template>
         </app-custom-modal>
 
-        <li (click)="openUserBalances()" data-menu-icon="👨‍👨‍👦‍👦" class="main-side-menu-item">Users Balances</li>
-        <app-custom-modal #userBalancesDialog>
-        <ng-template >
-                <app-user-balances-dialog [data]="{title: 'User Balances'}"></app-user-balances-dialog>
-            </ng-template>
-        </app-custom-modal>
-    </ul>
+      </content>
+    </app-collapsible-area>
 
 
-    <nav class="botton-social-icons ">
-        <a class="social-link" href="https://twitter.com/harvest_finance"><i class="fab fa-twitter"></i></a>
-        <a class="social-link" href="https://discord.gg/R5SeTVR"><i class="fab fa-discord"></i></a>
-        <a class="social-link" href="https://medium.com/harvest-finance"><i class="fab fa-medium"></i></a>
-        <a class="social-link" href="https://www.reddit.com/r/HarvestFinance/"><i class="fab fa-reddit-square"></i></a>
-    </nav>
+    <li (click)="openWeeklyRewardsDialog()" data-menu-icon="🏆" class="main-side-menu-item">Weekly Rewards History</li>
+    <app-custom-modal #weeklyRewardsDialog>
+      <ng-template>
+        <app-rewards-history-dialog [data]="{title: 'Weekly rewards history chart'}"></app-rewards-history-dialog>
+      </ng-template>
+    </app-custom-modal>
+
+    <li (click)="openDownloadHistoricDataDialog()" data-menu-icon="🗄️" class="main-side-menu-item">Download</li>
+    <app-custom-modal #downloadHistoricDataDialog>
+      <ng-template>
+        <app-download-historic-data-dialog
+            [data]="{title: 'Download Historic Data'}"></app-download-historic-data-dialog>
+      </ng-template>
+    </app-custom-modal>
+
+    <li (click)="openUserBalances()" data-menu-icon="👨‍👨‍👦‍👦" class="main-side-menu-item">Users Balances</li>
+    <app-custom-modal #userBalancesDialog>
+      <ng-template>
+        <app-user-balances-dialog [data]="{title: 'User Balances'}"></app-user-balances-dialog>
+      </ng-template>
+    </app-custom-modal>
+  </ul>
+
+
+  <nav class="botton-social-icons ">
+    <a class="social-link" href="https://twitter.com/harvest_finance"><i class="fab fa-twitter"></i></a>
+    <a class="social-link" href="https://discord.gg/R5SeTVR"><i class="fab fa-discord"></i></a>
+    <a class="social-link" href="https://medium.com/harvest-finance"><i class="fab fa-medium"></i></a>
+    <a class="social-link" href="https://www.reddit.com/r/HarvestFinance/"><i class="fab fa-reddit-square"></i></a>
+  </nav>
 </div>

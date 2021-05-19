@@ -1,4 +1,4 @@
-import {AfterContentInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, ChangeDetectorRef, Component} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {WebsocketService} from '../../services/websocket.service';
 import {BusyNotifierService} from '../../services/busy-notifier.service';
@@ -20,7 +20,7 @@ export class MainPageLightComponent implements AfterContentInit {
               public dialog: MatDialog,
               private loadingService: BusyNotifierService,
               private cdref: ChangeDetectorRef
-              ) {
+  ) {
   }
 
   ngAfterContentInit(): void {
@@ -29,7 +29,7 @@ export class MainPageLightComponent implements AfterContentInit {
       this.cdref.detectChanges();
     });
     this.loadingService.failures.subscribe(err => {
-      if(!this.errored && err instanceof Error){
+      if (!this.errored && err instanceof Error) {
         this.errored = true;
         this.dialog.open(ApplicationErrorDialog);
       }

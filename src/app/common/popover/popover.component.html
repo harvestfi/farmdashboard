@@ -1,7 +1,8 @@
-<div [ngbPopover]="popover" placement="bottom" triggers="mouseenter:mouseleave" [popoverClass]="vt.getThemeColor() + '-card'" container="body">
-    <ng-template #popover>
-        <ng-container [ngTemplateOutlet]="template"></ng-container>
-    </ng-template>
-    <ng-content> </ng-content>
+<div [ngbPopover]="popover" placement="bottom" triggers="mouseenter:mouseleave"
+     [popoverClass]="vt.getThemeColor() + '-card'" container="body">
+  <ng-template #popover>
+    <ng-container [ngTemplateOutlet]="template"></ng-container>
+  </ng-template>
+  <ng-content></ng-content>
 </div>
 

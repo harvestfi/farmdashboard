@@ -3,12 +3,12 @@ import {Token} from './token';
 import {IContract} from './icontract';
 
 export class Lps implements IContract {
-    id: number;
-    contract: Contract;
-    updatedBlock: number;
-    keyToken: Token;
-    type: number;
-    decimals: number;
-    token0: Contract;
-    token1: Contract;
+  id: number;
+  contract: Contract;
+  updatedBlock: number;
+  keyToken: Token;
+  type: number;
+  decimals: number;
+  token0: Contract;
+  token1: Contract;
 }

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { HarvestDto } from '../../../models/harvest-dto';
-import { ViewTypeService } from '../../../services/view-type.service';
+import {Component, Input} from '@angular/core';
+import {HarvestDto} from '../../../models/harvest-dto';
+import {ViewTypeService} from '../../../services/view-type.service';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { ViewTypeService } from '../../../services/view-type.service';
   templateUrl: './harvest-flow-tab.component.html',
   styleUrls: ['./harvest-flow-tab.component.scss']
 })
-export class HarvestFlowTabComponent{
+export class HarvestFlowTabComponent {
 
   @Input() dtos: HarvestDto[] = [];
   @Input() maxHeight = 400;
