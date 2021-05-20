@@ -95,6 +95,7 @@ import {ApyCommonComponent} from './dashboard/apy-window/apy-common.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {interceptorProviders} from './interceptors';
 import {ApplicationErrorDialog} from './main/main-page-light/application-error-dialog';
+import {KatexModule} from 'ng-katex';
 
 
 @NgModule({
@@ -201,6 +202,7 @@ import {ApplicationErrorDialog} from './main/main-page-light/application-error-d
     SidebarModule.forRoot(),
     NgbModule,
     MatProgressBarModule,
+    KatexModule,
   ],
   providers: [
     interceptorProviders

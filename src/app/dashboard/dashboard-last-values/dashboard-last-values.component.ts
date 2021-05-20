@@ -9,6 +9,7 @@ import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {HarvestDataService} from '../../services/data/harvest-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Addresses} from '../../static/addresses';
+import {KatexOptions} from 'ng-katex';
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -16,6 +17,9 @@ import {Addresses} from '../../static/addresses';
   styleUrls: ['./dashboard-last-values.component.scss']
 })
 export class DashboardLastValuesComponent implements OnInit {
+  katexOptions: KatexOptions = {
+    displayMode: true,
+  };
   @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
   @ViewChild('weeklyProfitModal') private weeklyProfitModal: CustomModalComponent;
   @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
@@ -75,6 +79,26 @@ export class DashboardLastValuesComponent implements OnInit {
 
   weeklyProfits(network: string): number {
     return this.hardworkData.getWeeklyProfits(network);
+  }
+
+  get priceToEarningsRatio(): number {
+    const earningPerShare = this.psYearEarning / this.farmTotalAmount;
+    return this.farmUsdPrice / earningPerShare;
+  }
+
+  get psYearEarning() {
+    const psLastWeekEarned = this.hardworkData.getWeeklyProfits('eth') * 0.3
+        + this.hardworkData.getWeeklyProfits('bsc') * 0.08;
+    return psLastWeekEarned * 52.1429;
+  }
+
+  get farmTotalAmount(): number {
+    const lastPsHarvest =
+        this.harvestData.getVaultLastInfo(Addresses.ADDRESSES.get('PS'), 'eth');
+    if (!lastPsHarvest) {
+      return 0;
+    }
+    return lastPsHarvest.totalAmount;
   }
 
   // --------------- HARVEST DATA -----------------------------
@@ -177,4 +201,17 @@ export class DashboardLastValuesComponent implements OnInit {
     return Addresses.ADDRESSES.get('PS');
   }
 
+  // ------------- FORMULAS -------------------------
+
+  get peRatioHtml() {
+    return `PE = `
+        + `\\cfrac{FARMPrice (${this.farmUsdPrice.toFixed(0)})}`
+        + `{EPS(${(this.psYearEarning / this.farmTotalAmount).toFixed(0)})}`;
+  }
+
+  get epsHtml() {
+    return `EPS = `
+        + ` \\cfrac{PSLastWeekProfit * WeeksInYear (${this.psYearEarning.toFixed(0)})}`
+        + `{FARMTotalAmount (${this.farmTotalAmount.toFixed(0)})}`;
+  }
 }

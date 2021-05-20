@@ -115,15 +115,18 @@
       </ng-template>
     </app-custom-modal>
 
-    <app-popover-card class="value-card ps-income"
-                      [class]="vt.getThemeColor() + '-card'">
+    <app-popover-card class="value-card ps-income" [class]="vt.getThemeColor() + '-card'">
       <div>
-        <ng-template>Soon</ng-template>
+        <ng-template>
+          <a href="https://www.investopedia.com/terms/p/price-earningsratio.asp">Price-to-Earnings Ratio – P/E Ratio</a>
+          <ng-katex [equation]="peRatioHtml" [options]="katexOptions"></ng-katex>
+          <ng-katex [equation]="epsHtml" [options]="katexOptions"></ng-katex>
+        </ng-template>
         <div class="value-middle">
-          📈P/A Ratio
+          📈P/E Ratio
         </div>
         <div class="value-number-middle ">
-          -
+          {{priceToEarningsRatio | number: '1.2-2' }}
         </div>
       </div>
     </app-popover-card>
