@@ -92,7 +92,6 @@ export class RewardDataService {
             reward);
         this.rewardEnded.add(vaultAddress);
         this.rewardEnded.add(vaultAddress);
-        ``;
       }
       return 0;
     }
