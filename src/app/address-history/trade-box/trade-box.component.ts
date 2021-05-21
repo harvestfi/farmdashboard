@@ -5,7 +5,6 @@ import {TransferDto} from '../../models/transfer-dto';
 import {NGXLogger} from 'ngx-logger';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
-import {IContract} from '../../models/icontract';
 
 @Component({
   selector: 'app-trade-box',
@@ -95,6 +94,14 @@ export class TradeBoxComponent implements OnInit {
       return '';
     }
     return otherSide;
+  }
+
+  getTransferOtherSideVault(): Vault {
+    return this.contractsService.getContracts(Vault).get(this.getTransferOtherSide());
+  }
+
+  getHarvestVault(): Vault {
+    return this.contractsService.getContracts(Vault).get(this.harvestDto.vaultAddress);
   }
 
   getTransferOtherSidePretty(): string {

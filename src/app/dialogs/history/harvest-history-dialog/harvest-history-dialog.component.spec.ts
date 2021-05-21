@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { HarvestHistoryDialogComponent } from './harvest-history-dialog.component';
+import {HarvestHistoryDialogComponent} from './harvest-history-dialog.component';
 
 describe('HarvestHistoryDialogComponent', () => {
   let component: HarvestHistoryDialogComponent;
@@ -8,7 +8,7 @@ describe('HarvestHistoryDialogComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ HarvestHistoryDialogComponent ]
+      declarations: [HarvestHistoryDialogComponent]
     })
     .compileComponents();
   }));

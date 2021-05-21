@@ -41,7 +41,6 @@ export class TransferDto {
     } else if (dto.recipient.toLowerCase() === address.toLowerCase()) {
       return dto.balanceRecipient;
     } else {
-      console.log('wrong balance for ', address, dto);
       return 0;
     }
   }

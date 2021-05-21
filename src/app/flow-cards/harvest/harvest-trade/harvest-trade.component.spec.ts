@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { HarvestTradeComponent } from './harvest-trade.component';
+import {HarvestTradeComponent} from './harvest-trade.component';
 
 describe('HarvestTradeComponent', () => {
   let component: HarvestTradeComponent;
@@ -8,7 +8,7 @@ describe('HarvestTradeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ HarvestTradeComponent ]
+      declarations: [HarvestTradeComponent]
     })
     .compileComponents();
   }));

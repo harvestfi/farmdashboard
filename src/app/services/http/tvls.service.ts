@@ -6,20 +6,20 @@ import {Network} from '../../models/network';
 import {StaticValues} from '../../static/static-values';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class TvlsService {
 
-    constructor(private httpService: HttpService) {
-    }
+  constructor(private httpService: HttpService) {
+  }
 
 
-    getHistoryAllTvl(network: Network = StaticValues.NETWORKS.get('eth')): Observable<HarvestTvl[]> {
-        return this.httpService.httpGet(`/api/transactions/history/alltvl`, network);
-    }
+  getHistoryAllTvl(network: Network = StaticValues.NETWORKS.get('eth')): Observable<HarvestTvl[]> {
+    return this.httpService.httpGet(`/api/transactions/history/alltvl`, network);
+  }
 
-    getHistoryTvlByVault(vault: string, network: Network = StaticValues.NETWORKS.get('eth')): Observable<HarvestTvl[]> {
-        return this.httpService.httpGet(`/api/transactions/history/tvl/${vault}`, network);
-    }
+  getHistoryTvlByVault(vault: string, network: Network = StaticValues.NETWORKS.get('eth')): Observable<HarvestTvl[]> {
+    return this.httpService.httpGet(`/api/transactions/history/tvl/${vault}?reduce=10`, network);
+  }
 
 }

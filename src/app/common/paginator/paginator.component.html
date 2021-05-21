@@ -1,5 +1,8 @@
 <div class="paginator-component" [class]="vt.getThemeColor()">
-    <button [disabled]="pageObject.previousPage < 0" class="paginator-btn" (click)="handlePreviousPage()" href="#"><i class="fas fa-chevron-left"></i></button>
-    <button class="paginator-btn" [class]="pageObject.currentPage === page - 1 ? 'active' : ''" (click)="handleSelectPage(page)" *ngFor="let page of pageRange" href="#">{{page}}</button>
-    <button [disabled]="pageObject.nextPage < 0" class="paginator-btn" (click)="handleNextPage()" href="#"><i class="fas fa-chevron-right"></i></button>
+  <button [disabled]="pageObject.previousPage < 0" class="paginator-btn" (click)="handlePreviousPage()" href="#"><i
+      class="fas fa-chevron-left"></i></button>
+  <button class="paginator-btn" [class]="pageObject.currentPage === page - 1 ? 'active' : ''"
+          (click)="handleSelectPage(page)" *ngFor="let page of pageRange" href="#">{{page}}</button>
+  <button [disabled]="pageObject.nextPage < 0" class="paginator-btn" (click)="handleNextPage()" href="#"><i
+      class="fas fa-chevron-right"></i></button>
 </div>

@@ -11,8 +11,8 @@
       <p>Last gas: {{dto.lastGas | number}}</p>
     </ng-template>
     {{fullDate ?
-    (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'):
-    (dto.blockDateAdopted | date: 'HH:mm:ss')
+      (dto.blockDateAdopted | date: 'dd-MMM HH:mm') :
+      (dto.blockDateAdopted | date: 'HH:mm:ss')
     }}
   </app-popover-card>
 
@@ -39,15 +39,15 @@
 
       </app-link-window>
     </app-simple-modal>
-     
+
     <container-element class="pointer"
-        (click)='showTradeLinks()' [ngSwitch]="checkImportantOwner(dto)">
+                       (click)='showTradeLinks()' [ngSwitch]="checkImportantOwner(dto)">
 
       <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price"
                 class="sign-icon">
         open_in_new
       </mat-icon>
-    
+
       <mat-icon *ngSwitchCase="'devs'" [ngStyle]="{'color': '#c4ad58'}" aria-hidden="false" aria-label="Price"
                 class="sign-icon">
         warning
@@ -57,7 +57,7 @@
                       size="14"></angular-emojis>
 
     </container-element>
-   
+
   </div>
 
 </div>

@@ -9,7 +9,7 @@
     margin: 0 5px;
   }
 
-  .left { 
+  .left {
     margin-right: 10px;
   }
 
@@ -18,10 +18,10 @@
   }
 
   @media screen and (max-width: 1025px) {
-      grid-template-columns:  100%;
-      .middle, .left, .right {
-        margin: 10px 0;
-      }
+    grid-template-columns:  100%;
+    .middle, .left, .right {
+      margin: 10px 0;
+    }
   }
 }
 

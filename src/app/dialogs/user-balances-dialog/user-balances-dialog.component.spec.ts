@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { UserBalancesDialogComponent } from './user-balances-dialog.component';
+import {UserBalancesDialogComponent} from './user-balances-dialog.component';
 
 describe('UserBalancesDialogComponent', () => {
   let component: UserBalancesDialogComponent;
@@ -8,7 +8,7 @@ describe('UserBalancesDialogComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserBalancesDialogComponent ]
+      declarations: [UserBalancesDialogComponent]
     })
     .compileComponents();
   }));

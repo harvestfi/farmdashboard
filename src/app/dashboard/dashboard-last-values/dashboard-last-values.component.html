@@ -13,7 +13,7 @@
     </div>
 
     <app-popover-card class="value-card gas" [class]="vt.getThemeColor() + '-card'"
-         (click)="openGasPriceDialog()">
+                      (click)="openGasPriceDialog()">
       <div class="pointer">
         <ng-template>
           <p>Click to open history chart</p>
@@ -86,28 +86,28 @@
     </app-popover-card>
     <app-custom-modal #FARMStakedModal>
       <ng-template>
-        <app-vault-tvl-dialog [vault]="'PS'" [network]="'eth'"></app-vault-tvl-dialog>
+        <app-vault-tvl-dialog [vault]="psAddress" [network]="'eth'"></app-vault-tvl-dialog>
       </ng-template>
     </app-custom-modal>
 
 
     <app-popover-card (click)="openWeeklyProfitDialog()"
-         class="value-card pointer weekly-profits"
-         [class]="vt.getThemeColor() + '-card'">
-        <ng-template>
-          <div>
-            <p>Weekly profits from all vaults by network</p>
-            <p>BSC {{weeklyProfits("bsc") / 1000 | number: '1.0-1'}}K$</p>
-            <p>ETH {{weeklyProfits("eth") / 1000 | number: '1.0-1'}}K$</p>
-          </div>
-        </ng-template>
-        <div class="value-middle">
-          🤑Weekly Profit
+                      class="value-card pointer weekly-profits"
+                      [class]="vt.getThemeColor() + '-card'">
+      <ng-template>
+        <div>
+          <p>Weekly profits from all vaults by network</p>
+          <p>BSC {{weeklyProfits("bsc") / 1000 | number: '1.0-1'}}K$</p>
+          <p>ETH {{weeklyProfits("eth") / 1000 | number: '1.0-1'}}K$</p>
         </div>
-        <div class="value-number-middle">
-          <span>{{totalWeeklyProfits / 1000 | number: '1.0-1'}}</span>
-          K$
-        </div>
+      </ng-template>
+      <div class="value-middle">
+        🤑Weekly Profit
+      </div>
+      <div class="value-number-middle">
+        <span>{{totalWeeklyProfits / 1000 | number: '1.0-1'}}</span>
+        K$
+      </div>
     </app-popover-card>
     <app-custom-modal #weeklyProfitModal>
       <ng-template>
@@ -115,22 +115,25 @@
       </ng-template>
     </app-custom-modal>
 
-    <app-popover-card class="value-card ps-income"
-         [class]="vt.getThemeColor() + '-card'">
+    <app-popover-card class="value-card ps-income" [class]="vt.getThemeColor() + '-card'">
       <div>
-        <ng-template>Soon</ng-template>
+        <ng-template>
+          <a href="https://www.investopedia.com/terms/p/price-earningsratio.asp">Price-to-Earnings Ratio – P/E Ratio</a>
+          <ng-katex [equation]="peRatioHtml" [options]="katexOptions"></ng-katex>
+          <ng-katex [equation]="epsHtml" [options]="katexOptions"></ng-katex>
+        </ng-template>
         <div class="value-middle">
-          📈P/A Ratio
+          📈P/E Ratio
         </div>
         <div class="value-number-middle ">
-          -
+          {{priceToEarningsRatio | number: '1.2-2' }}
         </div>
       </div>
     </app-popover-card>
 
     <app-popover-card (click)="openTvlDialog()"
-         class="value-card pointer tvl"
-         [class]="vt.getThemeColor() + '-card'">
+                      class="value-card pointer tvl"
+                      [class]="vt.getThemeColor() + '-card'">
       <ng-template>
         <div>
           <p>Total value locked by network</p>
@@ -155,7 +158,7 @@
 
 
     <app-popover-card class="value-card farm-holders"
-         [class]="vt.getThemeColor() + '-card'">
+                      [class]="vt.getThemeColor() + '-card'">
       <div>
         <ng-template>
           <p>Under refactoring</p>
@@ -170,8 +173,8 @@
     </app-popover-card>
 
     <app-popover-card (click)="openFarmBuybacksDialog()"
-         class="value-card pointer farm-buybacks"
-         [class]="vt.getThemeColor() + '-card'">
+                      class="value-card pointer farm-buybacks"
+                      [class]="vt.getThemeColor() + '-card'">
       <div>
         <ng-template>
           <p>30% profit of each ETH HardWork goes to buy FARM</p>
@@ -195,8 +198,8 @@
     </app-custom-modal>
 
     <app-popover-card (click)="openSavedFeesDialog()"
-         class="value-card pointer saved-fees"
-         [class]="vt.getThemeColor() + '-card'">
+                      class="value-card pointer saved-fees"
+                      [class]="vt.getThemeColor() + '-card'">
       <div>
         <ng-template>
           <p>How much gas would users spend on<br/> transactions without our project?</p>
@@ -219,8 +222,8 @@
     </app-custom-modal>
 
     <app-popover-card (click)="openTotalUsersDialog()"
-         class="value-card pointer total-users"
-        [class]="vt.getThemeColor() + '-card'">
+                      class="value-card pointer total-users"
+                      [class]="vt.getThemeColor() + '-card'">
       <div>
         <ng-template>
           <p>Total unique accounts interacted with the project</p>
@@ -243,7 +246,7 @@
 
 
     <app-popover-card class="value-card active-pools"
-         [class]="vt.getThemeColor() + '-card'">
+                      [class]="vt.getThemeColor() + '-card'">
       <div>
         <ng-template>
           <div>

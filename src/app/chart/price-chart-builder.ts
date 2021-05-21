@@ -1,4 +1,3 @@
-import {UniswapDto} from '../models/uniswap-dto';
 import {OhlcDto} from '../models/ohlc-dto';
 import {ElementRef} from '@angular/core';
 import {createChart, IChartApi} from 'lightweight-charts';
@@ -6,7 +5,6 @@ import {NGXLogger} from 'ngx-logger';
 import {LightweightChartsOptions} from './lightweight-charts-options';
 import {ViewTypeService} from '../services/view-type.service';
 import {ChartsOptionsLight} from './charts-options-light';
-import {PricesDto} from '../models/prices-dto';
 
 export class PriceChartBuilder {
   lastDate = 0;

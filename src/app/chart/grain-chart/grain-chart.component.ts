@@ -4,7 +4,6 @@ import {NGXLogger} from 'ngx-logger';
 import {PriceChartBuilder} from '../price-chart-builder';
 import {IChartApi} from 'lightweight-charts';
 import {UniswapService} from '../../services/http/uniswap.service';
-import {PricesService} from '../../services/http/prices.service';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Addresses} from '../../static/addresses';
 

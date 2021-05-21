@@ -1,3 +1,15 @@
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index:999;
+  /*background: #3d3d3d;*/
+  background-color: rgba(0, 0, 0, 0.61);
+  backdrop-filter: blur(4px);
+}
+
 .central-view-row {
   width: 100%;
 }
@@ -31,4 +43,8 @@
   .middle {
     width: 100%;
   }
+}
+
+mat-progress-bar {
+  width: 100%;
 }

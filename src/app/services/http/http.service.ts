@@ -9,8 +9,9 @@ import {Network} from '../../models/network';
 import {StaticValues} from '../../static/static-values';
 import {APP_CONFIG, AppConfig} from 'src/app.config';
 import {NGXLogger} from 'ngx-logger';
-import get = Reflect.get;
 import {RestResponse} from '../../models/rest-response';
+import {Paginated} from '../../models/paginated';
+import get = Reflect.get;
 
 @Injectable({
   providedIn: 'root'
@@ -91,12 +92,7 @@ export class HttpService {
         + `${urlAtr}network=${network.ethparserName}`;
     this.log.debug('HTTP simple get for network ' + network.ethparserName, url);
     return this.http.get<T>(url).pipe(
-        map(x => {
-          if (RestResponse.isRestResponse(x)) {
-            return get(x as any, 'data');
-          }
-          return x;
-        }),
+        map(x => this.handleResponse(x, urlAtr)),
         catchError(this.snackService.handleError<T>(url + ' error'))
     );
   }
@@ -107,6 +103,18 @@ export class HttpService {
 
   getUserBalances(): Observable<Balance[]> {
     return this.httpGetWithNetwork('/user_balances');
+  }
+
+  private handleResponse(x: any, url: string) {
+    if (RestResponse.isRestResponse(x)) {
+      if (get(x as any, 'code') === '200') {
+        return get(x as any, 'data');
+      } else {
+        this.log.error(`Error get ${url} ${x.status}`);
+        return Paginated.empty();
+      }
+    }
+    return x;
   }
 
 }

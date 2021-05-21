@@ -2,20 +2,20 @@
 
   <div class="uni-card" [class]="vt.getThemeColor() + '-card'">
     <app-popover-card
-         aria-hidden="false"
-         aria-label="?"
-         class="title-span">
+        aria-hidden="false"
+        aria-label="?"
+        class="title-span">
       <ng-template>
         <p>List of trades contain FARM.</p>
         <p>Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).</p>
         <p>Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price</p>
       </ng-template>
-      
+
       <div class="title-row">
         <h4 class="title">Trades</h4>
         <input #uniswapDtoFilter class="filter-input" placeholder="More than..." type="number" min="0">
       </div>
-          
+
     </app-popover-card>
 
     <div class="trade-card-header">

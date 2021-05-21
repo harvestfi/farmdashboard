@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-hardwork-header',
@@ -8,8 +8,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class HardworkHeaderComponent implements OnInit {
 
 
-  constructor() { }
+  constructor() {
+  }
+
   @Input() showMoreColumns = false;
+
   ngOnInit(): void {
   }
 

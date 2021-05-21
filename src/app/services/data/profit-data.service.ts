@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import {StaticValues} from '../../static/static-values';
+import {Injectable} from '@angular/core';
 import {HarvestDataService} from './harvest-data.service';
 import {NGXLogger} from 'ngx-logger';
 
@@ -11,7 +10,8 @@ export class ProfitDataService {
   constructor(
       private harvestData: HarvestDataService,
       private log: NGXLogger
-  ) { }
+  ) {
+  }
 
   // vaultRewardApr(poolName: string): number {
   //   const reward = this.lastRewards.get(poolName);

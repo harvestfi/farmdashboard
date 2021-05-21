@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HarvestDto} from '../../../models/harvest-dto';
-import {StaticValues} from '../../../static/static-values';
 import {Utils} from '../../../static/utils';
+import {Vault} from '../../../models/vault';
+import {ContractsService} from '../../../services/contracts.service';
 
 @Component({
   selector: 'app-harvest-trade',
@@ -10,7 +11,7 @@ import {Utils} from '../../../static/utils';
 })
 export class HarvestTradeComponent implements OnInit {
 
-  constructor() {
+  constructor(private contractService: ContractsService) {
   }
 
   @Input() dto: HarvestDto;
@@ -32,4 +33,7 @@ export class HarvestTradeComponent implements OnInit {
     return Utils.priceGradientHarvest(type, amount, success);
   }
 
+  get vaultModel() {
+    return this.contractService.getContracts(Vault).get(this.dto.vaultAddress);
+  }
 }

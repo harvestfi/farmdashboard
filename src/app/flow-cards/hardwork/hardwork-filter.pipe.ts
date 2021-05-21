@@ -8,7 +8,7 @@ import {HardWorkDto} from '../../models/hardwork-dto';
 export class HardworkFilterPipe implements PipeTransform {
   tmp = [];
 
-  transform(dtos: HardWorkDto[], minUsdAmount: number,  vault: string): HardWorkDto[] {
+  transform(dtos: HardWorkDto[], minUsdAmount: number, vault: string): HardWorkDto[] {
     if (!dtos || (!minUsdAmount && !vault)) {
       return dtos;
     }

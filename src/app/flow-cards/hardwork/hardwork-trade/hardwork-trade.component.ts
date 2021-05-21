@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HardWorkDto} from 'src/app/models/hardwork-dto';
 import {Utils} from '../../../static/utils';
+import {ContractsService} from '../../../services/contracts.service';
+import {Vault} from '../../../models/vault';
 
 @Component({
   selector: 'app-hardwork-trade',
@@ -17,7 +19,7 @@ export class HardworkTradeComponent implements OnInit {
   name = '';
   network = '';
 
-  constructor() {
+  constructor(private contractService: ContractsService) {
   }
 
   ngOnInit(): void {
@@ -26,6 +28,10 @@ export class HardworkTradeComponent implements OnInit {
     this.hash = temp[0];
     this.network = this.dto.network;
     this.name = Utils.prettyVaultName(this.dto.vault);
+  }
+
+  get vaultModel() {
+    return this.contractService.getContracts(Vault).get(this.dto.vaultAddress);
   }
 
 }

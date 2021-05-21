@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { DraggableModalComponent } from './draggable-modal.component';
+import {DraggableModalComponent} from './draggable-modal.component';
 
 describe('CustomModalComponent', () => {
   let component: DraggableModalComponent;
@@ -8,7 +8,7 @@ describe('CustomModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DraggableModalComponent ]
+      declarations: [DraggableModalComponent]
     })
     .compileComponents();
   }));

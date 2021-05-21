@@ -1,7 +1,7 @@
 .uni-trades {
   display: grid;
   position: relative;
-  grid-template-columns: 23% 23% 23% 23% 8%;
+  grid-template-columns: 29% 20% 23% 21% 7%;
 }
 
 .trade-field {
@@ -30,6 +30,7 @@
 .sign-icon {
   font-size: 0.9em;
 }
+
 .pointer:hover {
   z-index: 900;
 }
@@ -37,7 +38,7 @@
 @media(max-width: 1100px) {
   .uni-trades {
     margin: 10px 0;
-    
+
   }
 }
 

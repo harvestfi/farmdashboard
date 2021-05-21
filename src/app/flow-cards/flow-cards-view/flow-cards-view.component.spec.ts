@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { FlowCardsViewComponent } from './flow-cards-view.component';
+import {FlowCardsViewComponent} from './flow-cards-view.component';
 
 describe('FlowCardsViewComponent', () => {
   let component: FlowCardsViewComponent;
@@ -8,7 +8,7 @@ describe('FlowCardsViewComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlowCardsViewComponent ]
+      declarations: [FlowCardsViewComponent]
     })
     .compileComponents();
   }));

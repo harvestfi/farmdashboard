@@ -1,4 +1,4 @@
-.head-row-tr, .main-row-tr, .head-row-hv, .main-row-hv  {
+.head-row-tr, .main-row-tr, .head-row-hv, .main-row-hv {
   display: grid;
   grid-template-columns: 0.5fr 1fr 1fr 1fr 1.5fr 1.5fr 1fr 1fr 1fr .3fr;
 }

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {UserSettings} from '../user-settings';
-import { Observable, Subject } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +29,7 @@ export class ViewTypeService {
     this.subject.next(event);
   }
 
-  get events$(): Observable<any>{
+  get events$(): Observable<any> {
     return this.subject.asObservable();
   }
 }

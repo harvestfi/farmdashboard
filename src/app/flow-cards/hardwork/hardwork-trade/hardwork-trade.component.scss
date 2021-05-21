@@ -1,51 +1,53 @@
 .hardwork-info {
-    align-items: center;
-    justify-content: space-evenly;
-    position: relative;
-    font-weight: bold;
-    width: 100%;
-    font-size: .9em;
-    display: grid;
-    grid-template-columns:  1.3fr 0.5fr 1fr 1fr 0.05fr;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+  font-weight: bold;
+  width: 100%;
+  font-size: .9em;
+  display: grid;
+  grid-template-columns:  1.3fr 0.5fr 1fr 1fr 0.05fr;
 }
 
 .hardwork-info-full {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    position: relative;
-    font-weight: bold;
-    width: 100%;
-    font-size: .9em;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+  font-weight: bold;
+  width: 100%;
+  font-size: .9em;
 }
 
 .hardwork-field {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    .tvl-img {
-        width: 25%;
-        margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 
-    }
+  .tvl-img {
+    width: 25%;
+    margin: 0 auto;
+
+  }
 }
 
 .pointer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .sign-icon {
-        font-size: .9em;
-        margin-top: 10px;
-        margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    }
+  .sign-icon {
+    font-size: .9em;
+    margin-top: 10px;
+    margin-bottom: 0;
+
+  }
 }
 
 .hardwork-vault {
-    font-size: 0.8em;
-    align-items: baseline;
+  font-size: 0.8em;
+  align-items: baseline;
 }
 
 

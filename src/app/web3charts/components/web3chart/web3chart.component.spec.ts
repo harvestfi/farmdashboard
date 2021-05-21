@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { Web3chartComponent } from './web3chart.component';
+import {Web3chartComponent} from './web3chart.component';
 
 describe('Web3chartComponent', () => {
   let component: Web3chartComponent;
@@ -8,7 +8,7 @@ describe('Web3chartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Web3chartComponent ]
+      declarations: [Web3chartComponent]
     })
     .compileComponents();
   });

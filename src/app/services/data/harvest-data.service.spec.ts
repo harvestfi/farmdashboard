@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { HarvestDataService } from './harvest-data.service';
+import {HarvestDataService} from './harvest-data.service';
 
 describe('HarvestDataService', () => {
   let service: HarvestDataService;

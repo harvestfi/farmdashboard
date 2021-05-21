@@ -28,12 +28,12 @@ export class HardworkDataService {
   private load(): void {
 
     this.hardworksService.getLastHardWorks(100).subscribe(data => {
-      this.log.info('Last page with hardwork loaded', data);
+      this.log.debug('Last page with hardwork loaded', data);
       return data.sort((a, b) => a.block > b.block ? 1 : -1)
       ?.forEach(this.handleHardworks.bind(this));
     }).add(() => {
       this.hardworksService.getAllLastHardWorks().subscribe(data => {
-            this.log.info('AllLastHardworks loaded', data);
+            this.log.debug('AllLastHardworks loaded', data);
             return data?.forEach(this.handleHardworks.bind(this));
           }
       );
@@ -63,7 +63,7 @@ export class HardworkDataService {
       this.latestHardwork.set(dto.network, dto);
     }
     Utils.addInArrayAtTheStart(this.dtos, dto);
-    this.dtos = this.dtos.sort((a,b) => b.blockDate - a.blockDate);
+    this.dtos = this.dtos.sort((a, b) => b.blockDate - a.blockDate);
     this.lastHardworks.get(dto.network)?.set(dto.vaultAddress, dto);
     this.handledIds.add(dto.id);
   };

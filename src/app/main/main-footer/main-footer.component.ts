@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { ViewTypeService } from 'src/app/services/view-type.service';
+import {ViewTypeService} from 'src/app/services/view-type.service';
 
 @Component({
   selector: 'app-main-footer',
@@ -8,6 +8,7 @@ import { ViewTypeService } from 'src/app/services/view-type.service';
 })
 export class MainFooterComponent implements OnInit {
   public vt: ViewTypeService = new ViewTypeService();
+
   constructor() {
   }
 

@@ -26,8 +26,8 @@ export class HarvestTxComponent implements AfterViewInit {
               public vt: ViewTypeService,
               private snack: SnackService,
               private log: NGXLogger,
-              private  contractsService: ContractsService,
-              private  harvestsService: HarvestsService,
+              private contractsService: ContractsService,
+              private harvestsService: HarvestsService,
               private harvestData: HarvestDataService
   ) {
   }

@@ -30,22 +30,16 @@ export class DownloadHistoricDataDialogComponent implements OnInit {
   }
 
   sortData(sort: Sort): void {
-    let vaults;
-    if (this.includeInactive) {
-      vaults = this.vaults;
-    } else {
-      vaults = this.vaults.filter(_ => _.isActive());
-    }
     if (!sort || !sort.active || sort.direction === '') {
-      this.sortedVaults = vaults;
+      this.sortedVaults = this.vaults;
       return;
     }
 
-    this.sortedVaults = vaults.sort((a, b) => {
+    this.sortedVaults = this.vaults.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'name':
-          return this.compare(a, b, isAsc);
+          return this.compare(a?.contract?.name, b?.contract?.name, isAsc);
         default:
           return 0;
       }

@@ -4,12 +4,12 @@ import {StaticValues} from '../../static/static-values';
 import {ViewTypeService} from '../../services/view-type.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {APP_CONFIG, AppConfig} from '../../../app.config';
-import {PricesService} from '../../services/http/prices.service';
 import {NGXLogger} from 'ngx-logger';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {HarvestDataService} from '../../services/data/harvest-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Addresses} from '../../static/addresses';
+import {KatexOptions} from 'ng-katex';
 
 @Component({
   selector: 'app-dashboard-last-values',
@@ -17,9 +17,11 @@ import {Addresses} from '../../static/addresses';
   styleUrls: ['./dashboard-last-values.component.scss']
 })
 export class DashboardLastValuesComponent implements OnInit {
+  katexOptions: KatexOptions = {
+    displayMode: true,
+  };
   @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
   @ViewChild('weeklyProfitModal') private weeklyProfitModal: CustomModalComponent;
-  @ViewChild('psIncomeModal') private psIncomeModal: CustomModalComponent;
   @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
   @ViewChild('farmBuybacksModal') private farmBuybacksModal: CustomModalComponent;
   @ViewChild('savedFeesModal') private savedFeesModal: CustomModalComponent;
@@ -29,7 +31,6 @@ export class DashboardLastValuesComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               public dialog: MatDialog,
               public vt: ViewTypeService,
-              private pricesService: PricesService,
               private hardworkData: HardworkDataService,
               private harvestData: HarvestDataService,
               private priceData: PriceDataService,
@@ -39,6 +40,7 @@ export class DashboardLastValuesComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   // TODO split to classes
   // ------------- HARDWORK DATA ---------------------------
 
@@ -79,6 +81,26 @@ export class DashboardLastValuesComponent implements OnInit {
     return this.hardworkData.getWeeklyProfits(network);
   }
 
+  get priceToEarningsRatio(): number {
+    const earningPerShare = this.psYearEarning / this.farmTotalAmount;
+    return this.farmUsdPrice / earningPerShare;
+  }
+
+  get psYearEarning() {
+    const psLastWeekEarned = this.hardworkData.getWeeklyProfits('eth') * 0.3
+        + this.hardworkData.getWeeklyProfits('bsc') * 0.08;
+    return psLastWeekEarned * 52.1429;
+  }
+
+  get farmTotalAmount(): number {
+    const lastPsHarvest =
+        this.harvestData.getVaultLastInfo(Addresses.ADDRESSES.get('PS'), 'eth');
+    if (!lastPsHarvest) {
+      return 0;
+    }
+    return lastPsHarvest.totalAmount;
+  }
+
   // --------------- HARVEST DATA -----------------------------
 
   gas(network: string): number {
@@ -86,11 +108,11 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get psFarmTvl(): number {
-    return this.harvestData.getVaultLastInfo(Addresses.ADDRESSES.get('PS'), 'eth')?.lastTvl;
+    return this.harvestData.getVaultLastInfo(this.psAddress, 'eth')?.lastTvl;
   }
 
   get farmTotalSupply(): number {
-    return this.harvestData.getVaultLastInfo(Addresses.ADDRESSES.get('PS'), 'eth')?.sharePrice;
+    return this.harvestData.getVaultLastInfo(this.psAddress, 'eth')?.sharePrice;
   }
 
   get lpFarmStaked(): number {
@@ -151,10 +173,6 @@ export class DashboardLastValuesComponent implements OnInit {
     this.tvlModal.open();
   }
 
-  openPsIncomeDialog(): void {
-    this.psIncomeModal.open();
-  }
-
   openWeeklyProfitDialog(): void {
     this.weeklyProfitModal.open();
   }
@@ -179,4 +197,21 @@ export class DashboardLastValuesComponent implements OnInit {
     this.gasPriceModal.open();
   }
 
+  get psAddress() {
+    return Addresses.ADDRESSES.get('PS');
+  }
+
+  // ------------- FORMULAS -------------------------
+
+  get peRatioHtml() {
+    return `PE = `
+        + `\\cfrac{FARMPrice (${this.farmUsdPrice.toFixed(0)})}`
+        + `{EPS(${(this.psYearEarning / this.farmTotalAmount).toFixed(0)})}`;
+  }
+
+  get epsHtml() {
+    return `EPS = `
+        + ` \\cfrac{PSLastWeekProfit * WeeksInYear (${this.psYearEarning.toFixed(0)})}`
+        + `{FARMTotalAmount (${this.farmTotalAmount.toFixed(0)})}`;
+  }
 }

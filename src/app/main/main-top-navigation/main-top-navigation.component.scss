@@ -1,55 +1,57 @@
 @import "../../../scss/utilities/utilities.scss";
+
 .main-top-navigation {
-    margin: 1rem 0.8em;
-    display: grid;
-    align-items: center;
-    grid-template-columns: 33% 33% 33%;
-    box-shadow: 0 4px 8px 0 rgb(0, 0, 0 / 20%);
-    transition: 0.3s;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    box-sizing: border-box;
+  margin: 1rem 0.8em;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 33% 33% 33%;
+  box-shadow: 0 4px 8px 0 rgb(0, 0, 0 / 20%);
+  transition: 0.3s;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  box-sizing: border-box;
 
-    @include responsive(phone){
-        grid-template-columns: 50% 50%;
-    }
-    
-    .nav-title {
+  @include responsive(phone) {
+    grid-template-columns: 50% 50%;
+  }
+
+  .nav-title {
+    font-weight: bold;
+    text-align: center;
+
+  }
+
+  .sockets-status-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+
+    .network-status {
+      display: flex;
+      padding: 5px;
+      border-radius: 10px;
+      align-items: center;
+      gap: 5px;
+
+      .status {
         font-weight: bold;
-        text-align: center;
+        transition: color 500ms;
 
-    }
 
-    .sockets-status-container {
-        display: flex;
-        justify-content: flex-end;
-        gap: 5px;
-        .network-status {
-            display: flex;
-            padding: 5px;
-            border-radius: 10px;
-            align-items: center;
-            gap: 5px;
-          
-            .status {
-                font-weight: bold;
-                transition: color 500ms;
-        
-
-                &.offline {
-                    color: red;
-                }
-
-                &.online {
-                    color: green;
-                }
-            }
+        &.offline {
+          color: red;
         }
-    }
 
-    &.dark-card {
-        .network-status {
-            background: #312222;
+        &.online {
+          color: green;
         }
+      }
     }
+  }
+
+  &.dark-card {
+    .network-status {
+      background: #312222;
+    }
+  }
 }

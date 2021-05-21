@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, Inject, Input} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {HttpService} from '../../services/http/http.service';
 import {NGXLogger} from 'ngx-logger';
 import {Balance} from '../../models/balance';
-import { ViewTypeService } from 'src/app/services/view-type.service';
+import {ViewTypeService} from 'src/app/services/view-type.service';
 import {Utils} from '../../static/utils';
 
 @Component({
@@ -26,7 +26,8 @@ export class UserBalancesDialogComponent implements AfterViewInit {
 
   private loadData(): void {
     this.httpService.getUserBalances().subscribe(data => {
-      this.userBalances = data;
+      this.userBalances = data
+      .filter(b => !isNaN(+b.balance) && b.balance !== Infinity);
     });
   }
 

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HardWorkDto} from '../../../models/hardwork-dto';
-import { ViewTypeService } from '../../../services/view-type.service';
+import {ViewTypeService} from '../../../services/view-type.service';
 
 @Component({
   selector: 'app-hardwork-flow-tab',
@@ -14,7 +14,9 @@ export class HardworkFlowTabComponent implements OnInit {
   @Input() vaultFilter = 'all';
   @Input() minAmount = 0;
   @Input() showMoreColumns = false;
-  constructor(public vt: ViewTypeService) { }
+
+  constructor(public vt: ViewTypeService) {
+  }
 
   ngOnInit(): void {
   }

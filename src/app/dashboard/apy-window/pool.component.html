@@ -1,5 +1,7 @@
 <div>
-    <p>Pool Address: <app-address-link [contract]="pool?.contract"></app-address-link></p>
+  <p>Pool Address:
+    <app-address-link [contract]="pool?.contract"></app-address-link>
+  </p>
 </div>
 <p>Reward period: {{vaultRewardPeriod | number: '1.0-0'}} day(s)</p>
 <p>FARM rewards: {{vaultReward | number: '1.1-1'}} FARM</p>

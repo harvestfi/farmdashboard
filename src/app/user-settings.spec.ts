@@ -1,4 +1,4 @@
-import { UserSettings } from './user-settings';
+import {UserSettings} from './user-settings';
 
 describe('UserSettings', () => {
   it('should create an instance', () => {

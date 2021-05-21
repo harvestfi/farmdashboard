@@ -4,30 +4,51 @@ import {Observable} from 'rxjs';
 import {UniswapDto} from '../../models/uniswap-dto';
 import {HttpService} from './http.service';
 import {OhlcDto} from '../../models/ohlc-dto';
+import {Paginated} from 'src/app/models/paginated';
+import {Addresses} from 'src/app/static/addresses';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
+
 /**
  * @deprecated Uniswipe feed will be removed soon
  */
 export class UniswapService {
 
-    constructor(private httpService: HttpService,
-                private log: NGXLogger) {
-    }
+  constructor(private httpService: HttpService,
+              private log: NGXLogger) {
+  }
 
-    // ------------------- REST REQUESTS ---------------------
+  // ------------------- REST REQUESTS ---------------------
 
-    getUniswapTxHistoryData(): Observable<UniswapDto[]> {
-        return this.httpService.httpGet('/api/transactions/history/uni');
-    }
+  getUniswapTxHistoryData(): Observable<UniswapDto[]> {
+    return this.httpService.httpGet('/api/transactions/history/uni');
+  }
 
-    getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
-        return this.httpService.httpGet(`/api/transactions/history/uni?from=${minBlock}&to=${maxBlock}`);
-    }
+  getUniswapPaginatedTxHistoryData(
+      pageNumber: number = 0,
+      pageSize: number = 10,
+      minAmount: number = 0,
+      ordering: string = 'desc'
+  ): Observable<Paginated<UniswapDto>> {
+    const apiUrl = `/uni/pages?`
+        + `pageSize=${pageSize}`
+        + `&page=${pageNumber}`
+        + `${minAmount ? '&minAmount=' + minAmount : ''}`
+        + `&ordering=${ordering}` +
+        `&token=${Addresses.ADDRESSES.get('FARM')}`;
 
-    getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
-        return this.httpService.httpGet('/api/transactions/history/uni/ohcl/' + coin);
-    }
+    return this.httpService.httpGet(apiUrl);
+  }
+
+  getUniswapTxHistoryByRange(minBlock: number, maxBlock: number): Observable<UniswapDto[]> {
+    return this.httpService.httpGet(`/api/transactions/history/uni?`
+        + `from=${minBlock}`
+        + `&to=${maxBlock}`);
+  }
+
+  getUniswapOHLC(coin: string): Observable<OhlcDto[]> {
+    return this.httpService.httpGet('/api/transactions/history/uni/ohcl/' + coin);
+  }
 }

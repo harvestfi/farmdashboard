@@ -1,14 +1,11 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { HttpService } from '../../../services/http/http.service';
-import { StaticValues } from 'src/app/static/static-values';
-import { ViewTypeService } from '../../../services/view-type.service';
-import { NGXLogger } from 'ngx-logger';
-import { HarvestDto } from '../../../models/harvest-dto';
-import {Observable} from 'rxjs';
+import {AfterContentInit, Component} from '@angular/core';
+import {ViewTypeService} from '../../../services/view-type.service';
+import {NGXLogger} from 'ngx-logger';
+import {HarvestDto} from '../../../models/harvest-dto';
 import {Vault} from '../../../models/vault';
-import {map} from 'rxjs/operators';
 import {ContractsService} from '../../../services/contracts.service';
 import {HarvestsService} from '../../../services/http/harvests.service';
+import {Paginated} from 'src/app/models/paginated';
 
 
 @Component({
@@ -16,71 +13,53 @@ import {HarvestsService} from '../../../services/http/harvests.service';
   templateUrl: './harvest-history-dialog.component.html',
   styleUrls: ['./harvest-history-dialog.component.scss']
 })
-export class HarvestHistoryDialogComponent implements AfterViewInit {
-  vaultFilter = 'all';
-  dtos: HarvestDto[] = [];
-  harvestTxIds = new Set<string>();
-  lowestBlockDate = 999999999999;
-  disabled = false;
+export class HarvestHistoryDialogComponent implements AfterContentInit {
+  vaultFilter: Vault;
+  paginatedDtos: Paginated<HarvestDto> = Paginated.empty();
+  minAmount = 0;
 
   constructor(
-    public vt: ViewTypeService,
-    private log: NGXLogger,
-    private contractsService: ContractsService,
-    private harvestsService: HarvestsService
-  ) {}
-
-  get tvlNames(): string[] {
-    return this.contractsService.getContractsArray(Vault)
-        .map(_ => _.contract.name);
+      public vt: ViewTypeService,
+      private log: NGXLogger,
+      private contractsService: ContractsService,
+      private harvestsService: HarvestsService
+  ) {
   }
 
-  ngAfterViewInit(): void {
-    this.harvestsService.getHarvestTxHistoryData().subscribe(data => {
-      this.addInArray(data);
+  ngAfterContentInit(): void {
+    this.getHarvestHistoryForPage(0);
+  }
+
+  get vaults(): Vault[] {
+    return this.contractsService.getContractsArray(Vault);
+  }
+
+  getHarvestHistoryForPage(pageNumber) {
+    this.harvestsService.getHarvestPaginatedTxHistoryData(
+        pageNumber,
+        10,
+        this.minAmount,
+        this.vaultFilter?.contract?.address
+    ).subscribe(response => {
+      this.log.info('Harvest page response', response);
+      response?.data?.forEach(dto => HarvestDto.enrich(dto));
+      this.paginatedDtos = response;
     });
   }
 
-  getOlderTransactions(): void {
-    this.disabled = true;
-    if (this.lowestBlockDate === 0) {
-      return;
-    }
-    this.harvestsService
-      .getHarvestTxHistoryByRangeAllNetworks(
-          this.lowestBlockDate - (StaticValues.SECONDS_OF_DAY * 2),
-          this.lowestBlockDate)
-      .subscribe(data => {
-        this.addInArray(data);
-      }).add(() => this.disabled = false);
+  nextPage($event): void {
+    this.getHarvestHistoryForPage($event);
   }
 
-  private isUniqTx(tx: HarvestDto): boolean {
-    if (this.harvestTxIds.has(tx.id)) {
-      return false;
-    }
-    this.harvestTxIds.add(tx.id);
-    if (this.harvestTxIds.size > 100_000) {
-      this.harvestTxIds = new Set<string>();
-    }
-    return true;
+  previousPage($event): void {
+    this.getHarvestHistoryForPage($event);
   }
 
-  private addInArray(newValues: HarvestDto[]): void {
+  selectPage($event): void {
+    this.getHarvestHistoryForPage($event);
+  }
 
-    this.log.info('New values', newValues);
-    for (let i = newValues.length - 1; i > 0; i--) {
-      const tx = newValues[i];
-      if (!this.isUniqTx(tx)) {
-        this.log.warn('Not unique transaction', tx);
-        continue;
-      }
-      if (tx.blockDate < this.lowestBlockDate) {
-        this.lowestBlockDate = tx.blockDate;
-      }
-      HarvestDto.enrich(tx);
-      this.dtos.push(tx);
-
-    }
+  handleFilterUpdate(_$event): void {
+    this.getHarvestHistoryForPage(0);
   }
 }

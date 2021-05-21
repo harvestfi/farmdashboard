@@ -72,7 +72,7 @@
     <app-popover-card class="value coin-col">
       <ng-template>{{otherSideAddress}}</ng-template>
       {{otherSideName}}
-      <app-vault-icon *ngIf="!otherSideName?.startsWith('0x')" [vault]="otherSideName"></app-vault-icon>
+      <app-vault-icon *ngIf="!otherSideName?.startsWith('0x')" [vault]="getTransferOtherSideVault()"></app-vault-icon>
     </app-popover-card>
 
     <div class="value amount price-coll">
@@ -173,8 +173,8 @@
     </div>
 
     <div class="value vault-col">
-      {{harvestDto.prettyName}}
-      <app-vault-icon [vault]="harvestDto.vault"></app-vault-icon>
+      {{harvestDto.vault}}
+      <app-vault-icon [vault]="getHarvestVault()"></app-vault-icon>
     </div>
 
     <div class="value price-coll">

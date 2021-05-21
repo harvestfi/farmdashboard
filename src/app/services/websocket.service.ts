@@ -123,13 +123,13 @@ export class WebsocketService implements OnDestroy {
   }
 
   public isNetworkConnected(network: string): boolean {
-    if(this.clients.has(network)){
+    if (this.clients.has(network)) {
       return this.clients.get(network).connected;
     }
     throw new Error(
-      `isNetworkConnected() expected a valid network but received '${network}' 
+        `isNetworkConnected() expected a valid network but received '${network}' 
       instead. Please make sure that '${network}' is part of the clients map`
-      );
+    );
   }
 
   private connect(): Observable<Client> {
