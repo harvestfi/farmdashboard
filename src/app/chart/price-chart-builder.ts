@@ -13,6 +13,7 @@ export class PriceChartBuilder {
   candleTime = 60 * 60; // sec
   chart: IChartApi;
   series;
+  volumeSeries;
   coin;
 
   constructor(private log: NGXLogger, coin: string, chartEl: ElementRef, public vt: ViewTypeService) {
@@ -39,6 +40,7 @@ export class PriceChartBuilder {
       dto.high = price;
       dto.low = price;
       dto.close = price;
+      dto.volume = price;
     } else {
       dto.timestamp = this.lastOhlc.timestamp;
       dto.open = this.lastOhlc.open;
@@ -63,21 +65,37 @@ export class PriceChartBuilder {
       this.log.error('Chart not yet init');
     }
     const data = [];
+    const volumeData = [];
     dtos?.forEach(dto => {
       if (dto.timestamp > this.lastDate) {
         this.lastDate = dto.timestamp;
       }
       this.lastOhlc = dto;
+      volumeData.push({time: dto.timestamp, value: dto.volume});
       data.push({time: dto.timestamp, open: dto.open, high: dto.high, low: dto.low, close: dto.close});
+    });
+    this.volumeSeries = this.chart.addHistogramSeries({
+      color: '#26a69a',
+      priceFormat: {
+        type: 'volume',
+      },
+      priceScaleId: '',
+      scaleMargins: {
+        top: 0.8,
+        bottom: 0,
+      },
     });
     if (!this.series) {
       this.series = this.chart.addCandlestickSeries();
     }
     if (update) {
       const tick = data[0];
+      const volTick = volumeData[0];
       this.series.update(tick);
+      this.volumeSeries.update(volTick);
     } else {
       this.series.setData(data);
+      this.volumeSeries.setData(volumeData);
     }
 
   }
