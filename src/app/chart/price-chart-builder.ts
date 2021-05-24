@@ -9,6 +9,7 @@ import {ChartsOptionsLight} from './charts-options-light';
 export class PriceChartBuilder {
   lastDate = 0;
   lastUpdatedPrice = 0.0;
+  lastUpdatedVolume = 0.0;
   lastOhlc: OhlcDto;
   candleTime = 60 * 60; // sec
   chart: IChartApi;
@@ -22,11 +23,26 @@ export class PriceChartBuilder {
     this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
   }
 
-  public collectLastTx(price: number, blockDate: number): void {
+  public updateVolume(volume: number): void {
+    if(!this.lastDate){
+      this.log.debug('First data price not collected');
+      return;
+    }
+    if(volume !== this.lastUpdatedVolume){
+      this.lastUpdatedVolume = volume;
+      return;
+    } else{
+      return;
+    }
+  }
+
+  public collectLastTx(volume: number, price: number, blockDate: number): void {
+    //Todo: This is the function where we need to update the volume***
     if (!this.lastDate) {
       this.log.debug('First data price not collected');
       return;
     }
+    this.updateVolume(volume);
     if (price !== this.lastUpdatedPrice) {
       this.lastUpdatedPrice = price;
     } else {
@@ -40,7 +56,7 @@ export class PriceChartBuilder {
       dto.high = price;
       dto.low = price;
       dto.close = price;
-      dto.volume = price;
+      dto.volume = volume;
     } else {
       dto.timestamp = this.lastOhlc.timestamp;
       dto.open = this.lastOhlc.open;
@@ -75,13 +91,13 @@ export class PriceChartBuilder {
       data.push({time: dto.timestamp, open: dto.open, high: dto.high, low: dto.low, close: dto.close});
     });
     this.volumeSeries = this.chart.addHistogramSeries({
-      color: '#26a69a',
+      color: '#0000FF',
       priceFormat: {
         type: 'volume',
       },
       priceScaleId: '',
       scaleMargins: {
-        top: 0.8,
+        top: 0.7,
         bottom: 0,
       },
     });
