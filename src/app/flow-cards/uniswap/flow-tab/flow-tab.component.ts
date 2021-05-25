@@ -52,10 +52,11 @@ export class FlowTabComponent implements OnInit {
   }
 
   checkImportantOwner(address: string): string {
-    if (address === '0xbed04c43e74150794f2ff5b62b4f73820edaf661') {
+    if (address.toLowerCase() === '0xbed04c43e74150794f2ff5b62b4f73820edaf661'.toLowerCase()) {
       return 'doHardWork';
     }
-    if (address === '0x843002b1d545ef7abb71c716e6179570582faa40' || address === '0x49d71131396f23f0bce31de80526d7c025981c4d') {
+    if (address.toLowerCase() === '0x843002b1d545ef7abb71c716e6179570582faa40'.toLowerCase()
+        || address.toLowerCase() === '0x49d71131396f23f0bce31de80526d7c025981c4d'.toLowerCase()) {
       return 'devs';
     }
     return 'normal';
