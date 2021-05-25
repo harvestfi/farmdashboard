@@ -7,6 +7,7 @@ import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.co
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {HardworkDataService} from '../../../services/data/hardwork-data.service';
+import { Utils } from 'src/app/static/utils';
 
 @Component({
   selector: 'app-hardwork-tx',
@@ -16,7 +17,7 @@ import {HardworkDataService} from '../../../services/data/hardwork-data.service'
 export class HardworkTxComponent implements AfterViewInit {
   @ViewChild('hardWorkHistoryListModal') private hardWorkHistoryListModal: CustomModalComponent;
   vaultFilter = 'all';
-
+  minAmout = 0;
 
   constructor(
       public vt: ViewTypeService,
@@ -26,6 +27,7 @@ export class HardworkTxComponent implements AfterViewInit {
       private hardworksData: HardworkDataService
   ) {
   }
+
 
   get vaultNames(): string[] {
     return this.contractsService.getContractsArray(Vault)
@@ -41,6 +43,14 @@ export class HardworkTxComponent implements AfterViewInit {
 
   openHardWorkHistoryListDialog(): void {
     this.hardWorkHistoryListModal.open();
+  }
+
+  getVaultModel(vaultAddress: string): Vault{
+    return this.contractsService.getContracts(Vault).get(vaultAddress);
+  }
+
+  getVaultName(vault: string): string {
+    return Utils.prettyVaultName(vault);
   }
 
 }

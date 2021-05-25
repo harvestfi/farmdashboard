@@ -1,7 +1,3 @@
-.left {
-  padding: 10px;
-}
-
 .hardwork-card {
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -36,28 +32,76 @@
     }
   }
 
-  .hardwork-card-header {
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: space-evenly;
-    -ms-flex-pack: space-evenly;
-    justify-content: space-evenly;
-    position: relative;
-    font-weight: bold;
-    width: 100%;
-    font-size: .9em;
+  .list-headers {
     display: grid;
-    grid-template-columns: 0.8fr 0.7fr 1fr 1fr 0.05fr;
-    text-align: center;
+    grid-template-columns: 30% 8% 35% 20% 5%;
+    padding: 0.3em 0.5em;
+    font-weight: bold;
+    font-size: 0.9em;
     background: darken(#fffce6, 5%);
-    margin: 10px 0;
-  }
 
-  &.dark-card {
-    .hardwork-card-header {
+    &.dark {
       background: #111111;
     }
+  }
+
+
+  .hardwork-list {
+    max-height: 192px;
+    overflow: hidden;
+    overflow-y: auto;
+
+    .hardwork-list-item {
+      display: grid;
+      grid-template-columns: 30% 10% 35% 20% 5%;
+      padding: 0.3em 0.5em;
+      font-weight: bold;
+      font-size: 0.9em;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      margin: 0.5em;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+
+      &.dark {
+        border: 1px solid #212121;
+      }
+
+      .vault-icon {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+      }
+
+      .vault-name {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+      }
+    }
+  }
+
+  .empty-list {
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    height: 191px;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
 
   .button-container {
