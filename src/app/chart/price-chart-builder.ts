@@ -23,32 +23,17 @@ export class PriceChartBuilder {
     this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
   }
 
-  public updateVolume(volume: number): void {
-    if(!this.lastDate){
-      this.log.debug('First data price not collected');
-      return;
-    }
-    if(volume !== this.lastUpdatedVolume){
-      this.lastUpdatedVolume = volume;
-      return;
-    } else{
-      return;
-    }
-  }
-
   public collectLastTx(volume: number, price: number, blockDate: number): void {
-    //Todo: This is the function where we need to update the volume***
     if (!this.lastDate) {
       this.log.debug('First data price not collected');
       return;
     }
-    this.updateVolume(volume);
-    if (price !== this.lastUpdatedPrice) {
+    if (price !== this.lastUpdatedPrice && volume !== this.lastUpdatedVolume) {
       this.lastUpdatedPrice = price;
+      this.lastUpdatedVolume = volume;
     } else {
       return;
     }
-
     const dto = new OhlcDto();
     if (blockDate - this.lastOhlc.timestamp > this.candleTime) { // new candle
       dto.timestamp = Math.round(blockDate / this.candleTime) * this.candleTime;
@@ -58,6 +43,8 @@ export class PriceChartBuilder {
       dto.close = price;
       dto.volume = volume;
     } else {
+      // If old candle, we need to add the new vol. to the old volume.
+      dto.volume = volume + this.lastOhlc.volume;
       dto.timestamp = this.lastOhlc.timestamp;
       dto.open = this.lastOhlc.open;
       if (price > this.lastOhlc.high) {
@@ -90,17 +77,19 @@ export class PriceChartBuilder {
       volumeData.push({time: dto.timestamp, value: dto.volume});
       data.push({time: dto.timestamp, open: dto.open, high: dto.high, low: dto.low, close: dto.close});
     });
-    this.volumeSeries = this.chart.addHistogramSeries({
-      color: '#0000FF',
-      priceFormat: {
-        type: 'volume',
-      },
-      priceScaleId: '',
-      scaleMargins: {
-        top: 0.7,
-        bottom: 0,
-      },
-    });
+    if(!this.volumeSeries){
+      this.volumeSeries = this.chart.addHistogramSeries({
+        color: 'rgba(0,94,255,0.21)',
+        priceFormat: {
+          type: 'volume',
+        },
+        priceScaleId: '',
+        scaleMargins: {
+          top: 0.7,
+          bottom: 0,
+        },
+      });
+  }
     if (!this.series) {
       this.series = this.chart.addCandlestickSeries();
     }
