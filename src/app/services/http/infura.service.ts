@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpBackend, HttpClient} from '@angular/common/http';
 import {Observable, timer} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {Network} from '../../models/network';
@@ -9,7 +9,10 @@ import {Network} from '../../models/network';
 })
 export class InfuraService {
 
-    constructor(private http: HttpClient) {
+    private http: HttpClient;
+
+    constructor(private httpBackend: HttpBackend) {
+        this.http = new HttpClient(this.httpBackend);
     }
 
     /**
