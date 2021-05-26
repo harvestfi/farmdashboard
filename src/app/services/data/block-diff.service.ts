@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {InfuraService} from '../http/infura.service';
 import {PricesService} from '../http/prices.service';
 import {Observable, Subscriber} from 'rxjs';
-import {StaticValues} from '../../static/static-values';
+import {Networks} from '../../static/networks';
 
 @Injectable({
     providedIn: 'root'
@@ -10,15 +10,17 @@ import {StaticValues} from '../../static/static-values';
 export class BlockDiffService {
 
     private subscribers: Subscriber<{network: string;blockNum: number}>[] = [];
-    private networks = new Map<string,Map<string, number>>([['eth', new Map()],['bsc', new Map()]]);
+    private networks = new Map<string,Map<string, number>>();
 
-    constructor(private infuraService: InfuraService, private pricesService: PricesService) {
+    constructor(private infuraService: InfuraService, private pricesService: PricesService, networks: Networks) {
+        networks.NETWORKS.forEach((v,k) => this.networks.set(k, new Map()));
         this.pricesService.subscribeToPrices().subscribe(price => {
             this.networks.set(price.network, this.networks.get(price.network).set('ethparser', price.block));
             this.publishDiff(price.network);
         });
-        ['eth','bsc'].forEach(network =>
-            this.infuraService.getLastBlock(StaticValues.NETWORKS.get(network)).subscribe(blockNum => {
+
+        Array.from(networks.NETWORKS.keys()).forEach(network =>
+            this.infuraService.getLastBlock(networks.NETWORKS.get(network)).subscribe(blockNum => {
                 this.networks.set(network, this.networks.get(network).set('infura', blockNum));
                 this.publishDiff(network);
             })

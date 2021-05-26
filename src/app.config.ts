@@ -2,6 +2,7 @@ import {InjectionToken} from '@angular/core';
 
 export class AppConfig {
     debugLevel: number;
+    infuraKey: string;
     apiEndpoints = {};
     wsEndpoints = {};
     wsReconnectInterval: number;
