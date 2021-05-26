@@ -3,7 +3,7 @@ import {WebsocketService} from './services/websocket.service';
 import {APP_CONFIG, AppConfig} from '../app.config';
 import {NGXLogger, NgxLoggerLevel} from 'ngx-logger';
 import {StaticValues} from './static/static-values';
-import {Networks} from "./static/networks";
+import {Networks} from './static/networks';
 
 @Component({
   selector: 'app-root',
