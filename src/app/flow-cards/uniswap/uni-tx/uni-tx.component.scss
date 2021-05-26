@@ -1,4 +1,6 @@
 @import "../../../../scss/utilities/utilities.scss";
+$buy-color: #a1bca6;
+$sell-color: #B80E0E;
 
 .uni-card {
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -7,58 +9,101 @@
   -o-transition: 0.3s;
   transition: 0.3s;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 3px;
-
 
   .title-row {
-    display: grid;
-    grid-template-areas: "title filter";
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    vertical-align: middle;
+    padding: 0.4em;
 
     .title {
-      font-size: 1em;
-      font-weight: bolder;
-      text-align: center;
-      width: 100%;
       margin: 0;
-      padding: 5px;
-      text-align: left;
-    }
-
-    .filter-input {
-      height: 25px;
     }
   }
 
-  .trade-card-header {
-    background: darken(#fffce6, 5%);
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: space-evenly;
-    -ms-flex-pack: space-evenly;
-    justify-content: space-evenly;
-    position: relative;
-    font-weight: bold;
-    width: 100%;
-    font-size: .9em;
+  .table-header {
     display: grid;
-    grid-template-columns: 23% 23% 23% 23% 8%;
-    text-align: center;
-    margin: 10px 0;
-    padding: 0 10px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+    grid-template-columns: 15% 30% 15% 20% 15% 5%;
+    font-weight: bold;
+    font-size: 0.9em;
+    background: #fff9cd;
+    padding: 0.3em 0.5em;
 
-  &.dark-card {
-    .trade-card-header {
+
+    &.dark {
       background: #111111;
     }
+
+    .money-icon{
+      text-align: center;
+    }
   }
 
+  .trades-list {
+    max-height: 195px;
+    overflow: hidden;
+    overflow-y: auto;
+
+    .trades-list-item {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 12% 30% 15% 20% 10% 10%;
+      gap: 5px;
+      padding: 0.3em 0.5em;
+      font-weight: bold;
+      font-size: 0.9em;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      margin: 0.5em;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+
+      &.dark {
+        border: 1px solid #212121;
+      }
+
+      .transaction-type span {
+        padding: 0.3em 0.4em;
+        text-align: center;
+        border-radius: 0.5em;
+        font-size: 0.8em;
+
+        &.BUY {
+          background: rgba($buy-color, 0.3);
+          border: 1px solid $buy-color;
+          color: $buy-color;
+        }
+
+        &.SELL {
+          background: rgba($sell-color, 0.3);
+          border: 1px solid $sell-color;
+          color: $sell-color;
+        }
+
+      }
+    }
+
+    .icon .mat-icon {
+      font-size: 1em;
+      height: auto;
+      vertical-align: middle;
+    }
+
+    .farm-value {
+      text-align: center;
+    }
+
+    .usd-cost {
+      text-align: center;
+    }
+  }
 
   .button-container {
     display: -webkit-box;
@@ -71,22 +116,16 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-  }
 
-  .show-more {
-    background-color: #eebf65;
-    color: black;
-    font-weight: bold;
-    border-radius: 3px;
-    border: 1px solid black;
-    cursor: pointer;
-  }
-
-  @include responsive(small) {
-    .left,
-    .right,
-    .middle {
-      width: 100%;
+    .show-more {
+      background-color: #eebf65;
+      color: black;
+      font-weight: bold;
+      border-radius: 3px;
+      border: 1px solid black;
+      cursor: pointer;
     }
   }
+
+
 }
