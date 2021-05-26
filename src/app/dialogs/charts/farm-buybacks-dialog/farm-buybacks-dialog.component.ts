@@ -8,6 +8,7 @@ import {TvlsService} from '../../../services/http/tvls.service';
 import {PriceDataService} from '../../../services/data/price-data.service';
 import {StaticValues} from '../../../static/static-values';
 import {Addresses} from '../../../static/addresses';
+import {RewardDataService} from '../../../services/data/reward-data.service';
 import {forkJoin} from 'rxjs';
 
 @Component({
@@ -23,21 +24,36 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
               private hardworksService: HardworksService,
               private priceData: PriceDataService,
               private tvlsService: TvlsService,
+              private rewardService: RewardDataService,
   ) {
     super(cdRef, vt);
   }
 
+  private calcRewardComparison(address: string, network: string, buyBack: number): number {
+    // Calculate the ratio between the buyback and reward for a given block.
+    const reward =  this.rewardService.getReward(address, network);
+    if (buyBack !== 0 || reward !== 0){
+      if(buyBack > reward){
+        return buyBack / reward;
+      } else {
+        return reward / buyBack;
+      }
+    }
+  }
+
   load(): void {
+
     forkJoin([
       this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network)),
-      this.tvlsService.getHistoryTvlByVault(Addresses.ADDRESSES.get('PS'))
-    ]).subscribe(([hardWorks, vaultData]) => {
+      this.tvlsService.getHistoryTvlByVault(Addresses.ADDRESSES.get('PS')),
+    ]).subscribe(([hardWorks, vaultData, ]) => {
       this.log.debug('History of All Farm buybacks loaded ', hardWorks);
 
       const chartBuilder = new ChartBuilder();
-      chartBuilder.initVariables(2);
+      chartBuilder.initVariables(3);
 
       hardWorks?.forEach(dto => {
+        const rewardEmissionRatio = this.calcRewardComparison(dto.vaultAddress, dto.network, dto.farmBuyback);
         let bb = dto.farmBuybackSum / 1000;
         if (dto.network === 'bsc') {
           const farmPrice = this.priceData.getLastFarmPrice();
@@ -48,6 +64,7 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
           }
         }
         chartBuilder.addInData(0, dto.blockDate, bb);
+        chartBuilder.addInData(2, dto.blockDate, rewardEmissionRatio);
       });
 
       this.log.debug('History of PS TVL loaded ', vaultData);
@@ -55,7 +72,8 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
 
       this.handleData(chartBuilder, [
         ['FARM Buyback K', 'right', '#0085ff'],
-        ['All supply K', '1', '#efa4a4']
+        ['All supply K', '1', '#efa4a4'],
+        ['Comparison K', '2', '#28a69a']
       ]);
     });
   }
