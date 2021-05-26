@@ -1,14 +1,8 @@
 @import "../../../../scss/utilities/utilities.scss";
-$buy-color: #a1bca6;
-$sell-color: #B80E0E;
+@import "../../flow-card-common-styles.scss";
+
 
 .uni-card {
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  -webkit-transition: 0.3s;
-  -o-transition: 0.3s;
-  transition: 0.3s;
-  border: 1px solid rgba(0, 0, 0, 0.2);
 
   .title-row {
     display: -webkit-box;
@@ -23,57 +17,20 @@ $sell-color: #B80E0E;
     vertical-align: middle;
     padding: 0.4em;
 
-    .title {
-      margin: 0;
-      font-size: 1em;
-      font-weight: bold;
-      margin: 0;
-    }
   }
 
   .table-header {
-    display: grid;
     grid-template-columns: 15% 30% 15% 20% 15% 5%;
-    font-weight: bold;
-    font-size: 0.9em;
-    background: #fff9cd;
-    padding: 0.3em 0.5em;
-
-
-    &.dark {
-      background: #111111;
-    }
-
-    .money-icon {
-      text-align: center;
-    }
   }
 
   .trades-list {
-    height: 195px;
-    overflow: hidden;
-    overflow-y: auto;
-    position: relative;
+
 
 
     .trades-list-item {
-      display: grid;
-      align-items: center;
       grid-template-columns: 12% 30% 15% 20% 10% 10%;
       gap: 5px;
-      padding: 0.3em 0.5em;
-      font-weight: bold;
-      font-size: 0.9em;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      margin: 0.5em;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-
-      &.dark {
-        border: 1px solid #212121;
-      }
-
+    
       .transaction-type span {
         padding: 0.3em 0.4em;
         text-align: center;
@@ -95,12 +52,6 @@ $sell-color: #B80E0E;
       }
     }
 
-    .icon .mat-icon {
-      font-size: 1em;
-      height: auto;
-      vertical-align: middle;
-    }
-
     .farm-value {
       text-align: center;
     }
@@ -110,42 +61,6 @@ $sell-color: #B80E0E;
     }
   }
 
-  .button-container {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: 1em;
 
-
-    .show-more {
-      background-color: #eebf65;
-      color: black;
-      font-weight: bold;
-      border-radius: 3px;
-      border: 1px solid black;
-      cursor: pointer;
-    }
-  }
-
-  .empty-list {
-    text-align: center;
-    min-height: 195px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-  }
 
 }

@@ -1,73 +1,30 @@
-$buy-color: #a1bca6;
-$sell-color: #B80E0E;
+@import "../../flow-card-common-styles.scss";
 
 .harvest-card {
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba($dark-background-color, 0.2);
 
     .title-row {
-        display: grid;
-        grid-template-areas: "name strategy amount";
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        grid-template-columns: 30% 30% 30%;
-        grid-column-gap: 3%;
-
+  
         .select-strategy-2,
         .input-less-than {
             height: 25px;
         }
 
         .title {
-            font-size: 1em;
-            font-weight: bolder;
-            text-align: center;
-            margin: 0;
             padding: 5px;
             text-align: left;
         }
 
     }
 
-    .harvest-tx-header {
-        display: grid;
-        grid-template-columns: 17% 26% 19% 13% 15% 5%;
-        font-weight: bold;
-        font-size: 0.9em;
-        background: #fff9cd;
-        padding: 0.3em 0.5em;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-
-        &.dark {
-            background: #111111;
-        }
-
-        .money-icon {
-            text-align: center;
-        }
+    .table-header {
+        grid-template-columns: 17% 26% 19% 13% 15% 5%;       
     }
 
-    .harvest-trade-list {
-        position: relative;
-        height: 195px;
-        overflow: hidden;
-        overflow-y: auto;
-
-        .harvest-trade-item {
-            display: grid;
+    .trades-list {
+  
+        .trades-list-item {
             grid-template-columns: 17% 27% 22% 9% 21% 5%;
-            padding: 0.3em 0.5em;
-            font-weight: bold;
-            font-size: 0.9em;
-            margin: 0.5em;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-
-            &.dark {
-                border: 1px solid #111111;
-            }
-
 
             .transaction-type span {
                 padding: 0.3em 0.4em;
@@ -90,48 +47,9 @@ $sell-color: #B80E0E;
             }
 
             .mat-icon {
-                font-size: 1em;
-                vertical-align: middle;
-                text-align: center;
+                margin-left: 3px;
             }
         }
-    }
-
-    .empty-list {
-        text-align: center;
-        min-height: 195px;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-    }
-
-    .button-container {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        padding: 1em;
-    }
-
-    .show-more {
-        background-color: #eebf65;
-        color: black;
-        font-weight: bold;
-        border-radius: 3px;
-        border: 1px solid black;
-        cursor: pointer;
     }
 
 }

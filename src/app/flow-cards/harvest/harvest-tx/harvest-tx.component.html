@@ -1,5 +1,5 @@
 <div id="top-div-light">
-  <div class="harvest-card" [class]="vt.getThemeColor() + '-card'">
+  <div class="flow-card harvest-card" [class]="vt.getThemeColor() + '-card'">
     <div class="title-row">
       <app-popover-card aria-hidden="false" aria-label="?" class="pool-title left-border-box">
         <ng-template>
@@ -15,7 +15,7 @@
       <input #harvestDtoFilter [(ngModel)]="minAmount" class="input-less-than left-border-box" placeholder="More than..." type="number">
     </div>
 
-    <div class="harvest-tx-header" [class]="vt.getThemeColor()">
+    <div class="table-header" [class]="vt.getThemeColor()">
       <div class="money-icon"><span role="img">💸</span></div>
       <div class="harvest-tx-header-label">Date</div>
       <div class="harvest-tx-header-label">Amount</div>
@@ -25,8 +25,8 @@
     </div>
 
 
-    <div *ngIf="dtos | harvestFilter:minAmount:vaultFilter as filteredDTOs" class="harvest-trade-list">
-      <div *ngFor="let dto of filteredDTOs" class="harvest-trade-item" [class]="vt.getThemeColor()">
+    <div *ngIf="dtos | harvestFilter:minAmount:vaultFilter as filteredDTOs" class="trades-list">
+      <div *ngFor="let dto of filteredDTOs" class="trades-list-item" [class]="vt.getThemeColor()">
 
         <div class="transaction-type">
           <span [class]="dto.methodName">{{dto.methodName}}</span>

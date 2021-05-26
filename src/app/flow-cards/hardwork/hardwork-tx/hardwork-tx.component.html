@@ -1,4 +1,4 @@
-<div class="hardwork-card" [class]="vt.getThemeColor() + '-card'">
+<div class="hardwork-card flow-card" [class]="vt.getThemeColor() + '-card'">
 
 
   <div class="title-row">
@@ -12,7 +12,7 @@
     <input type="number" min="0" [(ngModel)]="minAmout" class="input-less-than left-border-box" placeholder="More than...">
   </div>
 
-  <div class="list-headers" [class]="vt.getThemeColor()">
+  <div class="table-header" [class]="vt.getThemeColor()">
     <div class="list-date-header">Date</div>
     <div></div>
     <div class="list-vault-hader">Vault</div>
@@ -21,8 +21,8 @@
   </div>
 
 
-  <div *ngIf="dtos | hardworkFilter:minAmout:vaultFilter as filteredDTOs" class="hardwork-list">
-    <div *ngFor="let dto of filteredDTOs" class="hardwork-list-item" [class]="vt.getThemeColor()">
+  <div *ngIf="dtos | hardworkFilter:minAmout:vaultFilter as filteredDTOs" class="trades-list">
+    <div *ngFor="let dto of filteredDTOs" class="trades-list-item" [class]="vt.getThemeColor()">
       <app-popover-card class="hardwork-date">
         <ng-template>
           <p>{{dto.blockDateAdopted| date: 'dd-MMM HH:mm'}}</p>
