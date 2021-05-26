@@ -79,6 +79,29 @@ $dark-background-color: #111111;
                 height: auto;
                 width: auto;
             }
+
+            .transaction-type span {
+
+                padding: 0.3em 0.4em;
+                text-align: center;
+                border-radius: 0.5em;
+                font-size: 0.8em;
+
+                &.BUY,
+                &.Deposit {
+                    background: rgba($buy-color, 0.3);
+                    border: 1px solid $buy-color;
+                    color: $buy-color;
+                }
+
+                &.SELL,
+                &.Withdraw {
+                    background: rgba($sell-color, 0.3);
+                    border: 1px solid $sell-color;
+                    color: $sell-color;
+                }
+            }
+
         }
     }
 

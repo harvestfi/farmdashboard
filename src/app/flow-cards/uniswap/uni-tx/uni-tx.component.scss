@@ -30,26 +30,7 @@
     .trades-list-item {
       grid-template-columns: 12% 30% 15% 20% 10% 10%;
       gap: 5px;
-    
-      .transaction-type span {
-        padding: 0.3em 0.4em;
-        text-align: center;
-        border-radius: 0.5em;
-        font-size: 0.8em;
 
-        &.BUY {
-          background: rgba($buy-color, 0.3);
-          border: 1px solid $buy-color;
-          color: $buy-color;
-        }
-
-        &.SELL {
-          background: rgba($sell-color, 0.3);
-          border: 1px solid $sell-color;
-          color: $sell-color;
-        }
-
-      }
     }
 
     .farm-value {

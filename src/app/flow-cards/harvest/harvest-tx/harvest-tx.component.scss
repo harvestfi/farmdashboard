@@ -4,7 +4,7 @@
     border: 1px solid rgba($dark-background-color, 0.2);
 
     .title-row {
-  
+
         .select-strategy-2,
         .input-less-than {
             height: 25px;
@@ -18,33 +18,13 @@
     }
 
     .table-header {
-        grid-template-columns: 17% 26% 19% 13% 15% 5%;       
+        grid-template-columns: 17% 26% 19% 13% 15% 5%;
     }
 
     .trades-list {
-  
+
         .trades-list-item {
             grid-template-columns: 17% 27% 22% 9% 21% 5%;
-
-            .transaction-type span {
-                padding: 0.3em 0.4em;
-                text-align: center;
-                border-radius: 0.5em;
-                font-size: 0.8em;
-
-                &.Deposit {
-                    background: rgba($buy-color, 0.3);
-                    border: 1px solid $buy-color;
-                    color: $buy-color;
-                }
-
-                &.Withdraw {
-                    background: rgba($sell-color, 0.3);
-                    border: 1px solid $sell-color;
-                    color: $sell-color;
-                }
-
-            }
 
             .mat-icon {
                 margin-left: 3px;
