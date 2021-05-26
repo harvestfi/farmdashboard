@@ -41,15 +41,15 @@
        
         <div class="icon">
 
-          <app-simple-modal *ngIf="openModal">
-            <app-link-window (showModal)="hideTradeLinks($event)" [network]="'eth'"
+          <app-simple-modal *ngIf="openedModal[dto.id]">
+            <app-link-window (showModal)="hideTradeLinks(dto.id)" [network]="'eth'"
                              [hash]='dto.hash' [owner]='dto.owner'>
       
             </app-link-window>
           </app-simple-modal>
       
           <container-element class="pointer"
-                             (click)='showTradeLinks()' [ngSwitch]="checkImportantOwner(dto)">
+                             (click)='showTradeLinks(dto.id)' [ngSwitch]="checkImportantOwner(dto)">
       
             <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price"
                       class="sign-icon">
@@ -68,7 +68,15 @@
       
         </div>
       </div>
+
+      <div *ngIf="!filteredDTOs.length" class="empty-list">
+        <span role="img">🏜️ </span>
+        No Uniswap trades available
+        <span role="img">🏜️ </span>
+      </div>
     </div>
+
+    
 
     <!-- <app-flow-tab [dtos]="dtos" [maxHeight]="180" [minAmount]="+uniswapDtoFilter.value"></app-flow-tab> -->
     <div class="button-container">

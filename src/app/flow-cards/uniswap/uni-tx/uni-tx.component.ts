@@ -12,6 +12,7 @@ import {UniswapDataService} from '../../../services/data/uniswap-data.service';
 export class UniTxComponent implements AfterViewInit {
   @ViewChild('unitHistoryModal') private unitHistoryModal: CustomModalComponent;
   minAmount = 0;
+  openedModal = {};
   constructor(
       private uniswapData: UniswapDataService,
       public vt: ViewTypeService,
@@ -40,6 +41,14 @@ export class UniTxComponent implements AfterViewInit {
       return 'devs';
     }
     return 'normal';
+  }
+
+  showTradeLinks(dto_id: string): void {
+    this.openedModal[dto_id] = true;
+  }
+
+  hideTradeLinks(dto_id: string): void {
+    this.openedModal[dto_id] = false;
   }
 
 }

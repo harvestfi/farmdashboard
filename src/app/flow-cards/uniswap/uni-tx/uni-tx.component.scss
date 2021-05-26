@@ -25,6 +25,9 @@ $sell-color: #B80E0E;
 
     .title {
       margin: 0;
+      font-size: 1em;
+      font-weight: bold;
+      margin: 0;
     }
   }
 
@@ -41,7 +44,7 @@ $sell-color: #B80E0E;
       background: #111111;
     }
 
-    .money-icon{
+    .money-icon {
       text-align: center;
     }
   }
@@ -50,6 +53,8 @@ $sell-color: #B80E0E;
     max-height: 195px;
     overflow: hidden;
     overflow-y: auto;
+    position: relative;
+
 
     .trades-list-item {
       display: grid;
@@ -127,5 +132,18 @@ $sell-color: #B80E0E;
     }
   }
 
+  .empty-list {
+    text-align: center;
+    min-height: 195px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
 
 }

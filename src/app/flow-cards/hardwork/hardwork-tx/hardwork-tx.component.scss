@@ -51,6 +51,7 @@
     overflow: hidden;
     overflow-y: auto;
 
+
     .hardwork-list-item {
       display: grid;
       grid-template-columns: 30% 10% 35% 20% 5%;
@@ -60,8 +61,8 @@
       border: 1px solid rgba(0, 0, 0, 0.2);
       margin: 0.5em;
       -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
 
       &.dark {
         border: 1px solid #212121;
@@ -87,7 +88,9 @@
         -ms-flex-align: center;
         align-items: center;
       }
+
     }
+
   }
 
   .empty-list {
@@ -96,12 +99,12 @@
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     height: 191px;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
   }
 
   .button-container {
