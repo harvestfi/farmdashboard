@@ -8,15 +8,15 @@ export class StaticValues {
   public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
 
   private static NETWORK_ETH: Network = {
-    blockExplorerUrl: 'https://www.bscscan.com',
+    blockExplorerUrl: 'https://etherscan.io',
     chainId: 1,
     ethparserName: 'eth',
     currencySymbol: 'ETH',
     name: 'Ethereum Mainnet',
-    rpcUrl: 'https://mainnet.infura.io/v3/undefined',
+    rpcUrl: 'https://mainnet.infura.io/v3/947c289378954cf68220c31e65449507',
   };
   private static NETWORK_BSC: Network = {
-    blockExplorerUrl: 'https://etherscan.io',
+    blockExplorerUrl: 'https://www.bscscan.com',
     chainId: 56,
     ethparserName: 'bsc',
     currencySymbol: 'BNB',
