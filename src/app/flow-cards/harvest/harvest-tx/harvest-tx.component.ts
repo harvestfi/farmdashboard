@@ -18,8 +18,9 @@ import {HarvestDataService} from '../../../services/data/harvest-data.service';
 })
 export class HarvestTxComponent implements AfterViewInit {
   vaultFilter = 'all';
+  minAmount = 0;
+  openedModal: Record<string, boolean> = {};
   @ViewChild('harvestHistoryModal') private harvestHistoryModal: CustomModalComponent;
-
   constructor(private ws: WebsocketService,
               private httpService: HttpService,
               private cdRef: ChangeDetectorRef,
@@ -28,7 +29,8 @@ export class HarvestTxComponent implements AfterViewInit {
               private log: NGXLogger,
               private contractsService: ContractsService,
               private harvestsService: HarvestsService,
-              private harvestData: HarvestDataService
+              private harvestData: HarvestDataService,
+              private contractService: ContractsService
   ) {
   }
 
@@ -44,7 +46,19 @@ export class HarvestTxComponent implements AfterViewInit {
     return this.harvestData.getDtos();
   }
 
+  getVaultIcon(vault_address: string){
+    return this.contractService.getContracts(Vault).get(vault_address);
+  }
+
   openHarvestHistory(): void {
     this.harvestHistoryModal.open();
+  }
+
+  hideTradeLinks(dto_id: string): void {
+    this.openedModal[dto_id] = false;
+  }
+
+  showTradeLinks(dto_id: string): void {
+    this.openedModal[dto_id] = true;
   }
 }

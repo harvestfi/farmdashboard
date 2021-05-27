@@ -1,32 +1,13 @@
-.left {
-  padding: 10px;
-}
+@import "../../flow-card-common-styles.scss";
 
 .hardwork-card {
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  -webkit-transition: 0.3s;
-  -o-transition: 0.3s;
-  transition: 0.3s;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 3px 0;
-
 
   .title-row {
-    display: grid;
-    grid-template-areas: "name strategy amount";
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    grid-template-columns: 30% 30% 30%;
-    grid-column-gap: 3%;
+
 
     .title {
-      font-size: 1em;
-      font-weight: bolder;
       text-align: center;
       width: 100%;
-      margin: 0;
       padding: 5px;
     }
 
@@ -36,49 +17,38 @@
     }
   }
 
-  .hardwork-card-header {
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: space-evenly;
-    -ms-flex-pack: space-evenly;
-    justify-content: space-evenly;
-    position: relative;
-    font-weight: bold;
-    width: 100%;
-    font-size: .9em;
-    display: grid;
-    grid-template-columns: 0.8fr 0.7fr 1fr 1fr 0.05fr;
-    text-align: center;
-    background: darken(#fffce6, 5%);
-    margin: 10px 0;
+  .table-header {
+    grid-template-columns: 30% 8% 35% 20% 5%;
   }
 
-  &.dark-card {
-    .hardwork-card-header {
-      background: #111111;
+  .trades-list {
+    height: 192px;
+
+    .trades-list-item {
+      grid-template-columns: 30% 10% 35% 20% 5%;
+
+      .vault-icon {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+      }
+
+      .vault-name {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+      }
+
     }
-  }
 
-  .button-container {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-  }
-
-  .show-more {
-    background-color: #eebf65;
-    color: black;
-    font-weight: bold;
-    border-radius: 3px;
-    border: 1px solid black;
-    cursor: pointer;
   }
 }
