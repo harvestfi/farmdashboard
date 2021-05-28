@@ -28,7 +28,7 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
   }
 
   private calcRewardComparison(buyBack: number, rewards: number): number {
-    return 100 * Math.abs((buyBack - rewards ) / ((buyBack + rewards)/2))
+    return 100 * Math.abs((buyBack - rewards ) / ((buyBack + rewards)/2));
   }
 
   load(): void {
@@ -44,7 +44,7 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
       hardWorks?.forEach(dto => {
         const rewardEmissionRatio = this.calcRewardComparison(dto.farmBuyback, dto.fullRewardUsd);
         let bb = dto.farmBuybackSum / 1000;
-        let rewards = dto.fullRewardUsd;
+        const rewards = dto.fullRewardUsd;
         if (dto.network === 'bsc') {
           const farmPrice = this.priceData.getLastFarmPrice();
           if (farmPrice && farmPrice !== 0) {
@@ -53,7 +53,7 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
             bb = 0;
           }
         }
-        chartBuilder.addInData(3, dto.blockDate, rewards)
+        chartBuilder.addInData(3, dto.blockDate, rewards);
         chartBuilder.addInData(0, dto.blockDate, bb);
         chartBuilder.addInData(2, dto.blockDate, rewardEmissionRatio);
       });
