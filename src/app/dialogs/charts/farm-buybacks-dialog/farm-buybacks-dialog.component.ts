@@ -6,10 +6,9 @@ import {ChartGeneralMethodsComponent} from '../../../chart/chart-general-methods
 import {HardworksService} from '../../../services/http/hardworks.service';
 import {TvlsService} from '../../../services/http/tvls.service';
 import {PriceDataService} from '../../../services/data/price-data.service';
-import {RewardsService} from '../../../services/http/rewards.service'
+import {RewardsService} from '../../../services/http/rewards.service';
 import {StaticValues} from '../../../static/static-values';
 import {Addresses} from '../../../static/addresses';
-import {RewardDataService} from '../../../services/data/reward-data.service';
 import {forkJoin} from 'rxjs';
 
 @Component({
@@ -38,7 +37,6 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
       this.rewardService.getHistoryRewards(Addresses.ADDRESSES.get('PS'), StaticValues.NETWORKS.get('eth')),
     ]).subscribe(([hardWorks, vaultData, rewards]) => {
       this.log.debug('History of All Farm buybacks loaded ', hardWorks);
-
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(4);
 
@@ -46,11 +44,11 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
       let rewardsSum = 0;
       rewards?.forEach(dto=>{
         if(dto.isWeeklyReward){
-          rewardArray.push(dto.reward)
-          rewardArray.map(d=>rewardsSum+=d)
+          rewardArray.push(dto.reward);
+          rewardArray.map(d=>rewardsSum+=d);
           chartBuilder.addInData(2, dto.blockDate, rewardsSum);
         }
-      })
+      });
 
       hardWorks?.forEach(dto => {
         let bb = dto.farmBuybackSum / 1000;
@@ -62,9 +60,9 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
             bb = 0;
           }
       }
-        let rewardsBBRatio = bb/rewardsSum *100;
+        const rewardsBBRatio = bb/rewardsSum *100;
 
-        chartBuilder.addInData(3, dto.blockDate, rewardsBBRatio)
+        chartBuilder.addInData(3, dto.blockDate, rewardsBBRatio);
         chartBuilder.addInData(0, dto.blockDate, bb);
       });
 
