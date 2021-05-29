@@ -1,28 +1,54 @@
-<div class="hardwork-card" [class]="vt.getThemeColor() + '-card'">
-  <div class="hardWork-list-history">
-    <div class="title-row">
+<div class="hardwork-card flow-card" [class]="vt.getThemeColor() + '-card'">
 
-      <h4 class="title">doHardWorks</h4>
-      <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
-        <option [value]="'all'">All</option>
-        <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
-      </select>
+  <div class="title-row">
+    <h4 class="title">doHardWorks</h4>
+    <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
+      <option [value]="'all'">All</option>
+      <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
+    </select>
 
-      <input type="number" min="0" #hardworkDtoFilter class="input-less-than left-border-box"
-             placeholder="More than...">
+    <input type="number" min="0" [(ngModel)]="minAmout" class="input-less-than left-border-box" placeholder="More than...">
+  </div>
+
+  <div class="table-header" [class]="vt.getThemeColor()">
+    <div class="list-date-header">Date</div>
+    <div></div>
+    <div class="list-vault-hader">Vault</div>
+    <div class="list-income-hader">Income</div>
+    <div></div>
+  </div>
+
+
+  <div *ngIf="dtos | hardworkFilter:minAmout:vaultFilter as filteredDTOs" class="trades-list">
+    <div *ngFor="let dto of filteredDTOs" class="trades-list-item" [class]="vt.getThemeColor()">
+      <app-popover-card class="hardwork-date">
+        <ng-template>
+          <p>{{dto.blockDateAdopted| date: 'dd-MMM HH:mm'}}</p>
+          <p>{{dto.vault}}</p>
+          <p>TVL ${{dto.tvl | number: '1.0-0'}}</p>
+          <p>PS APR {{dto.psApr.toFixed(2) | number: '1.0-0'}}%</p>
+        </ng-template>
+        {{dto.blockDateAdopted | date: 'dd-MMM HH:mm'}}
+      </app-popover-card>
+
+      <div class="vault-icon">
+        <app-vault-icon [vault]="getVaultModel(dto.vaultAddress)"></app-vault-icon>
+      </div>
+
+      <div class="vault-name">{{getVaultName(dto.vault)}}</div>
+      <div class="income">
+        ${{dto.fullRewardUsd | number: '1.2-2'}}
+      </div>
+
+      <div class="transaction-link">
+        <app-transaction-link [transactionHash]="dto.id.split('_')[0]" [network]="dto.network"></app-transaction-link>
+      </div>
     </div>
-
-    <div class="hardwork-card-header">
-      <div class="hardword-card-header-title">Date</div>
-      <div class="hardword-card-header-title"></div>
-      <div class="hardword-card-header-title">Vault</div>
-      <div class="hardword-card-header-title">Income</div>
-      <div class="hardword-card-header-title"></div>
+    <div *ngIf="!filteredDTOs.length" class="empty-list">
+      <span role="img">🏜️ </span>
+      No doHardWorks available
+      <span role="img">🏜️ </span>
     </div>
-
-    <app-hardwork-flow-tab [dtos]="dtos" [showMoreColumns]="false" [showFullDate]="false" [maxHeight]="180"
-                           [vaultFilter]="vaultFilter" [minAmount]="+hardworkDtoFilter.value">
-    </app-hardwork-flow-tab>
   </div>
 
   <div class="button-container">

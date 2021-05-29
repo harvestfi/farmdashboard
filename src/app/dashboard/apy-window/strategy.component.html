@@ -6,4 +6,5 @@
   <p>Last week earned: {{vaultEarnedLastWeek | number: '1.1-1'}}$</p>
   <p>Strategy hAPR: {{vaultApr | number: '1.1-1'}}%</p>
   <p>Strategy hAPY: {{toApy(vaultApr) | number: '1.1-1'}}%</p>
+  <p>Strategy ROI({{getIdleTime()}}h): {{getPPFSROI() | number: '1.1-1'}}%</p>
 </div>

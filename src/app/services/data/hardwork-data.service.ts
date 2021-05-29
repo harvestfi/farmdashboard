@@ -107,6 +107,18 @@ export class HardworkDataService {
         * ((weeklyProfit / avgTvl) * 100.0);
   }
 
+  getRoiBasedOnPPFS(address: string, network: string): number {
+    const hardWork = this.lastHardworks.get(network).get(address);
+    if (!hardWork) {
+      return 0;
+    }
+    return (hardWork.shareChange / hardWork.idleTime) * 100 * StaticValues.SECONDS_OF_YEAR;
+  }
+
+  getIdleTime(address: string, network: string): number {
+    return this.lastHardworks.get(network)?.get(address)?.idleTime / 60 / 60;
+  }
+
   getDtos(): HardWorkDto[] {
     return this.dtos;
   }

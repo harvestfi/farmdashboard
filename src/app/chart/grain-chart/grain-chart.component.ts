@@ -34,7 +34,8 @@ export class GrainChartComponent implements AfterViewInit {
       if (tx.tokenAddress !== this.coin) {
         return;
       }
-      priceChartBuilder.collectLastTx(tx.price, tx.blockDate);
+      const volume = tx.tokenAmount;
+      priceChartBuilder.collectLastTx(volume, tx.price, tx.blockDate);
     });
   }
 }
