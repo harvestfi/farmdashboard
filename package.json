@@ -54,6 +54,7 @@
     "rxjs": "~6.5.5",
     "sass-loader": "^10.0.1",
     "sockjs-client": "^1.5.0",
+    "ts-treemap": "^1.1.0",
     "tslib": "^2.0.0",
     "typescript": "~4.1.5",
     "zone.js": "~0.10.3"
