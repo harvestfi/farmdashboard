@@ -10,6 +10,7 @@ import {RewardsService} from '../../../services/http/rewards.service';
 import {StaticValues} from '../../../static/static-values';
 import {Addresses} from '../../../static/addresses';
 import {forkJoin} from 'rxjs';
+import TreeMap from 'ts-treemap';
 
 @Component({
   selector: 'app-farm-buybacks-dialog',
@@ -34,24 +35,24 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
     forkJoin([
       this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network)),
       this.tvlsService.getHistoryTvlByVault(Addresses.ADDRESSES.get('PS')),
-      this.rewardService.getHistoryRewards(Addresses.ADDRESSES.get('PS'), StaticValues.NETWORKS.get('eth')),
+      this.rewardService.getAllHistoryRewardsByNetwork(StaticValues.NETWORKS.get(this.network)),
     ]).subscribe(([hardWorks, vaultData, rewards]) => {
       this.log.debug('History of All Farm buybacks loaded ', hardWorks);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(4);
 
-      const rewardArray = [];
+      const cumulativeRewards = new TreeMap<number, number>();
       let rewardsSum = 0;
-      rewards?.forEach(dto=>{
-        if(dto.isWeeklyReward){
-          rewardArray.push(dto.reward);
-          rewardArray.map(d=>rewardsSum+=d);
-          chartBuilder.addInData(2, dto.blockDate, rewardsSum);
+      rewards?.forEach(dto => {
+        if (dto.isWeeklyReward) {
+          rewardsSum += dto.reward;
+          cumulativeRewards.set(dto.block, rewardsSum);
+          chartBuilder.addInData(2, dto.blockDate, rewardsSum / 1000);
         }
       });
 
       hardWorks?.forEach(dto => {
-        let bb = dto.farmBuybackSum / 1000;
+        let bb = dto.farmBuybackSum;
         if (dto.network === 'bsc') {
           const farmPrice = this.priceData.getLastFarmPrice();
           if (farmPrice && farmPrice !== 0) {
@@ -59,11 +60,16 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
           } else {
             bb = 0;
           }
-      }
-        const rewardsBBRatio = bb/rewardsSum *100;
+        }
+
+        chartBuilder.addInData(0, dto.blockDate, bb / 1000);
+
+        if (!cumulativeRewards.floorKey(dto.block)) {
+          return;
+        }
+        const rewardsBBRatio = bb / cumulativeRewards.floorEntry(dto.block)[1] * 100;
 
         chartBuilder.addInData(3, dto.blockDate, rewardsBBRatio);
-        chartBuilder.addInData(0, dto.blockDate, bb);
       });
 
       this.log.debug('History of PS TVL loaded ', vaultData);
@@ -71,8 +77,8 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
 
       this.handleData(chartBuilder, [
         ['FARM Buyback K', 'right', '#0085ff'],
-        ['All supply K', '1', '#efa4a4'],
-        ['Rewards K', '2', '#28a69a'],
+        ['FARM Total supply K', '1', '#efa4a4'],
+        ['FARM Weekly Rewards K', '2', '#28a69a'],
         ['Rewards to BB %', '3', 'red']
       ]);
     });
