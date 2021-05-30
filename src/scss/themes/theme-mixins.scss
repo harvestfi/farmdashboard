@@ -1,5 +1,5 @@
 @mixin isDarkMode(){
-    &.dark-card, &.dark-background {
+    &.dark-card, &.dark-background, &.dark {
         @content;
     }
 }

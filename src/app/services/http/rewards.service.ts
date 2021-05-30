@@ -5,6 +5,7 @@ import {HttpService} from './http.service';
 import {WebsocketService} from '../websocket.service';
 import {WsConsumer} from '../ws-consumer';
 import {Network} from '../../models/network';
+import {StaticValues} from '../../static/static-values';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,10 @@ export class RewardsService implements WsConsumer {
     endTimestamp = Math.floor(endTimestamp || (Date.now() / 1000));
     return this.httpService.httpGetWithNetwork(
         `/api/transactions/history/reward/?start=${startTimestamp}&end=${endTimestamp}`);
+  }
+
+  getAllHistoryRewardsByNetwork(network: Network = StaticValues.NETWORKS.get('eth')): Observable<RewardDto[]> {
+    return this.httpService.httpGet(`/api/transactions/history/reward`, network);
   }
 
 }

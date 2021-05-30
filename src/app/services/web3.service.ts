@@ -21,7 +21,7 @@ export class Web3Service {
   contracts = [];
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig, private contractsService: ContractsService) {
-    this.web3Url = config.web3Url;
+    this.web3Url = config.ethRpcUrl;
   }
 
   init(): Promise<void> {

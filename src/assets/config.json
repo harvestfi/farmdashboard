@@ -1,14 +1,14 @@
 {
     "debugLevel": 0,
     "wsReconnectInterval": 15,
-    "web3Url": "wss://eth-mainnet.ws.alchemyapi.io/v2/nzZTij_2KAavafMTicQTL52SkxJf1Lkz",
+    "ethRpcUrl": "https://mainnet.infura.io/v3/unknown",
     "wsEndpoints": {
-        "eth": "https://ethparser-staging.herokuapp.com/stomp",
-        "bsc": "https://ethparser-staging.herokuapp.com/stomp"
+        "eth": "https://ethparser.herokuapp.com/stomp",
+        "bsc": "https://ethparser.herokuapp.com/stomp"
     },
     "apiEndpoints": {
-        "eth": "https://ethparser-staging.herokuapp.com",
-        "bsc": "https://ethparser-staging.herokuapp.com"
+        "eth": "https://ethparser-api.herokuapp.com",
+        "bsc": "https://ethparser-api.herokuapp.com"
     },
     "multipleSources": true,
     "defaultNetwork": "eth"

@@ -54,4 +54,12 @@ export class StrategyComponent implements OnInit {
     return Math.max(this.hardworkData.getWeeklyApr(this.contract.address, this.contract.network), 0);
   }
 
+  getPPFSROI(): number {
+    return Math.max(this.hardworkData.getRoiBasedOnPPFS(this.contract.address, this.contract.network), 0);
+  }
+
+  getIdleTime(): string {
+    return this.hardworkData.getIdleTime(this.contract.address, this.contract.network).toFixed(0) || '0';
+  }
+
 }
