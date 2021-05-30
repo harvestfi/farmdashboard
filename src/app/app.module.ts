@@ -96,6 +96,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {interceptorProviders} from './interceptors';
 import {ApplicationErrorDialog} from './main/main-page-light/application-error-dialog';
 import {KatexModule} from 'ng-katex';
+import {DaysAgoPipe} from './common/pipes/days-ago.pipe';
 
 
 @NgModule({
@@ -168,7 +169,8 @@ import {KatexModule} from 'ng-katex';
     AddressComponent,
     ApyCommonComponent,
     MainTopNavigationComponent,
-    ApplicationErrorDialog
+    ApplicationErrorDialog,
+    DaysAgoPipe,
   ],
   imports: [
     AppRoutingModule,

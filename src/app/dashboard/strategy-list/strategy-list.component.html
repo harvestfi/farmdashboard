@@ -59,6 +59,10 @@
     <div (click)="sortVaultsList('total_earned')" class="header-column desktop-only">
       Total Earned <i class="fas fa-sort"></i>
     </div>
+
+    <div (click)="sortVaultsList('created')" class="header-column desktop-only">
+      Created <i class="fas fa-sort"></i>
+    </div>
   </div>
 
   <!--  ******** VALUES ************** -->
@@ -122,6 +126,10 @@
           ${{vaultTotalEarning(row.contract.address, row.contract.network) | number: '1.1-1'}}
         </div>
 
+        <!-- Created -->
+        <div class="column desktop-only">
+          {{row.contract.createdDate | daysAgo}}
+        </div>
       </div>
 
       <div class="empty-list" *ngIf="!filteredVaults.length">
