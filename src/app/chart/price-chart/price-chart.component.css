@@ -11,8 +11,19 @@
   width: 100%;
 }
 
-.selector {
-  margin: 15px;
+.header {
+  display: flex;
+  align-items: center;
   position: absolute;
+
+  min-height: 3em;
+  margin: 15px;
+
   z-index: 999;
+
+  background-color: #fffce66c;
+}
+
+.header > div {
+  margin-right: 8px;
 }

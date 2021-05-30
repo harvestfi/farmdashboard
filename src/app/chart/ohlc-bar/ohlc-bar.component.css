@@ -1,0 +1,14 @@
+.ohlc-bar {
+    display: flex;
+    flex-direction: column;
+}
+
+.ohlc-bar span {
+    color: red;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.ohlc-bar span.positive {
+    color: green;
+}
