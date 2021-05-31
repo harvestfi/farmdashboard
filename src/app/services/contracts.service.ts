@@ -9,6 +9,7 @@ import {IContract} from '../models/icontract';
 import {APP_CONFIG, AppConfig} from '../../app.config';
 import {HttpService} from './http/http.service';
 import {NGXLogger} from 'ngx-logger';
+import {Strategy} from '../models/strategy';
 
 /**
  * Usage:
@@ -26,10 +27,11 @@ export class ContractsService {
   private cache = new Map<string, Map<string, IContract>>();
   private urlPrefix = 'contracts';
   private typePaths = new Map<IContract, string>(
-      [[Vault, 'vault'],
-        [Pool, 'pool'],
-        [Token, 'token'],
-        [Lps, 'lp']]
+      [[Vault, 'vaults'],
+        [Pool, 'pools'],
+        [Strategy, 'strategies'],
+        [Token, 'tokens'],
+        [Lps, 'lps']]
   );
 
   constructor(
@@ -77,7 +79,7 @@ export class ContractsService {
   }
 
   private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {
-    return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}s`)
+    return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}`)
     .pipe(
         map((val: T[]) => val?.map(o => Object.assign(new type(), o)) as T[])
     );
