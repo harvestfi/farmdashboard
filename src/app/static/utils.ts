@@ -151,6 +151,7 @@ export class Utils {
   }
 
   public static prettyVaultName(name: string): string {
+    name = name.replace('V_', '');
     let postfix = '';
     if (!!name && name.split('_#').length === 2) {
       postfix = '_' + name.split('_#')[1];
