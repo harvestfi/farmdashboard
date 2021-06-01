@@ -99,6 +99,7 @@ import {KatexModule} from 'ng-katex';
 import { ProfitChartComponent } from './chart/profit-chart/profit-chart.component';
 import { WeeklyProfitChartComponent } from './chart/weekly-profit-chart/weekly-profit-chart.component';
 import { ChartProfitMethodsComponent } from './chart/chart-profit-methods.component';
+import {DaysAgoPipe} from './common/pipes/days-ago.pipe';
 
 
 @NgModule({
@@ -174,6 +175,7 @@ import { ChartProfitMethodsComponent } from './chart/chart-profit-methods.compon
     ApplicationErrorDialog,
     ProfitChartComponent,
     WeeklyProfitChartComponent
+    DaysAgoPipe,
   ],
   imports: [
     AppRoutingModule,
