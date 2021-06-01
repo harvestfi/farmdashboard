@@ -40,7 +40,7 @@
     transition: all 0.5s;
     padding: 10px 20px;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     font-weight: bold;
@@ -71,7 +71,7 @@
   .row {
     padding: 10px 20px;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(auto-fill);
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
