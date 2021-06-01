@@ -66,6 +66,16 @@ export class PriceDataService {
     return new Observable<PricesDto>(o => o.next(price));
   }
 
+  public getTotalFarmLpStaked(): PricesDto[] {
+    const result = []
+    this.prices.forEach((prs, network)=>
+      prs.forEach((price, name)=>
+        result.push(price)
+      )
+    )
+    return result
+  }
+
   public getAllPrices(): PricesDto[] {
     const result = [];
     this.prices.forEach((prs, network) =>
