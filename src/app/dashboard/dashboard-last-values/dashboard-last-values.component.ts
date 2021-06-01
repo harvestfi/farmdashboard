@@ -116,36 +116,7 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get lpFarmStaked(): number {
-    let usdcPoolStaked = 0;
-    let wethPoolStaked = 0;
-    let grainPoolStaked = 0;
-    const data = this.priceData.getTotalFarmLpStaked();
-    data.map((v,i)=>{
-      // Make sure the network is eth, since that is the only network currently set up on the backend
-      if(v.network === 'eth'){
-        if(v.source === 'UNI_LP_USDC_FARM'){
-          // Allow for unknown variable of which token is in which "Slot" in the pair
-          if(v.token === 'FARM'){
-            usdcPoolStaked = v.lpToken0Pooled;
-          } else {
-            usdcPoolStaked = v.lpToken1Pooled;
-          }
-        } else if (v.source === 'UNI_LP_WETH_FARM'){
-          if(v.token === 'FARM'){
-            wethPoolStaked = v.lpToken0Pooled;
-          } else {
-            wethPoolStaked = v.lpToken1Pooled;
-          }
-        } else if(v.source === 'UNI_LP_GRAIN_FARM'){
-          if(v.token === 'FARM'){
-            grainPoolStaked = v.lpToken0Pooled;
-          } else {
-            grainPoolStaked = v.lpToken1Pooled;
-          }
-        }
-      }
-    });
-    return grainPoolStaked + wethPoolStaked + usdcPoolStaked;
+    return this.priceData.getTotalFarmLpStaked();
   }
 
   tvlSum(network: string): number {
