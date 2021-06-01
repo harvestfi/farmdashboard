@@ -114,14 +114,6 @@ export class WebsocketService implements OnDestroy {
   //   .subscribe(inst => inst.send(topic, {}, JSON.stringify(payload)));
   // }
 
-  // TODO split
-  public isConnected(): boolean {
-    return Array.from(this.clients.values())
-    .map(c => c.connected)
-    .filter(c => !c)
-        .length === 0;
-  }
-
   public isNetworkConnected(network: string): boolean {
     if (this.clients.has(network)) {
       return this.clients.get(network).connected;

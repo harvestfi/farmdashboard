@@ -6,6 +6,7 @@ export class PricesDto {
   blockDate: number;
   network: string;
   owner: string;
+  recipient: string;
   token: string;
   tokenAddress: string;
   tokenAmount: number;
@@ -15,6 +16,10 @@ export class PricesDto {
   price: number;
   buy: boolean;
   source: string;
+  sourceAddress: string;
+  lpTotalSupply: number;
+  lpToken0Pooled: number;
+  lpToken1Pooled: number;
 
   blockDateAdopted: Date;
 

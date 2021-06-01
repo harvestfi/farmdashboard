@@ -26,9 +26,9 @@ export class IconsComponent {
     let name;
     if (!this.error) {
       if (this.vault instanceof Vault) {
-        name = this.vault?.contract?.name;
+        name = this.vault?.contract?.name.replace('V_', '');
       } else if (this.vault instanceof Pool) {
-        name = this.vault?.contract?.name.replace('ST_', '');
+        name = this.vault?.contract?.name.replace('P_', '');
       } else if (this.vault?.startsWith('0x')) {
         name = this.contractService.getContractName(this.vault);
       } else {

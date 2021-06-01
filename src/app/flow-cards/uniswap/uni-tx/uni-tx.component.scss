@@ -1,92 +1,47 @@
 @import "../../../../scss/utilities/utilities.scss";
+@import "../../flow-card-common-styles.scss";
+
 
 .uni-card {
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  -webkit-transition: 0.3s;
-  -o-transition: 0.3s;
-  transition: 0.3s;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 3px;
-
 
   .title-row {
-    display: grid;
-    grid-template-areas: "title filter";
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-
-    .title {
-      font-size: 1em;
-      font-weight: bolder;
-      text-align: center;
-      width: 100%;
-      margin: 0;
-      padding: 5px;
-      text-align: left;
-    }
-
-    .filter-input {
-      height: 25px;
-    }
-  }
-
-  .trade-card-header {
-    background: darken(#fffce6, 5%);
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: space-evenly;
-    -ms-flex-pack: space-evenly;
-    justify-content: space-evenly;
-    position: relative;
-    font-weight: bold;
-    width: 100%;
-    font-size: .9em;
-    display: grid;
-    grid-template-columns: 23% 23% 23% 23% 8%;
-    text-align: center;
-    margin: 10px 0;
-    padding: 0 10px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-
-  &.dark-card {
-    .trade-card-header {
-      background: #111111;
-    }
-  }
-
-
-  .button-container {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    vertical-align: middle;
+    padding: 0.4em;
+
   }
 
-  .show-more {
-    background-color: #eebf65;
-    color: black;
-    font-weight: bold;
-    border-radius: 3px;
-    border: 1px solid black;
-    cursor: pointer;
+  .table-header {
+    grid-template-columns: 15% 30% 15% 20% 15% 5%;
   }
 
-  @include responsive(small) {
-    .left,
-    .right,
-    .middle {
-      width: 100%;
+  .trades-list {
+
+
+
+    .trades-list-item {
+      grid-template-columns: 12% 30% 15% 20% 10% 10%;
+      gap: 5px;
+
+    }
+
+    .farm-value {
+      text-align: center;
+    }
+
+    .usd-cost {
+      text-align: center;
     }
   }
+
+
+
 }

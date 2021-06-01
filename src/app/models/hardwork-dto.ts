@@ -5,7 +5,7 @@ export class HardWorkDto {
   block: number;
   blockDate: number;
   network: string;
-  shareChange: Date;
+  shareChange: number;
   fullRewardUsd: number;
   fullRewardUsdTotal: number;
   tvl: number;

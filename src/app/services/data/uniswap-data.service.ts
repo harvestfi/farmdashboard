@@ -29,15 +29,19 @@ export class UniswapDataService {
     this.uniswapService.getUniswapTxHistoryData().subscribe(unis => {
           this.log.debug('Last 100 uniswaps loaded', unis);
           return unis?.sort((a, b) => a.block > b.block ? 1 : -1)
-          ?.forEach(this.handleFarmUni.bind(this));
+          ?.forEach(this.handleFarmTradeUni.bind(this));
         }
     );
 
     this.pricesService.subscribeToPrices().subscribe(this.handlePriceToUni.bind(this));
   }
 
-  private handleFarmUni(uniDto: UniswapDto): void {
-    if (!uniDto || uniDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')) {
+  private handleFarmTradeUni(uniDto: UniswapDto): void {
+    if (!uniDto
+        || uniDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')
+        || uniDto?.type === 'REM'
+        || uniDto?.type === 'ADD'
+    ) {
       // this.log.warn('Not FARM uni dto', uniDto);
       return;
     }
@@ -60,7 +64,7 @@ export class UniswapDataService {
     const price = priceDto.price * this.priceData.getUsdPrice(priceDto.otherTokenAddress, priceDto.network);
     const uniDto = priceDto.toUniswap();
     uniDto.lastPrice = price;
-    this.handleFarmUni(uniDto);
+    this.handleFarmTradeUni(uniDto);
   }
 
   private isNotActual(dto: UniswapDto): boolean {

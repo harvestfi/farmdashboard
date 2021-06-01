@@ -5,7 +5,7 @@ export class AppConfig {
     apiEndpoints = {};
     wsEndpoints = {};
     wsReconnectInterval: number;
-    web3Url: string;
+    ethRpcUrl: string;
     multipleSources: boolean;
     defaultNetwork: string;
 }

@@ -54,7 +54,8 @@ export class FarmChartComponent implements AfterViewInit, OnInit {
         return;
       }
       const price = tx.price * this.priceData.getUsdPrice(tx.otherTokenAddress, tx.network);
-      priceChartBuilder.collectLastTx(price, tx.blockDate);
+      const volume = tx.tokenAmount;
+      priceChartBuilder.collectLastTx(volume, price, tx.blockDate);
     });
   }
 }

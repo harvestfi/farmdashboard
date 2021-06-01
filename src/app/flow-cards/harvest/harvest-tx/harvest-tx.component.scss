@@ -1,74 +1,35 @@
+@import "../../flow-card-common-styles.scss";
+
 .harvest-card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 3px;
+    border: 1px solid rgba($dark-background-color, 0.2);
 
-  .title-row {
-    display: grid;
-    grid-template-areas: "name strategy amount";
-    align-items: center;
-    grid-template-columns: 30% 30% 30%;
-    grid-column-gap: 3%;
+    .title-row {
 
-    .select-strategy-2,
-    .input-less-than {
-      height: 25px;
+        .select-strategy-2,
+        .input-less-than {
+            height: 25px;
+        }
+
+        .title {
+            padding: 5px;
+            text-align: left;
+        }
+
     }
 
-    .title {
-      font-size: 1em;
-      font-weight: bolder;
-      text-align: center;
-      margin: 0;
-      padding: 5px;
-      text-align: left;
+    .table-header {
+        grid-template-columns: 17% 26% 19% 13% 15% 5%;
     }
 
-  }
+    .trades-list {
 
-  .harvest-tx-header {
-    align-items: center;
-    justify-content: space-evenly;
-    position: relative;
-    font-weight: bold;
-    width: 100%;
-    font-size: .9em;
-    display: grid;
-    text-align: center;
-    margin: 10px 0;
-    grid-template-columns: 20% 30% 15% 30% 5%;
-    background: darken(#fffce6, 5%);
-  }
+        .trades-list-item {
+            grid-template-columns: 17% 27% 22% 9% 21% 5%;
 
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .show-more {
-    background-color: #eebf65;
-    color: black;
-    font-weight: bold;
-    border-radius: 3px;
-    border: 1px solid black;
-    cursor: pointer;
-  }
-
-  .live-data-table {
-    margin-left: 10px;
-  }
-
-  .select-strategy {
-    width: 110px;
-  }
-
-  &.dark-card {
-    .harvest-tx-header {
-      background: #111111;
+            .mat-icon {
+                margin-left: 3px;
+            }
+        }
     }
-  }
-
 
 }

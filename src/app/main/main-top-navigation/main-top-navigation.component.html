@@ -7,11 +7,14 @@
       <app-popover-card class="pointer">
         <ng-template>
           <p>{{network.name}} socket server status</p>
+          <p>Behind by {{blockDiffs.get(network.name)}} blocks</p>
         </ng-template>
         <div class="network-status">
           <img width="10" [src]="network.icon" class="icon"/>
-          <span class="status" [class]="ws.isConnected(network.name) ? 'online' : 'offline'">{{ws.isNetworkConnected(
+          <span class="status" [class]="ws.isNetworkConnected(network.name) ? 'online' : 'offline'">{{ws.isNetworkConnected(
               network.name) ? 'Online' : 'Offline'}}</span>
+          <i *ngIf="blockDiffs.get(network.name) > 10"
+              class="fas fa-exclamation-triangle" style="color: brown"></i>
         </div>
       </app-popover-card>
     </div>
