@@ -1,0 +1,69 @@
+.title {
+  font-size: 1.5em;
+  padding: 10px;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.network-toggle {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px 0;
+
+  .network-input {
+    display: none;
+
+    &:checked ~ .network-label {
+      &.dark {
+        background: #696969;
+      }
+
+      &.light {
+        background: #fff9cd;
+
+      }
+    }
+  }
+
+  .network-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    border-radius: 14px;
+    margin: 0 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid #848484;
+
+
+    .networi-icon {
+      width: 15px;
+      height: 15px;
+      object-fit: contain;
+    }
+  }
+}
+
+.dialog-card {
+  width: 100vw;
+  max-width: 800px;
+}
+
+
+.chart {
+  min-height: 70vh;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (max-width: 900px) {
+  .title-col {
+    font-size: 1em;
+    margin: 5px;
+  }
+}
