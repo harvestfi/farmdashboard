@@ -119,7 +119,7 @@ export class DashboardLastValuesComponent implements OnInit {
     let usdcPoolStaked = 0;
     let wethPoolStaked = 0;
     let grainPoolStaked = 0;
-    const data = this.priceData.getTotalFarmLpStaked()
+    const data = this.priceData.getTotalFarmLpStaked();
     data.map((v,i)=>{
       // Make sure the network is eth, since that is the only network currently set up on the backend
       if(v.network === 'eth'){
@@ -144,7 +144,7 @@ export class DashboardLastValuesComponent implements OnInit {
           }
         }
       }
-    })  
+    });
     return grainPoolStaked + wethPoolStaked + usdcPoolStaked;
   }
 

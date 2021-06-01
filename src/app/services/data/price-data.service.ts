@@ -67,13 +67,13 @@ export class PriceDataService {
   }
 
   public getTotalFarmLpStaked(): PricesDto[] {
-    const result = []
+    const result = [];
     this.prices.forEach((prs, network)=>
       prs.forEach((price, name)=>
         result.push(price)
       )
-    )
-    return result
+    );
+    return result;
   }
 
   public getAllPrices(): PricesDto[] {
