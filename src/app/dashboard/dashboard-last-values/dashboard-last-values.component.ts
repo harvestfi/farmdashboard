@@ -116,7 +116,7 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get lpFarmStaked(): number {
-    return this.harvestData.getLpFarmStaked();
+    return this.priceData.getTotalFarmLpStaked();
   }
 
   tvlSum(network: string): number {

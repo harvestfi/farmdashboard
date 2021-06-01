@@ -66,6 +66,40 @@ export class PriceDataService {
     return new Observable<PricesDto>(o => o.next(price));
   }
 
+  public getTotalFarmLpStaked(): number {
+    let usdcPoolStaked = 0;
+    let wethPoolStaked = 0;
+    let grainPoolStaked = 0;
+    this.prices.forEach((prs, network)=>
+      prs.forEach((price, name)=>{
+      if(price.network === 'eth'){
+        if(price.source === 'UNI_LP_USDC_FARM'){
+          // Allow for unknown variable of which token is in which "Slot" in the pair
+          if(price.token === 'FARM'){
+            usdcPoolStaked = price.lpToken0Pooled;
+          } else {
+            usdcPoolStaked = price.lpToken1Pooled;
+          }
+        } else if (price.source === 'UNI_LP_WETH_FARM'){
+          if(price.token === 'FARM'){
+            wethPoolStaked = price.lpToken0Pooled;
+          } else {
+            wethPoolStaked = price.lpToken1Pooled;
+          }
+        } else if(price.source === 'UNI_LP_GRAIN_FARM'){
+          if(price.token === 'FARM'){
+            grainPoolStaked = price.lpToken0Pooled;
+          } else {
+            grainPoolStaked = price.lpToken1Pooled;
+          }
+        }
+      }
+    }
+      )
+    );
+    return usdcPoolStaked + wethPoolStaked + grainPoolStaked;
+  }
+
   public getAllPrices(): PricesDto[] {
     const result = [];
     this.prices.forEach((prs, network) =>
