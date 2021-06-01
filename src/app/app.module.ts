@@ -96,6 +96,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {interceptorProviders} from './interceptors';
 import {ApplicationErrorDialog} from './main/main-page-light/application-error-dialog';
 import {KatexModule} from 'ng-katex';
+import { ProfitChartComponent } from './chart/profit-chart/profit-chart.component';
+import { WeeklyProfitChartComponent } from './chart/weekly-profit-chart/weekly-profit-chart.component';
+import { ChartProfitMethodsComponent } from './chart/chart-profit-methods.component';
 
 
 @NgModule({
@@ -168,7 +171,9 @@ import {KatexModule} from 'ng-katex';
     AddressComponent,
     ApyCommonComponent,
     MainTopNavigationComponent,
-    ApplicationErrorDialog
+    ApplicationErrorDialog,
+    ProfitChartComponent,
+    WeeklyProfitChartComponent
   ],
   imports: [
     AppRoutingModule,

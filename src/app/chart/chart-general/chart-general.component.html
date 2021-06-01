@@ -13,19 +13,27 @@
       <div class="title">
         {{title}}
       </div>
-      <div class="network-toggle">
-        <div *ngIf="multipleNetworks">
-          <span *ngFor="let n of networks">
-            <input [id]="n" class="network-input" (change)="choseNetwork()" [value]="n" [(ngModel)]="chosenNetwork"
-                   [checked]="n == chosenNetwork" type="radio" name="network">
-            <label class="network-label" [class]="vt.getThemeColor()" [for]="n">
-              <img class="networi-icon" [src]="network_icons.get(n)" alt="{{n}} icon">
-              {{n}}
-            </label>
-          </span>
-        </div>
-      </div>
-      <div #chart class="chart"></div>
+      <mat-tab-group>
+        <mat-tab label="All">
+          <div class="network-toggle">
+            <div *ngIf="multipleNetworks">
+              <span *ngFor="let n of networks">
+                <input [id]="n" class="network-input" (change)="choseNetwork()" [value]="n" [(ngModel)]="chosenNetwork"
+                       [checked]="n == chosenNetwork" type="radio" name="network">
+                <label class="network-label" [class]="vt.getThemeColor()" [for]="n">
+                  <img class="networi-icon" [src]="network_icons.get(n)" alt="{{n}} icon">
+                  {{n}}
+                </label>
+              </span>
+            </div>
+          </div>
+          <div #chart class="chart"></div>
+        </mat-tab>
+
+        <mat-tab label="Weekly">
+          <app-profit-chart></app-profit-chart>
+        </mat-tab>
+      </mat-tab-group>
     </div>
 
   </div>

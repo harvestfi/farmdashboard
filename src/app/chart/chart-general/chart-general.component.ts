@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {ViewTypeService} from '../../services/view-type.service';
-import {StaticValues} from '../../static/static-values';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ViewTypeService } from '../../services/view-type.service';
+import { StaticValues } from '../../static/static-values';
 
 @Component({
   selector: 'app-chart-general',
