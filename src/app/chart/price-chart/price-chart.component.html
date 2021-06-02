@@ -7,18 +7,18 @@
       </select>
     </div>
 
-    <ohlc-bar [data]="selectedData"></ohlc-bar>
+    <app-ohlc-bar [data]="selectedData"></app-ohlc-bar>
   </div>
 
   <div *ngIf="showChart === 'GRAIN'" id="grain" class="grain-chart left-border-box">
     <div class="price-card" [class]="vt.getThemeColor() + '-card'">
-      <app-grain-chart (onCrosshairMove)="updateSelectedData($event)"></app-grain-chart>
+      <app-grain-chart (crosshairMove)="updateSelectedData($event)"></app-grain-chart>
     </div>
   </div>
 
   <div *ngIf="showChart === 'FARM'" id="farm" class="farm-chart left-border-box">
     <div class="price-card" [class]="vt.getThemeColor() + '-card'">
-      <app-farm-chart (onCrosshairMove)="updateSelectedData($event)"></app-farm-chart>
+      <app-farm-chart (crosshairMove)="updateSelectedData($event)"></app-farm-chart>
     </div>
   </div>
 

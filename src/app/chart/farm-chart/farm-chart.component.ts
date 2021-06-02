@@ -1,4 +1,14 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {ViewTypeService} from '../../services/view-type.service';
 import {PriceChartBuilder} from '../price-chart-builder';
@@ -7,7 +17,6 @@ import {UniswapService} from '../../services/http/uniswap.service';
 import {ChartsOptionsLight} from '../charts-options-light';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Addresses} from '../../static/addresses';
-
 
 @Component({
   selector: 'app-farm-chart',
@@ -20,7 +29,7 @@ export class FarmChartComponent implements AfterViewInit, OnInit {
   otherCoin = Addresses.ADDRESSES.get('WETH');
   chart: IChartApi;
 
-  @Output() onCrosshairMove = new EventEmitter<Object>();
+  @Output() crosshairMove = new EventEmitter<any>();
 
   constructor(private uniswapService: UniswapService,
               private priceData: PriceDataService,
@@ -52,7 +61,7 @@ export class FarmChartComponent implements AfterViewInit, OnInit {
       const volumeData = seriesPrices.get(priceChartBuilder.volumeSeries) as BarPrices;
 
       if (data && volumeData) {
-        this.onCrosshairMove.emit({timestamp, ...data, volume: volumeData});
+        this.crosshairMove.emit({timestamp, ...data, volume: volumeData});
       }
     });
 

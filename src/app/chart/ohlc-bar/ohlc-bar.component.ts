@@ -1,14 +1,14 @@
-import {Component, Input, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {OhlcDto} from 'src/app/models/ohlc-dto';
 import {ViewTypeService} from 'src/app/services/view-type.service';
 
 @Component({
-  selector: 'ohlc-bar',
+  selector: 'app-ohlc-bar',
   templateUrl: './ohlc-bar.component.html',
   styleUrls: ['./ohlc-bar.component.css']
 })
-export class OhlcBarComponent {
-  @Input() data: OhlcDto
+export class OhlcBarComponent implements OnChanges {
+  @Input() data: OhlcDto;
 
   private open: string;
   private high: string;

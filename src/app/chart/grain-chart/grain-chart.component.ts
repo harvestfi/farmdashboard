@@ -17,7 +17,7 @@ export class GrainChartComponent implements AfterViewInit {
   coin = Addresses.ADDRESSES.get('GRAIN');
   chart: IChartApi;
 
-  @Output() onCrosshairMove = new EventEmitter<Object>();
+  @Output() crosshairMove = new EventEmitter<any>();
 
   constructor(private uniswapService: UniswapService,
               private priceData: PriceDataService,
@@ -34,7 +34,7 @@ export class GrainChartComponent implements AfterViewInit {
       const volumeData = seriesPrices.get(priceChartBuilder.volumeSeries) as BarPrices;
 
       if (data && volumeData) {
-        this.onCrosshairMove.emit({timestamp, ...data, volume: volumeData});
+        this.crosshairMove.emit({timestamp, ...data, volume: volumeData});
       }
     });
 
