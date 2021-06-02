@@ -5,7 +5,7 @@ import {ViewTypeService} from 'src/app/services/view-type.service';
 @Component({
   selector: 'app-price-chart',
   templateUrl: './price-chart.component.html',
-  styleUrls: ['./price-chart.component.css']
+  styleUrls: ['./price-chart.component.scss']
 })
 export class PriceChartComponent implements OnInit {
   showChart = 'FARM';

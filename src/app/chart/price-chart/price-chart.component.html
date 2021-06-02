@@ -1,6 +1,6 @@
 <div class="price-chart-card">
 
-  <div class="header">
+  <div [class]="[vt.getThemeColor(), 'header']">
     <div>
       <select [(ngModel)]="showChart" class="select-strategy-2 left-border-box" (ngModelChange)="updateSelectedData(null)">
         <option *ngFor="let name of charts" [value]="name">{{name}}</option>
