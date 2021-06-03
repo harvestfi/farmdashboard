@@ -7,7 +7,7 @@
       <app-popover-card class="pointer">
         <ng-template>
           <p>{{network.name}} socket server status</p>
-          <p>Behind by {{blockDiffs.get(network.name)}} blocks</p>
+          <p>Behind by {{blockDiffs.get(network.name)||0}} blocks</p>
         </ng-template>
         <div class="network-status">
           <img width="10" [src]="network.icon" class="icon"/>
