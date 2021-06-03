@@ -60,10 +60,11 @@
                       class="sign-icon">
               warning
             </mat-icon>
-      
-            <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" class="do-hard-work-img"
-                            size="14"></angular-emojis>
-      
+            <app-popover-card>
+              <ng-template>From doHardWork</ng-template>
+              <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" class="do-hard-work-img" size="14"></angular-emojis>
+            </app-popover-card>
+            
           </container-element>
       
         </div>
