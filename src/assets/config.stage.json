@@ -3,12 +3,12 @@
     "wsReconnectInterval": 15,
     "ethRpcUrl": "https://mainnet.infura.io/v3/unknown",
     "wsEndpoints": {
-        "eth": "https://ethparser-staging.herokuapp.com/stomp",
-        "bsc": "https://ethparser-staging.herokuapp.com/stomp"
+        "eth": "https://ethparser-stage.harvestfi.builders/stomp",
+        "bsc": "https://ethparser-stage.harvestfi.builders/stomp"
     },
     "apiEndpoints": {
-        "eth": "https://ethparser-staging.herokuapp.com",
-        "bsc": "https://ethparser-staging.herokuapp.com"
+        "eth": "https://ethparser-stage.harvestfi.builders",
+        "bsc": "https://ethparser-stage.harvestfi.builders"
     },
     "multipleSources": true,
     "defaultNetwork": "eth"
