@@ -3,12 +3,12 @@
     "wsReconnectInterval": 15,
     "ethRpcUrl": "https://mainnet.infura.io/v3/unknown",
     "wsEndpoints": {
-        "eth": "https://ethparser-stage.harvestfi.builders/stomp",
-        "bsc": "https://ethparser-stage.harvestfi.builders/stomp"
+        "eth": "http://localhost:4142/stomp",
+        "bsc": "http://localhost:4142/stomp"
     },
     "apiEndpoints": {
-        "eth": "https://ethparser-stage.harvestfi.builders",
-        "bsc": "https://ethparser-stage.harvestfi.builders"
+        "eth": "http://localhost:4142",
+        "bsc": "http://localhost:4142"
     },
     "multipleSources": true,
     "defaultNetwork": "eth"
