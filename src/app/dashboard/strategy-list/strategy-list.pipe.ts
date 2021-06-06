@@ -59,6 +59,8 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
         case 'total_earned':
           return this.vaultTotalEarning(right.contract?.address, right.contract?.network)
               - this.vaultTotalEarning(left.contract?.address, left.contract?.network);
+        case 'created':
+          return left.contract?.createdDate < right.contract?.createdDate ? -1 : 1;
         default:
           break;
       }
