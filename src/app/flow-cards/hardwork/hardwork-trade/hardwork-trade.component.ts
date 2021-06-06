@@ -3,6 +3,7 @@ import {HardWorkDto} from 'src/app/models/hardwork-dto';
 import {Utils} from '../../../static/utils';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
+import { ViewTypeService } from 'src/app/services/view-type.service';
 
 @Component({
   selector: 'app-hardwork-trade',
@@ -19,7 +20,10 @@ export class HardworkTradeComponent implements OnInit {
   name = '';
   network = '';
 
-  constructor(private contractService: ContractsService) {
+  constructor(
+    private contractService: ContractsService,
+    public vt: ViewTypeService
+    ) {
   }
 
   ngOnInit(): void {

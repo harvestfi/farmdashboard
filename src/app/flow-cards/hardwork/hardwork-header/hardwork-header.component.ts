@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { ViewTypeService } from 'src/app/services/view-type.service';
 
 @Component({
   selector: 'app-hardwork-header',
@@ -8,7 +9,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class HardworkHeaderComponent implements OnInit {
 
 
-  constructor() {
+  constructor(public vt: ViewTypeService) {
   }
 
   @Input() showMoreColumns = false;

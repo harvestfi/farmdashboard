@@ -16,6 +16,7 @@
   align-items: center;
   max-width: 1200px;
   width: 90vw;
+  padding: 10px 20px;
 
   @include responsive(small) {
     width: 100%;

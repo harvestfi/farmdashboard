@@ -1,13 +1,5 @@
-.hardwork-info {
-  align-items: center;
-  justify-content: space-evenly;
-  position: relative;
-  font-weight: bold;
-  width: 100%;
-  font-size: .9em;
-  display: grid;
-  grid-template-columns:  1.3fr 0.5fr 1fr 1fr 0.05fr;
-}
+@import "src/scss/themes/theme-mixins.scss";
+
 
 .hardwork-info-full {
   display: flex;
@@ -17,13 +9,22 @@
   font-weight: bold;
   width: 100%;
   font-size: .9em;
+  margin: 3px 0;
+  box-sizing: border-box;
+  padding: 5px;
+  border: 1px solid rgba(#111111, 0.2);
+  
+  @include isDarkMode(){
+    border: 1px solid #111111;
+  }
+
 }
 
 .hardwork-field {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
+  white-space: nowrap;
+  text-align: center;
+
 
   .tvl-img {
     width: 25%;
@@ -49,6 +50,3 @@
   font-size: 0.8em;
   align-items: baseline;
 }
-
-
-

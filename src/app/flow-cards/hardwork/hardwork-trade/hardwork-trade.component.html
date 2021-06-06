@@ -1,4 +1,4 @@
-<div [ngClass]="moreColumns ? 'hardwork-info-full' : 'hardwork-info'">
+<div [ngClass]="moreColumns ? 'hardwork-info-full' : 'hardwork-info'" [class]="vt.getThemeColor()">
   <div *ngIf='moreColumns' class="hardwork-field hardwork-poolCalls">
     {{dto.callsQuantity }}
   </div>
