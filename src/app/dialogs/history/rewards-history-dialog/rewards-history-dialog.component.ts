@@ -23,8 +23,6 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
   startDate: Date;
   endDate: Date;
 
-  private dayLag = 15;
-
   constructor(public vt: ViewTypeService,
               private cdRef: ChangeDetectorRef,
               private log: NGXLogger,
