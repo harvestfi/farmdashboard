@@ -6,19 +6,20 @@ import {Utils} from '../../../static/utils';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
 import {RewardsService} from '../../../services/http/rewards.service';
+import { Paginated } from 'src/app/models/paginated';
 
 @Component({
   selector: 'app-rewards-history-dialog',
   templateUrl: './rewards-history-dialog.component.html',
-  styleUrls: ['./rewards-history-dialog.component.css']
+  styleUrls: ['./rewards-history-dialog.component.scss']
 })
+
 
 export class RewardsHistoryDialogComponent implements AfterViewInit {
   @Input() data;
-  rewards: Array<RewardDto> = [];
+  rewards: Paginated<RewardDto> = Paginated.empty();
   ready = false;
-  disabled = false;
-  vaultFilter = '-';
+  vaultFilter = '';
   startDate: Date;
   endDate: Date;
 
@@ -33,12 +34,6 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.startDate = new Date();
-    this.startDate.setDate(this.startDate.getDate() - 1);
-    this.endDate = new Date();
-    this.endDate.setDate(this.endDate.getDate() + 1);
-
-    this.startDate.setDate(this.startDate.getDate() - this.dayLag);
     this.loadRewardsHistory();
   }
 
@@ -48,27 +43,32 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
   }
 
 
-  private loadRewardsHistory(): void {
-    this.rewardsService.getAllHistoryRewards(
-        Math.floor(this.startDate.getTime() / 1000),
-        Math.floor(this.endDate.getTime() / 1000))
-    .subscribe((data) => {
-      this.log.info('Rewards loaded', data);
-      this.rewards.push(...(data
-      .filter(r => r.isWeeklyReward)
-      .map(RewardDto.fillBlockDateAdopted)
-      .reverse()));
-      this.ready = true;
-      this.disabled = false;
-      this.cdRef.detectChanges();
+  private loadRewardsHistory(page: number = 0): void {
+    this.ready = false;
+    this.rewardsService.getPaginatedHistoryRewards(10, page, -1, 'desc', this.vaultFilter).subscribe((response) => {
+      this.log.info('Rewards loaded', response);
+      if('data' in response) {
+        response.data = response.data.filter(r => r.isWeeklyReward)
+        .map(RewardDto.fillBlockDateAdopted);
+
+        this.rewards = response;
+
+        this.ready= true;
+        this.cdRef.detectChanges();
+        return;
+      }
+
+      this.rewards = Paginated.empty();
     });
   }
 
-  loadMoreRewardsHistory(): void {
-    this.disabled = true;
-    this.endDate.setDate(this.startDate.getDate());
-    this.startDate.setDate(this.endDate.getDate() - this.dayLag);
-    this.loadRewardsHistory();
+
+  handlePageChange($event): void {
+    this.loadRewardsHistory($event);
+  }
+
+  handleFilterUpdate(): void {
+    this.loadRewardsHistory(0);
   }
 
   openNetworkScanTx(hash: string, network: string): void {
