@@ -1,6 +1,6 @@
-@import "../../../../scss/utilities/utilities.scss";
+@import "src/scss/utilities/utilities.scss";
+@import "src/scss/utilities/fancy-ui-helpers.scss";
 @import "../../flow-card-common-styles.scss";
-
 
 .uni-card {
 
@@ -17,6 +17,10 @@
     vertical-align: middle;
     padding: 0.4em;
 
+    .filter-input {
+      height: 25px;
+      @include fancy-input($fancy-input-small-padding, $fancy-input-small-radius);
+    }
   }
 
   .table-header {

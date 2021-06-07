@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {PriceChartBuilder} from '../price-chart-builder';
@@ -16,6 +16,11 @@ export class GrainChartComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
   coin = Addresses.ADDRESSES.get('GRAIN');
   chart: IChartApi;
+
+  /**
+   * @TODO: base logic will be implemented later
+   */
+  @Input() base: string;
 
   @Output() crosshairMove = new EventEmitter<any>();
 

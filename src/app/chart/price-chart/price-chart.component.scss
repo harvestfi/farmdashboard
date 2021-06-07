@@ -1,4 +1,6 @@
-@import '../../../scss/themes/theme-mixins.scss';
+@import 'src/scss/themes/theme-mixins.scss';
+@import 'src/scss/utilities/responsive_utilities.scss';
+@import "src/scss/utilities/fancy-ui-helpers.scss";
 
 .price-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -31,5 +33,28 @@
 
   &.dark {
     background-color: #404040;
+  }
+}
+
+.chart-modes {
+  select {
+    @include fancy-input($fancy-input-small-padding, $fancy-input-small-radius);
+
+    &:not(:first-child) {
+      margin-left: 0.5em;
+    }
+  }
+
+  @include responsive(phone) {
+    & {
+      width: 5em;
+
+      select {
+        width: 100%;
+        &:not(:first-child) {
+          margin: 0;
+        }
+      }
+    }
   }
 }
