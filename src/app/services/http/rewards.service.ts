@@ -6,6 +6,7 @@ import {WebsocketService} from '../websocket.service';
 import {WsConsumer} from '../ws-consumer';
 import {Network} from '../../models/network';
 import {StaticValues} from '../../static/static-values';
+import { Paginated } from 'src/app/models/paginated';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +71,19 @@ export class RewardsService implements WsConsumer {
 
   getAllHistoryRewardsByNetwork(network: Network = StaticValues.NETWORKS.get('eth')): Observable<RewardDto[]> {
     return this.httpService.httpGet(`/api/transactions/history/reward`, network);
+  }
+
+  getPaginatedHistoryRewards(
+    pageSize: number = 10,
+    page: number = 0,
+    minAmount: number = -1,
+    ordering: string = 'desc',
+    vault?: string,
+    network: Network = StaticValues.NETWORKS.get('eth')
+    ): Observable<Paginated<RewardDto>> {
+    return this.httpService.httpGet(
+      `/reward/pages?pageSize=${pageSize}&page=${page}&minAmount=${minAmount}&ordering=${ordering}${vault ? `&vault=${vault}` : ''}`,
+    network);
   }
 
 }
