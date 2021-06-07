@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {PriceChartBuilder} from '../price-chart-builder';
-import {BarPrices, IChartApi} from 'lightweight-charts';
+import {IChartApi} from 'lightweight-charts';
 import {UniswapService} from '../../services/http/uniswap.service';
 import {PriceDataService} from '../../services/data/price-data.service';
 import {Addresses} from '../../static/addresses';
@@ -17,8 +17,6 @@ export class GrainChartComponent implements AfterViewInit {
   coin = Addresses.ADDRESSES.get('GRAIN');
   chart: IChartApi;
 
-  @Output() crosshairMove = new EventEmitter<any>();
-
   constructor(private uniswapService: UniswapService,
               private priceData: PriceDataService,
               public vt: ViewTypeService,
@@ -27,17 +25,6 @@ export class GrainChartComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     const priceChartBuilder = new PriceChartBuilder(this.log, this.coin, this.chartEl, this.vt);
-    this.chart = priceChartBuilder.chart;
-
-    this.chart.subscribeCrosshairMove(({time: timestamp, seriesPrices}) => {
-      const data = seriesPrices.get(priceChartBuilder.series) as BarPrices;
-      const volumeData = seriesPrices.get(priceChartBuilder.volumeSeries) as BarPrices;
-
-      if (data && volumeData) {
-        this.crosshairMove.emit({timestamp, ...data, volume: volumeData});
-      }
-    });
-
     this.uniswapService.getUniswapOHLC(this.coin).subscribe(data => {
       this.log.debug(this.coin + ' prices loaded ', data);
       priceChartBuilder.addValuesToChart(data, false);

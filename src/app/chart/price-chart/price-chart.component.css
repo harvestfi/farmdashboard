@@ -1,5 +1,3 @@
-@import '../../../scss/themes/theme-mixins.scss';
-
 .price-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
@@ -13,23 +11,8 @@
   width: 100%;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  position: absolute;
-
-  min-height: 3em;
+.selector {
   margin: 15px;
-
+  position: absolute;
   z-index: 999;
-
-  background-color: #fffce6;
-
-  &> div {
-    margin-right: 8px;
-  }
-
-  &.dark {
-    background-color: #404040;
-  }
 }

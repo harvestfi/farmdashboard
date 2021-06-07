@@ -52,7 +52,6 @@ import {HarvestHistoryDialogComponent} from './dialogs/history/harvest-history-d
 import {SimpleChartDialogComponent} from './dialogs/charts/simple-chart-dialog/simple-chart-dialog.component';
 import {UniHistoryDialogComponent} from './dialogs/history/uni-history-dialog/uni-history-dialog.component';
 import {PriceChartComponent} from './chart/price-chart/price-chart.component';
-import {OhlcBarComponent} from './chart/ohlc-bar/ohlc-bar.component';
 import {DraggableModalComponent} from './dialogs/draggable-modal/draggable-modal.component';
 import {CustomModalComponent} from './dialogs/custom-modal/custom-modal.component';
 import {HarvestTradeComponent} from './flow-cards/harvest/harvest-trade/harvest-trade.component';
@@ -132,7 +131,6 @@ import {KatexModule} from 'ng-katex';
     HarvestHistoryDialogComponent,
     SimpleChartDialogComponent,
     PriceChartComponent,
-    OhlcBarComponent,
     DraggableModalComponent,
     CustomModalComponent,
     HarvestTradeComponent,
