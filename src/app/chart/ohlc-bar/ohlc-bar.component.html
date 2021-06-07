@@ -1,0 +1,12 @@
+<div *ngIf="data" class="ohlc-bar">
+    <div class="ohlc-values">
+        O<span [ngClass]="{'positive': isPositive}">{{open}}</span>
+        H<span [ngClass]="{'positive': isPositive}">{{high}}</span>
+        L<span [ngClass]="{'positive': isPositive}">{{low}}</span>
+        C<span [ngClass]="{'positive': isPositive}">{{close}}</span>
+        <span [ngClass]="{'positive': isPositive}">{{difference}} ({{movement}})</span>
+    </div>
+    <div class="ohlc-volume">
+        Volume <span [ngClass]="{'positive': isPositive}">{{volume}}</span>
+    </div>
+</div>
