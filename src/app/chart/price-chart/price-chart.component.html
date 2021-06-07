@@ -1,20 +1,24 @@
 <div class="price-chart-card">
 
-  <div class="selector">
-    <select [(ngModel)]="showChart" class="select-strategy-2 left-border-box">
-      <option *ngFor="let name of charts" [value]="name">{{name}}</option>
-    </select>
+  <div [class]="[vt.getThemeColor(), 'header']">
+    <div>
+      <select [(ngModel)]="showChart" class="select-strategy-2 left-border-box" (ngModelChange)="updateSelectedData(null)">
+        <option *ngFor="let name of charts" [value]="name">{{name}}</option>
+      </select>
+    </div>
+
+    <app-ohlc-bar [data]="selectedData"></app-ohlc-bar>
   </div>
 
   <div *ngIf="showChart === 'GRAIN'" id="grain" class="grain-chart left-border-box">
     <div class="price-card" [class]="vt.getThemeColor() + '-card'">
-      <app-grain-chart></app-grain-chart>
+      <app-grain-chart (crosshairMove)="updateSelectedData($event)"></app-grain-chart>
     </div>
   </div>
 
   <div *ngIf="showChart === 'FARM'" id="farm" class="farm-chart left-border-box">
     <div class="price-card" [class]="vt.getThemeColor() + '-card'">
-      <app-farm-chart></app-farm-chart>
+      <app-farm-chart (crosshairMove)="updateSelectedData($event)"></app-farm-chart>
     </div>
   </div>
 
