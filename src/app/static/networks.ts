@@ -13,7 +13,7 @@ export class Networks {
     ethparserName: 'eth',
     currencySymbol: 'ETH',
     name: 'Ethereum Mainnet',
-    rpcUrl: '' + rpcUrl,
+    rpcUrl: 'https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken',
   });
   private static NETWORK_BSC: Network = {
     blockExplorerUrl: 'https://www.bscscan.com',
