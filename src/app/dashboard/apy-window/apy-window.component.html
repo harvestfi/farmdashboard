@@ -32,12 +32,19 @@
       </div>
     </mat-tab>
   </mat-tab-group>
+  <app-custom-modal [name]="'tvlModal_' + vault.contract.address">
+    <ng-template>
+      <app-vault-tvl-dialog [vault]="vault.contract.address"
+                            [network]="vault.contract.network"></app-vault-tvl-dialog>
+    </ng-template>
+  </app-custom-modal>
 
   <div class="apy-window-footer">
     <p class="link pointer">
       <a (click)="openIncomeDialog()">Chart</a>
       <a href='https://www.notion.so/harvestfinance/APY-Calculation-bd7a8082f76541e79fe49d8d928a2c93' target='_blank'>
         Interest rate guide</a>
+      <a (click)="openTvlDialog(vault.contract.address)">Total Value Locked</a>
     </p>
 
     <app-custom-modal #incomeModal>

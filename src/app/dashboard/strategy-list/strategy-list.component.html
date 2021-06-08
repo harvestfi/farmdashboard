@@ -45,13 +45,6 @@
       APY <i class="fas fa-sort"></i>
     </app-popover-card>
 
-    <app-popover-card (click)="sortVaultsList('tvl')" class="header-column">
-      <ng-template>
-        Total Value Locked
-      </ng-template>
-      TVL <i class="fas fa-sort"></i>
-    </app-popover-card>
-
     <div (click)="sortVaultsList('users')" class="header-column desktop-only">
       Users <i class="fas fa-sort"></i>
     </div>
@@ -96,23 +89,6 @@
             <i *ngIf="isWeeklyRewardActive(row)" class="fa fa-bolt" style="color: goldenrod"></i>
             {{prettifyNumber(vaultFullApy(row.contract.address, row.contract.network))}}%
             <i class="far fa-window-restore"></i>
-          </app-popover-card>
-        </div>
-
-        <!-- TVL -->
-        <div class="column">
-          <app-custom-modal [name]="'tvlModal_' + row.contract.address">
-            <ng-template>
-              <app-vault-tvl-dialog [vault]="row.contract.address"
-                                    [network]="row.contract.network"></app-vault-tvl-dialog>
-            </ng-template>
-          </app-custom-modal>
-          <app-popover-card class="pointer" (click)="openTvlDialog(row.contract.address)">
-            <ng-template>
-              <p>TVL: {{vaultTvl(row.contract.address, row.contract.network) | number}}$</p>
-              <p>Click to open TVL history chart</p>
-            </ng-template>
-            ${{prettifyNumber(vaultTvl(row.contract.address, row.contract.network))}}
           </app-popover-card>
         </div>
 

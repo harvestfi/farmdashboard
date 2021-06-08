@@ -1,6 +1,5 @@
-import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
-import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
 import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
@@ -29,7 +28,6 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   public currentSortingValue = 'tvl';
   public platform_list = platforms;
 
-  @ViewChildren(CustomModalComponent) private tvlModals: QueryList<CustomModalComponent>;
 
   constructor(
       public vt: ViewTypeService,
@@ -87,12 +85,6 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   sortVaultsList(sortBy?: string): void {
     this.currentSortingValue = sortBy;
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-  }
-
-  openTvlDialog(address: string): void {
-    this.tvlModals
-    .find(e => e.name === 'tvlModal_' + address)
-    ?.open();
   }
 
   isWeeklyRewardActive(vault: Vault): boolean {

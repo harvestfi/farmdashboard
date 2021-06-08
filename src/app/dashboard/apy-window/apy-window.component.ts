@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewChildren, QueryList} from '@angular/core';
 import {Vault} from '../../models/vault';
 import {Pool} from '../../models/pool';
 import {CustomModalComponent} from '../../dialogs/custom-modal/custom-modal.component';
@@ -15,6 +15,7 @@ export class ApyWindowComponent implements OnInit {
   @Input() pool: Pool;
   @ViewChild('incomeModal') private incomeModal: CustomModalComponent;
   @ViewChild('psApyModal') private psApyModal: CustomModalComponent;
+  @ViewChildren(CustomModalComponent) private tvlModals: QueryList<CustomModalComponent>;
 
   constructor() {
   }
@@ -35,6 +36,12 @@ export class ApyWindowComponent implements OnInit {
       return;
     }
     this.incomeModal.open();
+  }
+
+  openTvlDialog(address: string): void {
+    this.tvlModals
+    .find(e => e.name === 'tvlModal_' + address)
+    ?.open();
   }
 
   private openPsApyDialog(): void {
