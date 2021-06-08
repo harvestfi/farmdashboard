@@ -1,5 +1,5 @@
 import {Network} from '../models/network';
-import {APP_CONFIG} from '../../app.config'
+import {APP_CONFIG} from '../../app.config';
 import {Inject, Injectable} from '@angular/core';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class Networks {
     name: 'Ethereum Mainnet',
     currencySymbol: 'ETH',
     rpcUrl: 'https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken'
-  })
+  });
 
   private static NETWORK_ETH: Network ={
     blockExplorerUrl: 'https://etherscan.io',
@@ -38,7 +38,7 @@ export class Networks {
   ]);
 
   constructor(@Inject(APP_CONFIG)config) {
-    this.NETWORKS.set('eth', this.makeEthNetwork(config.ethRpcUrl))
+    this.NETWORKS.set('eth', this.makeEthNetwork(config.ethRpcUrl));
   }
 
 }
