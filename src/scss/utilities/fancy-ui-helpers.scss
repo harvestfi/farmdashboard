@@ -1,0 +1,12 @@
+
+@mixin fancy-input($padding: $fancy-input-default-padding, $radius: $fancy-input-default-radius) {
+  padding: $padding;
+  box-sizing: border-box;
+  border-radius: $radius;
+  outline: none;
+}
+
+$fancy-input-default-padding: 0.2em;
+$fancy-input-default-radius: 0.5em;
+$fancy-input-small-padding: 0.1em;
+$fancy-input-small-radius: 0.25em;

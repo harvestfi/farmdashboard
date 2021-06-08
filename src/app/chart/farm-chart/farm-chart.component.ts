@@ -5,6 +5,7 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
+  Input,
   OnInit,
   Output,
   ViewChild
@@ -28,6 +29,11 @@ export class FarmChartComponent implements AfterViewInit, OnInit {
   coin = Addresses.ADDRESSES.get('FARM');
   otherCoin = Addresses.ADDRESSES.get('WETH');
   chart: IChartApi;
+
+  /**
+   * @TODO: base logic will be implemented later
+   */
+  @Input() base: string;
 
   @Output() crosshairMove = new EventEmitter<any>();
 

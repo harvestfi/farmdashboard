@@ -12,6 +12,9 @@ export class PriceChartComponent implements OnInit {
   charts = ['FARM', 'GRAIN'];
   selectedData = null;
 
+  selectedBase = 'USDC';
+  bases = ['USDC'];
+
   constructor(public vt: ViewTypeService) {
   }
 

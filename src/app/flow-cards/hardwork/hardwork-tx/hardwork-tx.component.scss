@@ -1,4 +1,5 @@
 @import "../../flow-card-common-styles.scss";
+@import "src/scss/utilities/fancy-ui-helpers.scss";
 
 .hardwork-card {
 
@@ -14,6 +15,7 @@
     .select-strategy-2,
     .input-less-than {
       height: 25px;
+      @include fancy-input($fancy-input-small-padding, $fancy-input-small-radius);
     }
   }
 

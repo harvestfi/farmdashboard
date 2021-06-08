@@ -1,5 +1,6 @@
-@import '../../../scss/themes/theme-mixins.scss';
-@import '../../../scss/utilities/utilities.scss';
+@import 'src/scss/themes/theme-mixins.scss';
+@import 'src/scss/utilities/utilities.scss';
+@import 'src/scss/utilities/fancy-ui-helpers.scss';
 
 .custom-table {
   margin: 10px;
@@ -106,10 +107,7 @@
 
     select, #vaults-search {
       position: relative;
-      padding: 0.2em;
-      box-sizing: border-box;
-      border-radius: 0.5em;
-      outline: none;
+      @include fancy-input();
     }
 
     #vaults-search {
