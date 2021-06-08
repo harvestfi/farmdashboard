@@ -6,9 +6,11 @@
         aria-label="?"
         class="title-span">
       <ng-template>
-        <p>List of trades contain FARM.</p>
-        <p>Special trades will be marked with spec symbols (buys from doHardWork and sells from dev funds).</p>
-        <p>Format: Date | buy/sell/add/rem | Farm amount | Other amount | Price</p>
+        <h3>List of trades containing FARM.</h3>
+        <ul>
+          <li>Special trades will be marked with specific symbols (i.e. Buys from doHardWork and sells from dev funds)</li>
+          <li>Format: Date | buy/sell/add/remove | Farm amount | Other amount | Price</li>
+        </ul>
       </ng-template>
 
       <div class="title-row">
@@ -60,10 +62,11 @@
                       class="sign-icon">
               warning
             </mat-icon>
-      
-            <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" class="do-hard-work-img"
-                            size="14"></angular-emojis>
-      
+            <app-popover-card>
+              <ng-template>From doHardWork</ng-template>
+              <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" class="do-hard-work-img" size="14"></angular-emojis>
+            </app-popover-card>
+            
           </container-element>
       
         </div>
