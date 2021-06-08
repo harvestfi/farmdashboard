@@ -1,6 +1,7 @@
 import {Network} from '../models/network';
 import {Addresses} from './addresses';
 import {Networks} from './networks';
+import {APP_CONFIG} from '../../app.config';
 
 export class StaticValues {
   public static SECONDS_OF_DAY = 60 * 60 * 24;
@@ -8,7 +9,7 @@ export class StaticValues {
   public static SECONDS_OF_WEEK = StaticValues.SECONDS_OF_DAY * 7;
   public static SECONDS_OF_YEAR = StaticValues.SECONDS_OF_DAY * 365;
 
-  public static NETWORKS: Map<string, Network> = new Networks().NETWORKS;
+  public static NETWORKS: Map<string, Network> = new Networks(APP_CONFIG).NETWORKS;
 
   public static NETWORK_ICON: Map<string, string> = new Map<string, string>([
     ['eth', 'assets/icons/common/eth.svg'],
