@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {HardWorkDto} from '../../../models/hardwork-dto';
 import {NGXLogger} from 'ngx-logger';
 import {ViewTypeService} from '../../../services/view-type.service';
-import {SnackService} from '../../../services/snack.service';
+import {SnackBarService} from '../../../main/snack-bar/snack-bar.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
@@ -21,7 +21,7 @@ export class HardworkTxComponent implements AfterViewInit {
 
   constructor(
       public vt: ViewTypeService,
-      private snack: SnackService,
+      private snack: SnackBarService,
       private log: NGXLogger,
       private contractsService: ContractsService,
       private hardworksData: HardworkDataService

@@ -3,13 +3,11 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 import {NGXLogger} from 'ngx-logger';
-import {SnackBarComponent} from '../main/snack-bar/snack-bar.component';
-import {ViewTypeService} from './view-type.service';
+import {SnackBarComponent} from './snack-bar.component';
+import {ViewTypeService} from '../../services/view-type.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class SnackService {
+@Injectable()
+export class SnackBarService {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 

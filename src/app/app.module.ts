@@ -2,7 +2,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {HttpClientModule} from '@angular/common/http';
 import {FarmChartComponent} from './chart/farm-chart/farm-chart.component';
@@ -31,7 +30,6 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {SidebarModule} from 'ng-sidebar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
-import {SnackBarComponent} from './main/snack-bar/snack-bar.component';
 import {MatSortModule} from '@angular/material/sort';
 import {LoadingSpinnerComponent} from './main/loading-spinner/loading-spinner.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -98,6 +96,7 @@ import {interceptorProviders} from './interceptors';
 import {ApplicationErrorDialog} from './main/main-page-light/application-error-dialog';
 import {KatexModule} from 'ng-katex';
 import {DaysAgoPipe} from './common/pipes/days-ago.pipe';
+import {SnackBarModule} from './main/snack-bar/snack-bar.module';
 
 
 @NgModule({
@@ -117,7 +116,6 @@ import {DaysAgoPipe} from './common/pipes/days-ago.pipe';
     MainPageLightComponent,
     CenterViewComponent,
     UniTradeComponent,
-    SnackBarComponent,
     LoadingSpinnerComponent,
     ApyChartDialogComponent,
     WeeklyProfitDialogComponent,
@@ -188,7 +186,7 @@ import {DaysAgoPipe} from './common/pipes/days-ago.pipe';
     FormsModule,
     CommonModule,
     BrowserModule,
-    MatSnackBarModule,
+    SnackBarModule,
     HttpClientModule,
     LoggerModule.forRoot({
       serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
