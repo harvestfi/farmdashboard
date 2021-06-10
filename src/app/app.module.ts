@@ -75,7 +75,6 @@ import {VaultFilterPipe} from './dialogs/history/rewards-history-dialog/vault-fi
 import {TransactionComponent} from './static/components/transactions/transaction.component';
 import {IconsComponent} from './static/components/icons/icons.component';
 import {GasDialogComponent} from './dialogs/charts/gas-dialog/gas-dialog.component';
-import {PaginatorComponent} from './common/paginator/paginator.component';
 import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
 import {SelectElementComponent} from './common/select-element/select-element.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -97,6 +96,7 @@ import {KatexModule} from 'ng-katex';
 import {DaysAgoPipe} from './common/pipes/days-ago.pipe';
 import {SnackBarModule} from './main/snack-bar/snack-bar.module';
 import {PopoverModule} from './common/popover/popover.module';
+import {PaginatorModule} from './common/paginator/paginator.module';
 
 
 @NgModule({
@@ -155,7 +155,6 @@ import {PopoverModule} from './common/popover/popover.module';
     Web3chartsComponent,
     Web3chartComponent,
     GasDialogComponent,
-    PaginatorComponent,
     StrategyListFilterPipe,
     SelectElementComponent,
     TvlV2DialogComponent,
@@ -187,6 +186,7 @@ import {PopoverModule} from './common/popover/popover.module';
     BrowserModule,
     SnackBarModule,
     PopoverModule,
+    PaginatorModule,
     HttpClientModule,
     LoggerModule.forRoot({
       serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
