@@ -76,7 +76,6 @@ import {TransactionComponent} from './static/components/transactions/transaction
 import {IconsComponent} from './static/components/icons/icons.component';
 import {GasDialogComponent} from './dialogs/charts/gas-dialog/gas-dialog.component';
 import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
-import {SelectElementComponent} from './common/select-element/select-element.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TvlV2DialogComponent} from './dialogs/charts/tvl-v2-dialog/tvl-v2-dialog.component';
 import {VaultTvlDialogComponent} from './dialogs/charts/vault-tvl-dialog/vault-tvl-dialog.component';
@@ -156,7 +155,6 @@ import {PaginatorModule} from './common/paginator/paginator.module';
     Web3chartComponent,
     GasDialogComponent,
     StrategyListFilterPipe,
-    SelectElementComponent,
     TvlV2DialogComponent,
     VaultTvlDialogComponent,
     ChartGeneralComponent,
