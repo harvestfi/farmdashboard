@@ -73,7 +73,6 @@ import {DownloadHistoricDataDialogComponent} from './dialogs/download-historic-d
 import {RewardsHistoryDialogComponent} from './dialogs/history/rewards-history-dialog/rewards-history-dialog.component';
 import {VaultFilterPipe} from './dialogs/history/rewards-history-dialog/vault-filter.pipe';
 import {TransactionComponent} from './static/components/transactions/transaction.component';
-import {IconsComponent} from './static/components/icons/icons.component';
 import {GasDialogComponent} from './dialogs/charts/gas-dialog/gas-dialog.component';
 import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -96,6 +95,7 @@ import {SnackBarModule} from './main/snack-bar/snack-bar.module';
 import {PopoverModule} from './common/popover/popover.module';
 import {PaginatorModule} from './common/paginator/paginator.module';
 import {PipesModule} from './common/pipes/pipes.module';
+import {IconsModule} from './static/components/icons/icons.module';
 
 
 @NgModule({
@@ -150,7 +150,6 @@ import {PipesModule} from './common/pipes/pipes.module';
     DownloadHistoricDataDialogComponent,
     VaultFilterPipe,
     TransactionComponent,
-    IconsComponent,
     Web3chartsComponent,
     Web3chartComponent,
     GasDialogComponent,
@@ -181,10 +180,15 @@ import {PipesModule} from './common/pipes/pipes.module';
     FormsModule,
     CommonModule,
     BrowserModule,
+
+    // added while AppModule refactoring
     SnackBarModule,
     PopoverModule,
     PaginatorModule,
     PipesModule,
+    IconsModule,
+    //
+
     HttpClientModule,
     LoggerModule.forRoot({
       serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
