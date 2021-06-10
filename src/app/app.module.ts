@@ -92,10 +92,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {interceptorProviders} from './interceptors';
 import {ApplicationErrorDialog} from './main/main-page-light/application-error-dialog';
 import {KatexModule} from 'ng-katex';
-import {DaysAgoPipe} from './common/pipes/days-ago.pipe';
 import {SnackBarModule} from './main/snack-bar/snack-bar.module';
 import {PopoverModule} from './common/popover/popover.module';
 import {PaginatorModule} from './common/paginator/paginator.module';
+import {PipesModule} from './common/pipes/pipes.module';
 
 
 @NgModule({
@@ -166,7 +166,6 @@ import {PaginatorModule} from './common/paginator/paginator.module';
     ApyCommonComponent,
     MainTopNavigationComponent,
     ApplicationErrorDialog,
-    DaysAgoPipe,
   ],
   imports: [
     AppRoutingModule,
@@ -185,6 +184,7 @@ import {PaginatorModule} from './common/paginator/paginator.module';
     SnackBarModule,
     PopoverModule,
     PaginatorModule,
+    PipesModule,
     HttpClientModule,
     LoggerModule.forRoot({
       serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
