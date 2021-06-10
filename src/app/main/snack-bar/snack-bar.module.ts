@@ -4,7 +4,7 @@ import {SnackBarComponent} from './snack-bar.component';
 import {SnackBarService} from './snack-bar.service';
 
 /**
- * Candindate for /shared/
+ * Candidate for /shared/
  */
 @NgModule({
   imports: [

@@ -83,7 +83,6 @@ import {TvlV2DialogComponent} from './dialogs/charts/tvl-v2-dialog/tvl-v2-dialog
 import {VaultTvlDialogComponent} from './dialogs/charts/vault-tvl-dialog/vault-tvl-dialog.component';
 import {ChartGeneralComponent} from './chart/chart-general/chart-general.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {PopoverComponent} from './common/popover/popover.component';
 import {CollapsibleAreaComponent} from './main/collapsable-area/collapsible-area.component';
 import {VaultComponent} from './dashboard/apy-window/vault.component';
 import {StrategyComponent} from './dashboard/apy-window/strategy.component';
@@ -97,6 +96,7 @@ import {ApplicationErrorDialog} from './main/main-page-light/application-error-d
 import {KatexModule} from 'ng-katex';
 import {DaysAgoPipe} from './common/pipes/days-ago.pipe';
 import {SnackBarModule} from './main/snack-bar/snack-bar.module';
+import {PopoverModule} from './common/popover/popover.module';
 
 
 @NgModule({
@@ -161,7 +161,6 @@ import {SnackBarModule} from './main/snack-bar/snack-bar.module';
     TvlV2DialogComponent,
     VaultTvlDialogComponent,
     ChartGeneralComponent,
-    PopoverComponent,
     CollapsibleAreaComponent,
     VaultComponent,
     StrategyComponent,
@@ -187,6 +186,7 @@ import {SnackBarModule} from './main/snack-bar/snack-bar.module';
     CommonModule,
     BrowserModule,
     SnackBarModule,
+    PopoverModule,
     HttpClientModule,
     LoggerModule.forRoot({
       serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
