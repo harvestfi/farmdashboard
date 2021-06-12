@@ -4,7 +4,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {HttpClientModule} from '@angular/common/http';
-import {FarmChartComponent} from './chart/farm-chart/farm-chart.component';
 import {UniTxComponent} from './flow-cards/uniswap/uni-tx/uni-tx.component';
 import {MatCardModule} from '@angular/material/card';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
@@ -36,7 +35,6 @@ import {ApyChartDialogComponent} from './dialogs/charts/apy-chart-dialog/apy-cha
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {WeeklyProfitDialogComponent} from './dialogs/charts/weekly-profit-dialog/weekly-profit-dialog.component';
-import {GrainChartComponent} from './chart/grain-chart/grain-chart.component';
 import {FarmBuybacksDialogComponent} from './dialogs/charts/farm-buybacks-dialog/farm-buybacks-dialog.component';
 import {HistoryPageComponent} from './address-history/history-page/history-page.component';
 import {AppRoutingModule} from './app-routing/app-routing.module';
@@ -48,8 +46,6 @@ import {MatInputModule} from '@angular/material/input';
 import {HarvestHistoryDialogComponent} from './dialogs/history/harvest-history-dialog/harvest-history-dialog.component';
 import {SimpleChartDialogComponent} from './dialogs/charts/simple-chart-dialog/simple-chart-dialog.component';
 import {UniHistoryDialogComponent} from './dialogs/history/uni-history-dialog/uni-history-dialog.component';
-import {PriceChartComponent} from './chart/price-chart/price-chart.component';
-import {OhlcBarComponent} from './chart/ohlc-bar/ohlc-bar.component';
 import {HarvestTradeComponent} from './flow-cards/harvest/harvest-trade/harvest-trade.component';
 import {LinkWindowComponent} from './flow-cards/uniswap/link-window/link-window.component';
 import {ApyWindowComponent} from './dashboard/apy-window/apy-window.component';
@@ -73,8 +69,6 @@ import {GasDialogComponent} from './dialogs/charts/gas-dialog/gas-dialog.compone
 import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TvlV2DialogComponent} from './dialogs/charts/tvl-v2-dialog/tvl-v2-dialog.component';
-import {VaultTvlDialogComponent} from './dialogs/charts/vault-tvl-dialog/vault-tvl-dialog.component';
-import {ChartGeneralComponent} from './chart/chart-general/chart-general.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {CollapsibleAreaComponent} from './main/collapsable-area/collapsible-area.component';
 import {VaultComponent} from './dashboard/apy-window/vault.component';
@@ -90,6 +84,9 @@ import {SnackBarModule} from './main/snack-bar/snack-bar.module';
 import {PopoverModule} from './common/popover/popover.module';
 import {PaginatorModule} from './common/paginator/paginator.module';
 import {PipesModule} from './common/pipes/pipes.module';
+import {PriceChartModule} from './chart/price-chart/price-chart.module';
+import {VaultTvlDialogModule} from './dialogs/charts/vault-tvl-dialog/vault-tvl-dialog.module';
+import {ChartGeneralModule} from './chart/chart-general/chart-general.module';
 import {LoadingSpinnerModule} from './main/loading-spinner/loading-spinner.module';
 import {IconsModule} from './static/components/icons/icons.module';
 import {AddressModule} from './static/components/addresses/address.module';
@@ -100,7 +97,6 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
 @NgModule({
   declarations: [
     AppComponent,
-    FarmChartComponent,
     UniTxComponent,
     FlowTabComponent,
     HarvestTxComponent,
@@ -116,7 +112,6 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     UniTradeComponent,
     ApyChartDialogComponent,
     WeeklyProfitDialogComponent,
-    GrainChartComponent,
     FarmBuybacksDialogComponent,
     HistoryPageComponent,
     TradeBoxComponent,
@@ -127,8 +122,6 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     RewardsHistoryDialogComponent,
     HarvestHistoryDialogComponent,
     SimpleChartDialogComponent,
-    PriceChartComponent,
-    OhlcBarComponent,
     HarvestTradeComponent,
     LinkWindowComponent,
     ApyWindowComponent,
@@ -150,8 +143,6 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     GasDialogComponent,
     StrategyListFilterPipe,
     TvlV2DialogComponent,
-    VaultTvlDialogComponent,
-    ChartGeneralComponent,
     CollapsibleAreaComponent,
     VaultComponent,
     StrategyComponent,
@@ -181,9 +172,12 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     PaginatorModule,
     LoadingSpinnerModule,
     PipesModule,
+    PriceChartModule,
+    ChartGeneralModule,
     IconsModule,
     AddressModule,
     CustomModalModule,
+    VaultTvlDialogModule,
     TransactionModule,
     //
 
