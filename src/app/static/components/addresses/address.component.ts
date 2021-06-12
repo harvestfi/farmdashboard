@@ -13,7 +13,7 @@ export class AddressComponent {
   constructor(public vt: ViewTypeService) {
   }
 
-  viewNetworkAddress() {
+  viewNetworkAddress(): void {
     if (this.contract.network === 'bsc') {
       window.open('https://www.bscscan.com/address/' + this.contract.address, '_blank');
     } else {

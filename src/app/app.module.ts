@@ -84,7 +84,6 @@ import {CollapsibleAreaComponent} from './main/collapsable-area/collapsible-area
 import {VaultComponent} from './dashboard/apy-window/vault.component';
 import {StrategyComponent} from './dashboard/apy-window/strategy.component';
 import {PoolComponent} from './dashboard/apy-window/pool.component';
-import {AddressComponent} from './static/components/addresses/address.component';
 import {MainTopNavigationComponent} from './main/main-top-navigation/main-top-navigation.component';
 import {ApyCommonComponent} from './dashboard/apy-window/apy-common.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -96,6 +95,7 @@ import {PopoverModule} from './common/popover/popover.module';
 import {PaginatorModule} from './common/paginator/paginator.module';
 import {PipesModule} from './common/pipes/pipes.module';
 import {IconsModule} from './static/components/icons/icons.module';
+import {AddressModule} from './static/components/addresses/address.module';
 
 
 @NgModule({
@@ -161,7 +161,6 @@ import {IconsModule} from './static/components/icons/icons.module';
     VaultComponent,
     StrategyComponent,
     PoolComponent,
-    AddressComponent,
     ApyCommonComponent,
     MainTopNavigationComponent,
     ApplicationErrorDialog,
@@ -187,6 +186,7 @@ import {IconsModule} from './static/components/icons/icons.module';
     PaginatorModule,
     PipesModule,
     IconsModule,
+    AddressModule,
     //
 
     HttpClientModule,
