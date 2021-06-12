@@ -31,7 +31,6 @@ import {SidebarModule} from 'ng-sidebar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSortModule} from '@angular/material/sort';
-import {LoadingSpinnerComponent} from './main/loading-spinner/loading-spinner.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {ApyChartDialogComponent} from './dialogs/charts/apy-chart-dialog/apy-chart-dialog.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -91,6 +90,7 @@ import {SnackBarModule} from './main/snack-bar/snack-bar.module';
 import {PopoverModule} from './common/popover/popover.module';
 import {PaginatorModule} from './common/paginator/paginator.module';
 import {PipesModule} from './common/pipes/pipes.module';
+import {LoadingSpinnerModule} from './main/loading-spinner/loading-spinner.module';
 import {IconsModule} from './static/components/icons/icons.module';
 import {AddressModule} from './static/components/addresses/address.module';
 import {TransactionModule} from './static/components/transactions/transaction.module';
@@ -114,7 +114,6 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     MainPageLightComponent,
     CenterViewComponent,
     UniTradeComponent,
-    LoadingSpinnerComponent,
     ApyChartDialogComponent,
     WeeklyProfitDialogComponent,
     GrainChartComponent,
@@ -180,6 +179,7 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     SnackBarModule,
     PopoverModule,
     PaginatorModule,
+    LoadingSpinnerModule,
     PipesModule,
     IconsModule,
     AddressModule,
