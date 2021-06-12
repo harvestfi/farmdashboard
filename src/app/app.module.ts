@@ -51,7 +51,6 @@ import {SimpleChartDialogComponent} from './dialogs/charts/simple-chart-dialog/s
 import {UniHistoryDialogComponent} from './dialogs/history/uni-history-dialog/uni-history-dialog.component';
 import {PriceChartComponent} from './chart/price-chart/price-chart.component';
 import {OhlcBarComponent} from './chart/ohlc-bar/ohlc-bar.component';
-import {CustomModalComponent} from './dialogs/custom-modal/custom-modal.component';
 import {HarvestTradeComponent} from './flow-cards/harvest/harvest-trade/harvest-trade.component';
 import {LinkWindowComponent} from './flow-cards/uniswap/link-window/link-window.component';
 import {ApyWindowComponent} from './dashboard/apy-window/apy-window.component';
@@ -95,6 +94,7 @@ import {PipesModule} from './common/pipes/pipes.module';
 import {IconsModule} from './static/components/icons/icons.module';
 import {AddressModule} from './static/components/addresses/address.module';
 import {TransactionModule} from './static/components/transactions/transaction.module';
+import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
 
 
 @NgModule({
@@ -130,7 +130,6 @@ import {TransactionModule} from './static/components/transactions/transaction.mo
     SimpleChartDialogComponent,
     PriceChartComponent,
     OhlcBarComponent,
-    CustomModalComponent,
     HarvestTradeComponent,
     LinkWindowComponent,
     ApyWindowComponent,
@@ -184,6 +183,7 @@ import {TransactionModule} from './static/components/transactions/transaction.mo
     PipesModule,
     IconsModule,
     AddressModule,
+    CustomModalModule,
     TransactionModule,
     //
 
