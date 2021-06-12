@@ -18,7 +18,6 @@ import {DashboardLastValuesComponent} from './dashboard/dashboard-last-values/da
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {MainPageViewComponent} from './main/main-page-view/main-page-view.component';
-import {StrategyListComponent} from './dashboard/strategy-list/strategy-list.component';
 import {MainFooterComponent} from './main/main-footer/main-footer.component';
 import {CommonModule} from '@angular/common';
 import {MainPageLightComponent} from './main/main-page-light/main-page-light.component';
@@ -31,7 +30,6 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {ApyChartDialogComponent} from './dialogs/charts/apy-chart-dialog/apy-chart-dialog.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {WeeklyProfitDialogComponent} from './dialogs/charts/weekly-profit-dialog/weekly-profit-dialog.component';
@@ -41,14 +39,12 @@ import {AppRoutingModule} from './app-routing/app-routing.module';
 import {TradeBoxComponent} from './address-history/trade-box/trade-box.component';
 import {SavedGasFeesDialogComponent} from './dialogs/charts/saved-gas-fees-dialog/saved-gas-fees-dialog.component';
 import {TotalUsersDialogComponent} from './dialogs/charts/total-users-dialog/total-users-dialog.component';
-import {PsApyDialogComponent} from './dialogs/charts/ps-apy-dialog/ps-apy-dialog.component';
 import {MatInputModule} from '@angular/material/input';
 import {HarvestHistoryDialogComponent} from './dialogs/history/harvest-history-dialog/harvest-history-dialog.component';
 import {SimpleChartDialogComponent} from './dialogs/charts/simple-chart-dialog/simple-chart-dialog.component';
 import {UniHistoryDialogComponent} from './dialogs/history/uni-history-dialog/uni-history-dialog.component';
 import {HarvestTradeComponent} from './flow-cards/harvest/harvest-trade/harvest-trade.component';
 import {LinkWindowComponent} from './flow-cards/uniswap/link-window/link-window.component';
-import {ApyWindowComponent} from './dashboard/apy-window/apy-window.component';
 import {HardWorkHistoryListDialogComponent} from './dialogs/history/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
 import {HardworkTradeComponent} from './flow-cards/hardwork/hardwork-trade/hardwork-trade.component';
 import {HardworkFlowTabComponent} from './flow-cards/hardwork/hardwork-flow-tab/hardwork-flow-tab.component';
@@ -66,16 +62,11 @@ import {DownloadHistoricDataDialogComponent} from './dialogs/download-historic-d
 import {RewardsHistoryDialogComponent} from './dialogs/history/rewards-history-dialog/rewards-history-dialog.component';
 import {VaultFilterPipe} from './dialogs/history/rewards-history-dialog/vault-filter.pipe';
 import {GasDialogComponent} from './dialogs/charts/gas-dialog/gas-dialog.component';
-import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TvlV2DialogComponent} from './dialogs/charts/tvl-v2-dialog/tvl-v2-dialog.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {CollapsibleAreaComponent} from './main/collapsable-area/collapsible-area.component';
-import {VaultComponent} from './dashboard/apy-window/vault.component';
-import {StrategyComponent} from './dashboard/apy-window/strategy.component';
-import {PoolComponent} from './dashboard/apy-window/pool.component';
 import {MainTopNavigationComponent} from './main/main-top-navigation/main-top-navigation.component';
-import {ApyCommonComponent} from './dashboard/apy-window/apy-common.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {interceptorProviders} from './interceptors';
 import {ApplicationErrorDialog} from './main/main-page-light/application-error-dialog';
@@ -90,6 +81,7 @@ import {ChartGeneralModule} from './chart/chart-general/chart-general.module';
 import {LoadingSpinnerModule} from './main/loading-spinner/loading-spinner.module';
 import {IconsModule} from './static/components/icons/icons.module';
 import {AddressModule} from './static/components/addresses/address.module';
+import {StrategyListModule} from './dashboard/strategy-list/strategy-list.module';
 import {TransactionModule} from './static/components/transactions/transaction.module';
 import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
 
@@ -105,12 +97,10 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     UniswapFilterPipe,
     DashboardLastValuesComponent,
     MainPageViewComponent,
-    StrategyListComponent,
     MainFooterComponent,
     MainPageLightComponent,
     CenterViewComponent,
     UniTradeComponent,
-    ApyChartDialogComponent,
     WeeklyProfitDialogComponent,
     FarmBuybacksDialogComponent,
     HistoryPageComponent,
@@ -118,13 +108,11 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     SavedGasFeesDialogComponent,
     TotalUsersDialogComponent,
     UniHistoryDialogComponent,
-    PsApyDialogComponent,
     RewardsHistoryDialogComponent,
     HarvestHistoryDialogComponent,
     SimpleChartDialogComponent,
     HarvestTradeComponent,
     LinkWindowComponent,
-    ApyWindowComponent,
     HardWorkHistoryListDialogComponent,
     HardworkTradeComponent,
     HardworkFlowTabComponent,
@@ -141,13 +129,8 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     Web3chartsComponent,
     Web3chartComponent,
     GasDialogComponent,
-    StrategyListFilterPipe,
     TvlV2DialogComponent,
     CollapsibleAreaComponent,
-    VaultComponent,
-    StrategyComponent,
-    PoolComponent,
-    ApyCommonComponent,
     MainTopNavigationComponent,
     ApplicationErrorDialog,
   ],
@@ -179,6 +162,7 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     CustomModalModule,
     VaultTvlDialogModule,
     TransactionModule,
+    StrategyListModule,
     //
 
     HttpClientModule,
