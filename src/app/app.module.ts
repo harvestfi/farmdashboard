@@ -72,7 +72,6 @@ import {Web3chartComponent} from './web3charts/components/web3chart/web3chart.co
 import {DownloadHistoricDataDialogComponent} from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
 import {RewardsHistoryDialogComponent} from './dialogs/history/rewards-history-dialog/rewards-history-dialog.component';
 import {VaultFilterPipe} from './dialogs/history/rewards-history-dialog/vault-filter.pipe';
-import {TransactionComponent} from './static/components/transactions/transaction.component';
 import {GasDialogComponent} from './dialogs/charts/gas-dialog/gas-dialog.component';
 import {StrategyListFilterPipe} from './dashboard/strategy-list/strategy-list.pipe';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -96,6 +95,7 @@ import {PaginatorModule} from './common/paginator/paginator.module';
 import {PipesModule} from './common/pipes/pipes.module';
 import {IconsModule} from './static/components/icons/icons.module';
 import {AddressModule} from './static/components/addresses/address.module';
+import {TransactionModule} from './static/components/transactions/transaction.module';
 
 
 @NgModule({
@@ -149,7 +149,6 @@ import {AddressModule} from './static/components/addresses/address.module';
     UserBalancesDialogComponent,
     DownloadHistoricDataDialogComponent,
     VaultFilterPipe,
-    TransactionComponent,
     Web3chartsComponent,
     Web3chartComponent,
     GasDialogComponent,
@@ -187,6 +186,7 @@ import {AddressModule} from './static/components/addresses/address.module';
     PipesModule,
     IconsModule,
     AddressModule,
+    TransactionModule,
     //
 
     HttpClientModule,
