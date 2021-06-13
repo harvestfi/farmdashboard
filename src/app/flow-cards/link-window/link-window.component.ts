@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Utils} from '../../../static/utils';
+import {Utils} from '../../static/utils';
 
 @Component({
   selector: 'app-link-window',

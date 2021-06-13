@@ -4,16 +4,10 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {HttpClientModule} from '@angular/common/http';
-import {UniTxComponent} from './flow-cards/uniswap/uni-tx/uni-tx.component';
 import {MatCardModule} from '@angular/material/card';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
-import {FlowTabComponent} from './flow-cards/uniswap/flow-tab/flow-tab.component';
 import {MatIconModule} from '@angular/material/icon';
-import {HarvestTxComponent} from './flow-cards/harvest/harvest-tx/harvest-tx.component';
-import {HarvestFlowTabComponent} from './flow-cards/harvest/harvest-flow-tab/harvest-flow-tab.component';
 import {AngularEmojisModule} from 'angular-emojis';
-import {HarvestFilterPipe} from './flow-cards/harvest/harvest-filter.pipe';
-import {UniswapFilterPipe} from './flow-cards/uniswap/uniswap-filter.pipe';
 import {DashboardLastValuesComponent} from './dashboard/dashboard-last-values/dashboard-last-values.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
@@ -22,7 +16,6 @@ import {MainFooterComponent} from './main/main-footer/main-footer.component';
 import {CommonModule} from '@angular/common';
 import {MainPageLightComponent} from './main/main-page-light/main-page-light.component';
 import {CenterViewComponent} from './main/center-view/center-view.component';
-import {UniTradeComponent} from './flow-cards/uniswap/uni-trade/uni-trade.component';
 import {FormsModule} from '@angular/forms';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {SidebarModule} from 'ng-sidebar';
@@ -40,20 +33,8 @@ import {TradeBoxComponent} from './address-history/trade-box/trade-box.component
 import {SavedGasFeesDialogComponent} from './dialogs/charts/saved-gas-fees-dialog/saved-gas-fees-dialog.component';
 import {TotalUsersDialogComponent} from './dialogs/charts/total-users-dialog/total-users-dialog.component';
 import {MatInputModule} from '@angular/material/input';
-import {HarvestHistoryDialogComponent} from './dialogs/history/harvest-history-dialog/harvest-history-dialog.component';
 import {SimpleChartDialogComponent} from './dialogs/charts/simple-chart-dialog/simple-chart-dialog.component';
-import {UniHistoryDialogComponent} from './dialogs/history/uni-history-dialog/uni-history-dialog.component';
-import {HarvestTradeComponent} from './flow-cards/harvest/harvest-trade/harvest-trade.component';
-import {LinkWindowComponent} from './flow-cards/uniswap/link-window/link-window.component';
-import {HardWorkHistoryListDialogComponent} from './dialogs/history/hard-work-history-list-dialog/hard-work-history-list-dialog.component';
-import {HardworkTradeComponent} from './flow-cards/hardwork/hardwork-trade/hardwork-trade.component';
-import {HardworkFlowTabComponent} from './flow-cards/hardwork/hardwork-flow-tab/hardwork-flow-tab.component';
-import {HardworkTxComponent} from './flow-cards/hardwork/hardwork-tx/hardwork-tx.component';
-import {HardworkHeaderComponent} from './flow-cards/hardwork/hardwork-header/hardwork-header.component';
-import {HardworkFilterPipe} from './flow-cards/hardwork/hardwork-filter.pipe';
 import {MainSideMenuComponent} from './main/main-side-menu/main-side-menu.component';
-import {SimpleModalComponent} from './dialogs/simple-modal/simple-modal.component';
-import {FlowCardsViewComponent} from './flow-cards/flow-cards-view/flow-cards-view.component';
 import {LastPricesListComponent} from './dashboard/last-prices-list/last-prices-list.component';
 import {UserBalancesDialogComponent} from './dialogs/user-balances-dialog/user-balances-dialog.component';
 import {Web3chartsComponent} from './web3charts/web3charts.component';
@@ -84,44 +65,26 @@ import {AddressModule} from './static/components/addresses/address.module';
 import {StrategyListModule} from './dashboard/strategy-list/strategy-list.module';
 import {TransactionModule} from './static/components/transactions/transaction.module';
 import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
+import {FlowCardsViewModule} from './flow-cards/flow-cards-view/flow-cards-view.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    UniTxComponent,
-    FlowTabComponent,
-    HarvestTxComponent,
-    HarvestFlowTabComponent,
-    HarvestFilterPipe,
-    UniswapFilterPipe,
     DashboardLastValuesComponent,
     MainPageViewComponent,
     MainFooterComponent,
     MainPageLightComponent,
     CenterViewComponent,
-    UniTradeComponent,
     WeeklyProfitDialogComponent,
     FarmBuybacksDialogComponent,
     HistoryPageComponent,
     TradeBoxComponent,
     SavedGasFeesDialogComponent,
     TotalUsersDialogComponent,
-    UniHistoryDialogComponent,
     RewardsHistoryDialogComponent,
-    HarvestHistoryDialogComponent,
     SimpleChartDialogComponent,
-    HarvestTradeComponent,
-    LinkWindowComponent,
-    HardWorkHistoryListDialogComponent,
-    HardworkTradeComponent,
-    HardworkFlowTabComponent,
-    HardworkTxComponent,
-    HardworkHeaderComponent,
-    HardworkFilterPipe,
     MainSideMenuComponent,
-    SimpleModalComponent,
-    FlowCardsViewComponent,
     LastPricesListComponent,
     UserBalancesDialogComponent,
     DownloadHistoricDataDialogComponent,
@@ -163,6 +126,7 @@ import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
     VaultTvlDialogModule,
     TransactionModule,
     StrategyListModule,
+    FlowCardsViewModule,
     //
 
     HttpClientModule,

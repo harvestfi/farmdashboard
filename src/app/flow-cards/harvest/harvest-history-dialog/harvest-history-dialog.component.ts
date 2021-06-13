@@ -34,7 +34,7 @@ export class HarvestHistoryDialogComponent implements AfterContentInit {
     return this.contractsService.getContractsArray(Vault);
   }
 
-  getHarvestHistoryForPage(pageNumber) {
+  getHarvestHistoryForPage(pageNumber): void {
     this.harvestsService.getHarvestPaginatedTxHistoryData(
         pageNumber,
         10,
@@ -59,7 +59,7 @@ export class HarvestHistoryDialogComponent implements AfterContentInit {
     this.getHarvestHistoryForPage($event);
   }
 
-  handleFilterUpdate(_$event): void {
+  handleFilterUpdate($event): void {
     this.getHarvestHistoryForPage(0);
   }
 }

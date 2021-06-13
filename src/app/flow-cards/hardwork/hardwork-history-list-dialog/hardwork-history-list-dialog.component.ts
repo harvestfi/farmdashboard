@@ -9,11 +9,11 @@ import {HardWorkDto} from '../../../models/hardwork-dto';
 import {StaticValues} from '../../../static/static-values';
 
 @Component({
-  selector: 'app-hard-work-history-list-dialog',
-  templateUrl: './hard-work-history-list-dialog.component.html',
-  styleUrls: ['./hard-work-history-list-dialog.component.scss']
+  selector: 'app-hardwork-history-list-dialog',
+  templateUrl: './hardwork-history-list-dialog.component.html',
+  styleUrls: ['./hardwork-history-list-dialog.component.scss']
 })
-export class HardWorkHistoryListDialogComponent implements AfterViewInit {
+export class HardworkHistoryListDialogComponent implements AfterViewInit {
   dtos: Paginated<HardWorkDto>;
   hardWorkIds = new Set<string>();
   vaultFilter;
@@ -21,7 +21,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
   disabled = false;
   ready = false;
   networks: string[] = Array.from(StaticValues.NETWORKS.keys());
-  network_icons: Map<string, string> = StaticValues.NETWORK_ICON;
+  networkIcons: Map<string, string> = StaticValues.NETWORK_ICON;
   network = 'eth';
 
   constructor(
@@ -36,9 +36,9 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
     this.getDtoDataForPage(0);
   }
 
-  getDtoDataForPage(page_number: number): void {
+  getDtoDataForPage(pageNumber: number): void {
     this.hardworksService
-    .getPaginatedHardworkHistoryData(10, page_number,
+    .getPaginatedHardworkHistoryData(10, pageNumber,
         this.vaultFilter?.contract?.address, this.minAmount, 'desc',
         StaticValues.NETWORKS.get(this.network))
     .subscribe(response => {
@@ -76,7 +76,7 @@ export class HardWorkHistoryListDialogComponent implements AfterViewInit {
     this.getDtoDataForPage($event);
   }
 
-  handleFilterUpdate(_$event): void {
+  handleFilterUpdate($event): void {
     this.getDtoDataForPage(0);
   }
 

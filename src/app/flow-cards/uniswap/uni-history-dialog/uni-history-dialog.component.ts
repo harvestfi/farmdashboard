@@ -1,6 +1,5 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {ViewTypeService} from '../../../services/view-type.service';
-import {NGXLogger} from 'ngx-logger';
 import {UniswapDto} from '../../../models/uniswap-dto';
 import {UniswapService} from '../../../services/http/uniswap.service';
 import {Paginated} from 'src/app/models/paginated';
@@ -13,7 +12,7 @@ import {Paginated} from 'src/app/models/paginated';
 })
 export class UniHistoryDialogComponent implements AfterViewInit {
   dtos: UniswapDto[] = [];
-  paginated_dtos: Paginated<UniswapDto> = {
+  paginatedDtos: Paginated<UniswapDto> = {
     currentPage: 0,
     nextPage: -1,
     previousPage: -1,
@@ -28,7 +27,6 @@ export class UniHistoryDialogComponent implements AfterViewInit {
   constructor(
       private txHistory: UniswapService,
       public vt: ViewTypeService,
-      private log: NGXLogger
   ) {
   }
 
@@ -37,15 +35,14 @@ export class UniHistoryDialogComponent implements AfterViewInit {
     this.getUniDataForPage(0);
   }
 
-  getUniDataForPage(page_number): void {
-    this.txHistory.getUniswapPaginatedTxHistoryData(page_number, 10, this.minAmount)
+  getUniDataForPage(pageNumber): void {
+    this.txHistory.getUniswapPaginatedTxHistoryData(pageNumber, 10, this.minAmount)
     .subscribe(response => {
-      const mappedDtos = response.data.map(dto => {
+      response.data = response.data.map((dto) => {
         UniswapDto.round(dto);
         return dto;
       });
-      response.data = mappedDtos;
-      this.paginated_dtos = response;
+      this.paginatedDtos = response;
     });
   }
 
@@ -61,7 +58,11 @@ export class UniHistoryDialogComponent implements AfterViewInit {
     this.getUniDataForPage($event);
   }
 
-  handleFilterUpdate(_$event): void {
+  handleFilterUpdate($event): void {
     this.getUniDataForPage(0);
+  }
+
+  getDtos(): Array<UniswapDto> {
+    return this.paginatedDtos.data.sort((a, b) => b.blockDate - a.blockDate);
   }
 }

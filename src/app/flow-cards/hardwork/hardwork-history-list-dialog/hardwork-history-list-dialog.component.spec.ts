@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import {HardWorkHistoryListDialogComponent} from './hard-work-history-list-dialog.component';
+import {HardworkHistoryListDialogComponent} from './hardwork-history-list-dialog.component';
 
 describe('HardWorkHistoryListDialogComponent', () => {
-  let component: HardWorkHistoryListDialogComponent;
-  let fixture: ComponentFixture<HardWorkHistoryListDialogComponent>;
+  let component: HardworkHistoryListDialogComponent;
+  let fixture: ComponentFixture<HardworkHistoryListDialogComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [HardWorkHistoryListDialogComponent]
+      declarations: [HardworkHistoryListDialogComponent]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HardWorkHistoryListDialogComponent);
+    fixture = TestBed.createComponent(HardworkHistoryListDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

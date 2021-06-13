@@ -20,7 +20,7 @@
             <input [id]="n" class="network-input" (change)="choseNetwork()" [value]="n" [(ngModel)]="network"
                    [checked]="n == network" type="radio" name="network">
             <label class="network-label" [class]="vt.getThemeColor()" [for]="n">
-              <img class="networi-icon" [src]="network_icons.get(n)" alt="{{n}} icon">
+              <img class="networi-icon" [src]="networkIcons.get(n)" alt="{{n}} icon">
               {{n}}
             </label>
           </span>
