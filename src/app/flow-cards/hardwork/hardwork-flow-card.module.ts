@@ -15,6 +15,7 @@ import {CustomModalModule} from '../../dialogs/custom-modal/custom-modal.module'
 import {HardworkHistoryListDialogComponent} from './hardwork-history-list-dialog/hardwork-history-list-dialog.component';
 import {PaginatorModule} from '../../common/paginator/paginator.module';
 import {LoadingSpinnerModule} from '../../main/loading-spinner/loading-spinner.module';
+import {SnackBarModule} from '../../main/snack-bar/snack-bar.module';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {LoadingSpinnerModule} from '../../main/loading-spinner/loading-spinner.m
     CustomModalModule,
     PaginatorModule,
     LoadingSpinnerModule,
+    SnackBarModule,
   ],
   exports: [
     HardworkTxComponent,

@@ -1,22 +1,19 @@
 import {NgModule} from '@angular/core';
 
-import {IconsComponent} from './icons.component';
+import {LastPricesListComponent} from './last-prices-list.component';
 import {CommonModule} from '@angular/common';
 
-/**
- * Candidate for /shared/
- */
 @NgModule({
   imports: [
     CommonModule,
   ],
   exports: [
-    IconsComponent,
+    LastPricesListComponent,
   ],
   declarations: [
-    IconsComponent,
+    LastPricesListComponent,
   ],
   providers: [],
 })
-export class IconsModule {
+export class LastPricesListModule {
 }

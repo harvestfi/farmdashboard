@@ -1,0 +1,19 @@
+mat-dialog-content {
+  align-content: center;
+
+  img {
+    //-webkit-animation: rotate 4s infinite;
+    animation: rotate 4s steps(4) infinite;
+    display: block;
+    margin: 0 auto;
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

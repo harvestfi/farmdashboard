@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {ViewTypeService} from '../../services/view-type.service';
 import {APP_CONFIG, AppConfig} from 'src/app.config';
@@ -13,6 +13,8 @@ import get = Reflect.get;
   styleUrls: ['./download-historic-data-dialog.component.scss']
 })
 export class DownloadHistoricDataDialogComponent implements OnInit {
+  @Input('data') public data;
+
   sortedVaults: Vault[];
   vaults: Vault[];
   includeInactive = false;

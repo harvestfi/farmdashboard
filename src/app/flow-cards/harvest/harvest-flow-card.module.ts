@@ -14,6 +14,7 @@ import {FormsModule} from '@angular/forms';
 import {HarvestHistoryDialogComponent} from './harvest-history-dialog/harvest-history-dialog.component';
 import {PaginatorModule} from '../../common/paginator/paginator.module';
 import {CustomModalModule} from '../../dialogs/custom-modal/custom-modal.module';
+import {SnackBarModule} from '../../main/snack-bar/snack-bar.module';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import {CustomModalModule} from '../../dialogs/custom-modal/custom-modal.module'
     FormsModule,
     PaginatorModule,
     CustomModalModule,
+    SnackBarModule,
   ],
   exports: [
     HarvestTxComponent,

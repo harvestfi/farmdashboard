@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularEmojisModule} from 'angular-emojis';
 import {MatIconModule} from '@angular/material/icon';
 
 import {SnackBarComponent} from './snack-bar.component';
+import {CommonModule} from '@angular/common';
 import {SnackBarService} from './snack-bar.service';
 
 /**
@@ -12,12 +12,14 @@ import {SnackBarService} from './snack-bar.service';
  */
 @NgModule({
   imports: [
+    CommonModule,
     MatSnackBarModule,
-    BrowserAnimationsModule,
     AngularEmojisModule,
     MatIconModule,
   ],
-  exports: [],
+  exports: [
+    SnackBarComponent,
+  ],
   declarations: [
     SnackBarComponent,
   ],
