@@ -1,15 +1,15 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
-import {ViewTypeService} from '../../../services/view-type.service';
+import {ViewTypeService} from '../../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
-import {ChartBuilder} from '../../../chart/chart-builder';
+import {ChartBuilder} from '../../../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
-import {TvlsService} from '../../../services/http/tvls.service';
-import {StaticValues} from '../../../static/static-values';
+import {TvlsService} from '../../../../services/http/tvls.service';
+import {StaticValues} from '../../../../static/static-values';
 
 @Component({
   selector: 'app-total-users-dialog',
   templateUrl: './total-users-dialog.component.html',
-  styleUrls: ['./total-users-dialog.component.css']
+  styleUrls: ['./total-users-dialog.component.scss']
 })
 export class TotalUsersDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
 

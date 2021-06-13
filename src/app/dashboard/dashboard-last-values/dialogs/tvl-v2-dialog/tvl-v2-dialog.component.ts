@@ -1,16 +1,16 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
-import {ChartGeneralMethodsComponent} from '../../../chart/chart-general-methods.component';
-import {ViewTypeService} from '../../../services/view-type.service';
+import {ChartGeneralMethodsComponent} from '../../../../chart/chart-general-methods.component';
+import {ViewTypeService} from '../../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
-import {HardworksService} from '../../../services/http/hardworks.service';
-import {TvlsService} from '../../../services/http/tvls.service';
-import {ChartBuilder} from '../../../chart/chart-builder';
-import {StaticValues} from '../../../static/static-values';
+import {HardworksService} from '../../../../services/http/hardworks.service';
+import {TvlsService} from '../../../../services/http/tvls.service';
+import {ChartBuilder} from '../../../../chart/chart-builder';
+import {StaticValues} from '../../../../static/static-values';
 
 @Component({
   selector: 'app-tvl-v2-dialog',
   templateUrl: './tvl-v2-dialog.component.html',
-  styleUrls: ['./tvl-v2-dialog.component.css']
+  styleUrls: ['./tvl-v2-dialog.component.scss']
 })
 export class TvlV2DialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
 
@@ -18,7 +18,8 @@ export class TvlV2DialogComponent extends ChartGeneralMethodsComponent implement
               public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
               private hardworksService: HardworksService,
-              private tvlService: TvlsService,) {
+              private tvlService: TvlsService,
+  ) {
     super(cdRef, vt);
   }
 

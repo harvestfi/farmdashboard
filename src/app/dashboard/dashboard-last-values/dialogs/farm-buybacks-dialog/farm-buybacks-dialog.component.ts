@@ -1,14 +1,14 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
-import {ViewTypeService} from '../../../services/view-type.service';
+import {ViewTypeService} from '../../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
-import {ChartBuilder} from '../../../chart/chart-builder';
-import {ChartGeneralMethodsComponent} from '../../../chart/chart-general-methods.component';
-import {HardworksService} from '../../../services/http/hardworks.service';
-import {TvlsService} from '../../../services/http/tvls.service';
-import {PriceDataService} from '../../../services/data/price-data.service';
-import {RewardsService} from '../../../services/http/rewards.service';
-import {StaticValues} from '../../../static/static-values';
-import {Addresses} from '../../../static/addresses';
+import {ChartBuilder} from '../../../../chart/chart-builder';
+import {ChartGeneralMethodsComponent} from '../../../../chart/chart-general-methods.component';
+import {HardworksService} from '../../../../services/http/hardworks.service';
+import {TvlsService} from '../../../../services/http/tvls.service';
+import {PriceDataService} from '../../../../services/data/price-data.service';
+import {RewardsService} from '../../../../services/http/rewards.service';
+import {StaticValues} from '../../../../static/static-values';
+import {Addresses} from '../../../../static/addresses';
 import {forkJoin} from 'rxjs';
 import TreeMap from 'ts-treemap';
 

@@ -1,15 +1,15 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
-import {ViewTypeService} from '../../../services/view-type.service';
+import {ViewTypeService} from '../../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
-import {ChartBuilder} from '../../../chart/chart-builder';
+import {ChartBuilder} from '../../../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
-import {HardworksService} from '../../../services/http/hardworks.service';
-import {StaticValues} from '../../../static/static-values';
+import {HardworksService} from '../../../../services/http/hardworks.service';
+import {StaticValues} from '../../../../static/static-values';
 
 @Component({
   selector: 'app-weekly-profit-dialog',
   templateUrl: './weekly-profit-dialog.component.html',
-  styleUrls: ['./weekly-profit-dialog.component.css']
+  styleUrls: ['./weekly-profit-dialog.component.scss']
 })
 export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
 

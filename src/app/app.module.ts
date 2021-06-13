@@ -8,7 +8,6 @@ import {MatCardModule} from '@angular/material/card';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {MatIconModule} from '@angular/material/icon';
 import {AngularEmojisModule} from 'angular-emojis';
-import {DashboardLastValuesComponent} from './dashboard/dashboard-last-values/dashboard-last-values.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {MainPageViewComponent} from './main/main-page-view/main-page-view.component';
@@ -25,13 +24,9 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {WeeklyProfitDialogComponent} from './dialogs/charts/weekly-profit-dialog/weekly-profit-dialog.component';
-import {FarmBuybacksDialogComponent} from './dialogs/charts/farm-buybacks-dialog/farm-buybacks-dialog.component';
 import {HistoryPageComponent} from './address-history/history-page/history-page.component';
 import {AppRoutingModule} from './app-routing/app-routing.module';
 import {TradeBoxComponent} from './address-history/trade-box/trade-box.component';
-import {SavedGasFeesDialogComponent} from './dialogs/charts/saved-gas-fees-dialog/saved-gas-fees-dialog.component';
-import {TotalUsersDialogComponent} from './dialogs/charts/total-users-dialog/total-users-dialog.component';
 import {MatInputModule} from '@angular/material/input';
 import {SimpleChartDialogComponent} from './dialogs/charts/simple-chart-dialog/simple-chart-dialog.component';
 import {MainSideMenuComponent} from './main/main-side-menu/main-side-menu.component';
@@ -42,9 +37,7 @@ import {Web3chartComponent} from './web3charts/components/web3chart/web3chart.co
 import {DownloadHistoricDataDialogComponent} from './dialogs/download-historic-data-dialog/download-historic-data-dialog.component';
 import {RewardsHistoryDialogComponent} from './dialogs/history/rewards-history-dialog/rewards-history-dialog.component';
 import {VaultFilterPipe} from './dialogs/history/rewards-history-dialog/vault-filter.pipe';
-import {GasDialogComponent} from './dialogs/charts/gas-dialog/gas-dialog.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {TvlV2DialogComponent} from './dialogs/charts/tvl-v2-dialog/tvl-v2-dialog.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {CollapsibleAreaComponent} from './main/collapsable-area/collapsible-area.component';
 import {MainTopNavigationComponent} from './main/main-top-navigation/main-top-navigation.component';
@@ -66,22 +59,18 @@ import {StrategyListModule} from './dashboard/strategy-list/strategy-list.module
 import {TransactionModule} from './static/components/transactions/transaction.module';
 import {CustomModalModule} from './dialogs/custom-modal/custom-modal.module';
 import {FlowCardsViewModule} from './flow-cards/flow-cards-view/flow-cards-view.module';
+import {DashboardLastValuesModule} from './dashboard/dashboard-last-values/dashboard-last-values.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardLastValuesComponent,
     MainPageViewComponent,
     MainFooterComponent,
     MainPageLightComponent,
     CenterViewComponent,
-    WeeklyProfitDialogComponent,
-    FarmBuybacksDialogComponent,
     HistoryPageComponent,
     TradeBoxComponent,
-    SavedGasFeesDialogComponent,
-    TotalUsersDialogComponent,
     RewardsHistoryDialogComponent,
     SimpleChartDialogComponent,
     MainSideMenuComponent,
@@ -91,8 +80,6 @@ import {FlowCardsViewModule} from './flow-cards/flow-cards-view/flow-cards-view.
     VaultFilterPipe,
     Web3chartsComponent,
     Web3chartComponent,
-    GasDialogComponent,
-    TvlV2DialogComponent,
     CollapsibleAreaComponent,
     MainTopNavigationComponent,
     ApplicationErrorDialog,
@@ -127,6 +114,7 @@ import {FlowCardsViewModule} from './flow-cards/flow-cards-view/flow-cards-view.
     TransactionModule,
     StrategyListModule,
     FlowCardsViewModule,
+    DashboardLastValuesModule,
     //
 
     HttpClientModule,

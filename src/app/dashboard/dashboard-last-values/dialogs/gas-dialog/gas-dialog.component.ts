@@ -1,10 +1,10 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from '@angular/core';
-import {StaticValues} from '../../../static/static-values';
-import {ViewTypeService} from '../../../services/view-type.service';
+import {StaticValues} from '../../../../static/static-values';
+import {ViewTypeService} from '../../../../services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
-import {ChartBuilder} from '../../../chart/chart-builder';
+import {ChartBuilder} from '../../../../chart/chart-builder';
 import {ChartGeneralMethodsComponent} from 'src/app/chart/chart-general-methods.component';
-import {HarvestsService} from '../../../services/http/harvests.service';
+import {HarvestsService} from '../../../../services/http/harvests.service';
 
 @Component({
   selector: 'app-gas-dialog',
