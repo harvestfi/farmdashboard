@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
@@ -6,7 +6,7 @@ import {ContractsService} from '../../services/contracts.service';
 import {Vault} from '../../models/vault';
 import {NGXLogger} from 'ngx-logger';
 import {HarvestDataService} from 'src/app/services/data/harvest-data.service';
-import {assets, platforms} from './strategy-list.constants';
+import {assets, Platform, PLATFORM_LIST} from './strategy-list.constants';
 import {HardworkDataService} from '../../services/data/hardwork-data.service';
 import {RewardDataService} from '../../services/data/reward-data.service';
 import {PriceDataService} from '../../services/data/price-data.service';
@@ -27,7 +27,6 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   public apyWindowState: Record<string, boolean> = {};
   public sortDirection = 'desc';
   public currentSortingValue = 'tvl';
-  public platform_list = platforms;
 
   @ViewChildren(CustomModalComponent) private tvlModals: QueryList<CustomModalComponent>;
 
@@ -38,6 +37,7 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
       public hardworkData: HardworkDataService,
       public rewardData: RewardDataService,
       public priceData: PriceDataService,
+      @Inject(PLATFORM_LIST) public platformList: Array<Platform>,
       private log: NGXLogger
   ) {
     super(harvestData, hardworkData, rewardData, priceData);

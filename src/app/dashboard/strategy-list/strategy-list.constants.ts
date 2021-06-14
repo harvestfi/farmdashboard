@@ -1,4 +1,11 @@
-export const platforms = [
+import {InjectionToken} from '@angular/core';
+
+export interface Platform {
+  name: string;
+  prefix: string;
+}
+
+export const platforms: Array<Platform> = [
   {
     name: 'Curve',
     prefix: 'CRV_'
@@ -33,5 +40,6 @@ export const platforms = [
   },
 ];
 
+export const PLATFORM_LIST = new InjectionToken('PLATFORM_LIST');
 
 export const assets = new Set<string>();

@@ -15,7 +15,7 @@ export class ChartGeneralComponent implements OnInit {
   @Output() network = new EventEmitter<string>();
   @ViewChild('chart') chartEl;
   networks: string[] = Array.from(StaticValues.NETWORKS.keys());
-  network_icons: Map<string, string> = StaticValues.NETWORK_ICON;
+  networkIcons: Map<string, string> = StaticValues.NETWORK_ICON;
   chosenNetwork = 'eth';
 
   constructor(public vt: ViewTypeService) {

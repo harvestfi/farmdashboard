@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {SnackService} from '../snack.service';
+import {SnackBarService} from '../../main/snack-bar/snack-bar.service';
 import {forkJoin, Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {TransferDto} from '../../models/transfer-dto';
@@ -21,7 +21,7 @@ export class HttpService {
   constructor(
       @Inject(APP_CONFIG) public config: AppConfig,
       private http: HttpClient,
-      private snackService: SnackService,
+      private snackService: SnackBarService,
       private log: NGXLogger
   ) {
   }

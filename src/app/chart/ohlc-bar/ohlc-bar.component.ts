@@ -10,18 +10,19 @@ import {ViewTypeService} from 'src/app/services/view-type.service';
 export class OhlcBarComponent implements OnChanges {
   @Input() data: OhlcDto;
 
-  private open: string;
-  private high: string;
-  private low: string;
-  private close: string;
-  private difference: string;
-  private movement: string;
-  private volume: string;
+  public isPositive: boolean;
+  public open: string;
+  public high: string;
+  public low: string;
+  public close: string;
+  public difference: string;
+  public movement: string;
+  public volume: string;
 
   constructor(public vt: ViewTypeService) {
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     const {currentValue} = changes.data ?? {};
 
     if (currentValue) {
@@ -31,11 +32,11 @@ export class OhlcBarComponent implements OnChanges {
       this.close = currentValue.close.toFixed(2);
 
       const difference = currentValue.close - currentValue.open;
-      const isPositive = difference >= 0;
-      this.difference = `${isPositive ? '+' : ''}${difference.toFixed(2)}`;
+      this.isPositive = difference >= 0;
+      this.difference = `${this.isPositive ? '+' : ''}${difference.toFixed(2)}`;
 
       const movement = (currentValue.close * 100 / currentValue.open) - 100;
-      this.movement = `${isPositive ? '+' : ''}${movement.toFixed(2)}%`;
+      this.movement = `${this.isPositive ? '+' : ''}${movement.toFixed(2)}%`;
 
       this.volume = currentValue.volume.toFixed(2);
     }
