@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
 import {ContractsService} from '../../services/contracts.service';
