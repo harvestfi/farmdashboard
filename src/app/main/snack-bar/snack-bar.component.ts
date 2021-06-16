@@ -4,12 +4,14 @@ import {MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-snack-bar',
   templateUrl: './snack-bar.component.html',
-  styleUrls: ['./snack-bar.component.css']
+  styleUrls: ['./snack-bar.component.scss']
 })
 export class SnackBarComponent implements OnInit {
 
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: string,
-              private snackBarRef: MatSnackBarRef<SnackBarComponent>) {
+  constructor(
+    @Inject(MAT_SNACK_BAR_DATA) public data: string,
+    private snackBarRef: MatSnackBarRef<SnackBarComponent>
+  ) {
   }
 
   ngOnInit(): void {

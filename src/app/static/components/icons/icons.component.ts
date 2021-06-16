@@ -8,7 +8,7 @@ import {NGXLogger} from 'ngx-logger';
 @Component({
   selector: 'app-vault-icon',
   templateUrl: './icons.component.html',
-  styleUrls: ['./icons.component.css']
+  styleUrls: ['./icons.component.scss']
 })
 
 export class IconsComponent {
@@ -42,7 +42,7 @@ export class IconsComponent {
     return `/assets/icons/vaults/${name}.png`;
   }
 
-  errorIcon() {
+  errorIcon(): void {
     this.error = true;
   }
 }

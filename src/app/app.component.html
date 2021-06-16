@@ -1,1 +1,23 @@
-<app-main-page-view></app-main-page-view>
+<div class="progress-bar">
+  <mat-progress-bar color="primary" mode="query" *ngIf="buffering"></mat-progress-bar>
+</div>
+
+<ng-sidebar-container class="sidebar-container" [class]="vt.getThemeColor() + '-background'">
+  <div ng-sidebar-content style="min-height: 100%">
+
+    <div class="main-row">
+      <div class="middle">
+        <app-main-top-navigation></app-main-top-navigation>
+
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+    <footer>
+      <app-main-footer></app-main-footer>
+    </footer>
+
+  </div>
+
+
+</ng-sidebar-container>

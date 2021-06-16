@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
 import {WsConsumer} from '../ws-consumer';
 import {WebsocketService} from '../websocket.service';
-import {SnackService} from '../snack.service';
+import {SnackBarService} from '../../main/snack-bar/snack-bar.service';
 import {Network} from '../../models/network';
 import {Paginated} from 'src/app/models/paginated';
 
@@ -16,9 +16,11 @@ export class HarvestsService implements WsConsumer {
   private $subscribers: Subscriber<HarvestDto>[] = [];
   private subscribed = false;
 
-  constructor(private httpService: HttpService,
-              private ws: WebsocketService,
-              private snack: SnackService,) {
+  constructor(
+      private httpService: HttpService,
+      private ws: WebsocketService,
+      private snack: SnackBarService,
+  ) {
     this.ws.registerConsumer(this);
   }
 

@@ -7,7 +7,7 @@ import {PricesService} from '../http/prices.service';
 import {PricesDto} from '../../models/prices-dto';
 import {Addresses} from '../../static/addresses';
 import {PriceDataService} from './price-data.service';
-import {SnackService} from '../snack.service';
+import {SnackBarService} from '../../main/snack-bar/snack-bar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class UniswapDataService {
   constructor(private uniswapService: UniswapService,
               private pricesService: PricesService,
               private priceData: PriceDataService,
-              private snack: SnackService,
+              private snack: SnackBarService,
               private log: NGXLogger) {
     this.load();
   }

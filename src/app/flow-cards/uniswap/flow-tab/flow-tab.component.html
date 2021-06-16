@@ -1,15 +1,5 @@
 <perfect-scrollbar [ngStyle]="{'maxHeight': maxHeight+'px'}" class="scroller">
-
   <div id="top-div-light">
-
-    <div class="trade-row" *ngFor="let dto of getDtos() | uniswapFilter:minAmount">
-      <app-uni-trade [fullDate]="showFullDate" [dto]="dto"></app-uni-trade>
-    </div>
-
-    <div *ngIf="!dtos.length" class="empty-vault">
-      🏜️ Loading... 🏜️
-    </div>
-
+    <ng-content></ng-content>
   </div>
-
 </perfect-scrollbar>

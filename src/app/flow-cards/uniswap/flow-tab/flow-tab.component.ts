@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UniswapDto} from '../../../models/uniswap-dto';
 import {ViewTypeService} from '../../../services/view-type.service';
 
 @Component({
@@ -8,10 +7,8 @@ import {ViewTypeService} from '../../../services/view-type.service';
   styleUrls: ['./flow-tab.component.css']
 })
 export class FlowTabComponent implements OnInit {
-  @Input() public dtos: UniswapDto[] = [];
   @Input() maxHeight = 400;
   @Input() minAmount = 0;
-  @Input() showFullDate = true;
 
   constructor(public vt: ViewTypeService) {
   }
@@ -19,6 +16,9 @@ export class FlowTabComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * @TODO: to remove
+   */
   priceGradient(type: string, amount: number, success: boolean): string {
     if (success) {
       switch (type) {
@@ -51,6 +51,9 @@ export class FlowTabComponent implements OnInit {
     return '#ffffff';
   }
 
+  /**
+   * @TODO: to remove
+   */
   checkImportantOwner(address: string): string {
     if (address.toLowerCase() === '0xbed04c43e74150794f2ff5b62b4f73820edaf661'.toLowerCase()) {
       return 'doHardWork';
@@ -62,8 +65,6 @@ export class FlowTabComponent implements OnInit {
     return 'normal';
   }
 
-  getDtos() {
-    return this.dtos.sort((a, b) => b.blockDate - a.blockDate);
-  }
+
 
 }

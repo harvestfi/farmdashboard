@@ -1,0 +1,22 @@
+.progress-bar {
+  width: 100%;
+  z-index: 9999;
+  position: absolute;
+}
+
+.main-row {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+}
+
+.middle {
+  max-width: 1150px;
+  width: 100%;
+  padding: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 5px;
+}

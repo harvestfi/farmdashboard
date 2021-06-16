@@ -2,6 +2,9 @@
 import {Component, ContentChild, TemplateRef} from '@angular/core';
 import {ViewTypeService} from '../../services/view-type.service';
 
+/**
+ * @todo(dmitry2199): to rename selector or component name, they should be same
+ */
 @Component({
   selector: 'app-popover-card',
   templateUrl: './popover.component.html',

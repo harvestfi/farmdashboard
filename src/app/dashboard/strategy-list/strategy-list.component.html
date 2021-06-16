@@ -9,7 +9,7 @@
 
     <select [(ngModel)]="platformFilter" name="" id="platformFilter">
       <option value="">Platform</option>
-      <option *ngFor="let platform of platform_list" [value]="platform.prefix">{{platform.name}}</option>
+      <option *ngFor="let platform of platformList" [value]="platform.prefix">{{platform.name}}</option>
     </select>
 
     <select [(ngModel)]="assetFilter" name="" id="assetFilter">

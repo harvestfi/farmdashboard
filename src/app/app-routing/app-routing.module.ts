@@ -1,14 +1,19 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {HistoryPageComponent} from '../address-history/history-page/history-page.component';
-import {CenterViewComponent} from '../main/center-view/center-view.component';
-import {Web3chartsComponent} from '../web3charts/web3charts.component';
 
 const routes: Routes = [
-  {path: '', component: CenterViewComponent},
-  {path: 'history/:address', component: HistoryPageComponent},
-  {path: 'history', component: HistoryPageComponent},
-  {path: 'charts', component: Web3chartsComponent},
+  {
+    path: '',
+    loadChildren: () => import('../main/main-page/main-page.module').then(m => m.MainPageModule),
+  },
+  {
+    path: 'history',
+    loadChildren: () => import('../address-history/history-page/history-page.module').then(m => m.HistoryPageModule),
+  },
+  {
+    path: 'charts',
+    loadChildren: () => import('../web3charts/web3charts.module').then(m => m.Web3ChartsModule),
+  },
   {path: '**', redirectTo: ''}
 ];
 
