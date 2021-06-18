@@ -16,12 +16,14 @@ export class PopoverComponent {
   @ContentChild(TemplateRef) template;
 
   maybeOpen(popoverRef){
+    this.hover = true;
     popoverRef.open();
   }
 
   timeDelayClose(popoverRef, delay= 500){
     setTimeout(() => {
       if(!this.hover) {
+        this.hover = false;
         popoverRef.close();
       }
     },500);

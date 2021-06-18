@@ -1,9 +1,9 @@
 <div [ngbPopover]="popover" placement="bottom"
-     triggers="manual" #p1="ngbPopover" (mouseover)="maybeOpen(p1)" (mouseleave)="timeDelayClose(p1)"
+     triggers="manual" #p1="ngbPopover" (mouseenter)="maybeOpen(p1)" (mouseleave)="timeDelayClose(p1)"
      [popoverClass]="vt.getThemeColor() + '-card popover-custom'"
      container="body">
   <ng-template #popover>
-    <div (mouseover)="maintainOpen(p1)" (mouseleave)="leavePopover(p1)">
+    <div (mouseenter)="maintainOpen(p1)" (mouseleave)="leavePopover(p1)">
       <ng-container [ngTemplateOutlet]="template"></ng-container>
     </div>
   </ng-template>
