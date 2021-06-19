@@ -107,13 +107,9 @@
                                     [network]="row.contract.network"></app-vault-tvl-dialog>
             </ng-template>
           </app-custom-modal>
-          <app-popover-card class="pointer" (click)="openTvlDialog(row.contract.address)">
-            <ng-template>
-              <p>TVL: {{vaultTvl(row.contract.address, row.contract.network) | number}}$</p>
-              <p>Click to open TVL history chart</p>
-            </ng-template>
+          <div class="column desktop-only">
             ${{prettifyNumber(vaultTvl(row.contract.address, row.contract.network))}}
-          </app-popover-card>
+          </div>
         </div>
 
         <!-- Users -->
