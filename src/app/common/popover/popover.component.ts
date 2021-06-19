@@ -13,20 +13,23 @@ import {ViewTypeService} from '../../services/view-type.service';
 export class PopoverComponent {
   public vt: ViewTypeService = new ViewTypeService();
   private hover = false;
+  private pendingTimeout;
   @ContentChild(TemplateRef) template;
 
   maybeOpen(popoverRef){
-    this.hover = true;
-    popoverRef.open();
+    clearTimeout(this.pendingTimeout);
+    if(!popoverRef.isOpen()) {
+      popoverRef.open();
+    }
   }
 
   timeDelayClose(popoverRef, delay= 500){
-    setTimeout(() => {
+    this.pendingTimeout = setTimeout(() => {
       if(!this.hover) {
         this.hover = false;
         popoverRef.close();
       }
-    },500);
+    },delay);
   }
 
   maintainOpen(popoverRef) {
