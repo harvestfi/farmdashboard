@@ -24,6 +24,7 @@ export class PopoverComponent {
   }
 
   timeDelayClose(popoverRef, delay= 500){
+    clearTimeout(this.pendingTimeout);
     this.pendingTimeout = setTimeout(() => {
       if(!this.hover) {
         this.hover = false;
