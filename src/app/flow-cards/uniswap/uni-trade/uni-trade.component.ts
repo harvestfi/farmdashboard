@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { ViewTypeService } from 'src/app/services/view-type.service';
 import {UniswapDto} from '../../../models/uniswap-dto';
 import {Utils} from '../../../static/utils';
 
@@ -9,7 +10,7 @@ import {Utils} from '../../../static/utils';
 })
 export class UniTradeComponent implements OnInit {
 
-  constructor() {
+  constructor(public vt: ViewTypeService) {
   }
 
   @Input() dto: UniswapDto;

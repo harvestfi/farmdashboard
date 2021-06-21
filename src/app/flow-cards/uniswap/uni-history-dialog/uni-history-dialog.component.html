@@ -3,8 +3,10 @@
   <input class="filter-input" (input)="handleFilterUpdate($event)" [(ngModel)]="minAmount" placeholder="More than..."
          type="number">
   <app-flow-tab>
-    <div class="trade-row" *ngFor="let dto of getDtos() | uniswapFilter:minAmount">
-      <app-uni-trade [fullDate]="true" [dto]="dto"></app-uni-trade>
+    <div class="trades-list">
+      <div class="trades-list-item trade-row" *ngFor="let dto of getDtos() | uniswapFilter:minAmount">
+        <app-uni-trade [fullDate]="true" [dto]="dto"></app-uni-trade>
+      </div>
     </div>
     <div *ngIf="!paginatedDtos.data?.length" class="empty-vault">
       🏜️ Loading... 🏜️

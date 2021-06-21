@@ -1,56 +1,72 @@
+@import "../../../../scss/themes/theme-mixins.scss";
+$buy-color: #a1bca6;
+$sell-color: #B80E0E;
+$dark-background-color: #111111;
+
 .harvest-trades {
   display: grid;
   position: relative;
-  grid-template-columns: 20% 30% 15% 30% 5%;
-  padding: 0 0.9rem;
-}
-
-.harvest-field {
-  font-weight: bolder;
-  display: inline-block;
-  min-height: 30px;
-  text-align: center;
-}
-
-.harvest2-date {
+  grid-template-columns: 5% 20% 30% 15% 25% 5%;
+  display: grid;
+  padding: 0.3em 0.5em;
+  font-weight: bold;
   font-size: 0.9em;
-}
+  border: 1px solid rgba($dark-background-color, 0.2);
+  margin: 0.3em;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 
-.sign-icon {
-  font-size: 0.9em;
-}
+  @include isDarkMode() {
+      border: 1px solid $dark-background-color;
+  }
 
-.tvl-img {
-  width: 15px;
-  height: 15px;
-}
 
-.pointer:hover {
-  z-index: 900;
-}
+  .transaction-type {
+    span {
+      padding: 0.3em 0.4em;
+      text-align: center;
+      border-radius: 0.5em;
+      font-size: 0.8em;
 
-@media (max-width: 1100px) {
-  .harvest-trades {
+      &.BUY,
+      &.Deposit {
+        background: rgba($buy-color, 0.3);
+        border: 1px solid $buy-color;
+        color: $buy-color;
+      }
+
+      &.SELL,
+      &.Withdraw {
+        background: rgba($sell-color, 0.3);
+        border: 1px solid $sell-color;
+        color: $sell-color;
+      }
+    }
+  }
+
+  .harvest-field {
+    font-weight: bolder;
+    display: inline-block;
+    text-align: center;
+  }
+
+
+  .sign-icon, .harvest2-date {
+    font-size: 0.9em;
+    height: auto;
+  }
+
+  .tvl-img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .pointer:hover {
+    z-index: 900;
+  }
+
+  @media (max-width: 1100px) {
     margin: 10px 0;
   }
 }
-
-/*------------------------- old *------------------------*/
-
-/* .harvest-date {
-    font-size: 0.9em;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .harvest-amount {
-    font-size: .9em;
-  }
-  
-  .harvest-vault {
-    font-size: 0.9em;
-  }
-  
-  .harvest-tvl {
-    font-size: 0.9em;
-  } */

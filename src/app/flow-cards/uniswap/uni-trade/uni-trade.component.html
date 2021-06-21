@@ -1,5 +1,7 @@
-<div class='uni-trades' [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}">
-
+<div class='uni-trades' [class]="vt.getThemeColor() + ' ' + dto.type">
+  <div class="transaction-type">
+    <span [class]="dto.type">{{dto.type}}</span>
+  </div>
   <app-popover-card class="trade-date left-border-box trade-field">
     <ng-template>
       <p>{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}</p>
@@ -10,10 +12,7 @@
       <p>Price: {{dto.lastPrice | number}}</p>
       <p>Last gas: {{dto.lastGas | number}}</p>
     </ng-template>
-    {{fullDate ?
-      (dto.blockDateAdopted | date: 'dd-MMM HH:mm') :
-      (dto.blockDateAdopted | date: 'HH:mm:ss')
-    }}
+    {{ (dto.blockDateAdopted | date: 'dd-MMM-YYYY HH:mm') }}
   </app-popover-card>
 
   <div class="trade-amount left-border-box trade-field">
