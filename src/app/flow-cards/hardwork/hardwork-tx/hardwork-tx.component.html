@@ -1,7 +1,18 @@
 <div class="hardwork-card flow-card" [class]="vt.getThemeColor() + '-card'">
 
   <div class="title-row">
+    <app-popover-card
+    aria-hidden="false"
+    aria-label="?"
+    class="title-span">
+  <ng-template>
+    <h3>List of doHardWorks performed.</h3>
+    <ul>
+      <li>Format: Date | Vault | Income Earned</li>
+    </ul>
+  </ng-template>
     <h4 class="title">doHardWorks</h4>
+    </app-popover-card>
     <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
       <option [value]="'all'">All</option>
       <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
@@ -56,7 +67,7 @@
   </div>
   <app-custom-modal #hardWorkHistoryListModal>
     <ng-template>
-      <app-hard-work-history-list-dialog></app-hard-work-history-list-dialog>
+      <app-hardwork-history-list-dialog></app-hardwork-history-list-dialog>
     </ng-template>
   </app-custom-modal>
 

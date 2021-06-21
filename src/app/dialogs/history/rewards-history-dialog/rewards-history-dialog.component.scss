@@ -1,0 +1,67 @@
+.title {
+  font-size: 1.5em;
+  padding: 10px;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.dialog-card {
+  width: 100vw;
+  max-width: 700px;
+  padding: 20px;
+}
+
+.tvl-img {
+  width: 15px;
+  height: 15px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.headers, .values {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 0.3fr;
+}
+
+.header-field {
+  /*text-align: center;*/
+  padding: 3px;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.value-field {
+  padding: 3px;
+  font-size: 0.9em;
+  font-weight: bolder;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+}
+
+.scroller {
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.empty-list {
+  text-align: center;
+  padding: 2em 0;
+}
+
+
+@media screen and (max-width: 900px) {
+  .title-col {
+    font-size: 1em;
+    margin: 5px;
+  }
+
+  ::ng-deep.mat-dialog-container {
+    border-radius: 1px;
+    padding: 5px !important;
+  }
+}

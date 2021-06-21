@@ -44,15 +44,15 @@ export abstract class ChartGeneralMethodsComponent implements OnInit, AfterViewI
     chartBuilder.addToChart(this.chart, config);
   }
 
-  setNetwork(networkName: string) {
+  setNetwork(networkName: string): void {
     this.network = networkName;
     this.clear();
     this.load();
   }
 
-  abstract load();
+  abstract load(): void;
 
-  clear() {
+  clear(): void {
     this.chart.remove();
     this.ready = false;
   }

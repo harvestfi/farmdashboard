@@ -9,8 +9,8 @@
     <div class="title">Rewards History</div>
     <div class="filters">
       <div>
-        <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
-          <option [value]="'-'">-</option>
+        <select (change)="handleFilterUpdate()" [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
+          <option [value]="''">-</option>
           <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
         </select>
       </div>
@@ -23,11 +23,12 @@
       <div class="header-field"></div>
     </div>
     <div class="scroller">
-      <div class="values" *ngFor="let reward of rewards | vaultFilter: vaultFilter">
+      <div class="values" *ngFor="let reward of rewards.data">
         <div class="value-field">{{reward.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
         <div class="value-field">
           <app-vault-icon [vault]="getVault(reward.vaultAddress)"></app-vault-icon>
-          {{reward.vault}}
+          <span [title]="reward.vault">{{reward.vault}}</span>
+          
         </div>
         <div class="value-field">{{reward.reward | number: '1.1-1'}}</div>
         <div class="value-field">{{reward.periodFinish * 1000 | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
@@ -38,13 +39,18 @@
         </div>
       </div>
     </div>
-    <div class="button-container">
-      <button class="show-even-more" (click)="loadMoreRewardsHistory()" [disabled]="disabled" [ngStyle]="{
-                'pointer-events': disabled ? 'none' : 'auto',
-                'cursor': disabled ? 'wait' : 'pointer',
-                'background-color': disabled ? '#eebf65' : '#eebf65'
-            }">{{disabled ? 'please wait' : 'load more'}}</button>
+
+    <div *ngIf="!rewards.data.length" class="empty-list">
+      <span role="img">🏜️</span> No rewards found <span role="img">🏜️</span>
     </div>
+
+    <app-paginator 
+      (selectPage)="handlePageChange($event)"
+      (nextPage)="handlePageChange($event)"
+      (previousPage)="handlePageChange($event)"
+      [pageObject]="rewards"
+    ></app-paginator>
+
   </div>
 
 </ng-template>

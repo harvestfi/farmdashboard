@@ -19,14 +19,15 @@ export class ApyChartDialogComponent extends ChartGeneralMethodsComponent implem
               public vt: ViewTypeService,
               public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
-              private hardworksService: HardworksService,) {
+              private hardworksService: HardworksService,
+  ) {
     super(cdRef, vt);
   }
 
   load(): void {
     this.log.info('APY window data', this.data);
     this.hardworksService.getHardWorkHistoryDataByAddress(this.data.address,
-        StaticValues.NETWORKS.get(this.data.network)).subscribe(data => {
+      StaticValues.NETWORKS.get(this.data.network)).subscribe(data => {
       this.log.debug('History of All Incomes loaded ', data);
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(3);

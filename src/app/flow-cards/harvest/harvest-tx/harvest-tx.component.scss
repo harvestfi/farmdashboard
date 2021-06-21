@@ -1,4 +1,5 @@
 @import "../../flow-card-common-styles.scss";
+@import "src/scss/utilities/fancy-ui-helpers.scss";
 
 .harvest-card {
     border: 1px solid rgba($dark-background-color, 0.2);
@@ -8,6 +9,7 @@
         .select-strategy-2,
         .input-less-than {
             height: 25px;
+            @include fancy-input($fancy-input-small-padding, $fancy-input-small-radius);
         }
 
         .title {

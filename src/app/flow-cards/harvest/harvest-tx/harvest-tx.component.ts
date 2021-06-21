@@ -4,7 +4,7 @@ import {HttpService} from '../../../services/http/http.service';
 import {NGXLogger} from 'ngx-logger';
 import {HarvestDto} from '../../../models/harvest-dto';
 import {ViewTypeService} from '../../../services/view-type.service';
-import {SnackService} from '../../../services/snack.service';
+import {SnackBarService} from '../../../main/snack-bar/snack-bar.service';
 import {CustomModalComponent} from 'src/app/dialogs/custom-modal/custom-modal.component';
 import {ContractsService} from '../../../services/contracts.service';
 import {Vault} from '../../../models/vault';
@@ -25,7 +25,7 @@ export class HarvestTxComponent implements AfterViewInit {
               private httpService: HttpService,
               private cdRef: ChangeDetectorRef,
               public vt: ViewTypeService,
-              private snack: SnackService,
+              private snack: SnackBarService,
               private log: NGXLogger,
               private contractsService: ContractsService,
               private harvestsService: HarvestsService,
@@ -46,19 +46,22 @@ export class HarvestTxComponent implements AfterViewInit {
     return this.harvestData.getDtos();
   }
 
-  getVaultIcon(vault_address: string){
-    return this.contractService.getContracts(Vault).get(vault_address);
+  /**
+   * @TODO: to rename? because it does not provide icon, it provides an entire vault
+   */
+  getVaultIcon(vaultAddress: string): Vault {
+    return this.contractService.getContracts(Vault).get(vaultAddress);
   }
 
   openHarvestHistory(): void {
     this.harvestHistoryModal.open();
   }
 
-  hideTradeLinks(dto_id: string): void {
-    this.openedModal[dto_id] = false;
+  hideTradeLinks(dtoId: string): void {
+    this.openedModal[dtoId] = false;
   }
 
-  showTradeLinks(dto_id: string): void {
-    this.openedModal[dto_id] = true;
+  showTradeLinks(dtoId: string): void {
+    this.openedModal[dtoId] = true;
   }
 }

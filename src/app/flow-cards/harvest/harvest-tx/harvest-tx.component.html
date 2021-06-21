@@ -3,8 +3,10 @@
     <div class="title-row">
       <app-popover-card aria-hidden="false" aria-label="?" class="pool-title left-border-box">
         <ng-template>
-          <p>Changes in Harvest vaults.</p>
-          <p>Format: Date | add/remove | Amount in USD | Pool TVL</p>
+          <h3>List that indicates changes in Harvest vaults.</h3>
+          <ul>
+            <li>Format: Date | add/remove | Amount in USD | Pool TVL</li>
+          </ul>
         </ng-template>
         <h4 class="title">Pools</h4>
       </app-popover-card>
@@ -33,7 +35,7 @@
         </div>
         <app-popover-card class="date">
           <ng-template>
-            <p>{{dto.blockDateAdopted | date: 'dd-MMM hh:mm'}}</p>
+            <p>{{dto.blockDateAdopted | date: 'dd-MMM HH:mm'}}</p>
             <p>{{dto.vault}}</p>
             <p>{{dto.methodName}}</p>
             <p>fAmount: {{dto.amount | number: '1.0-6'}}</p>

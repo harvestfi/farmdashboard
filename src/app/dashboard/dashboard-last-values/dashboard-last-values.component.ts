@@ -34,7 +34,6 @@ export class DashboardLastValuesComponent implements OnInit {
               private hardworkData: HardworkDataService,
               private harvestData: HarvestDataService,
               private priceData: PriceDataService,
-              private log: NGXLogger
   ) {
   }
 
@@ -50,8 +49,8 @@ export class DashboardLastValuesComponent implements OnInit {
 
   totalGasSavedAllNetworks(): number {
     return Array.from(StaticValues.NETWORKS.keys())
-    .map(network => this.hardworkData.getTotalGasSaved(network))
-    .reduce((p, n) => p + n, 0);
+      .map((network) => this.hardworkData.getTotalGasSaved(network))
+      .reduce((p, n) => p + n, 0);
   }
 
   farmBuybackSum(network: string): number {
@@ -67,14 +66,14 @@ export class DashboardLastValuesComponent implements OnInit {
 
   get totalFarmBuybacks(): number {
     return Array.from(StaticValues.NETWORKS.keys())
-    .map(network => this.farmBuybackSum(network))
-    .reduce((p, n) => n + p, 0);
+      .map((network) => this.farmBuybackSum(network))
+      .reduce((p, n) => n + p, 0);
   }
 
   get totalWeeklyProfits(): number {
     return Array.from(StaticValues.NETWORKS.keys())
-    .map(network => this.hardworkData.getWeeklyProfits(network))
-    .reduce((p, n) => p + n, 0);
+      .map((network) => this.hardworkData.getWeeklyProfits(network))
+      .reduce((p, n) => p + n, 0);
   }
 
   weeklyProfits(network: string): number {
@@ -86,15 +85,15 @@ export class DashboardLastValuesComponent implements OnInit {
     return this.farmUsdPrice / earningPerShare;
   }
 
-  get psYearEarning() {
+  get psYearEarning(): number {
     const psLastWeekEarned = this.hardworkData.getWeeklyProfits('eth') * 0.3
-        + this.hardworkData.getWeeklyProfits('bsc') * 0.08;
+      + this.hardworkData.getWeeklyProfits('bsc') * 0.08;
     return psLastWeekEarned * 52.1429;
   }
 
   get farmTotalAmount(): number {
     const lastPsHarvest =
-        this.harvestData.getVaultLastInfo(Addresses.ADDRESSES.get('PS'), 'eth');
+      this.harvestData.getVaultLastInfo(Addresses.ADDRESSES.get('PS'), 'eth');
     if (!lastPsHarvest) {
       return 0;
     }
@@ -116,7 +115,7 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   get lpFarmStaked(): number {
-    return this.harvestData.getLpFarmStaked();
+    return this.priceData.getTotalFarmLpStaked();
   }
 
   tvlSum(network: string): number {
@@ -125,8 +124,8 @@ export class DashboardLastValuesComponent implements OnInit {
 
   get tvlSumAllNetwork(): number {
     return Array.from(StaticValues.NETWORKS.keys())
-    .map(network => this.tvlSum(network))
-    .reduce((p, n) => p + n, 0);
+      .map((network) => this.tvlSum(network))
+      .reduce((p, n) => p + n, 0);
   }
 
   userCount(network: string): number {
@@ -135,8 +134,8 @@ export class DashboardLastValuesComponent implements OnInit {
 
   get userCountAllNetwork(): number {
     return Array.from(StaticValues.NETWORKS.keys())
-    .map(network => this.userCount(network))
-    .reduce((p, n) => p + n, 0);
+      .map((network) => this.userCount(network))
+      .reduce((p, n) => p + n, 0);
   }
 
   poolUsers(network: string): number {
@@ -145,8 +144,8 @@ export class DashboardLastValuesComponent implements OnInit {
 
   get poolUsersAllNetwork(): number {
     return Array.from(StaticValues.NETWORKS.keys())
-    .map(network => this.poolUsers(network))
-    .reduce((p, n) => p + n, 0);
+      .map((network) => this.poolUsers(network))
+      .reduce((p, n) => p + n, 0);
   }
 
   // --------------------------- PRICES -------------------------
@@ -197,21 +196,21 @@ export class DashboardLastValuesComponent implements OnInit {
     this.gasPriceModal.open();
   }
 
-  get psAddress() {
+  get psAddress(): string {
     return Addresses.ADDRESSES.get('PS');
   }
 
   // ------------- FORMULAS -------------------------
 
-  get peRatioHtml() {
+  get peRatioHtml(): string {
     return `PE = `
-        + `\\cfrac{FARMPrice (${this.farmUsdPrice.toFixed(0)})}`
-        + `{EPS(${(this.psYearEarning / this.farmTotalAmount).toFixed(0)})}`;
+      + `\\cfrac{FARMPrice (${this.farmUsdPrice.toFixed(0)})}`
+      + `{EPS(${(this.psYearEarning / this.farmTotalAmount).toFixed(0)})}`;
   }
 
-  get epsHtml() {
+  get epsHtml(): string {
     return `EPS = `
-        + ` \\cfrac{PSLastWeekProfit * WeeksInYear (${this.psYearEarning.toFixed(0)})}`
-        + `{FARMTotalAmount (${this.farmTotalAmount.toFixed(0)})}`;
+      + ` \\cfrac{PSLastWeekProfit * WeeksInYear (${this.psYearEarning.toFixed(0)})}`
+      + `{FARMTotalAmount (${this.farmTotalAmount.toFixed(0)})}`;
   }
 }

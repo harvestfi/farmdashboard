@@ -1,0 +1,60 @@
+@import 'src/scss/themes/theme-mixins.scss';
+@import 'src/scss/utilities/responsive_utilities.scss';
+@import "src/scss/utilities/fancy-ui-helpers.scss";
+
+.price-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 10px 10px 10px 10px;
+  padding: 3px;
+  height: 300px;
+}
+
+.grain-chart, .farm-chart {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  position: absolute;
+
+  min-height: 3em;
+  margin: 15px;
+
+  z-index: 999;
+
+  background-color: #fffce6;
+
+  &> div {
+    margin-right: 8px;
+  }
+
+  &.dark {
+    background-color: #404040;
+  }
+}
+
+.chart-modes {
+  select {
+    @include fancy-input($fancy-input-small-padding, $fancy-input-small-radius);
+
+    &:not(:first-child) {
+      margin-left: 0.5em;
+    }
+  }
+
+  @include responsive(phone) {
+    & {
+      width: 5em;
+
+      select {
+        width: 100%;
+        &:not(:first-child) {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
