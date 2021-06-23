@@ -19,6 +19,10 @@ export class PriceDataService {
   );
   private dataFeed: Observable<PricesDto>;
 
+  private exclude = new Set<string>([
+      '0xa8bb71facdd46445644c277f9499dd22f6f0a30c'.toLowerCase()
+  ]);
+
   constructor(
       private pricesService: PricesService,
       private titleService: Title,
@@ -44,7 +48,7 @@ export class PriceDataService {
   }
 
   private handlePrice(price: PricesDto): Observable<PricesDto> {
-    if (!price) {
+    if (!price || this.exclude.has(price.otherTokenAddress.toLowerCase()) || this.exclude.has(price.tokenAddress.toLowerCase())) {
       return new Observable<PricesDto>();
     }
     if (price.tokenAmount === 0 || price.otherTokenAmount === 0) {
@@ -70,32 +74,32 @@ export class PriceDataService {
     let usdcPoolStaked = 0;
     let wethPoolStaked = 0;
     let grainPoolStaked = 0;
-    this.prices.forEach((prs, network)=>
-      prs.forEach((price, name)=>{
-      if(price.network === 'eth'){
-        if(price.source === 'UNI_LP_USDC_FARM'){
-          // Allow for unknown variable of which token is in which "Slot" in the pair
-          if(price.token === 'FARM'){
-            usdcPoolStaked = price.lpToken0Pooled;
-          } else {
-            usdcPoolStaked = price.lpToken1Pooled;
-          }
-        } else if (price.source === 'UNI_LP_WETH_FARM'){
-          if(price.token === 'FARM'){
-            wethPoolStaked = price.lpToken0Pooled;
-          } else {
-            wethPoolStaked = price.lpToken1Pooled;
-          }
-        } else if(price.source === 'UNI_LP_GRAIN_FARM'){
-          if(price.token === 'FARM'){
-            grainPoolStaked = price.lpToken0Pooled;
-          } else {
-            grainPoolStaked = price.lpToken1Pooled;
-          }
-        }
-      }
-    }
-      )
+    this.prices.forEach((prs, network) =>
+        prs.forEach((price, name) => {
+              if (price.network === 'eth') {
+                if (price.source === 'UNI_LP_USDC_FARM') {
+                  // Allow for unknown variable of which token is in which "Slot" in the pair
+                  if (price.token === 'FARM') {
+                    usdcPoolStaked = price.lpToken0Pooled;
+                  } else {
+                    usdcPoolStaked = price.lpToken1Pooled;
+                  }
+                } else if (price.source === 'UNI_LP_WETH_FARM') {
+                  if (price.token === 'FARM') {
+                    wethPoolStaked = price.lpToken0Pooled;
+                  } else {
+                    wethPoolStaked = price.lpToken1Pooled;
+                  }
+                } else if (price.source === 'UNI_LP_GRAIN_FARM') {
+                  if (price.token === 'FARM') {
+                    grainPoolStaked = price.lpToken0Pooled;
+                  } else {
+                    grainPoolStaked = price.lpToken1Pooled;
+                  }
+                }
+              }
+            }
+        )
     );
     return usdcPoolStaked + wethPoolStaked + grainPoolStaked;
   }
