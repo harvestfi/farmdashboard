@@ -1,0 +1,188 @@
+@import "../../../../scss/utilities/responsive_utilities";
+
+.main-top-stats {
+  display: grid;
+  grid-template-areas: "farm-price gas-price native-tokens placeholder tvl"
+                         "farm-price farm-staked weekly-profit ps-income tvl" 
+                         "farm-holders farm-buybacks saved-gas total-users active-pools";
+
+  @include responsive(phone) {
+    grid-template-areas: "farm-price tvl"
+                           "farm-price tvl"
+                           "gas-price saved-gas" 
+                           "farm-staked weekly-profit"
+                           "ps-income farm-buybacks"
+                           "total-users active-pools"
+                           "native-tokens placeholder"
+                           "farm-holders farm-holders";
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
+  }
+
+  .value-card {
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin: 0 10px 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+  .farm {
+    grid-area: farm-price;
+    text-align: center;
+  }
+
+  .gas {
+    grid-area: gas-price;
+  }
+
+  .native-tokens {
+    grid-area: native-tokens;
+    grid-column: auto / span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .eth {
+    grid-area: eth-price;
+  }
+
+  .farm-staked {
+    grid-area: farm-staked;
+  }
+
+  .weekly-profits {
+    grid-area: weekly-profit;
+  }
+
+  .ps-income {
+    grid-area: ps-income;
+  }
+
+  .tvl {
+    grid-area: tvl;
+    text-align: center;
+  }
+
+  .farm-holders {
+    grid-area: farm-holders;
+  }
+
+  .farm-buybacks {
+    grid-area: farm-buybacks;
+  }
+
+  .saved-fees {
+    grid-area: saved-gas;
+  }
+
+  .total-users {
+    grid-area: total-users;
+  }
+
+  .active-pools {
+    grid-area: active-pools;
+  }
+
+  .value-caption {
+    margin-bottom: 2rem;
+    font-weight: bolder;
+    text-align: center;
+  }
+
+
+  .sign {
+    font-weight: bolder;
+  }
+
+  .value-number {
+    font-weight: bolder;
+    font-size: 3.7em;
+
+    @include responsive(small) {
+      font-size: 3em;
+    }
+  }
+
+  .value-sign {
+    font-size: 0.6em;
+  }
+
+  .value-middle {
+    font-size: 0.85em;
+    font-weight: bolder;
+    text-align: center;
+  }
+
+  .value-number-middle {
+    margin-top: 3px;
+    font-size: 1.9em;
+    font-weight: bolder;
+    text-align: center;
+  }
+
+
+  .icon {
+    width: 12px;
+    height: 12px;
+    position: absolute;
+
+    @include responsive(phone) {
+      width: 6px;
+      height: 6px;
+    }
+  }
+
+  .small-value-caption {
+    margin-left: 14px;
+
+    @include responsive(phone) {
+      margin-left: 8px;
+    }
+  }
+}
+
+
+#top-div-scoreboard {
+  .caption-btc, .caption-btc-value, .caption-btc-sign {
+    color: #77612e;
+  }
+
+  .caption-btc-sign {
+    font-size: 3em;
+  }
+
+  .caption-eth, .caption-eth-value, .caption-eth-sign {
+    color: #596d56;
+  }
+
+  .caption-eth-sign {
+    font-size: 3em;
+  }
+
+  .caption-ps-value, .caption-ps-sign, .caption-ps {
+    color: mediumpurple;
+  }
+
+  .last-price-sign {
+    font-size: 4em;
+    color: #fff;
+  }
+
+}
