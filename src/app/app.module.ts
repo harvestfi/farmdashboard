@@ -97,6 +97,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {interceptorProviders} from './interceptors';
 import {ApplicationErrorDialog} from './main/main-page-light/application-error-dialog';
 import {KatexModule} from 'ng-katex';
+import {VaultStatsComponent} from './dashboard/vault-stats/vault-stats.component';
+import {NgxEchartsModule} from 'ngx-echarts';
 
 
 @NgModule({
@@ -170,7 +172,8 @@ import {KatexModule} from 'ng-katex';
     AddressComponent,
     ApyCommonComponent,
     MainTopNavigationComponent,
-    ApplicationErrorDialog
+    ApplicationErrorDialog,
+    VaultStatsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -205,6 +208,9 @@ import {KatexModule} from 'ng-katex';
     NgbModule,
     MatProgressBarModule,
     KatexModule,
+    NgxEchartsModule.forRoot({
+        echarts: () => import('echarts')
+    }),
   ],
   providers: [
     interceptorProviders

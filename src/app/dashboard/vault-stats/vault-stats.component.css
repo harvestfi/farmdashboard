@@ -1,0 +1,236 @@
+
+.cover {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 27px;
+    -webkit-box-align: center;
+    align-items: center;
+    flex: 1 1 0%;
+    overflow: hidden auto;
+    z-index: 1;
+}
+
+.cover > * {
+    max-width: 1200px;
+}
+
+.container {
+    width: 95%;
+}
+
+.grid-sheet {
+    display: grid;
+    grid-auto-rows: auto;
+    row-gap: 16px;
+}
+
+.charts-block {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    width: 100%;
+    display: flex;
+    padding: 0px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.title {
+    font-family: "Inter var", sans-serif;
+    color: rgb(195, 197, 203);
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    font-weight: 500;
+}
+
+.chart-block {
+    width: 49%;
+    z-index: 1;
+}
+
+.chart-background {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    min-height: 332px;
+    border-radius: 16px;
+    width: 100%;
+    height: 300px;
+    padding: 16px 28px 16px 16px;
+    display: flex;
+    background-color: #404040;
+    flex-direction: column;
+    position: relative;
+}
+
+.currentInfo {
+    position: absolute;
+    width: calc(100% - 28px);
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    font-family: 'Inter var', sans-serif;
+    box-sizing: border-box;
+}
+
+.last-data-container {
+    width: 100%;
+    display: flex;
+    padding: 0;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    font-family: 'Inter var', sans-serif;
+}
+
+.last-data-container .left-part,
+.last-data-container .right-part {
+    width: 49%;
+    z-index: 1;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+.last-data-container .left-part .change-amount,
+.last-data-container .left-part .change-percent,
+.last-data-container .right-part .change-amount,
+.last-data-container .right-part .change-percent{
+    width: 49%;
+    border-radius: 16px;
+    padding: 1rem;
+    background-color: #404040;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.last-data-container .left-part .change-amount .label,
+.last-data-container .left-part .change-percent .label,
+.last-data-container .right-part .change-amount .label,
+.last-data-container .right-part .change-percent .label{
+    font-weight: 500;
+    color: rgb(195, 197, 203);
+    font-size: 14px;
+}
+
+.last-data-container .left-part .change-amount .value,
+.last-data-container .left-part .change-percent .value,
+.last-data-container .right-part .change-amount .value,
+.last-data-container .right-part .change-percent .value {
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+    min-width: 0;
+    font-weight: 600;
+    font-size: 32px;
+    color: #ffffff;
+}
+.last-data-container .left-part .change-amount .value .symbol,
+.last-data-container .right-part .change-amount .value .symbol {
+    color: #ffffff;
+}
+
+
+.currentInfo .name {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+}
+.currentInfo .name span {
+    color: #ffffff;
+}
+.currentInfo .value {
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+    min-width: 0;
+    font-weight: 600;
+    font-size: 32px;
+    color: #ffffff;
+}
+
+.currentInfo .date {
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+    min-width: 0;
+    font-weight: 500;
+    font-size: 12px;
+    height: 14px;
+    color: rgb(195, 197, 203);
+}
+
+.last-data {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    width: 100%;
+    border-radius: 16px;
+    padding: 1rem;
+    background-color: rgb(25, 27, 31);
+}
+.last-data-holder {
+    box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    width: 100%;
+    display: flex;
+    padding: 0;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+@media (max-width: 1000px) {
+    .last-data-container .left-part .change-amount .value,
+    .last-data-container .left-part .change-percent .value,
+    .last-data-container .right-part .change-amount .value,
+    .last-data-container .right-part .change-percent .value {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 800px) {
+    .last-data-container .left-part .change-amount .value,
+    .last-data-container .left-part .change-percent .value,
+    .last-data-container .right-part .change-amount .value,
+    .last-data-container .right-part .change-percent .value {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 720px) {
+    .charts-block,
+    .last-data-container {
+        flex-direction: column;
+        row-gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .chart-block,
+    .last-data-container .left-part,
+    .last-data-container .right-part {
+        width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    .last-data-container .left-part .change-amount .label,
+    .last-data-container .left-part .change-percent .label,
+    .last-data-container .right-part .change-amount .label,
+    .last-data-container .right-part .change-percent .label{
+        font-size: 12px;
+    }
+
+    .last-data-container .left-part .change-amount .value,
+    .last-data-container .left-part .change-percent .value,
+    .last-data-container .right-part .change-amount .value,
+    .last-data-container .right-part .change-percent .value {
+        font-size: 18px;
+    }
+}
