@@ -8,6 +8,8 @@ import {FlowCardsViewModule} from '@modules/flow-cards/flow-cards-view/flow-card
 import {LastPricesListModule} from '@modules/dashboard/last-prices-list/last-prices-list.module';
 import {CommonModule} from '@angular/common';
 import {MainPageRoutingModule} from './main-page-routing.module';
+import {VaultStatsComponent} from '../dashboard/vault-stats/vault-stats.component';
+import {NgxEchartsModule} from 'ngx-echarts';
 
 @NgModule({
   imports: [
@@ -18,12 +20,16 @@ import {MainPageRoutingModule} from './main-page-routing.module';
     FlowCardsViewModule,
     LastPricesListModule,
     CommonModule,
+    NgxEchartsModule.forRoot({
+       echarts: () => import('echarts')
+    }),
   ],
   exports: [
     MainPageComponent,
   ],
   declarations: [
     MainPageComponent,
+    VaultStatsComponent,
   ],
   providers: [],
 })
