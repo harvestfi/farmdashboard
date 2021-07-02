@@ -5,51 +5,57 @@
             </div>
             <div class="charts-block">
                 <div class="chart-block">
-                    <div class="chart-background">
-                        <div class="currentInfo">
-                            <div class="name">
-                                <span>{{ title1 }}</span>
-                                <span>[ETH/BSC]</span>
-                            </div>
-                            <span class="value">{{ tvlSelectedValue }}</span>
-                            <span class="date">{{ tvlSelectedDate | date: 'MMM dd, YYYY'}}</span>
-                        </div>
-                        <div echarts [options]="options1" [autoResize]="true" (chartGlobalOut)="onChart1Event($event, 'chartGlobalOut')"></div>
-                    </div>
+                    <app-echart [title]="title1"
+                                [chartName]="chartName1"
+                                [selectedValue]="tvlSelectedValue"
+                                [valueSymbol]="valueSymbol1"
+                                [selectedDate]="tvlSelectedDate"
+                                [options]="options1"
+                                [data]="data1"></app-echart>
                 </div>
                 <div class="chart-block">
-                    <div class="chart-background">
-                        <div class="currentInfo">
-                            <div class="name">
-                                <span>{{ title2 }}</span>
-                                <span>[ETH/BSC]</span>
-                            </div>
-                            <span class="value">{{ profitSelectedValue }}</span>
-                            <span class="date">{{ profitSelectedDate | date: 'MMM dd, YYYY'}}</span>
-                        </div>
-                        <div echarts [options]="options2" [autoResize]="true"  (chartGlobalOut)="onChart2Event($event, 'chartGlobalOut')"></div>
-                    </div>
+                    <app-echart [title]="title2"
+                                [chartName]="chartName2"
+                                [selectedValue]="profitSelectedValue"
+                                [valueSymbol]="valueSymbol2"
+                                [selectedDate]="profitSelectedDate"
+                                [options]="options2"
+                                [data]="data2"></app-echart>
                 </div>
             </div>
             <div class="last-data-container">
                 <div class="left-part">
                     <div class="change-percent">
                         <span  class="label">Change in % (24h)</span>
-                        <span class="value"><span *ngIf="minus2" style="color: red">{{'&#10549;'}}</span><span *ngIf="!minus2" style="color: green">{{'&#10548;'}}</span> {{ changesTvlInPercent}} %</span>
+                        <span class="value">
+                            <span *ngIf="minus2" style="color: red">{{'&#10549;'}}</span>
+                            <span *ngIf="!minus2" style="color: green">{{'&#10548;'}}</span>
+                            {{ changesTvlInPercent}} %
+                        </span>
                     </div>
                     <div class="change-amount">
                         <span  class="label">Change in $ (24h)</span>
-                        <span class="value"><span  class="symbol">{{ minus2 ? '-' : '+' }}</span> ${{ changesTvlInAmount }}</span>
+                        <span class="value">
+                            <span  class="symbol">{{ minus2 ? '-' : '+' }}</span>
+                            ${{ changesTvlInAmount }}
+                        </span>
                     </div>
                 </div>
                 <div class="right-part">
                     <div class="change-percent">
                         <span class="label">Change in % (24h)</span>
-                        <span class="value"><span *ngIf="minus1" style="color: red">{{'&#10549;'}}</span><span *ngIf="!minus1" style="color: green">{{'&#10548;'}}</span> {{ changesVolumInPercent}} %</span>
+                        <span class="value">
+                            <span *ngIf="minus1" style="color: red">{{'&#10549;'}}</span>
+                            <span *ngIf="!minus1" style="color: green">{{'&#10548;'}}</span>
+                            {{ changesVolumeInPercent}} %
+                        </span>
                     </div>
                     <div class="change-amount">
                         <span class="label">Change in $ (24h)</span>
-                        <span class="value"><span class="symbol">{{ minus1 ? '-' : '+' }}</span> ${{ changesVolumInAmount }}</span>
+                        <span class="value">
+                            <span class="symbol">{{ minus1 ? '-' : '+' }}</span>
+                            ${{ changesVolumeInAmount }}
+                        </span>
                     </div>
                 </div>
             </div>

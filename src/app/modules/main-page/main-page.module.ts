@@ -10,6 +10,7 @@ import {CommonModule} from '@angular/common';
 import {MainPageRoutingModule} from './main-page-routing.module';
 import {VaultStatsComponent} from '../dashboard/vault-stats/vault-stats.component';
 import {NgxEchartsModule} from 'ngx-echarts';
+import {EchartComponent} from '@modules/dashboard/vault-stats/echart/echart.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import {NgxEchartsModule} from 'ngx-echarts';
   declarations: [
     MainPageComponent,
     VaultStatsComponent,
+    EchartComponent,
   ],
   providers: [],
 })
