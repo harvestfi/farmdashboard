@@ -115,9 +115,7 @@ export class VaultStatsComponent implements OnInit {
                     color: 'rgb(108, 114, 132)',
                     fontSize: '16px',
                     fontFamily: 'Inter var',
-                    formatter: (value) => {
-                        return echarts.format.formatTime('dd', value, false);
-                    },
+                    formatter: (value) => echarts.format.formatTime('dd', value, false),
                     showMinLabel: true,
                     showMaxLabel: true,
                     interval: 3,
@@ -189,9 +187,7 @@ export class VaultStatsComponent implements OnInit {
                         color: 'rgb(108, 114, 132)',
                         fontSize: '16px',
                         fontFamily: 'Inter var',
-                        formatter: (value) => {
-                            return echarts.format.formatTime('dd', value, false);
-                        },
+                        formatter: (value) => echarts.format.formatTime('dd', value, false),
                         showMinLabel: true,
                         showMaxLabel: true,
                         interval: 3,
@@ -263,9 +259,7 @@ export class VaultStatsComponent implements OnInit {
             { value: 1e18, symbol: 'e' }
         ];
         const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-        const item = lookup.slice().reverse().find((it) => {
-            return num >= it.value;
-        });
+        const item = lookup.slice().reverse().find((it) => num >= it.value);
         return item ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol : '0.00';
     }
 }

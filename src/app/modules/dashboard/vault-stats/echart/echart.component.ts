@@ -36,9 +36,7 @@ export class EchartComponent implements OnInit {
             { value: 1e18, symbol: 'e' }
         ];
         const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-        const item = lookup.slice().reverse().find((it) => {
-            return num >= it.value;
-        });
+        const item = lookup.slice().reverse().find((it) => num >= it.value);
         return item ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol : '0.00';
     }
 
