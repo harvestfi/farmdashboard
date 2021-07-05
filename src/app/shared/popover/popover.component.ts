@@ -14,16 +14,21 @@ export class PopoverComponent {
   public vt: ViewTypeService = new ViewTypeService();
   private hover = false;
   private pendingTimeout;
+  private openTimeout;
   @ContentChild(TemplateRef) template;
 
-  maybeOpen(popoverRef): void {
+  maybeOpen(popoverRef, delay = 500): void {
     clearTimeout(this.pendingTimeout);
-    if (!popoverRef.isOpen()) {
-      popoverRef.open();
-    }
+    clearTimeout(this.openTimeout);
+    this.openTimeout = setTimeout(() => {
+      if (!popoverRef.isOpen()) {
+        popoverRef.open();
+      }
+    }, delay);
   }
 
-  timeDelayClose(popoverRef, delay= 500): void {
+  timeDelayClose(popoverRef, delay= 1): void {
+    clearTimeout(this.openTimeout);
     clearTimeout(this.pendingTimeout);
     this.pendingTimeout = setTimeout(() => {
       if (!this.hover) {
