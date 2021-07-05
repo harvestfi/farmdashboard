@@ -3,6 +3,7 @@ import {Vault} from '@data/models/vault';
 import {Pool} from '@data/models/pool';
 import {CustomModalComponent} from '@shared/custom-modal/custom-modal.component';
 import {StaticValues} from '@data/static/static-values';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-apy-window',
@@ -16,7 +17,7 @@ export class ApyWindowComponent implements OnInit {
   @ViewChild('incomeModal') private incomeModal: CustomModalComponent;
   @ViewChild('psApyModal') private psApyModal: CustomModalComponent;
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit(): void {
@@ -24,6 +25,10 @@ export class ApyWindowComponent implements OnInit {
 
   closeModal(): void {
     this.showModal.emit(false);
+  }
+
+  openChartPage(): void {
+    this.router.navigateByUrl('/info/' + this.vault.contract.address);
   }
 
 

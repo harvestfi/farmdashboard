@@ -9,19 +9,29 @@ import {ChartSeries} from '@modules/dashboard/vault-stats/models/chart-series.mo
 })
 export class EchartComponent implements OnInit {
 
+  tempData: ChartSeries[] = [];
   @Input() title = '';
   @Input() chartName = '';
   @Input() selectedValue = '';
   @Input() selectedDate = '';
   @Input() valueSymbol = '';
   @Input() options: EChartsOption;
-  @Input() data: ChartSeries[];
+
+  @Input() set data(value: ChartSeries[]) {
+      if (value.length) {
+          this.tempData = value;
+          this.setDefaultTooltipValues();
+      }
+  }
+
+    get data(): ChartSeries[] {
+        return this.tempData;
+    }
 
 
   constructor() { }
 
   ngOnInit(): void {
-      this.setDefaultTooltipValues();
   }
 
   nFormatter(num, digits): any {

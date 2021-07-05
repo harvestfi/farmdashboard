@@ -2,13 +2,12 @@
     <div class="currentInfo">
         <div class="name">
             <span>{{ title }}</span>
-            <span>{{ chartName }}</span>
+            <span  *ngIf="chartName">[{{ chartName }}]</span>
         </div>
         <span class="value">{{ selectedValue }}</span>
         <span class="date">{{ selectedDate | date: 'MMM dd, YYYY'}}</span>
     </div>
     <div echarts
          [options]="options"
-         [autoResize]="true"
          (chartGlobalOut)="onChartEvent($event, 'chartGlobalOut')"></div>
 </div>

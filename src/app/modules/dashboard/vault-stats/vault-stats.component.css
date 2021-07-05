@@ -39,11 +39,12 @@
 
 .title {
     font-family: "Inter var", sans-serif;
-    color: rgb(195, 197, 203);
+    color: #404040;
     box-sizing: border-box;
     margin: 0px;
     min-width: 0px;
     font-weight: 500;
+    font-size: 18px;
 }
 
 .chart-block {
