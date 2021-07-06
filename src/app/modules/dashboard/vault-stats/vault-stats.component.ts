@@ -4,7 +4,6 @@ import {EChartsOption} from 'echarts/types/src/export/option';
 import {chartData} from './mokData/charts.data';
 import {ChartSeries} from '@modules/dashboard/vault-stats/models/chart-series.model';
 import {ActivatedRoute} from '@angular/router';
-import {map, take} from 'rxjs/operators';
 import {HarvestDto} from '@data/models/harvest-dto';
 import {HarvestsService} from '@data/services/http/harvests.service';
 import {StaticValues} from '@data/static/static-values';
@@ -12,7 +11,6 @@ import {HardWorkDto} from '@data/models/hardwork-dto';
 import {HardworksService} from '@data/services/http/hardworks.service';
 import {TvlsService} from '@data/services/http/tvls.service';
 import {HarvestTvl} from '@data/models/harvest-tvl';
-import {Network} from "@data/models/network";
 
 @Component({
   selector: 'app-vault-stats',
