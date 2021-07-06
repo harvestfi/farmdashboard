@@ -1,12 +1,12 @@
 import {AfterContentInit, ChangeDetectorRef, Component, Inject} from '@angular/core';
-import {WebsocketService} from './services/websocket.service';
+import {WebsocketService} from '@data/services/websocket.service';
 import {APP_CONFIG, AppConfig} from '../app.config';
 import {NGXLogger, NgxLoggerLevel} from 'ngx-logger';
-import {StaticValues} from './static/static-values';
-import {ApplicationErrorDialogComponent} from './main/layout/application-error-dialog/application-error-dialog.component';
-import {ViewTypeService} from './services/view-type.service';
+import {StaticValues} from '@data/static/static-values';
+import {ApplicationErrorDialogComponent} from '@layout/application-error-dialog/application-error-dialog.component';
+import {ViewTypeService} from '@data/services/view-type.service';
 import {MatDialog} from '@angular/material/dialog';
-import {BusyNotifierService} from './services/busy-notifier.service';
+import {BusyNotifierService} from '@data/services/busy-notifier.service';
 
 @Component({
   selector: 'app-root',

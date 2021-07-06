@@ -1,0 +1,51 @@
+@import "../../../../../scss/utilities/utilities";
+@import "../../../../../scss/utilities/fancy-ui-helpers";
+@import "../../flow-card-common-styles";
+
+.uni-card {
+
+  .title-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    vertical-align: middle;
+    padding: 0.4em;
+
+    .filter-input {
+      height: 25px;
+      @include fancy-input($fancy-input-small-padding, $fancy-input-small-radius);
+    }
+  }
+
+  .table-header {
+    grid-template-columns: 15% 30% 15% 20% 15% 5%;
+  }
+
+  .trades-list {
+
+
+
+    .trades-list-item {
+      grid-template-columns: 12% 30% 15% 20% 10% 10%;
+      gap: 5px;
+
+    }
+
+    .farm-value {
+      text-align: center;
+    }
+
+    .usd-cost {
+      text-align: center;
+    }
+  }
+
+
+
+}

@@ -2,15 +2,13 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
-import {HttpClientModule} from '@angular/common/http';
-import {CommonModule} from '@angular/common';
-import {AppRoutingModule} from './app-routing/app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {interceptorProviders} from './interceptors';
-import {LayoutModule} from './main/layout/layout.module';
+import {LayoutModule} from '@layout/layout.module';
 import {SidebarModule} from 'ng-sidebar';
-import {SnackBarModule} from './main/snack-bar/snack-bar.module';
+import {SnackBarModule} from '@shared/snack-bar/snack-bar.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CoreModule} from '@core/core.module';
 
 @NgModule({
   declarations: [
@@ -19,10 +17,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,
-    CommonModule,
     BrowserModule,
+    CoreModule,
     LayoutModule,
-    HttpClientModule,
     SnackBarModule,
     LoggerModule.forRoot({
       serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
@@ -33,9 +30,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatProgressBarModule,
     SidebarModule,
   ],
-  providers: [
-    interceptorProviders
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {
