@@ -9,7 +9,7 @@ const routes: Routes = [
     component: MainPageComponent,
   },
   {
-    path: 'info/:address',
+    path: 'info/:network/:address',
     component: VaultStatsComponent
   },
 ];

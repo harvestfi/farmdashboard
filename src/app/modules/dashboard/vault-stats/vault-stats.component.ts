@@ -12,6 +12,7 @@ import {HardWorkDto} from '@data/models/hardwork-dto';
 import {HardworksService} from '@data/services/http/hardworks.service';
 import {TvlsService} from '@data/services/http/tvls.service';
 import {HarvestTvl} from '@data/models/harvest-tvl';
+import {Network} from "@data/models/network";
 
 @Component({
   selector: 'app-vault-stats',
@@ -66,6 +67,7 @@ export class VaultStatsComponent implements OnInit {
     minus4 = false;
 
     vaultAddress = '';
+    vaultNetwork = '';
 
     vaultDataTVL: ChartSeries[] = [];
     vaultDataProfit: ChartSeries[] = [];
@@ -80,6 +82,7 @@ export class VaultStatsComponent implements OnInit {
         route.params.subscribe(routeVal => {
           if (routeVal) {
               this.vaultAddress = routeVal.address;
+              this.vaultNetwork = routeVal.network;
           }
         });
     }
@@ -94,7 +97,7 @@ export class VaultStatsComponent implements OnInit {
     }
 
     loadSingleVaultTVL(): void {
-        this.harvestService.getHarvestHistoryByVault(this.vaultAddress, StaticValues.NETWORKS.get('eth'))
+        this.harvestService.getHarvestHistoryByVault(this.vaultAddress, StaticValues.NETWORKS.get(this.vaultNetwork))
             .subscribe((data: HarvestDto[]) => {
                 if (data.length) {
                     this.vaultDataTVL = data.map((item) => {
@@ -200,7 +203,7 @@ export class VaultStatsComponent implements OnInit {
 
 
     loadSingleVaultProfit(): void {
-        this.hardWorkService.getHardWorkHistoryDataByAddress(this.vaultAddress, StaticValues.NETWORKS.get('eth'))
+        this.hardWorkService.getHardWorkHistoryDataByAddress(this.vaultAddress, StaticValues.NETWORKS.get(this.vaultNetwork))
             .subscribe((data) => {
                 if (data.length) {
                     this.vaultDataProfit = data.map((item: HardWorkDto) => {
@@ -457,7 +460,7 @@ export class VaultStatsComponent implements OnInit {
 
 
     loadTotalProfit(): void {
-        this.hardWorkService.getHardWorkHistoryData(undefined)
+        this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.vaultNetwork))
             .subscribe((data) => {
                 if (data.length) {
                     let newData = data;

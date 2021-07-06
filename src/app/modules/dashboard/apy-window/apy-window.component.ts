@@ -28,7 +28,7 @@ export class ApyWindowComponent implements OnInit {
   }
 
   openChartPage(): void {
-    this.router.navigateByUrl('/info/' + this.vault.contract.address);
+    this.router.navigateByUrl(`/info/${this.vault.contract.network}/${this.vault.contract.address}`);
   }
 
 
