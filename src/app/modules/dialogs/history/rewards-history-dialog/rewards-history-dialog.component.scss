@@ -1,3 +1,7 @@
+@import "../../../../../scss/themes/theme-mixins";
+
+$dark-background-color: #111111;
+
 .title {
   font-size: 1.5em;
   padding: 10px;
@@ -17,13 +21,22 @@
 }
 
 .filters {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
 }
 
-.headers, .values {
+.values {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 0.3fr;
+  position: relative;
+  grid-template-columns: 23% 24.5% 15% 25% 7%;
+  padding: 0 0.5em;
+  font-weight: bold;
+  font-size: 0.9em;
+  border: 1px solid;
+  margin: 0.5em;
+  align-items: center;
 }
 
 .header-field {
@@ -51,6 +64,48 @@
 .empty-list {
   text-align: center;
   padding: 2em 0;
+}
+
+.select-strategy-2 {
+  height: 25px;
+  padding: 0.1em;
+  box-sizing: border-box;
+  border-radius: 0.25em;
+  outline: none;
+}
+
+.table-header {
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  display: grid;
+  padding: 0.3em 0.5em;
+  font-weight: bold;
+  font-size: 0.9em;
+  background: darken(#fffce6, 5%);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0.5em;
+  text-align: center;
+
+  @include isDarkMode() {
+    background: $dark-background-color;
+  }
+
+  .money-icon {
+    text-align: center;
+  }
+}
+
+.sign-icon {
+  font-size: 1em;
+  height: auto;
+  vertical-align: middle;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.link-field {
+  text-align: center;
 }
 
 

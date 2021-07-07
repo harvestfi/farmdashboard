@@ -1,14 +1,26 @@
+@import "../../../../../scss/themes/theme-mixins";
+$buy-color: #a1bca6;
+$sell-color: #B80E0E;
+$dark-background-color: #111111;
+
 .uni-trades {
   display: grid;
   position: relative;
-  grid-template-columns: 29% 20% 23% 21% 7%;
+  grid-template-columns: 7% 23% 21% 22% 20% 5%;
+  padding: 0 0.5em;
+  font-weight: bold;
+  font-size: 0.9em;
+  border: 1px solid;
+  margin: 0.5em;
+  align-items: center;
 }
 
 .trade-field {
   font-weight: bolder;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   min-height: 30px;
-  text-align: center;
 }
 
 .trade-date {
@@ -23,16 +35,50 @@
   font-size: 0.7em;
 }
 
+.trade-amount {
+  text-align: center;
+}
+
 .trade-sign {
   font-size: 0.9em;
+  text-align: center;
+}
+
+.trade-price {
+  text-align: center;
 }
 
 .sign-icon {
-  font-size: 0.9em;
+  font-size: 1em;
+  vertical-align: middle;
+  text-align: center;
+  height: auto;
+  width: auto;
 }
 
 .pointer:hover {
   z-index: 900;
+}
+
+.transaction-type span {
+  padding: 0.3em 0.4em;
+  text-align: center;
+  border-radius: 0.5em;
+  font-size: 0.8em;
+
+  &.BUY,
+  &.Deposit {
+    background: rgba($buy-color, 0.3);
+    border: 1px solid $buy-color;
+    color: $buy-color;
+  }
+
+  &.SELL,
+  &.Withdraw {
+    background: rgba($sell-color, 0.3);
+    border: 1px solid $sell-color;
+    color: $sell-color;
+  }
 }
 
 @media(max-width: 1100px) {

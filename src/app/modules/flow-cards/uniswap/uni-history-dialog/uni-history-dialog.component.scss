@@ -1,4 +1,7 @@
 @import "../../../../../scss/utilities/utilities";
+@import "../../../../../scss/themes/theme-mixins";
+
+$dark-background-color: #111111;
 
 .uni-tx-hist {
   margin: 0 auto;
@@ -18,11 +21,26 @@
     text-align: center;
   }
 
+  .title-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    vertical-align: middle;
+    padding: 0.4em 0;
+  }
+
   .title {
     font-size: 1.5em;
     font-weight: bolder;
     text-align: center;
     width: 100%;
+    margin: 0;
   }
 
   .filter-input {
@@ -47,11 +65,36 @@
 
   }
 
+  .table-header {
+    grid-template-columns: 8% 30% 20% 22% 10% 10%;
+    display: grid;
+    padding: 0.3em 0.5em;
+    font-weight: bold;
+    font-size: 0.9em;
+    background: darken(#fffce6, 5%);
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    @include isDarkMode() {
+      background: $dark-background-color;
+    }
+
+    .money-icon {
+      text-align: center;
+    }
+  }
+
 
   @media screen and (max-width: 900px) {
     .title {
       font-size: 1em;
       margin: 5px;
+    }
+
+    .title-row {
+      flex-direction: column;
+      justify-content: center;
     }
   }
 

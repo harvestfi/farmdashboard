@@ -1,6 +1,6 @@
-<div [ngClass]="moreColumns ? 'hardwork-info-full' : 'hardwork-info'">
+<div class="table-row" [ngClass]="moreColumns ? 'hardwork-info-full' : 'hardwork-info'">
   <div *ngIf='moreColumns' class="hardwork-field hardwork-poolCalls">
-    {{dto.callsQuantity }}
+    <span>{{dto.callsQuantity }}</span>
   </div>
   <app-popover-card class="hardwork-field hardwork-date left-border-box">
     <ng-template>
@@ -9,10 +9,12 @@
       <p>TVL ${{dto.tvl | number: '1.0-0'}}</p>
       <p>PS APR {{dto.psApr.toFixed(2) | number: '1.0-0'}}%</p>
     </ng-template>
+    <span>
     {{fullDate ?
       (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss') :
       (dto.blockDateAdopted | date: 'dd-MMM HH:mm')
     }}
+    </span>
 
   </app-popover-card>
 
@@ -22,32 +24,32 @@
 
 
   <div class="hardwork-field hardwork-vault">
-    {{name}}
+    <span>{{name}}</span>
   </div>
 
   <div class="hardwork-field hardwork-shareChangeUsd">
-    ${{dto.fullRewardUsd | number: '1.2-2'}}
+    <span>${{dto.fullRewardUsd | number: '1.2-2'}}</span>
   </div>
 
 
   <div *ngIf='moreColumns' class="hardwork-field hardwork-farmBuyback">
-    {{dto.farmBuyback.toFixed(2)}} FARM
+    <span>{{dto.farmBuyback.toFixed(2)}} FARM</span>
   </div>
 
   <div *ngIf='moreColumns' class="hardwork-field hardwork-weeklyProfit">
-    ${{dto.weeklyProfit | number: '1.0-0'}}
+    <span>${{dto.weeklyProfit | number: '1.0-0'}}</span>
   </div>
 
   <div *ngIf='moreColumns' class="hardwork-field hardwork-tvl currency">
-    ${{ (dto.tvl| number: '1.0-0')}}
+    <span>${{ (dto.tvl| number: '1.0-0')}}</span>
   </div>
 
   <div *ngIf='moreColumns' class="hardwork-field hardwork-periodOfWork">
-    {{(dto.periodOfWork / (60 * 60 * 24)).toFixed(2)}} days
+    <span>{{(dto.periodOfWork / (60 * 60 * 24)).toFixed(2)}} days</span>
   </div>
 
   <div *ngIf='moreColumns' class="hardwork-field hardwork-gasSaved">
-    ${{dto.savedGasFees | number: '1.0-0' }}
+    <span>${{dto.savedGasFees | number: '1.0-0' }}</span>
   </div>
 
   <div class="hardwork-field pointer">

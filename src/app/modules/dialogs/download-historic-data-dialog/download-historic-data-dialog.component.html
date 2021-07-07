@@ -1,25 +1,22 @@
 <div class="download-historic-data-container" [class]="vt.getThemeColor() + '-card'">
 
-  <div class="row header-row">
-    <div class="left-border-box title">
-      Download historic data in CSV about all existing vaults
-    </div>
-  </div>
+  <h1 class="title">Download historic data in CSV about all existing vaults</h1>
+
 
   <div class="dialog-card" mat-dialog-content>
     <table (matSortChange)="sortData($event)" class="table-vaults" matSort>
-      <tr>
+      <tr class="table-header" [class]="vt.getThemeColor()">
         <th mat-sort-header="name">Name</th>
         <th mat-sort-header="transactions"></th>
         <th mat-sort-header="hardwork"></th>
         <th mat-sort-header="tvl"></th>
       </tr>
 
-      <tr *ngFor="let vault of sortedVaults">
+      <tr class="table-row" *ngFor="let vault of sortedVaults">
 
         <td class="name">
           <app-vault-icon [vault]="vault"></app-vault-icon>
-          {{vault.contract.name}}
+          <span>{{vault.contract.name}}</span>
         </td>
 
         <td class="transactions">

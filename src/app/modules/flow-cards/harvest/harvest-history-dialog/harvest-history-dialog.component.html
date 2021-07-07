@@ -10,14 +10,24 @@
         <label class="strategy-selector-label" for="strategy-selector">Pools</label>
         <select (change)="handleFilterUpdate($event)" [(ngModel)]="vaultFilter" id="strategy-selector"
                 class="strategy-selector">
-          <option [value]="">All</option>
+          <option [value]="undefined">All</option>
           <option *ngFor="let vault of vaults" [ngValue]="vault">{{vault.contract.name}}</option>
         </select>
       </app-popover-card>
-      <input (change)="handleFilterUpdate($event)" [(ngModel)]="minAmount" #harvestDtoFilter class="more-than-input"
-             placeholder="More than..." type="number" min="0">
+      <div>
+        <label class="more-than-input-label">&nbsp;</label>
+        <input (change)="handleFilterUpdate($event)" [(ngModel)]="minAmount" #harvestDtoFilter class="more-than-input"
+               placeholder="More than..." type="number" min="0">
+      </div>
     </div>
-
+    <div class="table-header" [class]="vt.getThemeColor()">
+      <div class="money-icon"><span role="img">💸</span></div>
+      <div class="date-header">Date</div>
+      <div class="farm-header">Amount</div>
+      <div class="usd-cost-header">Vault</div>
+      <div class="price-header">TVL</div>
+      <div></div>
+    </div>
     <app-harvest-flow-tab [dtos]="paginatedDtos.data" [showFullDate]=true></app-harvest-flow-tab>
     <div class="paginator-area">
       <app-paginator (selectPage)="selectPage($event)" (nextPage)="nextPage($event)"

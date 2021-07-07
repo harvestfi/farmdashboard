@@ -8,31 +8,34 @@
   <div class="dialog-card" [class]="vt.getThemeColor() + '-card'">
     <div class="title">Rewards History</div>
     <div class="filters">
-      <div>
         <select (change)="handleFilterUpdate()" [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
-          <option [value]="''">-</option>
+          <option [value]="''">All</option>
           <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
         </select>
-      </div>
     </div>
-    <div class="headers">
+    <div class="table-header" [class]="vt.getThemeColor()">
       <div class="header-field">Date</div>
       <div class="header-field">Vault</div>
       <div class="header-field">Reward</div>
       <div class="header-field">Period Finish</div>
-      <div class="header-field"></div>
+      <div class="header-field">Link</div>
     </div>
     <div class="scroller">
-      <div class="values" *ngFor="let reward of rewards.data">
-        <div class="value-field">{{reward.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
+      <div class="values table-row" *ngFor="let reward of rewards.data">
+        <div class="value-field">
+          <span>{{reward.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</span>
+        </div>
         <div class="value-field">
           <app-vault-icon [vault]="getVault(reward.vaultAddress)"></app-vault-icon>
           <span [title]="reward.vault">{{reward.vault}}</span>
-          
         </div>
-        <div class="value-field">{{reward.reward | number: '1.1-1'}}</div>
-        <div class="value-field">{{reward.periodFinish * 1000 | date: 'dd-MMM-yyyy HH:mm:ss'}}</div>
         <div class="value-field">
+          <span>{{reward.reward | number: '1.1-1'}}</span>
+        </div>
+        <div class="value-field">
+          <span>{{reward.periodFinish * 1000 | date: 'dd-MMM-yyyy HH:mm:ss'}}</span>
+        </div>
+        <div class="value-field link-field">
           <mat-icon (click)="openNetworkScanTx(reward.id.split('_')[0], reward.network)"
                     [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new
           </mat-icon>

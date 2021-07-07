@@ -1,5 +1,5 @@
-<div class='uni-trades' [ngStyle]="{'color': priceGradient(dto.type, dto.amount, dto.confirmed)}">
-
+<div class='uni-trades table-row'>
+  <div class="transaction-type"><span [class]="dto.type">{{dto.type}}</span></div>
   <app-popover-card class="trade-date left-border-box trade-field">
     <ng-template>
       <p>{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}</p>
@@ -10,25 +10,25 @@
       <p>Price: {{dto.lastPrice | number}}</p>
       <p>Last gas: {{dto.lastGas | number}}</p>
     </ng-template>
-    {{fullDate ?
-      (dto.blockDateAdopted | date: 'dd-MMM HH:mm') :
+    <span>{{fullDate ?
+      (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm') :
       (dto.blockDateAdopted | date: 'HH:mm:ss')
-    }}
+      }}</span>
   </app-popover-card>
 
   <div class="trade-amount left-border-box trade-field">
-    {{dto.amount  | number: '1.0-0'}}
+    <span>{{dto.amount  | number: '1.0-0'}}</span>
   </div>
 
 
   <div class="trade-amount left-border-box trade-field">
-    ${{dto.amount * dto.lastPrice  | number: '1.0-0'}}
+    <span>${{dto.amount * dto.lastPrice  | number: '1.0-0'}}</span>
   </div>
 
 
   <app-popover-card class="trade-price left-border-box trade-field">
     <ng-template>{{dto.otherCoin}} price: {{(dto.otherAmount / dto.amount) | number: '1.4-4'}}</ng-template>
-    {{dto.lastPrice | number: '1.2-2'}}
+    <span>{{dto.lastPrice | number: '1.2-2'}}</span>
   </app-popover-card>
 
   <div class="trade-sign left-border-box trade-field">
