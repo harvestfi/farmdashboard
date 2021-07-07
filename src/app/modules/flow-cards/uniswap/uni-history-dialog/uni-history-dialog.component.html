@@ -1,7 +1,17 @@
 <div class="uni-tx-hist" [class]="vt.getThemeColor() + '-card'">
-  <h1 class="title">Uniswap Transaction History</h1>
-  <input class="filter-input" (input)="handleFilterUpdate($event)" [(ngModel)]="minAmount" placeholder="More than..."
-         type="number">
+  <div class="title-row">
+    <h1 class="title">Uniswap Transaction History</h1>
+    <input class="filter-input" (input)="handleFilterUpdate($event)" [(ngModel)]="minAmount" placeholder="More than..."
+           type="number">
+  </div>
+  <div class="table-header" [class]="vt.getThemeColor()">
+    <div class="money-icon"><span role="img">💸</span></div>
+    <div class="date-header">Date</div>
+    <div class="farm-header">FARM</div>
+    <div class="usd-cost-header">USD Cost</div>
+    <div class="price-header">Price</div>
+    <div></div>
+  </div>
   <app-flow-tab>
     <div class="trade-row" *ngFor="let dto of getDtos() | uniswapFilter:minAmount">
       <app-uni-trade [fullDate]="true" [dto]="dto"></app-uni-trade>

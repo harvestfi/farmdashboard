@@ -39,6 +39,10 @@ $variables in $themes_colors {
             margin: 0;
             padding: 0;
         }
+
+        .table-row {
+            color: map-get($variables, "border");
+        }
     }
 
     .#{$color}-background {

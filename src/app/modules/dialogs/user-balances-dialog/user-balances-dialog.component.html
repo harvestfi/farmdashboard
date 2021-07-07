@@ -1,15 +1,15 @@
 <div class="container" [class]="vt.getThemeColor() + '-card'">
 
-  <div class="title">
+  <h1 class="title">
     {{data.title}}
-  </div>
+  </h1>
 
   <div class="disclaimer">
     Currently, balances for contracts can't be reached.
     Badger holders and transactions via Argent don't appear on this list.
   </div>
 
-  <div class="headers">
+  <div class="table-header" [class]="vt.getThemeColor()">
 
     <div class="header-field">
       &nbsp;

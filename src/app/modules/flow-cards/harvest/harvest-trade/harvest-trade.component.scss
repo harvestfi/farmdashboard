@@ -1,23 +1,45 @@
+@import "../../../../../scss/themes/theme-mixins";
+$buy-color: #a1bca6;
+$sell-color: #B80E0E;
+$dark-background-color: #111111;
+
 .harvest-trades {
   display: grid;
   position: relative;
-  grid-template-columns: 20% 30% 15% 30% 5%;
-  padding: 0 0.9rem;
+  grid-template-columns: 7% 23% 20% 22% 20% 5%;
+  padding: 0 0.5em;
+  font-weight: bold;
+  font-size: 0.9em;
+  border: 1px solid;
+  margin: 0.25em;
+  align-items: center;
 }
 
 .harvest-field {
   font-weight: bolder;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   min-height: 30px;
-  text-align: center;
 }
 
 .harvest2-date {
   font-size: 0.9em;
 }
 
+.harvest2-amount,
+.harvest2-vault,
+.harvest2-tvl,
+.harvest2-type{
+  text-align: center;
+}
+
 .sign-icon {
-  font-size: 0.9em;
+  font-size: 1em;
+  vertical-align: middle;
+  text-align: center;
+  height: auto;
+  width: auto;
 }
 
 .tvl-img {
@@ -27,6 +49,28 @@
 
 .pointer:hover {
   z-index: 900;
+}
+
+.transaction-type span {
+
+  padding: 0.3em 0.4em;
+  text-align: center;
+  border-radius: 0.5em;
+  font-size: 0.8em;
+
+  &.BUY,
+  &.Deposit {
+    background: rgba($buy-color, 0.3);
+    border: 1px solid $buy-color;
+    color: $buy-color;
+  }
+
+  &.SELL,
+  &.Withdraw {
+    background: rgba($sell-color, 0.3);
+    border: 1px solid $sell-color;
+    color: $sell-color;
+  }
 }
 
 @media (max-width: 1100px) {

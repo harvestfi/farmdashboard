@@ -8,7 +8,7 @@ import {Utils} from '@data/static/utils';
 @Component({
   selector: 'app-user-balances-dialog',
   templateUrl: './user-balances-dialog.component.html',
-  styleUrls: ['./user-balances-dialog.component.css']
+  styleUrls: ['./user-balances-dialog.component.scss']
 })
 export class UserBalancesDialogComponent implements AfterViewInit {
   @Input('data') public data;

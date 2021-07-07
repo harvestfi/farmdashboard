@@ -1,22 +1,25 @@
 .hardwork-info {
-  align-items: center;
-  justify-content: space-evenly;
-  position: relative;
-  font-weight: bold;
-  width: 100%;
-  font-size: .9em;
   display: grid;
-  grid-template-columns:  1.3fr 0.5fr 1fr 1fr 0.05fr;
+  position: relative;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  padding: 0 0.5em;
+  font-weight: bold;
+  font-size: 0.9em;
+  border: 1px solid;
+  margin: 0.25em;
+  align-items: center;
 }
 
 .hardwork-info-full {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  display: grid;
   position: relative;
+  grid-template-columns: 4% 11% 4% 12% 12% 11% 11% 9% 9% 9% 4%;
+  padding: 0 0.5em;
   font-weight: bold;
-  width: 100%;
-  font-size: .9em;
+  font-size: 0.9em;
+  border: 1px solid;
+  margin: 0.25em;
+  align-items: center;
 }
 
 .hardwork-field {
@@ -24,6 +27,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-height: 30px;
 
   .tvl-img {
     width: 25%;
@@ -32,10 +36,15 @@
   }
 }
 
+.hardwork-poolCalls {
+  justify-content: left;
+}
+
 .pointer {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 
   .sign-icon {
     font-size: .9em;
@@ -43,11 +52,6 @@
     margin-bottom: 0;
 
   }
-}
-
-.hardwork-vault {
-  font-size: 0.8em;
-  align-items: baseline;
 }
 
 

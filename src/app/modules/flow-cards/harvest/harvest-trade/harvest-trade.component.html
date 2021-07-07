@@ -1,4 +1,5 @@
-<div class="harvest-trades" [ngStyle]="{'color': priceGradientLight(dto.methodName, dto.usdAmount, dto.confirmed)}">
+<div class="harvest-trades table-row">
+  <div class="transaction-type"><span [class]="dto.methodName">{{dto.methodName}}</span></div>
   <app-popover-card class="harvest-field harvest2-date left-border-box">
     <ng-template>
       <p>{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}</p>
@@ -8,14 +9,14 @@
       <p>sharePrice: {{dto.sharePrice | number}}</p>
       <p>vault tvl: {{dto.lastTvl | number}}</p>
     </ng-template>
-    {{fullDate ?
-      (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss') :
+    <span>{{fullDate ?
+      (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm') :
       (dto.blockDateAdopted | date: 'HH:mm:ss')
-    }}
+      }}</span>
   </app-popover-card>
 
   <div class="harvest-field harvest2-amount left-border-box">
-    ${{dto.usdAmount | number: '1.0-0'}}
+    <span>${{dto.usdAmount | number: '1.0-0'}}</span>
   </div>
 
 
@@ -24,7 +25,7 @@
   </div>
 
   <div class="harvest-field harvest2-tvl left-border-box">
-    {{dto.lastUsdTvl | number: '1.0-0'}}$
+    <span>{{dto.lastUsdTvl | number: '1.0-0'}}$</span>
   </div>
 
   <div class="harvest-field harvest2-type left-border-box pointer ">

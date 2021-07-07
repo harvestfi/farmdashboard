@@ -16,6 +16,8 @@
   align-items: center;
   max-width: 1200px;
   width: 90vw;
+  margin: 0 auto;
+  padding: 20px;
 
   @include responsive(small) {
     width: 100%;
@@ -27,6 +29,7 @@
     text-align: center;
     width: 100%;
     padding: 10px 0;
+    margin: 0;
   }
 
 
@@ -82,21 +85,24 @@
     -ms-flex-align: center;
     align-items: center;
     width: 100%;
-    padding: 10px 20px;
+    padding: 20px 0;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 
 
-    .strategy-select-field, .less-than-filter-field {
-      outline: 0;
-      height: 40px;
-      border-radius: 5px;
-      border: 1px solid #cdcdcd;
-      padding: 5px;
-      -webkit-box-sizing: border-box;
+    .strategy-select-field,
+    .less-than-filter-field {
+      height: 25px;
+      padding: 0.1em;
       box-sizing: border-box;
+      border-radius: 0.25em;
+      outline: none;
     }
   }
 
+}
+
+.hardWork-list-history.showMoreColumns {
+  max-width: 800px;
 }
 
