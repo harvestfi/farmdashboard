@@ -502,7 +502,7 @@ export class VaultStatsComponent implements OnInit {
         };
     }
 
-    lastChanges(data): { minus: boolean; amountChanges: string; percentChanges: string; } {
+    lastChanges(data): { minus: boolean; amountChanges: string; percentChanges: string } {
         const lastChanges = +data[data.length - 1].value[1] - + data[data.length - 2].value[1];
         const previousNumber = +data[data.length - 2].value[1] ;
         let minus = false;
