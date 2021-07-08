@@ -58,8 +58,8 @@ export class HardworksService implements WsConsumer {
 
   // ------------------- REST REQUESTS ---------------------
 
-  getHardWorkHistoryData(network: Network): Observable<HardWorkDto[]> {
-    return this.httpService.httpGet('/api/transactions/history/hardwork?reduce=10', network);
+  getHardWorkHistoryData(network: Network, reduce = 10): Observable<HardWorkDto[]> {
+    return this.httpService.httpGet('/api/transactions/history/hardwork?reduce=' + reduce, network);
   }
 
   getHardWorkHistoryDataByAddress(address: string, network: Network): Observable<HardWorkDto[]> {

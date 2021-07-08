@@ -408,18 +408,29 @@ export class VaultStatsComponent implements OnInit {
     }
 
     loadTotalProfit(): void {
-        this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.vaultNetwork))
+        this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.vaultNetwork), 1)
             .subscribe((data) => {
                 if (data.length) {
+                    const cumulative = new Map<string, number>();
+                    let lastTotalProfit = 0;
+
+                    data.forEach( hw => {
+                        const date = new Date(hw.blockDate * 1000);
+                        const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
+                        if(!cumulative.has(curDate)) {
+                            lastTotalProfit = 0;
+                        }
+                        lastTotalProfit += hw.fullRewardUsd;
+                        cumulative.set(curDate, lastTotalProfit);
+                    });
                     this.totalDataProfit = data.map((item: HardWorkDto) => {
                         const date = new Date(item.blockDate * 1000);
+                        const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
                         return {
                             name: date.toString(),
                             value: [
-                                [
-                                    date.getFullYear(), date.getMonth() + 1, date.getDate()
-                                ].join('/'),
-                                item.fullRewardUsdTotal.toString()
+                                curDate,
+                                cumulative.get(curDate).toString()
                             ]
                         };
                     });
@@ -479,7 +490,7 @@ export class VaultStatsComponent implements OnInit {
                         color: 'rgb(108, 114, 132)',
                         fontSize: '16px',
                         fontFamily: 'Inter var',
-                        formatter: (value) => echarts.format.formatTime('dd', value, false),
+                        formatter: (value) => echarts.format.formatTime('MM', value, false),
                         showMinLabel: true,
                         showMaxLabel: true,
                     },
