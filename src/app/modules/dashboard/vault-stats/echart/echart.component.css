@@ -8,10 +8,18 @@
     height: 300px;
     padding: 16px 28px 16px 16px;
     display: flex;
-    background-color: #404040;
     flex-direction: column;
     position: relative;
 }
+
+.chart-background.dark {
+    background-color: #404040;
+}
+
+.chart-background.light {
+    background-color: #fffce6;
+}
+
 
 .currentInfo {
     position: absolute;
@@ -23,21 +31,26 @@
     box-sizing: border-box;
 }
 
+.chart-background.dark .currentInfo {
+    color: #ffffff;
+}
+.chart-background.light .currentInfo {
+    color: #404040;
+}
+
+
 .currentInfo .name {
     display: flex;
     justify-content: space-between;
     font-size: 16px;
 }
-.currentInfo .name span {
-    color: #ffffff;
-}
+
 .currentInfo .value {
     font-variant-numeric: tabular-nums;
     margin: 0;
     min-width: 0;
     font-weight: 600;
     font-size: 32px;
-    color: #ffffff;
 }
 
 .currentInfo .date {
@@ -47,5 +60,4 @@
     font-weight: 500;
     font-size: 12px;
     height: 14px;
-    color: rgb(195, 197, 203);
 }

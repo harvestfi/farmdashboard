@@ -8,6 +8,7 @@
     flex: 1 1 0%;
     overflow: hidden auto;
     z-index: 1;
+    margin-bottom: 3rem;
 }
 
 .cover > * {
@@ -39,12 +40,18 @@
 
 .title {
     font-family: "Inter var", sans-serif;
-    color: #404040;
     box-sizing: border-box;
     margin: 0px;
     min-width: 0px;
     font-weight: 500;
     font-size: 18px;
+}
+.cover.light .title {
+    color: #404040;
+}
+
+.cover.dark .title {
+    color: #ffffff;
 }
 
 .chart-block {
@@ -80,11 +87,65 @@
     width: 49%;
     border-radius: 16px;
     padding: 1rem;
-    background-color: #404040;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     row-gap: 16px;
+}
+.cover.light {
+    .last-data-container .left-part .change-amount,
+    .last-data-container .left-part .change-percent,
+    .last-data-container .right-part .change-amount,
+    .last-data-container .right-part .change-percent {
+        background-color: #fffce6;
+    }
+
+    .last-data-container .left-part .change-amount .label,
+    .last-data-container .left-part .change-percent .label,
+    .last-data-container .right-part .change-amount .label,
+    .last-data-container .right-part .change-percent .label{
+        color: #404040;
+    }
+
+    .last-data-container .left-part .change-amount .value,
+    .last-data-container .left-part .change-percent .value,
+    .last-data-container .right-part .change-amount .value,
+    .last-data-container .right-part .change-percent .value {
+        color: #404040;
+    }
+
+    .last-data-container .left-part .change-amount .value .symbol,
+    .last-data-container .right-part .change-amount .value .symbol {
+        color: #404040;
+    }
+}
+
+.cover.dark {
+    .last-data-container .left-part .change-amount,
+    .last-data-container .left-part .change-percent,
+    .last-data-container .right-part .change-amount,
+    .last-data-container .right-part .change-percent {
+        background-color: #404040;
+    }
+
+    .last-data-container .left-part .change-amount .label,
+    .last-data-container .left-part .change-percent .label,
+    .last-data-container .right-part .change-amount .label,
+    .last-data-container .right-part .change-percent .label{
+        color: rgb(195, 197, 203);
+    }
+
+    .last-data-container .left-part .change-amount .value,
+    .last-data-container .left-part .change-percent .value,
+    .last-data-container .right-part .change-amount .value,
+    .last-data-container .right-part .change-percent .value {
+        color: #ffffff;
+    }
+
+    .last-data-container .left-part .change-amount .value .symbol,
+    .last-data-container .right-part .change-amount .value .symbol {
+        color: #ffffff;
+    }
 }
 
 .last-data-container .left-part .change-amount .label,
@@ -92,7 +153,6 @@
 .last-data-container .right-part .change-amount .label,
 .last-data-container .right-part .change-percent .label{
     font-weight: 500;
-    color: rgb(195, 197, 203);
     font-size: 14px;
 }
 
@@ -105,39 +165,6 @@
     min-width: 0;
     font-weight: 600;
     font-size: 32px;
-    color: #ffffff;
-}
-.last-data-container .left-part .change-amount .value .symbol,
-.last-data-container .right-part .change-amount .value .symbol {
-    color: #ffffff;
-}
-
-
-.currentInfo .name {
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px;
-}
-.currentInfo .name span {
-    color: #ffffff;
-}
-.currentInfo .value {
-    font-variant-numeric: tabular-nums;
-    margin: 0;
-    min-width: 0;
-    font-weight: 600;
-    font-size: 32px;
-    color: #ffffff;
-}
-
-.currentInfo .date {
-    font-variant-numeric: tabular-nums;
-    margin: 0;
-    min-width: 0;
-    font-weight: 500;
-    font-size: 12px;
-    height: 14px;
-    color: rgb(195, 197, 203);
 }
 
 
