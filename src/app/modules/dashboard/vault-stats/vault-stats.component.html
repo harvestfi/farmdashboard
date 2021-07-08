@@ -105,7 +105,7 @@
                 </div>
                 <div class="right-part">
                     <div class="change-percent">
-                        <span class="label">Change in % (24h)</span>
+                        <span class="label">Change in % (1 month)</span>
                         <span class="value">
                             <span *ngIf="minus4" style="color: red">{{'&#10549;'}}</span>
                             <span *ngIf="!minus4" style="color: green">{{'&#10548;'}}</span>
@@ -113,7 +113,7 @@
                         </span>
                     </div>
                     <div class="change-amount">
-                        <span class="label">Change in $ (24h)</span>
+                        <span class="label">Change in $ (1 month)</span>
                         <span class="value">
                             <span class="symbol">{{ minus4 ? '-' : '+' }}</span>
                             ${{ changesProfitTotalInAmount}}

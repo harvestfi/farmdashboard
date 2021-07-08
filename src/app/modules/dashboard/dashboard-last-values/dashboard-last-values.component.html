@@ -197,8 +197,9 @@
       </ng-template>
     </app-custom-modal>
 
-    <app-popover-card (click)="openSavedFeesDialog()"
-                      class="value-card pointer saved-fees"
+    <!-- TODO fix        (click)="openSavedFeesDialog()"-->
+    <app-popover-card
+                      class="value-card saved-fees"
                       [class]="vt.getThemeColor() + '-card'">
       <div>
         <ng-template>

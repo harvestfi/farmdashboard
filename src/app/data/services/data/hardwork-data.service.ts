@@ -20,6 +20,8 @@ export class HardworkDataService {
   );
 
   private handledIds = new Set<string>();
+  private gasSavedEth = 0;
+  private gasSavedBsc = 0;
 
   constructor(private hardworksService: HardworksService, private log: NGXLogger) {
     this.load();
@@ -39,6 +41,11 @@ export class HardworkDataService {
       );
     });
     this.hardworksService.subscribeToHardworks().subscribe(this.handleHardworks.bind(this));
+
+    this.hardworksService.getGasSaved(StaticValues.NETWORKS.get('eth'))
+    .subscribe(data => this.gasSavedEth += parseFloat(data));
+    this.hardworksService.getGasSaved(StaticValues.NETWORKS.get('bsc'))
+    .subscribe(data => this.gasSavedBsc += parseFloat(data));
   }
 
   private handleHardworks(dto: HardWorkDto): void {
@@ -82,7 +89,13 @@ export class HardworkDataService {
   }
 
   getTotalGasSaved(network: string): number {
-    return Utils.iterableReduce(this.lastHardworks.get(network).values(), a => a.savedGasFeesSum);
+    if (network === 'eth') {
+      return this.gasSavedEth;
+    } else if (network === 'bsc') {
+      return this.gasSavedBsc;
+    }
+    return 0;
+    // return Utils.iterableReduce(this.lastHardworks.get(network).values(), a => a.savedGasFeesSum);
   }
 
   getWeeklyProfits(network: string): number {

@@ -58,6 +58,10 @@ export class HardworksService implements WsConsumer {
 
   // ------------------- REST REQUESTS ---------------------
 
+  getGasSaved(network: Network): Observable<string> {
+    return this.httpService.httpGet('/last_saved_gas_sum', network);
+  }
+
   getHardWorkHistoryData(network: Network, reduce = 10): Observable<HardWorkDto[]> {
     return this.httpService.httpGet('/api/transactions/history/hardwork?reduce=' + reduce, network);
   }

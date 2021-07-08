@@ -24,22 +24,22 @@ export class SavedGasFeesDialogComponent extends ChartGeneralMethodsComponent im
   }
 
   load(): void {
-    this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network))
-      .subscribe((data) => {
-        this.log.debug('History of All Hard Works loaded ', data);
-        const chartBuilder = new ChartBuilder();
-        const hwFees = new Map<number, number>();
-        let savedGas = 0;
+    this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network), 1)
+    .subscribe((data) => {
+      this.log.debug('History of All Hard Works loaded ', data);
+      const chartBuilder = new ChartBuilder();
+      const hwFees = new Map<number, number>();
+      let savedGas = 0;
 
-        data?.forEach(dto => {
-          savedGas += dto.savedGasFees;
-          hwFees.set(dto.blockDate, savedGas);
-        });
-        chartBuilder.initVariables(1);
-        hwFees.forEach((fees, date) => chartBuilder.addInData(0, date, fees / 1000000));
-        this.handleData(chartBuilder, [
-          ['Saved Gas Fees M$', 'right', '#0085ff']
-        ]);
+      data?.forEach(dto => {
+        savedGas += dto.savedGasFees;
+        hwFees.set(dto.blockDate, savedGas);
       });
+      chartBuilder.initVariables(1);
+      hwFees.forEach((fees, date) => chartBuilder.addInData(0, date, fees / 1000000));
+      this.handleData(chartBuilder, [
+        ['Saved Gas Fees M$', 'right', '#0085ff']
+      ]);
+    });
   }
 }
