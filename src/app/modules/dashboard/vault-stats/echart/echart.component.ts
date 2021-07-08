@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EChartsOption} from 'echarts/types/src/export/option';
 import {ChartSeries} from '@modules/dashboard/vault-stats/models/chart-series.model';
+import {ViewTypeService} from '@data/services/view-type.service';
 
 @Component({
   selector: 'app-echart',
@@ -29,7 +30,7 @@ export class EchartComponent implements OnInit {
     }
 
 
-  constructor() { }
+  constructor(public vt: ViewTypeService) { }
 
   ngOnInit(): void {
   }

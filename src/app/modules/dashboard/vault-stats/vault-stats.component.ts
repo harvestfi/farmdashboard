@@ -11,11 +11,12 @@ import {HardWorkDto} from '@data/models/hardwork-dto';
 import {HardworksService} from '@data/services/http/hardworks.service';
 import {TvlsService} from '@data/services/http/tvls.service';
 import {HarvestTvl} from '@data/models/harvest-tvl';
+import {ViewTypeService} from '@data/services/view-type.service';
 
 @Component({
   selector: 'app-vault-stats',
   templateUrl: './vault-stats.component.html',
-  styleUrls: ['./vault-stats.component.css']
+  styleUrls: ['./vault-stats.component.scss']
 })
 export class VaultStatsComponent implements OnInit {
 
@@ -76,7 +77,8 @@ export class VaultStatsComponent implements OnInit {
                 private route: ActivatedRoute,
                 private harvestService: HarvestsService,
                 private hardWorkService: HardworksService,
-                private tvlService: TvlsService) {
+                private tvlService: TvlsService,
+                public vt: ViewTypeService) {
         route.params.subscribe(routeVal => {
           if (routeVal) {
               this.vaultAddress = routeVal.address;
@@ -111,8 +113,11 @@ export class VaultStatsComponent implements OnInit {
                         };
                     });
                     this.chartName1 = data[0].vault;
+                    this.vaultDataTVL = this.dataReducer(this.vaultDataTVL, 20);
                     this.initializeChartTVL();
-                    this.lastChangesVaultTVL(data);
+                    this.changesTvlInAmount =  this.lastChanges(this.vaultDataTVL).amountChanges;
+                    this.changesTvlInPercent =  this.lastChanges(this.vaultDataTVL).percentChanges;
+                    this.minus1 = this.lastChanges(this.vaultDataTVL).minus;
                 }
             }, err => {
                 console.log(err);
@@ -199,7 +204,6 @@ export class VaultStatsComponent implements OnInit {
         };
     }
 
-
     loadSingleVaultProfit(): void {
         this.hardWorkService.getHardWorkHistoryDataByAddress(this.vaultAddress, StaticValues.NETWORKS.get(this.vaultNetwork))
             .subscribe((data) => {
@@ -218,8 +222,11 @@ export class VaultStatsComponent implements OnInit {
                     });
 
                     this.chartName2 = data[0].vault;
+                    this.vaultDataProfit  = this.dataReducer(this.vaultDataProfit, 100);
                     this.initializeChartProfit();
-                    this.lastChangesVaultProfit(data);
+                    this.changesVolumeInAmount =  this.lastChanges(this.vaultDataProfit).amountChanges;
+                    this.changesVolumeInPercent =  this.lastChanges(this.vaultDataProfit).percentChanges;
+                    this.minus2 = this.lastChanges(this.vaultDataProfit).minus;
                 }
             }, err => {
                 console.log(err);
@@ -294,47 +301,6 @@ export class VaultStatsComponent implements OnInit {
         };
     }
 
-
-
-    lastChangesVaultTVL(data: HarvestDto[]): void {
-        const lastChangesTvl = +data[data.length - 1].lastUsdTvl - + data[data.length - 2].lastUsdTvl;
-        const previousNumberTvl = +data[data.length - 2].lastUsdTvl ;
-        if (lastChangesTvl  < 0 ) {
-            this.minus1 = true;
-        }
-        if (this.minus1) {
-            this.changesTvlInAmount = this.nFormatter(lastChangesTvl * (-1), 2);
-        } else {
-            this.changesTvlInAmount = this.nFormatter(lastChangesTvl, 2);
-        }
-        const finalTvlPercent = Math.abs(lastChangesTvl / previousNumberTvl * 100);
-        if (finalTvlPercent >= 1) {
-            this.changesTvlInPercent = this.nFormatter(finalTvlPercent.toString(), 2);
-        } else {
-            this.changesTvlInPercent = finalTvlPercent.toFixed(2);
-        }
-    }
-    lastChangesVaultProfit(data: HardWorkDto[]): void {
-        const lastChangesVolume = +data[data.length - 1].fullRewardUsd - +data[data.length - 2].fullRewardUsd;
-        const previousNumberVolume = +data[data.length - 2].fullRewardUsd;
-
-        if (lastChangesVolume  < 0 ) {
-            this.minus2 = true;
-        }
-        if (this.minus2) {
-            this.changesVolumeInAmount = this.nFormatter(lastChangesVolume * (-1), 2);
-        } else {
-            this.changesVolumeInAmount = this.nFormatter(lastChangesVolume, 2);
-        }
-        const finalVolumePercent = Math.abs(lastChangesVolume  / previousNumberVolume * 100);
-        if (finalVolumePercent >= 1) {
-            this.changesVolumeInPercent = this.nFormatter(finalVolumePercent.toString(), 2);
-        } else {
-            this.changesVolumeInPercent = finalVolumePercent.toFixed(2);
-        }
-    }
-
-
     loadTotalTVL(): void {
         this.tvlService.getHistoryAllTvl()
             .subscribe((data: HarvestTvl[]) => {
@@ -351,8 +317,11 @@ export class VaultStatsComponent implements OnInit {
                             ]
                         };
                     });
+                    this.totalDataTVL = this.dataReducer(this.totalDataTVL, 100);
                     this.initializeChartTotalTVL();
-                    this.lastChangesTotalTVL(data);
+                    this.changesTvlTotalInAmount =  this.lastChanges(this.totalDataTVL).amountChanges;
+                    this.changesTvlTotalInPercent =  this.lastChanges(this.totalDataTVL).percentChanges;
+                    this.minus3 = this.lastChanges(this.totalDataTVL).minus;
                 }
             }, err => {
                 console.log(err);
@@ -437,38 +406,15 @@ export class VaultStatsComponent implements OnInit {
             }]
         };
     }
-    lastChangesTotalTVL(data: HarvestTvl[]): void {
-        const lastChangesTvl = +data[data.length - 1].lastTvl - + data[data.length - 2].lastTvl;
-        const previousNumberTvl = +data[data.length - 2].lastTvl ;
-        if (lastChangesTvl  < 0 ) {
-            this.minus3 = true;
-        }
-        if (this.minus3) {
-            this.changesTvlTotalInAmount = this.nFormatter(lastChangesTvl * (-1), 2);
-        } else {
-            this.changesTvlTotalInAmount = this.nFormatter(lastChangesTvl, 2);
-        }
-        const finalTvlPercent = Math.abs(lastChangesTvl / previousNumberTvl * 100);
-        if (finalTvlPercent >= 1) {
-            this.changesTvlTotalInPercent = this.nFormatter(finalTvlPercent.toString(), 2);
-        } else {
-            this.changesTvlTotalInPercent = finalTvlPercent.toFixed(2);
-        }
-    }
-
 
     loadTotalProfit(): void {
         this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.vaultNetwork))
             .subscribe((data) => {
                 if (data.length) {
-                    let newData = data;
-                    if (data.length > 100) {
-                        newData = data.slice(data.length - 100);
-                    }
-                    this.totalDataProfit = newData.map((item: HardWorkDto) => {
+                    this.totalDataProfit = data.map((item: HardWorkDto) => {
                         const date = new Date(item.blockDate * 1000);
                         return {
-                            name: date.toUTCString(),
+                            name: date.toString(),
                             value: [
                                 [
                                     date.getFullYear(), date.getMonth() + 1, date.getDate()
@@ -477,8 +423,11 @@ export class VaultStatsComponent implements OnInit {
                             ]
                         };
                     });
+                    this.totalDataProfit = this.dataReducer(this.totalDataProfit, 100);
                     this.initializeChartTotalProfit();
-                    this.lastChangesTotalProfit(newData);
+                    this.changesProfitTotalInAmount =  this.lastChanges(this.totalDataProfit).amountChanges;
+                    this.changesProfitTotalInPercent =  this.lastChanges(this.totalDataProfit).percentChanges;
+                    this.minus4 = this.lastChanges(this.totalDataProfit).minus;
                 }
             }, err => {
                 console.log(err);
@@ -552,23 +501,32 @@ export class VaultStatsComponent implements OnInit {
             }]
         };
     }
-    lastChangesTotalProfit(data: HardWorkDto[]): void {
-        const lastChangesTvl = +data[data.length - 1].fullRewardUsdTotal - + data[data.length - 2].fullRewardUsdTotal;
-        const previousNumberTvl = +data[data.length - 2].fullRewardUsdTotal;
-        if (lastChangesTvl  < 0 ) {
-            this.minus4 = true;
+
+    lastChanges(data): { minus: boolean; amountChanges: string; percentChanges: string; } {
+        const lastChanges = +data[data.length - 1].value[1] - + data[data.length - 2].value[1];
+        const previousNumber = +data[data.length - 2].value[1] ;
+        let minus = false;
+        let amountChanges = '';
+        let percentChanges = '';
+        if (lastChanges  < 0 ) {
+            minus = true;
         }
-        if (this.minus4) {
-            this.changesProfitTotalInAmount = this.nFormatter(lastChangesTvl * (-1), 2);
+        if (minus) {
+            amountChanges = this.nFormatter(lastChanges * (-1), 2);
         } else {
-            this.changesProfitTotalInAmount = this.nFormatter(lastChangesTvl, 2);
+            amountChanges = this.nFormatter(lastChanges, 2);
         }
-        const finalTvlPercent = Math.abs(lastChangesTvl / previousNumberTvl * 100);
-        if (finalTvlPercent >= 1) {
-            this.changesProfitTotalInPercent = this.nFormatter(finalTvlPercent.toString(), 2);
+        const finalPercent = Math.abs(lastChanges / previousNumber * 100);
+        if (finalPercent >= 1) {
+            percentChanges = this.nFormatter(finalPercent.toString(), 2);
         } else {
-            this.changesProfitTotalInPercent = finalTvlPercent.toFixed(2);
+            percentChanges = finalPercent.toFixed(2);
         }
+        return {
+            minus,
+            amountChanges,
+            percentChanges
+        };
     }
 
     nFormatter(num, digits): string {
@@ -584,6 +542,20 @@ export class VaultStatsComponent implements OnInit {
         const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
         const item = lookup.slice().reverse().find((it) => num >= it.value);
         return item ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol : '0.00';
+    }
+
+    dataReducer(data, length): Array<{name: string; value: Array<string>}> {
+        let tempArray = [...data].reverse();
+        tempArray = tempArray.filter((thing, index, self) =>
+            index === self.findIndex((t) => (
+                t.value[0] === thing.value[0]
+            ))
+        );
+        if (tempArray.length > length) {
+            return tempArray.reverse().slice(tempArray.length - length);
+        } else {
+            return tempArray.reverse();
+        }
     }
 
     lastChangesDefaultInit(): void {
