@@ -66,6 +66,7 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
             {
                 type: 'category',
                 boundaryGap: false,
+                data: []
             }
         ],
         yAxis: [
@@ -107,22 +108,22 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
           const currentDate = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('/');
           return currentDate;
       });
-      this.option.xAxis[0]['data'] = times;
+      this.option.xAxis[0].data = times;
       const group = data.reduce((acc, item) => {
           if (!acc[item.vault.split('_')[0]]) {
               if (item.vault.split('_').length > 1) {
                   acc[item.vault.split('_')[0]] = [];
               } else {
-                  acc['UNKNOWN'] = [];
+                  acc.UNKNOWN = [];
               }
           }
           if (item.vault.split('_').length > 1) {
               acc[item.vault.split('_')[0]].push(item);
           } else {
-              if (!acc['UNKNOWN']) {
-                  acc['UNKNOWN'] = [];
+              if (!acc.UNKNOWN) {
+                  acc.UNKNOWN = [];
               }
-              acc['UNKNOWN'].push(item);
+              acc.UNKNOWN.push(item);
           }
           return acc;
       }, {});
