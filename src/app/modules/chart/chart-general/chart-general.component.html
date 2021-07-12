@@ -26,7 +26,35 @@
           </span>
         </div>
       </div>
-      <div #chart class="chart"></div>
+
+      <mat-tab-group class="tab-group"
+                     *ngIf="tabs"
+                     [selectedIndex]="tabIndex"
+                     (selectedTabChange)="changeTab($event)">
+        <mat-tab label="TAB 1">
+
+        </mat-tab>
+        <mat-tab label="TAB 2">
+
+        </mat-tab>
+
+      </mat-tab-group>
+      <div class="tab" *ngIf="tabs">
+        <div class="card"
+             [class.active]="!tabIndex">
+          <div #chart class="chart"></div>
+        </div>
+        <div  class="card right-part"
+              [class.active]="tabIndex">
+          <div echarts
+               [options]="options"></div>
+        </div>
+      </div>
+      <div *ngIf="!tabs">
+        <div #chart
+             class="chart"></div>
+      </div>
+
     </div>
 
   </div>

@@ -51,6 +51,24 @@
     }
   }
 }
+.card {
+  visibility: hidden;
+  height: 0;
+}
+
+.card.active.right-part {
+  padding-top: 150px;
+}
+
+.card.active {
+  visibility: visible;
+  height: unset;
+}
+
+:host ::ng-deep.mat-tab-label,
+:host ::ng-deep.mat-tab-label-active {
+  width: 50%;
+}
 
 .dialog-card {
   width: 100vw;

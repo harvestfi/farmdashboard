@@ -4,6 +4,8 @@ import {CommonModule} from '@angular/common';
 
 import {ChartGeneralComponent} from './chart-general.component';
 import {LoadingSpinnerModule} from '@shared/loading-spinner/loading-spinner.module';
+import {MatTabsModule} from "@angular/material/tabs";
+import {NgxEchartsModule} from "ngx-echarts";
 
 
 @NgModule({
@@ -11,6 +13,10 @@ import {LoadingSpinnerModule} from '@shared/loading-spinner/loading-spinner.modu
     CommonModule,
     LoadingSpinnerModule,
     FormsModule,
+    MatTabsModule,
+    NgxEchartsModule.forRoot({
+        echarts: () => import('echarts')
+    }),
   ],
   exports: [
     ChartGeneralComponent,
