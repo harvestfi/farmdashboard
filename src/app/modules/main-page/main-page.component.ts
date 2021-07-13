@@ -35,20 +35,8 @@ export class MainPageComponent implements AfterContentInit, OnInit {
         .subscribe((data: {subgraphs: []}) => {
           console.log(data.subgraphs);
           this.subGraphs = data.subgraphs;
-          this.getExactSubGraph(this.subGraphs[0].id);
         }, err => {
           console.log(err);
         });
   }
-
-  getExactSubGraph(id): void {
-      this.theGraphService.getExactSubGraph(id)
-          .subscribe(data => {
-              console.log(data.subgraph);
-          }, err => {
-              console.log(err);
-          });
-  }
-
-
 }
