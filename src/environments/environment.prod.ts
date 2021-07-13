@@ -5,5 +5,6 @@
 // 4) access config via this.config.apiEndpoint
 
 export const environment = {
-  production: true
+  production: true,
+  theGraphUrl: 'https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet'
 };

@@ -9,6 +9,8 @@ import {SidebarModule} from 'ng-sidebar';
 import {SnackBarModule} from '@shared/snack-bar/snack-bar.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from '@core/core.module';
+import { HttpClientModule } from '@angular/common/http';
+import { GraphQLModule } from '@modules/main-page/graphql.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import {CoreModule} from '@core/core.module';
     }),
     MatProgressBarModule,
     SidebarModule,
+    GraphQLModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

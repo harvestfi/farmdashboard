@@ -6,6 +6,7 @@
 
 export const environment = {
   production: false,
+  theGraphUrl: 'https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet'
 };
 
 /*
