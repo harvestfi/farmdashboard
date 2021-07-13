@@ -30,6 +30,7 @@
     "@angular/platform-browser": "~11.2.5",
     "@angular/platform-browser-dynamic": "~11.2.5",
     "@angular/router": "~11.2.5",
+    "@apollo/client": "^3.0.0",
     "@ethersproject/units": "^5.0.5",
     "@juggle/resize-observer": "^3.3.1",
     "@ng-bootstrap/ng-bootstrap": "^9.0.2",
@@ -63,8 +64,7 @@
     "ts-treemap": "^1.1.0",
     "tslib": "^2.0.0",
     "typescript": "~4.1.5",
-    "zone.js": "~0.10.3",
-    "@apollo/client": "^3.0.0"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1102.4",
