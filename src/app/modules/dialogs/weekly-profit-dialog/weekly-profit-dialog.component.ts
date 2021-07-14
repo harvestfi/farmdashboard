@@ -134,9 +134,7 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
   }
 
   loadSecondChart(data): void {
-      const times: Array<string> = data.map(item => {
-        return this.getCurrentDate(item);
-      });
+      const times: Array<string> = data.map(item => this.getCurrentDate(item));
 
       this.option.xAxis[0].data = times;
       const groups = data.reduce((acc, item) => {
