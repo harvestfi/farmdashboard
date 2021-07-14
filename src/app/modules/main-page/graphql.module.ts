@@ -2,22 +2,17 @@ import { NgModule } from '@angular/core';
 import { APOLLO_OPTIONS } from 'apollo-angular';
 import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 import { HttpLink } from 'apollo-angular/http';
-import { environment } from '../../../environments/environment';
-
-const uri = environment.theGraphUrl;
-
-
-const createApollo = (httpLink: HttpLink): ApolloClientOptions<any> => ({ link: httpLink.create({uri}),  cache: new InMemoryCache() });
-
-
+import { APP_CONFIG, AppConfig } from '../../../app.config';
 
 @NgModule({
-  providers: [
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory: createApollo,
-      deps: [HttpLink],
-    },
-  ],
+    providers: [
+        {
+            provide: APOLLO_OPTIONS,
+            useFactory: (httpLink: HttpLink, config: AppConfig): ApolloClientOptions<any> => ({
+                    link: httpLink.create({uri: config.theGraph.graphQlServerUrl}), cache: new InMemoryCache()
+            }),
+            deps: [HttpLink, APP_CONFIG],
+        },
+    ],
 })
 export class GraphQLModule {}

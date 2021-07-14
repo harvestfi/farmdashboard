@@ -1,23 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
-import { environment } from '../../../environments/environment';
-
-const subGraphsListURL = environment.theGraphUrl;;
+import { APP_CONFIG, AppConfig } from '../../../app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TheGraphService {
 
-  constructor(private http: HttpClient, private apollo: Apollo) {
+  subGraphsListURL = '';
+
+  constructor( private http: HttpClient, private apollo: Apollo, @Inject(APP_CONFIG) public config: AppConfig ) {
+      this.subGraphsListURL = config.theGraph.graphQlServerUrl;
   }
 
   getSubGraphs(): any {
      const subGraphsQuery = `{"query":"{ subgraphs { id displayName } }", "variables": null}`;
-     return this.http.post(subGraphsListURL, subGraphsQuery).pipe(map((result: {data}) => result.data));
+     return this.http.post(this.subGraphsListURL, subGraphsQuery).pipe(map((result: {data}) => result.data));
   }
 
   getExactSubGraph(id): any {
