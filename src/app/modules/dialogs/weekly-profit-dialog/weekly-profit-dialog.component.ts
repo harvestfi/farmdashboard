@@ -34,47 +34,59 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
       ],
       responsive: true,
       maintainAspectRatio: false,
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'cross',
-                label: {
-                    backgroundColor: '#6a7985'
-                }
-            }
-        },
-        legend: {
-            data: [],
-            textStyle: {
-                fontSize: '14px',
-                color: '#498ecb'
-            },
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            top: '30%',
-            containLabel: true,
-        },
-        xAxis: [
-            {
-                type: 'category',
-                boundaryGap: false,
-                data: []
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value'
-            }
-        ],
-        series: []
+      tooltip: {
+          backgroundColor: 'rgba(50,50,50,0.9)',
+          textStyle: {
+              color:  '#ffffff'
+          },
+          trigger: 'axis',
+          axisPointer: {
+              type: 'cross',
+              label: {
+                  backgroundColor: '#6a7985'
+              }
+          },
+          position: (pos, params, dom, rect, size) => {
+              // tooltip will be fixed on the right if mouse hovering on the left,
+              // and on the left if hovering on the right.
+           const obj = {top: 0};
+           obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 5;
+           return obj;
+          },
+          order: 'valueDesc'
+      },
+      legend: {
+          data: [],
+          textStyle: {
+              fontSize: '14px',
+              color: '#498ecb'
+          },
+      },
+      toolbox: {
+          feature: {
+              saveAsImage: {}
+          }
+      },
+      grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          top: '30%',
+          containLabel: true,
+      },
+      xAxis: [
+          {
+              type: 'category',
+              boundaryGap: false,
+              data: []
+          }
+      ],
+      yAxis: [
+          {
+              type: 'value'
+          }
+      ],
+      series: []
     };
 
   constructor(public vt: ViewTypeService,
@@ -96,41 +108,52 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
         ['Weekly Profit K$', 'right', '#0085ff'],
         ['All profit M$', '1', '#eeb000']
       ]);
-      console.log(data);
       this.loadSecondChart(data);
 
     });
   }
 
+  getPlatformFromVaultName(vaultName: string): string {
+      if (vaultName.startsWith('V_')) {
+          vaultName = vaultName.replace('V_', '');
+      }
+      const underscoreCount = vaultName.split('_').length;
+      let platform = 'SINGLE';
+      if (underscoreCount > 0) {
+          platform = vaultName.split('_')[0];
+      } else if (vaultName.indexOf('CRV') >= 0) {
+          platform = 'CRV';
+      }
+      return platform;
+  }
+
+  getCurrentDate(item): string {
+      const date = new Date(item.blockDate * 1000);
+      const currentDate = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('/');
+      return currentDate;
+  }
+
   loadSecondChart(data): void {
       const times: Array<string> = data.map(item => {
-          const date = new Date(item.blockDate * 1000);
-          const currentDate = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('/');
-          return currentDate;
+        return this.getCurrentDate(item);
       });
+
       this.option.xAxis[0].data = times;
-      const group = data.reduce((acc, item) => {
-          if (!acc[item.vault.split('_')[0]]) {
-              if (item.vault.split('_').length > 1) {
-                  acc[item.vault.split('_')[0]] = [];
-              } else {
-                  acc.UNKNOWN = [];
-              }
+      const groups = data.reduce((acc, item) => {
+          const vaultName = item.vault;
+          const platform = this.getPlatformFromVaultName(vaultName);
+          if (!acc[platform]) {
+              acc[platform] = [];
           }
-          if (item.vault.split('_').length > 1) {
-              acc[item.vault.split('_')[0]].push(item);
-          } else {
-              if (!acc.UNKNOWN) {
-                  acc.UNKNOWN = [];
-              }
-              acc.UNKNOWN.push(item);
-          }
+          acc[platform].push(item);
           return acc;
       }, {});
-      console.log(group);
-      let variablesCounter = 0;
-      for (const key in group) {
-          if (group.hasOwnProperty(key)) {
+
+      let seriesCounter = 0;
+      this.option.legend.data = [];
+      this.option.series = [];
+      for (const key in groups) {
+          if (groups.hasOwnProperty(key)) {
               this.option.series.push({
                   name: key,
                   type: 'line',
@@ -145,18 +168,17 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
 
               for (const i of times) {
                   let value = 0;
-                  for (const j of group[key]) {
-                      const date = new Date(j.blockDate * 1000);
-                      const currentDate = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('/');
+                  for (const j of groups[key]) {
+                      const currentDate = this.getCurrentDate(j);
                       if (i === currentDate) {
                           value = j.weeklyAllProfit / 1000;
                       }
                   }
                   newDataList.push(value);
               }
-              this.option.series[variablesCounter].data = newDataList;
+              this.option.series[seriesCounter].data = newDataList;
               this.option.legend.data.push(key);
-              variablesCounter = variablesCounter + 1;
+              seriesCounter = seriesCounter + 1;
           }
       }
   }
