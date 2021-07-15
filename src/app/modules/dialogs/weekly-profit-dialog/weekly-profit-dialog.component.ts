@@ -69,9 +69,9 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
       },
       grid: {
           left: '3%',
-          right: '4%',
-          bottom: '3%',
-          top: '30%',
+          right: '6%',
+          bottom: '12%',
+          top: '15%',
           containLabel: true,
       },
       xAxis: [
@@ -117,9 +117,9 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
       if (vaultName.startsWith('V_')) {
           vaultName = vaultName.replace('V_', '');
       }
-      const underscoreCount = vaultName.split('_').length;
+      const underscoreCount = vaultName.split('_')?.length ?? 0;
       let platform = 'SINGLE';
-      if (underscoreCount > 0) {
+      if (underscoreCount > 2) {
           platform = vaultName.split('_')[0];
       } else if (vaultName.indexOf('CRV') >= 0) {
           platform = 'CRV';
@@ -155,7 +155,6 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
               this.option.series.push({
                   name: key,
                   type: 'line',
-                  stack: '总量',
                   areaStyle: {},
                   emphasis: {
                       focus: 'series'
@@ -169,7 +168,7 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
                   for (const j of groups[key]) {
                       const currentDate = this.getCurrentDate(j);
                       if (i === currentDate) {
-                          value = j.weeklyAllProfit / 1000;
+                          value = j.fullRewardUsdTotal / 1000;
                       }
                   }
                   newDataList.push(value);
