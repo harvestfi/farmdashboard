@@ -1,0 +1,74 @@
+<div class="hardwork-card flow-card" [class]="vt.getThemeColor() + '-card'">
+
+  <div class="title-row">
+    <app-popover-card
+    aria-hidden="false"
+    aria-label="?"
+    class="title-span">
+  <ng-template>
+    <h3>List of doHardWorks performed.</h3>
+    <ul>
+      <li>Format: Date | Vault | Income Earned</li>
+    </ul>
+  </ng-template>
+    <h4 class="title">doHardWorks</h4>
+    </app-popover-card>
+    <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
+      <option [value]="'all'">All</option>
+      <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
+    </select>
+
+    <input type="number" min="0" [(ngModel)]="minAmout" class="input-less-than left-border-box" placeholder="More than...">
+  </div>
+
+  <div class="table-header" [class]="vt.getThemeColor()">
+    <div class="list-date-header">Date</div>
+    <div></div>
+    <div class="list-vault-hader">Vault</div>
+    <div class="list-income-hader">Income</div>
+    <div></div>
+  </div>
+
+
+  <div *ngIf="dtos | hardworkFilter:minAmout:vaultFilter as filteredDTOs" class="trades-list">
+    <div *ngFor="let dto of filteredDTOs" class="trades-list-item" [class]="vt.getThemeColor()">
+      <app-popover-card class="hardwork-date">
+        <ng-template>
+          <p>{{dto.blockDateAdopted| date: 'dd-MMM HH:mm'}}</p>
+          <p>{{dto.vault}}</p>
+          <p>TVL ${{dto.tvl | number: '1.0-0'}}</p>
+          <p>PS APR {{dto.psApr.toFixed(2) | number: '1.0-0'}}%</p>
+        </ng-template>
+        {{dto.blockDateAdopted | date: 'dd-MMM HH:mm'}}
+      </app-popover-card>
+
+      <div class="vault-icon">
+        <app-vault-icon [vault]="getVaultModel(dto.vaultAddress)"></app-vault-icon>
+      </div>
+
+      <div class="vault-name">{{getVaultName(dto.vault)}}</div>
+      <div class="income">
+        ${{dto.fullRewardUsd | number: '1.2-2'}}
+      </div>
+
+      <div class="transaction-link">
+        <app-transaction-link [transactionHash]="dto.id.split('_')[0]" [network]="dto.network"></app-transaction-link>
+      </div>
+    </div>
+    <div *ngIf="!filteredDTOs.length" class="empty-list">
+      <span role="img">🏜️ </span>
+      No doHardWorks available
+      <span role="img">🏜️ </span>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button (click)="openHardWorkHistoryListDialog()" class="show-more">show older</button>
+  </div>
+  <app-custom-modal #hardWorkHistoryListModal>
+    <ng-template>
+      <app-hardwork-history-list-dialog></app-hardwork-history-list-dialog>
+    </ng-template>
+  </app-custom-modal>
+
+</div>

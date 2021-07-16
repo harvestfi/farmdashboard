@@ -1,0 +1,13 @@
+<div class="chart-background" [class]="vt.getThemeColor()">
+    <div class="currentInfo">
+        <div class="name">
+            <span>{{ title }}</span>
+            <span  *ngIf="chartName">[{{ chartName }}]</span>
+        </div>
+        <span class="value">{{ selectedValue }}</span>
+        <span class="date">{{ selectedDate | date: 'MMM dd, YYYY'}}</span>
+    </div>
+    <div echarts
+         [options]="options"
+         (chartGlobalOut)="onChartEvent($event, 'chartGlobalOut')"></div>
+</div>

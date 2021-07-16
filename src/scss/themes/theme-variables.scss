@@ -3,12 +3,14 @@ $themes_colors: (
         "background": #bce3e2,
         "card": #fffce6,
         "font": #363636,
-        "links": #363636
+        "links": #363636,
+        "border": rgba(17, 17, 17, 0.2),
     ),
     "dark": (
         "background": #111111,
         "card": #404040,
         "font": #f1f1f1,
-        "links": #fae5ff
+        "links": #fae5ff,
+        "border": #111111,
     )
 );

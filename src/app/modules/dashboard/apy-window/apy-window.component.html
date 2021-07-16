@@ -1,0 +1,59 @@
+<div class="apy-window">
+  <div (click)="closeModal()" class="close left-border-box">
+    <mat-icon class="close-icon">
+      close
+    </mat-icon>
+  </div>
+
+  <div class="apy-window-header">
+    <p>
+      <app-vault-icon [vault]="vault"></app-vault-icon>
+      {{vault.contract.name}}</p>
+  </div>
+
+  <div>
+    <app-apy-common [vault]="vault"></app-apy-common>
+  </div>
+
+  <mat-tab-group>
+    <mat-tab label="Vault">
+      <div class="apy-card vault-card">
+        <app-vault [vault]="vault"></app-vault>
+      </div>
+    </mat-tab>
+    <mat-tab label="Strategy">
+      <div class="apy-card strategy-card">
+        <app-strategy [contract]="vault.contract"></app-strategy>
+      </div>
+    </mat-tab>
+    <mat-tab label="Pool">
+      <div class="apy-card pool-card">
+        <app-pool [vault]="vault" [pool]="pool"></app-pool>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div class="apy-window-footer">
+    <p class="link pointer">
+      <a (click)="openChartPage()">Vault Info</a>
+      <a (click)="openIncomeDialog()">Chart</a>
+      <a href='https://www.notion.so/harvestfinance/APY-Calculation-bd7a8082f76541e79fe49d8d928a2c93' target='_blank'>
+        Interest rate guide</a>
+    </p>
+
+    <app-custom-modal #incomeModal>
+      <ng-template>
+        <app-apy-chart-dialog
+            [data]="{title: vault.name + ' Income history chart', address: vault.contract.address, network: vault.contract.network}"></app-apy-chart-dialog>
+      </ng-template>
+    </app-custom-modal>
+
+    <app-custom-modal #psApyModal>
+      <ng-template>
+        <app-ps-apy-dialog></app-ps-apy-dialog>
+      </ng-template>
+    </app-custom-modal>
+  </div>
+</div>
+
+

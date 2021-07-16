@@ -1,0 +1,94 @@
+<div id="top-div-light">
+
+  <div class="flow-card uni-card" [class]="vt.getThemeColor() + '-card'">
+    <app-popover-card
+        aria-hidden="false"
+        aria-label="?"
+        class="title-span">
+      <ng-template>
+        <h3>List of trades containing FARM.</h3>
+        <ul>
+          <li>Special trades will be marked with specific symbols (i.e. Buys from doHardWork and sells from dev funds)</li>
+          <li>Format: Buy/Sell | Date | Farm amount | USD Cost | Price</li>
+        </ul>
+      </ng-template>
+
+      <div class="title-row">
+        <h4 class="title">Trades</h4>
+        <input [(ngModel)]="minAmount" class="filter-input" placeholder="More than..." type="number" min="0">
+      </div>
+
+    </app-popover-card>
+
+    <div class="table-header" [class]="vt.getThemeColor()">
+      <div class="money-icon"><span role="img">💸</span></div>
+      <div class="date-header">Date</div>
+      <div class="farm-header">FARM</div>
+      <div class="usd-cost-header">USD Cost</div>
+      <div class="prive-header">Price</div>
+      <div></div>
+    </div>
+
+    <div *ngIf="dtos | uniswapFilter:minAmount as filteredDTOs" class="trades-list">
+      <div *ngFor="let dto of filteredDTOs" class="trades-list-item" [class]="vt.getThemeColor()">
+        <div class="transaction-type"><span [class]="dto.type">{{dto.type}}</span></div>
+        <div class="transaction-date">{{dto.blockDateAdopted | date: 'dd-MMM HH:mm'}}</div>
+        <div class="farm-value">{{dto.amount | number: '1.0-0'}}</div>
+        <div class="usd-cost">${{dto.amount * dto.lastPrice | number: '1.0-0'}}</div>
+
+        <app-popover-card class="price">
+          <ng-template>{{dto.otherCoin}} price: {{(dto.otherAmount / dto.amount) | number: '1.4-4'}}</ng-template>
+          {{dto.lastPrice | number: '1.2-2'}}
+        </app-popover-card>
+       
+        <div class="icon">
+
+          <app-simple-modal *ngIf="openedModal[dto.id]">
+            <app-link-window (showModal)="hideTradeLinks(dto.id)" [network]="'eth'"
+                             [hash]='dto.hash' [owner]='dto.owner'>
+      
+            </app-link-window>
+          </app-simple-modal>
+      
+          <container-element class="pointer"
+                             (click)='showTradeLinks(dto.id)' [ngSwitch]="checkImportantOwner(dto)">
+      
+            <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price"
+                      class="sign-icon">
+              open_in_new
+            </mat-icon>
+      
+            <mat-icon *ngSwitchCase="'devs'" [ngStyle]="{'color': '#c4ad58'}" aria-hidden="false" aria-label="Price"
+                      class="sign-icon">
+              warning
+            </mat-icon>
+            <app-popover-card>
+              <ng-template>From doHardWork</ng-template>
+              <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" class="do-hard-work-img" size="14"></angular-emojis>
+            </app-popover-card>
+            
+          </container-element>
+      
+        </div>
+      </div>
+
+      <div *ngIf="!filteredDTOs.length" class="empty-list">
+        <span role="img">🏜️ </span>
+        No Uniswap trades available
+        <span role="img">🏜️ </span>
+      </div>
+    </div>
+
+
+    <div class="button-container">
+      <button class="show-more" (click)="openUniHistory()">show older</button>
+    </div>
+
+    <app-custom-modal #unitHistoryModal>
+      <ng-template>
+        <app-uni-history-dialog></app-uni-history-dialog>
+      </ng-template>
+    </app-custom-modal>
+    
+  </div>
+</div>

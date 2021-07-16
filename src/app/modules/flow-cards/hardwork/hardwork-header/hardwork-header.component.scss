@@ -1,0 +1,35 @@
+@import "../../../../../scss/themes/theme-mixins";
+
+$dark-background-color: #111111;
+
+:host {
+  width: 100%;
+}
+
+.table-header {
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  display: grid;
+  padding: 0.3em 0.5em;
+  font-weight: bold;
+  font-size: 0.9em;
+  background: darken(#fffce6, 5%);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0.5em;
+  text-align: center;
+
+  @include isDarkMode() {
+    background: $dark-background-color;
+  }
+
+  .money-icon {
+    text-align: center;
+  }
+}
+
+.table-header.showMoreColumns {
+  grid-template-columns: 8% 11% 5% 10% 11% 11.5% 12% 6% 10% 8.5% 7%;
+  text-align: left;
+}
+

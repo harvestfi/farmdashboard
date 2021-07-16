@@ -1,0 +1,99 @@
+@import "../../../../../scss/utilities/utilities";
+@import "../../../../../scss/themes/theme-mixins";
+
+$dark-background-color: #111111;
+
+.harvest-tx-hist {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  max-width: 900px;
+  width: 90vw;
+
+  .paginator-area {
+    text-align: center;
+  }
+
+  .filters-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+
+    .pool-title {
+      z-index: 99999999999;
+    }
+
+    .more-than-input,
+    .strategy-selector {
+      height: 25px;
+      padding: 0.1em;
+      box-sizing: border-box;
+      border-radius: 0.25em;
+      outline: none;
+    }
+
+    .strategy-selector-label,
+    .more-than-input-label {
+      display: block;
+    }
+  }
+
+  .title {
+    font-size: 1.5em;
+    font-weight: bolder;
+    text-align: center;
+    width: 100%;
+  }
+
+  .table-header {
+    grid-template-columns: 7% 30.5% 21.5% 21% 10% 10%;
+    display: grid;
+    padding: 0.3em 0.5em;
+    font-weight: bold;
+    font-size: 0.9em;
+    background: darken(#fffce6, 5%);
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 0.25em;
+
+    @include isDarkMode() {
+      background: $dark-background-color;
+    }
+
+    .money-icon {
+      text-align: center;
+    }
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .show-even-more {
+    font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid black;
+    margin-top: 5px;
+    cursor: pointer;
+    color: black;
+    background-color: #eebf65;
+
+    &:disabled {
+      pointer-events: none;
+      cursor: wait;
+    }
+  }
+
+  @include responsive(small) {
+    .title {
+      font-size: 1em;
+      margin: 5px;
+    }
+  }
+}

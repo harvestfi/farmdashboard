@@ -1,0 +1,64 @@
+<div class='uni-trades table-row'>
+  <div class="transaction-type"><span [class]="dto.type">{{dto.type}}</span></div>
+  <app-popover-card class="trade-date left-border-box trade-field">
+    <ng-template>
+      <p>{{dto.blockDateAdopted | date: 'dd.MM.yyyy HH:mm:ss'}}</p>
+      <p>{{dto.lp}}</p>
+      <p>{{dto.type}}</p>
+      <p>{{dto.coin}}: {{dto.amount | number}}</p>
+      <p>{{dto.otherCoin}}: {{dto.otherAmount | number}}</p>
+      <p>Price: {{dto.lastPrice | number}}</p>
+      <p>Last gas: {{dto.lastGas | number}}</p>
+    </ng-template>
+    <span>{{fullDate ?
+      (dto.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm') :
+      (dto.blockDateAdopted | date: 'HH:mm:ss')
+      }}</span>
+  </app-popover-card>
+
+  <div class="trade-amount left-border-box trade-field">
+    <span>{{dto.amount  | number: '1.0-0'}}</span>
+  </div>
+
+
+  <div class="trade-amount left-border-box trade-field">
+    <span>${{dto.amount * dto.lastPrice  | number: '1.0-0'}}</span>
+  </div>
+
+
+  <app-popover-card class="trade-price left-border-box trade-field">
+    <ng-template>{{dto.otherCoin}} price: {{(dto.otherAmount / dto.amount) | number: '1.4-4'}}</ng-template>
+    <span>{{dto.lastPrice | number: '1.2-2'}}</span>
+  </app-popover-card>
+
+  <div class="trade-sign left-border-box trade-field">
+
+    <app-simple-modal *ngIf="openModal">
+      <app-link-window (showModal)="hideTradeLinks($event)" [network]="'eth'"
+                       [hash]='dto.hash' [owner]='dto.owner'>
+
+      </app-link-window>
+    </app-simple-modal>
+
+    <container-element class="pointer"
+                       (click)='showTradeLinks()' [ngSwitch]="checkImportantOwner(dto)">
+
+      <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price"
+                class="sign-icon">
+        open_in_new
+      </mat-icon>
+
+      <mat-icon *ngSwitchCase="'devs'" [ngStyle]="{'color': '#c4ad58'}" aria-hidden="false" aria-label="Price"
+                class="sign-icon">
+        warning
+      </mat-icon>
+
+      <angular-emojis *ngSwitchCase="'doHardWork'" [name]="'tractor'" class="do-hard-work-img"
+                      size="14"></angular-emojis>
+
+    </container-element>
+
+  </div>
+
+</div>
+

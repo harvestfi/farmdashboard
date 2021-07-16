@@ -1,0 +1,87 @@
+@import "../../../../scss/themes/theme-mixins";
+
+$dark-background-color: #111111;
+
+.container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  max-width: 600px;
+  width: 90vw;
+}
+
+.title {
+  font-size: 1.5em;
+  padding: 10px;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.disclaimer {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 0.8em;
+  margin-bottom: 1rem;
+}
+
+.values {
+  display: grid;
+  grid-template-columns: 0.3fr 0.9fr 0.9fr 1fr;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 0.3fr 1fr 1fr 1fr;
+  padding: 0.3em 0.5em;
+  font-weight: bold;
+  font-size: 0.9em;
+  background: darken(#fffce6, 5%);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0.5em;
+  text-align: center;
+
+  @include isDarkMode() {
+    background: $dark-background-color;
+  }
+}
+
+.header-field {
+  text-align: center;
+  padding: 3px;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.values {
+
+}
+
+.value-field {
+  text-align: center;
+  padding: 3px;
+  font-size: 0.9em;
+  font-weight: bolder;
+}
+
+.links a {
+  width: 80%;
+  text-decoration: none;
+  background-color: #EEBF65;
+  color: black;
+  position: relative;
+  font-size: 12px;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 1%;
+  transition: all .2s ease-out;
+}
+
+.scroller {
+  overflow-y: scroll;
+  max-height: 80vh;
+}
+
