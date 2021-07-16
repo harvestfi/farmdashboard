@@ -20,7 +20,8 @@ export class PriceDataService {
   private dataFeed: Observable<PricesDto>;
 
   private exclude = new Set<string>([
-      '0xa8bb71facdd46445644c277f9499dd22f6f0a30c'.toLowerCase()
+      '0xa8bb71facdd46445644c277f9499dd22f6f0a30c'.toLowerCase(), //beltBNB
+      '0xAA20E8Cb61299df2357561C2AC2e1172bC68bc25'.toLowerCase() // beltETH
   ]);
 
   constructor(
