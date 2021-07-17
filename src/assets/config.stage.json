@@ -11,5 +11,8 @@
         "bsc": "https://ethparser-stage.harvestfi.builders"
     },
     "multipleSources": true,
-    "defaultNetwork": "eth"
+    "defaultNetwork": "eth",
+    "theGraph": {
+        "graphQlServerUrl": "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
+    }
 }
