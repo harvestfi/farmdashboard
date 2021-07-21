@@ -200,6 +200,10 @@ table {
   cursor: pointer;
 }
 
+.anychart-credits {
+  display: none;
+}
+
 ngb-popover-window.popover {
   // todo create a general style for value-card and this
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

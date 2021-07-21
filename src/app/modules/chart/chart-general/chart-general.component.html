@@ -46,8 +46,9 @@
         </div>
         <div  class="card right-part"
               [class.active]="tabIndex">
-          <div echarts
-               [options]="options"></div>
+         <!-- <div echarts
+               [options]="options"></div>-->
+           <div id="anychart" class="chart"></div>
         </div>
       </div>
       <div *ngIf="!tabs">

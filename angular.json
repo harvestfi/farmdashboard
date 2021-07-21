@@ -26,9 +26,14 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.scss",
-              "src/assets/styles/bootstrap.min.css"
+              "src/assets/styles/bootstrap.min.css",
+              "src/assets/anychart/css/anychart-ui.min.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/anychart/js/anychart-base.min.js",
+              "src/assets/anychart/js/anychart-exports.min.js",
+              "src/assets/anychart/js/anychart-ui.min.js"
+            ],
             "allowedCommonJsDependencies": [
               "rxjs",
               "sockjs-client",
