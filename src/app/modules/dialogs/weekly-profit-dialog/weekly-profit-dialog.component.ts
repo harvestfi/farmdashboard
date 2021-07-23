@@ -235,7 +235,12 @@ export class WeeklyProfitDialogComponent extends ChartGeneralMethodsComponent im
                           value = j.fullRewardUsdTotal / 1000;
                       }
                   }
-                  newDataList.push(value);
+                  if (!newDataList.length) {
+                      newDataList.push(value);
+                  } else {
+                      const sumValue = +newDataList[newDataList.length - 1] + +value;
+                      newDataList.push(sumValue);
+                  }
               }
               series[seriesCounter].data = newDataList;
               seriesCounter = seriesCounter + 1;
