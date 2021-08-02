@@ -13,6 +13,8 @@
     "multipleSources": true,
     "defaultNetwork": "eth",
     "theGraph": {
-        "graphQlServerUrl": "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
+        "graphQlServerUrl": "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet",
+        "graphQlAnalyticsUrl": "https://gateway.thegraph.com/network-analytics"
+
     }
 }
