@@ -10,6 +10,7 @@ export class AppConfig {
     defaultNetwork: string;
     theGraph: {
         graphQlServerUrl: string;
+        graphQlAnalyticsUrl: string;
     };
 }
 

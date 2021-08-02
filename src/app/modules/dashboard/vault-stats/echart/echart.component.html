@@ -2,12 +2,17 @@
     <div class="currentInfo">
         <div class="name">
             <span>{{ title }}</span>
-            <span  *ngIf="chartName">[{{ chartName }}]</span>
+            <div class="controls">
+                <button [class.selected]="selectedPeriod === 1" (click)="selectPeriod(1)">1M</button> /
+                <button [class.selected]="selectedPeriod === 6" (click)="selectPeriod(6)">6M</button> /
+                <button [class.selected]="!selectedPeriod" (click)="selectPeriod(0)">All</button>
+            </div>
         </div>
         <span class="value">{{ selectedValue }}</span>
         <span class="date">{{ selectedDate | date: 'MMM dd, YYYY'}}</span>
     </div>
     <div echarts
          [options]="options"
+         [merge]="updateOptions"
          (chartGlobalOut)="onChartEvent($event, 'chartGlobalOut')"></div>
 </div>

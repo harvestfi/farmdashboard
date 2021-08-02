@@ -17,11 +17,14 @@ export class EchartComponent implements OnInit {
   @Input() selectedDate = '';
   @Input() valueSymbol = '';
   @Input() options: EChartsOption;
-
+  updateOptions: any;
+  selectedPeriod = 0;
+  primaryData = [];
   @Input() set data(value: ChartSeries[]) {
-      if (value.length) {
-          this.tempData = value;
-          this.setDefaultTooltipValues();
+    if (value.length) {
+        this.tempData = value;
+        this.primaryData = [...this.tempData];
+        this.setDefaultTooltipValues();
       }
   }
 
@@ -58,5 +61,35 @@ export class EchartComponent implements OnInit {
 
   onChartEvent(event: any, type: string): void {
       this.setDefaultTooltipValues();
+  }
+
+  selectPeriod(period): void {
+      this.selectedPeriod = period;
+      this.updateOptions = {
+          series: [{
+              data: this.filterDataByPeriod(period)
+          }],
+          xAxis: this.options.xAxis
+      };
+  }
+
+
+
+  filterDataByPeriod(period): any {
+      const monthAgo = new Date();
+      monthAgo.setDate(monthAgo.getDate() - 30);
+      const halfYearAgo = new Date();
+      halfYearAgo .setDate(halfYearAgo.getDate() - 180);
+      const seriesData = [...this.primaryData];
+      if (!period) {
+          return this.primaryData;
+      }
+      if (period === 1) {
+          return seriesData.filter((item) => (new Date(item.name).getTime() > monthAgo.getTime()));
+      }
+      if (period === 6) {
+          return seriesData.filter((item) => (new Date(item.name).getTime() > halfYearAgo.getTime()));
+      }
+
   }
 }

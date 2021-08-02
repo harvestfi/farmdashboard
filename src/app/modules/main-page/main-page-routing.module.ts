@@ -2,6 +2,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {MainPageComponent} from './main-page.component';
 import {VaultStatsComponent} from '../dashboard/vault-stats/vault-stats.component';
+import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component';
+
 
 const routes: Routes = [
   {
@@ -11,6 +13,10 @@ const routes: Routes = [
   {
     path: 'info/:network/:address',
     component: VaultStatsComponent
+  },
+  {
+    path: 'info-total',
+    component: VaultStatsTotalComponent
   },
 ];
 

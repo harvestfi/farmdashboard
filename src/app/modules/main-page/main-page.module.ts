@@ -11,6 +11,7 @@ import {MainPageRoutingModule} from './main-page-routing.module';
 import {VaultStatsComponent} from '../dashboard/vault-stats/vault-stats.component';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {EchartComponent} from '@modules/dashboard/vault-stats/echart/echart.component';
+import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component'
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import {EchartComponent} from '@modules/dashboard/vault-stats/echart/echart.comp
   declarations: [
     MainPageComponent,
     VaultStatsComponent,
+    VaultStatsTotalComponent,
     EchartComponent,
   ],
   providers: [],

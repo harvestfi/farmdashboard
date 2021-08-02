@@ -3,6 +3,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {UserSettings} from '@core/user-settings';
 import {CustomModalComponent} from '@shared/custom-modal/custom-modal.component';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-main-side-menu',
@@ -39,7 +40,7 @@ export class MainSideMenuComponent {
   @ViewChild('userBalancesDialog') private userBalancesDialog: CustomModalComponent;
   @ViewChild('downloadHistoricDataDialog') private downloadHistoricDataDialog: CustomModalComponent;
 
-  constructor(public viewTypeService: ViewTypeService) {
+  constructor(public viewTypeService: ViewTypeService, private router: Router) {
   }
 
   toggleMenu(): void {
@@ -90,6 +91,11 @@ export class MainSideMenuComponent {
   openUserBalances(): void {
     this.userBalancesDialog.open();
     this.toggleMenu();
+  }
+
+  openTotalVault(): void {
+      this.toggleMenu();
+      this.router.navigateByUrl('info-total');
   }
 
   openDownloadHistoricDataDialog(): void {

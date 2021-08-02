@@ -6,6 +6,8 @@ import {HardworksService} from '@data/services/http/hardworks.service';
 import {TvlsService} from '@data/services/http/tvls.service';
 import {ChartBuilder} from '../../chart/chart-builder';
 import {StaticValues} from '@data/static/static-values';
+import {Router} from '@angular/router';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-tvl-v2-dialog',
@@ -13,12 +15,13 @@ import {StaticValues} from '@data/static/static-values';
   styleUrls: ['./tvl-v2-dialog.component.scss']
 })
 export class TvlV2DialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
-
   constructor(public vt: ViewTypeService,
               public cdRef: ChangeDetectorRef,
               private log: NGXLogger,
+              private router: Router,
               private hardworksService: HardworksService,
               private tvlService: TvlsService,
+              private modalService: NgbModal
   ) {
     super(cdRef, vt);
   }
@@ -40,4 +43,10 @@ export class TvlV2DialogComponent extends ChartGeneralMethodsComponent implement
       ]);
     });
   }
+
+  showTotalPage(): void {
+      this.modalService.dismissAll();
+      this.router.navigateByUrl('info-total');
+  }
+
 }
