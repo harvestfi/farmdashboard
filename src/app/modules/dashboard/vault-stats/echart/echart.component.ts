@@ -65,12 +65,14 @@ export class EchartComponent implements OnInit {
 
   selectPeriod(period): void {
       this.selectedPeriod = period;
-      this.updateOptions = {
-          series: [{
-              data: this.filterDataByPeriod(period)
-          }],
-          xAxis: this.options.xAxis
-      };
+      if (this.options) {
+          this.updateOptions = {
+              series: [{
+                  data: this.filterDataByPeriod(period)
+              }],
+              xAxis: this.options.xAxis
+          };
+      }
   }
 
 

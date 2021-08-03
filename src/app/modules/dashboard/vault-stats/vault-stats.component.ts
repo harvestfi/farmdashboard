@@ -59,6 +59,7 @@ export class VaultStatsComponent implements OnInit {
     changesTvlTotalInAmount = '';
     changesProfitTotalInPercent = '';
     changesProfitTotalInAmount = '';
+    gasSaved = '';
 
     minus1 = false;
     minus2 = false;
@@ -94,6 +95,17 @@ export class VaultStatsComponent implements OnInit {
         this.loadSingleVaultProfit();
         this.loadTotalTVL();
         this.loadTotalProfit();
+        this.loadGasSaved();
+    }
+
+    loadGasSaved(): void {
+        this.hardWorkService.getGasSaved(StaticValues.NETWORKS.get(this.vaultNetwork))
+            .subscribe((data) => {
+                this.gasSaved = this.nFormatter(data, 2);
+                console.log(data);
+            }, err => {
+                console.log(err);
+            });
     }
 
     loadSingleVaultTVL(): void {

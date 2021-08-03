@@ -83,7 +83,7 @@
 .last-data-container .left-part .change-amount,
 .last-data-container .left-part .change-percent,
 .last-data-container .right-part .change-amount,
-.last-data-container .right-part .change-percent{
+.last-data-container .right-part .change-percent {
     width: 49%;
     border-radius: 16px;
     padding: 1rem;
@@ -92,25 +92,57 @@
     flex-direction: column;
     row-gap: 16px;
 }
+
+
+.last-data-container .left-part .total-earned .title,
+.last-data-container .right-part .total-earned .title{
+    display: flex;
+    justify-content: space-between;
+}
+
+.last-data-container .left-part .total-earned,
+.last-data-container .right-part .total-earned{
+    width: 100%;
+    border-radius: 16px;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.last-data-container .left-part .total-earned .value,
+.last-data-container .right-part .total-earned .value {
+    font-size: 38px;
+    font-family: 'Inter var', sans-serif;
+    font-weight: 700;
+}
+
 .cover.light {
     .last-data-container .left-part .change-amount,
     .last-data-container .left-part .change-percent,
     .last-data-container .right-part .change-amount,
-    .last-data-container .right-part .change-percent {
+    .last-data-container .right-part .change-percent,
+    .last-data-container .left-part .total-earned,
+    .last-data-container .right-part .total-earned{
         background-color: #fffce6;
     }
 
     .last-data-container .left-part .change-amount .label,
     .last-data-container .left-part .change-percent .label,
     .last-data-container .right-part .change-amount .label,
-    .last-data-container .right-part .change-percent .label{
+    .last-data-container .right-part .change-percent .label,
+    .last-data-container .left-part .total-earned .label,
+    .last-data-container .right-part .total-earned .label {
         color: #404040;
     }
 
     .last-data-container .left-part .change-amount .value,
     .last-data-container .left-part .change-percent .value,
     .last-data-container .right-part .change-amount .value,
-    .last-data-container .right-part .change-percent .value {
+    .last-data-container .right-part .change-percent .value,
+    .last-data-container .left-part .total-earned .value,
+    .last-data-container .right-part .total-earned .value {
         color: #404040;
     }
 
@@ -124,7 +156,9 @@
     .last-data-container .left-part .change-amount,
     .last-data-container .left-part .change-percent,
     .last-data-container .right-part .change-amount,
-    .last-data-container .right-part .change-percent {
+    .last-data-container .right-part .change-percent,
+    .last-data-container .left-part .total-earned,
+    .last-data-container .right-part .total-earned{
         background-color: #404040;
     }
 
