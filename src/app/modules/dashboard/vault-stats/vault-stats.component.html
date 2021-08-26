@@ -9,7 +9,6 @@
             <div class="charts-block">
                 <div class="chart-block">
                     <app-echart [title]="title1"
-                                [chartName]="chartName1"
                                 [selectedValue]="tvlSelectedValue"
                                 [selectedDate]="tvlSelectedDate"
                                 [valueSymbol]="valueSymbol1"
@@ -18,7 +17,6 @@
                 </div>
                 <div class="chart-block">
                     <app-echart [title]="title2"
-                                [chartName]="chartName2"
                                 [selectedValue]="profitSelectedValue"
                                 [selectedDate]="profitSelectedDate"
                                 [valueSymbol]="valueSymbol2"
@@ -63,12 +61,11 @@
                 </div>
             </div>
             <div class="title">
-                Total
+
             </div>
             <div class="charts-block">
                 <div class="chart-block">
                     <app-echart [title]="title3"
-                                [chartName]="chartName3"
                                 [selectedValue]="tvlTotalSelectedValue"
                                 [selectedDate]="tvlTotalSelectedDate"
                                 [valueSymbol]="valueSymbol3"
@@ -77,12 +74,11 @@
                 </div>
                 <div class="chart-block">
                     <app-echart [title]="title4"
-                                [chartName]="chartName4"
-                                [selectedValue]="profitTotalSelectedValue"
-                                [selectedDate]="profitTotalSelectedDate"
+                                [selectedValue]="usersSelectedValue"
+                                [selectedDate]="usersSelectedDate"
                                 [valueSymbol]="valueSymbol4"
                                 [options]="options4"
-                                [data]="totalDataProfit"></app-echart>
+                                [data]="vaultDataUsers"></app-echart>
                 </div>
             </div>
             <div class="last-data-container">
@@ -105,48 +101,19 @@
                 </div>
                 <div class="right-part">
                     <div class="change-percent">
-                        <span class="label">Change in % (1 month)</span>
+                        <span class="label">Change in % (from last period)</span>
                         <span class="value">
                             <span *ngIf="minus4" style="color: red">{{'&#10549;'}}</span>
                             <span *ngIf="!minus4" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesProfitTotalInPercent }} %
+                            {{  changesUsersInPercent }} %
                         </span>
                     </div>
                     <div class="change-amount">
-                        <span class="label">Change in $ (1 month)</span>
+                        <span class="label">Change (from last period)</span>
                         <span class="value">
                             <span class="symbol">{{ minus4 ? '-' : '+' }}</span>
-                            ${{ changesProfitTotalInAmount}}
+                            {{  changesUsersInAmount }}
                         </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="last-data-container">
-                <div class="left-part">
-                    <div class="total-earned">
-                        <div class="title">
-                            <span class="label">Total Earned</span>
-                            <span class="label">USDT-UST</span>
-                        </div>
-                        <div>
-                             <span class="value">
-
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="right-part">
-                    <div class="total-earned">
-                        <div class="title">
-                            <span class="label">Gas Saved</span>
-                            <span class="label">USDT-UST</span>
-                        </div>
-                        <div>
-                            <span class="value">
-                              ${{ gasSaved }}
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -32,10 +32,7 @@ export class VaultStatsTotalComponent implements OnInit {
     title2 = 'Profit';
     title3 = 'Total TVL';
     title4 = 'Total Profit';
-    chartName1 = '';
-    chartName2 = '';
-    chartName3 = '';
-    chartName4 = '';
+
 
     tvlSelectedValue = '';
     tvlSelectedDate = '';

@@ -12,7 +12,6 @@ export class EchartComponent implements OnInit {
 
   tempData: ChartSeries[] = [];
   @Input() title = '';
-  @Input() chartName = '';
   @Input() selectedValue = '';
   @Input() selectedDate = '';
   @Input() valueSymbol = '';
@@ -65,14 +64,12 @@ export class EchartComponent implements OnInit {
 
   selectPeriod(period): void {
       this.selectedPeriod = period;
-      if (this.options) {
-          this.updateOptions = {
-              series: [{
-                  data: this.filterDataByPeriod(period)
-              }],
-              xAxis: this.options.xAxis
-          };
-      }
+      this.updateOptions = {
+          series: [{
+              data: this.filterDataByPeriod(period)
+          }],
+          xAxis: this.options ? this.options.xAxis : ''
+      };
   }
 
 
