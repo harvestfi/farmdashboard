@@ -33,7 +33,6 @@ export class MainPageComponent implements AfterContentInit, OnInit {
   onGetTheGraphSubGraph(): void {
     this.theGraphService.getSubGraphs()
         .subscribe((data: {subgraphs: []}) => {
-          console.log(data.subgraphs);
           this.subGraphs = data.subgraphs;
           this.getExactSubGraph(this.subGraphs[0].id);
           this.getSubGraphAnalytics(this.subGraphs[1].id);
@@ -45,7 +44,7 @@ export class MainPageComponent implements AfterContentInit, OnInit {
   getExactSubGraph(id): void {
       this.theGraphService.getExactSubGraph(id)
           .subscribe(data => {
-              console.log(data.subgraph);
+              //console.log(data.subgraph);
           }, err => {
               console.log(err);
           });
@@ -54,7 +53,7 @@ export class MainPageComponent implements AfterContentInit, OnInit {
   getSubGraphAnalytics(id): void {
       this.theGraphService.getGraphAnalytics(id)
           .subscribe(data => {
-              console.log(data);
+              //console.log(data);
           }, err => {
               console.log(err);
           });
