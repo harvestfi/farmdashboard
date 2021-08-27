@@ -81,34 +81,50 @@ export class VaultStatsTotalComponent implements OnInit {
                          ]
                 ).subscribe(([data, data2]) => {
                 if (data.length && data2.length) {
-                    this.totalDataTVL = data.map((item) => {
+                    let totalDataTVL = data.map((item) => {
                         const date = new Date(item.calculateTime * 1000);
                         return {
                             name: date.toUTCString(),
                             value: [
                                 [
-                                    date.getFullYear(), date.getMonth() + 1, date.getDate()
+                                    date.getFullYear(), date.getMonth() + 1, date.getUTCDate()
                                 ].join('/'),
                                 item.lastTvl.toString()
-                            ]
+                            ],
+                            date: [
+                                date.getFullYear(), date.getMonth() + 1, date.getUTCDate()
+                            ].join('/'),
+                            sum: item.lastTvl.toString()
                         };
                     });
-                    let totalDataTVL = data2.map((item) => {
+                    let totalDataTVL2 = data2.map((item) => {
                         const date = new Date(item.calculateTime * 1000);
                         return {
                             name: date.toUTCString(),
                             value: [
                                 [
-                                    date.getFullYear(), date.getMonth() + 1, date.getDate()
+                                    date.getFullYear(), date.getMonth() + 1, date.getUTCDate()
                                 ].join('/'),
                                 item.lastTvl.toString()
-                            ]
+                            ],
+                            date: [
+                                date.getFullYear(), date.getMonth() + 1, date.getUTCDate()
+                            ].join('/'),
+                            sum: item.lastTvl.toString()
                         };
                     });
                     totalDataTVL = this.dataReducer(totalDataTVL, 50);
-                    this.totalDataTVL = this.dataReducer(this.totalDataTVL, 50);
-                    console.log(totalDataTVL);
-                    console.log(this.totalDataTVL);
+                    totalDataTVL2 = this.dataReducer(totalDataTVL2, 50);
+                    console.log([...totalDataTVL, ...totalDataTVL2]);
+                    const totalArray = [...totalDataTVL, ...totalDataTVL2]
+                        .sort((a: any, b: any) => {
+                        return new Date(a.name).getTime() - new Date(b.name).getTime();
+                    }).slice(0, [...totalDataTVL, ...totalDataTVL2].length - 1);
+
+
+                    console.log(totalArray);
+                    this.totalDataTVL = this.combineNetworks(totalArray);
+
                     this.initializeChartTotalTVL();
                     this.changesTvlTotalInAmount =  this.lastChanges(this.totalDataTVL).amountChanges;
                     this.changesTvlTotalInPercent =  this.lastChanges(this.totalDataTVL).percentChanges;
@@ -198,7 +214,11 @@ export class VaultStatsTotalComponent implements OnInit {
         };
     }
 
+
+
+
     loadTotalProfit(): void {
+
         this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.vaultNetwork), 1)
             .subscribe((data) => {
                 if (data.length) {
@@ -306,6 +326,15 @@ export class VaultStatsTotalComponent implements OnInit {
 
 
 
+    combineNetworks(allNetworkData): any {
+
+        return Object.values(allNetworkData.reduce((a, {name, value, date, sum}) => {
+            a[date] = (a[date] || {name, value, date, sum: 0});
+            a[date].sum = String(Number(a[date].sum) + Number(sum));
+            a[date].value[1] = a[date].sum;
+            return a;
+        }, {}));
+    }
 
 
     lastChanges(data): { minus: boolean; amountChanges: string; percentChanges: string } {
@@ -350,7 +379,7 @@ export class VaultStatsTotalComponent implements OnInit {
         return item ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol : '0.00';
     }
 
-    dataReducer(data, length): Array<{name: string; value: Array<string>}> {
+    dataReducer(data, length): Array<{name: string; value: Array<string>, date: string, sum: string}> {
         let tempArray = [...data].reverse();
         tempArray = tempArray.filter((thing, index, self) =>
             index === self.findIndex((t) => (
