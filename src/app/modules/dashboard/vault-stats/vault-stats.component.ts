@@ -28,8 +28,6 @@ export class VaultStatsComponent implements OnInit {
     options3: EChartsOption;
     options4: EChartsOption;
 
-    data1: ChartSeries[] = [];
-    data2: ChartSeries[] = [];
 
     title1 = 'TVL';
     title2 = 'Profits';
@@ -40,8 +38,6 @@ export class VaultStatsComponent implements OnInit {
     tvlSelectedDate = '';
     profitSelectedValue = '';
     profitSelectedDate = '';
-    tvlTotalSelectedValue = '';
-    tvlTotalSelectedDate = '';
     usersSelectedValue = '';
     usersSelectedDate = '';
     apySelectedValue = '';
@@ -56,8 +52,6 @@ export class VaultStatsComponent implements OnInit {
     changesVolumeInAmount = '';
     changesTvlInPercent = '';
     changesTvlInAmount = '';
-    changesTvlTotalInPercent = '';
-    changesTvlTotalInAmount = '';
     changesUsersInAmount = '';
     changesUsersInPercent = '';
     changesAPYInAmount = '';
@@ -96,8 +90,6 @@ export class VaultStatsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // Mock Data this.fillChartsDataSets();
-        // Mok this.lastChangesDefaultInit();
         this.loadSingleVaultTVL();
         this.loadSingleVaultProfit();
         this.loadSingleVaultAPY();
@@ -543,7 +535,7 @@ export class VaultStatsComponent implements OnInit {
         const lookup = [
             { value: 1, symbol: '' },
             { value: 1e3, symbol: 'k' },
-            { value: 1e6, symbol: 'M' },
+            { value: 1e6, symbol: 'm' },
             { value: 1e9, symbol: 'b' },
             { value: 1e12, symbol: 't' },
             { value: 1e15, symbol: 'p' },
@@ -568,62 +560,4 @@ export class VaultStatsComponent implements OnInit {
         }
     }
 
-    lastChangesDefaultInit(): void {
-        const lastChangesVolume = +chartData[chartData.length - 1].volumeUSD - +chartData[chartData.length - 2].volumeUSD;
-        const previousNumberVolume = +chartData[chartData.length - 2].volumeUSD;
-
-        if (lastChangesVolume  < 0 ) {
-            this.minus1 = true;
-        }
-        if (this.minus1) {
-            this.changesVolumeInAmount = this.nFormatter(lastChangesVolume * (-1), 2);
-        } else {
-            this.changesVolumeInAmount = this.nFormatter(lastChangesVolume, 2);
-        }
-        const finalVolumePercent = Math.abs(lastChangesVolume  / previousNumberVolume * 100);
-        if (finalVolumePercent >= 1) {
-            this.changesVolumeInPercent = this.nFormatter(finalVolumePercent.toString(), 2);
-        } else {
-            this.changesVolumeInPercent = finalVolumePercent.toFixed(2);
-        }
-
-
-        const lastChangesTvl = +chartData[chartData.length - 1].tvlUSD - +chartData[chartData.length - 2].tvlUSD;
-        const previousNumberTvl = +chartData[chartData.length - 2].tvlUSD;
-        if (lastChangesTvl  < 0 ) {
-            this.minus2 = true;
-        }
-        if (this.minus2) {
-            this.changesTvlInAmount = this.nFormatter(lastChangesTvl * (-1), 2);
-        } else {
-            this.changesTvlInAmount = this.nFormatter(lastChangesTvl, 2);
-        }
-        const finalTvlPercent = Math.abs(lastChangesTvl / previousNumberTvl * 100);
-        if (finalTvlPercent >= 1) {
-            this.changesTvlInPercent = this.nFormatter(finalTvlPercent.toString(), 2);
-        } else {
-            this.changesTvlInPercent = finalTvlPercent.toFixed(2);
-        }
-    }
-    fillChartsDataSets(): void {
-        chartData.map((item) => {
-            const date = new Date(item.date * 1000);
-            this.data1.push({
-                name: date.toUTCString(),
-                value: [
-                    [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('/'),
-                    item.tvlUSD
-                ]
-            });
-            this.data2.push({
-                name: date.toUTCString(),
-                value: [
-                    [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('/'),
-                    item.volumeUSD
-                ]
-            });
-            return item;
-        });
-
-    }
 }
