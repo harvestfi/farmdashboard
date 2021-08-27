@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-
 import {MainPageComponent} from './main-page.component';
 import {DashboardLastValuesModule} from '@modules/dashboard/dashboard-last-values/dashboard-last-values.module';
 import {StrategyListModule} from '@modules/dashboard/strategy-list/strategy-list.module';
@@ -11,7 +10,7 @@ import {MainPageRoutingModule} from './main-page-routing.module';
 import {VaultStatsComponent} from '../dashboard/vault-stats/vault-stats.component';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {EchartComponent} from '@modules/dashboard/vault-stats/echart/echart.component';
-import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component'
+import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component';
 
 @NgModule({
   imports: [

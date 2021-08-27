@@ -12,10 +12,9 @@ import {HardworksService} from '@data/services/http/hardworks.service';
 import {TvlsService} from '@data/services/http/tvls.service';
 import {HarvestTvl} from '@data/models/harvest-tvl';
 import {ViewTypeService} from '@data/services/view-type.service';
-import {Addresses} from "@data/static/addresses";
-import {RewardsService} from "@data/services/http/rewards.service";
-import {RewardDto} from "@data/models/reward-dto";
-import {HardworkDataService} from "@data/services/data/hardwork-data.service";
+import {RewardsService} from '@data/services/http/rewards.service';
+import {RewardDto} from '@data/models/reward-dto';
+import {HardworkDataService} from '@data/services/data/hardwork-data.service';
 
 @Component({
   selector: 'app-vault-stats',

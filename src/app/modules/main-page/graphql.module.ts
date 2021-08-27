@@ -4,20 +4,19 @@ import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
 import { HttpLink } from 'apollo-angular/http';
 import { APP_CONFIG, AppConfig } from '../../../app.config';
 
-export function createNamedApollo(httpLink: HttpLink, config: AppConfig): Record<string, ApolloClientOptions<any>> {
-    return {
-        second: {
-            name: 'second',
-            link: httpLink.create({ uri: config.theGraph.graphQlAnalyticsUrl }),
-            cache: new InMemoryCache()
-        },
-        third: {
-            name: 'third',
-            link: httpLink.create({ uri: config.theGraph.graphQlAnalyticsUrl }),
-            cache: new InMemoryCache()
-        }
-    };
-}
+const createNamedApollo = (httpLink: HttpLink, config: AppConfig): Record<string, ApolloClientOptions<any>> => ({
+    second: {
+        name: 'second',
+        link: httpLink.create({ uri: config.theGraph.graphQlAnalyticsUrl }),
+        cache: new InMemoryCache()
+    },
+    third: {
+        name: 'third',
+        link: httpLink.create({ uri: config.theGraph.graphQlAnalyticsUrl }),
+        cache: new InMemoryCache()
+    }
+});
+
 
 @NgModule({
     providers: [
