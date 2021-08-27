@@ -1,17 +1,16 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {HarvestDto} from "@data/models/harvest-dto";
-import {ViewTypeService} from "@data/services/view-type.service";
-import * as echarts from "echarts";
-import {ChartSeries} from "@modules/dashboard/vault-stats/models/chart-series.model";
-import {StaticValues} from "@data/static/static-values";
-import {HardworksService} from "@data/services/http/hardworks.service";
-import {HardWorkDto} from "@data/models/hardwork-dto";
-import {HarvestTvl} from "@data/models/harvest-tvl";
-import {chartData} from "@modules/dashboard/vault-stats/mokData/charts.data";
-import {TvlsService} from "@data/services/http/tvls.service";
-import {HarvestsService} from "@data/services/http/harvests.service";
-import {EChartsOption} from "echarts";
-import {ActivatedRoute} from "@angular/router";
+import {ViewTypeService} from '@data/services/view-type.service';
+import * as echarts from 'echarts';
+import {ChartSeries} from '@modules/dashboard/vault-stats/models/chart-series.model';
+import {StaticValues} from '@data/static/static-values';
+import {HardworksService} from '@data/services/http/hardworks.service';
+import {HardWorkDto} from '@data/models/hardwork-dto';
+import {HarvestTvl} from '@data/models/harvest-tvl';
+import {TvlsService} from '@data/services/http/tvls.service';
+import {HarvestsService} from '@data/services/http/harvests.service';
+import {EChartsOption} from 'echarts';
+import {ActivatedRoute} from '@angular/router';
+import {forkJoin, Observable, Subscriber} from 'rxjs';
 
 @Component({
   selector: 'app-vault-stats-total',
@@ -25,19 +24,16 @@ export class VaultStatsTotalComponent implements OnInit {
     options3: EChartsOption;
     options4: EChartsOption;
 
-    data1: ChartSeries[] = [];
-    data2: ChartSeries[] = [];
-
-    title1 = 'TVL';
-    title2 = 'Profit';
-    title3 = 'Total TVL';
-    title4 = 'Total Profit';
 
 
-    tvlSelectedValue = '';
-    tvlSelectedDate = '';
-    profitSelectedValue = '';
-    profitSelectedDate = '';
+    title1 = 'Total TVL';
+    title2 = 'Total Profits';
+    title3 = 'TVL';
+    title4 = 'Profit';
+
+
+
+
     tvlTotalSelectedValue = '';
     tvlTotalSelectedDate = '';
     profitTotalSelectedValue = '';
@@ -48,10 +44,6 @@ export class VaultStatsTotalComponent implements OnInit {
     valueSymbol3 = '$';
     valueSymbol4 = '$';
 
-    changesVolumeInPercent = '';
-    changesVolumeInAmount = '';
-    changesTvlInPercent = '';
-    changesTvlInAmount = '';
     changesTvlTotalInPercent = '';
     changesTvlTotalInAmount = '';
     changesProfitTotalInPercent = '';
@@ -65,8 +57,8 @@ export class VaultStatsTotalComponent implements OnInit {
     vaultAddress = '';
     vaultNetwork = '';
 
-    vaultDataTVL: ChartSeries[] = [];
-    vaultDataProfit: ChartSeries[] = [];
+    networks = ['eth', 'bsc'];
+
     totalDataTVL: ChartSeries[] = [];
     totalDataProfit: ChartSeries[] = [];
 
@@ -76,26 +68,19 @@ export class VaultStatsTotalComponent implements OnInit {
                 private hardWorkService: HardworksService,
                 private tvlService: TvlsService,
                 public vt: ViewTypeService) {
-        route.params.subscribe(routeVal => {
-            if (routeVal) {
-                this.vaultAddress = routeVal.address;
-                this.vaultNetwork = routeVal.network;
-            }
-        });
     }
 
     ngOnInit(): void {
-        // Mock Data this.fillChartsDataSets();
-        // Mok this.lastChangesDefaultInit();
-
         this.loadTotalTVL();
         this.loadTotalProfit();
     }
 
     loadTotalTVL(): void {
-        this.tvlService.getHistoryAllTvl()
-            .subscribe((data: HarvestTvl[]) => {
-                if (data.length) {
+        forkJoin([ this.tvlService.getHistoryAllTvl(StaticValues.NETWORKS.get(this.networks[0])),
+                           this.tvlService.getHistoryAllTvl(StaticValues.NETWORKS.get(this.networks[1]))
+                         ]
+                ).subscribe(([data, data2]) => {
+                if (data.length && data2.length) {
                     this.totalDataTVL = data.map((item) => {
                         const date = new Date(item.calculateTime * 1000);
                         return {
@@ -108,11 +93,26 @@ export class VaultStatsTotalComponent implements OnInit {
                             ]
                         };
                     });
+                    let totalDataTVL = data2.map((item) => {
+                        const date = new Date(item.calculateTime * 1000);
+                        return {
+                            name: date.toUTCString(),
+                            value: [
+                                [
+                                    date.getFullYear(), date.getMonth() + 1, date.getDate()
+                                ].join('/'),
+                                item.lastTvl.toString()
+                            ]
+                        };
+                    });
+                    totalDataTVL = this.dataReducer(totalDataTVL, 50);
                     this.totalDataTVL = this.dataReducer(this.totalDataTVL, 50);
+                    console.log(totalDataTVL);
+                    console.log(this.totalDataTVL);
                     this.initializeChartTotalTVL();
                     this.changesTvlTotalInAmount =  this.lastChanges(this.totalDataTVL).amountChanges;
                     this.changesTvlTotalInPercent =  this.lastChanges(this.totalDataTVL).percentChanges;
-                    this.minus3 = this.lastChanges(this.totalDataTVL).minus;
+                    this.minus1 = this.lastChanges(this.totalDataTVL).minus;
                 }
             }, err => {
                 console.log(err);
@@ -120,7 +120,7 @@ export class VaultStatsTotalComponent implements OnInit {
     }
     initializeChartTotalTVL(): void {
         let temp = '';
-        this.options3 = {
+        this.options1 = {
             tooltip: {
                 trigger: 'axis',
                 formatter: (params) => {
@@ -229,7 +229,7 @@ export class VaultStatsTotalComponent implements OnInit {
                     this.initializeChartTotalProfit();
                     this.changesProfitTotalInAmount =  this.lastChanges(this.totalDataProfit).amountChanges;
                     this.changesProfitTotalInPercent =  this.lastChanges(this.totalDataProfit).percentChanges;
-                    this.minus4 = this.lastChanges(this.totalDataProfit).minus;
+                    this.minus2 = this.lastChanges(this.totalDataProfit).minus;
                 }
             }, err => {
                 console.log(err);
@@ -237,7 +237,7 @@ export class VaultStatsTotalComponent implements OnInit {
     }
     initializeChartTotalProfit(): void {
         let temp = '';
-        this.options4 = {
+        this.options2 = {
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -304,6 +304,10 @@ export class VaultStatsTotalComponent implements OnInit {
         };
     }
 
+
+
+
+
     lastChanges(data): { minus: boolean; amountChanges: string; percentChanges: string } {
         const lastChanges = +data[data.length - 1].value[1] - + data[data.length - 2].value[1];
         const previousNumber = +data[data.length - 2].value[1] ;
@@ -360,62 +364,5 @@ export class VaultStatsTotalComponent implements OnInit {
         }
     }
 
-    lastChangesDefaultInit(): void {
-        const lastChangesVolume = +chartData[chartData.length - 1].volumeUSD - +chartData[chartData.length - 2].volumeUSD;
-        const previousNumberVolume = +chartData[chartData.length - 2].volumeUSD;
 
-        if (lastChangesVolume  < 0 ) {
-            this.minus1 = true;
-        }
-        if (this.minus1) {
-            this.changesVolumeInAmount = this.nFormatter(lastChangesVolume * (-1), 2);
-        } else {
-            this.changesVolumeInAmount = this.nFormatter(lastChangesVolume, 2);
-        }
-        const finalVolumePercent = Math.abs(lastChangesVolume  / previousNumberVolume * 100);
-        if (finalVolumePercent >= 1) {
-            this.changesVolumeInPercent = this.nFormatter(finalVolumePercent.toString(), 2);
-        } else {
-            this.changesVolumeInPercent = finalVolumePercent.toFixed(2);
-        }
-
-
-        const lastChangesTvl = +chartData[chartData.length - 1].tvlUSD - +chartData[chartData.length - 2].tvlUSD;
-        const previousNumberTvl = +chartData[chartData.length - 2].tvlUSD;
-        if (lastChangesTvl  < 0 ) {
-            this.minus2 = true;
-        }
-        if (this.minus2) {
-            this.changesTvlInAmount = this.nFormatter(lastChangesTvl * (-1), 2);
-        } else {
-            this.changesTvlInAmount = this.nFormatter(lastChangesTvl, 2);
-        }
-        const finalTvlPercent = Math.abs(lastChangesTvl / previousNumberTvl * 100);
-        if (finalTvlPercent >= 1) {
-            this.changesTvlInPercent = this.nFormatter(finalTvlPercent.toString(), 2);
-        } else {
-            this.changesTvlInPercent = finalTvlPercent.toFixed(2);
-        }
-    }
-    fillChartsDataSets(): void {
-        chartData.map((item) => {
-            const date = new Date(item.date * 1000);
-            this.data1.push({
-                name: date.toUTCString(),
-                value: [
-                    [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('/'),
-                    item.tvlUSD
-                ]
-            });
-            this.data2.push({
-                name: date.toUTCString(),
-                value: [
-                    [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('/'),
-                    item.volumeUSD
-                ]
-            });
-            return item;
-        });
-
-    }
 }

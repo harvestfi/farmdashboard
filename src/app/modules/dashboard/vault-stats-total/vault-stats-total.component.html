@@ -4,55 +4,53 @@
         <div class="grid-sheet">
             <div class="charts-block">
                 <div class="chart-block">
-                    <app-echart [title]="title3"
+                    <app-echart [title]="title1"
                                 [selectedValue]="tvlTotalSelectedValue"
                                 [selectedDate]="tvlTotalSelectedDate"
                                 [valueSymbol]="valueSymbol3"
-                                [options]="options3"
+                                [options]="options1"
                                 [data]="totalDataTVL"></app-echart>
+                    <div class="left-part">
+                        <div class="change-percent">
+                            <span  class="label">Change in % (24h)</span>
+                            <span class="value">
+                            <span *ngIf="minus1" style="color: red">{{'&#10549;'}}</span>
+                            <span *ngIf="!minus1" style="color: green">{{'&#10548;'}}</span>
+                            {{ changesTvlTotalInPercent}} %
+                        </span>
+                        </div>
+                        <div class="change-amount">
+                            <span  class="label">Change in $ (24h)</span>
+                            <span class="value">
+                            <span  class="symbol">{{ minus1 ? '-' : '+' }}</span>
+                            ${{ changesTvlTotalInAmount }}
+                        </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="chart-block">
-                    <app-echart [title]="title4"
+                    <app-echart [title]="title2"
                                 [selectedValue]="profitTotalSelectedValue"
                                 [selectedDate]="profitTotalSelectedDate"
                                 [valueSymbol]="valueSymbol4"
-                                [options]="options4"
+                                [options]="options2"
                                 [data]="totalDataProfit"></app-echart>
-                </div>
-            </div>
-            <div class="last-data-container">
-                <div class="left-part">
-                    <div class="change-percent">
-                        <span  class="label">Change in % (24h)</span>
-                        <span class="value">
-                            <span *ngIf="minus3" style="color: red">{{'&#10549;'}}</span>
-                            <span *ngIf="!minus3" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesTvlTotalInPercent}} %
-                        </span>
-                    </div>
-                    <div class="change-amount">
-                        <span  class="label">Change in $ (24h)</span>
-                        <span class="value">
-                            <span  class="symbol">{{ minus3 ? '-' : '+' }}</span>
-                            ${{ changesTvlTotalInAmount }}
-                        </span>
-                    </div>
-                </div>
-                <div class="right-part">
-                    <div class="change-percent">
-                        <span class="label">Change in % (1 month)</span>
-                        <span class="value">
-                            <span *ngIf="minus4" style="color: red">{{'&#10549;'}}</span>
-                            <span *ngIf="!minus4" style="color: green">{{'&#10548;'}}</span>
+                    <div class="right-part">
+                        <div class="change-percent">
+                            <span class="label">Change in % (24h)</span>
+                            <span class="value">
+                            <span *ngIf="minus2" style="color: red">{{'&#10549;'}}</span>
+                            <span *ngIf="!minus2" style="color: green">{{'&#10548;'}}</span>
                             {{ changesProfitTotalInPercent }} %
                         </span>
-                    </div>
-                    <div class="change-amount">
-                        <span class="label">Change in $ (1 month)</span>
-                        <span class="value">
-                            <span class="symbol">{{ minus4 ? '-' : '+' }}</span>
+                        </div>
+                        <div class="change-amount">
+                            <span class="label">Change in $ (24h)</span>
+                            <span class="value">
+                            <span class="symbol">{{ minus2 ? '-' : '+' }}</span>
                             ${{ changesProfitTotalInAmount}}
                         </span>
+                        </div>
                     </div>
                 </div>
             </div>
