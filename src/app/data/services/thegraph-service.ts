@@ -49,15 +49,8 @@ export class TheGraphService {
   }
 
   getGraphAnalytics(id): any {
-    const subGraphsQuery = `{"operationName":"subgraphDaily","variables":{` +
-        + `"id":"0x69f5aeac6be8bd93eac408304e2b141709871cc204bc1652cafb63d85a69f98c",` +
-        + `"orderBy":"dayNumber","orderDirection":"desc"},` +
-        + `"query":"query subgraphDaily($id: ID!,` +
-        + `$orderBy: SubgraphDeploymentDailyData_orderBy, $orderDirection: OrderDirection)` +
-        + `@analytics {  subgraphDeploymentDailyDatas(where: {subgraphDeployment: $id},` +
-        + `orderBy: $orderBy, orderDirection: $orderDirection, first: 1000)` +
-        + `{   id    dayNumber    dayStart    dayEnd    queryFeesAmount    signalledTokens    __typename  }}"}`;
-    return this.http.post(this.subGraphsAnalyticsURL, subGraphsQuery).pipe(map((result: {data}) => result.data));
+      const subGraphsQuery = ``;
+      return this.http.post(this.subGraphsAnalyticsURL, subGraphsQuery).pipe(map((result: {data}) => result.data));
   }
 
 
