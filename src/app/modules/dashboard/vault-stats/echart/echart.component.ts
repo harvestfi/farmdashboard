@@ -42,7 +42,7 @@ export class EchartComponent implements OnInit {
         const lookup = [
             { value: 1, symbol: '' },
             { value: 1e3, symbol: 'k' },
-            { value: 1e6, symbol: 'm' },
+            { value: 1e6, symbol: 'M' },
             { value: 1e9, symbol: 'b' },
             { value: 1e12, symbol: 't' },
             { value: 1e15, symbol: 'p' },
@@ -54,7 +54,17 @@ export class EchartComponent implements OnInit {
     }
 
   setDefaultTooltipValues(): void {
-      this.selectedValue = this.valueSymbol + this.nFormatter(this.data[this.data.length - 1].value[1], 2);
+      if (this.valueSymbol === '%') {
+          const temp = this.data[this.data.length - 1].value[1];
+          let value = this.nFormatter(temp, 2);
+          if (+temp < 1) {
+              const tempNumber = +temp;
+              value = tempNumber.toFixed(2);
+          }
+          this.selectedValue = value + this.valueSymbol;
+      } else {
+          this.selectedValue = this.valueSymbol + this.nFormatter(this.data[this.data.length - 1].value[1], 2);
+      }
       this.selectedDate = new Date(this.data[this.data.length - 1].name).toString();
   }
 
