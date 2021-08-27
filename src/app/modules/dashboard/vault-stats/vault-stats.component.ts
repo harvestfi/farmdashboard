@@ -33,7 +33,7 @@ export class VaultStatsComponent implements OnInit {
     data2: ChartSeries[] = [];
 
     title1 = 'TVL';
-    title2 = 'Profit';
+    title2 = 'Profits';
     title3 = 'APY';
     title4 = 'Users';
 
