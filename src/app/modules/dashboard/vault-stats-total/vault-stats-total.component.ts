@@ -5,12 +5,18 @@ import {ChartSeries} from '@modules/dashboard/vault-stats/models/chart-series.mo
 import {StaticValues} from '@data/static/static-values';
 import {HardworksService} from '@data/services/http/hardworks.service';
 import {HardWorkDto} from '@data/models/hardwork-dto';
-import {HarvestTvl} from '@data/models/harvest-tvl';
 import {TvlsService} from '@data/services/http/tvls.service';
 import {HarvestsService} from '@data/services/http/harvests.service';
 import {EChartsOption} from 'echarts';
 import {ActivatedRoute} from '@angular/router';
 import {forkJoin, Observable, Subscriber} from 'rxjs';
+
+export interface ChartItem {
+    name: string;
+    value: Array<string>;
+    date: string;
+    sum: string;
+}
 
 @Component({
   selector: 'app-vault-stats-total',
@@ -28,7 +34,7 @@ export class VaultStatsTotalComponent implements OnInit {
 
     title1 = 'Total TVL';
     title2 = 'Total Profits';
-    title3 = 'TVL';
+    title3 = 'Users';
     title4 = 'Profit';
 
 
@@ -38,6 +44,8 @@ export class VaultStatsTotalComponent implements OnInit {
     tvlTotalSelectedDate = '';
     profitTotalSelectedValue = '';
     profitTotalSelectedDate = '';
+    usersSelectedValue = '';
+    usersSelectedDate = '';
 
     valueSymbol1 = '$';
     valueSymbol2 = '$';
@@ -48,19 +56,20 @@ export class VaultStatsTotalComponent implements OnInit {
     changesTvlTotalInAmount = '';
     changesProfitTotalInPercent = '';
     changesProfitTotalInAmount = '';
+    changesUsersInAmount = '';
+    changesUsersInPercent = '';
 
     minus1 = false;
     minus2 = false;
     minus3 = false;
     minus4 = false;
 
-    vaultAddress = '';
-    vaultNetwork = '';
 
     networks = ['eth', 'bsc'];
 
     totalDataTVL: ChartSeries[] = [];
     totalDataProfit: ChartSeries[] = [];
+    totalUsers: ChartSeries[] = [];
 
     constructor(private ref: ChangeDetectorRef,
                 private route: ActivatedRoute,
@@ -81,53 +90,27 @@ export class VaultStatsTotalComponent implements OnInit {
                          ]
                 ).subscribe(([data, data2]) => {
                 if (data.length && data2.length) {
-                    let totalDataTVL = data.map((item) => {
-                        const date = new Date(item.calculateTime * 1000);
-                        return {
-                            name: date.toUTCString(),
-                            value: [
-                                [
-                                    date.getFullYear(), date.getMonth() + 1, date.getUTCDate()
-                                ].join('/'),
-                                item.lastTvl.toString()
-                            ],
-                            date: [
-                                date.getFullYear(), date.getMonth() + 1, date.getUTCDate()
-                            ].join('/'),
-                            sum: item.lastTvl.toString()
-                        };
-                    });
-                    let totalDataTVL2 = data2.map((item) => {
-                        const date = new Date(item.calculateTime * 1000);
-                        return {
-                            name: date.toUTCString(),
-                            value: [
-                                [
-                                    date.getFullYear(), date.getMonth() + 1, date.getUTCDate()
-                                ].join('/'),
-                                item.lastTvl.toString()
-                            ],
-                            date: [
-                                date.getFullYear(), date.getMonth() + 1, date.getUTCDate()
-                            ].join('/'),
-                            sum: item.lastTvl.toString()
-                        };
-                    });
+                    let totalDataTVL = this.prepareData(data, 'lastTvl', 'calculateTime');
+                    let totalDataTVL2 = this.prepareData(data2, 'lastTvl', 'calculateTime');
+                    let totalUsers = this.prepareData(data, 'lastOwnersCount', 'calculateTime');
+                    let totalUsers2 = this.prepareData(data2, 'lastOwnersCount', 'calculateTime');
                     totalDataTVL = this.dataReducer(totalDataTVL, 50);
                     totalDataTVL2 = this.dataReducer(totalDataTVL2, 50);
-                    console.log([...totalDataTVL, ...totalDataTVL2]);
-                    const totalArray = [...totalDataTVL, ...totalDataTVL2]
-                        .sort((a: any, b: any) => {
-                        return new Date(a.name).getTime() - new Date(b.name).getTime();
-                    }).slice(0, [...totalDataTVL, ...totalDataTVL2].length - 1);
-
-
-                    console.log(totalArray);
-                    this.totalDataTVL = this.combineNetworks(totalArray);
-
+                    totalUsers =  this.dataReducer(totalUsers,  100);
+                    totalUsers2 = this.dataReducer(totalUsers2,  100);
+                    const totalUsersArray = [...totalUsers, ...totalUsers2].sort(this.sortDate);
+                    const totalArray = [...totalDataTVL, ...totalDataTVL2].sort(this.sortDate);
+                    const paredArray = this.findNotParedDay(totalArray);
+                    const paredUsersArray = this.findNotParedDay(totalUsersArray);
+                    this.totalDataTVL = this.combineNetworks(paredArray);
+                    this.totalUsers = this.combineNetworks(paredUsersArray);
                     this.initializeChartTotalTVL();
+                    this.initializeChartUsers();
+                    this.changesUsersInAmount =  this.lastChanges(this.totalUsers).amountChanges;
+                    this.changesUsersInPercent =  this.lastChanges(this.totalUsers).percentChanges;
                     this.changesTvlTotalInAmount =  this.lastChanges(this.totalDataTVL).amountChanges;
                     this.changesTvlTotalInPercent =  this.lastChanges(this.totalDataTVL).percentChanges;
+                    this.minus3 = this.lastChanges(this.totalUsers).minus;
                     this.minus1 = this.lastChanges(this.totalDataTVL).minus;
                 }
             }, err => {
@@ -214,38 +197,45 @@ export class VaultStatsTotalComponent implements OnInit {
         };
     }
 
-
-
-
     loadTotalProfit(): void {
-
-        this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.vaultNetwork), 1)
-            .subscribe((data) => {
+        forkJoin([ this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.networks[0]), 1),
+                           this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.networks[1]), 1)
+                         ]
+                ).subscribe(([data, data2]) => {
                 if (data.length) {
+
                     const cumulative = new Map<string, number>();
+                    const cumulative2 = new Map<string, number>();
                     let lastTotalProfit = 0;
+                    let lastTotalProfit2 = 0;
 
                     data.forEach( hw => {
                         const date = new Date(hw.blockDate * 1000);
                         const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
-                        if(!cumulative.has(curDate)) {
+                        if (!cumulative.has(curDate)) {
                             lastTotalProfit = 0;
                         }
                         lastTotalProfit += hw.fullRewardUsd;
                         cumulative.set(curDate, lastTotalProfit);
                     });
-                    this.totalDataProfit = data.map((item: HardWorkDto) => {
-                        const date = new Date(item.blockDate * 1000);
+
+                    data2.forEach( hw => {
+                        const date = new Date(hw.blockDate * 1000);
                         const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
-                        return {
-                            name: date.toString(),
-                            value: [
-                                curDate,
-                                cumulative.get(curDate).toString()
-                            ]
-                        };
+                        if (!cumulative2.has(curDate)) {
+                            lastTotalProfit = 0;
+                        }
+                        lastTotalProfit2 += hw.fullRewardUsd;
+                        cumulative2.set(curDate, lastTotalProfit2);
                     });
-                    this.totalDataProfit = this.dataReducer(this.totalDataProfit, 50);
+
+                    let totalProfit = this.prepareData2(data, cumulative, 'blockDate');
+                    let totalProfit2 = this.prepareData2(data2, cumulative2, 'blockDate');
+                    totalProfit = this.dataReducer(totalProfit, 50);
+                    totalProfit2 = this.dataReducer(totalProfit2, 50);
+                    const totalProfitArray = [...totalProfit, ...totalProfit2].sort(this.sortDate);
+                    const paredArray = this.findNotParedDay(totalProfitArray);
+                    this.totalDataProfit = this.combineNetworks(paredArray);
                     this.initializeChartTotalProfit();
                     this.changesProfitTotalInAmount =  this.lastChanges(this.totalDataProfit).amountChanges;
                     this.changesProfitTotalInPercent =  this.lastChanges(this.totalDataProfit).percentChanges;
@@ -325,9 +315,76 @@ export class VaultStatsTotalComponent implements OnInit {
     }
 
 
+    initializeChartUsers(): void {
+        let temp = '';
+        this.options3 = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow',
+                },
+                formatter: (params) => {
+                    params = params[0];
+                    if (params.value[1] !== temp) {
+                        temp = params.value[1];
+                    } else {
+                        return '';
+                    }
+                    const date = new Date(params.name);
+                    const roundedSum = this.nFormatter(temp, 2);
+                    this.usersSelectedValue = roundedSum;
+                    this.usersSelectedDate = date.toString();
+                    this.ref.detectChanges();
+                    return  ``;
+                },
+                backgroundColor: 'rgb(25, 27, 31)',
+                borderWidth: 0,
+                position: [-10, 25],
+                extraCssText: 'box-shadow: none',
+            },
+            grid: {
+                top: '26%',
+                left: '4.5%',
+                right: '6%',
+                bottom: '12%',
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: 'rgb(108, 114, 132)',
+                        fontSize: '16px',
+                        fontFamily: 'Inter var',
+                        formatter: (value) => echarts.format.formatTime('dd', value, false),
+                        showMinLabel: true,
+                        showMaxLabel: true,
+                    },
 
-    combineNetworks(allNetworkData): any {
+                },
+            ],
+            yAxis: [{
+                show: false,
+                type: 'value'
+            }],
+            series: [{
+                type: 'bar',
+                barWidth: '70%',
+                data: this.totalUsers,
+                itemStyle: {
+                    color: '#2172e5',
+                    borderRadius: 6
+                },
+            }]
+        };
+    }
 
+    combineNetworks(allNetworkData): ChartItem[] {
         return Object.values(allNetworkData.reduce((a, {name, value, date, sum}) => {
             a[date] = (a[date] || {name, value, date, sum: 0});
             a[date].sum = String(Number(a[date].sum) + Number(sum));
@@ -336,6 +393,57 @@ export class VaultStatsTotalComponent implements OnInit {
         }, {}));
     }
 
+    prepareData2(data, cumulative, dateField): ChartItem[] {
+        return data.map((item: HardWorkDto) => {
+            const date = new Date(item[dateField] * 1000);
+            const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
+            return {
+                name: date.toString(),
+                value: [
+                    curDate,
+                    cumulative.get(curDate).toString()
+                ],
+                date: curDate,
+                sum: cumulative.get(curDate).toString()
+            };
+        });
+    }
+
+
+    prepareData(data, valueField, dateField): ChartItem[] {
+        return data.map((item) => {
+            const date = new Date(item[dateField] * 1000);
+            return {
+                name: date.toString(),
+                value: [
+                    [
+                        date.getFullYear(), date.getMonth() + 1, date.getDate()
+                    ].join('/'),
+                    item[valueField].toString()
+                ],
+                date: [
+                    date.getFullYear(), date.getMonth() + 1, date.getDate()
+                ].join('/'),
+                sum: item[valueField].toString()
+            };
+        });
+    }
+
+    sortDate(a, b): number {
+        return new Date(a.name).getTime() - new Date(b.name).getTime();
+    }
+
+    findNotParedDay(totalArray): ChartItem[] {
+        const paredList = [];
+        const result = totalArray.reduce( (acc, o) => (acc[o.date] = (acc[o.date] || 0) + 1, acc), {} );
+
+        for (const i of totalArray) {
+            if (result[i.date] === 2) {
+                paredList.push(i);
+            }
+        }
+        return paredList;
+    }
 
     lastChanges(data): { minus: boolean; amountChanges: string; percentChanges: string } {
         const lastChanges = +data[data.length - 1].value[1] - + data[data.length - 2].value[1];
@@ -379,7 +487,7 @@ export class VaultStatsTotalComponent implements OnInit {
         return item ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol : '0.00';
     }
 
-    dataReducer(data, length): Array<{name: string; value: Array<string>, date: string, sum: string}> {
+    dataReducer(data, length): ChartItem[] {
         let tempArray = [...data].reverse();
         tempArray = tempArray.filter((thing, index, self) =>
             index === self.findIndex((t) => (
