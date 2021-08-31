@@ -1,15 +1,16 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {ViewTypeService} from '@data/services/view-type.service';
+import {  ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ViewTypeService } from '@data/services/view-type.service';
 import * as echarts from 'echarts';
-import {ChartSeries} from '@modules/dashboard/vault-stats/models/chart-series.model';
-import {StaticValues} from '@data/static/static-values';
-import {HardworksService} from '@data/services/http/hardworks.service';
-import {HardWorkDto} from '@data/models/hardwork-dto';
-import {TvlsService} from '@data/services/http/tvls.service';
-import {HarvestsService} from '@data/services/http/harvests.service';
-import {EChartsOption} from 'echarts';
-import {ActivatedRoute} from '@angular/router';
-import {forkJoin, Observable, Subscriber} from 'rxjs';
+import { ChartSeries } from '@modules/dashboard/vault-stats/models/chart-series.model';
+import { StaticValues } from '@data/static/static-values';
+import { HardworksService } from '@data/services/http/hardworks.service';
+import { HardWorkDto } from '@data/models/hardwork-dto';
+import { TvlsService } from '@data/services/http/tvls.service';
+import { HarvestsService } from '@data/services/http/harvests.service';
+import { EChartsOption } from 'echarts';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { PriceDataService } from '@data/services/data/price-data.service';
 
 export interface ChartItem {
     name: string;
@@ -25,20 +26,35 @@ export interface ChartItem {
 })
 export class VaultStatsTotalComponent implements OnInit {
 
+    networks = ['eth', 'bsc'];
+
+    totalDataTVL: ChartSeries[] = [];
+    totalDataProfit: ChartSeries[] = [];
+    totalUsers: ChartSeries[] = [];
+    totalFarmBuyBack: ChartSeries[] = [];
+
+    totalFarmStacked: ChartSeries[] = [];
+
     options1: EChartsOption;
     options2: EChartsOption;
     options3: EChartsOption;
     options4: EChartsOption;
-
-
+    options5: EChartsOption;
+    options6: EChartsOption;
 
     title1 = 'Total TVL';
     title2 = 'Total Profits';
     title3 = 'Users';
-    title4 = 'Profit';
+    title4 = 'Farm Buybacks';
+    title5 = 'P/E Ratio';
+    title6 = 'Farm Stacked';
 
-
-
+    valueSymbol1 = '$';
+    valueSymbol2 = '$';
+    valueSymbol3 = '';
+    valueSymbol4 = '$';
+    valueSymbol5 = '$';
+    valueSymbol6 = '$';
 
     tvlTotalSelectedValue = '';
     tvlTotalSelectedDate = '';
@@ -46,11 +62,11 @@ export class VaultStatsTotalComponent implements OnInit {
     profitTotalSelectedDate = '';
     usersSelectedValue = '';
     usersSelectedDate = '';
+    farmBuyBackSelectedValue = '';
+    farmBuyBackSelectedDate = '';
+    farmStackedSelectedValue = '';
+    farmStackedSelectedDate = '';
 
-    valueSymbol1 = '$';
-    valueSymbol2 = '$';
-    valueSymbol3 = '$';
-    valueSymbol4 = '$';
 
     changesTvlTotalInPercent = '';
     changesTvlTotalInAmount = '';
@@ -58,33 +74,34 @@ export class VaultStatsTotalComponent implements OnInit {
     changesProfitTotalInAmount = '';
     changesUsersInAmount = '';
     changesUsersInPercent = '';
+    changesFarmBuyBackInAmount = '';
+    changesFarmBuyBackInPercent = '';
+    farmStackedInAmount = '';
+    farmStackedInPercent = '';
+
 
     minus1 = false;
     minus2 = false;
     minus3 = false;
     minus4 = false;
-
-
-    networks = ['eth', 'bsc'];
-
-    totalDataTVL: ChartSeries[] = [];
-    totalDataProfit: ChartSeries[] = [];
-    totalUsers: ChartSeries[] = [];
+    minus5 = false;
+    minus6 = false;
 
     constructor(private ref: ChangeDetectorRef,
                 private route: ActivatedRoute,
                 private harvestService: HarvestsService,
                 private hardWorkService: HardworksService,
                 private tvlService: TvlsService,
+                private priceData: PriceDataService,
                 public vt: ViewTypeService) {
     }
 
     ngOnInit(): void {
-        this.loadTotalTVL();
-        this.loadTotalProfit();
+        this.loadTVLHistoryData();
+        this.loadHardWorkHistoryData();
     }
 
-    loadTotalTVL(): void {
+    loadTVLHistoryData(): void {
         forkJoin([ this.tvlService.getHistoryAllTvl(StaticValues.NETWORKS.get(this.networks[0])),
                            this.tvlService.getHistoryAllTvl(StaticValues.NETWORKS.get(this.networks[1]))
                          ]
@@ -94,29 +111,103 @@ export class VaultStatsTotalComponent implements OnInit {
                     let totalDataTVL2 = this.prepareData(data2, 'lastTvl', 'calculateTime');
                     let totalUsers = this.prepareData(data, 'lastOwnersCount', 'calculateTime');
                     let totalUsers2 = this.prepareData(data2, 'lastOwnersCount', 'calculateTime');
+                    let totalFarmStacked = this.prepareFarmStackedData(data, 'calculateTime');
+                    let totalFarmStacked2 = this.prepareFarmStackedData(data2, 'calculateTime');
                     totalDataTVL = this.dataReducer(totalDataTVL, 50);
                     totalDataTVL2 = this.dataReducer(totalDataTVL2, 50);
                     totalUsers =  this.dataReducer(totalUsers,  100);
                     totalUsers2 = this.dataReducer(totalUsers2,  100);
+                    totalFarmStacked =  this.dataReducer(totalFarmStacked,  100);
+                    totalFarmStacked2 = this.dataReducer(totalFarmStacked2, 100);
+                    const totalFarmStackedArray = [...totalFarmStacked, ...totalFarmStacked2].sort(this.sortDate);
                     const totalUsersArray = [...totalUsers, ...totalUsers2].sort(this.sortDate);
                     const totalArray = [...totalDataTVL, ...totalDataTVL2].sort(this.sortDate);
                     const paredArray = this.findNotParedDay(totalArray);
                     const paredUsersArray = this.findNotParedDay(totalUsersArray);
+                    const paredFarmStacked = this.findNotParedDay(totalFarmStackedArray);
+                    this.totalFarmStacked = this.combineNetworks( paredFarmStacked);
                     this.totalDataTVL = this.combineNetworks(paredArray);
                     this.totalUsers = this.combineNetworks(paredUsersArray);
                     this.initializeChartTotalTVL();
                     this.initializeChartUsers();
+                    this.initializeChartFarmStacked();
                     this.changesUsersInAmount =  this.lastChanges(this.totalUsers).amountChanges;
                     this.changesUsersInPercent =  this.lastChanges(this.totalUsers).percentChanges;
                     this.changesTvlTotalInAmount =  this.lastChanges(this.totalDataTVL).amountChanges;
                     this.changesTvlTotalInPercent =  this.lastChanges(this.totalDataTVL).percentChanges;
-                    this.minus3 = this.lastChanges(this.totalUsers).minus;
+                    this.changesFarmBuyBackInAmount =  this.lastChanges(this.totalFarmStacked).amountChanges;
+                    this.changesFarmBuyBackInPercent =  this.lastChanges(this.totalFarmStacked).percentChanges;
                     this.minus1 = this.lastChanges(this.totalDataTVL).minus;
+                    this.minus3 = this.lastChanges(this.totalUsers).minus;
+                    this.minus6 = this.lastChanges(this.totalFarmStacked).minus;
                 }
             }, err => {
                 console.log(err);
             });
     }
+
+    loadHardWorkHistoryData(): void {
+        forkJoin([ this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.networks[0]), 1),
+                           this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.networks[1]), 1)
+                         ]
+                ).subscribe(([data, data2]) => {
+                if (data.length) {
+                    const cumulative = new Map<string, number>();
+                    const cumulative2 = new Map<string, number>();
+                    let lastTotalProfit = 0;
+                    let lastTotalProfit2 = 0;
+
+                    data.forEach( hw => {
+                        const date = new Date(hw.blockDate * 1000);
+                        const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
+                        if (!cumulative.has(curDate)) {
+                            lastTotalProfit = 0;
+                        }
+                        lastTotalProfit += hw.fullRewardUsd;
+                        cumulative.set(curDate, lastTotalProfit);
+                    });
+
+                    data2.forEach( hw => {
+                        const date = new Date(hw.blockDate * 1000);
+                        const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
+                        if (!cumulative2.has(curDate)) {
+                            lastTotalProfit = 0;
+                        }
+                        lastTotalProfit2 += hw.fullRewardUsd;
+                        cumulative2.set(curDate, lastTotalProfit2);
+                    });
+
+                    let totalFarmBuyBack = this.prepareFarmBuyBack(data, 'farmBuybackSum', 'blockDate');
+                    let totalFarmBuyBack2 = this.prepareFarmBuyBack(data2, 'farmBuybackSum', 'blockDate');
+                    let totalProfit = this.prepareDataCumulative(data, cumulative, 'blockDate');
+                    let totalProfit2 = this.prepareDataCumulative(data2, cumulative2, 'blockDate');
+                    totalProfit = this.dataReducer(totalProfit, 50);
+                    totalProfit2 = this.dataReducer(totalProfit2, 50);
+                    totalFarmBuyBack = this.dataReducer(totalFarmBuyBack, 50);
+                    totalFarmBuyBack2 = this.dataReducer(totalFarmBuyBack2, 50);
+                    const totalBuyBackArray = [...totalFarmBuyBack , ...totalFarmBuyBack2].sort(this.sortDate);
+                    const totalProfitArray = [...totalProfit, ...totalProfit2].sort(this.sortDate);
+                    const paredProfitArray = this.findNotParedDay(totalProfitArray);
+                    const paredFarmBuyBackArray = this.findNotParedDay(totalBuyBackArray);
+                    this.totalDataProfit = this.combineNetworks(paredProfitArray);
+                    this.totalFarmBuyBack = this.combineNetworks(paredFarmBuyBackArray);
+                    this.initializeChartTotalProfit();
+                    this.initializeChartFarmBuyBack();
+
+                    this.changesProfitTotalInAmount =  this.lastChanges(this.totalDataProfit).amountChanges;
+                    this.changesProfitTotalInPercent =  this.lastChanges(this.totalDataProfit).percentChanges;
+                    this.minus2 = this.lastChanges(this.totalDataProfit).minus;
+
+                    this.changesFarmBuyBackInAmount = this.lastChanges(this.totalFarmBuyBack).amountChanges;
+                    this.changesFarmBuyBackInPercent = this.lastChanges(this.totalFarmBuyBack).percentChanges;;
+                    this.minus4 = this.lastChanges(this.totalFarmBuyBack).minus;
+
+                }
+            }, err => {
+                console.log(err);
+            });
+    }
+
     initializeChartTotalTVL(): void {
         let temp = '';
         this.options1 = {
@@ -197,54 +288,6 @@ export class VaultStatsTotalComponent implements OnInit {
         };
     }
 
-    loadTotalProfit(): void {
-        forkJoin([ this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.networks[0]), 1),
-                           this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.networks[1]), 1)
-                         ]
-                ).subscribe(([data, data2]) => {
-                if (data.length) {
-
-                    const cumulative = new Map<string, number>();
-                    const cumulative2 = new Map<string, number>();
-                    let lastTotalProfit = 0;
-                    let lastTotalProfit2 = 0;
-
-                    data.forEach( hw => {
-                        const date = new Date(hw.blockDate * 1000);
-                        const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
-                        if (!cumulative.has(curDate)) {
-                            lastTotalProfit = 0;
-                        }
-                        lastTotalProfit += hw.fullRewardUsd;
-                        cumulative.set(curDate, lastTotalProfit);
-                    });
-
-                    data2.forEach( hw => {
-                        const date = new Date(hw.blockDate * 1000);
-                        const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
-                        if (!cumulative2.has(curDate)) {
-                            lastTotalProfit = 0;
-                        }
-                        lastTotalProfit2 += hw.fullRewardUsd;
-                        cumulative2.set(curDate, lastTotalProfit2);
-                    });
-
-                    let totalProfit = this.prepareData2(data, cumulative, 'blockDate');
-                    let totalProfit2 = this.prepareData2(data2, cumulative2, 'blockDate');
-                    totalProfit = this.dataReducer(totalProfit, 50);
-                    totalProfit2 = this.dataReducer(totalProfit2, 50);
-                    const totalProfitArray = [...totalProfit, ...totalProfit2].sort(this.sortDate);
-                    const paredArray = this.findNotParedDay(totalProfitArray);
-                    this.totalDataProfit = this.combineNetworks(paredArray);
-                    this.initializeChartTotalProfit();
-                    this.changesProfitTotalInAmount =  this.lastChanges(this.totalDataProfit).amountChanges;
-                    this.changesProfitTotalInPercent =  this.lastChanges(this.totalDataProfit).percentChanges;
-                    this.minus2 = this.lastChanges(this.totalDataProfit).minus;
-                }
-            }, err => {
-                console.log(err);
-            });
-    }
     initializeChartTotalProfit(): void {
         let temp = '';
         this.options2 = {
@@ -313,7 +356,6 @@ export class VaultStatsTotalComponent implements OnInit {
             }]
         };
     }
-
 
     initializeChartUsers(): void {
         let temp = '';
@@ -384,6 +426,144 @@ export class VaultStatsTotalComponent implements OnInit {
         };
     }
 
+    initializeChartFarmBuyBack(): void {
+        let temp = '';
+        this.options4 = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow',
+                },
+                formatter: (params) => {
+                    params = params[0];
+                    if (params.value[1] !== temp) {
+                        temp = params.value[1];
+                    } else {
+                        return '';
+                    }
+                    const date = new Date(params.name);
+                    const roundedSum = this.nFormatter(params.value[1], 2);
+                    this.farmBuyBackSelectedValue = '$' + roundedSum;
+                    this.farmBuyBackSelectedDate = date.toString();
+                    this.ref.detectChanges();
+                    return  ``;
+                },
+                backgroundColor: 'rgb(25, 27, 31)',
+                borderWidth: 0,
+                position: [-10, 25],
+                extraCssText: 'box-shadow: none',
+            },
+            grid: {
+                top: '26%',
+                left: '4.5%',
+                right: '6%',
+                bottom: '12%',
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: 'rgb(108, 114, 132)',
+                        fontSize: '16px',
+                        fontFamily: 'Inter var',
+                        formatter: (value) => echarts.format.formatTime('dd', value, false),
+                        showMinLabel: true,
+                        showMaxLabel: true,
+                    },
+
+                },
+            ],
+            yAxis: [{
+                show: false,
+                type: 'value'
+            }],
+            series: [{
+                type: 'bar',
+                barWidth: '70%',
+                data: this.totalFarmBuyBack,
+                itemStyle: {
+                    color: '#2172e5',
+                    borderRadius: 6
+                },
+            }]
+        };
+    }
+
+    initializeChartFarmStacked(): void {
+        let temp = '';
+        this.options6 = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow',
+                },
+                formatter: (params) => {
+                    params = params[0];
+                    if (params.value[1] !== temp) {
+                        temp = params.value[1];
+                    } else {
+                        return '';
+                    }
+                    const date = new Date(params.name);
+                    const roundedSum = this.nFormatter(temp, 2);
+                    this.farmStackedSelectedValue = roundedSum;
+                    this.farmStackedSelectedDate = date.toString();
+                    this.ref.detectChanges();
+                    return  ``;
+                },
+                backgroundColor: 'rgb(25, 27, 31)',
+                borderWidth: 0,
+                position: [-10, 25],
+                extraCssText: 'box-shadow: none',
+            },
+            grid: {
+                top: '26%',
+                left: '4.5%',
+                right: '6%',
+                bottom: '12%',
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: 'rgb(108, 114, 132)',
+                        fontSize: '16px',
+                        fontFamily: 'Inter var',
+                        formatter: (value) => echarts.format.formatTime('dd', value, false),
+                        showMinLabel: true,
+                        showMaxLabel: true,
+                    },
+
+                },
+            ],
+            yAxis: [{
+                show: false,
+                type: 'value'
+            }],
+            series: [{
+                type: 'bar',
+                barWidth: '70%',
+                data: this.totalFarmStacked,
+                itemStyle: {
+                    color: '#2172e5',
+                    borderRadius: 6
+                },
+            }]
+        };
+    }
+
     combineNetworks(allNetworkData): ChartItem[] {
         return Object.values(allNetworkData.reduce((a, {name, value, date, sum}) => {
             a[date] = (a[date] || {name, value, date, sum: 0});
@@ -393,7 +573,35 @@ export class VaultStatsTotalComponent implements OnInit {
         }, {}));
     }
 
-    prepareData2(data, cumulative, dateField): ChartItem[] {
+    prepareFarmBuyBack(data, valueField, dateField): ChartItem[] {
+        return data.map((item) => {
+            const date = new Date(item[dateField] * 1000);
+            let bb = item[valueField];
+            if (item.network === 'bsc') {
+                const farmPrice = this.priceData.getLastFarmPrice();
+                if (farmPrice && farmPrice !== 0) {
+                    bb = bb / farmPrice;
+                } else {
+                    bb = 0;
+                }
+            }
+            return {
+                name: date.toString(),
+                value: [
+                    [
+                        date.getFullYear(), date.getMonth() + 1, date.getDate()
+                    ].join('/'),
+                    bb.toString()
+                ],
+                date: [
+                    date.getFullYear(), date.getMonth() + 1, date.getDate()
+                ].join('/'),
+                sum: bb
+            };
+        });
+    }
+
+    prepareDataCumulative(data, cumulative, dateField): ChartItem[] {
         return data.map((item: HardWorkDto) => {
             const date = new Date(item[dateField] * 1000);
             const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
@@ -425,6 +633,25 @@ export class VaultStatsTotalComponent implements OnInit {
                     date.getFullYear(), date.getMonth() + 1, date.getDate()
                 ].join('/'),
                 sum: item[valueField].toString()
+            };
+        });
+    }
+
+    prepareFarmStackedData(data, dateField): ChartItem[] {
+        return data.map((item) => {
+            const date = new Date(item[dateField] * 1000);
+            return {
+                name: date.toString(),
+                value: [
+                    [
+                        date.getFullYear(), date.getMonth() + 1, date.getDate()
+                    ].join('/'),
+                    ((item.lastTvlNative / item.sharePrice) * 100).toString()
+                ],
+                date: [
+                    date.getFullYear(), date.getMonth() + 1, date.getDate()
+                ].join('/'),
+                sum: ((item.lastTvlNative / item.sharePrice) * 100).toString()
             };
         });
     }
