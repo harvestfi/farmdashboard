@@ -42,8 +42,8 @@ export class VaultStatsTotalComponent implements OnInit {
     options5: EChartsOption;
     options6: EChartsOption;
 
-    title1 = 'Total TVL';
-    title2 = 'Total Profits';
+    title1 = 'TVL';
+    title2 = 'Profits';
     title3 = 'Users';
     title4 = 'Farm Buybacks';
     title5 = 'P/E Ratio';
