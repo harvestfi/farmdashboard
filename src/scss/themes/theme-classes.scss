@@ -16,6 +16,18 @@ $variables in $themes_colors {
             color: map-get($variables, "font");
         }
 
+        .#{$color}-gray {
+            color: map-get($variables, "gray");
+        }
+
+        .#{$color}-yellow {
+            color: map-get($variables, "yellow");
+        }
+
+        .#{$color}-black {
+            color: map-get($variables, "black");
+        }
+
         input,
         select {
             background: map-get($variables, "card");
@@ -47,12 +59,22 @@ $variables in $themes_colors {
 
     .#{$color}-background {
         background: map-get($variables, "background");
-
     }
 
     .#{$color}-card {
         background: map-get($variables, "card");
     }
+
+    .#{$color}-transparent {
+        background: map-get($variables, "transparent");
+    }
+
+    .#{$color}-softGreen {
+        background: map-get($variables, "softGreen");
+    }
+
+
+
     
     .#{$color}-font {
         color: map-get($variables, "font");

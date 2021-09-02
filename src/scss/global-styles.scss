@@ -5,10 +5,10 @@ body {
   min-height: 100% !important;
 }
 
-html, body {
+html, body, .mat-h4, .mat-subheading-1, .mat-typography h4 {
   height: 100%;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: PT Sans, "Helvetica Neue", sans-serif;
 }
 
 .left-border-box {
@@ -34,7 +34,7 @@ html, body {
 }
 
 .mat-global-reverse {
-  background-color: #bce3e2;
+  background-color: #EAF6F6;
   color: black;
 }
 

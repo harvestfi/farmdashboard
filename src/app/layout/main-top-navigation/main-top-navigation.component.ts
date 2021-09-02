@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {WebsocketService} from '@data/services/websocket.service';
 import {BlockDiffService} from '@data/services/data/block-diff.service';
+import {UserSettings} from '@core/user-settings';
 
 @Component({
   selector: 'app-main-top-navigation',
@@ -9,6 +10,7 @@ import {BlockDiffService} from '@data/services/data/block-diff.service';
   styleUrls: ['./main-top-navigation.component.scss']
 })
 export class MainTopNavigationComponent implements OnInit {
+  isDarkTheme = UserSettings.getColor() === 'dark';
   public networks = [
     {
       name: 'eth',
@@ -23,7 +25,9 @@ export class MainTopNavigationComponent implements OnInit {
   public blockDiffs = new Map<string, number>();
 
   constructor(public ws: WebsocketService, public vt: ViewTypeService, private blockDiffService: BlockDiffService,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private changeDetectorRef: ChangeDetectorRef,
+              public viewTypeService: ViewTypeService) {
+      this.isDarkTheme = UserSettings.getColor() === 'dark';
   }
 
   ngOnInit(): void {
@@ -31,6 +35,15 @@ export class MainTopNavigationComponent implements OnInit {
       this.blockDiffs = new Map([...this.blockDiffs, [diff.network, diff.blockNum]]);
       this.changeDetectorRef.detectChanges();
     });
+
+  }
+
+  toggleTheme(): void {
+      if (this.viewTypeService.getThemeColor() === 'dark') {
+          this.viewTypeService.setThemeColor('light');
+          return;
+      }
+      this.viewTypeService.setThemeColor('dark');
   }
 
 

@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {AfterContentInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { BusyNotifierService } from '@data/services/busy-notifier.service';
 import { ViewTypeService } from '@data/services/view-type.service';
 import { TheGraphService } from '@data/services/thegraph-service';
@@ -20,7 +20,7 @@ export class MainPageComponent implements AfterContentInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.onGetTheGraphSubGraph();
+    //this.onGetTheGraphSubGraph();
   }
 
   ngAfterContentInit(): void {
@@ -33,9 +33,9 @@ export class MainPageComponent implements AfterContentInit, OnInit {
   onGetTheGraphSubGraph(): void {
     this.theGraphService.getSubGraphs()
         .subscribe((data: {subgraphs: []}) => {
-          console.log(data.subgraphs);
+          //console.log(data.subgraphs);
           this.subGraphs = data.subgraphs;
-          this.getExactSubGraph(this.subGraphs[0].id);
+          //this.getExactSubGraph(this.subGraphs[0].id);
         }, err => {
           console.log(err);
         });
@@ -44,7 +44,7 @@ export class MainPageComponent implements AfterContentInit, OnInit {
   getExactSubGraph(id): void {
       this.theGraphService.getExactSubGraph(id)
           .subscribe(data => {
-              console.log(data.subgraph);
+              //console.log(data.subgraph);
           }, err => {
               console.log(err);
           });

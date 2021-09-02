@@ -3,6 +3,9 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {UserSettings} from '@core/user-settings';
 import {CustomModalComponent} from '@shared/custom-modal/custom-modal.component';
+import {SideMenuService} from '@data/services/side-menu.service';
+import {Router} from '@angular/router';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-main-side-menu',
@@ -26,7 +29,7 @@ import {CustomModalComponent} from '@shared/custom-modal/custom-modal.component'
   ]
 })
 export class MainSideMenuComponent {
-  showSideMenu = false;
+  public modalRef: NgbModalRef;
   isDarkTheme = UserSettings.getColor() === 'dark';
   @ViewChild('allStatsDialog') private allStatsDialog: CustomModalComponent;
   @ViewChild('tvlDialog') private tvlDialog: CustomModalComponent;
@@ -39,11 +42,35 @@ export class MainSideMenuComponent {
   @ViewChild('userBalancesDialog') private userBalancesDialog: CustomModalComponent;
   @ViewChild('downloadHistoricDataDialog') private downloadHistoricDataDialog: CustomModalComponent;
 
-  constructor(public viewTypeService: ViewTypeService) {
+  constructor(public viewTypeService: ViewTypeService,
+              private sideMenuService: SideMenuService,
+              public router: Router,
+              private modalService: NgbModal) {
+      const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      if (width > 1600) {
+          this.sideMenuService.setSideMenuState(true);
+      }
+      window.addEventListener('resize', (event) => {
+          const newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+          if (newWidth > 1600) {
+              this.sideMenuService.setSideMenuState(true);
+          }
+      });
+  }
+
+  get homeRoute(): boolean {
+      return this.router.isActive('', true);
+  }
+
+  get sideMenuState(): any {
+    return this.sideMenuService.getSideMenuState();
   }
 
   toggleMenu(): void {
-    this.showSideMenu = !this.showSideMenu;
+      const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      if (width <= 1600) {
+          this.sideMenuService.setSideMenuState(!this.sideMenuState);
+      }
   }
 
   openAllStatsDialog(): void {
@@ -64,6 +91,12 @@ export class MainSideMenuComponent {
   openPsApyDialog(): void {
     this.psApyDialog.open();
     this.toggleMenu();
+  }
+
+  openMain(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('');
   }
 
   openWeeklyProfitDialog(): void {
@@ -95,13 +128,5 @@ export class MainSideMenuComponent {
   openDownloadHistoricDataDialog(): void {
     this.downloadHistoricDataDialog.open();
     this.toggleMenu();
-  }
-
-  toggleTheme(): void {
-    if (this.viewTypeService.getThemeColor() === 'dark') {
-      this.viewTypeService.setThemeColor('light');
-      return;
-    }
-    this.viewTypeService.setThemeColor('dark');
   }
 }

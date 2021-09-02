@@ -1,0 +1,5 @@
+@font-face{font-family:"Inter";font-style:normal; font-weight:100; font-display:swap;src:url(../Inter/Inter-Thin.woff2) format("woff2"),url(../Inter/Inter-Thin.woff) format("woff")}
+@font-face{font-family:"Inter";font-style:italic; font-weight:100; font-display:swap;src:url(../Inter/Inter-ThinItalic.woff2) format("woff2"),url(../Inter/Inter-ThinItalic.woff) format("woff")}
+@font-face{font-family:"Inter var";  src:url(../Inter/Inter-roman.var.woff2) format("woff2 supports variations(gvar)"),url(../Inter/Inter-roman.var2.woff2) format("woff2-variations"),url(../Inter/Inter-roman.var3.woff2) format("woff2")}
+@font-face{font-family:"Inter var";font-weight:100 900;font-style:italic;font-named-instance:"Italic";src:url(../Inter/Inter-italic.var.woff2) format("woff2 supports variations(gvar)"),url(../Inter/Inter-italic.var2.woff2) format("woff2-variations"),url(../Inter/Inter-italic.var3.woff2) format("woff2")}
+@font-face{font-family:"Inter var experimental";font-weight: 100 900; font-style:oblique 0deg 10deg;src:url(../Inter/Inter.var.a.woff2) format("woff2-variations"),url(../Inter/Inter.var.woff2) format("woff2")}

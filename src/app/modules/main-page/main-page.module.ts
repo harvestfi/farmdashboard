@@ -11,6 +11,7 @@ import {MainPageRoutingModule} from './main-page-routing.module';
 import {VaultStatsComponent} from '../dashboard/vault-stats/vault-stats.component';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {EchartComponent} from '@modules/dashboard/vault-stats/echart/echart.component';
+import {LayoutModule} from '@layout/layout.module';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import {EchartComponent} from '@modules/dashboard/vault-stats/echart/echart.comp
     PriceChartModule,
     FlowCardsViewModule,
     LastPricesListModule,
+    LayoutModule,
     CommonModule,
     NgxEchartsModule.forRoot({
        echarts: () => import('echarts')

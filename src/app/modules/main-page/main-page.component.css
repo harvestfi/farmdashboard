@@ -23,6 +23,12 @@
   height: 100%;
 }
 
+.bottom-row {
+ display: flex;
+ overflow: hidden;
+ width: calc(100% - 40px);
+}
+
 @media screen and (max-width: 900px) {
   .price-card {
     height: 450px;
@@ -32,6 +38,9 @@
 @media screen and (max-width: 600px) {
   .price-card {
     height: 350px;
+  }
+  .bottom-row {
+    flex-direction: column;
   }
 }
 
