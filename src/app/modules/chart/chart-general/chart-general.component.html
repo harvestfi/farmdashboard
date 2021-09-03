@@ -10,7 +10,7 @@
   <div id="top-div-light" class="dialog-card" [class]="vt.getThemeColor() + '-card'">
 
     <div>
-      <div class="title">
+      <div class="title" *ngIf="title">
         {{title}}
       </div>
       <p class="sub-title">Lines inside the chart have a non-comparable scale!</p>

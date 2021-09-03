@@ -1,8 +1,8 @@
 <div class="main-top-navigation" [class]="vt.getThemeColor() + '-transparent'">
-  <app-main-side-menu></app-main-side-menu>
+  <button id="menu-button-toggle" (click)="toggleMenu()"><i class="fas fa-bars"></i></button>
   <div class="nav-title hide-on-phone">
-    <span class="first-part">Harvest</span>
-    <span> Live Dashboard</span></div>
+    <span class="first-part">Harvest&nbsp;</span>
+    <span>Live Dashboard</span></div>
   <div class="sockets-status-container">
     <div *ngFor="let network of networks">
 
@@ -25,14 +25,7 @@
       <ng-template>
         <p>Theme switch</p>
       </ng-template>
-    <div class="dark-mode-toggle-container">
-        <input [checked]="isDarkTheme" type="checkbox" name="darkmode toggle" id="dark-mode-toggle-checkbox">
-        <label (click)="toggleTheme()" for="dark-mode-toggle-checkbox"
-               class="dark-mode-toggle-label">
-          <span>Light</span>
-          <span>Dark</span>
-        </label>
-    </div>
+      <app-theme-switch></app-theme-switch>
     </app-popover-card>
   </div>
 

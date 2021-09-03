@@ -29,8 +29,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
   ]
 })
 export class MainSideMenuComponent {
-  public modalRef: NgbModalRef;
-  isDarkTheme = UserSettings.getColor() === 'dark';
+  @ViewChild('collapsibleArea', {static: true}) collapsibleArea;
   @ViewChild('allStatsDialog') private allStatsDialog: CustomModalComponent;
   @ViewChild('tvlDialog') private tvlDialog: CustomModalComponent;
   @ViewChild('incomeDialog') private incomeDialog: CustomModalComponent;
@@ -59,7 +58,39 @@ export class MainSideMenuComponent {
   }
 
   get homeRoute(): boolean {
-      return this.router.isActive('', true);
+      return this.router.isActive('/', true);
+  }
+
+  get chartRoute(): boolean {
+      return this.router.isActive('charts', false);
+  }
+
+  get chartApyHistoryRoute(): boolean {
+      return this.router.isActive('charts/ps-apy-history', true);
+  }
+
+  get chartWeeklyProfitHistoryRoute(): boolean {
+      return this.router.isActive('charts/weekly-profit-history', true);
+  }
+
+  get chartFarmBuyBacksRoute(): boolean {
+      return this.router.isActive('charts/farm-buybacks', true);
+  }
+
+  get chartSavedGasFeesRoute(): boolean {
+      return this.router.isActive('charts/saved-gas-fees', true);
+  }
+
+  get rewardsHistoryRoute(): boolean {
+      return this.router.isActive('rewards-history', true);
+  }
+
+  get downloadsRoute(): boolean {
+      return this.router.isActive('downloads', true);
+  }
+
+  get userBalancesRoute(): boolean {
+      return this.router.isActive('user-balances', true);
   }
 
   get sideMenuState(): any {
@@ -97,6 +128,48 @@ export class MainSideMenuComponent {
     this.modalService.dismissAll();
     this.toggleMenu();
     this.router.navigateByUrl('');
+    this.collapsibleArea.closeCollapseArea();
+  }
+
+  openPsApyHistory(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('charts/ps-apy-history');
+  }
+
+  openWeeklyProfitHistory(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('charts/weekly-profit-history');
+  }
+  openFarmBuyBacks(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('charts/farm-buybacks');
+  }
+
+  openSavedGasFees(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('charts/saved-gas-fees');
+  }
+
+  openRewardsHistory(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('rewards-history');
+  }
+
+  openDownloads(): void {
+      this.modalService.dismissAll();
+      this.toggleMenu();
+      this.router.navigateByUrl('downloads');
+  }
+
+  openUserBalances(): void {
+      this.modalService.dismissAll();
+      this.toggleMenu();
+      this.router.navigateByUrl('user-balances');
   }
 
   openWeeklyProfitDialog(): void {
@@ -120,7 +193,7 @@ export class MainSideMenuComponent {
   }
 
 
-  openUserBalances(): void {
+  openUserBalancesDialog(): void {
     this.userBalancesDialog.open();
     this.toggleMenu();
   }

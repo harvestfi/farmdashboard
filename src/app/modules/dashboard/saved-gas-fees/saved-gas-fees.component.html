@@ -1,0 +1,11 @@
+<div class="title-wrapper"
+     [class]="vt.getThemeColor() + '-black'">
+    <span>
+     Saved Gas Fees History
+    </span>
+    <app-theme-switch></app-theme-switch>
+</div>
+<div class="app-chart-wrapper">
+    <app-chart-general [title]="" [ready]="ready" (network)="setNetwork($event)">
+    </app-chart-general>
+</div>

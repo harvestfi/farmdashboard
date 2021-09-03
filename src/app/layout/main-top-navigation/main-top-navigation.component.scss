@@ -1,10 +1,18 @@
 @import "../../../scss/utilities/utilities";
 
+#menu-button-toggle {
+  cursor: pointer;
+  border: none;
+  font-size: 24px;
+  background: none;
+  margin-left: 5px;
+  outline: none;
+}
+
 .main-top-navigation {
-  margin: 63px 0.8em 40px;
-  display: grid;
-  align-items: center;
-  grid-template-columns: 0 50% 50%;
+  margin: 0 10px;
+  display: flex;
+  justify-content: space-between;
   transition: 0.3s;
   box-sizing: border-box;
 
@@ -16,6 +24,10 @@
     font-family: 'PT Sans', sans-serif;
     text-align: left;
     font-size: 36px;
+    display: flex;
+    span {
+      margin: auto 0;
+    }
     .first-part {
       font-family: 'PT Sans', sans-serif;
       font-weight: 700;
@@ -64,74 +76,19 @@
   }
 }
 
-.dark-mode-toggle-container {
-  border: 1px solid #C9DBDB;
-  box-sizing: border-box;
-  border-radius: 10px;
-  width: 150px;
-  height: 57px;
-  padding: 6px;
-
-  .dark-mode-toggle-label {
-    font-family: 'PT Sans', sans-serif;
-    font-size: 16px;
-    height: 100%;
-    width: 100%;
-    border-radius: 20px;
-    position: relative;
-    transition: background 0.5s;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-
-    span {
-      color: #5CADAA;
-      width: 100%;
-      text-align: center;
-      margin: auto 0;
-      transition: color, 0.5s;
-    }
-
-    &::after {
-      background: #5CADAA;
-      border-radius: 8px;
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 0;
-      content: "Light";
-      height: 100%;
-      width: 67px;
-      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
-      transition: all 0.5s;
-      color: #FFFFFF;
-    }
-  }
-
-  #dark-mode-toggle-checkbox {
-    display: none;
-
-    &:checked ~ .dark-mode-toggle-label {
-      span {
-        color: #FFFFFF;
-        width: 100%;
-        text-align: center;
-        margin: auto 0
-      }
-      &::after {
-        left: 50%;
-        content: "Dark"
-      }
-    }
-  }
+#menu-button-toggle {
+  display: none;
 }
 
 @media (max-width: 1600px) {
   .main-top-navigation {
     grid-template-columns: 45px 40% calc(60% - 40px);
+  }
+  .nav-title {
+    margin: auto auto auto 15px;
+  }
+  #menu-button-toggle {
+    display: block;
   }
 }
 
@@ -141,8 +98,8 @@
   }
 }
 
-@media (max-width: 800px) {
-  .hide-on-phone {
+@media (max-width: 880px) {
+  .main-top-navigation .hide-on-phone {
     display: none;
   }
   .main-top-navigation {

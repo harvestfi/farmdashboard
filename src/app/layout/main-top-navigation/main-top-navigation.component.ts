@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {WebsocketService} from '@data/services/websocket.service';
 import {BlockDiffService} from '@data/services/data/block-diff.service';
-import {UserSettings} from '@core/user-settings';
+import {SideMenuService} from '@data/services/side-menu.service';
 
 @Component({
   selector: 'app-main-top-navigation',
@@ -10,7 +10,6 @@ import {UserSettings} from '@core/user-settings';
   styleUrls: ['./main-top-navigation.component.scss']
 })
 export class MainTopNavigationComponent implements OnInit {
-  isDarkTheme = UserSettings.getColor() === 'dark';
   public networks = [
     {
       name: 'eth',
@@ -26,8 +25,8 @@ export class MainTopNavigationComponent implements OnInit {
 
   constructor(public ws: WebsocketService, public vt: ViewTypeService, private blockDiffService: BlockDiffService,
               private changeDetectorRef: ChangeDetectorRef,
-              public viewTypeService: ViewTypeService) {
-      this.isDarkTheme = UserSettings.getColor() === 'dark';
+              public viewTypeService: ViewTypeService,
+              private sideMenuService: SideMenuService) {
   }
 
   ngOnInit(): void {
@@ -35,16 +34,19 @@ export class MainTopNavigationComponent implements OnInit {
       this.blockDiffs = new Map([...this.blockDiffs, [diff.network, diff.blockNum]]);
       this.changeDetectorRef.detectChanges();
     });
-
   }
 
-  toggleTheme(): void {
-      if (this.viewTypeService.getThemeColor() === 'dark') {
-          this.viewTypeService.setThemeColor('light');
-          return;
+  get sideMenuState(): any {
+      return this.sideMenuService.getSideMenuState();
+  }
+  toggleMenu(): void {
+      const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      if (width <= 1600) {
+          this.sideMenuService.setSideMenuState(!this.sideMenuState);
       }
-      this.viewTypeService.setThemeColor('dark');
   }
+
+
 
 
 }

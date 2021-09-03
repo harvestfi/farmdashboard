@@ -1,0 +1,58 @@
+<div class="container" [class]="vt.getThemeColor() + '-card'">
+
+    <h1 class="title">
+        {{data?.title}}
+    </h1>
+
+    <div class="disclaimer">
+        Currently, balances for contracts can't be reached.
+        Badger holders and transactions via Argent don't appear on this list.
+    </div>
+
+    <div class="table-header" [class]="vt.getThemeColor()">
+
+        <div class="header-field">
+            &nbsp;
+        </div>
+
+        <div class="header-field">
+            Owner
+        </div>
+
+        <div class="header-field">
+            Summary Balance
+        </div>
+
+        <div class="header-field">
+            Links
+        </div>
+
+    </div>
+
+    <div class="scroller">
+
+        <div class="values" *ngFor="let balance of userBalances; let i = index">
+
+            <div class="value-field">
+                #{{i + 1}}
+            </div>
+
+            <div class="value-field">
+                {{shortAddress(balance.owner)}}
+            </div>
+
+            <div class="value-field">
+                {{balance.balance | number: '1.0-0'}}$
+            </div>
+
+            <div class="value-field links">
+                <a href='{{getNetworkScan()}}/address/{{balance.owner}}' target='_blank' class="trade-link">NetworkScan</a>
+                <a href='https://app.zerion.io/{{balance.owner}}/overview' target='_blank' class="trade-link">Zerion</a>
+                <a href='/history/{{balance.owner}}' target='_blank' class="trade-link">History</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

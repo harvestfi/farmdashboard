@@ -1,5 +1,7 @@
 @import "../../../../scss/utilities/responsive_utilities";
-
+#top-div-light {
+  margin-top: 32px;
+}
 .main-top-stats {
   display: grid;
   grid-template-areas:   "native-tokens native-tokens weekly-profit ps-income tvl"

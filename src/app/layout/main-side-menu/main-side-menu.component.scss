@@ -9,17 +9,9 @@
   cursor: pointer;
 }
 
-#menu-button-toggle {
-  cursor: pointer;
-  border: none;
-  font-size: 24px;
-  background: none;
-  margin-left: 5px;
-  outline: none;
-}
-
 #main-side-menu {
   width: 100%;
+  height: 100%;
   max-width: 348px;
   max-height: 1002px;
   position: absolute;
@@ -30,7 +22,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  height: 100%;
+  user-select: none;
 
   .main-side-menu-logo-container {
     padding: 40px 40px 60px 40px;
@@ -197,7 +189,7 @@
 
   }
 
-  .botton-social-icons {
+  .bottom-social-icons {
     display: flex;
     width: 222px;
     padding: 20px 0 20px 42px;
@@ -236,15 +228,8 @@
 
 }
 
-#menu-button-toggle {
-  display: none;
-}
-
 
 @media (max-width: 1600px) {
-  #menu-button-toggle {
-    display: block;
-  }
   #side-menu-backdrop {
     max-width: 100%;
     max-height: 100%;

@@ -1,0 +1,11 @@
+<div class="title-wrapper"
+     [class]="vt.getThemeColor() + '-black'">
+    <span>
+    PS APY History
+    </span>
+    <app-theme-switch></app-theme-switch>
+</div>
+<div class="app-chart-wrapper">
+    <app-chart-general [title]="" [ready]="ready" [multipleNetworks]="false">
+    </app-chart-general>
+</div>

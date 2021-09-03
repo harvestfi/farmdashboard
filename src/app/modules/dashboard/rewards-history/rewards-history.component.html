@@ -1,0 +1,65 @@
+<div *ngIf="ready === true; then readyBlock else loadingBlock" id="load"></div>
+<ng-template #loadingBlock>
+    <app-loading-spinner></app-loading-spinner>
+</ng-template>
+
+<ng-template #readyBlock>
+
+        <div class="title-wrapper"
+             [class]="vt.getThemeColor() + '-black'">
+        <span>
+            Rewards History
+        </span>
+            <app-theme-switch></app-theme-switch>
+        </div>
+        <div class="dialog-card" [class]="vt.getThemeColor() + '-card'">
+            <div class="filters">
+                <select (change)="handleFilterUpdate()" [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
+                    <option [value]="''">All</option>
+                    <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
+                </select>
+            </div>
+            <div class="table-header" [class]="vt.getThemeColor()">
+                <div class="header-field">Date</div>
+                <div class="header-field">Vault</div>
+                <div class="header-field">Reward</div>
+                <div class="header-field">Period Finish</div>
+                <div class="header-field">Link</div>
+            </div>
+            <div class="scroller">
+                <div class="values table-row" *ngFor="let reward of rewards.data">
+                    <div class="value-field">
+                        <span>{{reward.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</span>
+                    </div>
+                    <div class="value-field">
+                        <app-vault-icon [vault]="getVault(reward.vaultAddress)"></app-vault-icon>
+                        <span [title]="reward.vault">{{reward.vault}}</span>
+                    </div>
+                    <div class="value-field">
+                        <span>{{reward.reward | number: '1.1-1'}}</span>
+                    </div>
+                    <div class="value-field">
+                        <span>{{reward.periodFinish * 1000 | date: 'dd-MMM-yyyy HH:mm:ss'}}</span>
+                    </div>
+                    <div class="value-field link-field">
+                        <mat-icon (click)="openNetworkScanTx(reward.id.split('_')[0], reward.network)"
+                                  [ngStyle]="{'color': '#b5b4b4'}" class="sign-icon">open_in_new
+                        </mat-icon>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!rewards.data.length" class="empty-list">
+                <span role="img">🏜️</span> No rewards found <span role="img">🏜️</span>
+            </div>
+
+            <app-paginator
+                    (selectPage)="handlePageChange($event)"
+                    (nextPage)="handlePageChange($event)"
+                    (previousPage)="handlePageChange($event)"
+                    [pageObject]="rewards"
+            ></app-paginator>
+
+        </div>
+
+</ng-template>
