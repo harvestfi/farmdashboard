@@ -2,14 +2,29 @@
 
 $dark-background-color: #111111;
 
+.title-wrapper {
+  margin: 0 0 0 10px;
+  font-family: 'PT Sans', sans-serif;
+  text-align: left;
+  font-size: 36px;
+  font-weight: 700;
+  display: flex;
+  height: 57px;
+  justify-content: space-between;
+  span {
+    margin: auto 0;
+  }
+}
+
 .container {
-  margin: 0 auto;
+  padding: 35px 40px 35px 40px;
+  border-radius: 10px;
+  margin-left: 10px;
+  min-height: 718px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 20px;
-  max-width: 600px;
-  width: 90vw;
+  position: relative;
+
 }
 
 .title {
@@ -20,68 +35,67 @@ $dark-background-color: #111111;
 }
 
 .disclaimer {
-  text-align: center;
-  font-weight: bolder;
-  font-size: 0.8em;
-  margin-bottom: 1rem;
+  text-align: left;
+  font-weight: 400;
+  font-size: 16px;
+  margin: 0 0 30px 10px;
 }
 
 .values {
   display: grid;
-  grid-template-columns: 0.3fr 0.9fr 0.9fr 1fr;
+  grid-template-columns: 0.3fr 1fr 2fr 0.5fr;
+  border-bottom: 1px solid #F0F0F0;
+  padding: 14px 10px 14px 0;
 }
 
 .table-header {
+  padding: 14px 10px 14px 0;
   display: grid;
-  grid-template-columns: 0.3fr 1fr 1fr 1fr;
-  padding: 0.3em 0.5em;
+  grid-template-columns: 0.3fr 1fr 2fr 0.5fr;
   font-weight: bold;
-  font-size: 0.9em;
-  background: darken(#fffce6, 5%);
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-bottom: 0.5em;
   text-align: center;
+  font-size: 14px;
+  font-family: 'PT Sans', sans-serif;
 
-  @include isDarkMode() {
-    background: $dark-background-color;
-  }
 }
 
 .header-field {
-  text-align: center;
-  padding: 3px;
-  font-size: 1em;
-  font-weight: bold;
+  text-align: left;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .values {
 
 }
 
-.value-field {
-  text-align: center;
-  padding: 3px;
-  font-size: 0.9em;
-  font-weight: bolder;
+.scroller {
+  max-height: 718px;
+  overflow: auto;
 }
 
-.links a {
-  width: 80%;
+
+.value-field {
+  font-family: 'PT Sans', sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.table-link-badge {
+  padding: 4px 7px;
   text-decoration: none;
-  background-color: #EEBF65;
-  color: black;
+  border-radius: 6px;
+  color: #FFFFFF;
   position: relative;
+  font-weight: bold;
   font-size: 12px;
   margin: 5px;
-  border-radius: 5px;
-  padding: 1%;
   transition: all .2s ease-out;
+  font-family: 'PT Sans', sans-serif;
 }
 
-.scroller {
-  overflow-y: scroll;
-  max-height: 80vh;
-}
 

@@ -1,15 +1,21 @@
+<div class="title-wrapper"
+     [class]="vt.getThemeColor() + '-black'">
+            <span>
+                User Balances
+            </span>
+    <app-theme-switch></app-theme-switch>
+</div>
+<div class="disclaimer"
+     [class]="vt.getThemeColor() + '-gray'">
+    Currently, balances for contracts can't be reached.
+    Badger holders and transactions via Argent don't appear on this list.
+</div>
+
 <div class="container" [class]="vt.getThemeColor() + '-card'">
 
-    <h1 class="title">
-        {{data?.title}}
-    </h1>
 
-    <div class="disclaimer">
-        Currently, balances for contracts can't be reached.
-        Badger holders and transactions via Argent don't appear on this list.
-    </div>
-
-    <div class="table-header" [class]="vt.getThemeColor()">
+    <div class="table-header"
+         [class]="vt.getThemeColor() + '-gray'">
 
         <div class="header-field">
             &nbsp;
@@ -38,7 +44,7 @@
             </div>
 
             <div class="value-field">
-                {{shortAddress(balance.owner)}}
+                {{balance.owner}}
             </div>
 
             <div class="value-field">
@@ -46,9 +52,12 @@
             </div>
 
             <div class="value-field links">
-                <a href='{{getNetworkScan()}}/address/{{balance.owner}}' target='_blank' class="trade-link">NetworkScan</a>
-                <a href='https://app.zerion.io/{{balance.owner}}/overview' target='_blank' class="trade-link">Zerion</a>
-                <a href='/history/{{balance.owner}}' target='_blank' class="trade-link">History</a>
+                <a href='{{getNetworkScan()}}/address/{{balance.owner}}' target='_blank'
+                   [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'">NetworkScan</a>
+                <a href='https://app.zerion.io/{{balance.owner}}/overview' target='_blank'
+                   [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'">Zerion</a>
+                <a href='/history/{{balance.owner}}' target='_blank'
+                   [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'">History</a>
             </div>
 
         </div>

@@ -28,10 +28,31 @@ $variables in $themes_colors {
             color: map-get($variables, "black");
         }
 
-        input,
-        select {
+        .#{$color}-middleGreen {
+            color: map-get($variables, "middleGreen");
+        }
+
+        .table-link-badge{
+            background: map-get($variables, "middleGreen");
+        }
+
+        input {
             background: map-get($variables, "card");
             color: map-get($variables, "font");
+        }
+
+        select  {
+            background: map-get($variables, "lightGreen");
+            color: map-get($variables, "solidGreen");
+            border-right: 18px solid map-get($variables, "lightGreen");
+            option {
+                background: #FFFFFF;
+            }
+            option:checked,
+            option:hover {
+                background: map-get($variables, "lightGreen");
+                color: map-get($variables, "middleGreen");
+            }
         }
 
         a {
@@ -75,7 +96,8 @@ $variables in $themes_colors {
 
 
 
-    
+
+
     .#{$color}-font {
         color: map-get($variables, "font");
     }

@@ -17,8 +17,17 @@ $dark-background-color: #111111;
 }
 
 .dialog-card {
-  padding: 20px;
+  padding: 40px;
   margin-left: 10px;
+  border-radius: 10px;
+  min-height: 728px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#load {
+  max-height: 90vh;
 }
 
 .tvl-img {
@@ -31,45 +40,74 @@ $dark-background-color: #111111;
   justify-content: space-between;
   align-items: center;
   padding: 20px 0;
+
+  select {
+    height: 46px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+  }
 }
 
 .values {
   display: grid;
   position: relative;
-  grid-template-columns: 23% 24.5% 15% 25% 7%;
-  padding: 0 0.5em;
+  //grid-template-columns: 23% 24.5% 15% 25% 7%;
+  grid-template-columns: 15% 20% 10% 20% 30%;
+  padding: 0;
   font-weight: bold;
   font-size: 0.9em;
-  border: 1px solid;
-  margin: 0.5em;
+  border-bottom: 1px solid #F0F0F0;
   align-items: center;
+}
+
+.values:last-child {
+  border-bottom: none;
 }
 
 .header-field {
   /*text-align: center;*/
-  padding: 3px;
-  font-size: 1em;
-  font-weight: bold;
+  padding: 4px 14px 4px 0;
+  font-size: 14px;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: 400;
 }
 
+.header-field:last-child,
+.value-field:last-child{
+  text-align: end;
+}
+
+
 .value-field {
-  padding: 3px;
-  font-size: 0.9em;
-  font-weight: bolder;
+  padding: 14px 14px 14px 0;
   white-space: nowrap;
   overflow: hidden;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
+  font-family: 'PT Sans', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .scroller {
   overflow-y: auto;
   max-height: 80vh;
+  margin: 0 0 auto 0;
 }
 
 .empty-list {
   text-align: center;
   padding: 2em 0;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  font-size: 18px;
+  font-family: 'PT Sans', sans-serif;
 }
 
 .select-strategy-2 {
@@ -81,17 +119,14 @@ $dark-background-color: #111111;
 }
 
 .table-header {
-  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-columns: 15% 20% 10% 20% 30%;
   display: grid;
-  padding: 0.3em 0.5em;
+  padding: 4px 0;
   font-weight: bold;
   font-size: 0.9em;
-  background: darken(#fffce6, 5%);
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-bottom: 0.5em;
-  text-align: center;
 
   @include isDarkMode() {
     background: $dark-background-color;
@@ -125,4 +160,15 @@ $dark-background-color: #111111;
     border-radius: 1px;
     padding: 5px !important;
   }
+}
+
+@media screen and (max-width: 620px) {
+  .title-wrapper {
+    flex-direction: column;
+    height: auto;
+    font-size: 20px;
+    text-align: center;
+  }
+
+
 }

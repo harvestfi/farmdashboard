@@ -1,13 +1,15 @@
 $paginator-style: (
     "dark": (
-        "background": #3d3d3d,
-        "border": 1px solid #3c3c3c,
-        "color": #f1f1f1
+        "background": transparent,
+        "color": #C0C4C4,
+        "active-background": #5CADAA,
+        "active-color": #FFFFFF
     ),
     "light": (
-        "background": #fff9cd,
-        "border": 1px solid #f0e69c,
-        "color": #363636
+        "background": transparent,
+        "color": #383D4A,
+        "active-background": #5CADAA,
+        "active-color": #FFFFFF
     )
 );
 
@@ -20,19 +22,28 @@ $paginator-style: (
   color: map-get($current-color, 'color');
 
   &.active, &:hover {
-    background: darken(map-get($current-color, 'background'), 10%);
+    background: map-get($current-color, 'active-background');
+    color: map-get($current-color, "active-color");
   }
 }
 
 .paginator-component {
-  padding: 10px;
-  text-align: center;
+  padding: 9px 0 19px;
+  display: flex;
 
   .paginator-btn {
-    padding: 5px;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 16px;
+    padding: 12px 18px;
+    border-radius: 10px;
     cursor: pointer;
     outline: none;
     user-select: none;
+    border: none;
+    display: flex;
+    i {
+      margin: auto;
+    }
 
     &:disabled {
       opacity: 0.8;
@@ -51,6 +62,21 @@ $paginator-style: (
       @include paginatorColors(light)
     }
 
+  }
+
+  .paginator-btn:first-child,
+  .paginator-btn:last-child {
+    color: #5CADAA;
+    font-size: 10px;
+  }
+  .paginator-btn:first-child:hover,
+  .paginator-btn:last-child:hover,
+  .paginator-btn.spacer:hover{
+    background: transparent;
+    color: #5CADAA;
+  }
+  .paginator-btn.spacer:hover {
+    cursor: initial;
   }
 
 }

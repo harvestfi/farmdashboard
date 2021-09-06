@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Input, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, Inject, Input, OnInit} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {APP_CONFIG, AppConfig} from 'src/app.config';
@@ -18,7 +18,6 @@ export class DownloadHistoricDataComponent  implements OnInit{
     sortedVaults: Vault[];
     vaults: Vault[];
     includeInactive = false;
-
     constructor(
         @Inject(APP_CONFIG) public config: AppConfig,
         public vt: ViewTypeService,
@@ -32,7 +31,13 @@ export class DownloadHistoricDataComponent  implements OnInit{
 
     getData(): void {
       this.sortedVaults = this.vaults = this.contractsService.getContractsArray(Vault);
-      this.sortData(null);
+      if (!this.sortedVaults.length) {
+          setTimeout(() => {
+              this.getData();
+          }, 1000);
+      } else {
+          this.sortData(null);
+      }
     }
 
     sortData(sort: Sort): void {

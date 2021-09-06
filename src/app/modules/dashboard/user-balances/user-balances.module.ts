@@ -1,10 +1,12 @@
 import {NgModule} from '@angular/core';
 import {UserBalancesComponent} from '@modules/dashboard/user-balances/user-balances.component';
 import {CommonModule} from '@angular/common';
+import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
 
 @NgModule({
   imports: [
-   CommonModule
+   CommonModule,
+   ThemeSwitchModule,
   ],
   exports: [
    UserBalancesComponent

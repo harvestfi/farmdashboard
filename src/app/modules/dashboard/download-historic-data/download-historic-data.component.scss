@@ -2,22 +2,44 @@
 
 $dark-background-color: #111111;
 
+.title-wrapper {
+    margin: 0 0 24px 10px;
+    font-family: 'PT Sans', sans-serif;
+    text-align: left;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    height: 57px;
+    justify-content: space-between;
+    span {
+        margin: auto 0;
+    }
+}
+
 .download-historic-data-container {
-    margin: 0 auto;
+    padding: 35px 40px 0 40px;
+    border-radius: 10px;
+    margin-left: 10px;
+    min-height: 788px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-    max-width: 600px;
-    width: 90vw;
+    position: relative;
+    max-height: 778px;
+    overflow: auto;
+
 
     td, th {
         padding: 4px;
     }
 
+    th#name {
+        width: 90%;
+    }
+
     .header-row {
         width: 100%;
         padding: 10px;
+        font-weight: 400;
     }
 
     .title {
@@ -52,42 +74,33 @@ $dark-background-color: #111111;
     }
 
     .table-header {
-        padding: 0.3em 0.5em;
-        font-weight: bold;
-        font-size: 0.9em;
-        background: darken(#fffce6, 5%);
+        padding: 14px 0;
+        font-size: 14px!important;
         -webkit-box-align: center;
         -ms-flex-align: center;
         align-items: center;
-        margin-bottom: 0.25em;
+        font-family: 'PT Sans', sans-serif;
+        font-weight: 400!important;
 
-        @include isDarkMode() {
-            background: $dark-background-color;
-        }
     }
     .table-row {
-        padding: 0 0.5em;
+
         font-weight: bold;
         font-size: 0.9em;
-        border: 1px solid;
+        border-bottom: 1px solid #F0F0F0;
         margin: 0.25em;
         align-items: center;
     }
 
+    .table-row:last-child {
+        border: none;
+    }
+
     .table-row td {
-        padding: 0.5rem;
+        padding: 14px 0;
     }
 
-    .table-vaults {
-    }
 
-    tr:hover {
-    }
-
-    .tvl-name {
-        /*width: 40%;*/
-        font-size: 0.9em;
-    }
 
     .tvl-value, .income-value, .income-apr-value, .owners-value, .reward-value, .reward-apr, .all-apr {
         font-size: 1em;
@@ -109,15 +122,26 @@ $dark-background-color: #111111;
     }
 
     .download-link {
-        width: 80%;
+        padding: 4px 7px;
         text-decoration: none;
-        background-color: #EEBF65;
-        color: black;
+        border-radius: 6px;
+        color: #FFFFFF;
         position: relative;
+        font-weight: bold;
         font-size: 12px;
         margin: 5px;
-        border-radius: 5px;
-        padding: 6%;
         transition: all .2s ease-out;
+        font-family: 'PT Sans', sans-serif;
     }
+}
+
+@media screen and (max-width: 620px) {
+    .title-wrapper {
+        flex-direction: column;
+        height: auto;
+        font-size: 20px;
+        text-align: center;
+    }
+
+
 }

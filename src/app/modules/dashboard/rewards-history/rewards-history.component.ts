@@ -40,7 +40,6 @@ export class RewardsHistoryComponent implements AfterViewInit {
 
 
     private loadRewardsHistory(page: number = 0): void {
-        this.ready = false;
         this.rewardsService.getPaginatedHistoryRewards(10, page, -1, 'desc', this.vaultFilter).subscribe((response) => {
             this.log.info('Rewards loaded', response);
             if ('data' in response) {
@@ -49,7 +48,6 @@ export class RewardsHistoryComponent implements AfterViewInit {
 
                 this.rewards = response;
 
-                this.ready = true;
                 this.cdRef.detectChanges();
                 return;
             }
