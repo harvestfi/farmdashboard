@@ -55,7 +55,7 @@ export class PsApyHistoryComponent extends ChartGeneralMethodsComponent implemen
             });
 
             this.handleData(chartBuilder, [
-                ['Weekly APY %', 'right', '#0085ff'],
+                ['Weekly APY %', 'right', '#5CADAA'],
                 ['TVL M$', '1', '#eeb000']
             ]);
         });

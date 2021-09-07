@@ -37,7 +37,7 @@ export class ApyChartDialogComponent extends ChartGeneralMethodsComponent implem
         chartBuilder.addInData(2, dto.blockDate, dto.tvl / 1000000);
       });
       this.handleData(chartBuilder, [
-        ['Profit K$', 'right', '#0085ff'],
+        ['Profit K$', 'right', '#5CADAA'],
         ['Reward $', '1', '#eeb000'],
         ['TVL M$', '2', '#7e7e7e']
       ]);

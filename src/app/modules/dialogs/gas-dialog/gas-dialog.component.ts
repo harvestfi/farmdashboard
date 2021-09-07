@@ -36,7 +36,7 @@ export class GasDialogComponent extends ChartGeneralMethodsComponent implements 
         prevDate = dto.blockDate;
       });
       this.handleData(chartBuilder, [
-        ['Gas price', 'right', '#0085ff'],
+        ['Gas price', 'right', '#5CADAA'],
       ]);
     });
   }

@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, HostListener, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {UserSettings} from '@core/user-settings';
@@ -49,12 +49,14 @@ export class MainSideMenuComponent {
       if (width > 1600) {
           this.sideMenuService.setSideMenuState(true);
       }
-      window.addEventListener('resize', (event) => {
-          const newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-          if (newWidth > 1600) {
-              this.sideMenuService.setSideMenuState(true);
-          }
-      });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  handleScreenResize($event: any): void {
+      const newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      if (newWidth > 1600) {
+          this.sideMenuService.setSideMenuState(true);
+      }
   }
 
   get homeRoute(): boolean {

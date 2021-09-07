@@ -30,7 +30,7 @@ export class WeeklyProfitHistoryComponent extends ChartGeneralMethodsComponent i
             data?.forEach(dto => chartBuilder.addInData(0, dto.blockDate, (dto.weeklyAllProfit) / 1000));
             data?.forEach(dto => chartBuilder.addInData(1, dto.blockDate, dto.allProfit / 1000000));
             this.handleData(chartBuilder, [
-                ['Weekly Profit K$', 'right', '#0085ff'],
+                ['Weekly Profit K$', 'right', '#5CADAA'],
                 ['All profit M$', '1', '#eeb000']
             ]);
         });

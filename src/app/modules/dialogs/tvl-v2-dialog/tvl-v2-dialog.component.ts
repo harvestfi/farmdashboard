@@ -34,7 +34,7 @@ export class TvlV2DialogComponent extends ChartGeneralMethodsComponent implement
         chartBuilder.addInData(2, dto.calculateTime, dto.lastPrice);
       });
       this.handleData(chartBuilder, [
-        ['TVL M$', 'right', '#0085ff'],
+        ['TVL M$', 'right', '#5CADAA'],
         ['Accounts', '1', '#7e7e7e'],
         ['FARM Price', '2', '#eeb000'],
       ]);

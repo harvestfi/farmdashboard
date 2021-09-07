@@ -38,7 +38,7 @@ export class SavedGasFeesComponent extends ChartGeneralMethodsComponent implemen
                 chartBuilder.initVariables(1);
                 hwFees.forEach((fees, date) => chartBuilder.addInData(0, date, fees / 1000000));
                 this.handleData(chartBuilder, [
-                    ['Saved Gas Fees M$', 'right', '#0085ff']
+                    ['Saved Gas Fees M$', 'right', '#5CADAA']
                 ]);
             });
     }
