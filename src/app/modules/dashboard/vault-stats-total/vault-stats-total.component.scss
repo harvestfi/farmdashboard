@@ -1,3 +1,11 @@
+h1.title {
+    text-align: center;
+    font-size: 3.5rem;
+    line-height: 6rem;
+    font-weight: 900;
+    font-family: "Inter var", sans-serif;
+    text-transform: uppercase;
+}
 .cover {
     display: flex;
     flex-direction: column;
@@ -36,34 +44,6 @@
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
-
-    .total {
-        background-color: #fffce6;
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        row-gap: 24px;
-        font-family: "Inter var", sans-serif;
-        .title-part {
-            display: flex;
-            justify-content: space-between;
-        }
-        .label {
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-        .info {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-        .value {
-            font-family: "Inter var", sans-serif;
-            font-weight: 900;
-            font-size: 2.5rem;
-        }
-    }
 }
 
 .title {
@@ -85,6 +65,7 @@
 .chart-block {
     width: 49%;
     z-index: 1;
+    font-family: 'Inter var', sans-serif;
 }
 
 .chart-block .left-part,
@@ -111,59 +92,59 @@
     row-gap: 16px;
 }
 .cover.light {
-    .chart-block .left-part .change-amount,
-    .chart-block .left-part .change-percent,
-    .chart-block .right-part .change-amount,
-    .chart-block .right-part .change-percent {
-        background-color: #fffce6;
-    }
+.chart-block .left-part .change-amount,
+.chart-block .left-part .change-percent,
+.chart-block .right-part .change-amount,
+.chart-block .right-part .change-percent {
+    background-color: #fffce6;
+}
 
-    .chart-block .left-part .change-amount .label,
-    .chart-block .left-part .change-percent .label,
-    .chart-block .right-part .change-amount .label,
-    .chart-block .right-part .change-percent .label{
-        color: #404040;
-    }
+.chart-block .left-part .change-amount .label,
+.chart-block .left-part .change-percent .label,
+.chart-block .right-part .change-amount .label,
+.chart-block .right-part .change-percent .label{
+    color: #404040;
+}
 
-    .chart-block .left-part .change-amount .value,
-    .chart-block .left-part .change-percent .value,
-    .chart-block .right-part .change-amount .value,
-    .chart-block .right-part .change-percent .value {
-        color: #404040;
-    }
+.chart-block .left-part .change-amount .value,
+.chart-block .left-part .change-percent .value,
+.chart-block .right-part .change-amount .value,
+.chart-block .right-part .change-percent .value {
+    color: #404040;
+}
 
-    .chart-block .left-part .change-amount .value .symbol,
-    .chart-block .right-part .change-amount .value .symbol {
-        color: #404040;
-    }
+.chart-block .left-part .change-amount .value .symbol,
+.chart-block .right-part .change-amount .value .symbol {
+    color: #404040;
+}
 }
 
 .cover.dark {
-    .chart-block .left-part .change-amount,
-    .chart-block .left-part .change-percent,
-    .chart-block .right-part .change-amount,
-    .chart-block .right-part .change-percent {
-        background-color: #404040;
-    }
+.chart-block .left-part .change-amount,
+.chart-block .left-part .change-percent,
+.chart-block .right-part .change-amount,
+.chart-block .right-part .change-percent {
+    background-color: #404040;
+}
 
-    .chart-block .left-part .change-amount .label,
-    .chart-block .left-part .change-percent .label,
-    .chart-block .right-part .change-amount .label,
-    .chart-block .right-part .change-percent .label{
-        color: rgb(195, 197, 203);
-    }
+.chart-block .left-part .change-amount .label,
+.chart-block .left-part .change-percent .label,
+.chart-block .right-part .change-amount .label,
+.chart-block .right-part .change-percent .label{
+    color: rgb(195, 197, 203);
+}
 
-    .chart-block .left-part .change-amount .value,
-    .chart-block .left-part .change-percent .value,
-    .chart-block .right-part .change-amount .value,
-    .chart-block .right-part .change-percent .value {
-        color: #ffffff;
-    }
+.chart-block .left-part .change-amount .value,
+.chart-block .left-part .change-percent .value,
+.chart-block .right-part .change-amount .value,
+.chart-block .right-part .change-percent .value {
+    color: #ffffff;
+}
 
-    .chart-block .left-part .change-amount .value .symbol,
-    .chart-block .right-part .change-amount .value .symbol {
-        color: #ffffff;
-    }
+.chart-block .left-part .change-amount .value .symbol,
+.chart-block .right-part .change-amount .value .symbol {
+    color: #ffffff;
+}
 }
 
 .chart-block .left-part .change-amount .label,
@@ -209,7 +190,6 @@
     .chart-block {
         flex-direction: column;
         row-gap: 1rem;
-        //margin-bottom: 1.5rem;
     }
     .chart-block,
     .chart-block .left-part,

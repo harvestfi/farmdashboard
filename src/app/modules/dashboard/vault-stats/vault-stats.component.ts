@@ -12,6 +12,9 @@ import {HardworksService} from '@data/services/http/hardworks.service';
 import {TvlsService} from '@data/services/http/tvls.service';
 import {HarvestTvl} from '@data/models/harvest-tvl';
 import {ViewTypeService} from '@data/services/view-type.service';
+import {RewardsService} from '@data/services/http/rewards.service';
+import {RewardDto} from '@data/models/reward-dto';
+import {HardworkDataService} from '@data/services/data/hardwork-data.service';
 
 @Component({
   selector: 'app-vault-stats',
@@ -25,40 +28,34 @@ export class VaultStatsComponent implements OnInit {
     options3: EChartsOption;
     options4: EChartsOption;
 
-    data1: ChartSeries[] = [];
-    data2: ChartSeries[] = [];
 
     title1 = 'TVL';
-    title2 = 'Profit';
-    title3 = 'TVL';
-    title4 = 'Profit';
-    chartName1 = '';
-    chartName2 = '';
-    chartName3 = '';
-    chartName4 = '';
+    title2 = 'Profits';
+    title3 = 'APY';
+    title4 = 'Users';
 
     tvlSelectedValue = '';
     tvlSelectedDate = '';
     profitSelectedValue = '';
     profitSelectedDate = '';
-    tvlTotalSelectedValue = '';
-    tvlTotalSelectedDate = '';
-    profitTotalSelectedValue = '';
-    profitTotalSelectedDate = '';
+    usersSelectedValue = '';
+    usersSelectedDate = '';
+    apySelectedValue = '';
+    apySelectedDate = '';
 
     valueSymbol1 = '$';
     valueSymbol2 = '$';
-    valueSymbol3 = '$';
-    valueSymbol4 = '$';
+    valueSymbol3 = '%';
+    valueSymbol4 = '';
 
     changesVolumeInPercent = '';
     changesVolumeInAmount = '';
     changesTvlInPercent = '';
     changesTvlInAmount = '';
-    changesTvlTotalInPercent = '';
-    changesTvlTotalInAmount = '';
-    changesProfitTotalInPercent = '';
-    changesProfitTotalInAmount = '';
+    changesUsersInAmount = '';
+    changesUsersInPercent = '';
+    changesAPYInAmount = '';
+    changesAPYInPercent = '';
 
     minus1 = false;
     minus2 = false;
@@ -70,14 +67,19 @@ export class VaultStatsComponent implements OnInit {
 
     vaultDataTVL: ChartSeries[] = [];
     vaultDataProfit: ChartSeries[] = [];
-    totalDataTVL: ChartSeries[] = [];
-    totalDataProfit: ChartSeries[] = [];
+    vaultDataUsers: ChartSeries[] = [];
+    vaultDataAPY: ChartSeries[] = [];
+
+    gasSaved = '$' + this.nFormatter(0, 2);
+
 
     constructor(private ref: ChangeDetectorRef,
                 private route: ActivatedRoute,
                 private harvestService: HarvestsService,
                 private hardWorkService: HardworksService,
                 private tvlService: TvlsService,
+                private rewardsService: RewardsService,
+                private hardworkData: HardworkDataService,
                 public vt: ViewTypeService) {
         route.params.subscribe(routeVal => {
           if (routeVal) {
@@ -88,12 +90,18 @@ export class VaultStatsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // Mock Data this.fillChartsDataSets();
-        // Mok this.lastChangesDefaultInit();
         this.loadSingleVaultTVL();
         this.loadSingleVaultProfit();
-        this.loadTotalTVL();
-        this.loadTotalProfit();
+        this.loadSingleVaultAPY();
+        this.loadSingleVaultUsers();
+    }
+
+    hardWork(): HardWorkDto {
+        return this.hardworkData.getLastHardWork(this.vaultAddress, this.vaultNetwork);
+    }
+
+    get vaultEarned(): number {
+        return this.hardWork()?.fullRewardUsdTotal * (1 - this.hardWork()?.profitSharingRate);
     }
 
     loadSingleVaultTVL(): void {
@@ -112,7 +120,6 @@ export class VaultStatsComponent implements OnInit {
                             ]
                         };
                     });
-                    this.chartName1 = data[0].vault;
                     this.vaultDataTVL = this.dataReducer(this.vaultDataTVL, 20);
                     this.initializeChartTVL();
                     this.changesTvlInAmount =  this.lastChanges(this.vaultDataTVL).amountChanges;
@@ -220,9 +227,8 @@ export class VaultStatsComponent implements OnInit {
                             ]
                         };
                     });
-
-                    this.chartName2 = data[0].vault;
                     this.vaultDataProfit  = this.dataReducer(this.vaultDataProfit, 100);
+                    this.gasSaved = '$' + this.nFormatter(data[data.length - 1].savedGasFeesSum, 2);
                     this.initializeChartProfit();
                     this.changesVolumeInAmount =  this.lastChanges(this.vaultDataProfit).amountChanges;
                     this.changesVolumeInPercent =  this.lastChanges(this.vaultDataProfit).percentChanges;
@@ -301,152 +307,36 @@ export class VaultStatsComponent implements OnInit {
         };
     }
 
-    loadTotalTVL(): void {
-        this.tvlService.getHistoryAllTvl()
-            .subscribe((data: HarvestTvl[]) => {
+    loadSingleVaultAPY(): void {
+        this.rewardsService.getHistoryRewards(this.vaultAddress, StaticValues.NETWORKS.get(this.vaultNetwork))
+            .subscribe((data) => {
                 if (data.length) {
-                    this.totalDataTVL = data.map((item) => {
-                        const date = new Date(item.calculateTime * 1000);
+                    this.vaultDataAPY = data.map((item: RewardDto) => {
+                        const date = new Date(item.blockDate * 1000);
                         return {
                             name: date.toUTCString(),
                             value: [
                                 [
                                     date.getFullYear(), date.getMonth() + 1, date.getDate()
                                 ].join('/'),
-                                item.lastTvl.toString()
+                                item.weeklyApy.toString()
                             ]
                         };
                     });
-                    this.totalDataTVL = this.dataReducer(this.totalDataTVL, 100);
-                    this.initializeChartTotalTVL();
-                    this.changesTvlTotalInAmount =  this.lastChanges(this.totalDataTVL).amountChanges;
-                    this.changesTvlTotalInPercent =  this.lastChanges(this.totalDataTVL).percentChanges;
-                    this.minus3 = this.lastChanges(this.totalDataTVL).minus;
+
+                    this.vaultDataAPY  = this.dataReducer(this.vaultDataAPY, 100);
+                    this.initializeChartAPY();
+                    this.changesAPYInAmount =  this.lastChanges(this.vaultDataAPY).amountChanges;
+                    this.changesAPYInPercent =  this.lastChanges(this.vaultDataAPY).percentChanges;
+                    this.minus3 = this.lastChanges(this.vaultDataAPY).minus;
                 }
             }, err => {
                 console.log(err);
             });
     }
-    initializeChartTotalTVL(): void {
+    initializeChartAPY(): void {
         let temp = '';
         this.options3 = {
-            tooltip: {
-                trigger: 'axis',
-                formatter: (params) => {
-                    params = params[0];
-                    if (params.value[1] !== temp) {
-                        temp = params.value[1];
-                    } else {
-                        return '';
-                    }
-                    const date = new Date(params.name);
-                    const roundedSum = this.nFormatter(temp, 2);
-                    this.tvlTotalSelectedValue = '$' + roundedSum;
-                    this.tvlTotalSelectedDate = date.toString();
-                    this.ref.detectChanges();
-                    return  ``;
-                },
-                backgroundColor: 'rgb(25, 27, 31)',
-                borderWidth: 0,
-                position: [-10, 25],
-                extraCssText: 'box-shadow: none'
-            },
-            grid: {
-                top: '26%',
-                left: '3.5%',
-                right: '6%',
-                bottom: '12%',
-            },
-            axisPointer: {
-                lineStyle: {
-                    type: 'solid',
-                    color: '#2c2f36'
-                }
-            },
-            xAxis: {
-                type: 'category',
-                splitLine: {
-                    show: false
-                },
-                axisLine: {
-                    show: false
-                },
-                axisTick: {
-                    show: false,
-                },
-                axisLabel: {
-                    color: 'rgb(108, 114, 132)',
-                    fontSize: '16px',
-                    fontFamily: 'Inter var',
-                    formatter: (value) => echarts.format.formatTime('dd', value, false),
-                    showMinLabel: true,
-                    showMaxLabel: true,
-                },
-                boundaryGap: false,
-
-            },
-            yAxis: {
-                type: 'value',
-                splitLine: {
-                    show: false
-                },
-                show: false
-            },
-            series: [{
-                type: 'line',
-                smooth: true,
-                showSymbol: false,
-                data: this.totalDataTVL,
-                itemStyle: {
-                    color: '#ff007a'
-                },
-                areaStyle: {
-                    color: '#37162a'
-                },
-            }]
-        };
-    }
-
-    loadTotalProfit(): void {
-        this.hardWorkService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.vaultNetwork), 1)
-            .subscribe((data) => {
-                if (data.length) {
-                    const cumulative = new Map<string, number>();
-                    let lastTotalProfit = 0;
-
-                    data.forEach( hw => {
-                        const date = new Date(hw.blockDate * 1000);
-                        const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
-                        if(!cumulative.has(curDate)) {
-                            lastTotalProfit = 0;
-                        }
-                        lastTotalProfit += hw.fullRewardUsd;
-                        cumulative.set(curDate, lastTotalProfit);
-                    });
-                    this.totalDataProfit = data.map((item: HardWorkDto) => {
-                        const date = new Date(item.blockDate * 1000);
-                        const curDate = [date.getFullYear(), date.getMonth() + 1].join('/');
-                        return {
-                            name: date.toString(),
-                            value: [
-                                curDate,
-                                cumulative.get(curDate).toString()
-                            ]
-                        };
-                    });
-                    this.totalDataProfit = this.dataReducer(this.totalDataProfit, 100);
-                    this.initializeChartTotalProfit();
-                    this.changesProfitTotalInAmount =  this.lastChanges(this.totalDataProfit).amountChanges;
-                    this.changesProfitTotalInPercent =  this.lastChanges(this.totalDataProfit).percentChanges;
-                    this.minus4 = this.lastChanges(this.totalDataProfit).minus;
-                }
-            }, err => {
-                console.log(err);
-            });
-    }
-    initializeChartTotalProfit(): void {
-        let temp = '';
-        this.options4 = {
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -460,9 +350,13 @@ export class VaultStatsComponent implements OnInit {
                         return '';
                     }
                     const date = new Date(params.name);
-                    const roundedSum = this.nFormatter(params.value[1], 2);
-                    this.profitTotalSelectedValue = '$' + roundedSum;
-                    this.profitTotalSelectedDate = date.toString();
+                    let roundedSum = this.nFormatter(temp, 2);
+                    if (+temp < 1) {
+                       const tempNumber = +temp;
+                       roundedSum = tempNumber.toFixed(2);
+                    }
+                    this.apySelectedValue = roundedSum + '%';
+                    this.apySelectedDate = date.toString();
                     this.ref.detectChanges();
                     return  ``;
                 },
@@ -490,7 +384,7 @@ export class VaultStatsComponent implements OnInit {
                         color: 'rgb(108, 114, 132)',
                         fontSize: '16px',
                         fontFamily: 'Inter var',
-                        formatter: (value) => echarts.format.formatTime('MM', value, false),
+                        formatter: (value) => echarts.format.formatTime('dd', value, false),
                         showMinLabel: true,
                         showMaxLabel: true,
                     },
@@ -504,7 +398,7 @@ export class VaultStatsComponent implements OnInit {
             series: [{
                 type: 'bar',
                 barWidth: '70%',
-                data: this.totalDataProfit,
+                data: this.vaultDataAPY,
                 itemStyle: {
                     color: '#2172e5',
                     borderRadius: 6
@@ -513,9 +407,106 @@ export class VaultStatsComponent implements OnInit {
         };
     }
 
+    loadSingleVaultUsers(): void {
+        this.tvlService.getHistoryTvlByVault(this.vaultAddress, StaticValues.NETWORKS.get(this.vaultNetwork))
+            .subscribe((data) => {
+                if (data.length) {
+                    this.vaultDataUsers = data.map((item: HarvestTvl) => {
+                        const date = new Date(item.calculateTime * 1000);
+                        return {
+                            name: date.toUTCString(),
+                            value: [
+                                [
+                                    date.getFullYear(), date.getMonth() + 1, date.getDate()
+                                ].join('/'),
+                                item.lastOwnersCount.toString()
+                            ]
+                        };
+                    });
+
+                    this.vaultDataUsers  = this.dataReducer(this.vaultDataUsers, 100);
+                    this.initializeChartUsers();
+                    this.changesUsersInAmount =  this.lastChanges(this.vaultDataUsers).amountChanges;
+                    this.changesUsersInPercent =  this.lastChanges(this.vaultDataUsers).percentChanges;
+                    this.minus4 = this.lastChanges(this.vaultDataUsers).minus;
+                }
+            }, err => {
+                console.log(err);
+            });
+    }
+    initializeChartUsers(): void {
+        let temp = '';
+        this.options4 = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow',
+                },
+                formatter: (params) => {
+                    params = params[0];
+                    if (params.value[1] !== temp) {
+                        temp = params.value[1];
+                    } else {
+                        return '';
+                    }
+                    const date = new Date(params.name);
+                    const roundedSum = this.nFormatter(temp, 2);
+                    this.usersSelectedValue = roundedSum;
+                    this.usersSelectedDate = date.toString();
+                    this.ref.detectChanges();
+                    return  ``;
+                },
+                backgroundColor: 'rgb(25, 27, 31)',
+                borderWidth: 0,
+                position: [-10, 25],
+                extraCssText: 'box-shadow: none',
+            },
+            grid: {
+                top: '26%',
+                left: '4.5%',
+                right: '6%',
+                bottom: '12%',
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: 'rgb(108, 114, 132)',
+                        fontSize: '16px',
+                        fontFamily: 'Inter var',
+                        formatter: (value) => echarts.format.formatTime('dd', value, false),
+                        showMinLabel: true,
+                        showMaxLabel: true,
+                    },
+
+                },
+            ],
+            yAxis: [{
+                show: false,
+                type: 'value'
+            }],
+            series: [{
+                type: 'bar',
+                barWidth: '70%',
+                data: this.vaultDataUsers,
+                itemStyle: {
+                    color: '#2172e5',
+                    borderRadius: 6
+                },
+            }]
+        };
+    }
+
+
     lastChanges(data): { minus: boolean; amountChanges: string; percentChanges: string } {
         const lastChanges = +data[data.length - 1].value[1] - + data[data.length - 2].value[1];
-        const previousNumber = +data[data.length - 2].value[1] ;
+        const previousNumber = +data[data.length - 2].value[1];
         let minus = false;
         let amountChanges = '';
         let percentChanges = '';
@@ -523,9 +514,9 @@ export class VaultStatsComponent implements OnInit {
             minus = true;
         }
         if (minus) {
-            amountChanges = this.nFormatter(lastChanges * (-1), 2);
+            amountChanges =  Math.abs(lastChanges) >= 1  ? this.nFormatter(lastChanges * (-1), 2) : (lastChanges * (-1)).toFixed(2) ;
         } else {
-            amountChanges = this.nFormatter(lastChanges, 2);
+            amountChanges =  Math.abs(lastChanges) >= 1 ? this.nFormatter(lastChanges, 2) : lastChanges.toFixed(2) ;
         }
         const finalPercent = Math.abs(lastChanges / previousNumber * 100);
         if (finalPercent >= 1) {
@@ -569,62 +560,4 @@ export class VaultStatsComponent implements OnInit {
         }
     }
 
-    lastChangesDefaultInit(): void {
-        const lastChangesVolume = +chartData[chartData.length - 1].volumeUSD - +chartData[chartData.length - 2].volumeUSD;
-        const previousNumberVolume = +chartData[chartData.length - 2].volumeUSD;
-
-        if (lastChangesVolume  < 0 ) {
-            this.minus1 = true;
-        }
-        if (this.minus1) {
-            this.changesVolumeInAmount = this.nFormatter(lastChangesVolume * (-1), 2);
-        } else {
-            this.changesVolumeInAmount = this.nFormatter(lastChangesVolume, 2);
-        }
-        const finalVolumePercent = Math.abs(lastChangesVolume  / previousNumberVolume * 100);
-        if (finalVolumePercent >= 1) {
-            this.changesVolumeInPercent = this.nFormatter(finalVolumePercent.toString(), 2);
-        } else {
-            this.changesVolumeInPercent = finalVolumePercent.toFixed(2);
-        }
-
-
-        const lastChangesTvl = +chartData[chartData.length - 1].tvlUSD - +chartData[chartData.length - 2].tvlUSD;
-        const previousNumberTvl = +chartData[chartData.length - 2].tvlUSD;
-        if (lastChangesTvl  < 0 ) {
-            this.minus2 = true;
-        }
-        if (this.minus2) {
-            this.changesTvlInAmount = this.nFormatter(lastChangesTvl * (-1), 2);
-        } else {
-            this.changesTvlInAmount = this.nFormatter(lastChangesTvl, 2);
-        }
-        const finalTvlPercent = Math.abs(lastChangesTvl / previousNumberTvl * 100);
-        if (finalTvlPercent >= 1) {
-            this.changesTvlInPercent = this.nFormatter(finalTvlPercent.toString(), 2);
-        } else {
-            this.changesTvlInPercent = finalTvlPercent.toFixed(2);
-        }
-    }
-    fillChartsDataSets(): void {
-        chartData.map((item) => {
-            const date = new Date(item.date * 1000);
-            this.data1.push({
-                name: date.toUTCString(),
-                value: [
-                    [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('/'),
-                    item.tvlUSD
-                ]
-            });
-            this.data2.push({
-                name: date.toUTCString(),
-                value: [
-                    [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('/'),
-                    item.volumeUSD
-                ]
-            });
-            return item;
-        });
-
-    }
 }

@@ -9,6 +9,7 @@ import {SavedGasFeesComponent} from '@modules/dashboard/saved-gas-fees/saved-gas
 import {RewardsHistoryComponent} from '@modules/dashboard/rewards-history/rewards-history.component';
 import {DownloadHistoricDataComponent} from '@modules/dashboard/download-historic-data/download-historic-data.component';
 import {UserBalancesComponent} from '@modules/dashboard/user-balances/user-balances.component';
+import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'info/:network/:address',
     component: VaultStatsComponent
+  },
+  {
+    path: 'info-total',
+    component: VaultStatsTotalComponent
   },
 ];
 

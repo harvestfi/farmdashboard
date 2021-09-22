@@ -1,142 +1,134 @@
 <div class="cover" [class]="vt.getThemeColor()">
     <div class="container">
+        <h1 class="title">Total</h1>
         <div class="grid-sheet">
-            <div class="title">
-                Network: {{ vaultNetwork }}
-                <br>
-                Vault: {{ vaultAddress }}
-            </div>
             <div class="charts-block">
                 <div class="chart-block">
                     <app-echart [title]="title1"
-                                [selectedValue]="tvlSelectedValue"
-                                [selectedDate]="tvlSelectedDate"
+                                [selectedValue]="tvlTotalSelectedValue"
+                                [selectedDate]="tvlTotalSelectedDate"
                                 [valueSymbol]="valueSymbol1"
                                 [options]="options1"
-                                [data]="vaultDataTVL"></app-echart>
+                                [data]="totalDataTVL"></app-echart>
                     <div class="left-part">
                         <div class="change-percent">
                             <span  class="label">Change in % (24h)</span>
                             <span class="value">
                             <span *ngIf="minus1" style="color: red">{{'&#10549;'}}</span>
                             <span *ngIf="!minus1" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesTvlInPercent}} %
+                            {{ changesTvlTotalInPercent}} %
                         </span>
                         </div>
                         <div class="change-amount">
                             <span  class="label">Change in $ (24h)</span>
                             <span class="value">
                             <span  class="symbol">{{ minus1 ? '-' : '+' }}</span>
-                            ${{ changesTvlInAmount }}
+                            ${{ changesTvlTotalInAmount }}
                         </span>
                         </div>
                     </div>
                 </div>
                 <div class="chart-block">
                     <app-echart [title]="title2"
-                                [selectedValue]="profitSelectedValue"
-                                [selectedDate]="profitSelectedDate"
+                                [selectedValue]="profitTotalSelectedValue"
+                                [selectedDate]="profitTotalSelectedDate"
                                 [valueSymbol]="valueSymbol2"
                                 [options]="options2"
-                                [data]="vaultDataProfit"></app-echart>
+                                [data]="totalDataProfit"></app-echart>
                     <div class="right-part">
                         <div class="change-percent">
                             <span class="label">Change in % (24h)</span>
                             <span class="value">
                             <span *ngIf="minus2" style="color: red">{{'&#10549;'}}</span>
                             <span *ngIf="!minus2" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesVolumeInPercent}} %
+                            {{ changesProfitTotalInPercent }} %
                         </span>
                         </div>
                         <div class="change-amount">
                             <span class="label">Change in $ (24h)</span>
                             <span class="value">
                             <span class="symbol">{{ minus2 ? '-' : '+' }}</span>
-                            ${{ changesVolumeInAmount }}
+                            ${{ changesProfitTotalInAmount}}
                         </span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="title">
-
-            </div>
             <div class="charts-block">
                 <div class="chart-block">
                     <app-echart [title]="title3"
-                                [selectedValue]="apySelectedValue"
-                                [selectedDate]="apySelectedDate"
+                                [selectedValue]="usersSelectedValue"
+                                [selectedDate]="usersSelectedDate"
                                 [valueSymbol]="valueSymbol3"
                                 [options]="options3"
-                                [data]="vaultDataAPY"></app-echart>
+                                [data]="totalUsers"></app-echart>
                     <div class="left-part">
                         <div class="change-percent">
-                            <span  class="label">Change (24h)</span>
+                            <span  class="label">Change in % (24h)</span>
                             <span class="value">
                             <span *ngIf="minus3" style="color: red">{{'&#10549;'}}</span>
                             <span *ngIf="!minus3" style="color: green">{{'&#10548;'}}</span>
-                            <span *ngIf="valueSymbol3 !== '%'">{{ changesAPYInPercent }} %</span>
+                            {{ changesUsersInPercent }} %
                         </span>
                         </div>
                         <div class="change-amount">
-                            <span  class="label">Change in {{valueSymbol3}} (24h)</span>
+                            <span  class="label">Change (24h)</span>
                             <span class="value">
                             <span  class="symbol">{{ minus3 ? '-' : '+' }}</span>
-                            {{ changesAPYInAmount }} {{valueSymbol3}}
+                            {{ changesUsersInAmount }}
                         </span>
                         </div>
                     </div>
                 </div>
                 <div class="chart-block">
                     <app-echart [title]="title4"
-                                [selectedValue]="usersSelectedValue"
-                                [selectedDate]="usersSelectedDate"
+                                [selectedValue]="farmBuyBackSelectedValue"
+                                [selectedDate]="farmBuyBackSelectedDate"
                                 [valueSymbol]="valueSymbol4"
                                 [options]="options4"
-                                [data]="vaultDataUsers"></app-echart>
+                                [data]="totalFarmBuyBack"></app-echart>
                     <div class="right-part">
                         <div class="change-percent">
                             <span class="label">Change in % (24h)</span>
                             <span class="value">
                             <span *ngIf="minus4" style="color: red">{{'&#10549;'}}</span>
                             <span *ngIf="!minus4" style="color: green">{{'&#10548;'}}</span>
-                            {{  changesUsersInPercent }} %
+                            {{ changesFarmBuyBackInPercent }} %
                         </span>
                         </div>
                         <div class="change-amount">
-                            <span class="label">Change (24h)</span>
+                            <span class="label">Change in $ (24h)</span>
                             <span class="value">
                             <span class="symbol">{{ minus4 ? '-' : '+' }}</span>
-                            {{  changesUsersInAmount }}
+                            ${{ changesFarmBuyBackInAmount }}
                         </span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="charts-block">
-                <div class="chart-block">
-                    <div class="total">
-                        <div class="title-part">
-                            <span class="label">Total Earned</span>
-                            <span class="info">USDT-UST</span>
-                        </div>
-                        <div>
+                <div class="chart-block" style="width: 100%">
+                    <app-echart [title]="title6"
+                                [selectedValue]="farmStackedSelectedValue"
+                                [selectedDate]="farmStackedSelectedDate"
+                                [valueSymbol]="valueSymbol6"
+                                [options]="options6"
+                                [data]="totalFarmStacked"></app-echart>
+                    <div class="right-part">
+                        <div class="change-percent">
+                            <span class="label">Change in % (24h)</span>
                             <span class="value">
-                                ${{ nFormatter(vaultEarned, 2) }}
-                            </span>
+                            <span *ngIf="minus6" style="color: red">{{'&#10549;'}}</span>
+                            <span *ngIf="!minus6" style="color: green">{{'&#10548;'}}</span>
+                            {{ changesFarmStackedInPercent }} %
+                        </span>
                         </div>
-                    </div>
-                </div>
-                <div class="chart-block">
-                    <div class="total">
-                        <div class="title-part">
-                            <span class="label">Gas Saved</span>
-                            <span class="info">USDT-UST</span>
-                        </div>
-                        <div>
+                        <div class="change-amount">
+                            <span class="label">Change in $ (24h)</span>
                             <span class="value">
-                                {{ gasSaved }}
-                            </span>
+                            <span class="symbol">{{ minus6 ? '-' : '+' }}</span>
+                            ${{ changesFarmStackedInAmount }}
+                        </span>
                         </div>
                     </div>
                 </div>

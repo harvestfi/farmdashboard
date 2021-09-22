@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-
 import {MainPageComponent} from './main-page.component';
 import {DashboardLastValuesModule} from '@modules/dashboard/dashboard-last-values/dashboard-last-values.module';
 import {StrategyListModule} from '@modules/dashboard/strategy-list/strategy-list.module';
@@ -13,6 +12,7 @@ import {NgxEchartsModule} from 'ngx-echarts';
 import {EchartComponent} from '@modules/dashboard/vault-stats/echart/echart.component';
 import {LayoutModule} from '@layout/layout.module';
 import {PsApyHistoryComponent} from '@modules/dashboard/ps-apy-history/ps-apy-history.component';
+import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component';
 
 @NgModule({
   imports: [
@@ -34,6 +34,7 @@ import {PsApyHistoryComponent} from '@modules/dashboard/ps-apy-history/ps-apy-hi
   declarations: [
     MainPageComponent,
     VaultStatsComponent,
+    VaultStatsTotalComponent,
     EchartComponent,
   ],
   providers: [],
