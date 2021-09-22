@@ -123,8 +123,10 @@ export class VaultStatsTotalComponent implements OnInit {
                     const paredUsersArray = this.findNotParedDay(totalUsersArray);
                     this.totalDataTVL = this.combineNetworks(paredArray);
                     this.totalUsers = this.combineNetworks(paredUsersArray);
-                    this.initializeChartTotalTVL();
-                    this.initializeChartUsers();
+                    setTimeout(() => {
+                        this.initializeChartTotalTVL();
+                        this.initializeChartUsers();
+                    });
                     this.changesUsersInAmount =  this.lastChanges(this.totalUsers).amountChanges;
                     this.changesUsersInPercent =  this.lastChanges(this.totalUsers).percentChanges;
                     this.changesTvlTotalInAmount =  this.lastChanges(this.totalDataTVL).amountChanges;
@@ -196,9 +198,10 @@ export class VaultStatsTotalComponent implements OnInit {
                     const paredFarmBuyBackArray = this.findNotParedDay(totalBuyBackArray);
                     this.totalDataProfit = this.combineNetworks(paredProfitArray);
                     this.totalFarmBuyBack = this.combineNetworks(paredFarmBuyBackArray);
-                    this.initializeChartTotalProfit();
-                    this.initializeChartFarmBuyBack();
-
+                    setTimeout(() => {
+                        this.initializeChartTotalProfit();
+                        this.initializeChartFarmBuyBack();
+                    });
                     this.changesProfitTotalInAmount =  this.lastChanges(this.totalDataProfit).amountChanges;
                     this.changesProfitTotalInPercent =  this.lastChanges(this.totalDataProfit).percentChanges;
                     this.minus2 = this.lastChanges(this.totalDataProfit).minus;
