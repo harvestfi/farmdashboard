@@ -107,32 +107,7 @@
                 </div>
             </div>
             <div class="charts-block">
-                <div class="chart-block">
-                  <!--  <app-echart [title]="title3"
-                                [selectedValue]="usersSelectedValue"
-                                [selectedDate]="usersSelectedDate"
-                                [valueSymbol]="valueSymbol3"
-                                [options]="options3"
-                                [data]="totalUsers"></app-echart>
-                    <div class="left-part">
-                        <div class="change-percent">
-                            <span  class="label">Change in % (24h)</span>
-                            <span class="value">
-                            <span *ngIf="minus3" style="color: red">{{'&#10549;'}}</span>
-                            <span *ngIf="!minus3" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesUsersInPercent }} %
-                        </span>
-                        </div>
-                        <div class="change-amount">
-                            <span  class="label">Change in $ (24h)</span>
-                            <span class="value">
-                            <span  class="symbol">{{ minus3 ? '-' : '+' }}</span>
-                            ${{ changesUsersInAmount }}
-                        </span>
-                        </div>
-                    </div>-->
-                </div>
-                <div class="chart-block">
+                <div class="chart-block" style="width: 100%">
                     <app-echart [title]="title6"
                                 [selectedValue]="farmStackedSelectedValue"
                                 [selectedDate]="farmStackedSelectedDate"
@@ -145,14 +120,14 @@
                             <span class="value">
                             <span *ngIf="minus6" style="color: red">{{'&#10549;'}}</span>
                             <span *ngIf="!minus6" style="color: green">{{'&#10548;'}}</span>
-                            {{ farmStackedInPercent }} %
+                            {{ changesFarmStackedInPercent }} %
                         </span>
                         </div>
                         <div class="change-amount">
                             <span class="label">Change in $ (24h)</span>
                             <span class="value">
                             <span class="symbol">{{ minus6 ? '-' : '+' }}</span>
-                            ${{ farmStackedInAmount }}
+                            ${{ changesFarmStackedInAmount }}
                         </span>
                         </div>
                     </div>

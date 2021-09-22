@@ -11,6 +11,7 @@ import { EChartsOption } from 'echarts';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { PriceDataService } from '@data/services/data/price-data.service';
+import { Addresses } from '@data/static/addresses';
 
 export interface ChartItem {
     name: string;
@@ -76,8 +77,8 @@ export class VaultStatsTotalComponent implements OnInit {
     changesUsersInPercent = '';
     changesFarmBuyBackInAmount = '';
     changesFarmBuyBackInPercent = '';
-    farmStackedInAmount = '';
-    farmStackedInPercent = '';
+    changesFarmStackedInAmount = '';
+    changesFarmStackedInPercent = '';
 
 
     minus1 = false;
@@ -99,6 +100,7 @@ export class VaultStatsTotalComponent implements OnInit {
     ngOnInit(): void {
         this.loadTVLHistoryData();
         this.loadHardWorkHistoryData();
+        this.loadStackedData();
     }
 
     loadTVLHistoryData(): void {
@@ -111,39 +113,42 @@ export class VaultStatsTotalComponent implements OnInit {
                     let totalDataTVL2 = this.prepareData(data2, 'lastTvl', 'calculateTime');
                     let totalUsers = this.prepareData(data, 'lastOwnersCount', 'calculateTime');
                     let totalUsers2 = this.prepareData(data2, 'lastOwnersCount', 'calculateTime');
-                    let totalFarmStacked = this.prepareFarmStackedData(data, 'calculateTime');
-                    let totalFarmStacked2 = this.prepareFarmStackedData(data2, 'calculateTime');
                     totalDataTVL = this.dataReducer(totalDataTVL, 50);
                     totalDataTVL2 = this.dataReducer(totalDataTVL2, 50);
                     totalUsers =  this.dataReducer(totalUsers,  100);
                     totalUsers2 = this.dataReducer(totalUsers2,  100);
-                    totalFarmStacked =  this.dataReducer(totalFarmStacked,  100);
-                    totalFarmStacked2 = this.dataReducer(totalFarmStacked2, 100);
-                    const totalFarmStackedArray = [...totalFarmStacked, ...totalFarmStacked2].sort(this.sortDate);
                     const totalUsersArray = [...totalUsers, ...totalUsers2].sort(this.sortDate);
                     const totalArray = [...totalDataTVL, ...totalDataTVL2].sort(this.sortDate);
                     const paredArray = this.findNotParedDay(totalArray);
                     const paredUsersArray = this.findNotParedDay(totalUsersArray);
-                    const paredFarmStacked = this.findNotParedDay(totalFarmStackedArray);
-                    this.totalFarmStacked = this.combineNetworks( paredFarmStacked);
                     this.totalDataTVL = this.combineNetworks(paredArray);
                     this.totalUsers = this.combineNetworks(paredUsersArray);
                     this.initializeChartTotalTVL();
                     this.initializeChartUsers();
-                    this.initializeChartFarmStacked();
                     this.changesUsersInAmount =  this.lastChanges(this.totalUsers).amountChanges;
                     this.changesUsersInPercent =  this.lastChanges(this.totalUsers).percentChanges;
                     this.changesTvlTotalInAmount =  this.lastChanges(this.totalDataTVL).amountChanges;
                     this.changesTvlTotalInPercent =  this.lastChanges(this.totalDataTVL).percentChanges;
-                    this.changesFarmBuyBackInAmount =  this.lastChanges(this.totalFarmStacked).amountChanges;
-                    this.changesFarmBuyBackInPercent =  this.lastChanges(this.totalFarmStacked).percentChanges;
                     this.minus1 = this.lastChanges(this.totalDataTVL).minus;
                     this.minus3 = this.lastChanges(this.totalUsers).minus;
-                    this.minus6 = this.lastChanges(this.totalFarmStacked).minus;
                 }
             }, err => {
                 console.log(err);
             });
+    }
+
+    loadStackedData(): void {
+       this.tvlService.getHistoryTvlByVault(Addresses.ADDRESSES.get('PS'))
+        .subscribe((data) => {
+            const totalFarmStacked =  this.dataReducer(this.prepareFarmStackedData(data, 'calculateTime'), 40);
+            this.totalFarmStacked = totalFarmStacked.sort(this.sortDate);
+            this.initializeChartFarmStacked();
+            this.changesFarmStackedInAmount =  this.lastChanges(this.totalFarmStacked).amountChanges;
+            this.changesFarmStackedInPercent =  this.lastChanges(this.totalFarmStacked).percentChanges;
+            this.minus6 = this.lastChanges(this.totalFarmStacked).minus;
+        }, err => {
+            console.log(err);
+        });
     }
 
     loadHardWorkHistoryData(): void {
