@@ -40,9 +40,31 @@
 
 
 .currentInfo .name {
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px;
+     display: flex;
+     justify-content: space-between;
+     font-size: 16px;
+ }
+
+.currentInfo .name .title {
+    font-weight: 900;
+    font-size: 1.5rem;
+}
+
+.currentInfo .name .controls{
+    z-index: 1;
+    user-select: none;
+}
+
+.currentInfo .name .controls button {
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.currentInfo .name .controls button:active,
+.currentInfo .name .controls button.selected {
+    border-color: #a7a7a7;
 }
 
 .currentInfo .value {

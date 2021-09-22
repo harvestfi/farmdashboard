@@ -12,16 +12,18 @@ export class EchartComponent implements OnInit {
 
   tempData: ChartSeries[] = [];
   @Input() title = '';
-  @Input() chartName = '';
   @Input() selectedValue = '';
   @Input() selectedDate = '';
   @Input() valueSymbol = '';
   @Input() options: EChartsOption;
-
+  updateOptions: any;
+  selectedPeriod = 0;
+  primaryData = [];
   @Input() set data(value: ChartSeries[]) {
-      if (value.length) {
-          this.tempData = value;
-          this.setDefaultTooltipValues();
+    if (value.length) {
+        this.tempData = value;
+        this.primaryData = [...this.tempData];
+        this.setDefaultTooltipValues();
       }
   }
 
@@ -52,11 +54,51 @@ export class EchartComponent implements OnInit {
     }
 
   setDefaultTooltipValues(): void {
-      this.selectedValue = this.valueSymbol + this.nFormatter(this.data[this.data.length - 1].value[1], 2);
+      if (this.valueSymbol === '%') {
+          const temp = this.data[this.data.length - 1].value[1];
+          let value = this.nFormatter(temp, 2);
+          if (+temp < 1) {
+              const tempNumber = +temp;
+              value = tempNumber.toFixed(2);
+          }
+          this.selectedValue = value + this.valueSymbol;
+      } else {
+          this.selectedValue = this.valueSymbol + this.nFormatter(this.data[this.data.length - 1].value[1], 2);
+      }
       this.selectedDate = new Date(this.data[this.data.length - 1].name).toString();
   }
 
   onChartEvent(event: any, type: string): void {
       this.setDefaultTooltipValues();
+  }
+
+  selectPeriod(period): void {
+      this.selectedPeriod = period;
+      this.updateOptions = {
+          series: [{
+              data: this.filterDataByPeriod(period)
+          }],
+          xAxis: this.options ? this.options.xAxis : ''
+      };
+  }
+
+
+
+  filterDataByPeriod(period): any {
+      const monthAgo = new Date();
+      monthAgo.setDate(monthAgo.getDate() - 30);
+      const halfYearAgo = new Date();
+      halfYearAgo .setDate(halfYearAgo.getDate() - 180);
+      const seriesData = [...this.primaryData];
+      if (!period) {
+          return this.primaryData;
+      }
+      if (period === 1) {
+          return seriesData.filter((item) => (new Date(item.name).getTime() > monthAgo.getTime()));
+      }
+      if (period === 6) {
+          return seriesData.filter((item) => (new Date(item.name).getTime() > halfYearAgo.getTime()));
+      }
+
   }
 }
