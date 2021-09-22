@@ -92,7 +92,6 @@ export class MainSideMenuComponent {
     this.toggleMenu();
   }
 
-
   openDownloadHistoricDataDialog(): void {
     this.downloadHistoricDataDialog.open();
     this.toggleMenu();
