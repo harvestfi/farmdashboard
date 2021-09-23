@@ -55,6 +55,10 @@ $variables in $themes_colors {
             }
         }
 
+        div.controls {
+            background: map-get($variables, "lightGreen");
+        }
+
         a {
             color: map-get($variables, "links");
 

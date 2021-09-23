@@ -15,30 +15,30 @@
                 <th mat-sort-header="hardwork"></th>
                 <th mat-sort-header="tvl"></th>
             </tr>
-                    <tr class="table-row" *ngFor="let vault of sortedVaults">
+            <tbody>
+                <tr class="table-row" *ngFor="let vault of sortedVaults">
+                    <td class="name">
+                        <app-vault-icon [vault]="vault"></app-vault-icon>
+                        <span>{{vault.contract.name}}</span>
+                    </td>
 
-                        <td class="name">
-                            <app-vault-icon [vault]="vault"></app-vault-icon>
-                            <span>{{vault.contract.name}}</span>
-                        </td>
-
-                        <td class="transactions">
-                            <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/harvest/{{vault.contract.name}}'
-                               [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'"
-                               target='_blank' class="download-link">Transactions</a>
-                        </td>
-                        <td class="hardwork">
-                            <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/hardwork/{{vault.contract.name}}'
-                               [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'"
-                               target='_blank' class="download-link">Hardwork</a>
-                        </td>
-                        <td class="tvl">
-                            <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/tvl/{{vault.contract.name}}'
-                               [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'"
-                               target='_blank' class="download-link">TVL</a>
-                        </td>
-                    </tr>
-
+                    <td class="transactions">
+                        <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/harvest/{{vault.contract.name}}'
+                           [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'"
+                           target='_blank' class="download-link">Transactions</a>
+                    </td>
+                    <td class="hardwork">
+                        <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/hardwork/{{vault.contract.name}}'
+                           [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'"
+                           target='_blank' class="download-link">Hardwork</a>
+                    </td>
+                    <td class="tvl">
+                        <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/tvl/{{vault.contract.name}}'
+                           [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'"
+                           target='_blank' class="download-link">TVL</a>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>

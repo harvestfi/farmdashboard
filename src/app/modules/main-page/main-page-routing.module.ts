@@ -1,7 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {MainPageComponent} from './main-page.component';
-import {VaultStatsComponent} from '../dashboard/vault-stats/vault-stats.component';
 import {PsApyHistoryComponent} from '@modules/dashboard/ps-apy-history/ps-apy-history.component';
 import {WeeklyProfitHistoryComponent} from '@modules/dashboard/weekly-profit-history/weekly-profit-history.component';
 import {FarmBuybacksComponent} from '@modules/dashboard/farm-buybacks/farm-buybacks.component';
@@ -9,7 +8,6 @@ import {SavedGasFeesComponent} from '@modules/dashboard/saved-gas-fees/saved-gas
 import {RewardsHistoryComponent} from '@modules/dashboard/rewards-history/rewards-history.component';
 import {DownloadHistoricDataComponent} from '@modules/dashboard/download-historic-data/download-historic-data.component';
 import {UserBalancesComponent} from '@modules/dashboard/user-balances/user-balances.component';
-import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component';
 
 const routes: Routes = [
   {
@@ -43,14 +41,6 @@ const routes: Routes = [
   {
      path: 'user-balances',
      component: UserBalancesComponent,
-  },
-  {
-    path: 'info/:network/:address',
-    component: VaultStatsComponent
-  },
-  {
-    path: 'info-total',
-    component: VaultStatsTotalComponent
   },
 ];
 

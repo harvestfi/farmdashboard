@@ -17,16 +17,18 @@ $dark-background-color: #111111;
 }
 
 .download-historic-data-container {
-    padding: 35px 40px 0 40px;
+    padding: 35px 40px 35px 40px;
     border-radius: 10px;
     margin-left: 10px;
     min-height: 788px;
     display: flex;
     flex-direction: column;
     position: relative;
-    max-height: 778px;
-    overflow: auto;
 
+    table {
+        display: flex;
+        flex-direction: column;
+    }
 
     td, th {
         padding: 4px;
@@ -35,7 +37,15 @@ $dark-background-color: #111111;
     th#name {
         width: 90%;
     }
-
+    tbody {
+        overflow: auto;
+        max-height: 778px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-right: 10px;
+        overflow-x: hidden;
+    }
     .header-row {
         width: 100%;
         padding: 10px;
@@ -84,12 +94,16 @@ $dark-background-color: #111111;
 
     }
     .table-row {
-
+        width: 100%;
         font-weight: bold;
         font-size: 0.9em;
         border-bottom: 1px solid #F0F0F0;
         margin: 0.25em;
         align-items: center;
+        display: flex;
+    }
+    td.name {
+        margin-right: auto;
     }
 
     .table-row:last-child {

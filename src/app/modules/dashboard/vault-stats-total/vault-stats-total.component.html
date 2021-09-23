@@ -1,6 +1,5 @@
 <div class="cover" [class]="vt.getThemeColor()">
     <div class="container">
-        <h1 class="title">Total</h1>
         <div class="grid-sheet">
             <div class="charts-block">
                 <div class="chart-block">
@@ -10,7 +9,7 @@
                                 [valueSymbol]="valueSymbol1"
                                 [options]="options1"
                                 [data]="totalDataTVL"></app-echart>
-                    <div class="left-part">
+                    <!--<div class="left-part">
                         <div class="change-percent">
                             <span  class="label">Change in % (24h)</span>
                             <span class="value">
@@ -26,35 +25,61 @@
                             ${{ changesTvlTotalInAmount }}
                         </span>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="chart-block">
-                    <app-echart [title]="title2"
-                                [selectedValue]="profitTotalSelectedValue"
-                                [selectedDate]="profitTotalSelectedDate"
-                                [valueSymbol]="valueSymbol2"
-                                [options]="options2"
-                                [data]="totalDataProfit"></app-echart>
-                    <div class="right-part">
-                        <div class="change-percent">
-                            <span class="label">Change in % (24h)</span>
-                            <span class="value">
-                            <span *ngIf="minus2" style="color: red">{{'&#10549;'}}</span>
-                            <span *ngIf="!minus2" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesProfitTotalInPercent }} %
-                        </span>
-                        </div>
-                        <div class="change-amount">
-                            <span class="label">Change in $ (24h)</span>
-                            <span class="value">
-                            <span class="symbol">{{ minus2 ? '-' : '+' }}</span>
-                            ${{ changesProfitTotalInAmount}}
-                        </span>
-                        </div>
-                    </div>
+                    <app-echart [title]="title6"
+                                [selectedValue]="farmStackedSelectedValue"
+                                [selectedDate]="farmStackedSelectedDate"
+                                [valueSymbol]="valueSymbol6"
+                                [options]="options6"
+                                [data]="totalFarmStacked"></app-echart>
+                    <!--  <div class="right-part">
+                          <div class="change-percent">
+                              <span class="label">Change in % (24h)</span>
+                              <span class="value">
+                              <span *ngIf="minus6" style="color: red">{{'&#10549;'}}</span>
+                              <span *ngIf="!minus6" style="color: green">{{'&#10548;'}}</span>
+                              {{ changesFarmStackedInPercent }} %
+                          </span>
+                          </div>
+                          <div class="change-amount">
+                              <span class="label">Change in $ (24h)</span>
+                              <span class="value">
+                              <span class="symbol">{{ minus6 ? '-' : '+' }}</span>
+                              ${{ changesFarmStackedInAmount }}
+                          </span>
+                          </div>
+                      </div>-->
+
                 </div>
             </div>
             <div class="charts-block">
+                <div class="chart-block">
+                <app-echart [title]="title2"
+                            [selectedValue]="profitTotalSelectedValue"
+                            [selectedDate]="profitTotalSelectedDate"
+                            [valueSymbol]="valueSymbol2"
+                            [options]="options2"
+                            [data]="totalDataProfit"></app-echart>
+                <!-- <div class="right-part">
+                     <div class="change-percent">
+                         <span class="label">Change in % (24h)</span>
+                         <span class="value">
+                         <span *ngIf="minus2" style="color: red">{{'&#10549;'}}</span>
+                         <span *ngIf="!minus2" style="color: green">{{'&#10548;'}}</span>
+                         {{ changesProfitTotalInPercent }} %
+                     </span>
+                     </div>
+                     <div class="change-amount">
+                         <span class="label">Change in $ (24h)</span>
+                         <span class="value">
+                         <span class="symbol">{{ minus2 ? '-' : '+' }}</span>
+                         ${{ changesProfitTotalInAmount}}
+                     </span>
+                     </div>
+                 </div>-->
+                </div>
                 <div class="chart-block">
                     <app-echart [title]="title3"
                                 [selectedValue]="usersSelectedValue"
@@ -62,7 +87,7 @@
                                 [valueSymbol]="valueSymbol3"
                                 [options]="options3"
                                 [data]="totalUsers"></app-echart>
-                    <div class="left-part">
+                    <!--<div class="left-part">
                         <div class="change-percent">
                             <span  class="label">Change in % (24h)</span>
                             <span class="value">
@@ -78,59 +103,35 @@
                             {{ changesUsersInAmount }}
                         </span>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
-                <div class="chart-block">
+
+            </div>
+            <div class="charts-block">
+                <div class="chart-block" style="width: 100%">
                     <app-echart [title]="title4"
                                 [selectedValue]="farmBuyBackSelectedValue"
                                 [selectedDate]="farmBuyBackSelectedDate"
                                 [valueSymbol]="valueSymbol4"
                                 [options]="options4"
                                 [data]="totalFarmBuyBack"></app-echart>
-                    <div class="right-part">
-                        <div class="change-percent">
-                            <span class="label">Change in % (24h)</span>
-                            <span class="value">
-                            <span *ngIf="minus4" style="color: red">{{'&#10549;'}}</span>
-                            <span *ngIf="!minus4" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesFarmBuyBackInPercent }} %
-                        </span>
-                        </div>
-                        <div class="change-amount">
-                            <span class="label">Change in $ (24h)</span>
-                            <span class="value">
-                            <span class="symbol">{{ minus4 ? '-' : '+' }}</span>
-                            ${{ changesFarmBuyBackInAmount }}
-                        </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="charts-block">
-                <div class="chart-block" style="width: 100%">
-                    <app-echart [title]="title6"
-                                [selectedValue]="farmStackedSelectedValue"
-                                [selectedDate]="farmStackedSelectedDate"
-                                [valueSymbol]="valueSymbol6"
-                                [options]="options6"
-                                [data]="totalFarmStacked"></app-echart>
-                    <div class="right-part">
-                        <div class="change-percent">
-                            <span class="label">Change in % (24h)</span>
-                            <span class="value">
-                            <span *ngIf="minus6" style="color: red">{{'&#10549;'}}</span>
-                            <span *ngIf="!minus6" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesFarmStackedInPercent }} %
-                        </span>
-                        </div>
-                        <div class="change-amount">
-                            <span class="label">Change in $ (24h)</span>
-                            <span class="value">
-                            <span class="symbol">{{ minus6 ? '-' : '+' }}</span>
-                            ${{ changesFarmStackedInAmount }}
-                        </span>
-                        </div>
-                    </div>
+                    <!-- <div class="right-part">
+                         <div class="change-percent">
+                             <span class="label">Change in % (24h)</span>
+                             <span class="value">
+                             <span *ngIf="minus4" style="color: red">{{'&#10549;'}}</span>
+                             <span *ngIf="!minus4" style="color: green">{{'&#10548;'}}</span>
+                             {{ changesFarmBuyBackInPercent }} %
+                         </span>
+                         </div>
+                         <div class="change-amount">
+                             <span class="label">Change in $ (24h)</span>
+                             <span class="value">
+                             <span class="symbol">{{ minus4 ? '-' : '+' }}</span>
+                             ${{ changesFarmBuyBackInAmount }}
+                         </span>
+                         </div>
+                     </div>-->
                 </div>
             </div>
         </div>

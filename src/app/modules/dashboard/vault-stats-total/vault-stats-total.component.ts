@@ -43,8 +43,8 @@ export class VaultStatsTotalComponent implements OnInit {
     options5: EChartsOption;
     options6: EChartsOption;
 
-    title1 = 'TVL';
-    title2 = 'Profits';
+    title1 = 'Total TVL';
+    title2 = 'Total Profits';
     title3 = 'Users';
     title4 = 'Farm Buybacks';
     title5 = 'P/E Ratio';
@@ -55,7 +55,7 @@ export class VaultStatsTotalComponent implements OnInit {
     valueSymbol3 = '';
     valueSymbol4 = '$';
     valueSymbol5 = '$';
-    valueSymbol6 = '$';
+    valueSymbol6 = '';
 
     tvlTotalSelectedValue = '';
     tvlTotalSelectedDate = '';
@@ -255,17 +255,24 @@ export class VaultStatsTotalComponent implements OnInit {
             xAxis: {
                 type: 'category',
                 splitLine: {
-                    show: false
+                    show: false,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
                 },
                 axisLine: {
-                    show: false
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5',
+                    }
                 },
                 axisTick: {
                     show: false,
                 },
                 axisLabel: {
-                    color: 'rgb(108, 114, 132)',
-                    fontSize: '16px',
+                    color: '#9fa3a3',
+                    fontSize: '14px',
                     fontFamily: 'Inter var',
                     formatter: (value) => echarts.format.formatTime('dd', value, false),
                     showMinLabel: true,
@@ -275,11 +282,40 @@ export class VaultStatsTotalComponent implements OnInit {
 
             },
             yAxis: {
+                position: 'right',
                 type: 'value',
+                offset: 10,
                 splitLine: {
-                    show: false
+                    show: true,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
                 },
-                show: false
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5',
+                    }
+                },
+                axisLabel: {
+                    color: '#9fa3a3',
+                    fontSize: '12px',
+                    fontFamily: 'Inter var',
+                    show: true,
+                    showMinLabel: true,
+                    showMaxLabel: true,
+                    formatter: (value) => this.nFormatter(value, 2),
+                },
+                axisTick: {
+                    show: true,
+                    inside: true,
+                    length: 10,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    },
+                },
             },
             series: [{
                 type: 'line',
@@ -287,10 +323,11 @@ export class VaultStatsTotalComponent implements OnInit {
                 showSymbol: false,
                 data: this.totalDataTVL,
                 itemStyle: {
-                    color: '#ff007a'
+                    color: '#EAF6F6'
                 },
                 areaStyle: {
-                    color: '#37162a'
+                    color: '#5CADAA',
+                    opacity: 0.9
                 },
             }]
         };
@@ -332,15 +369,25 @@ export class VaultStatsTotalComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
+                    splitLine: {
+                        show: false,
+                        lineStyle: {
+                            type: [7],
+                            color: '#d1d2d5',
+                        }
+                    },
                     axisTick: {
                         show: false,
                     },
                     axisLine: {
-                        show: false
+                        show: true,
+                        lineStyle: {
+                            color: '#d1d2d5',
+                        }
                     },
                     axisLabel: {
-                        color: 'rgb(108, 114, 132)',
-                        fontSize: '16px',
+                        color: '#9fa3a3',
+                        fontSize: '14px',
                         fontFamily: 'Inter var',
                         formatter: (value) => echarts.format.formatTime('MM', value, false),
                         showMinLabel: true,
@@ -349,17 +396,48 @@ export class VaultStatsTotalComponent implements OnInit {
 
                 },
             ],
-            yAxis: [{
-                show: false,
-                type: 'value'
-            }],
+            yAxis: {
+                position: 'right',
+                type: 'value',
+                offset: 10,
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5'
+                    }
+                },
+                axisLabel: {
+                    color: '#9fa3a3',
+                    fontSize: '12px',
+                    fontFamily: 'Inter var',
+                    show: true,
+                    showMinLabel: true,
+                    showMaxLabel: true,
+                    formatter: (value) => this.nFormatter(value, 2),
+                },
+                axisTick: {
+                    show: true,
+                    inside: true,
+                    length: 10,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    },
+                },
+            },
             series: [{
                 type: 'bar',
-                barWidth: '70%',
+                barWidth: '90%',
                 data: this.totalDataProfit,
                 itemStyle: {
-                    color: '#2172e5',
-                    borderRadius: 6
+                    color: '#5CADAA',
                 },
             }]
         };
@@ -401,15 +479,25 @@ export class VaultStatsTotalComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
+                    splitLine: {
+                        show: false,
+                        lineStyle: {
+                            type: [7],
+                            color: '#d1d2d5',
+                        }
+                    },
                     axisTick: {
                         show: false,
                     },
                     axisLine: {
-                        show: false
+                        show: true,
+                        lineStyle: {
+                            color: '#d1d2d5',
+                        }
                     },
                     axisLabel: {
-                        color: 'rgb(108, 114, 132)',
-                        fontSize: '16px',
+                        color: '#9fa3a3',
+                        fontSize: '14px',
                         fontFamily: 'Inter var',
                         formatter: (value) => echarts.format.formatTime('dd', value, false),
                         showMinLabel: true,
@@ -418,17 +506,48 @@ export class VaultStatsTotalComponent implements OnInit {
 
                 },
             ],
-            yAxis: [{
-                show: false,
-                type: 'value'
-            }],
+            yAxis: {
+                position: 'right',
+                type: 'value',
+                offset: 10,
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5'
+                    }
+                },
+                axisLabel: {
+                    color: '#9fa3a3',
+                    fontSize: '12px',
+                    fontFamily: 'Inter var',
+                    show: true,
+                    showMinLabel: true,
+                    showMaxLabel: true,
+                    formatter: (value) => this.nFormatter(value, 2),
+                },
+                axisTick: {
+                    show: true,
+                    inside: true,
+                    length: 10,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    },
+                },
+            },
             series: [{
                 type: 'bar',
                 barWidth: '70%',
                 data: this.totalUsers,
                 itemStyle: {
-                    color: '#2172e5',
-                    borderRadius: 6
+                    color: '#5CADAA',
                 },
             }]
         };
@@ -470,15 +589,25 @@ export class VaultStatsTotalComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
+                    splitLine: {
+                        show: false,
+                        lineStyle: {
+                            type: [7],
+                            color: '#d1d2d5',
+                        }
+                    },
                     axisTick: {
                         show: false,
                     },
                     axisLine: {
-                        show: false
+                        show: true,
+                        lineStyle: {
+                            color: '#d1d2d5',
+                        }
                     },
                     axisLabel: {
-                        color: 'rgb(108, 114, 132)',
-                        fontSize: '16px',
+                        color: '#9fa3a3',
+                        fontSize: '14px',
                         fontFamily: 'Inter var',
                         formatter: (value) => echarts.format.formatTime('dd', value, false),
                         showMinLabel: true,
@@ -487,17 +616,48 @@ export class VaultStatsTotalComponent implements OnInit {
 
                 },
             ],
-            yAxis: [{
-                show: false,
-                type: 'value'
-            }],
+            yAxis: {
+                position: 'right',
+                type: 'value',
+                offset: 10,
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5'
+                    }
+                },
+                axisLabel: {
+                    color: '#9fa3a3',
+                    fontSize: '12px',
+                    fontFamily: 'Inter var',
+                    show: true,
+                    showMinLabel: true,
+                    showMaxLabel: true,
+                    formatter: (value) => this.nFormatter(value, 2),
+                },
+                axisTick: {
+                    show: true,
+                    inside: true,
+                    length: 10,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    },
+                },
+            },
             series: [{
                 type: 'bar',
                 barWidth: '70%',
                 data: this.totalFarmBuyBack,
                 itemStyle: {
-                    color: '#2172e5',
-                    borderRadius: 6
+                    color: '#5CADAA',
                 },
             }]
         };
@@ -539,15 +699,25 @@ export class VaultStatsTotalComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
+                    splitLine: {
+                        show: false,
+                        lineStyle: {
+                            type: [7],
+                            color: '#d1d2d5',
+                        }
+                    },
                     axisTick: {
                         show: false,
                     },
                     axisLine: {
-                        show: false
+                        show: true,
+                        lineStyle: {
+                            color: '#d1d2d5',
+                        }
                     },
                     axisLabel: {
-                        color: 'rgb(108, 114, 132)',
-                        fontSize: '16px',
+                        color: '#9fa3a3',
+                        fontSize: '14px',
                         fontFamily: 'Inter var',
                         formatter: (value) => echarts.format.formatTime('dd', value, false),
                         showMinLabel: true,
@@ -556,17 +726,48 @@ export class VaultStatsTotalComponent implements OnInit {
 
                 },
             ],
-            yAxis: [{
-                show: false,
-                type: 'value'
-            }],
+            yAxis: {
+                position: 'right',
+                type: 'value',
+                offset: 10,
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5'
+                    }
+                },
+                axisLabel: {
+                    color: '#9fa3a3',
+                    fontSize: '12px',
+                    fontFamily: 'Inter var',
+                    show: true,
+                    showMinLabel: true,
+                    showMaxLabel: true,
+                    formatter: (value) => this.nFormatter(value, 2),
+                },
+                axisTick: {
+                    show: true,
+                    inside: true,
+                    length: 10,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    },
+                },
+            },
             series: [{
                 type: 'bar',
                 barWidth: '70%',
                 data: this.totalFarmStacked,
                 itemStyle: {
-                    color: '#2172e5',
-                    borderRadius: 6
+                    color: '#5CADAA',
                 },
             }]
         };
@@ -711,7 +912,7 @@ export class VaultStatsTotalComponent implements OnInit {
         const lookup = [
             { value: 1, symbol: '' },
             { value: 1e3, symbol: 'k' },
-            { value: 1e6, symbol: 'm' },
+            { value: 1e6, symbol: 'M' },
             { value: 1e9, symbol: 'b' },
             { value: 1e12, symbol: 't' },
             { value: 1e15, symbol: 'p' },

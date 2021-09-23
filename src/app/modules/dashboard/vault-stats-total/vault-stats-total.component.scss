@@ -10,7 +10,8 @@ h1.title {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding-top: 27px;
+    padding: 10px 10px;
+    box-sizing: border-box;
     -webkit-box-align: center;
     align-items: center;
     flex: 1 1 0%;
@@ -19,18 +20,15 @@ h1.title {
     margin-bottom: 3rem;
 }
 
-.cover > * {
-    max-width: 1200px;
-}
-
 .container {
-    width: 95%;
+   width: 100%;
+   padding: 0 10px;
 }
 
 .grid-sheet {
     display: grid;
     grid-auto-rows: auto;
-    row-gap: 16px;
+    row-gap: 20px;
 }
 
 .charts-block {
@@ -63,9 +61,12 @@ h1.title {
 }
 
 .chart-block {
-    width: 49%;
+    width: 100%;
     z-index: 1;
     font-family: 'Inter var', sans-serif;
+}
+.chart-block:nth-child(odd):not(:last-child) {
+    margin-right: 20px;
 }
 
 .chart-block .left-part,
@@ -195,6 +196,9 @@ h1.title {
     .chart-block .left-part,
     .chart-block .right-part {
         width: 100%;
+    }
+    .chart-block:nth-child(odd):not(:last-child) {
+        margin-right: 0;
     }
 }
 

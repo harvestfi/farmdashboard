@@ -1,15 +1,26 @@
-<div class="chart-background" [class]="vt.getThemeColor()">
+<div class="chart-background" [class]="vt.getThemeColor() + '-card'">
     <div class="currentInfo">
-        <div class="name">
-            <span class="title">{{ title }}</span>
-            <div class="controls">
-                <button [class.selected]="selectedPeriod === 1" (click)="selectPeriod(1)">1M</button> /
-                <button [class.selected]="selectedPeriod === 6" (click)="selectPeriod(6)">6M</button> /
-                <button [class.selected]="!selectedPeriod" (click)="selectPeriod(0)">All</button>
+        <div class="text">
+            <div class="name">
+                <span class="title">{{ title }}</span>
+
+            </div>
+            <span class="value">{{ selectedValue }}</span>
+            <span class="date">{{ selectedDate | date: 'MMM dd, YYYY'}}</span>
+        </div>
+        <div>
+            <div class="controls"
+                 [class]="vt.getThemeColor() + '-lightGreen'">
+                <label class="toggle"
+                       [class.month]="selectedPeriod === 1"
+                       [class.sixMonth]="selectedPeriod === 6"
+                       [class.year]="!selectedPeriod">
+                    <div (click)="selectPeriod(1)"><span >1M</span></div>
+                    <div (click)="selectPeriod(6)"><span >6M</span></div>
+                    <div (click)="selectPeriod(0)"><span>All</span></div>
+                </label>
             </div>
         </div>
-        <span class="value">{{ selectedValue }}</span>
-        <span class="date">{{ selectedDate | date: 'MMM dd, YYYY'}}</span>
     </div>
     <div echarts
          [options]="options"
