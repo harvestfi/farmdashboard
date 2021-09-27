@@ -10,15 +10,24 @@
         </ng-template>
         <h4 class="title">Pools</h4>
       </app-popover-card>
-      <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
-        <option [value]="'all'">All</option>
-        <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
-      </select>
-      <input #harvestDtoFilter [(ngModel)]="minAmount" class="input-less-than left-border-box" placeholder="More than..." type="number">
+      <div class="filters">
+        <select [(ngModel)]="vaultFilter" class="select-strategy-2">
+          <option [value]="'all'">All</option>
+          <option *ngFor="let name of vaultNames"
+                  [value]="name">{{name}}</option>
+        </select>
+        <input #harvestDtoFilter
+               type="number"
+               min="0"
+               class="input-less-than"
+               placeholder="More than..."
+               [(ngModel)]="minAmount">
+      </div>
     </div>
 
-    <div class="table-header" [class]="vt.getThemeColor()">
-      <div class="money-icon"><span role="img">💸</span></div>
+    <div class="table-header"
+         [class]="vt.getThemeColor() + '-gray'">
+      <div class="money-icon">Status</div>
       <div class="harvest-tx-header-label">Date</div>
       <div class="harvest-tx-header-label">Amount</div>
       <div class="harvest-tx-header-label">Vault</div>
@@ -57,7 +66,8 @@
               [owner]='dto.owner'>
             </app-link-window>
           </app-simple-modal>
-          <mat-icon (click)="showTradeLinks(dto.id)" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false"
+          <mat-icon (click)="showTradeLinks(dto.id)" aria-hidden="false"
+                    [class]="vt.getThemeColor() + '-middleGreen'"
             aria-label="Price" class="sign-icon">
             open_in_new
           </mat-icon>
@@ -73,7 +83,10 @@
 
 
     <div class="button-container">
-      <button class="show-more" (click)="openHarvestHistory()">show older</button>
+      <button (click)="openHarvestHistory()"
+              class="show-more"
+              [class]="vt.getThemeColor() + '-middleGreen'"
+              >Show Older<img src="assets/icons/show_chevron_right.svg"></button>
     </div>
     <app-custom-modal #harvestHistoryModal>
       <ng-template>

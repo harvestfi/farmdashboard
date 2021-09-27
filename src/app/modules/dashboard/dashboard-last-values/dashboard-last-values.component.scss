@@ -1,18 +1,18 @@
 @import "../../../../scss/utilities/responsive_utilities";
 #top-div-light {
-  margin-top: 32px;
+  margin-top: 26px;
 }
 .main-top-stats {
   display: grid;
   grid-template-areas:   "native-tokens native-tokens weekly-profit ps-income tvl"
                          "native-tokens native-tokens weekly-profit ps-income tvl"
-                         "farm-holders farm-staked saved-gas total-users active-pools";
+                         "farm-buybacks farm-staked saved-gas total-users active-pools";
 
   @include responsive(medium) {
     grid-template-areas:   "native-tokens native-tokens"
                            "weekly-profit ps-income"
                            "tvl farm-staked"
-                           "saved-gas farm-holders"
+                           "saved-gas farm-buybacks"
                            "total-users active-pools";
     grid-template-columns: 50% 50%;
     grid-template-rows: 1fr 1fr 1fr 0.5fr 0.5fr;
@@ -112,6 +112,18 @@
 
   .farm-holders {
     grid-area: farm-holders;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
+  .farm-buybacks {
+    grid-area: farm-buybacks;
     height: 100px;
     .value-number-middle {
       font-size: 2.14em;

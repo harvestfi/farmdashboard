@@ -1,3 +1,8 @@
+<div class="title-wrapper"
+     [class]="vt.getThemeColor() + '-black'">
+     <h1 class="title">Total</h1>
+    <app-theme-switch></app-theme-switch>
+</div>
 <div class="cover" [class]="vt.getThemeColor()">
     <div class="container">
         <div class="grid-sheet">
@@ -108,14 +113,14 @@
 
             </div>
             <div class="charts-block">
-                <div class="chart-block" style="width: 100%">
+               <!-- <div class="chart-block" style="width: 100%">
                     <app-echart [title]="title4"
                                 [selectedValue]="farmBuyBackSelectedValue"
                                 [selectedDate]="farmBuyBackSelectedDate"
                                 [valueSymbol]="valueSymbol4"
                                 [options]="options4"
                                 [data]="totalFarmBuyBack"></app-echart>
-                    <!-- <div class="right-part">
+                     <div class="right-part">
                          <div class="change-percent">
                              <span class="label">Change in % (24h)</span>
                              <span class="value">
@@ -131,8 +136,8 @@
                              ${{ changesFarmBuyBackInAmount }}
                          </span>
                          </div>
-                     </div>-->
-                </div>
+                     </div>
+                </div>-->
             </div>
         </div>
     </div>

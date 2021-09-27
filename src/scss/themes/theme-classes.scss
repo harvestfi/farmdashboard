@@ -46,7 +46,7 @@ $variables in $themes_colors {
             color: map-get($variables, "solidGreen");
             border-right: 18px solid map-get($variables, "lightGreen");
             option {
-                background: #FFFFFF;
+                background: map-get($variables, "card");
             }
             option:checked,
             option:hover {
@@ -80,7 +80,37 @@ $variables in $themes_colors {
         .table-row {
             color: map-get($variables, "border");
         }
+
+        .trades-list-item .transaction-type span,
+        .uni-trades .transaction-type span,
+        .harvest-trades .transaction-type span {
+            &.BUY,
+            &.Deposit {
+                background: map-get($variables, 'middleGreen');
+                color: #FFFFFF;
+            }
+
+            &.SELL,
+            &.Withdraw {
+                background: map-get($variables, 'yellow');
+                color: #FFFFFF;
+            }
+        }
+        .footer-row {
+            svg.footer-icon path {
+                fill: map-get($variables, 'lightGray');
+            }
+            a {
+                color: map-get($variables, 'lightGray');
+            }
+        }
+        .table-header {
+            color: map-get($variables, "gray");
+        }
+
     }
+
+
 
     .#{$color}-background {
         background: map-get($variables, "background");
@@ -90,6 +120,10 @@ $variables in $themes_colors {
         background: map-get($variables, "card");
     }
 
+    .#{$color}-lightGreen {
+        background: map-get($variables, "lightGreen");
+    }
+
     .#{$color}-transparent {
         background: map-get($variables, "transparent");
     }
@@ -97,10 +131,6 @@ $variables in $themes_colors {
     .#{$color}-softGreen {
         background: map-get($variables, "softGreen");
     }
-
-
-
-
 
     .#{$color}-font {
         color: map-get($variables, "font");

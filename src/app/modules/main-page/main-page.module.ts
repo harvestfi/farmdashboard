@@ -13,6 +13,7 @@ import {EchartComponent} from '@modules/dashboard/vault-stats/echart/echart.comp
 import {LayoutModule} from '@layout/layout.module';
 import {PsApyHistoryComponent} from '@modules/dashboard/ps-apy-history/ps-apy-history.component';
 import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component';
+import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vau
     LastPricesListModule,
     LayoutModule,
     CommonModule,
+    ThemeSwitchModule,
     NgxEchartsModule.forRoot({
        echarts: () => import('echarts')
     }),

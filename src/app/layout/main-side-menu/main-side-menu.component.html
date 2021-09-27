@@ -127,6 +127,13 @@
               Saved Gas Fees
             </span>
           </li>
+          <li (click)="openTotalVault()"
+              data-menu-icon="🛡️"
+              class="main-side-menu-item nested"
+              [class.active]="totalChartsRoute">
+            <span>
+              Total charts info
+            </span>
           <app-custom-modal #savedFeesDialog>
             <ng-template>
               <app-saved-gas-fees-dialog></app-saved-gas-fees-dialog>

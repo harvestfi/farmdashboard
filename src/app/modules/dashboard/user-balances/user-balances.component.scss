@@ -43,7 +43,7 @@ $dark-background-color: #111111;
 
 .values {
   display: grid;
-  grid-template-columns: 0.3fr 1fr 2fr 0.5fr;
+  grid-template-columns: 0.3fr 2fr 2fr 0.5fr;
   border-bottom: 1px solid #F0F0F0;
   padding: 14px 10px 14px 0;
 }
@@ -51,7 +51,7 @@ $dark-background-color: #111111;
 .table-header {
   padding: 14px 10px 14px 0;
   display: grid;
-  grid-template-columns: 0.3fr 1fr 2fr 0.5fr;
+  grid-template-columns: 0.3fr 2fr 2fr 0.5fr;
   font-weight: bold;
   -webkit-box-align: center;
   -ms-flex-align: center;

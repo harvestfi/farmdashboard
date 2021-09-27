@@ -28,10 +28,31 @@
 
 .bottom-row {
  display: flex;
- overflow: hidden;
- width: calc(100% - 40px);
-  margin: auto 0 0;
+ width: 100%;
+ margin: auto 0 0;
+ padding: 25px 0 45px 10px;
 }
+
+.footer-wrapper {
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.shadower {
+  background: linear-gradient(90deg, rgba(234, 246, 246, 0) 0%, #EAF6F6 100%);
+  position: absolute;
+  width: 230px;
+  height: 100%;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+.shadower.dark {
+  background: linear-gradient(90deg, rgba(19, 28, 27, 0) 0%, #111111 100%);
+}
+
 
 @media screen and (max-width: 900px) {
   .price-card {

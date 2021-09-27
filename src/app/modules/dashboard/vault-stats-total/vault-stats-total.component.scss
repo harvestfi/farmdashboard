@@ -1,10 +1,25 @@
-h1.title {
+.title {
     text-align: center;
-    font-size: 3.5rem;
-    line-height: 6rem;
-    font-weight: 900;
-    font-family: "Inter var", sans-serif;
     text-transform: uppercase;
+    font-family: 'PT Sans', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 47px;
+    margin: auto 0;
+}
+.title-wrapper {
+    margin: 0 0 0 10px;
+    font-family: 'PT Sans', sans-serif;
+    text-align: left;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    height: 57px;
+    justify-content: space-between;
+    span {
+        margin: auto 0;
+    }
 }
 .cover {
     display: flex;
@@ -17,7 +32,7 @@ h1.title {
     flex: 1 1 0%;
     overflow: hidden auto;
     z-index: 1;
-    margin-bottom: 3rem;
+    margin-top: 30px;
 }
 
 .container {
@@ -44,14 +59,6 @@ h1.title {
     justify-content: space-between;
 }
 
-.title {
-    font-family: "Inter var", sans-serif;
-    box-sizing: border-box;
-    margin: 0px;
-    min-width: 0px;
-    font-weight: 500;
-    font-size: 18px;
-}
 .cover.light .title {
     color: #404040;
 }

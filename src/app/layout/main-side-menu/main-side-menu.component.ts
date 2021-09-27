@@ -95,6 +95,10 @@ export class MainSideMenuComponent {
       return this.router.isActive('user-balances', true);
   }
 
+  get totalChartsRoute(): boolean {
+      return this.router.isActive('charts/info-total', true);
+  }
+
   get sideMenuState(): any {
     return this.sideMenuService.getSideMenuState();
   }
@@ -173,6 +177,12 @@ export class MainSideMenuComponent {
       this.toggleMenu();
       this.router.navigateByUrl('user-balances');
   }
+
+  openTotalVault(): void {
+      this.modalService.dismissAll();
+      this.toggleMenu();
+      this.router.navigateByUrl('charts/info-total');
+ }
 
   openWeeklyProfitDialog(): void {
     this.weeklyProfitDialog.open();

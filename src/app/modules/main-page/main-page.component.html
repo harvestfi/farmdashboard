@@ -2,26 +2,19 @@
   <app-main-top-navigation></app-main-top-navigation>
   <div class="left-border-box left">
     <app-dashboard-last-values></app-dashboard-last-values>
-    <app-vault-stats-total></app-vault-stats-total>
-  </div>
-
- <!-- <div class="left-border-box left">
-    <app-strategy-list></app-strategy-list>
-  </div>
-
-  <div class="left-border-box middle">
-    <div class="row charts-row">
-      <app-price-chart></app-price-chart>
-    </div>
   </div>
 
   <div>
     <app-flow-cards-view></app-flow-cards-view>
-  </div>-->
+  </div>
 
   <div class="bottom-row">
-    <app-main-footer></app-main-footer>
-    <app-last-prices-list></app-last-prices-list>
+    <div class="footer-wrapper">
+      <app-main-footer></app-main-footer>
+      <app-last-prices-list></app-last-prices-list>
+      <div class="shadower"
+          [class]="vt.getThemeColor()"></div>
+    </div>
   </div>
 
 </div>

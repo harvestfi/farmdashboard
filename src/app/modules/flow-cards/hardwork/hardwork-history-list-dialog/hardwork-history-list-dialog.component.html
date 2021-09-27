@@ -9,25 +9,28 @@
   <ng-template #readyBlock>
     <h1 class="title">Hard Work History</h1>
     <div class="fields-container">
-      <select (change)="handleFilterUpdate($event)" [(ngModel)]="vaultFilter" class="strategy-select-field">
-        <option [value]="undefined">All</option>
-        <option *ngFor="let vault of vaults" [ngValue]="vault">{{vault.contract.name}}</option>
-      </select>
-      <input (input)="handleFilterUpdate($event)"
-             [(ngModel)]="minAmount" class="less-than-filter-field"
-             placeholder="More than..." type="number" min="0">
-
       <div class="network-toggle">
           <span *ngFor="let n of networks">
             <input [id]="n" class="network-input" (change)="choseNetwork()" [value]="n" [(ngModel)]="network"
                    [checked]="n == network" type="radio" name="network">
             <label class="network-label" [class]="vt.getThemeColor()" [for]="n">
-              <img class="networi-icon" [src]="networkIcons.get(n)" alt="{{n}} icon">
-              {{n}}
+              <span class="icon-wrapper">
+                <img *ngIf="network === n" class="networi-icon" [src]="'assets/icons/common/' + n + '_green.svg'" alt="{{n}} icon">
+                <img *ngIf="network !== n" class="networi-icon" [src]="'assets/icons/common/' + n + '_white.svg'" alt="{{n}} icon">
+              </span>
+              <span>{{n}}</span>
             </label>
           </span>
       </div>
-
+      <div class="filters">
+        <select (change)="handleFilterUpdate($event)" [(ngModel)]="vaultFilter" class="strategy-select-field">
+          <option [value]="undefined">All</option>
+          <option *ngFor="let vault of vaults" [ngValue]="vault">{{vault.contract.name}}</option>
+        </select>
+        <input (input)="handleFilterUpdate($event)"
+               [(ngModel)]="minAmount" class="less-than-filter-field"
+               placeholder="More than..." type="number" min="0">
+     </div>
     </div>
     <app-hardwork-header [showMoreColumns]="true"></app-hardwork-header>
     <app-hardwork-flow-tab [dtos]="dtos.data" [showMoreColumns]="true" [showFullDate]="true"></app-hardwork-flow-tab>

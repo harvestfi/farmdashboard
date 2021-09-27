@@ -4,9 +4,6 @@
   <div class="main-top-stats">
 
     <div class="value-card native-tokens" [class]="vt.getThemeColor() + '-card'">
-      <div class="title">
-        <span>Currency name</span>
-      </div>
       <div class="native-tokens-grid">
         <div>
           <div class="value-middle">
@@ -124,20 +121,30 @@
     </app-custom-modal>
 
 
-    <app-popover-card class="value-card farm-holders"
+    <app-popover-card (click)="openFarmBuybacksDialog()"
+                      class="value-card pointer farm-buybacks"
                       [class]="vt.getThemeColor() + '-card'">
       <div>
         <ng-template>
-          <p>Under refactoring</p>
+          <p>30% profit of each ETH HardWork goes to buy FARM</p>
+          <p>8% profit of each BSC HardWork goes to buy FARM</p>
+          <p>BSC {{farmBuybackSum('bsc') | number: '1.2-2'}}K</p>
+          <p>ETH {{farmBuybackSum('eth') | number: '1.2-2'}}K</p>
         </ng-template>
-        <div class="value-middle">
-          FARM Holders
+        <div class="value-middle" [class]="vt.getThemeColor() + '-gray'">
+          Farm buybacks
         </div>
         <div class="value-number-middle">
-          <span [class]="vt.getThemeColor() + '-black'">-</span>
+          <span class="">{{totalFarmBuybacks | number: '1.2-2'}}</span>
+          K
         </div>
       </div>
     </app-popover-card>
+    <app-custom-modal #farmBuybacksModal>
+      <ng-template>
+        <app-farm-buybacks-dialog></app-farm-buybacks-dialog>
+      </ng-template>
+    </app-custom-modal>
 
     <app-popover-card (click)="openPsTvlDialog()"
                       class="value-card pointer farm-staked"

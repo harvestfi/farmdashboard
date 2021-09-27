@@ -109,14 +109,10 @@ export class VaultStatsTotalComponent implements OnInit {
                          ]
                 ).subscribe(([data, data2]) => {
                 if (data.length && data2.length) {
-                    let totalDataTVL = this.prepareData(data, 'lastTvl', 'calculateTime');
-                    let totalDataTVL2 = this.prepareData(data2, 'lastTvl', 'calculateTime');
-                    let totalUsers = this.prepareData(data, 'lastOwnersCount', 'calculateTime');
-                    let totalUsers2 = this.prepareData(data2, 'lastOwnersCount', 'calculateTime');
-                    totalDataTVL = this.dataReducer(totalDataTVL, 50);
-                    totalDataTVL2 = this.dataReducer(totalDataTVL2, 50);
-                    totalUsers =  this.dataReducer(totalUsers,  100);
-                    totalUsers2 = this.dataReducer(totalUsers2,  100);
+                    const totalDataTVL = this.prepareData(data, 'lastTvl', 'calculateTime');
+                    const totalDataTVL2 = this.prepareData(data2, 'lastTvl', 'calculateTime');
+                    const totalUsers = this.prepareData(data, 'lastOwnersCount', 'calculateTime');
+                    const totalUsers2 = this.prepareData(data2, 'lastOwnersCount', 'calculateTime');
                     const totalUsersArray = [...totalUsers, ...totalUsers2].sort(this.sortDate);
                     const totalArray = [...totalDataTVL, ...totalDataTVL2].sort(this.sortDate);
                     const paredArray = this.findNotParedDay(totalArray);
@@ -142,7 +138,7 @@ export class VaultStatsTotalComponent implements OnInit {
     loadStackedData(): void {
        this.tvlService.getHistoryTvlByVault(Addresses.ADDRESSES.get('PS'))
         .subscribe((data) => {
-            const totalFarmStacked =  this.dataReducer(this.prepareFarmStackedData(data, 'calculateTime'), 40);
+            const totalFarmStacked = this.prepareFarmStackedData(data, 'calculateTime');
             this.totalFarmStacked = totalFarmStacked.sort(this.sortDate);
             this.initializeChartFarmStacked();
             this.changesFarmStackedInAmount =  this.lastChanges(this.totalFarmStacked).amountChanges;
@@ -184,31 +180,31 @@ export class VaultStatsTotalComponent implements OnInit {
                         cumulative2.set(curDate, lastTotalProfit2);
                     });
 
-                    let totalFarmBuyBack = this.prepareFarmBuyBack(data, 'farmBuybackSum', 'blockDate');
-                    let totalFarmBuyBack2 = this.prepareFarmBuyBack(data2, 'farmBuybackSum', 'blockDate');
+                    //  let totalFarmBuyBack = this.prepareFarmBuyBack(data, 'farmBuybackSum', 'blockDate');
+                    //  let totalFarmBuyBack2 = this.prepareFarmBuyBack(data2, 'farmBuybackSum', 'blockDate');
                     let totalProfit = this.prepareDataCumulative(data, cumulative, 'blockDate');
                     let totalProfit2 = this.prepareDataCumulative(data2, cumulative2, 'blockDate');
                     totalProfit = this.dataReducer(totalProfit, 50);
                     totalProfit2 = this.dataReducer(totalProfit2, 50);
-                    totalFarmBuyBack = this.dataReducer(totalFarmBuyBack, 50);
-                    totalFarmBuyBack2 = this.dataReducer(totalFarmBuyBack2, 50);
-                    const totalBuyBackArray = [...totalFarmBuyBack , ...totalFarmBuyBack2].sort(this.sortDate);
+                    //  totalFarmBuyBack = this.dataReducer(totalFarmBuyBack, totalFarmBuyBack.length + 1);
+                    //  totalFarmBuyBack2 = this.dataReducer(totalFarmBuyBack2, totalFarmBuyBack2.length + 1);
+                    //  const totalBuyBackArray = [...totalFarmBuyBack , ...totalFarmBuyBack2].sort(this.sortDate);
                     const totalProfitArray = [...totalProfit, ...totalProfit2].sort(this.sortDate);
                     const paredProfitArray = this.findNotParedDay(totalProfitArray);
-                    const paredFarmBuyBackArray = this.findNotParedDay(totalBuyBackArray);
+                    //  const paredFarmBuyBackArray = this.findNotParedDay(totalBuyBackArray);
                     this.totalDataProfit = this.combineNetworks(paredProfitArray);
-                    this.totalFarmBuyBack = this.combineNetworks(paredFarmBuyBackArray);
+                    //  this.totalFarmBuyBack = this.combineNetworks(paredFarmBuyBackArray);
                     setTimeout(() => {
                         this.initializeChartTotalProfit();
-                        this.initializeChartFarmBuyBack();
+                        //  this.initializeChartFarmBuyBack();
                     });
                     this.changesProfitTotalInAmount =  this.lastChanges(this.totalDataProfit).amountChanges;
                     this.changesProfitTotalInPercent =  this.lastChanges(this.totalDataProfit).percentChanges;
                     this.minus2 = this.lastChanges(this.totalDataProfit).minus;
 
-                    this.changesFarmBuyBackInAmount = this.lastChanges(this.totalFarmBuyBack).amountChanges;
+                   /* this.changesFarmBuyBackInAmount = this.lastChanges(this.totalFarmBuyBack).amountChanges;
                     this.changesFarmBuyBackInPercent = this.lastChanges(this.totalFarmBuyBack).percentChanges;;
-                    this.minus4 = this.lastChanges(this.totalFarmBuyBack).minus;
+                    this.minus4 = this.lastChanges(this.totalFarmBuyBack).minus;*/
 
                 }
             }, err => {
