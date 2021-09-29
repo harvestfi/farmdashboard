@@ -1,22 +1,45 @@
+.title {
+    font-family: 'PT Sans', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 47px;
+    margin: auto auto auto 0;
+    flex-direction: column;
+    display: flex;
+
+}
+
+.title-wrapper {
+    margin: 0 0 0 10px;
+    font-family: 'PT Sans', sans-serif;
+    text-align: left;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    span {
+        margin: auto 0;
+    }
+}
+
 .cover {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding-top: 27px;
+    padding: 10px 10px;
+    box-sizing: border-box;
     -webkit-box-align: center;
     align-items: center;
     flex: 1 1 0%;
     overflow: hidden auto;
     z-index: 1;
-    margin-bottom: 3rem;
-}
-
-.cover > * {
-    max-width: 1200px;
+    margin-top: 30px;
 }
 
 .container {
-    width: 95%;
+    width: 100%;
+    padding: 0 10px;
 }
 
 .grid-sheet {
@@ -24,6 +47,7 @@
     grid-auto-rows: auto;
     row-gap: 16px;
 }
+
 
 .charts-block {
     box-sizing: border-box;
@@ -38,14 +62,13 @@
     justify-content: space-between;
 
     .total {
-        background-color: #fffce6;
         border-radius: 16px;
         padding: 1.5rem;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         row-gap: 24px;
-        font-family: "Inter var", sans-serif;
+        font-family: 'PT Sans', sans-serif;
         .title-part {
             display: flex;
             justify-content: space-between;
@@ -59,21 +82,17 @@
             font-size: 1rem;
         }
         .value {
-            font-family: "Inter var", sans-serif;
+            font-family: 'PT Sans', sans-serif;
             font-weight: 900;
             font-size: 2.5rem;
         }
     }
 }
 
-.title {
-    font-family: "Inter var", sans-serif;
-    box-sizing: border-box;
-    margin: 0px;
-    min-width: 0px;
-    font-weight: 500;
-    font-size: 18px;
+.chart-block:nth-child(odd):not(:last-child) {
+    margin-right: 20px;
 }
+
 .cover.light .title {
     color: #404040;
 }
@@ -85,6 +104,7 @@
 .chart-block {
     width: 49%;
     z-index: 1;
+    font-family: 'PT Sans', sans-serif;
 }
 
 .chart-block .left-part,

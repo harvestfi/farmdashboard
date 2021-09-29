@@ -10,6 +10,7 @@ import {DownloadHistoricDataComponent} from '@modules/dashboard/download-histori
 import {UserBalancesComponent} from '@modules/dashboard/user-balances/user-balances.component';
 import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component';
 import {StrategyListComponent} from '@modules/dashboard/strategy-list/strategy-list.component';
+import {VaultStatsComponent} from '@modules/dashboard/vault-stats/vault-stats.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
      path: 'vaults-list',
      component: StrategyListComponent,
+  },
+  {
+     path: 'info/:network/:address',
+     component: VaultStatsComponent
   },
 ];
 

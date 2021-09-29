@@ -99,10 +99,13 @@
             <app-apy-window (showModal)="toggleAPYWindow(row.contract.address)"
                             [vault]="row" [pool]="poolsList().get(row.contract.address)"></app-apy-window>
           </app-draggable-modal>
-          <div class="pointer">
+          <app-popover-card class="pointer" (click)="toggleAPYWindow(row.contract.address)">
+            <ng-template>
+              <p>Click to open details</p>
+            </ng-template>
             <i *ngIf="isWeeklyRewardActive(row)" class="fa fa-bolt" style="color: goldenrod"></i>
             {{prettifyNumber(vaultFullApy(row.contract.address, row.contract.network))}}%
-          </div>
+          </app-popover-card>
         </div>
 
         <!-- TVL -->
