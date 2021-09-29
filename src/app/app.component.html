@@ -3,20 +3,15 @@
 </div>
 
 <ng-sidebar-container class="sidebar-container" [class]="vt.getThemeColor() + '-background'">
-  <div ng-sidebar-content style="min-height: 100%">
+  <div ng-sidebar-content>
 
     <div class="main-row">
       <div class="middle">
-        <app-main-top-navigation></app-main-top-navigation>
+        <app-main-side-menu></app-main-side-menu>
 
         <router-outlet></router-outlet>
       </div>
     </div>
-
-    <footer>
-      <app-main-footer></app-main-footer>
-    </footer>
-
   </div>
 
 

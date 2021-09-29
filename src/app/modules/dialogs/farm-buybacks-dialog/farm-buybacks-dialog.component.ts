@@ -78,7 +78,7 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
       this.handleData(chartBuilder, [
         ['FARM Buyback K', 'right', '#0085ff'],
         ['FARM Total supply K', '1', '#efa4a4'],
-        ['FARM Weekly Rewards K', '2', '#28a69a'],
+        ['FARM Weekly Rewards K', '2', '#5CADAA'],
         ['Rewards to BB %', '3', 'red']
       ]);
     });

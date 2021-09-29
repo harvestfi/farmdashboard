@@ -3,6 +3,7 @@ import {HarvestDto} from '@data/models/harvest-dto';
 import {Utils} from '@data/static/utils';
 import {Vault} from '@data/models/vault';
 import {ContractsService} from '@data/services/contracts.service';
+import {ViewTypeService} from '@data/services/view-type.service';
 
 @Component({
   selector: 'app-harvest-trade',
@@ -11,7 +12,8 @@ import {ContractsService} from '@data/services/contracts.service';
 })
 export class HarvestTradeComponent implements OnInit {
 
-  constructor(private contractService: ContractsService) {
+  constructor(private contractService: ContractsService,
+              public vt: ViewTypeService) {
   }
 
   @Input() dto: HarvestDto;

@@ -6,70 +6,99 @@ $dark-background-color: #111111;
 
 
 .flow-card {
-    -webkit-box-shadow: 0 4px 8px 0 rgba($dark-background-color, 0.2);
-    box-shadow: 0 4px 8px 0 rgba($dark-background-color, 0.2);
     -webkit-transition: 0.3s;
     -o-transition: 0.3s;
     transition: 0.3s;
-    border: 1px solid rgba($dark-background-color, 0.2);
-
+    padding: 36px 35px 23px 40px;
+    border-radius: 10px;
+    border: none;
 
     .title-row {
-        display: grid;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        grid-template-columns: 30% 30% 30%;
-        grid-column-gap: 3%;
+        display: flex;
+        flex-direction: column;
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 16px;
+            margin: 12px 0 30px;
+            font-family: 'PT Sans', sans-serif;
 
-        .title {
-            font-size: 1em;
-            font-weight: bold;
-            margin: 0;
+            select {
+                height: 46px;
+                padding: 12px 18px;
+                border-radius: 10px;
+                cursor: pointer;
+                border-left: none;
+                border-top: none;
+                border-bottom: none;
+                max-width: 50%;
+                -webkit-transition: all 0.5s;
+                -o-transition: all 0.5s;
+                transition: all 0.5s;
+                font-size: 16px;
+            }
+            input {
+                height: 46px;
+                padding: 12px 18px;
+                cursor: pointer;
+                border: 1px solid #CFE2E2;
+                box-sizing: border-box;
+                border-radius: 10px;
+                width: 100%;
+                -webkit-transition: all 0.5s;
+                -o-transition: all 0.5s;
+                transition: all 0.5s;
+                font-size: 16px;
+            }
         }
-
+        .title {
+            font-family: 'PT Sans', sans-serif;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 31px;
+            width: 100%;
+        }
+        .title-span {
+            margin: 0 auto 0 0;
+        }
     }
 
     .table-header {
         display: grid;
         padding: 0.3em 0.5em;
-        font-weight: bold;
-        font-size: 0.9em;
-        background: darken(#fffce6, 5%);
         -webkit-box-align: center;
         -ms-flex-align: center;
         align-items: center;
-
-        @include isDarkMode() {
-            background: $dark-background-color;
-        }
-
-        .money-icon {
-            text-align: center;
-        }
-
+        font-family: 'PT Sans', sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 18px;
     }
 
     .trades-list {
-        height: 195px;
+        height: 245px;
         overflow: hidden;
-        overflow-y: auto;
         position: relative;
+        padding-right: 5px;
 
         .trades-list-item {
             display: grid;
-            padding: 0.3em 0.5em;
+            padding: 13px 0 13px 0;
+            font-family: 'PT Sans', sans-serif;
+            font-style: normal;
             font-weight: bold;
-            font-size: 0.9em;
-            border: 1px solid rgba($dark-background-color, 0.2);
-            margin: 0.5em;
+            font-size: 16px;
+            border-bottom: 1px solid #F0F0F0;
+            margin-left: 7px;
             -webkit-box-align: center;
             -ms-flex-align: center;
             align-items: center;
 
             @include isDarkMode() {
-                border: 1px solid $dark-background-color;
-
+                border-bottom: 1px solid  #455858;
             }
 
             .mat-icon {
@@ -81,25 +110,13 @@ $dark-background-color: #111111;
             }
 
             .transaction-type span {
-
-                padding: 0.3em 0.4em;
+                border-radius: 6px;
+                padding: 4px 12px;
+                font-size: 12px;
+                line-height: 16px;
                 text-align: center;
-                border-radius: 0.5em;
-                font-size: 0.8em;
-
-                &.BUY,
-                &.Deposit {
-                    background: rgba($buy-color, 0.3);
-                    border: 1px solid $buy-color;
-                    color: $buy-color;
-                }
-
-                &.SELL,
-                &.Withdraw {
-                    background: rgba($sell-color, 0.3);
-                    border: 1px solid $sell-color;
-                    color: $sell-color;
-                }
+                display: inline-block;
+                box-sizing: border-box;
             }
 
         }
@@ -113,19 +130,24 @@ $dark-background-color: #111111;
         -webkit-box-direction: normal;
         -ms-flex-direction: column;
         flex-direction: column;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        padding: 1em;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        padding: 23px 0 0;
 
 
         .show-more {
-            background-color: #eebf65;
-            color: black;
+            background-color: transparent;
             font-weight: bold;
-            border-radius: 3px;
-            border: 1px solid black;
+            border: none;
             cursor: pointer;
+            display: flex;
+            font-family: 'PT Sans', sans-serif;
+            font-size: 16px;
+            img {
+                margin: auto 0 3px 8px;
+            }
+
         }
     }
 

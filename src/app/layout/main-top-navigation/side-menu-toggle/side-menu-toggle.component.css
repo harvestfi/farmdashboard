@@ -1,0 +1,20 @@
+.wrapper {
+  display: none;
+}
+
+#menu-button-toggle {
+    margin: auto;
+    cursor: pointer;
+    border: none;
+    font-size: 24px;
+    background: none;
+    outline: none;
+}
+
+@media (max-width: 1600px) {
+    .wrapper {
+        display: flex;
+        height: 100%;
+        margin: 0 15px 0 5px;
+    }
+}

@@ -15,6 +15,15 @@ import {RewardsHistoryDialogModule} from '@modules/dialogs/history/rewards-histo
 import {DownloadHistoricDataDialogModule} from '@modules/dialogs/download-historic-data-dialog/download-historic-data-dialog.module';
 import {UserBalancesDialogModule} from '@modules/dialogs/user-balances-dialog/user-balances-dialog.module';
 import {PopoverModule} from '@shared/popover/popover.module';
+import {PsApyHistoryModule} from '@modules/dashboard/ps-apy-history/ps-apy-history.module';
+import {WeeklyProfitHistoryModule} from '@modules/dashboard/weekly-profit-history/weekly-profit-history.module';
+import {FarmBuybacksModule} from '@modules/dashboard/farm-buybacks/farm-butbacks.module';
+import {SavedGasFeesModule} from '@modules/dashboard/saved-gas-fees/saved-gas-fees.module';
+import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
+import {RewardsHistoryModule} from '@modules/dashboard/rewards-history/rewards-history.module';
+import {DownloadsHistoricDataModule} from '@modules/dashboard/download-historic-data/downloads-historic-data.module';
+import {UserBalancesModule} from '@modules/dashboard/user-balances/user-balances.module';
+import {SideMenuToggleModule} from '@layout/main-top-navigation/side-menu-toggle/side-menu-toggle.module';
 
 @NgModule({
   imports: [
@@ -27,8 +36,17 @@ import {PopoverModule} from '@shared/popover/popover.module';
     SavedGasFeesDialogModule,
     RewardsHistoryDialogModule,
     DownloadHistoricDataDialogModule,
+    DownloadsHistoricDataModule,
     UserBalancesDialogModule,
     PopoverModule,
+    PsApyHistoryModule,
+    WeeklyProfitHistoryModule,
+    FarmBuybacksModule,
+    SavedGasFeesModule,
+    RewardsHistoryModule,
+    ThemeSwitchModule,
+    UserBalancesModule,
+    SideMenuToggleModule,
   ],
   exports: [
     MainTopNavigationComponent,

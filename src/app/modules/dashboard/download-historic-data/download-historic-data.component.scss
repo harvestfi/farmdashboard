@@ -1,0 +1,161 @@
+@import "../../../../scss/themes/theme-mixins";
+
+$dark-background-color: #111111;
+
+.title-wrapper {
+    margin: 0 0 24px 10px;
+    font-family: 'PT Sans', sans-serif;
+    text-align: left;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    height: 57px;
+    justify-content: space-between;
+    span {
+        margin: auto auto auto 0;
+    }
+}
+
+.download-historic-data-container {
+    padding: 35px 40px 35px 40px;
+    border-radius: 10px;
+    margin-left: 10px;
+    min-height: 788px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    table {
+        display: flex;
+        flex-direction: column;
+    }
+
+    td, th {
+        padding: 4px;
+    }
+
+    th#name {
+        width: 90%;
+    }
+    tbody {
+        overflow: auto;
+        max-height: 778px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-right: 10px;
+        overflow-x: hidden;
+    }
+    .header-row {
+        width: 100%;
+        padding: 10px;
+        font-weight: 400;
+    }
+
+    .title {
+        font-size: 1.5em;
+        font-weight: bolder;
+        text-align: center;
+        width: 100%;
+        padding: 10px 0;
+        margin: 0;
+    }
+
+    .title-col {
+        font-size: 1.5em;
+        font-weight: bolder;
+        text-align: left;
+        width: 75%;
+    }
+
+    .checkbox {
+        width: 25%;
+        font-size: 0.8em !important;
+        font-weight: normal;
+    }
+
+    .dialog-card {
+    }
+
+    ::ng-deep.mat-dialog-container {
+        overflow: hidden;
+        border-radius: 3px;
+        padding: 10px !important;
+    }
+
+    .table-header {
+        padding: 14px 0;
+        font-size: 14px!important;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        font-family: 'PT Sans', sans-serif;
+        font-weight: 400!important;
+
+    }
+    .table-row {
+        width: 100%;
+        font-weight: bold;
+        font-size: 0.9em;
+        border-bottom: 1px solid #F0F0F0;
+        margin: 0.25em;
+        align-items: center;
+        display: flex;
+    }
+    td.name {
+        margin-right: auto;
+    }
+
+    .table-row:last-child {
+        border: none;
+    }
+
+    .table-row td {
+        padding: 14px 0;
+    }
+
+
+
+    .tvl-value, .income-value, .income-apr-value, .owners-value, .reward-value, .reward-apr, .all-apr {
+        font-size: 1em;
+        /*width: 20%;*/
+        /*font-weight: bolder;*/
+    }
+
+    .tvl-img {
+        width: 15px;
+        height: 15px;
+        margin-right: 5px;
+    }
+
+    @media screen and (max-width: 900px) {
+        .title-col {
+            font-size: 1em;
+            margin: 5px;
+        }
+    }
+
+    .download-link {
+        padding: 4px 7px;
+        text-decoration: none;
+        border-radius: 6px;
+        color: #FFFFFF;
+        position: relative;
+        font-weight: bold;
+        font-size: 12px;
+        margin: 5px;
+        transition: all .2s ease-out;
+        font-family: 'PT Sans', sans-serif;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .title-wrapper {
+        flex-direction: column;
+        height: auto;
+        font-size: 20px;
+        text-align: center;
+    }
+
+
+}

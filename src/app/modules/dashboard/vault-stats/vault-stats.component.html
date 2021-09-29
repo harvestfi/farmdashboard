@@ -1,11 +1,16 @@
-<div class="cover" [class]="vt.getThemeColor()">
+<div class="title-wrapper"
+     [class]="vt.getThemeColor() + '-black'">
+    <app-side-menu-toggle></app-side-menu-toggle>
+    <div class="title">
+        <span>Network: {{ vaultNetwork }}</span>
+        <span>Vault: {{ vaultAddress }}</span>
+    </div>
+    <app-theme-switch></app-theme-switch>
+</div>
+<div class="cover">
     <div class="container">
         <div class="grid-sheet">
-            <div class="title">
-                Network: {{ vaultNetwork }}
-                <br>
-                Vault: {{ vaultAddress }}
-            </div>
+
             <div class="charts-block">
                 <div class="chart-block">
                     <app-echart [title]="title1"
@@ -15,7 +20,7 @@
                                 [options]="options1"
                                 [data]="vaultDataTVL"></app-echart>
                     <div class="left-part">
-                        <div class="change-percent">
+                        <div class="change-percent" [class]="vt.getThemeColor() + '-card'">
                             <span  class="label">Change in % (24h)</span>
                             <span class="value">
                             <span *ngIf="minus1" style="color: red">{{'&#10549;'}}</span>
@@ -23,7 +28,7 @@
                             {{ changesTvlInPercent}} %
                         </span>
                         </div>
-                        <div class="change-amount">
+                        <div class="change-amount" [class]="vt.getThemeColor() + '-card'">
                             <span  class="label">Change in $ (24h)</span>
                             <span class="value">
                             <span  class="symbol">{{ minus1 ? '-' : '+' }}</span>
@@ -40,7 +45,7 @@
                                 [options]="options2"
                                 [data]="vaultDataProfit"></app-echart>
                     <div class="right-part">
-                        <div class="change-percent">
+                        <div class="change-percent" [class]="vt.getThemeColor() + '-card'">
                             <span class="label">Change in % (24h)</span>
                             <span class="value">
                             <span *ngIf="minus2" style="color: red">{{'&#10549;'}}</span>
@@ -48,7 +53,7 @@
                             {{ changesVolumeInPercent}} %
                         </span>
                         </div>
-                        <div class="change-amount">
+                        <div class="change-amount" [class]="vt.getThemeColor() + '-card'">
                             <span class="label">Change in $ (24h)</span>
                             <span class="value">
                             <span class="symbol">{{ minus2 ? '-' : '+' }}</span>
@@ -70,7 +75,7 @@
                                 [options]="options3"
                                 [data]="vaultDataAPY"></app-echart>
                     <div class="left-part">
-                        <div class="change-percent">
+                        <div class="change-percent" [class]="vt.getThemeColor() + '-card'">
                             <span  class="label">Change (24h)</span>
                             <span class="value">
                             <span *ngIf="minus3" style="color: red">{{'&#10549;'}}</span>
@@ -78,7 +83,7 @@
                             <span *ngIf="valueSymbol3 !== '%'">{{ changesAPYInPercent }} %</span>
                         </span>
                         </div>
-                        <div class="change-amount">
+                        <div class="change-amount" [class]="vt.getThemeColor() + '-card'">
                             <span  class="label">Change in {{valueSymbol3}} (24h)</span>
                             <span class="value">
                             <span  class="symbol">{{ minus3 ? '-' : '+' }}</span>
@@ -95,7 +100,7 @@
                                 [options]="options4"
                                 [data]="vaultDataUsers"></app-echart>
                     <div class="right-part">
-                        <div class="change-percent">
+                        <div class="change-percent" [class]="vt.getThemeColor() + '-card'">
                             <span class="label">Change in % (24h)</span>
                             <span class="value">
                             <span *ngIf="minus4" style="color: red">{{'&#10549;'}}</span>
@@ -103,7 +108,7 @@
                             {{  changesUsersInPercent }} %
                         </span>
                         </div>
-                        <div class="change-amount">
+                        <div class="change-amount" [class]="vt.getThemeColor() + '-card'">
                             <span class="label">Change (24h)</span>
                             <span class="value">
                             <span class="symbol">{{ minus4 ? '-' : '+' }}</span>
@@ -113,9 +118,9 @@
                     </div>
                 </div>
             </div>
-            <div class="charts-block">
+            <div class="charts-block" >
                 <div class="chart-block">
-                    <div class="total">
+                    <div class="total" [class]="vt.getThemeColor() + '-card'">
                         <div class="title-part">
                             <span class="label">Total Earned</span>
                             <span class="info">USDT-UST</span>
@@ -128,7 +133,7 @@
                     </div>
                 </div>
                 <div class="chart-block">
-                    <div class="total">
+                    <div class="total" [class]="vt.getThemeColor() + '-card'">
                         <div class="title-part">
                             <span class="label">Gas Saved</span>
                             <span class="info">USDT-UST</span>

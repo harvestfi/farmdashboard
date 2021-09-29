@@ -40,8 +40,10 @@ export abstract class ChartGeneralMethodsComponent implements OnInit, AfterViewI
   handleData(chartBuilder: ChartBuilder, config: string[][]): void {
     this.ready = true;
     this.cdRef.detectChanges();
-    this.chart = chartBuilder.initChart(this.chartComponent.chartEl);
-    chartBuilder.addToChart(this.chart, config);
+    if (this.chartComponent.chartEl) {
+        this.chart = chartBuilder.initChart(this.chartComponent.chartEl);
+        chartBuilder.addToChart(this.chart, config);
+    }
   }
 
   setNetwork(networkName: string): void {

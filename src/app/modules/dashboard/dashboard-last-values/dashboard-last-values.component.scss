@@ -1,33 +1,31 @@
 @import "../../../../scss/utilities/responsive_utilities";
-
+#top-div-light {
+  margin-top: 26px;
+}
 .main-top-stats {
   display: grid;
-  grid-template-areas: "farm-price gas-price native-tokens placeholder tvl"
-                         "farm-price farm-staked weekly-profit ps-income tvl" 
-                         "farm-holders farm-buybacks saved-gas total-users active-pools";
+  grid-template-areas:   "farm btc weekly-profit ps-income tvl"
+                         "eth bnb weekly-profit ps-income tvl"
+                         "farm-buybacks farm-staked saved-gas total-users active-pools";
 
-  @include responsive(phone) {
-    grid-template-areas: "farm-price tvl"
-                           "farm-price tvl"
-                           "gas-price saved-gas" 
-                           "farm-staked weekly-profit"
-                           "ps-income farm-buybacks"
-                           "total-users active-pools"
-                           "native-tokens placeholder"
-                           "farm-holders farm-holders";
+  @include responsive(medium) {
+    grid-template-areas:   "farm btc"
+                           "eth bnb"
+                           "weekly-profit ps-income"
+                           "tvl farm-staked"
+                           "saved-gas farm-buybacks"
+                           "total-users active-pools";
     grid-template-columns: 50% 50%;
-    grid-template-rows: 1.5fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 0.5fr 1fr 1fr 0.5fr 0.5fr;
   }
 
   .value-card {
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
     -webkit-transition: 0.3s;
     -o-transition: 0.3s;
     transition: 0.3s;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    margin: 0 10px 10px;
+    padding: 0 27px;
+    margin: 10px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -41,94 +39,210 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-  }
+    font-family: 'PT Sans', sans-serif;
+    font-weight: 700;
 
-  .farm {
-    grid-area: farm-price;
-    text-align: center;
+    .title {
+      text-align: center;
+      width: 100%;
+      font-size: 2.57em;
+      margin-bottom: 27px;
+    }
+    span {
+      -webkit-transition: all 0.5s;
+      -o-transition: all 0.5s;
+      transition: all 0.5s;
+    }
   }
 
   .gas {
     grid-area: gas-price;
   }
 
-  .native-tokens {
-    grid-area: native-tokens;
-    grid-column: auto / span 2;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  .eth {
-    grid-area: eth-price;
-  }
-
   .farm-staked {
     grid-area: farm-staked;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
   }
 
   .weekly-profits {
     grid-area: weekly-profit;
+    height: 220px;
   }
 
   .ps-income {
     grid-area: ps-income;
+    height: 220px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
   }
 
   .tvl {
     grid-area: tvl;
     text-align: center;
+    height: 220px;
   }
 
   .farm-holders {
     grid-area: farm-holders;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
   }
 
   .farm-buybacks {
     grid-area: farm-buybacks;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
   }
+
 
   .saved-fees {
     grid-area: saved-gas;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
   }
 
   .total-users {
     grid-area: total-users;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
   }
 
   .active-pools {
     grid-area: active-pools;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
   }
+
+  .farm{
+    grid-area: farm;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
+  .bnb {
+    grid-area: bnb;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
+  .eth{
+    grid-area: eth;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
+  .btc{
+    grid-area: btc;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
 
   .value-caption {
     margin-bottom: 2rem;
-    font-weight: bolder;
     text-align: center;
+    font-weight: 400;
+    font-size: 16px;
   }
 
 
   .sign {
     font-weight: bolder;
+    font-size: 3.57em;
+    @include responsive(small) {
+      font-size: 3em;
+    }
   }
 
   .value-number {
     font-weight: bolder;
-    font-size: 3.7em;
+    font-size: 3.57em;
 
     @include responsive(small) {
       font-size: 3em;
     }
   }
 
-  .value-sign {
-    font-size: 0.6em;
-  }
 
   .value-middle {
-    font-size: 0.85em;
-    font-weight: bolder;
     text-align: center;
+    font-family: 'PT Sans', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    .sign {
+      font-weight: bolder;
+      font-size: 3.57em;
+    }
   }
+
+
 
   .value-number-middle {
     margin-top: 3px;

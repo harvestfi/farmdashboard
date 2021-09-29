@@ -1,6 +1,8 @@
 <ng-template #modal>
   <div class="custom-modal-container">
-    <button (click)="close()" class="custom-modal-btn-close">X</button>
+    <button (click)="close()" class="custom-modal-btn-close">
+      <img [src]="'assets/icons/cross.svg'">
+    </button>
     <ng-container [ngTemplateOutlet]="template"></ng-container>
   </div>
 </ng-template>

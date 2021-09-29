@@ -3,92 +3,52 @@
 
   <div class="main-top-stats">
     <div class="value-card farm" [class]="vt.getThemeColor() + '-card'">
-      <div class="value-caption">
+      <div class="value-middle"
+           [class]="vt.getThemeColor() + '-gray'">
         FARM Price
       </div>
-      <div class="value value-price">
-        <span class="value-number">{{farmUsdPrice | number: '1.0-2'}}</span>
-        <span class="sign">$</span>
+      <div class="value-number-middle">
+         <span class="value-sign"
+               [class]="vt.getThemeColor() + '-yellow'">$</span>
+        <span [class]="vt.getThemeColor() + '-black'">{{farmUsdPrice | number: '1.0-2'}}</span>
       </div>
     </div>
 
-    <app-popover-card class="value-card gas" [class]="vt.getThemeColor() + '-card'"
-                      (click)="openGasPriceDialog()">
-      <div class="pointer">
-        <ng-template>
-          <p>Click to open history chart</p>
-        </ng-template>
-        <div class="value-middle">
-          <img class="icon" src="../../../../assets/icons/common/gas.svg"/>
-          <span class="small-value-caption">ETH Gas price</span>
-        </div>
-
-        <div class="value-number-middle">
-          <span class="">{{gas('eth') | number: '1.0-0'}}</span>
-          gw
-        </div>
-      </div>
-      <app-custom-modal #gasPriceModal>
-        <ng-template>
-          <app-gas-dialog></app-gas-dialog>
-        </ng-template>
-      </app-custom-modal>
-    </app-popover-card>
-
-    <div class="value-card native-tokens" [class]="vt.getThemeColor() + '-card'">
-      <div>
-        <div class="value-middle">
-          <img class="icon" src="../../../../assets/icons/common/btc.png"/>
-          <span class="small-value-caption">BTC</span>
-        </div>
-        <div class="value-number-middle">
-          <span>{{btcUsdPrice | number: '1.0-0'}}</span><span class="value-sign">$</span>
-        </div>
-      </div>
-      <div>
-        <div class="value-middle">
-          <img class="icon" src="../../../../assets/icons/common/eth.svg"/>
-          <span class="small-value-caption">ETH</span>
-        </div>
-        <div class="value-number-middle">
-          <span>{{ethUsdPrice | number: '1.0-0'}}</span><span class="value-sign">$</span>
-        </div>
-      </div>
-      <div>
-        <div class="value-middle">
-          <img class="icon" src="../../../../assets/icons/common/wbnb.png"/>
-          <span class="small-value-caption">BNB</span>
-        </div>
-        <div class="value-number-middle">
-          <span>{{bnbUsdPrice | number: '1.0-0'}}</span><span class="value-sign">$</span>
-        </div>
-      </div>
-    </div>
-
-
-    <app-popover-card (click)="openPsTvlDialog()"
-                      class="value-card pointer farm-staked"
-                      [class]="vt.getThemeColor() + '-card'">
-      <ng-template>
-        <div>
-          <p>FARM staked in pools</p>
-          <p>PS Staked: {{psFarmTvl / farmTotalSupply * 100 | number: '1.0-1'}}%</p>
-          <p>LP Staked: {{lpFarmStaked / farmTotalSupply * 100 | number: '1.0-1'}}%</p>
-        </div>
-      </ng-template>
+    <div class="value-card btc" [class]="vt.getThemeColor() + '-card'">
       <div class="value-middle">
-        🔒FARM Staked
+            <span class="small-value-caption"
+                  [class]="vt.getThemeColor() + '-gray'">BTC</span>
       </div>
       <div class="value-number-middle">
-        <span>{{(psFarmTvl + lpFarmStaked) / farmTotalSupply * 100 | number: '1.0-1'}}</span>
-        %
+            <span class="value-sign"
+                  [class]="vt.getThemeColor() + '-yellow'">$</span>
+        <span [class]="vt.getThemeColor() + '-black'">{{btcUsdPrice | number: '1.0-0'}}</span>
       </div>
-    </app-popover-card>
-    <app-custom-modal #FARMStakedModal>
-      <ng-template>
-        <app-vault-tvl-dialog [vault]="psAddress" [network]="'eth'"></app-vault-tvl-dialog>
-      </ng-template>
-    </app-custom-modal>
+    </div>
+
+    <div class="value-card eth" [class]="vt.getThemeColor() + '-card'">
+      <div class="value-middle">
+            <span class="small-value-caption"
+                  [class]="vt.getThemeColor() + '-gray'">ETH</span>
+      </div>
+      <div class="value-number-middle">
+            <span class="value-sign"
+                  [class]="vt.getThemeColor() + '-yellow'">$</span>
+        <span [class]="vt.getThemeColor() + '-black'">{{ethUsdPrice | number: '1.0-0'}}</span>
+      </div>
+    </div>
+
+    <div class="value-card bnb" [class]="vt.getThemeColor() + '-card'">
+      <div class="value-middle">
+            <span class="small-value-caption"
+                  [class]="vt.getThemeColor() + '-gray'">BNB</span>
+      </div>
+      <div class="value-number-middle">
+            <span class="value-sign"
+                  [class]="vt.getThemeColor() + '-yellow'">$</span>
+        <span [class]="vt.getThemeColor() + '-black'">{{bnbUsdPrice | number: '1.0-0'}}</span>
+      </div>
+    </div>
 
 
     <app-popover-card (click)="openWeeklyProfitDialog()"
@@ -101,12 +61,18 @@
           <p>ETH {{weeklyProfits("eth") / 1000 | number: '1.0-1'}}K$</p>
         </div>
       </ng-template>
-      <div class="value-middle">
-        🤑Weekly Profit
+      <div class="value-caption"
+           [class]="vt.getThemeColor() + '-gray'">
+        Weekly Profit
       </div>
-      <div class="value-number-middle">
-        <span>{{totalWeeklyProfits / 1000 | number: '1.0-1'}}</span>
-        K$
+      <div class="value"
+           [class]="vt.getThemeColor() + '-black'">
+         <span class="sign"
+               [class]="vt.getThemeColor() + '-yellow'">$</span>
+        <span class="value-number"
+              [class]="vt.getThemeColor() + '-black'">{{totalWeeklyProfits / 1000 | number: '1.0-1'}}</span>
+        <span class="sign"
+              [class]="vt.getThemeColor() + '-black'">K</span>
       </div>
     </app-popover-card>
     <app-custom-modal #weeklyProfitModal>
@@ -122,10 +88,12 @@
           <ng-katex [equation]="peRatioHtml" [options]="katexOptions"></ng-katex>
           <ng-katex [equation]="epsHtml" [options]="katexOptions"></ng-katex>
         </ng-template>
-        <div class="value-middle">
-          📈P/E Ratio
+        <div class="value-caption"
+             [class]="vt.getThemeColor() + '-gray'">
+          P/E Ratio
         </div>
-        <div class="value-number-middle ">
+        <div class="value-number"
+             [class]="vt.getThemeColor() + '-black'">
           {{priceToEarningsRatio | number: '1.2-2' }}
         </div>
       </div>
@@ -142,12 +110,17 @@
           <p>Click to open history chart</p>
         </div>
       </ng-template>
-      <div class="value-caption" style="font-size: 1.2em">
+      <div class="value-caption"
+           [class]="vt.getThemeColor() + '-gray'">
         Total Value Locked
       </div>
       <div class="value value-tvl">
-        <span class="value-number">{{tvlSumAllNetwork / 1000000 | number: '1.0-0'}}</span>
-        <span class="sign">M$</span>
+        <span class="sign"
+              [class]="vt.getThemeColor() + '-yellow'">$</span>
+        <span class="value-number"
+              [class]="vt.getThemeColor() + '-black'">{{tvlSumAllNetwork / 1000000 | number: '1.0-0'}}</span>
+        <span class="sign"
+              [class]="vt.getThemeColor() + '-black'">M</span>
       </div>
     </app-popover-card>
     <app-custom-modal #tvlModal>
@@ -156,21 +129,6 @@
       </ng-template>
     </app-custom-modal>
 
-
-    <app-popover-card class="value-card farm-holders"
-                      [class]="vt.getThemeColor() + '-card'">
-      <div>
-        <ng-template>
-          <p>Under refactoring</p>
-        </ng-template>
-        <div class="value-middle">
-          👨‍🌾FARM Holders
-        </div>
-        <div class="value-number-middle">
-          <span>-</span>
-        </div>
-      </div>
-    </app-popover-card>
 
     <app-popover-card (click)="openFarmBuybacksDialog()"
                       class="value-card pointer farm-buybacks"
@@ -182,8 +140,8 @@
           <p>BSC {{farmBuybackSum('bsc') | number: '1.2-2'}}K</p>
           <p>ETH {{farmBuybackSum('eth') | number: '1.2-2'}}K</p>
         </ng-template>
-        <div class="value-middle">
-          📥Farm buybacks
+        <div class="value-middle" [class]="vt.getThemeColor() + '-gray'">
+          Farm buybacks
         </div>
         <div class="value-number-middle">
           <span class="">{{totalFarmBuybacks | number: '1.2-2'}}</span>
@@ -197,6 +155,34 @@
       </ng-template>
     </app-custom-modal>
 
+    <app-popover-card (click)="openPsTvlDialog()"
+                      class="value-card pointer farm-staked"
+                      [class]="vt.getThemeColor() + '-card'">
+      <ng-template>
+        <div>
+          <p>FARM staked in pools</p>
+          <p>PS Staked: {{psFarmTvl / farmTotalSupply * 100 | number: '1.0-1'}}%</p>
+          <p>LP Staked: {{lpFarmStaked / farmTotalSupply * 100 | number: '1.0-1'}}%</p>
+        </div>
+      </ng-template>
+      <div class="value-middle"
+           [class]="vt.getThemeColor() + '-gray'">
+        FARM Staked
+      </div>
+      <div class="value-number-middle"
+           [class]="vt.getThemeColor() + '-black'">
+        <span
+              [class]="vt.getThemeColor() + '-black'">{{(psFarmTvl + lpFarmStaked) / farmTotalSupply * 100 | number: '1.0-1'}}</span>
+        <span class="sign"
+              [class]="vt.getThemeColor() + '-yellow'">%</span>
+      </div>
+    </app-popover-card>
+    <app-custom-modal #FARMStakedModal>
+      <ng-template>
+        <app-vault-tvl-dialog [vault]="psAddress" [network]="'eth'"></app-vault-tvl-dialog>
+      </ng-template>
+    </app-custom-modal>
+
     <!-- TODO fix        (click)="openSavedFeesDialog()"-->
     <app-popover-card
                       class="value-card saved-fees"
@@ -207,12 +193,17 @@
           <p>BSC: {{totalGasSaved('bsc') / 1000000 | number: '1.0-2'}} M$</p>
           <p>ETH: {{totalGasSaved('eth') / 1000000 | number: '1.0-2'}} M$</p>
         </ng-template>
-        <div class="value-middle">
-          🛡️Saved gas fees
+        <div class="value-middle"
+             [class]="vt.getThemeColor() + '-gray'">
+          ️Saved gas fees
         </div>
         <div class="value-number-middle">
-          <span>{{totalGasSavedAllNetworks() / 1000000 | number: '1.0-1'}}</span>
-          M$
+          <span class="sign"
+                [class]="vt.getThemeColor() + '-yellow'">$</span>
+          <span
+                [class]="vt.getThemeColor() + '-black'">{{totalGasSavedAllNetworks() / 1000000 | number: '1.0-1'}}</span>
+          <span class="sign"
+                [class]="vt.getThemeColor() + '-black'">M</span>
         </div>
       </div>
     </app-popover-card>
@@ -231,11 +222,12 @@
           <p>BSC {{userCount('bsc') | number: '1.0-0'}}</p>
           <p>ETH {{userCount('eth') | number: '1.0-0'}}</p>
         </ng-template>
-        <div class="value-middle">
-          👪Total users
+        <div class="value-middle"
+             [class]="vt.getThemeColor() + '-gray'">
+          Total users
         </div>
         <div class="value-number-middle ">
-          <span>{{userCountAllNetwork | number: '1.0-0'}}</span>
+          <span [class]="vt.getThemeColor() + '-black'">{{userCountAllNetwork | number: '1.0-0'}}</span>
         </div>
       </div>
     </app-popover-card>
@@ -256,11 +248,12 @@
             <p>ETH {{poolUsers('eth') | number: '1.0-0'}}</p>
           </div>
         </ng-template>
-        <div class="value-middle">
-          👨‍🌾Pools active accounts
+        <div class="value-middle"
+             [class]="vt.getThemeColor() + '-gray'">
+          Pools active accounts
         </div>
         <div class="value-number-middle">
-          <span>{{poolUsersAllNetwork | number: '1.0-0'}}</span>
+          <span [class]="vt.getThemeColor() + '-black'">{{poolUsersAllNetwork | number: '1.0-0'}}</span>
         </div>
       </div>
     </app-popover-card>

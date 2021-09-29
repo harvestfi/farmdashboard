@@ -169,32 +169,67 @@ export class VaultStatsComponent implements OnInit {
             xAxis: {
                 type: 'category',
                 splitLine: {
-                    show: false
+                    show: false,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
                 },
                 axisLine: {
-                    show: false
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5',
+                    }
                 },
                 axisTick: {
                     show: false,
                 },
                 axisLabel: {
-                    color: 'rgb(108, 114, 132)',
-                    fontSize: '16px',
+                    color: '#9fa3a3',
+                    fontSize: '14px',
                     fontFamily: 'Inter var',
                     formatter: (value) => echarts.format.formatTime('dd', value, false),
                     showMinLabel: true,
                     showMaxLabel: true,
-
                 },
                 boundaryGap: false,
 
             },
             yAxis: {
+                position: 'right',
                 type: 'value',
+                offset: 10,
                 splitLine: {
-                    show: false
+                    show: true,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
                 },
-                show: false
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5',
+                    }
+                },
+                axisLabel: {
+                    color: '#9fa3a3',
+                    fontSize: '12px',
+                    fontFamily: 'Inter var',
+                    show: true,
+                    showMinLabel: true,
+                    showMaxLabel: true,
+                    formatter: (value) => this.nFormatter(value, 2),
+                },
+                axisTick: {
+                    show: true,
+                    inside: true,
+                    length: 10,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    },
+                },
             },
             series: [{
                 type: 'line',
@@ -202,10 +237,11 @@ export class VaultStatsComponent implements OnInit {
                 showSymbol: false,
                 data: this.vaultDataTVL,
                 itemStyle: {
-                    color: '#ff007a'
+                    color: '#EAF6F6'
                 },
                 areaStyle: {
-                    color: '#37162a'
+                    color: '#5CADAA',
+                    opacity: 0.9
                 },
             }]
         };
@@ -274,34 +310,75 @@ export class VaultStatsComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
+                    splitLine: {
+                        show: false,
+                        lineStyle: {
+                            type: [7],
+                            color: '#d1d2d5',
+                        }
+                    },
                     axisTick: {
                         show: false,
                     },
                     axisLine: {
-                        show: false
+                        show: true,
+                        lineStyle: {
+                            color: '#d1d2d5',
+                        }
                     },
                     axisLabel: {
-                        color: 'rgb(108, 114, 132)',
-                        fontSize: '16px',
+                        color: '#9fa3a3',
+                        fontSize: '14px',
                         fontFamily: 'Inter var',
-                        formatter: (value) => echarts.format.formatTime('dd', value, false),
+                        formatter: (value) => echarts.format.formatTime('MM', value, false),
                         showMinLabel: true,
                         showMaxLabel: true,
                     },
 
                 },
             ],
-            yAxis: [{
-                show: false,
-                type: 'value'
-            }],
+            yAxis: {
+                position: 'right',
+                type: 'value',
+                offset: 10,
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5'
+                    }
+                },
+                axisLabel: {
+                    color: '#9fa3a3',
+                    fontSize: '12px',
+                    fontFamily: 'Inter var',
+                    show: true,
+                    showMinLabel: true,
+                    showMaxLabel: true,
+                    formatter: (value) => this.nFormatter(value, 2),
+                },
+                axisTick: {
+                    show: true,
+                    inside: true,
+                    length: 10,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    },
+                },
+            },
             series: [{
                 type: 'bar',
-                barWidth: '70%',
+                barWidth: '90%',
                 data: this.vaultDataProfit,
                 itemStyle: {
-                    color: '#2172e5',
-                    borderRadius: 6
+                    color: '#5CADAA',
                 },
             }]
         };
@@ -374,34 +451,75 @@ export class VaultStatsComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
+                    splitLine: {
+                        show: false,
+                        lineStyle: {
+                            type: [7],
+                            color: '#d1d2d5',
+                        }
+                    },
                     axisTick: {
                         show: false,
                     },
                     axisLine: {
-                        show: false
+                        show: true,
+                        lineStyle: {
+                            color: '#d1d2d5',
+                        }
                     },
                     axisLabel: {
-                        color: 'rgb(108, 114, 132)',
-                        fontSize: '16px',
+                        color: '#9fa3a3',
+                        fontSize: '14px',
                         fontFamily: 'Inter var',
-                        formatter: (value) => echarts.format.formatTime('dd', value, false),
+                        formatter: (value) => echarts.format.formatTime('MM', value, false),
                         showMinLabel: true,
                         showMaxLabel: true,
                     },
 
                 },
             ],
-            yAxis: [{
-                show: false,
-                type: 'value'
-            }],
+            yAxis: {
+                position: 'right',
+                type: 'value',
+                offset: 10,
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5'
+                    }
+                },
+                axisLabel: {
+                    color: '#9fa3a3',
+                    fontSize: '12px',
+                    fontFamily: 'Inter var',
+                    show: true,
+                    showMinLabel: true,
+                    showMaxLabel: true,
+                    formatter: (value) => this.nFormatter(value, 2),
+                },
+                axisTick: {
+                    show: true,
+                    inside: true,
+                    length: 10,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    },
+                },
+            },
             series: [{
                 type: 'bar',
-                barWidth: '70%',
+                barWidth: '90%',
                 data: this.vaultDataAPY,
                 itemStyle: {
-                    color: '#2172e5',
-                    borderRadius: 6
+                    color: '#5CADAA',
                 },
             }]
         };
@@ -470,15 +588,25 @@ export class VaultStatsComponent implements OnInit {
             xAxis: [
                 {
                     type: 'category',
+                    splitLine: {
+                        show: false,
+                        lineStyle: {
+                            type: [7],
+                            color: '#d1d2d5',
+                        }
+                    },
                     axisTick: {
                         show: false,
                     },
                     axisLine: {
-                        show: false
+                        show: true,
+                        lineStyle: {
+                            color: '#d1d2d5',
+                        }
                     },
                     axisLabel: {
-                        color: 'rgb(108, 114, 132)',
-                        fontSize: '16px',
+                        color: '#9fa3a3',
+                        fontSize: '14px',
                         fontFamily: 'Inter var',
                         formatter: (value) => echarts.format.formatTime('dd', value, false),
                         showMinLabel: true,
@@ -487,17 +615,48 @@ export class VaultStatsComponent implements OnInit {
 
                 },
             ],
-            yAxis: [{
-                show: false,
-                type: 'value'
-            }],
+            yAxis: {
+                position: 'right',
+                type: 'value',
+                offset: 10,
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    }
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#d1d2d5'
+                    }
+                },
+                axisLabel: {
+                    color: '#9fa3a3',
+                    fontSize: '12px',
+                    fontFamily: 'Inter var',
+                    show: true,
+                    showMinLabel: true,
+                    showMaxLabel: true,
+                    formatter: (value) => this.nFormatter(value, 2),
+                },
+                axisTick: {
+                    show: true,
+                    inside: true,
+                    length: 10,
+                    lineStyle: {
+                        type: [7],
+                        color: '#d1d2d5',
+                    },
+                },
+            },
             series: [{
                 type: 'bar',
                 barWidth: '70%',
                 data: this.vaultDataUsers,
                 itemStyle: {
-                    color: '#2172e5',
-                    borderRadius: 6
+                    color: '#5CADAA',
                 },
             }]
         };

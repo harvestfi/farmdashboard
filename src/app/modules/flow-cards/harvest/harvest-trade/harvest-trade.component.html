@@ -35,8 +35,9 @@
       </app-link-window>
     </app-simple-modal>
     <mat-icon (click)="showTradeLinks()"
-              [ngStyle]="{'color': '#b5b4b4'}"
-              aria-hidden="false" aria-label="Price" class="sign-icon">
+              class="sign-icon"
+              [class]="vt.getThemeColor() + '-middleGreen'"
+              aria-hidden="false" aria-label="Price">
       open_in_new
     </mat-icon>
   </div>

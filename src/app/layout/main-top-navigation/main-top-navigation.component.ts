@@ -23,7 +23,8 @@ export class MainTopNavigationComponent implements OnInit {
   public blockDiffs = new Map<string, number>();
 
   constructor(public ws: WebsocketService, public vt: ViewTypeService, private blockDiffService: BlockDiffService,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private changeDetectorRef: ChangeDetectorRef,
+              public viewTypeService: ViewTypeService) {
   }
 
   ngOnInit(): void {
@@ -32,6 +33,4 @@ export class MainTopNavigationComponent implements OnInit {
       this.changeDetectorRef.detectChanges();
     });
   }
-
-
 }

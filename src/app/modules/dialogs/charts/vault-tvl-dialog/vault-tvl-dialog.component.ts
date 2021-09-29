@@ -52,7 +52,7 @@ export class VaultTvlDialogComponent extends ChartGeneralMethodsComponent implem
         chartBuilder.addInData(2, dto.calculateTime, dto.sharePrice);
       });
       this.handleData(chartBuilder, [
-        ['TVL M$', 'right', '#0085ff'],
+        ['TVL M$', 'right', '#5CADAA'],
         ['Accounts', '1', '#7e7e7e'],
         ['Share Price', '2', '#efa4a4'],
       ]);
@@ -71,7 +71,7 @@ export class VaultTvlDialogComponent extends ChartGeneralMethodsComponent implem
         chartBuilder.addInData(3, dto.calculateTime, (dto.lastTvlNative / dto.sharePrice) * 100);
       });
       this.handleData(chartBuilder, [
-        ['TVL M$', 'right', '#0085ff'],
+        ['TVL M$', 'right', '#5CADAA'],
         ['Accounts', '1', '#7e7e7e'],
         ['Total Supply', '2', '#efa4a4'],
         ['Staked', '3', '#409b4a'],

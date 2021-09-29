@@ -31,7 +31,7 @@ export class TotalUsersDialogComponent extends ChartGeneralMethodsComponent impl
       });
 
       this.handleData(chartBuilder, [
-        ['Total users', 'right', '#0085ff'],
+        ['Total users', 'right', '#5CADAA'],
         ['TVL', '1', '#eeb000']
       ]);
     });

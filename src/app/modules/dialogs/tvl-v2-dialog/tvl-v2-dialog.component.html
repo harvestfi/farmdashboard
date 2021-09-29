@@ -1,2 +1,4 @@
-<app-chart-general [title]="'All vaults history'" [ready]="ready" (network)="setNetwork($event)">
-</app-chart-general>
+<div class="background" [class]="vt.getThemeColor() + '-background'">
+    <app-chart-general [title]="'All vaults history'" [ready]="ready" (network)="setNetwork($event)">
+    </app-chart-general>
+</div>

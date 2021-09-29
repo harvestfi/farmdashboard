@@ -1,16 +1,27 @@
 #main-footer-component {
-
-  width: 100%;
+  max-width: 405px;
+  width: 405px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0 15px 0 0;
+  position: relative;
 
   .caption {
-    font-size: 0.9em;
-    font-weight: bolder;
+    display: flex;
+    font-family: 'PT Sans', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    svg {
+      margin: auto 10px auto 0;
+    }
+    a {
+      text-decoration: none;
+      margin: auto 0;
+    }
   }
 
 
@@ -24,5 +35,19 @@
   .alchemy-img {
     height: 15px;
     margin: 0 3px 0 10px;
+  }
+  .shadower {
+    background: linear-gradient(90deg, rgba(234, 246, 246, 0) 0%, #EAF6F6 100%);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    position: absolute;
+    width: 230px;
+    height: 100%;
+    left: 100%;
+    top: 0;
+    z-index: 1;
+  }
+  .shadower.dark {
+    background: linear-gradient(90deg, rgba(19, 28, 27, 0) 0%, #111111 100%);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
   }
 }

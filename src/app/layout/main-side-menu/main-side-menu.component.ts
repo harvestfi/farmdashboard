@@ -1,8 +1,11 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, HostListener, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {UserSettings} from '@core/user-settings';
 import {CustomModalComponent} from '@shared/custom-modal/custom-modal.component';
+import {SideMenuService} from '@data/services/side-menu.service';
+import {Router} from '@angular/router';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-main-side-menu',
@@ -26,8 +29,7 @@ import {CustomModalComponent} from '@shared/custom-modal/custom-modal.component'
   ]
 })
 export class MainSideMenuComponent {
-  showSideMenu = false;
-  isDarkTheme = UserSettings.getColor() === 'dark';
+  @ViewChild('collapsibleArea', {static: true}) collapsibleArea;
   @ViewChild('allStatsDialog') private allStatsDialog: CustomModalComponent;
   @ViewChild('tvlDialog') private tvlDialog: CustomModalComponent;
   @ViewChild('incomeDialog') private incomeDialog: CustomModalComponent;
@@ -39,11 +41,77 @@ export class MainSideMenuComponent {
   @ViewChild('userBalancesDialog') private userBalancesDialog: CustomModalComponent;
   @ViewChild('downloadHistoricDataDialog') private downloadHistoricDataDialog: CustomModalComponent;
 
-  constructor(public viewTypeService: ViewTypeService) {
+  constructor(public viewTypeService: ViewTypeService,
+              private sideMenuService: SideMenuService,
+              public router: Router,
+              private modalService: NgbModal) {
+      const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      if (width > 1600) {
+          this.sideMenuService.setSideMenuState(true);
+      }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  handleScreenResize($event: any): void {
+      const newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      if (newWidth > 1600) {
+          this.sideMenuService.setSideMenuState(true);
+      }
+  }
+
+  get homeRoute(): boolean {
+      return this.router.isActive('/', true);
+  }
+
+  get chartRoute(): boolean {
+      return this.router.isActive('charts', false);
+  }
+
+  get chartApyHistoryRoute(): boolean {
+      return this.router.isActive('charts/ps-apy-history', true);
+  }
+
+  get chartWeeklyProfitHistoryRoute(): boolean {
+      return this.router.isActive('charts/weekly-profit-history', true);
+  }
+
+  get chartFarmBuyBacksRoute(): boolean {
+      return this.router.isActive('charts/farm-buybacks', true);
+  }
+
+  get chartSavedGasFeesRoute(): boolean {
+      return this.router.isActive('charts/saved-gas-fees', true);
+  }
+
+  get rewardsHistoryRoute(): boolean {
+      return this.router.isActive('rewards-history', true);
+  }
+
+  get downloadsRoute(): boolean {
+      return this.router.isActive('downloads', true);
+  }
+
+  get userBalancesRoute(): boolean {
+      return this.router.isActive('user-balances', true);
+  }
+
+  get totalChartsRoute(): boolean {
+      return this.router.isActive('charts/info-total', true);
+  }
+
+  get vaultsListRoute(): boolean {
+      return this.router.isActive('vaults-list', true);
+  }
+
+  get sideMenuState(): any {
+    return this.sideMenuService.getSideMenuState();
   }
 
   toggleMenu(): void {
-    this.showSideMenu = !this.showSideMenu;
+      const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      if (width <= 1600) {
+          this.sideMenuService.setSideMenuState(!this.sideMenuState);
+      }
   }
 
   openAllStatsDialog(): void {
@@ -66,6 +134,71 @@ export class MainSideMenuComponent {
     this.toggleMenu();
   }
 
+  openMain(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('');
+    this.collapsibleArea.closeCollapseArea();
+  }
+
+  openPsApyHistory(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('charts/ps-apy-history');
+      this.collapsibleArea.closeCollapseArea();
+  }
+
+  openWeeklyProfitHistory(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('charts/weekly-profit-history');
+  }
+  openFarmBuyBacks(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('charts/farm-buybacks');
+  }
+
+  openSavedGasFees(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('charts/saved-gas-fees');
+  }
+
+  openRewardsHistory(): void {
+    this.modalService.dismissAll();
+    this.toggleMenu();
+    this.router.navigateByUrl('rewards-history');
+    this.collapsibleArea.closeCollapseArea();
+  }
+
+  openDownloads(): void {
+      this.modalService.dismissAll();
+      this.toggleMenu();
+      this.router.navigateByUrl('downloads');
+      this.collapsibleArea.closeCollapseArea();
+  }
+
+  openUserBalances(): void {
+      this.modalService.dismissAll();
+      this.toggleMenu();
+      this.router.navigateByUrl('user-balances');
+      this.collapsibleArea.closeCollapseArea();
+  }
+
+  openVaultsList(): void {
+      this.modalService.dismissAll();
+      this.toggleMenu();
+      this.router.navigateByUrl('vaults-list');
+      this.collapsibleArea.closeCollapseArea();
+  }
+
+  openTotalVault(): void {
+      this.modalService.dismissAll();
+      this.toggleMenu();
+      this.router.navigateByUrl('charts/info-total');
+ }
+
   openWeeklyProfitDialog(): void {
     this.weeklyProfitDialog.open();
     this.toggleMenu();
@@ -87,7 +220,7 @@ export class MainSideMenuComponent {
   }
 
 
-  openUserBalances(): void {
+  openUserBalancesDialog(): void {
     this.userBalancesDialog.open();
     this.toggleMenu();
   }
@@ -95,13 +228,5 @@ export class MainSideMenuComponent {
   openDownloadHistoricDataDialog(): void {
     this.downloadHistoricDataDialog.open();
     this.toggleMenu();
-  }
-
-  toggleTheme(): void {
-    if (this.viewTypeService.getThemeColor() === 'dark') {
-      this.viewTypeService.setThemeColor('light');
-      return;
-    }
-    this.viewTypeService.setThemeColor('dark');
   }
 }
