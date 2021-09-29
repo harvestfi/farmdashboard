@@ -12,8 +12,6 @@ import {RewardDataService} from '@data/services/data/reward-data.service';
 import {PriceDataService} from '@data/services/data/price-data.service';
 import {Token} from '@data/models/token';
 import {Pool} from '@data/models/pool';
-import {RewardDto} from "@data/models/reward-dto";
-import {Paginated} from "@data/models/paginated";
 
 @Component({
   selector: 'app-strategy-list',
