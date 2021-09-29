@@ -11,9 +11,9 @@ import {VaultStatsComponent} from '../dashboard/vault-stats/vault-stats.componen
 import {NgxEchartsModule} from 'ngx-echarts';
 import {EchartComponent} from '@modules/dashboard/vault-stats/echart/echart.component';
 import {LayoutModule} from '@layout/layout.module';
-import {PsApyHistoryComponent} from '@modules/dashboard/ps-apy-history/ps-apy-history.component';
 import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component';
 import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
+import {SideMenuToggleModule} from '@layout/main-top-navigation/side-menu-toggle/side-menu-toggle.module';
 
 @NgModule({
   imports: [
@@ -26,6 +26,7 @@ import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
     LayoutModule,
     CommonModule,
     ThemeSwitchModule,
+    SideMenuToggleModule,
     NgxEchartsModule.forRoot({
        echarts: () => import('echarts')
     }),

@@ -147,6 +147,15 @@
         }
       }
 
+      &:hover {
+        .icon-wrapper {
+          background: #FFFFFF;
+          svg > path {
+            fill: #5CADAA;
+          }
+        }
+      }
+
       /*&::before {
         font-family: "Font Awesome 5 Free";
         content: attr(data-menu-icon);

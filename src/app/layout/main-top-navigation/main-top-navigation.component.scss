@@ -1,14 +1,5 @@
 @import "../../../scss/utilities/utilities";
 
-#menu-button-toggle {
-  cursor: pointer;
-  border: none;
-  font-size: 24px;
-  background: none;
-  margin-left: 5px;
-  outline: none;
-}
-
 .main-top-navigation {
   margin: 0 10px;
   display: flex;
@@ -25,6 +16,7 @@
     text-align: left;
     font-size: 36px;
     display: flex;
+    margin: auto auto auto 0;
     span {
       margin: auto 0;
     }
@@ -76,9 +68,6 @@
   }
 }
 
-#menu-button-toggle {
-  display: none;
-}
 
 @media (max-width: 1600px) {
   .main-top-navigation {

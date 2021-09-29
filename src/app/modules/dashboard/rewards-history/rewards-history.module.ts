@@ -7,6 +7,7 @@ import {CommonModule} from '@angular/common';
 import {IconsModule} from '@shared/icons/icons.module';
 import {FormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
+import {SideMenuToggleModule} from '@layout/main-top-navigation/side-menu-toggle/side-menu-toggle.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {MatIconModule} from '@angular/material/icon';
     FormsModule,
     IconsModule,
     MatIconModule,
-    PaginatorModule
+    PaginatorModule,
+    SideMenuToggleModule,
   ],
   exports: [
     RewardsHistoryComponent,

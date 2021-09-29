@@ -23,6 +23,7 @@ import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
 import {RewardsHistoryModule} from '@modules/dashboard/rewards-history/rewards-history.module';
 import {DownloadsHistoricDataModule} from '@modules/dashboard/download-historic-data/downloads-historic-data.module';
 import {UserBalancesModule} from '@modules/dashboard/user-balances/user-balances.module';
+import {SideMenuToggleModule} from '@layout/main-top-navigation/side-menu-toggle/side-menu-toggle.module';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import {UserBalancesModule} from '@modules/dashboard/user-balances/user-balances
     SavedGasFeesModule,
     RewardsHistoryModule,
     ThemeSwitchModule,
-    UserBalancesModule
+    UserBalancesModule,
+    SideMenuToggleModule,
   ],
   exports: [
     MainTopNavigationComponent,

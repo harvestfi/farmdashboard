@@ -5,6 +5,7 @@ import {DownloadHistoricDataComponent} from '@modules/dashboard/download-histori
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSortModule} from '@angular/material/sort';
 import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
+import {SideMenuToggleModule} from '@layout/main-top-navigation/side-menu-toggle/side-menu-toggle.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
       CommonModule,
       MatSortModule,
       MatDialogModule,
+      SideMenuToggleModule,
   ],
   exports: [
     DownloadHistoricDataComponent
