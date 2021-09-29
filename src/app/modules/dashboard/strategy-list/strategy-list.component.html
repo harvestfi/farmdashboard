@@ -1,34 +1,44 @@
-<div class="custom-table" [class]="vt.getThemeColor() + '-card'">
-  <div class="strategy-list-filter-box">
+<div class="title-wrapper"
+     [class]="vt.getThemeColor() + '-black'">
+  <app-side-menu-toggle></app-side-menu-toggle>
+  <span>Vaults list</span>
+  <app-theme-switch></app-theme-switch>
+</div>
 
-    <select [(ngModel)]="networkFilter" name="" id="networkFilter">
+<div class="custom-table" [class]="vt.getThemeColor() + '-card'">
+  <div class="filters">
+  <div>
+    <select [(ngModel)]="networkFilter" name="" id="networkFilter"
+            [class]="vt.getThemeColor() + '-softGreen'">
       <option value="">Network</option>
       <option value="eth">Ethereum</option>
       <option value="bsc">Binance</option>
     </select>
 
-    <select [(ngModel)]="platformFilter" name="" id="platformFilter">
+    <select [(ngModel)]="platformFilter" name="" id="platformFilter"
+            [class]="vt.getThemeColor() + '-softGreen'">
       <option value="">Platform</option>
       <option *ngFor="let platform of platformList" [value]="platform.prefix">{{platform.name}}</option>
     </select>
 
-    <select [(ngModel)]="assetFilter" name="" id="assetFilter">
+    <select [(ngModel)]="assetFilter" name="" id="assetFilter"
+            [class]="vt.getThemeColor() + '-softGreen'">
       <option value="">Asset</option>
       <option *ngFor="let asset of assetList" [value]="asset">{{asset}}</option>
 
     </select>
 
     <div class="quantity">
-      Total: {{vaultsList.length}}
+      <span [class]="vt.getThemeColor() + '-solidGreen'">Total: {{vaultsList.length}}</span>
     </div>
-
-    <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
+  </div>
+  <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
 
   </div>
 
   <!--  ******** HEADERS ************** -->
 
-  <div class="header">
+  <div class="header" [class]="vt.getThemeColor() + '-gray'">
     <div class="header-column desktop-only">
       Network <i class="fas fa-sort"></i>
     </div>
@@ -67,7 +77,7 @@
 
   <!--  ******** VALUES ************** -->
 
-  <div class="content">
+  <div class="content" [class]="vt.getThemeColor() + '-card'">
     <div
         *ngIf="vaultsList | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
       <div *ngFor="let row of filteredVaults" class="row">
@@ -89,14 +99,10 @@
             <app-apy-window (showModal)="toggleAPYWindow(row.contract.address)"
                             [vault]="row" [pool]="poolsList().get(row.contract.address)"></app-apy-window>
           </app-draggable-modal>
-          <app-popover-card class="pointer" (click)="toggleAPYWindow(row.contract.address)">
-            <ng-template>
-              <p>Click to open details</p>
-            </ng-template>
+          <div class="pointer">
             <i *ngIf="isWeeklyRewardActive(row)" class="fa fa-bolt" style="color: goldenrod"></i>
             {{prettifyNumber(vaultFullApy(row.contract.address, row.contract.network))}}%
-            <i class="far fa-window-restore"></i>
-          </app-popover-card>
+          </div>
         </div>
 
         <!-- TVL -->

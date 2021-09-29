@@ -4,18 +4,19 @@
 }
 .main-top-stats {
   display: grid;
-  grid-template-areas:   "native-tokens native-tokens weekly-profit ps-income tvl"
-                         "native-tokens native-tokens weekly-profit ps-income tvl"
+  grid-template-areas:   "farm btc weekly-profit ps-income tvl"
+                         "eth bnb weekly-profit ps-income tvl"
                          "farm-buybacks farm-staked saved-gas total-users active-pools";
 
   @include responsive(medium) {
-    grid-template-areas:   "native-tokens native-tokens"
+    grid-template-areas:   "farm btc"
+                           "eth bnb"
                            "weekly-profit ps-income"
                            "tvl farm-staked"
                            "saved-gas farm-buybacks"
                            "total-users active-pools";
     grid-template-columns: 50% 50%;
-    grid-template-rows: 1fr 1fr 1fr 0.5fr 0.5fr;
+    grid-template-rows: 0.5fr 0.5fr 1fr 1fr 0.5fr 0.5fr;
   }
 
   .value-card {
@@ -47,33 +48,15 @@
       font-size: 2.57em;
       margin-bottom: 27px;
     }
-  }
-
-  .farm {
-    grid-area: farm-price;
-    text-align: center;
+    span {
+      -webkit-transition: all 0.5s;
+      -o-transition: all 0.5s;
+      transition: all 0.5s;
+    }
   }
 
   .gas {
     grid-area: gas-price;
-  }
-  .native-tokens {
-    grid-area: native-tokens;
-    height: 220px;
-    .value-number-middle {
-      font-size: 2.14em;
-      margin-top: 10px;
-    }
-  }
-  .native-tokens-grid {
-    width: 100%;
-    grid-column: auto / span 2;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  .eth {
-    grid-area: eth-price;
   }
 
   .farm-staked {
@@ -170,6 +153,55 @@
       font-size: unset;
     }
   }
+
+  .farm{
+    grid-area: farm;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
+  .bnb {
+    grid-area: bnb;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
+  .eth{
+    grid-area: eth;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
+  .btc{
+    grid-area: btc;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
 
   .value-caption {
     margin-bottom: 2rem;

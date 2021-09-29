@@ -132,6 +132,10 @@ $variables in $themes_colors {
         background: map-get($variables, "softGreen");
     }
 
+    span.#{$color}-solidGreen {
+        color: map-get($variables, "solidGreen");
+    }
+
     .#{$color}-font {
         color: map-get($variables, "font");
     }

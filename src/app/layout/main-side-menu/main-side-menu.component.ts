@@ -99,6 +99,10 @@ export class MainSideMenuComponent {
       return this.router.isActive('charts/info-total', true);
   }
 
+  get vaultsListRoute(): boolean {
+      return this.router.isActive('vaults-list', true);
+  }
+
   get sideMenuState(): any {
     return this.sideMenuService.getSideMenuState();
   }
@@ -141,6 +145,7 @@ export class MainSideMenuComponent {
     this.modalService.dismissAll();
     this.toggleMenu();
     this.router.navigateByUrl('charts/ps-apy-history');
+      this.collapsibleArea.closeCollapseArea();
   }
 
   openWeeklyProfitHistory(): void {
@@ -164,18 +169,28 @@ export class MainSideMenuComponent {
     this.modalService.dismissAll();
     this.toggleMenu();
     this.router.navigateByUrl('rewards-history');
+    this.collapsibleArea.closeCollapseArea();
   }
 
   openDownloads(): void {
       this.modalService.dismissAll();
       this.toggleMenu();
       this.router.navigateByUrl('downloads');
+      this.collapsibleArea.closeCollapseArea();
   }
 
   openUserBalances(): void {
       this.modalService.dismissAll();
       this.toggleMenu();
       this.router.navigateByUrl('user-balances');
+      this.collapsibleArea.closeCollapseArea();
+  }
+
+  openVaultsList(): void {
+      this.modalService.dismissAll();
+      this.toggleMenu();
+      this.router.navigateByUrl('vaults-list');
+      this.collapsibleArea.closeCollapseArea();
   }
 
   openTotalVault(): void {

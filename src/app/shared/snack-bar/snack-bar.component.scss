@@ -1,31 +1,44 @@
-.snack-bar-row {
-  /*min-width: 50px;*/
-}
-
 .text-column {
   text-align: center;
-  width: 96%;
+  width: 100%;
   font-size: 0.9em;
   font-weight: bolder;
-  /*float: right;*/
-  /*box-sizing: border-box;*/
+  padding: 18px 20px;
+  display: flex;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.07);
+  border-radius: 10px;
+  margin: 1rem 0 0 0;
 }
 
-.button-column {
-  width: 4%;
-  /*float: right;*/
-  /*box-sizing: border-box;*/
+.icon {
+  margin-right: 12px;
+}
+
+.text {
+  font-family: 'PT Sans', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 21px;
+  color: #FFFFFF;
 }
 
 .button-close {
-  margin-left: 5px;
-  font-size: 1em;
+  font-size: 1.5rem;
+  color: #FFFFFF;
+  width: 22px;
+  height: 22px;
+  margin: auto 0 auto auto;
 }
 
 ::ng-deep .mat-snack-bar-container {
-  padding: 5px;
-  margin: 5px;
   min-height: 10px;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  box-shadow: none;
+  border: none;
+  background: transparent;
 }
 
 @media screen and (max-width: 1025px) {

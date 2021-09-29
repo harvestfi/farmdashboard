@@ -46,6 +46,7 @@ $dark-background-color: #111111;
     align-items: center;
     gap: 16px;
     margin: 10px 0 39px 0;
+    font-family: 'PT Sans', sans-serif;
 
     select {
       height: 46px;
@@ -56,6 +57,10 @@ $dark-background-color: #111111;
       border-top: none;
       border-bottom: none;
       width: 100%;
+      -webkit-transition: all 0.5s;
+      -o-transition: all 0.5s;
+      transition: all 0.5s;
+      font-size: 16px;
     }
     input {
       height: 46px;
@@ -65,6 +70,10 @@ $dark-background-color: #111111;
       box-sizing: border-box;
       border-radius: 10px;
       width: 50%;
+      -webkit-transition: all 0.5s;
+      -o-transition: all 0.5s;
+      transition: all 0.5s;
+      font-size: 16px;
     }
   }
   .filters > div {

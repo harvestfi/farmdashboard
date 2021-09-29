@@ -23,6 +23,7 @@ $dark-background-color: #111111;
             width: 100%;
             gap: 16px;
             margin: 12px 0 30px;
+            font-family: 'PT Sans', sans-serif;
 
             select {
                 height: 46px;
@@ -33,6 +34,10 @@ $dark-background-color: #111111;
                 border-top: none;
                 border-bottom: none;
                 max-width: 50%;
+                -webkit-transition: all 0.5s;
+                -o-transition: all 0.5s;
+                transition: all 0.5s;
+                font-size: 16px;
             }
             input {
                 height: 46px;
@@ -42,6 +47,10 @@ $dark-background-color: #111111;
                 box-sizing: border-box;
                 border-radius: 10px;
                 width: 100%;
+                -webkit-transition: all 0.5s;
+                -o-transition: all 0.5s;
+                transition: all 0.5s;
+                font-size: 16px;
             }
         }
         .title {

@@ -2,42 +2,51 @@
 
 
   <div class="main-top-stats">
+    <div class="value-card farm" [class]="vt.getThemeColor() + '-card'">
+      <div class="value-middle"
+           [class]="vt.getThemeColor() + '-gray'">
+        FARM Price
+      </div>
+      <div class="value-number-middle">
+         <span class="value-sign"
+               [class]="vt.getThemeColor() + '-yellow'">$</span>
+        <span [class]="vt.getThemeColor() + '-black'">{{farmUsdPrice | number: '1.0-2'}}</span>
+      </div>
+    </div>
 
-    <div class="value-card native-tokens" [class]="vt.getThemeColor() + '-card'">
-      <div class="native-tokens-grid">
-        <div>
-          <div class="value-middle">
+    <div class="value-card btc" [class]="vt.getThemeColor() + '-card'">
+      <div class="value-middle">
             <span class="small-value-caption"
                   [class]="vt.getThemeColor() + '-gray'">BTC</span>
-          </div>
-          <div class="value-number-middle">
+      </div>
+      <div class="value-number-middle">
             <span class="value-sign"
                   [class]="vt.getThemeColor() + '-yellow'">$</span>
-            <span [class]="vt.getThemeColor() + '-black'">{{btcUsdPrice | number: '1.0-0'}}</span>
-          </div>
-        </div>
-        <div>
-          <div class="value-middle">
+        <span [class]="vt.getThemeColor() + '-black'">{{btcUsdPrice | number: '1.0-0'}}</span>
+      </div>
+    </div>
+
+    <div class="value-card eth" [class]="vt.getThemeColor() + '-card'">
+      <div class="value-middle">
             <span class="small-value-caption"
                   [class]="vt.getThemeColor() + '-gray'">ETH</span>
-          </div>
-          <div class="value-number-middle">
+      </div>
+      <div class="value-number-middle">
             <span class="value-sign"
                   [class]="vt.getThemeColor() + '-yellow'">$</span>
-            <span [class]="vt.getThemeColor() + '-black'">{{ethUsdPrice | number: '1.0-0'}}</span>
-          </div>
-        </div>
-        <div>
-          <div class="value-middle">
+        <span [class]="vt.getThemeColor() + '-black'">{{ethUsdPrice | number: '1.0-0'}}</span>
+      </div>
+    </div>
+
+    <div class="value-card bnb" [class]="vt.getThemeColor() + '-card'">
+      <div class="value-middle">
             <span class="small-value-caption"
                   [class]="vt.getThemeColor() + '-gray'">BNB</span>
-          </div>
-          <div class="value-number-middle">
+      </div>
+      <div class="value-number-middle">
             <span class="value-sign"
                   [class]="vt.getThemeColor() + '-yellow'">$</span>
-            <span [class]="vt.getThemeColor() + '-black'">{{bnbUsdPrice | number: '1.0-0'}}</span>
-          </div>
-        </div>
+        <span [class]="vt.getThemeColor() + '-black'">{{bnbUsdPrice | number: '1.0-0'}}</span>
       </div>
     </div>
 

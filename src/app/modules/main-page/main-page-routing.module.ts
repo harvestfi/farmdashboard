@@ -9,6 +9,7 @@ import {RewardsHistoryComponent} from '@modules/dashboard/rewards-history/reward
 import {DownloadHistoricDataComponent} from '@modules/dashboard/download-historic-data/download-historic-data.component';
 import {UserBalancesComponent} from '@modules/dashboard/user-balances/user-balances.component';
 import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component';
+import {StrategyListComponent} from '@modules/dashboard/strategy-list/strategy-list.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
      path: 'user-balances',
      component: UserBalancesComponent,
+  },
+  {
+     path: 'vaults-list',
+     component: StrategyListComponent,
   },
 ];
 
