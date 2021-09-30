@@ -32,3 +32,17 @@
 
 
 }
+
+@media (max-width: 1750px) {
+  .uni-card {
+    .table-header {
+      grid-template-columns: 15% 27% 12% 20% 20% 0;
+    }
+
+    .trades-list {
+      .trades-list-item {
+        grid-template-columns: 15% 26% 10% 18% 20% 0;
+      }
+    }
+  }
+}

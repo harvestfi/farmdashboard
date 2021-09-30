@@ -91,6 +91,7 @@ $dark-background-color: #111111;
             font-style: normal;
             font-weight: bold;
             font-size: 16px;
+            line-height: 21px;
             border-bottom: 1px solid #F0F0F0;
             margin-left: 7px;
             -webkit-box-align: center;
@@ -163,5 +164,59 @@ $dark-background-color: #111111;
         -webkit-box-align: center;
         -ms-flex-align: center;
         align-items: center;
+    }
+}
+
+@media (max-width: 1850px) {
+    .flow-card {
+        padding: 24px 20px;
+
+        .trades-list {
+            .trades-list-item {
+                font-size: 14px;
+                line-height: 18px;
+            }
+            mat-icon {
+                font-size: 14px;
+            }
+        }
+    }
+}
+@media (max-width: 1610px) {
+    .flow-card {
+        .trades-list {
+            .trades-list-item {
+                font-size: 12px;
+                line-height: 13px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1600px) {
+    .flow-card {
+        .trades-list {
+            .trades-list-item {
+                font-size: 14px;
+                line-height: 18px;
+            }
+            mat-icon {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .flow-card {
+        .trades-list {
+            .trades-list-item {
+                font-size: 16px;
+                line-height: 21px;
+            }
+            mat-icon {
+                font-size: 16px;
+            }
+        }
     }
 }
