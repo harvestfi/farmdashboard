@@ -52,7 +52,9 @@
       </app-popover-card>
 
       <div class="vault-icon">
-        <app-vault-icon [vault]="getVaultModel(dto.vaultAddress)"></app-vault-icon>
+
+        <app-vault-icon [vault]="getVaultModel(dto.vaultAddress)"
+                        [networks]="vaultsIconsList"></app-vault-icon>
       </div>
 
       <div class="vault-name">{{getVaultName(dto.vault)}}</div>

@@ -12,6 +12,7 @@ import {RewardDataService} from '@data/services/data/reward-data.service';
 import {PriceDataService} from '@data/services/data/price-data.service';
 import {Token} from '@data/models/token';
 import {Pool} from '@data/models/pool';
+import {VaultsDataService} from '@data/services/vaults-data.service';
 
 @Component({
   selector: 'app-strategy-list',
@@ -27,7 +28,7 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   public apyWindowState: Record<string, boolean> = {};
   public sortDirection = 'desc';
   public currentSortingValue = 'tvl';
-
+  public vaultsIconsList = [];
   @ViewChildren(CustomModalComponent) private tvlModals: QueryList<CustomModalComponent>;
 
   constructor(
@@ -38,7 +39,8 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
       public rewardData: RewardDataService,
       public priceData: PriceDataService,
       @Inject(PLATFORM_LIST) public platformList: Array<Platform>,
-      private log: NGXLogger
+      private log: NGXLogger,
+      private vaultsDataService: VaultsDataService
   ) {
     super(harvestData, hardworkData, rewardData, priceData);
   }
@@ -48,6 +50,16 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
 
   ngOnInit(): void {
     this.poolsList();
+    this.additionalVaultsList();
+  }
+
+  additionalVaultsList(): void {
+      this.vaultsDataService.retrieveVaultsList()
+          .subscribe((data) => {
+              this.vaultsIconsList = data;
+          }, err => {
+              console.log(err);
+          });
   }
 
   get assetList(): string[] {

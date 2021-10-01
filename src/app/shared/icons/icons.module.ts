@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 
 import {IconsComponent} from './icons.component';
 import {CommonModule} from '@angular/common';
+import {VaultIconsPipe} from '@shared/icons/vault-icons.pipe';
 
 /**
  * Candidate for /shared/
@@ -15,6 +16,7 @@ import {CommonModule} from '@angular/common';
   ],
   declarations: [
     IconsComponent,
+    VaultIconsPipe
   ],
   providers: [],
 })

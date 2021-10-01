@@ -8,6 +8,7 @@ import {ContractsService} from '@data/services/contracts.service';
 import {Vault} from '@data/models/vault';
 import {HardworkDataService} from '@data/services/data/hardwork-data.service';
 import { Utils } from '@data/static/utils';
+import {VaultsDataService} from '@data/services/vaults-data.service';
 
 @Component({
   selector: 'app-hardwork-tx',
@@ -18,13 +19,15 @@ export class HardworkTxComponent implements AfterViewInit {
   @ViewChild('hardWorkHistoryListModal') private hardWorkHistoryListModal: CustomModalComponent;
   vaultFilter = 'all';
   minAmout = 0;
+  vaultsIconsList = [];
 
   constructor(
       public vt: ViewTypeService,
       private snack: SnackBarService,
       private log: NGXLogger,
       private contractsService: ContractsService,
-      private hardworksData: HardworkDataService
+      private hardworksData: HardworkDataService,
+      private vaultsDataService: VaultsDataService
   ) {
   }
 
@@ -35,6 +38,16 @@ export class HardworkTxComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+      this.additionalVaultsList();
+  }
+
+  additionalVaultsList(): void {
+      this.vaultsDataService.retrieveVaultsList()
+          .subscribe((data) => {
+              this.vaultsIconsList = data;
+          }, err => {
+              console.log(err);
+          });
   }
 
   get dtos(): HardWorkDto[] {
