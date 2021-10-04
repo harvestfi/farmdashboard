@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {CustomModalComponent} from '@shared/custom-modal/custom-modal.component';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
@@ -13,13 +13,15 @@ import {PriceDataService} from '@data/services/data/price-data.service';
 import {Token} from '@data/models/token';
 import {Pool} from '@data/models/pool';
 import {VaultsDataService} from '@data/services/vaults-data.service';
+import {Subject} from 'rxjs/internal/Subject';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-strategy-list',
   templateUrl: './strategy-list.component.html',
   styleUrls: ['./strategy-list.component.scss']
 })
-export class StrategyListComponent extends StrategyListCommonMethods implements AfterViewInit, OnInit {
+export class StrategyListComponent extends StrategyListCommonMethods implements AfterViewInit, OnInit, OnDestroy {
   public searchTerm = '';
   public networkFilter = '';
   public platformFilter = '';
@@ -29,6 +31,7 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   public sortDirection = 'desc';
   public currentSortingValue = 'tvl';
   public vaultsIconsList = [];
+  private ngUnsubscribe = new Subject<boolean>();
   @ViewChildren(CustomModalComponent) private tvlModals: QueryList<CustomModalComponent>;
 
   constructor(
@@ -55,6 +58,7 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
 
   additionalVaultsList(): void {
       this.vaultsDataService.retrieveVaultsList()
+          .pipe(takeUntil(this.ngUnsubscribe))
           .subscribe((data) => {
               this.vaultsIconsList = data;
           }, err => {
@@ -110,5 +114,10 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   isWeeklyRewardActive(vault: Vault): boolean {
     const reward = this.rewardData.getReward(vault?.contract?.address, vault?.contract?.network);
     return !!reward && reward !== 0;
+  }
+
+  ngOnDestroy(): void {
+      this.ngUnsubscribe.next(true);
+      this.ngUnsubscribe.complete();
   }
 }

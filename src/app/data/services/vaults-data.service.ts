@@ -23,30 +23,36 @@ export class VaultsDataService {
 
     retrieveVaultsList(): Observable<Array<FilteredVault>> {
         return this.http.get(`http://localhost:8080/harvestFinance/vaults`)
-            .pipe(share())
-            .pipe(map(data => (this.getFilteredArray(data))
+            .pipe(
+                share(),
+                map(data => (this.getFilteredArray(data))
             ));
     }
 
     getFilteredArray(list): Array<FilteredVault> {
         const array = [];
-        for (const key in list) {
-            if (list.hasOwnProperty(key) && key !== 'updatedAt') {
+        Object.keys(list)
+            .filter(network => network !== 'updatedAt')
+            .forEach(network => {
                 array.push({
-                    network: key,
+                    network,
                     vaults: []
                 });
-                for (const vault in list[key]) {
-                    if (list[key].hasOwnProperty(vault)) {
+
+
+                const listValue = list[network];
+
+                Object.keys(listValue)
+                    .forEach(vault => {
+                        const listValueVault = listValue[vault];
+
                         array[array.length - 1].vaults.push({
                             vaultName: vault,
-                            iconUrl: 'https://harvest.finance' + list[key][vault].logoUrl.slice(1),
-                            address: list[key][vault].vaultAddress
+                            iconUrl: 'https://harvest.finance' + listValueVault.logoUrl.slice(1),
+                            address: listValueVault.vaultAddress
                         });
-                    }
-                }
-            }
-        }
+                    });
+            });
         return array;
     }
 }

@@ -24,32 +24,28 @@ export class VaultIconsPipe implements PipeTransform {
             }
         }
 
-        if (!name) {
-            if (networkList && networkList.length) {
-                return this.fillUnknown(vault, networkList) ? this.fillUnknown(vault, networkList) : `/assets/icons/vaults/UNKNOWN.png`;
-            } else {
-                return `/assets/icons/vaults/UNKNOWN.png`;
-            }
-        } else {
+        if (name) {
             name = name.split('_#').length === 2 ? name.split('_#')[0] : name;
             return `/assets/icons/vaults/${name}.png`;
         }
 
+        if (!networkList?.length) {
+            return '/assets/icons/vaults/UNKNOWN.png';
+        }
+
+        if (!name && networkList?.length && vault) {
+            const unknownIcon = this.fillUnknown(vault, networkList);
+            return unknownIcon || `/assets/icons/vaults/UNKNOWN.png`;
+        }
     }
 
-    fillUnknown(vault, networkList): any {
+    fillUnknown({ contract: {network, address} }, networkList): string {
         let iconUrl = '';
-        for (const network of networkList) {
-            if (network.network === vault?.contract.network) {
-                for (const item of network.vaults) {
-                    if (item && vault) {
-                        if (item.address && item.address.toLowerCase() === vault.contract.address.toLowerCase()) {
-                            iconUrl = item.iconUrl;
-                        }
-                    }
-                }
-            }
-        }
+        networkList
+            .filter(it => it.network === network)
+            .forEach(it => {
+                iconUrl = (it.vaults.find(vault => address && vault.address?.toLowerCase() === address.toLowerCase()))?.iconUrl || '';
+            });
         return iconUrl;
     }
 }
