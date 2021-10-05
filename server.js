@@ -1,11 +1,32 @@
 //Install express server
 const express = require('express');
 const path = require('path');
-
+const https = require('https');
 const app = express();
+const cors = require('cors');
+
+
+cors({credentials: true, origin: true});
+
+app.use(cors());
 
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/farmdashboard-front'));
+
+app.get('/harvestFinance/vaults', function(req, res) {
+    https.get('https://api-ui.harvest.finance/vaults?key=41e90ced-d559-4433-b390-af424fdc76d6', (resp) => {
+        let data = '';
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+        resp.on('end', () => {
+            return res.send(JSON.parse(data))
+        });
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+});
 
 app.get('/*', function(req,res) {
 

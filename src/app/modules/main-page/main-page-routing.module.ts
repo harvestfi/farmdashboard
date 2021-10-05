@@ -38,6 +38,10 @@ const routes: Routes = [
     component: VaultStatsTotalComponent
   },
   {
+    path: 'info/:network/:address',
+    component: VaultStatsComponent
+  },
+  {
     path: 'rewards-history',
     component: RewardsHistoryComponent,
   },
@@ -52,10 +56,6 @@ const routes: Routes = [
   {
      path: 'vaults-list',
      component: StrategyListComponent,
-  },
-  {
-     path: 'info/:network/:address',
-     component: VaultStatsComponent
   },
 ];
 

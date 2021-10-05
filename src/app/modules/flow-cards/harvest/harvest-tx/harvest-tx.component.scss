@@ -2,8 +2,6 @@
 @import "../../../../../scss/utilities/fancy-ui-helpers";
 
 .harvest-card {
-    border: 1px solid rgba($dark-background-color, 0.2);
-
     .title-row {
         .select-strategy-2,
         .input-less-than {
@@ -33,4 +31,18 @@
 
     }
 
+}
+
+@media (max-width: 1750px) {
+    .harvest-card {
+        .table-header {
+            grid-template-columns: 21% 27% 15% 11% 15% 0;
+        }
+
+        .trades-list {
+            .trades-list-item {
+                grid-template-columns: 22% 26% 15% 9% 24% 0;
+            }
+        }
+    }
 }

@@ -89,7 +89,8 @@
 
         <!-- Name -->
         <div class="column">
-          <app-vault-icon [vault]="row"></app-vault-icon>
+          <app-vault-icon [vault]="row"
+                          [networks]="vaultsIconsList"></app-vault-icon>
           {{prettyName(row.contract.name)}}
         </div>
 
