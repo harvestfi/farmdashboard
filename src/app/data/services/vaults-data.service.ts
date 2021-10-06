@@ -22,7 +22,7 @@ export class VaultsDataService {
     }
 
     retrieveVaultsList(): Observable<Array<FilteredVault>> {
-        return this.http.get(`http://localhost:8080/harvestFinance/vaults`)
+        return this.http.get(`/harvestFinance/vaults`)
             .pipe(
                 share(),
                 map(data => (this.getFilteredArray(data))
