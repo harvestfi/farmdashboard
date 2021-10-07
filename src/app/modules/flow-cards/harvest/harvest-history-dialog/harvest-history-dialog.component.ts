@@ -6,9 +6,9 @@ import {Vault} from '@data/models/vault';
 import {ContractsService} from '@data/services/contracts.service';
 import {HarvestsService} from '@data/services/http/harvests.service';
 import {Paginated} from '@data/models/paginated';
-import {Subject} from "rxjs/internal/Subject";
-import {VaultsDataService} from "@data/services/vaults-data.service";
-import {takeUntil} from "rxjs/operators";
+import {Subject} from 'rxjs/internal/Subject';
+import {VaultsDataService} from '@data/services/vaults-data.service';
+import {takeUntil} from 'rxjs/operators';
 
 
 @Component({

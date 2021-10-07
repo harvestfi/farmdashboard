@@ -10,9 +10,9 @@ import {ContractsService} from '@data/services/contracts.service';
 import {Vault} from '@data/models/vault';
 import {HarvestsService} from '@data/services/http/harvests.service';
 import {HarvestDataService} from '@data/services/data/harvest-data.service';
-import {Subject} from "rxjs/internal/Subject";
-import {takeUntil} from "rxjs/operators";
-import {VaultsDataService} from "@data/services/vaults-data.service";
+import {Subject} from 'rxjs/internal/Subject';
+import {takeUntil} from 'rxjs/operators';
+import {VaultsDataService} from '@data/services/vaults-data.service';
 
 @Component({
   selector: 'app-harvest-tx',
