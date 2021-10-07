@@ -26,9 +26,9 @@
       </div>
     </div>
 
-    <div class="value-card eth" [class]="vt.getThemeColor() + '-card'">
+    <div class="value-card eth" >
       <div class="currency-wrapper">
-        <div class="currency">
+        <div class="value-card currency" [class]="vt.getThemeColor() + '-card'">
           <div class="value-middle">
                 <span class="small-value-caption"
                       [class]="vt.getThemeColor() + '-gray'">ETH</span>
@@ -39,7 +39,7 @@
             <span [class]="vt.getThemeColor() + '-black'">{{ethUsdPrice | number: '1.0-0'}}</span>
           </div>
         </div>
-        <div class="currency">
+        <div class="value-card currency" [class]="vt.getThemeColor() + '-card'">
           <div class="value-middle">
                 <span class="small-value-caption"
                       [class]="vt.getThemeColor() + '-gray'">BNB</span>
@@ -50,7 +50,7 @@
             <span [class]="vt.getThemeColor() + '-black'">{{bnbUsdPrice | number: '1.0-0'}}</span>
           </div>
         </div>
-        <div class="currency">
+        <div class="value-card currency" [class]="vt.getThemeColor() + '-card'">
           <div class="value-middle">
                 <span class="small-value-caption"
                       [class]="vt.getThemeColor() + '-gray'">Polygon</span>

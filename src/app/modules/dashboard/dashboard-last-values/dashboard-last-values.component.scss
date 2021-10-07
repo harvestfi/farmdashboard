@@ -16,7 +16,7 @@
                            "saved-gas farm-buybacks"
                            "total-users active-pools";
     grid-template-columns: 50% 50%;
-    grid-template-rows: 0.5fr 0.5fr 1fr 1fr 0.5fr 0.5fr;
+    grid-template-rows: 0.5fr 1.5fr 1fr 1fr 0.5fr 0.5fr;
   }
 
   .value-card {
@@ -181,12 +181,17 @@
   .eth{
     grid-area: eth;
     height: 100px;
-
+    padding: 0;
+    background: transparent;
     .currency-wrapper {
       width: 100%;
+      min-height: 100px;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       .currency {
+        margin-top: 0;
+        margin-bottom: 0;
+        width: 100%;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -200,6 +205,12 @@
         -webkit-box-pack: center;
         -ms-flex-pack: center;
         justify-content: center;
+      }
+      .currency:first-child {
+        margin-left: 0;
+      }
+      .currency:last-child {
+        margin-right: 0;
       }
     }
     .value-number-middle {
@@ -337,5 +348,28 @@
 @media (max-width: 1850px) {
   .main-top-stats {
     padding: 0 10px;
+  }
+}
+
+@media (max-width: 1250px) {
+  .main-top-stats {
+    .eth {
+      height: unset;
+      .currency-wrapper {
+        flex-direction: column;
+        height: auto;
+        .currency {
+          box-sizing: border-box;
+          height: 100px;
+          margin: 10px 0;
+        }
+        .currency:first-child {
+          margin-top: 0;
+        }
+        .currency:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 }
