@@ -19,7 +19,8 @@
             <tbody>
                 <tr class="table-row" *ngFor="let vault of sortedVaults">
                     <td class="name">
-                        <app-vault-icon [vault]="vault"></app-vault-icon>
+                        <app-vault-icon [vault]="vault"
+                                        [networks]="vaultsIconsList"></app-vault-icon>
                         <span>{{vault.contract.name}}</span>
                     </td>
 

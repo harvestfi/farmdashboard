@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild} from '@angular/core';
 import {WebsocketService} from '@data/services/websocket.service';
 import {HttpService} from '@data/services/http/http.service';
 import {NGXLogger} from 'ngx-logger';
@@ -10,17 +10,23 @@ import {ContractsService} from '@data/services/contracts.service';
 import {Vault} from '@data/models/vault';
 import {HarvestsService} from '@data/services/http/harvests.service';
 import {HarvestDataService} from '@data/services/data/harvest-data.service';
+import {Subject} from "rxjs/internal/Subject";
+import {takeUntil} from "rxjs/operators";
+import {VaultsDataService} from "@data/services/vaults-data.service";
 
 @Component({
   selector: 'app-harvest-tx',
   templateUrl: './harvest-tx.component.html',
   styleUrls: ['./harvest-tx.component.scss']
 })
-export class HarvestTxComponent implements AfterViewInit {
+export class HarvestTxComponent implements AfterViewInit, OnDestroy{
   vaultFilter = 'all';
   minAmount = 0;
   openedModal: Record<string, boolean> = {};
+  vaultsIconsList = [];
+  private ngUnsubscribe = new Subject<boolean>();
   @ViewChild('harvestHistoryModal') private harvestHistoryModal: CustomModalComponent;
+
   constructor(private ws: WebsocketService,
               private httpService: HttpService,
               private cdRef: ChangeDetectorRef,
@@ -30,11 +36,23 @@ export class HarvestTxComponent implements AfterViewInit {
               private contractsService: ContractsService,
               private harvestsService: HarvestsService,
               private harvestData: HarvestDataService,
-              private contractService: ContractsService
+              private contractService: ContractsService,
+              private vaultsDataService: VaultsDataService,
   ) {
   }
 
   ngAfterViewInit(): void {
+    this.additionalVaultsList();
+  }
+
+  additionalVaultsList(): void {
+    this.vaultsDataService.retrieveVaultsList()
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((data) => {
+            this.vaultsIconsList = data;
+        }, err => {
+            console.log(err);
+        });
   }
 
   get vaultNames(): string[] {
@@ -63,5 +81,10 @@ export class HarvestTxComponent implements AfterViewInit {
 
   showTradeLinks(dtoId: string): void {
     this.openedModal[dtoId] = true;
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
 }

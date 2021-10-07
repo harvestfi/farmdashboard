@@ -165,6 +165,10 @@ export class DashboardLastValuesComponent implements OnInit {
     return this.priceData.getUsdPrice(Addresses.ADDRESSES.get('WBNB'), 'bsc');
   }
 
+  get polygonUsdPrice(): number {
+    return this.priceData.getUsdPrice(Addresses.ADDRESSES.get('WETH'), 'matic');
+ }
+
   // -------------- OPEN MODALS ---------------------
 
   openTvlDialog(): void {

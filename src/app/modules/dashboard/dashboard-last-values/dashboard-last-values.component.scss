@@ -4,13 +4,13 @@
 }
 .main-top-stats {
   display: grid;
-  grid-template-areas:   "farm btc weekly-profit ps-income tvl"
-                         "eth bnb weekly-profit ps-income tvl"
-                         "farm-buybacks farm-staked saved-gas total-users active-pools";
+  grid-template-areas:   "farm btc btc weekly-profit ps-income tvl"
+                         "eth  eth eth weekly-profit ps-income tvl"
+                         "farm-buybacks farm-staked farm-staked  saved-gas total-users active-pools";
 
   @include responsive(medium) {
     grid-template-areas:   "farm btc"
-                           "eth bnb"
+                           "eth eth"
                            "weekly-profit ps-income"
                            "tvl farm-staked"
                            "saved-gas farm-buybacks"
@@ -181,6 +181,27 @@
   .eth{
     grid-area: eth;
     height: 100px;
+
+    .currency-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      .currency {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+      }
+    }
     .value-number-middle {
       font-size: 2.14em;
       margin-top: 10px;
@@ -192,6 +213,18 @@
 
   .btc{
     grid-area: btc;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
+  .matic{
+    grid-area: matic;
     height: 100px;
     .value-number-middle {
       font-size: 2.14em;

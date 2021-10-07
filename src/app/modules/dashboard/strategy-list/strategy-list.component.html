@@ -13,6 +13,7 @@
         <option value="">Network</option>
         <option value="eth">Ethereum</option>
         <option value="bsc">Binance</option>
+        <option value="matic">Matic</option>
       </select>
 
       <select [(ngModel)]="platformFilter" name="" id="platformFilter"
@@ -104,7 +105,7 @@
 
         <!-- Network -->
         <div class="column desktop-only">
-          {{prettyNetwork(row.contract.network)}}
+          {{prettyNetwork(row.contract.network) | titlecase }}
         </div>
 
         <!-- Name -->

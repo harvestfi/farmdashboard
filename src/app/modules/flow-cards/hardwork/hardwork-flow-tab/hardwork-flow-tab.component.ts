@@ -14,6 +14,7 @@ export class HardworkFlowTabComponent implements OnInit {
   @Input() vaultFilter = 'all';
   @Input() minAmount = 0;
   @Input() showMoreColumns = false;
+  @Input() vaultsIconsList;
 
   constructor(public vt: ViewTypeService) {
   }
