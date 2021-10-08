@@ -37,7 +37,7 @@ export class Networks {
   public NETWORKS: Map<string, Network> = new Map<string, Network>([
     ['bsc', Networks.NETWORK_BSC],
     ['eth', Networks.NETWORK_ETH],
-    ['matic', Networks.NETWORK_MATIC]
+    ['matic', Networks.NETWORK_MATIC],
   ]);
 
   constructor(@Inject(APP_CONFIG)config) {

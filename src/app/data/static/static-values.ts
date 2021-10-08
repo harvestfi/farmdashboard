@@ -14,7 +14,7 @@ export class StaticValues {
   public static NETWORK_ICON: Map<string, string> = new Map<string, string>([
     ['eth', 'assets/icons/common/eth.svg'],
     ['bsc', 'assets/icons/common/wbnb.png'],
-    ['matic', 'assets/icons/common/matic.svg']
+    ['matic', 'assets/icons/common/matic.svg'],
   ]);
 
   public static farmPools: string[] = [
