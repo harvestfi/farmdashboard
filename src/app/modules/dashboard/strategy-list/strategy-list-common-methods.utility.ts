@@ -62,10 +62,6 @@ abstract class StrategyListCommonMethods {
   vaultUsers(vaultAddress: string, network: string): number {
     return this.harvestData.getVaultLastInfo(vaultAddress, network)?.ownerCount || 0;
   }
-
-  prettyName(name: string): string {
-    return Utils.prettyVaultName(name);
-  }
 }
 
 export default StrategyListCommonMethods;

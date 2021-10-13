@@ -10,7 +10,7 @@ import {HardworkDataService} from '@data/services/data/hardwork-data.service';
 import { Utils } from '@data/static/utils';
 import {VaultsDataService} from '@data/services/vaults-data.service';
 import {takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs/internal/Subject';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-hardwork-tx',

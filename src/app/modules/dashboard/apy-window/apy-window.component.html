@@ -1,5 +1,7 @@
 <div class="apy-window">
-  <div (click)="closeModal()" class="close left-border-box">
+  <div
+    class="close left-border-box"
+    (click)="onCloseModal($event)">
     <mat-icon class="close-icon">
       close
     </mat-icon>
@@ -37,6 +39,7 @@
     <p class="link pointer">
       <a (click)="openChartPage()">Vault Info</a>
       <a (click)="openIncomeDialog()">Chart</a>
+      <a (click)="openTvlDialog()">TVL Chart</a>
       <a href='https://www.notion.so/harvestfinance/APY-Calculation-bd7a8082f76541e79fe49d8d928a2c93' target='_blank'>
         Interest rate guide</a>
     </p>
@@ -44,13 +47,24 @@
     <app-custom-modal #incomeModal>
       <ng-template>
         <app-apy-chart-dialog
-            [data]="{title: vault.name + ' Income history chart', address: vault.contract.address, network: vault.contract.network}"></app-apy-chart-dialog>
+          [data]="{title: vault.name + ' Income history chart', address: vault.contract.address, network: vault.contract.network}"></app-apy-chart-dialog>
       </ng-template>
     </app-custom-modal>
 
     <app-custom-modal #psApyModal>
       <ng-template>
         <app-ps-apy-dialog></app-ps-apy-dialog>
+      </ng-template>
+    </app-custom-modal>
+
+    <app-custom-modal
+      #tvlApyModal
+      [name]="'tvlModal_' + vault.contract.address">
+      <ng-template>
+        <app-vault-tvl-dialog
+          [vault]="vault.contract.address"
+          [network]="vault.contract.network">
+        </app-vault-tvl-dialog>
       </ng-template>
     </app-custom-modal>
   </div>

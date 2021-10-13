@@ -7,32 +7,32 @@
 
 <div class="custom-table" [class]="vt.getThemeColor() + '-card'">
   <div class="filters">
-  <div>
-    <select [(ngModel)]="networkFilter" name="" id="networkFilter"
-            [class]="vt.getThemeColor() + '-softGreen'">
-      <option value="">Network</option>
-      <option value="eth">Ethereum</option>
-      <option value="bsc">Binance</option>
-    </select>
+    <div>
+      <select [(ngModel)]="networkFilter" name="" id="networkFilter"
+              [class]="vt.getThemeColor() + '-softGreen'">
+        <option value="">Network</option>
+        <option value="eth">Ethereum</option>
+        <option value="bsc">Binance</option>
+      </select>
 
-    <select [(ngModel)]="platformFilter" name="" id="platformFilter"
-            [class]="vt.getThemeColor() + '-softGreen'">
-      <option value="">Platform</option>
-      <option *ngFor="let platform of platformList" [value]="platform.prefix">{{platform.name}}</option>
-    </select>
+      <select [(ngModel)]="platformFilter" name="" id="platformFilter"
+              [class]="vt.getThemeColor() + '-softGreen'">
+        <option value="">Platform</option>
+        <option *ngFor="let platform of platformList" [value]="platform.prefix">{{platform.name}}</option>
+      </select>
 
-    <select [(ngModel)]="assetFilter" name="" id="assetFilter"
-            [class]="vt.getThemeColor() + '-softGreen'">
-      <option value="">Asset</option>
-      <option *ngFor="let asset of assetList" [value]="asset">{{asset}}</option>
+      <select [(ngModel)]="assetFilter" name="" id="assetFilter"
+              [class]="vt.getThemeColor() + '-softGreen'">
+        <option value="">Asset</option>
+        <option *ngFor="let asset of assetList" [value]="asset">{{asset}}</option>
 
-    </select>
+      </select>
 
-    <div class="quantity">
-      <span [class]="vt.getThemeColor() + '-solidGreen'">Total: {{vaultsList.length}}</span>
+      <div class="quantity">
+        <span [class]="vt.getThemeColor() + '-solidGreen'">Total: {{ (vaultsList$ | async)?.length }}</span>
+      </div>
     </div>
-  </div>
-  <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
+    <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
 
   </div>
 
@@ -77,10 +77,30 @@
 
   <!--  ******** VALUES ************** -->
 
-  <div class="content" [class]="vt.getThemeColor() + '-card'">
-    <div
-        *ngIf="vaultsList | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm as filteredVaults">
-      <div *ngFor="let row of filteredVaults" class="row">
+  <div
+    class="content"
+    [class]="vt.getThemeColor() + '-card'">
+    <ng-container
+      *ngIf="(vaultsList$ | async)
+      | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm
+      as filteredVaults">
+      <div
+        *ngFor="let row of filteredVaults"
+        class="row pointer"
+        (click)="toggleAPYWindow(row.contract.address)">
+
+        <!-- Popup -->
+        <app-draggable-modal
+          *ngIf="apyWindowState[row.contract.address]"
+          class="apy-modal"
+          (dragged)="onModalDrag($event)">
+          <app-apy-window
+            [vault]="row"
+            [pool]="poolsList().get(row.contract.address)"
+            (showModal)="toggleAPYWindow(row.contract.address)"
+            (closeModal)="closeAPYWindow(row.contract.address)">
+          </app-apy-window>
+        </app-draggable-modal>
 
         <!-- Network -->
         <div class="column desktop-only">
@@ -88,39 +108,34 @@
         </div>
 
         <!-- Name -->
-        <div class="column">
-          <app-vault-icon [vault]="row"
-                          [networks]="vaultsIconsList"></app-vault-icon>
-          {{prettyName(row.contract.name)}}
+        <div class="column name">
+          <app-vault-icon
+            [vault]="row"
+            [networks]="vaultsIconsList">
+          </app-vault-icon>
+
+          <span [title]="row.underlying?.name">
+            {{ row.underlying?.name }}
+          </span>
         </div>
 
         <!-- APY -->
         <div class="column">
-          <app-draggable-modal class="apy-modal" *ngIf="apyWindowState[row.contract.address]">
-            <app-apy-window (showModal)="toggleAPYWindow(row.contract.address)"
-                            [vault]="row" [pool]="poolsList().get(row.contract.address)"></app-apy-window>
-          </app-draggable-modal>
-          <app-popover-card class="pointer" (click)="toggleAPYWindow(row.contract.address)">
+          <app-popover-card class="pointer">
             <ng-template>
               <p>Click to open details</p>
             </ng-template>
             <i *ngIf="isWeeklyRewardActive(row)" class="fa fa-bolt" style="color: goldenrod"></i>
+            <!-- TODO: vaultFullApy - move to data mapper -->
             {{prettifyNumber(vaultFullApy(row.contract.address, row.contract.network))}}%
           </app-popover-card>
         </div>
 
         <!-- TVL -->
         <div class="column">
-          <app-custom-modal [name]="'tvlModal_' + row.contract.address">
-            <ng-template>
-              <app-vault-tvl-dialog [vault]="row.contract.address"
-                                    [network]="row.contract.network"></app-vault-tvl-dialog>
-            </ng-template>
-          </app-custom-modal>
-          <app-popover-card class="pointer" (click)="openTvlDialog(row.contract.address)">
+          <app-popover-card class="pointer">
             <ng-template>
               <p>TVL: {{vaultTvl(row.contract.address, row.contract.network) | number}}$</p>
-              <p>Click to open TVL history chart</p>
             </ng-template>
             ${{prettifyNumber(vaultTvl(row.contract.address, row.contract.network))}}
           </app-popover-card>
@@ -145,7 +160,7 @@
       <div class="empty-list" *ngIf="!filteredVaults.length">
         🏜️ No results found 🏜️
       </div>
-    </div>
+    </ng-container>
   </div>
 </div>
 
