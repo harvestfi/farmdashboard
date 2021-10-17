@@ -116,6 +116,10 @@
 
   .dark-card .row {
     border-bottom: 1px solid #455858;
+
+    &:hover {
+      background-color: #3a4848;
+    }
   }
 
   .column {

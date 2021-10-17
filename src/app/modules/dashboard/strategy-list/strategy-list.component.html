@@ -114,8 +114,8 @@
             [networks]="vaultsIconsList">
           </app-vault-icon>
 
-          <span [title]="row.underlying?.name">
-            {{ row.underlying?.name }}
+          <span [title]="row.underlying?.name || row.name">
+            {{ row.underlying?.name || row.name }}
           </span>
         </div>
 

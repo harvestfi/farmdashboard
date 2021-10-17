@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Vault } from '@data/models/vault';
 import { Token } from '@data/models/token';
 import { Pool } from '@data/models/pool';
@@ -26,7 +26,7 @@ import { Subject } from 'rxjs';
 export class ContractsService {
 
   private cache = new Map<string, Map<string, IContract>>();
-  private cache$ = new Map<string, Subject<Map<string, IContract>>>();
+  private cache$ = new Map<string, BehaviorSubject<Map<string, IContract>>>([]);
   private urlPrefix = 'contracts';
   private typePaths = new Map<IContract, string>(
     [[Vault, 'vaults'],
@@ -53,7 +53,7 @@ export class ContractsService {
     }
     if (!this.cache.has(typeName)) {
       this.cache.set(typeName, new Map());
-      this.cache$.set(typeName, new Subject());
+      this.cache$.set(typeName, new BehaviorSubject<Map<string, IContract>>(new Map()));
 
       this.requestContracts<T>(type).subscribe(contracts => {
         this.log.debug('Loaded contracts ' + typeName, contracts);
@@ -70,9 +70,11 @@ export class ContractsService {
 
   getContracts$<T extends IContract>(type: new () => T): Observable<any[]> {
     const typeName = this.typePaths.get(type);
+
     return this.cache$.get(typeName)
+      .asObservable()
       .pipe(
-        map(data => Array.from(data.values()))
+        map(data => Array.from(data.values())),
       );
   }
 
