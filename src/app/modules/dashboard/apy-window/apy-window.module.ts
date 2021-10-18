@@ -13,6 +13,7 @@ import {CustomModalModule} from '@shared/custom-modal/custom-modal.module';
 import {AddressModule} from '@shared/addresses/address.module';
 import {ApyChartDialogModule} from '@modules/dialogs/charts/apy-chart-dialog/apy-chart-dialog.module';
 import {PsApyDialogModule} from '@modules/dialogs/charts/ps-apy-dialog/ps-apy-dialog.module';
+import { VaultTvlDialogModule } from '@modules/dialogs/charts/vault-tvl-dialog/vault-tvl-dialog.module';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {PsApyDialogModule} from '@modules/dialogs/charts/ps-apy-dialog/ps-apy-di
     AddressModule,
     ApyChartDialogModule,
     PsApyDialogModule,
+    VaultTvlDialogModule,
   ],
   exports: [
     ApyWindowComponent,

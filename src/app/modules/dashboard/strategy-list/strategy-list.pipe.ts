@@ -28,6 +28,9 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
       sortDirection: string,
       searchTerm: string
   ): Vault[] {
+    if (!vaults) {
+      return [];
+    }
 
     const newVaults = vaults.filter(vault => {
       const networkMatchesFilter = (network ? vault.contract?.network === network : true);
@@ -35,7 +38,8 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
       const assetMatchesFilter = (asset ? vault.contract?.name.includes(asset) : true);
       const searchTermMatchesFilter = (
           searchTerm.length ? vault.contract?.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) : true);
-      return networkMatchesFilter && platformMatchesFilter && assetMatchesFilter && searchTermMatchesFilter;
+      const hasAddress = vault.contract?.address;
+      return networkMatchesFilter && platformMatchesFilter && assetMatchesFilter && searchTermMatchesFilter && hasAddress;
     });
 
     newVaults.sort((a: any, b: any): number => {

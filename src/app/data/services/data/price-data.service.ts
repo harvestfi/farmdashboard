@@ -4,7 +4,7 @@ import {PricesService} from '../http/prices.service';
 import {PricesDto} from '@data/models/prices-dto';
 import {StaticValues} from '@data/static/static-values';
 import {Title} from '@angular/platform-browser';
-import {Observable} from 'rxjs/internal/Observable';
+import {Observable} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
 import {Addresses} from '@data/static/addresses';
 

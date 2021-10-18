@@ -2,6 +2,10 @@
 @import '../../../../scss/utilities/utilities';
 @import '../../../../scss/utilities/fancy-ui-helpers';
 
+.apy-modal {
+  position: absolute;
+}
+
 .title-wrapper {
   margin: 0 0 24px 10px;
   font-family: 'PT Sans', sans-serif;
@@ -16,13 +20,21 @@
   }
 }
 
+.name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .custom-table {
+  // WTF ???
   -webkit-transition: all 0.5s;
   -o-transition: all 0.5s;
   transition: all 0.5s;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
+  // WTF is ends
   padding: 35px 40px 35px 40px;
   border-radius: 10px;
   margin-left: 10px;
@@ -53,7 +65,7 @@
     transition: all 0.5s;
     padding: 10px 20px;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: 100px 250px repeat(5, 1fr);
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     font-family: 'PT Sans', sans-serif;
@@ -86,8 +98,8 @@
   .row {
     padding: 10px 20px;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(auto-fill);
+    grid-template-columns: 100px 250px repeat(5, 1fr);
+    grid-template-rows: repeat(auto-fill, 22px);
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border-bottom: 1px solid #FFFFFF;
@@ -96,10 +108,18 @@
       font-size: 0.7rem;
       grid-template-columns: repeat(3, 1fr);
     }
+
+    &:hover {
+      background-color: #e9f6f6;
+    }
   }
 
   .dark-card .row {
     border-bottom: 1px solid #455858;
+
+    &:hover {
+      background-color: #3a4848;
+    }
   }
 
   .column {
