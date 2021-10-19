@@ -81,34 +81,51 @@
   }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1150px) {
   .main-top-navigation {
-    grid-template-columns: 45px 50% calc(50% - 40px);
+    flex-direction: column;
+    gap: 25px;
+    grid-template-columns: 45px calc(100% - 40px);
+
+    .sockets-status-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .nav-title {
+      justify-content: center;
+      display: flex;
+      width: 100%;
+    }
   }
 }
 
-@media (max-width: 880px) {
-  .main-top-navigation .hide-on-phone {
-    display: none;
-  }
-  .main-top-navigation {
-    grid-template-columns: 45px calc(100% - 40px);
-  }
-}
-@media (max-width: 567px) {
+@media (max-width: 768px) {
+
   .main-top-navigation {
     display: flex;
     flex-direction: column;
     grid-template-columns: unset;
   }
-}
-
-@media (max-width: 567px) {
   .sockets-status-container {
     flex-direction: column;
   }
   .theme-switch-wrapper {
     display: flex;
     justify-content: center;
+  }
+  .sockets-status-container .status-block {
+    margin: 0 auto;
+    display: flex;
+  }
+}
+
+@media (max-width: 400px) {
+  .nav-title {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .main-top-navigation .nav-title span {
+    margin: 0 auto;
   }
 }

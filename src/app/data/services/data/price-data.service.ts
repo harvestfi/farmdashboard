@@ -148,6 +148,10 @@ export class PriceDataService {
     return price;
   }
 
+  public getMaticUsdPrice(): Observable<{ usd: number; }> {
+    return this.pricesService.getMaticUSDPrice();
+  }
+
   public getLastFarmPrice(): number {
     return this.lastFarmPrice || 0;
   }

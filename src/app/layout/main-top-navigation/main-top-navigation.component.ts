@@ -17,7 +17,11 @@ export class MainTopNavigationComponent implements OnInit {
     {
       name: 'bsc',
       icon: 'assets/icons/common/wbnb.png'
-    }
+    },
+    {
+      name: 'matic',
+      icon: 'assets/icons/common/matic.png'
+    },
   ];
 
   public blockDiffs = new Map<string, number>();

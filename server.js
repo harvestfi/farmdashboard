@@ -28,6 +28,22 @@ app.get('/harvestFinance/vaults', function(req, res) {
 
 });
 
+app.get('/matic-info', function(req, res) {
+    https.get('https://api.coingecko.com/api/v3/simple/price?include_last_updated_at=true&ids=matic-network&vs_currencies=usd', (resp) => {
+        let data = '';
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+        resp.on('end', () => {
+            return res.send(JSON.parse(data)["matic-network"]);
+        });
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
+});
+
+
 app.get('/*', function(req,res) {
 
     res.sendFile(path.join(__dirname+'/dist/farmdashboard-front/index.html'));
