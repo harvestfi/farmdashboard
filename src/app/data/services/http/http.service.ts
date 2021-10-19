@@ -107,7 +107,7 @@ export class HttpService {
   }
 
   getMaticPrices(): Observable<{ usd: number }> {
-      return this.http.get<{ usd: number; }>(`${this.localApi}/matic-info`);
+      return this.http.get<{ usd: number }>(`${this.localApi}/matic-info`);
   }
 
   private handleResponse(x: any, url: string): any {
