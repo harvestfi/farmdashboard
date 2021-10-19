@@ -7,11 +7,12 @@ import { HardworksService } from '@data/services/http/hardworks.service';
 import { HardWorkDto } from '@data/models/hardwork-dto';
 import { TvlsService } from '@data/services/http/tvls.service';
 import { HarvestsService } from '@data/services/http/harvests.service';
-import { EChartsOption } from 'echarts';
+import {EChartsOption} from 'echarts/types/src/export/option';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { PriceDataService } from '@data/services/data/price-data.service';
 import { Addresses } from '@data/static/addresses';
+import moment from 'moment';
 
 export interface ChartItem {
     name: string;
@@ -56,6 +57,9 @@ export class VaultStatsTotalComponent implements OnInit {
     valueSymbol4 = '$';
     valueSymbol5 = '$';
     valueSymbol6 = '';
+
+    selectedPeriod1 = 0;
+    selectedPeriod3 = 0;
 
     tvlTotalSelectedValue = '';
     tvlTotalSelectedDate = '';
@@ -117,8 +121,8 @@ export class VaultStatsTotalComponent implements OnInit {
                     const totalArray = [...totalDataTVL, ...totalDataTVL2].sort(this.sortDate);
                     const paredArray = this.findNotParedDay(totalArray);
                     const paredUsersArray = this.findNotParedDay(totalUsersArray);
-                    this.totalDataTVL = this.combineNetworks(paredArray);
-                    this.totalUsers = this.combineNetworks(paredUsersArray);
+                    this.totalDataTVL = this.combineNetworks(totalArray);
+                    this.totalUsers = this.combineNetworks(totalUsersArray);
                     setTimeout(() => {
                         this.initializeChartTotalTVL();
                         this.initializeChartUsers();
@@ -239,7 +243,7 @@ export class VaultStatsTotalComponent implements OnInit {
             grid: {
                 top: '26%',
                 left: '3.5%',
-                right: '6%',
+                right: '50',
                 bottom: '12%',
             },
             axisPointer: {
@@ -249,7 +253,7 @@ export class VaultStatsTotalComponent implements OnInit {
                 }
             },
             xAxis: {
-                type: 'category',
+                type: 'time',
                 splitLine: {
                     show: false,
                     lineStyle: {
@@ -267,20 +271,19 @@ export class VaultStatsTotalComponent implements OnInit {
                     show: false,
                 },
                 axisLabel: {
-                    color: '#9fa3a3',
-                    fontSize: '14px',
-                    fontFamily: 'Inter var',
-                    formatter: (value) => echarts.format.formatTime('dd', value, false),
-                    showMinLabel: true,
-                    showMaxLabel: true,
+                  color: '#9fa3a3',
+                  fontSize: '12px',
+                  fontFamily: 'Inter var',
+                  formatter: (value => this.selectedPeriod1 === 1 ? moment(value).format('DD.MM') : moment(value).format('MM.YY')),
+                  showMinLabel: true,
+                  showMaxLabel: true,
                 },
                 boundaryGap: false,
-
             },
             yAxis: {
                 position: 'right',
                 type: 'value',
-                offset: 10,
+                offset: 0,
                 splitLine: {
                     show: true,
                     lineStyle: {
@@ -318,8 +321,11 @@ export class VaultStatsTotalComponent implements OnInit {
                 smooth: true,
                 showSymbol: false,
                 data: this.totalDataTVL,
+                lineStyle: {
+                  width: 0.5,
+                },
                 itemStyle: {
-                    color: '#EAF6F6'
+                    color: '#5CADAA'
                 },
                 areaStyle: {
                     color: '#5CADAA',
@@ -359,7 +365,7 @@ export class VaultStatsTotalComponent implements OnInit {
             grid: {
                 top: '26%',
                 left: '4.5%',
-                right: '6%',
+                right: '50',
                 bottom: '12%',
             },
             xAxis: [
@@ -385,7 +391,7 @@ export class VaultStatsTotalComponent implements OnInit {
                         color: '#9fa3a3',
                         fontSize: '14px',
                         fontFamily: 'Inter var',
-                        formatter: (value) => echarts.format.formatTime('MM', value, false),
+                        formatter: (value) => echarts.time.format('MM', value, false),
                         showMinLabel: true,
                         showMaxLabel: true,
                     },
@@ -469,12 +475,12 @@ export class VaultStatsTotalComponent implements OnInit {
             grid: {
                 top: '26%',
                 left: '4.5%',
-                right: '6%',
+                right: '50',
                 bottom: '12%',
             },
             xAxis: [
                 {
-                    type: 'category',
+                    type: 'time',
                     splitLine: {
                         show: false,
                         lineStyle: {
@@ -492,20 +498,19 @@ export class VaultStatsTotalComponent implements OnInit {
                         }
                     },
                     axisLabel: {
-                        color: '#9fa3a3',
-                        fontSize: '14px',
-                        fontFamily: 'Inter var',
-                        formatter: (value) => echarts.format.formatTime('dd', value, false),
-                        showMinLabel: true,
-                        showMaxLabel: true,
+                      color: '#9fa3a3',
+                      fontSize: '12px',
+                      fontFamily: 'Inter var',
+                      formatter: (value => this.selectedPeriod3 === 1 ? moment(value).format('DD.MM') : moment(value).format('MM.YY')),
+                      showMinLabel: true,
+                      showMaxLabel: true,
                     },
-
                 },
             ],
             yAxis: {
                 position: 'right',
                 type: 'value',
-                offset: 10,
+                offset: 0,
                 splitLine: {
                     show: true,
                     lineStyle: {
@@ -579,7 +584,7 @@ export class VaultStatsTotalComponent implements OnInit {
             grid: {
                 top: '26%',
                 left: '4.5%',
-                right: '6%',
+                right: '50',
                 bottom: '12%',
             },
             xAxis: [
@@ -605,7 +610,7 @@ export class VaultStatsTotalComponent implements OnInit {
                         color: '#9fa3a3',
                         fontSize: '14px',
                         fontFamily: 'Inter var',
-                        formatter: (value) => echarts.format.formatTime('dd', value, false),
+                        formatter: (value) => echarts.time.format('dd', value, false),
                         showMinLabel: true,
                         showMaxLabel: true,
                     },
@@ -689,7 +694,7 @@ export class VaultStatsTotalComponent implements OnInit {
             grid: {
                 top: '26%',
                 left: '4.5%',
-                right: '6%',
+                right: '50',
                 bottom: '12%',
             },
             xAxis: [
@@ -715,7 +720,7 @@ export class VaultStatsTotalComponent implements OnInit {
                         color: '#9fa3a3',
                         fontSize: '14px',
                         fontFamily: 'Inter var',
-                        formatter: (value) => echarts.format.formatTime('dd', value, false),
+                        formatter: (value) => echarts.time.format('dd', value, false),
                         showMinLabel: true,
                         showMaxLabel: true,
                     },
@@ -933,5 +938,7 @@ export class VaultStatsTotalComponent implements OnInit {
         }
     }
 
-
+    onChangePeriod(optionsNumber, period): void {
+      this[`selectedPeriod` + optionsNumber] = period;
+    }
 }

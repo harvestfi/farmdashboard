@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {EChartsOption} from 'echarts/types/src/export/option';
 import {ChartSeries} from '@modules/dashboard/vault-stats/models/chart-series.model';
 import {ViewTypeService} from '@data/services/view-type.service';
@@ -19,18 +19,21 @@ export class EchartComponent implements OnInit {
   updateOptions: any;
   selectedPeriod = 0;
   primaryData = [];
-  @Input() set data(value: ChartSeries[]) {
+
+  @Input()
+  set data(value: ChartSeries[]) {
     if (value.length) {
-        this.tempData = value;
-        this.primaryData = [...this.tempData];
-        this.setDefaultTooltipValues();
-      }
+      this.tempData = value;
+      this.primaryData = [...this.tempData];
+      this.setDefaultTooltipValues();
+    }
   }
 
-    get data(): ChartSeries[] {
-        return this.tempData;
-    }
+  get data(): ChartSeries[] {
+    return this.tempData;
+  }
 
+  @Output() changePeriod: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(public vt: ViewTypeService) { }
 
@@ -74,11 +77,14 @@ export class EchartComponent implements OnInit {
 
   selectPeriod(period): void {
       this.selectedPeriod = period;
+
+      this.changePeriod.emit(period);
+
       this.updateOptions = {
-          series: [{
-              data: this.filterDataByPeriod(period)
-          }],
-          xAxis: this.options ? this.options.xAxis : ''
+        series: [{
+          data: this.filterDataByPeriod(period),
+        }],
+        xAxis: this.options ? this.options.xAxis : '',
       };
   }
 
@@ -88,7 +94,7 @@ export class EchartComponent implements OnInit {
       const monthAgo = new Date();
       monthAgo.setDate(monthAgo.getDate() - 30);
       const halfYearAgo = new Date();
-      halfYearAgo .setDate(halfYearAgo.getDate() - 180);
+      halfYearAgo.setDate(halfYearAgo.getDate() - 180);
       const seriesData = [...this.primaryData];
       if (!period) {
           return this.primaryData;
@@ -99,6 +105,5 @@ export class EchartComponent implements OnInit {
       if (period === 6) {
           return seriesData.filter((item) => (new Date(item.name).getTime() > halfYearAgo.getTime()));
       }
-
   }
 }

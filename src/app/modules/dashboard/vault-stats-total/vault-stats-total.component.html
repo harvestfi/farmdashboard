@@ -9,12 +9,15 @@
         <div class="grid-sheet">
             <div class="charts-block">
                 <div class="chart-block">
-                    <app-echart [title]="title1"
-                                [selectedValue]="tvlTotalSelectedValue"
-                                [selectedDate]="tvlTotalSelectedDate"
-                                [valueSymbol]="valueSymbol1"
-                                [options]="options1"
-                                [data]="totalDataTVL"></app-echart>
+                    <app-echart
+                      [title]="title1"
+                      [selectedValue]="tvlTotalSelectedValue"
+                      [selectedDate]="tvlTotalSelectedDate"
+                      [valueSymbol]="valueSymbol1"
+                      [options]="options1"
+                      [data]="totalDataTVL"
+                      (changePeriod)="onChangePeriod(1, $event)">
+                    </app-echart>
                     <!--<div class="left-part">
                         <div class="change-percent">
                             <span  class="label">Change in % (24h)</span>
@@ -87,12 +90,15 @@
                  </div>-->
                 </div>
                 <div class="chart-block">
-                    <app-echart [title]="title3"
-                                [selectedValue]="usersSelectedValue"
-                                [selectedDate]="usersSelectedDate"
-                                [valueSymbol]="valueSymbol3"
-                                [options]="options3"
-                                [data]="totalUsers"></app-echart>
+                    <app-echart
+                      [title]="title3"
+                      [selectedValue]="usersSelectedValue"
+                      [selectedDate]="usersSelectedDate"
+                      [valueSymbol]="valueSymbol3"
+                      [options]="options3"
+                      [data]="totalUsers"
+                      (changePeriod)="onChangePeriod(3, $event)">
+                    </app-echart>
                     <!--<div class="left-part">
                         <div class="change-percent">
                             <span  class="label">Change in % (24h)</span>
