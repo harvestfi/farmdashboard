@@ -1,6 +1,5 @@
 import {  ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ViewTypeService } from '@data/services/view-type.service';
-import * as echarts from 'echarts';
 import { ChartSeries } from '@modules/dashboard/vault-stats/models/chart-series.model';
 import { StaticValues } from '@data/static/static-values';
 import { HardworksService } from '@data/services/http/hardworks.service';
@@ -59,7 +58,9 @@ export class VaultStatsTotalComponent implements OnInit {
     valueSymbol6 = '';
 
     selectedPeriod1 = 0;
+    selectedPeriod2 = 0;
     selectedPeriod3 = 0;
+    selectedPeriod6 = 0;
 
     tvlTotalSelectedValue = '';
     tvlTotalSelectedDate = '';
@@ -391,17 +392,20 @@ export class VaultStatsTotalComponent implements OnInit {
                         color: '#9fa3a3',
                         fontSize: '14px',
                         fontFamily: 'Inter var',
-                        formatter: (value) => echarts.time.format('MM', value, false),
+                        formatter: (
+                          value => this.selectedPeriod2 === 1
+                            ? moment(value, 'YYYY/MM').format('DD.MM')
+                            : moment(value, 'YYYY/MM').format('MM.YY')
+                        ),
                         showMinLabel: true,
                         showMaxLabel: true,
                     },
-
                 },
             ],
             yAxis: {
                 position: 'right',
                 type: 'value',
-                offset: 10,
+                offset: 0,
                 splitLine: {
                     show: true,
                     lineStyle: {
@@ -554,6 +558,8 @@ export class VaultStatsTotalComponent implements OnInit {
         };
     }
 
+// TODO: check this - remove if not used
+/*
     initializeChartFarmBuyBack(): void {
         let temp = '';
         this.options4 = {
@@ -663,6 +669,7 @@ export class VaultStatsTotalComponent implements OnInit {
             }]
         };
     }
+*/
 
     initializeChartFarmStacked(): void {
         let temp = '';
@@ -720,7 +727,11 @@ export class VaultStatsTotalComponent implements OnInit {
                         color: '#9fa3a3',
                         fontSize: '14px',
                         fontFamily: 'Inter var',
-                        formatter: (value) => echarts.time.format('dd', value, false),
+                        formatter: (
+                          value => this.selectedPeriod6 === 1
+                            ? moment(value, 'YYYY/MM/DD').format('DD.MM')
+                            : moment(value, 'YYYY/MM/DD').format('MM.YY')
+                        ),
                         showMinLabel: true,
                         showMaxLabel: true,
                     },
@@ -730,7 +741,7 @@ export class VaultStatsTotalComponent implements OnInit {
             yAxis: {
                 position: 'right',
                 type: 'value',
-                offset: 10,
+                offset: 0,
                 splitLine: {
                     show: true,
                     lineStyle: {

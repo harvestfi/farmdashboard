@@ -37,12 +37,15 @@
                     </div>-->
                 </div>
                 <div class="chart-block">
-                    <app-echart [title]="title6"
-                                [selectedValue]="farmStackedSelectedValue"
-                                [selectedDate]="farmStackedSelectedDate"
-                                [valueSymbol]="valueSymbol6"
-                                [options]="options6"
-                                [data]="totalFarmStacked"></app-echart>
+                    <app-echart
+                      [title]="title6"
+                      [selectedValue]="farmStackedSelectedValue"
+                      [selectedDate]="farmStackedSelectedDate"
+                      [valueSymbol]="valueSymbol6"
+                      [options]="options6"
+                      [data]="totalFarmStacked"
+                      (changePeriod)="onChangePeriod(6, $event)">
+                    </app-echart>
                     <!--  <div class="right-part">
                           <div class="change-percent">
                               <span class="label">Change in % (24h)</span>
@@ -65,12 +68,15 @@
             </div>
             <div class="charts-block">
                 <div class="chart-block">
-                <app-echart [title]="title2"
-                            [selectedValue]="profitTotalSelectedValue"
-                            [selectedDate]="profitTotalSelectedDate"
-                            [valueSymbol]="valueSymbol2"
-                            [options]="options2"
-                            [data]="totalDataProfit"></app-echart>
+                    <app-echart
+                      [title]="title2"
+                      [selectedValue]="profitTotalSelectedValue"
+                      [selectedDate]="profitTotalSelectedDate"
+                      [valueSymbol]="valueSymbol2"
+                      [options]="options2"
+                      [data]="totalDataProfit"
+                      (changePeriod)="onChangePeriod(2, $event)">
+                    </app-echart>
                 <!-- <div class="right-part">
                      <div class="change-percent">
                          <span class="label">Change in % (24h)</span>
