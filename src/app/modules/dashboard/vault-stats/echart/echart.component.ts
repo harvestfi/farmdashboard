@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {EChartsOption} from 'echarts/types/src/export/option';
 import {ChartSeries} from '@modules/dashboard/vault-stats/models/chart-series.model';
 import {ViewTypeService} from '@data/services/view-type.service';
@@ -14,9 +14,11 @@ export class EchartComponent implements OnInit {
   @Input() title = '';
   @Input() selectedValue = '';
   @Input() selectedDate = '';
+  @Input() dateLabel = '';
   @Input() valueSymbol = '';
   @Input() options: EChartsOption;
-  updateOptions: any;
+  @Input() isLoading = false;
+  updateOptions: EChartsOption;
   selectedPeriod = 0;
   primaryData = [];
 
@@ -35,7 +37,10 @@ export class EchartComponent implements OnInit {
 
   @Output() changePeriod: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(public vt: ViewTypeService) { }
+  constructor(
+    public viewTypeService: ViewTypeService,
+    private changeDetectorRef: ChangeDetectorRef,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -84,8 +89,10 @@ export class EchartComponent implements OnInit {
         series: [{
           data: this.filterDataByPeriod(period),
         }],
-        xAxis: this.options ? this.options.xAxis : '',
+        xAxis: this.options ? this.options.xAxis : null,
       };
+
+      this.changeDetectorRef.markForCheck();
   }
 
 

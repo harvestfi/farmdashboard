@@ -34,7 +34,8 @@
               "sockjs-client",
               "@stomp/stompjs",
               "stomp",
-              "@ethersproject"
+              "@ethersproject",
+              "date-fns"
             ]
           },
           "configurations": {

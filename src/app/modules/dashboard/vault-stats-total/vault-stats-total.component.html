@@ -1,157 +1,73 @@
 <div class="title-wrapper"
-     [class]="vt.getThemeColor() + '-black'">
-    <app-side-menu-toggle></app-side-menu-toggle>
-     <h1 class="title">Total</h1>
-    <app-theme-switch></app-theme-switch>
+     [class]="viewTypeService.getThemeColor() + '-black'">
+  <app-side-menu-toggle></app-side-menu-toggle>
+  <h1 class="title">Total</h1>
+  <app-theme-switch></app-theme-switch>
 </div>
-<div class="cover" [class]="vt.getThemeColor()">
-    <div class="container">
-        <div class="grid-sheet">
-            <div class="charts-block">
-                <div class="chart-block">
-                    <app-echart
-                      [title]="title1"
-                      [selectedValue]="tvlTotalSelectedValue"
-                      [selectedDate]="tvlTotalSelectedDate"
-                      [valueSymbol]="valueSymbol1"
-                      [options]="options1"
-                      [data]="totalDataTVL"
-                      (changePeriod)="onChangePeriod(1, $event)">
-                    </app-echart>
-                    <!--<div class="left-part">
-                        <div class="change-percent">
-                            <span  class="label">Change in % (24h)</span>
-                            <span class="value">
-                            <span *ngIf="minus1" style="color: red">{{'&#10549;'}}</span>
-                            <span *ngIf="!minus1" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesTvlTotalInPercent}} %
-                        </span>
-                        </div>
-                        <div class="change-amount">
-                            <span  class="label">Change in $ (24h)</span>
-                            <span class="value">
-                            <span  class="symbol">{{ minus1 ? '-' : '+' }}</span>
-                            ${{ changesTvlTotalInAmount }}
-                        </span>
-                        </div>
-                    </div>-->
-                </div>
-                <div class="chart-block">
-                    <app-echart
-                      [title]="title6"
-                      [selectedValue]="farmStackedSelectedValue"
-                      [selectedDate]="farmStackedSelectedDate"
-                      [valueSymbol]="valueSymbol6"
-                      [options]="options6"
-                      [data]="totalFarmStacked"
-                      (changePeriod)="onChangePeriod(6, $event)">
-                    </app-echart>
-                    <!--  <div class="right-part">
-                          <div class="change-percent">
-                              <span class="label">Change in % (24h)</span>
-                              <span class="value">
-                              <span *ngIf="minus6" style="color: red">{{'&#10549;'}}</span>
-                              <span *ngIf="!minus6" style="color: green">{{'&#10548;'}}</span>
-                              {{ changesFarmStackedInPercent }} %
-                          </span>
-                          </div>
-                          <div class="change-amount">
-                              <span class="label">Change in $ (24h)</span>
-                              <span class="value">
-                              <span class="symbol">{{ minus6 ? '-' : '+' }}</span>
-                              ${{ changesFarmStackedInAmount }}
-                          </span>
-                          </div>
-                      </div>-->
 
-                </div>
-            </div>
-            <div class="charts-block">
-                <div class="chart-block">
-                    <app-echart
-                      [title]="title2"
-                      [selectedValue]="profitTotalSelectedValue"
-                      [selectedDate]="profitTotalSelectedDate"
-                      [valueSymbol]="valueSymbol2"
-                      [options]="options2"
-                      [data]="totalDataProfit"
-                      (changePeriod)="onChangePeriod(2, $event)">
-                    </app-echart>
-                <!-- <div class="right-part">
-                     <div class="change-percent">
-                         <span class="label">Change in % (24h)</span>
-                         <span class="value">
-                         <span *ngIf="minus2" style="color: red">{{'&#10549;'}}</span>
-                         <span *ngIf="!minus2" style="color: green">{{'&#10548;'}}</span>
-                         {{ changesProfitTotalInPercent }} %
-                     </span>
-                     </div>
-                     <div class="change-amount">
-                         <span class="label">Change in $ (24h)</span>
-                         <span class="value">
-                         <span class="symbol">{{ minus2 ? '-' : '+' }}</span>
-                         ${{ changesProfitTotalInAmount}}
-                     </span>
-                     </div>
-                 </div>-->
-                </div>
-                <div class="chart-block">
-                    <app-echart
-                      [title]="title3"
-                      [selectedValue]="usersSelectedValue"
-                      [selectedDate]="usersSelectedDate"
-                      [valueSymbol]="valueSymbol3"
-                      [options]="options3"
-                      [data]="totalUsers"
-                      (changePeriod)="onChangePeriod(3, $event)">
-                    </app-echart>
-                    <!--<div class="left-part">
-                        <div class="change-percent">
-                            <span  class="label">Change in % (24h)</span>
-                            <span class="value">
-                            <span *ngIf="minus3" style="color: red">{{'&#10549;'}}</span>
-                            <span *ngIf="!minus3" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesUsersInPercent }} %
-                        </span>
-                        </div>
-                        <div class="change-amount">
-                            <span  class="label">Change (24h)</span>
-                            <span class="value">
-                            <span  class="symbol">{{ minus3 ? '-' : '+' }}</span>
-                            {{ changesUsersInAmount }}
-                        </span>
-                        </div>
-                    </div>-->
-                </div>
+<div class="cover" [class]="viewTypeService.getThemeColor()">
+  <div class="container">
+    <div class="grid-sheet">
+      <div class="charts-block">
 
-            </div>
-            <div class="charts-block">
-               <!-- <div class="chart-block" style="width: 100%">
-                    <app-echart [title]="title4"
-                                [selectedValue]="farmBuyBackSelectedValue"
-                                [selectedDate]="farmBuyBackSelectedDate"
-                                [valueSymbol]="valueSymbol4"
-                                [options]="options4"
-                                [data]="totalFarmBuyBack"></app-echart>
-                     <div class="right-part">
-                         <div class="change-percent">
-                             <span class="label">Change in % (24h)</span>
-                             <span class="value">
-                             <span *ngIf="minus4" style="color: red">{{'&#10549;'}}</span>
-                             <span *ngIf="!minus4" style="color: green">{{'&#10548;'}}</span>
-                             {{ changesFarmBuyBackInPercent }} %
-                         </span>
-                         </div>
-                         <div class="change-amount">
-                             <span class="label">Change in $ (24h)</span>
-                             <span class="value">
-                             <span class="symbol">{{ minus4 ? '-' : '+' }}</span>
-                             ${{ changesFarmBuyBackInAmount }}
-                         </span>
-                         </div>
-                     </div>
-                </div>-->
-            </div>
+        <!-- Total TVL -->
+        <div class="chart-block">
+          <app-echart
+            [isLoading]="isLoadingTvlUserCharts"
+            [title]="title1"
+            [selectedValue]="tvlTotalSelectedValue"
+            [selectedDate]="tvlTotalSelectedDate"
+            [valueSymbol]="valueSymbol1"
+            [options]="options1"
+            [data]="totalDataTVL"
+            (changePeriod)="onChangePeriod(1, $event)">
+          </app-echart>
         </div>
+
+        <!-- Farm Stacked -->
+        <div class="chart-block">
+          <app-echart
+            [isLoading]="isLoadingFarmStackedChart"
+            [title]="title4"
+            [selectedValue]="farmStackedSelectedValue"
+            [selectedDate]="farmStackedSelectedDate"
+            [valueSymbol]="valueSymbol4"
+            [options]="options4"
+            [data]="totalFarmStacked"
+            (changePeriod)="onChangePeriod(4, $event)">
+          </app-echart>
+        </div>
+      </div>
+
+      <div class="charts-block">
+        <!-- Total Profits -->
+        <div class="chart-block">
+          <app-echart
+            [isLoading]="isLoadingProfitChart"
+            [title]="title2"
+            [selectedValue]="profitTotalSelectedValue"
+            [dateLabel]="profitTotalSelectedDate"
+            [valueSymbol]="valueSymbol2"
+            [options]="options2"
+            [data]="totalDataProfit"
+            (changePeriod)="onChangePeriod(2, $event)">
+          </app-echart>
+        </div>
+
+        <!-- Users -->
+        <div class="chart-block">
+          <app-echart
+            [isLoading]="isLoadingTvlUserCharts"
+            [title]="title3"
+            [selectedValue]="usersSelectedValue"
+            [selectedDate]="usersSelectedDate"
+            [valueSymbol]="valueSymbol3"
+            [options]="options3"
+            [data]="totalUsers"
+            (changePeriod)="onChangePeriod(3, $event)">
+          </app-echart>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
