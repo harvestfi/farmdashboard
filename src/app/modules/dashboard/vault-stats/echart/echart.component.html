@@ -1,4 +1,4 @@
-<div class="chart-background" [class]="vt.getThemeColor() + '-card'">
+<div class="chart-background" [class]="viewTypeService.getThemeColor() + '-card'">
     <div class="currentInfo">
         <div class="text">
             <div class="name">
@@ -6,11 +6,11 @@
 
             </div>
             <span class="value">{{ selectedValue }}</span>
-            <span class="date">{{ selectedDate | date: 'MMM dd, YYYY'}}</span>
+            <span class="date">{{ dateLabel ? dateLabel : selectedDate | date: 'MMM dd, YYYY'}}</span>
         </div>
         <div>
             <div class="controls"
-                 [class]="vt.getThemeColor() + '-lightGreen'">
+                 [class]="viewTypeService.getThemeColor() + '-lightGreen'">
                 <label class="toggle"
                        [class.month]="selectedPeriod === 1"
                        [class.sixMonth]="selectedPeriod === 6"
@@ -23,6 +23,7 @@
         </div>
     </div>
     <div echarts
+         [loading]="isLoading"
          [options]="options"
          [merge]="updateOptions"
          (chartGlobalOut)="onChartEvent($event, 'chartGlobalOut')"></div>
