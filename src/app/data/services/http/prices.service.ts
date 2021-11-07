@@ -60,4 +60,7 @@ export class PricesService implements WsConsumer {
     return this.httpService.httpGet('/price/token/dto/' + address, network);
   }
 
+  public getMaticUSDPrice(): Observable<{ usd: number }> {
+      return this.httpService.getMaticPrices();
+  }
 }

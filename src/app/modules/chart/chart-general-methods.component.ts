@@ -55,7 +55,9 @@ export abstract class ChartGeneralMethodsComponent implements OnInit, AfterViewI
   abstract load(): void;
 
   clear(): void {
-    this.chart.remove();
+    if (this.chart) {
+        this.chart.remove();
+    }
     this.ready = false;
   }
 }

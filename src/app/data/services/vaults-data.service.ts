@@ -16,18 +16,20 @@ interface FilteredVault {
 
 export class VaultsDataService {
 
-  constructor(
-    @Inject(APP_CONFIG) public config: AppConfig,
-    private http: HttpClient) {
-  }
+    localApi = window.document.location.host === 'localhost:4200' ? 'http://localhost:8080' : '';
+    constructor(
+        @Inject(APP_CONFIG) public config: AppConfig,
+        private http: HttpClient,
+    ) {
+    }
 
-  retrieveVaultsList(): Observable<Array<FilteredVault>> {
-    return this.http.get(`/harvestFinance/vaults`)
-      .pipe(
-        share(),
-        map(data => (this.getFilteredArray(data)),
-        ));
-  }
+    retrieveVaultsList(): Observable<Array<FilteredVault>> {
+        return this.http.get(`${this.localApi}/harvestFinance/vaults`)
+            .pipe(
+                share(),
+                map(data => (this.getFilteredArray(data)),
+            ));
+    }
 
   getFilteredArray(list): Array<FilteredVault> {
     const array = [];

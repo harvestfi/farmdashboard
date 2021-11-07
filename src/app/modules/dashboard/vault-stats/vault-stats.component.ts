@@ -664,8 +664,16 @@ export class VaultStatsComponent implements OnInit {
 
 
     lastChanges(data): { minus: boolean; amountChanges: string; percentChanges: string } {
-        const lastChanges = +data[data.length - 1].value[1] - + data[data.length - 2].value[1];
-        const previousNumber = +data[data.length - 2].value[1];
+        let lastChanges;
+        let previousNumber;
+        if (data.length > 1) {
+            lastChanges = +data[data.length - 1].value[1] - +data[data.length - 2].value[1];
+            previousNumber = +data[data.length - 2].value[1];
+        } else {
+            lastChanges = +data[data.length - 1].value[1];
+            previousNumber = +data[data.length - 1].value[1];
+        }
+
         let minus = false;
         let amountChanges = '';
         let percentChanges = '';
@@ -677,7 +685,10 @@ export class VaultStatsComponent implements OnInit {
         } else {
             amountChanges =  Math.abs(lastChanges) >= 1 ? this.nFormatter(lastChanges, 2) : lastChanges.toFixed(2) ;
         }
-        const finalPercent = Math.abs(lastChanges / previousNumber * 100);
+        let finalPercent  = 0;
+        if (previousNumber !== 0) {
+            finalPercent = Math.abs(lastChanges / previousNumber * 100);
+        }
         if (finalPercent >= 1) {
             percentChanges = this.nFormatter(finalPercent.toString(), 2);
         } else {

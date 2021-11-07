@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, Inject, Input, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
 import {Sort} from '@angular/material/sort';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {APP_CONFIG, AppConfig} from 'src/app.config';
@@ -6,27 +6,45 @@ import {ContractsService} from '@data/services/contracts.service';
 import {Vault} from '@data/models/vault';
 import {StaticValues} from '@data/static/static-values';
 import get = Reflect.get;
+import {Subject} from 'rxjs/internal/Subject';
+import {takeUntil} from 'rxjs/operators';
+import {VaultsDataService} from '@data/services/vaults-data.service';
 
 @Component({
   selector: 'app-download-historic-data',
   templateUrl: './download-historic-data.component.html',
   styleUrls: ['./download-historic-data.component.scss']
 })
-export class DownloadHistoricDataComponent  implements OnInit{
+export class DownloadHistoricDataComponent  implements OnInit, OnDestroy{
     @Input('data') public data;
 
     sortedVaults: Vault[];
     vaults: Vault[];
     includeInactive = false;
+    vaultsIconsList = [];
+    private ngUnsubscribe = new Subject<boolean>();
+
     constructor(
         @Inject(APP_CONFIG) public config: AppConfig,
         public vt: ViewTypeService,
-        private contractsService: ContractsService
+        private contractsService: ContractsService,
+        private vaultsDataService: VaultsDataService
     ) {
     }
 
     ngOnInit(): void {
        this.getData();
+       this.additionalVaultsList();
+    }
+
+    additionalVaultsList(): void {
+        this.vaultsDataService.retrieveVaultsList()
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((data) => {
+                this.vaultsIconsList = data;
+            }, err => {
+                console.log(err);
+            });
     }
 
     getData(): void {
@@ -63,5 +81,10 @@ export class DownloadHistoricDataComponent  implements OnInit{
 
     getApiEndpoint(network: string): string {
         return get(this.config.apiEndpoints, StaticValues.NETWORKS.get(network).ethparserName);
+    }
+
+    ngOnDestroy(): void {
+        this.ngUnsubscribe.next(true);
+        this.ngUnsubscribe.complete();
     }
 }

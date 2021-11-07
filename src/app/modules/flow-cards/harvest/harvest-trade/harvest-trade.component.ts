@@ -18,6 +18,7 @@ export class HarvestTradeComponent implements OnInit {
 
   @Input() dto: HarvestDto;
   @Input() fullDate = false;
+  @Input() vaultsIconsList;
   openModal = false;
 
   ngOnInit(): void {

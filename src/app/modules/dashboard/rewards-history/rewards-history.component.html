@@ -31,7 +31,8 @@
                         <span>{{reward.blockDateAdopted | date: 'dd-MMM-yyyy HH:mm:ss'}}</span>
                     </div>
                     <div class="value-field" [class]="vt.getThemeColor() + '-black'">
-                        <app-vault-icon [vault]="getVault(reward.vaultAddress)"></app-vault-icon>
+                        <app-vault-icon [vault]="getVault(reward.vaultAddress)"
+                                        [networks]="vaultsIconsList"></app-vault-icon>
                         <span [title]="reward.vault">{{reward.vault}}</span>
                     </div>
                     <div class="value-field" [class]="vt.getThemeColor() + '-black'">

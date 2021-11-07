@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {StaticValues} from '@data/static/static-values';
 import {ViewTypeService} from '@data/services/view-type.service';
@@ -9,16 +9,21 @@ import {HarvestDataService} from '@data/services/data/harvest-data.service';
 import {PriceDataService} from '@data/services/data/price-data.service';
 import {Addresses} from '@data/static/addresses';
 import {KatexOptions} from 'ng-katex';
+import {Subject} from 'rxjs/internal/Subject';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard-last-values',
   templateUrl: './dashboard-last-values.component.html',
   styleUrls: ['./dashboard-last-values.component.scss']
 })
-export class DashboardLastValuesComponent implements OnInit {
+export class DashboardLastValuesComponent implements OnInit, OnDestroy {
   katexOptions: KatexOptions = {
     displayMode: true,
   };
+  maticUsdPrice = 0;
+  private ngUnsubscribe = new Subject<boolean>();
+
   @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
   @ViewChild('weeklyProfitModal') private weeklyProfitModal: CustomModalComponent;
   @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
@@ -37,6 +42,7 @@ export class DashboardLastValuesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getMaticUsdPrice();
   }
 
   // TODO split to classes
@@ -165,6 +171,18 @@ export class DashboardLastValuesComponent implements OnInit {
     return this.priceData.getUsdPrice(Addresses.ADDRESSES.get('WBNB'), 'bsc');
   }
 
+  getMaticUsdPrice(): void {
+    this.priceData.getMaticUsdPrice()
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((data: {usd: number}) => {
+            if (data) {
+              this.maticUsdPrice = data.usd;
+            }
+        }, err => {
+            console.log(err);
+        });
+  }
+
   // -------------- OPEN MODALS ---------------------
 
   openTvlDialog(): void {
@@ -211,5 +229,10 @@ export class DashboardLastValuesComponent implements OnInit {
     return `EPS = `
       + ` \\cfrac{PSLastWeekProfit * WeeksInYear (${this.psYearEarning.toFixed(0)})}`
       + `{FARMTotalAmount (${this.farmTotalAmount.toFixed(0)})}`;
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
 }

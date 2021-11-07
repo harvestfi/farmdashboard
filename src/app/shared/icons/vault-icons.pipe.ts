@@ -37,6 +37,8 @@ export class VaultIconsPipe implements PipeTransform {
             const unknownIcon = this.fillUnknown(vault, networkList);
             return unknownIcon || `/assets/icons/vaults/UNKNOWN.png`;
         }
+
+        return '/assets/icons/vaults/UNKNOWN.png';
     }
 
     fillUnknown({ contract: {network, address} }, networkList): string {

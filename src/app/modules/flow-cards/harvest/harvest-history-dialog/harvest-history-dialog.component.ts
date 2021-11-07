@@ -1,4 +1,4 @@
-import {AfterContentInit, Component} from '@angular/core';
+import {AfterContentInit, Component, OnDestroy} from '@angular/core';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {HarvestDto} from '@data/models/harvest-dto';
@@ -6,6 +6,9 @@ import {Vault} from '@data/models/vault';
 import {ContractsService} from '@data/services/contracts.service';
 import {HarvestsService} from '@data/services/http/harvests.service';
 import {Paginated} from '@data/models/paginated';
+import {Subject} from 'rxjs/internal/Subject';
+import {VaultsDataService} from '@data/services/vaults-data.service';
+import {takeUntil} from 'rxjs/operators';
 
 
 @Component({
@@ -13,21 +16,36 @@ import {Paginated} from '@data/models/paginated';
   templateUrl: './harvest-history-dialog.component.html',
   styleUrls: ['./harvest-history-dialog.component.scss']
 })
-export class HarvestHistoryDialogComponent implements AfterContentInit {
+export class HarvestHistoryDialogComponent implements AfterContentInit, OnDestroy {
   vaultFilter: Vault;
   paginatedDtos: Paginated<HarvestDto> = Paginated.empty();
   minAmount = 0;
+  vaultsIconsList = [];
+  private ngUnsubscribe = new Subject<boolean>();
 
-  constructor(
+
+    constructor(
       public vt: ViewTypeService,
       private log: NGXLogger,
       private contractsService: ContractsService,
-      private harvestsService: HarvestsService
+      private harvestsService: HarvestsService,
+      private vaultsDataService: VaultsDataService,
   ) {
   }
 
   ngAfterContentInit(): void {
+    this.additionalVaultsList();
     this.getHarvestHistoryForPage(0);
+  }
+
+  additionalVaultsList(): void {
+     this.vaultsDataService.retrieveVaultsList()
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((data) => {
+            this.vaultsIconsList = data;
+        }, err => {
+            console.log(err);
+        });
   }
 
   get vaults(): Vault[] {
@@ -61,5 +79,10 @@ export class HarvestHistoryDialogComponent implements AfterContentInit {
 
   handleFilterUpdate($event): void {
     this.getHarvestHistoryForPage(0);
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe.next(true);
+    this.ngUnsubscribe.complete();
   }
 }

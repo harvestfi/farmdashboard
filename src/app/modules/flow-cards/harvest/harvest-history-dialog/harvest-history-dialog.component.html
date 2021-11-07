@@ -30,7 +30,9 @@
       <div class="price-header">TVL</div>
       <div></div>
     </div>
-    <app-harvest-flow-tab [dtos]="paginatedDtos.data" [showFullDate]=true></app-harvest-flow-tab>
+    <app-harvest-flow-tab [dtos]="paginatedDtos.data"
+                          [showFullDate]=true
+                          [vaultsIconsList]="vaultsIconsList"></app-harvest-flow-tab>
     <div class="paginator-area">
       <app-paginator (selectPage)="selectPage($event)" (nextPage)="nextPage($event)"
                      (previousPage)="previousPage($event)" [pageObject]="paginatedDtos"></app-paginator>

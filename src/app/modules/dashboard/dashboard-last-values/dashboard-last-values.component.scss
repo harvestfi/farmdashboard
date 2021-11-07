@@ -4,19 +4,19 @@
 }
 .main-top-stats {
   display: grid;
-  grid-template-areas:   "farm btc weekly-profit ps-income tvl"
-                         "eth bnb weekly-profit ps-income tvl"
-                         "farm-buybacks farm-staked saved-gas total-users active-pools";
+  grid-template-areas:   "farm btc btc weekly-profit ps-income tvl"
+                         "eth  eth eth weekly-profit ps-income tvl"
+                         "farm-buybacks farm-staked farm-staked  saved-gas total-users active-pools";
 
   @include responsive(medium) {
     grid-template-areas:   "farm btc"
-                           "eth bnb"
+                           "eth eth"
                            "weekly-profit ps-income"
                            "tvl farm-staked"
                            "saved-gas farm-buybacks"
                            "total-users active-pools";
     grid-template-columns: 50% 50%;
-    grid-template-rows: 0.5fr 0.5fr 1fr 1fr 0.5fr 0.5fr;
+    grid-template-rows: 0.5fr 1.5fr 1fr 1fr 0.5fr 0.5fr;
   }
 
   .value-card {
@@ -181,6 +181,38 @@
   .eth{
     grid-area: eth;
     height: 100px;
+    padding: 0;
+    background: transparent;
+    .currency-wrapper {
+      width: 100%;
+      min-height: 100px;
+      display: flex;
+      justify-content: space-between;
+      .currency {
+        margin-top: 0;
+        margin-bottom: 0;
+        width: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+      }
+      .currency:first-child {
+        margin-left: 0;
+      }
+      .currency:last-child {
+        margin-right: 0;
+      }
+    }
     .value-number-middle {
       font-size: 2.14em;
       margin-top: 10px;
@@ -192,6 +224,18 @@
 
   .btc{
     grid-area: btc;
+    height: 100px;
+    .value-number-middle {
+      font-size: 2.14em;
+      margin-top: 10px;
+    }
+    .sign {
+      font-size: unset;
+    }
+  }
+
+  .matic{
+    grid-area: matic;
     height: 100px;
     .value-number-middle {
       font-size: 2.14em;
@@ -304,5 +348,28 @@
 @media (max-width: 1850px) {
   .main-top-stats {
     padding: 0 10px;
+  }
+}
+
+@media (max-width: 1250px) {
+  .main-top-stats {
+    .eth {
+      height: unset;
+      .currency-wrapper {
+        flex-direction: column;
+        height: auto;
+        .currency {
+          box-sizing: border-box;
+          height: 100px;
+          margin: 10px 0;
+        }
+        .currency:first-child {
+          margin-top: 0;
+        }
+        .currency:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
 }

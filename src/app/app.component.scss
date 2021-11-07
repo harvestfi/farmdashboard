@@ -32,3 +32,9 @@ footer {
     padding-right: 0;
   }
 }
+
+@media (max-width: 768px) {
+  .main-row {
+    margin-top: 25px;
+  }
+}

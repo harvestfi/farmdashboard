@@ -33,7 +33,8 @@
      </div>
     </div>
     <app-hardwork-header [showMoreColumns]="true"></app-hardwork-header>
-    <app-hardwork-flow-tab [dtos]="dtos.data" [showMoreColumns]="true" [showFullDate]="true"></app-hardwork-flow-tab>
+    <app-hardwork-flow-tab [dtos]="dtos.data" [showMoreColumns]="true" [showFullDate]="true"
+                           [vaultsIconsList]="vaultsIconsList"></app-hardwork-flow-tab>
     <app-paginator (selectPage)="selectPage($event)" (nextPage)="nextPage($event)" (previousPage)="previousPage($event)"
                    [pageObject]="dtos"></app-paginator>
   </ng-template>

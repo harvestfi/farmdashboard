@@ -15,6 +15,7 @@ export class HarvestFlowTabComponent {
   @Input() minAmount = 0;
   @Input() vaultFilter = 'all';
   @Input() showFullDate = false;
+  @Input() vaultsIconsList;
 
   constructor(public vt: ViewTypeService) {
   }
