@@ -12,6 +12,8 @@ import { forkJoin } from 'rxjs';
 import { PriceDataService } from '@data/services/data/price-data.service';
 import { Addresses } from '@data/static/addresses';
 import { format, parse, getISOWeek, getYear, getMonth, endOfWeek, startOfWeek, getDate } from 'date-fns';
+import { DestroyService } from '@data/services/destroy.service';
+import { filter, takeUntil } from 'rxjs/operators';
 
 export interface ChartItem {
   name: string;
@@ -25,6 +27,7 @@ export interface ChartItem {
   templateUrl: './vault-stats-total.component.html',
   styleUrls: ['./vault-stats-total.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DestroyService],
 })
 export class VaultStatsTotalComponent implements OnInit {
   networks = ['eth', 'bsc'];
@@ -88,7 +91,9 @@ export class VaultStatsTotalComponent implements OnInit {
     private hardworksService: HardworksService,
     private tvlService: TvlsService,
     private priceDataService: PriceDataService,
-    public viewTypeService: ViewTypeService) {
+    public viewTypeService: ViewTypeService,
+    private destroy$: DestroyService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -106,31 +111,33 @@ export class VaultStatsTotalComponent implements OnInit {
       this.tvlService.getHistoryAllTvl(StaticValues.NETWORKS.get(this.networks[0])),
       this.tvlService.getHistoryAllTvl(StaticValues.NETWORKS.get(this.networks[1])),
     ])
+      .pipe(
+        filter(([data, data2]) => !!data.length && !!data2.length),
+        takeUntil(this.destroy$),
+      )
       .subscribe(([data, data2]) => {
-        if (data.length && data2.length) {
-          const totalDataTVL = this.prepareData(data, 'lastTvl', 'calculateTime');
-          const totalDataTVL2 = this.prepareData(data2, 'lastTvl', 'calculateTime');
-          const totalUsers = this.prepareData(data, 'lastOwnersCount', 'calculateTime');
-          const totalUsers2 = this.prepareData(data2, 'lastOwnersCount', 'calculateTime');
-          const totalUsersArray = [...totalUsers, ...totalUsers2].sort(this.sortDate);
-          const totalArray = [...totalDataTVL, ...totalDataTVL2].sort(this.sortDate);
-          const paredArray = this.findNotParedDay(totalArray);
-          const paredUsersArray = this.findNotParedDay(totalUsersArray);
-          this.totalDataTVL = this.combineNetworks(totalArray);
-          this.totalUsers = this.combineNetworks(totalUsersArray);
+        const totalDataTVL = this.prepareData(data, 'lastTvl', 'calculateTime');
+        const totalDataTVL2 = this.prepareData(data2, 'lastTvl', 'calculateTime');
+        const totalUsers = this.prepareData(data, 'lastOwnersCount', 'calculateTime');
+        const totalUsers2 = this.prepareData(data2, 'lastOwnersCount', 'calculateTime');
+        const totalUsersArray = [...totalUsers, ...totalUsers2].sort(this.sortDate);
+        const totalArray = [...totalDataTVL, ...totalDataTVL2].sort(this.sortDate);
+        const paredArray = this.findNotParedDay(totalArray);
+        const paredUsersArray = this.findNotParedDay(totalUsersArray);
+        this.totalDataTVL = this.combineNetworks(totalArray);
+        this.totalUsers = this.combineNetworks(totalUsersArray);
 
-          this.initializeChartTotalTVL();
-          this.initializeChartUsers();
+        this.initializeChartTotalTVL();
+        this.initializeChartUsers();
 
-          this.changesUsersInAmount = this.lastChanges(this.totalUsers).amountChanges;
-          this.changesUsersInPercent = this.lastChanges(this.totalUsers).percentChanges;
-          this.changesTvlTotalInAmount = this.lastChanges(this.totalDataTVL).amountChanges;
-          this.changesTvlTotalInPercent = this.lastChanges(this.totalDataTVL).percentChanges;
+        this.changesUsersInAmount = this.lastChanges(this.totalUsers).amountChanges;
+        this.changesUsersInPercent = this.lastChanges(this.totalUsers).percentChanges;
+        this.changesTvlTotalInAmount = this.lastChanges(this.totalDataTVL).amountChanges;
+        this.changesTvlTotalInPercent = this.lastChanges(this.totalDataTVL).percentChanges;
 
-          this.isLoadingTvlUserCharts = false;
+        this.isLoadingTvlUserCharts = false;
 
-          this.changeDetectorRef.detectChanges();
-        }
+        this.changeDetectorRef.detectChanges();
       }, err => {
         console.log(err);
       });
@@ -142,6 +149,7 @@ export class VaultStatsTotalComponent implements OnInit {
     this.changeDetectorRef.detectChanges();
 
     this.tvlService.getHistoryTvlByVault(Addresses.ADDRESSES.get('PS'))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         const totalFarmStacked = this.prepareFarmStackedData(data, 'calculateTime');
         this.totalFarmStacked = totalFarmStacked.sort(this.sortDate);
@@ -166,6 +174,7 @@ export class VaultStatsTotalComponent implements OnInit {
       this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.networks[0]), 1),
       this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.networks[1]), 1),
     ])
+      .pipe(takeUntil(this.destroy$))
       .subscribe(([data, data2]) => {
         const sorted = [...data, ...data2].sort((a, b) => new Date(a.blockDate).getTime() - new Date(b.blockDate).getTime());
         const weeks = new Map<string, any>();

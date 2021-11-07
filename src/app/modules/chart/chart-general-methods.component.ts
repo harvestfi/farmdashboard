@@ -4,10 +4,13 @@ import {ViewTypeService} from '@data/services/view-type.service';
 import {ChartsOptionsLight} from './charts-options-light';
 import {ChartBuilder} from './chart-builder';
 import {ChartGeneralComponent} from './chart-general/chart-general.component';
+import { filter, takeUntil } from 'rxjs/operators';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-general-methods',
-  template: ``
+  template: ``,
+  providers: [DestroyService],
 })
 export abstract class ChartGeneralMethodsComponent implements OnInit, AfterViewInit {
   public chart: IChartApi;
@@ -15,15 +18,21 @@ export abstract class ChartGeneralMethodsComponent implements OnInit, AfterViewI
   public ready = false;
   public network = 'eth';
 
-  constructor(public cdRef: ChangeDetectorRef,
-              public vt: ViewTypeService) {
+  constructor(
+    public cdRef: ChangeDetectorRef,
+    public vt: ViewTypeService,
+    protected destroy$: DestroyService,
+  ) {
   }
 
   ngOnInit(): void {
-    this.vt.events$.subscribe(event => {
-      if (event === 'theme-changed') {
+    this.vt.events$
+      .pipe(
+        filter(event => event === 'theme-changed'),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => {
         this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
-      }
     });
   }
 

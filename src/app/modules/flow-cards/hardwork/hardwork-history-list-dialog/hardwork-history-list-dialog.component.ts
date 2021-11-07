@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {NGXLogger} from 'ngx-logger';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {ContractsService} from '@data/services/contracts.service';
@@ -7,16 +7,17 @@ import {HardworksService} from '@data/services/http/hardworks.service';
 import {Paginated} from '@data/models/paginated';
 import {HardWorkDto} from '@data/models/hardwork-dto';
 import {StaticValues} from '@data/static/static-values';
-import {Subject} from 'rxjs/internal/Subject';
 import {VaultsDataService} from '@data/services/vaults-data.service';
 import {takeUntil} from 'rxjs/operators';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-hardwork-history-list-dialog',
   templateUrl: './hardwork-history-list-dialog.component.html',
-  styleUrls: ['./hardwork-history-list-dialog.component.scss']
+  styleUrls: ['./hardwork-history-list-dialog.component.scss'],
+  providers: [DestroyService],
 })
-export class HardworkHistoryListDialogComponent implements AfterViewInit, OnDestroy {
+export class HardworkHistoryListDialogComponent implements AfterViewInit {
   dtos: Paginated<HardWorkDto>;
   hardWorkIds = new Set<string>();
   vaultFilter;
@@ -27,7 +28,6 @@ export class HardworkHistoryListDialogComponent implements AfterViewInit, OnDest
   networkIcons: Map<string, string> = StaticValues.NETWORK_ICON;
   network = 'eth';
   vaultsIconsList = [];
-  private ngUnsubscribe = new Subject<boolean>();
 
   constructor(
       public vt: ViewTypeService,
@@ -35,6 +35,7 @@ export class HardworkHistoryListDialogComponent implements AfterViewInit, OnDest
       private contractsService: ContractsService,
       private hardworksService: HardworksService,
       private vaultsDataService: VaultsDataService,
+      private destroy$: DestroyService,
   ) {
   }
 
@@ -45,7 +46,7 @@ export class HardworkHistoryListDialogComponent implements AfterViewInit, OnDest
 
   additionalVaultsList(): void {
     this.vaultsDataService.retrieveVaultsList()
-        .pipe(takeUntil(this.ngUnsubscribe))
+        .pipe(takeUntil(this.destroy$))
         .subscribe((data) => {
             this.vaultsIconsList = data;
         }, err => {
@@ -53,13 +54,17 @@ export class HardworkHistoryListDialogComponent implements AfterViewInit, OnDest
         });
   }
 
-
-    getDtoDataForPage(pageNumber: number): void {
+  getDtoDataForPage(pageNumber: number): void {
     this.hardworksService
-    .getPaginatedHardworkHistoryData(10, pageNumber,
-        this.vaultFilter?.contract?.address, this.minAmount, 'desc',
-        StaticValues.NETWORKS.get(this.network))
-    .subscribe(response => {
+      .getPaginatedHardworkHistoryData(
+        10,
+        pageNumber,
+        this.vaultFilter?.contract?.address, this.minAmount,
+        'desc',
+        StaticValues.NETWORKS.get(this.network),
+      )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
           this.log.info('Load hw pages', response);
           if ('data' in response) {
             return this.dtos = response;
@@ -69,11 +74,11 @@ export class HardworkHistoryListDialogComponent implements AfterViewInit, OnDest
             nextPage: -1,
             previousPage: -1,
             totalPages: 0,
-            data: []
+            data: [],
           };
-        }
-    )
-    .add(() => this.ready = true);
+        },
+      )
+      .add(() => this.ready = true);
   }
 
   get vaults(): Vault[] {
@@ -100,10 +105,5 @@ export class HardworkHistoryListDialogComponent implements AfterViewInit, OnDest
 
   choseNetwork(): void {
     this.getDtoDataForPage(0);
-  }
-
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next(true);
-    this.ngUnsubscribe.complete();
   }
 }

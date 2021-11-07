@@ -4,19 +4,25 @@ import {NGXLogger} from 'ngx-logger';
 import {Balance} from '@data/models/balance';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {Utils} from '@data/static/utils';
+import { DestroyService } from '@data/services/destroy.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-balances-dialog',
   templateUrl: './user-balances-dialog.component.html',
-  styleUrls: ['./user-balances-dialog.component.scss']
+  styleUrls: ['./user-balances-dialog.component.scss'],
+  providers: [DestroyService],
 })
 export class UserBalancesDialogComponent implements AfterViewInit {
   @Input('data') public data;
   userBalances: Balance[];
   public vt: ViewTypeService = new ViewTypeService();
 
-  constructor(private httpService: HttpService,
-              private log: NGXLogger) {
+  constructor(
+    private httpService: HttpService,
+    private log: NGXLogger,
+    private destroy$: DestroyService,
+  ) {
   }
 
   ngAfterViewInit(): void {
@@ -25,10 +31,11 @@ export class UserBalancesDialogComponent implements AfterViewInit {
 
 
   private loadData(): void {
-    this.httpService.getUserBalances().subscribe(data => {
-      this.userBalances = data
-      .filter(b => !isNaN(+b.balance) && b.balance !== Infinity);
-    });
+    this.httpService.getUserBalances()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.userBalances = data.filter(b => !isNaN(+b.balance) && b.balance !== Infinity);
+      });
   }
 
   shortAddress(address: string): string {

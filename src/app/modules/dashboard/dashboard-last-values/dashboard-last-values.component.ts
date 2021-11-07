@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {StaticValues} from '@data/static/static-values';
 import {ViewTypeService} from '@data/services/view-type.service';
@@ -9,20 +9,20 @@ import {HarvestDataService} from '@data/services/data/harvest-data.service';
 import {PriceDataService} from '@data/services/data/price-data.service';
 import {Addresses} from '@data/static/addresses';
 import {KatexOptions} from 'ng-katex';
-import {Subject} from 'rxjs/internal/Subject';
-import {takeUntil} from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-dashboard-last-values',
   templateUrl: './dashboard-last-values.component.html',
-  styleUrls: ['./dashboard-last-values.component.scss']
+  styleUrls: ['./dashboard-last-values.component.scss'],
+  providers: [DestroyService],
 })
-export class DashboardLastValuesComponent implements OnInit, OnDestroy {
+export class DashboardLastValuesComponent implements OnInit {
   katexOptions: KatexOptions = {
     displayMode: true,
   };
   maticUsdPrice = 0;
-  private ngUnsubscribe = new Subject<boolean>();
 
   @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
   @ViewChild('weeklyProfitModal') private weeklyProfitModal: CustomModalComponent;
@@ -32,12 +32,14 @@ export class DashboardLastValuesComponent implements OnInit, OnDestroy {
   @ViewChild('totalUsersModal') private totalUsersModal: CustomModalComponent;
   @ViewChild('gasPriceModal') private gasPriceModal: CustomModalComponent;
 
-  constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              public dialog: MatDialog,
-              public vt: ViewTypeService,
-              private hardworkData: HardworkDataService,
-              private harvestData: HarvestDataService,
-              private priceData: PriceDataService,
+  constructor(
+    @Inject(APP_CONFIG) private config: AppConfig,
+    public dialog: MatDialog,
+    public vt: ViewTypeService,
+    private hardworkData: HardworkDataService,
+    private harvestData: HarvestDataService,
+    private priceData: PriceDataService,
+    private destroy$: DestroyService,
   ) {
   }
 
@@ -173,11 +175,12 @@ export class DashboardLastValuesComponent implements OnInit, OnDestroy {
 
   getMaticUsdPrice(): void {
     this.priceData.getMaticUsdPrice()
-        .pipe(takeUntil(this.ngUnsubscribe))
+        .pipe(
+          filter(data => !!data),
+          takeUntil(this.destroy$),
+        )
         .subscribe((data: {usd: number}) => {
-            if (data) {
-              this.maticUsdPrice = data.usd;
-            }
+            this.maticUsdPrice = data.usd;
         }, err => {
             console.log(err);
         });
@@ -229,10 +232,5 @@ export class DashboardLastValuesComponent implements OnInit, OnDestroy {
     return `EPS = `
       + ` \\cfrac{PSLastWeekProfit * WeeksInYear (${this.psYearEarning.toFixed(0)})}`
       + `{FARMTotalAmount (${this.farmTotalAmount.toFixed(0)})}`;
-  }
-
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next(true);
-    this.ngUnsubscribe.complete();
   }
 }

@@ -5,20 +5,25 @@ import {NGXLogger} from 'ngx-logger';
 import {ChartBuilder} from '@modules/chart/chart-builder';
 import {DialogData} from '@modules/dialogs/dialog-data';
 import {ChartGeneralMethodsComponent} from '@modules/chart/chart-general-methods.component';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-simple-chart-dialog',
   templateUrl: './simple-chart-dialog.component.html',
-  styleUrls: ['./simple-chart-dialog.component.css']
+  styleUrls: ['./simple-chart-dialog.component.css'],
+  providers: [DestroyService],
 })
 export class SimpleChartDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
   @Input('data') data: DialogData;
 
-  constructor(private httpService: HttpService,
-              public vt: ViewTypeService,
-              public cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
-    super(cdRef, vt);
+  constructor(
+    private httpService: HttpService,
+    public vt: ViewTypeService,
+    protected destroy$: DestroyService,
+    public cdRef: ChangeDetectorRef,
+    private log: NGXLogger,
+  ) {
+    super(cdRef, vt, destroy$);
   }
 
   load(): void {

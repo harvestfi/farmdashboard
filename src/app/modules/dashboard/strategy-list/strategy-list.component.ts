@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ViewTypeService } from '@data/services/view-type.service';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
 import { ContractsService } from '@data/services/contracts.service';
@@ -18,15 +12,17 @@ import { PriceDataService } from '@data/services/data/price-data.service';
 import { Token } from '@data/models/token';
 import { Pool } from '@data/models/pool';
 import { VaultsDataService } from '@data/services/vaults-data.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-strategy-list',
   templateUrl: './strategy-list.component.html',
   styleUrls: ['./strategy-list.component.scss'],
+  providers: [DestroyService],
 })
-export class StrategyListComponent extends StrategyListCommonMethods implements AfterViewInit, OnInit, OnDestroy {
+export class StrategyListComponent extends StrategyListCommonMethods implements OnInit {
   public searchTerm = '';
   public networkFilter = '';
   public platformFilter = '';
@@ -37,7 +33,6 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   public currentSortingValue = 'tvl';
   public vaultsIconsList = [];
   private isModalDragged = false;
-  private ngUnsubscribe = new Subject<boolean>();
 
   constructor(
     public vt: ViewTypeService,
@@ -49,11 +44,9 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     @Inject(PLATFORM_LIST) public platformList: Array<Platform>,
     private log: NGXLogger,
     private vaultsDataService: VaultsDataService,
+    private destroy$: DestroyService,
   ) {
     super(harvestData, hardworkData, rewardData, priceData);
-  }
-
-  ngAfterViewInit(): void {
   }
 
   ngOnInit(): void {
@@ -64,14 +57,9 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     this.vaultsList$ = this.contractsService.getContracts$<Vault>(Vault);
   }
 
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next(true);
-    this.ngUnsubscribe.complete();
-  }
-
   additionalVaultsList(): void {
     this.vaultsDataService.retrieveVaultsList()
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         this.vaultsIconsList = data;
       }, err => {
