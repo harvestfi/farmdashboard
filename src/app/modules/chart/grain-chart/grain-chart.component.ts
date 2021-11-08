@@ -6,11 +6,14 @@ import {BarPrices, IChartApi} from 'lightweight-charts';
 import {UniswapService} from '@data/services/http/uniswap.service';
 import {PriceDataService} from '@data/services/data/price-data.service';
 import {Addresses} from '@data/static/addresses';
+import { takeUntil } from 'rxjs/operators';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-grain-chart',
   templateUrl: './grain-chart.component.html',
-  styleUrls: ['./grain-chart.component.css']
+  styleUrls: ['./grain-chart.component.css'],
+  providers: [DestroyService],
 })
 export class GrainChartComponent implements AfterViewInit {
   @ViewChild('price_chart') chartEl: ElementRef;
@@ -24,10 +27,13 @@ export class GrainChartComponent implements AfterViewInit {
 
   @Output() crosshairMove = new EventEmitter<any>();
 
-  constructor(private uniswapService: UniswapService,
-              private priceData: PriceDataService,
-              public vt: ViewTypeService,
-              private log: NGXLogger) {
+  constructor(
+    private uniswapService: UniswapService,
+    private priceData: PriceDataService,
+    public vt: ViewTypeService,
+    private log: NGXLogger,
+    private destroy$: DestroyService,
+  ) {
   }
 
   ngAfterViewInit(): void {
@@ -43,17 +49,21 @@ export class GrainChartComponent implements AfterViewInit {
       }
     });
 
-    this.uniswapService.getUniswapOHLC(this.coin).subscribe(data => {
-      this.log.debug(this.coin + ' prices loaded ', data);
-      priceChartBuilder.addValuesToChart(data, false);
-    });
+    this.uniswapService.getUniswapOHLC(this.coin)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.log.debug(this.coin + ' prices loaded ', data);
+        priceChartBuilder.addValuesToChart(data, false);
+      });
 
-    this.priceData.subscribeToActual().subscribe(tx => {
-      if (tx.tokenAddress !== this.coin) {
-        return;
-      }
-      const volume = tx.tokenAmount;
-      priceChartBuilder.collectLastTx(volume, tx.price, tx.blockDate);
-    });
+    this.priceData.subscribeToActual()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(tx => {
+        if (tx.tokenAddress !== this.coin) {
+          return;
+        }
+        const volume = tx.tokenAmount;
+        priceChartBuilder.collectLastTx(volume, tx.price, tx.blockDate);
+      });
   }
 }

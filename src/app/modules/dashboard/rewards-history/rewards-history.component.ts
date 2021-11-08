@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {ViewTypeService} from '@data/services/view-type.service';
 import {NGXLogger} from 'ngx-logger';
 import {RewardDto} from '@data/models/reward-dto';
@@ -7,16 +7,17 @@ import {ContractsService} from '@data/services/contracts.service';
 import {Vault} from '@data/models/vault';
 import {RewardsService} from '@data/services/http/rewards.service';
 import { Paginated } from '@data/models/paginated';
-import {Subject} from 'rxjs/internal/Subject';
 import {takeUntil} from 'rxjs/operators';
 import {VaultsDataService} from '@data/services/vaults-data.service';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-rewards-history',
   templateUrl: './rewards-history.component.html',
-  styleUrls: ['./rewards-history.component.scss']
+  styleUrls: ['./rewards-history.component.scss'],
+  providers: [DestroyService],
 })
-export class RewardsHistoryComponent implements AfterViewInit, OnDestroy {
+export class RewardsHistoryComponent implements AfterViewInit {
     @Input() data;
     rewards: Paginated<RewardDto> = Paginated.empty();
     ready = false;
@@ -24,14 +25,15 @@ export class RewardsHistoryComponent implements AfterViewInit, OnDestroy {
     startDate: Date;
     endDate: Date;
     vaultsIconsList = [];
-    private ngUnsubscribe = new Subject<boolean>();
 
-    constructor(public vt: ViewTypeService,
-                private cdRef: ChangeDetectorRef,
-                private log: NGXLogger,
-                private contractsService: ContractsService,
-                private rewardsService: RewardsService,
-                private vaultsDataService: VaultsDataService,
+    constructor(
+      public vt: ViewTypeService,
+      private cdRef: ChangeDetectorRef,
+      protected destroy$: DestroyService,
+      private log: NGXLogger,
+      private contractsService: ContractsService,
+      private rewardsService: RewardsService,
+      private vaultsDataService: VaultsDataService,
     ) {
     }
 
@@ -47,7 +49,7 @@ export class RewardsHistoryComponent implements AfterViewInit, OnDestroy {
 
     additionalVaultsList(): void {
         this.vaultsDataService.retrieveVaultsList()
-            .pipe(takeUntil(this.ngUnsubscribe))
+            .pipe(takeUntil(this.destroy$))
             .subscribe((data) => {
                 this.vaultsIconsList = data;
             }, err => {
@@ -56,7 +58,9 @@ export class RewardsHistoryComponent implements AfterViewInit, OnDestroy {
     }
 
     private loadRewardsHistory(page: number = 0): void {
-        this.rewardsService.getPaginatedHistoryRewards(10, page, -1, 'desc', this.vaultFilter).subscribe((response) => {
+        this.rewardsService.getPaginatedHistoryRewards(10, page, -1, 'desc', this.vaultFilter)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((response) => {
             this.log.info('Rewards loaded', response);
             if ('data' in response) {
                 response.data = response.data.filter(r => r.isWeeklyReward)
@@ -87,10 +91,5 @@ export class RewardsHistoryComponent implements AfterViewInit, OnDestroy {
 
     getVault(address: string): Vault {
         return this.contractsService.getContracts(Vault).get(address);
-    }
-
-    ngOnDestroy(): void {
-        this.ngUnsubscribe.next(true);
-        this.ngUnsubscribe.complete();
     }
 }

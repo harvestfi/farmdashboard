@@ -18,11 +18,14 @@ import {UniswapService} from '@data/services/http/uniswap.service';
 import {ChartsOptionsLight} from '../charts-options-light';
 import {PriceDataService} from '@data/services/data/price-data.service';
 import {Addresses} from '@data/static/addresses';
+import { DestroyService } from '@data/services/destroy.service';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-farm-chart',
   templateUrl: './farm-chart.component.html',
-  styleUrls: ['./farm-chart.component.css']
+  styleUrls: ['./farm-chart.component.css'],
+  providers: [DestroyService],
 })
 export class FarmChartComponent implements AfterViewInit, OnInit {
   @ViewChild('price_chart') chartEl: ElementRef;
@@ -37,19 +40,25 @@ export class FarmChartComponent implements AfterViewInit, OnInit {
 
   @Output() crosshairMove = new EventEmitter<any>();
 
-  constructor(private uniswapService: UniswapService,
-              private priceData: PriceDataService,
-              public vt: ViewTypeService,
-              public cdRef: ChangeDetectorRef,
-              private log: NGXLogger) {
+  constructor(
+    private uniswapService: UniswapService,
+    private priceData: PriceDataService,
+    public vt: ViewTypeService,
+    public cdRef: ChangeDetectorRef,
+    private log: NGXLogger,
+    private destroy$: DestroyService,
+  ) {
   }
 
   ngOnInit(): void {
-    this.vt.events$.subscribe(event => {
-      if (event === 'theme-changed') {
+    this.vt.events$
+      .pipe(
+        filter(event => event === 'theme-changed'),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => {
         this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
-      }
-    });
+      });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -71,18 +80,22 @@ export class FarmChartComponent implements AfterViewInit, OnInit {
       }
     });
 
-    this.uniswapService.getUniswapOHLC(this.coin).subscribe(data => {
-      this.log.debug(this.coin + ' prices loaded ', data);
-      priceChartBuilder.addValuesToChart(data, false);
-    });
+    this.uniswapService.getUniswapOHLC(this.coin)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.log.debug(this.coin + ' prices loaded ', data);
+        priceChartBuilder.addValuesToChart(data, false);
+      });
 
-    this.priceData.subscribeToActual().subscribe(tx => {
-      if (tx.tokenAddress !== this.coin || tx.otherTokenAddress !== this.otherCoin) {
-        return;
-      }
-      const price = tx.price * this.priceData.getUsdPrice(tx.otherTokenAddress, tx.network);
-      const volume = tx.tokenAmount;
-      priceChartBuilder.collectLastTx(volume, price, tx.blockDate);
-    });
+    this.priceData.subscribeToActual()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(tx => {
+        if (tx.tokenAddress !== this.coin || tx.otherTokenAddress !== this.otherCoin) {
+          return;
+        }
+        const price = tx.price * this.priceData.getUsdPrice(tx.otherTokenAddress, tx.network);
+        const volume = tx.tokenAmount;
+        priceChartBuilder.collectLastTx(volume, price, tx.blockDate);
+      });
   }
 }

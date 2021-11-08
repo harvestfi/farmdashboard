@@ -11,23 +11,28 @@ import {StaticValues} from '@data/static/static-values';
 import {Addresses} from '@data/static/addresses';
 import {forkJoin} from 'rxjs';
 import TreeMap from 'ts-treemap';
+import { takeUntil } from 'rxjs/operators';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-farm-buybacks-dialog',
   templateUrl: './farm-buybacks-dialog.component.html',
-  styleUrls: ['./farm-buybacks-dialog.component.css']
+  styleUrls: ['./farm-buybacks-dialog.component.css'],
+  providers: [DestroyService],
 })
 export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
 
-  constructor(public vt: ViewTypeService,
-              public cdRef: ChangeDetectorRef,
-              private log: NGXLogger,
-              private hardworksService: HardworksService,
-              private priceData: PriceDataService,
-              private tvlsService: TvlsService,
-              private rewardService: RewardsService,
+  constructor(
+    public vt: ViewTypeService,
+    public cdRef: ChangeDetectorRef,
+    protected destroy$: DestroyService,
+    private log: NGXLogger,
+    private hardworksService: HardworksService,
+    private priceData: PriceDataService,
+    private tvlsService: TvlsService,
+    private rewardService: RewardsService,
   ) {
-    super(cdRef, vt);
+    super(cdRef, vt, destroy$);
   }
 
   load(): void {
@@ -36,41 +41,43 @@ export class FarmBuybacksDialogComponent extends ChartGeneralMethodsComponent im
       this.hardworksService.getHardWorkHistoryData(StaticValues.NETWORKS.get(this.network)),
       this.tvlsService.getHistoryTvlByVault(Addresses.ADDRESSES.get('PS')),
       this.rewardService.getAllHistoryRewardsByNetwork(StaticValues.NETWORKS.get(this.network)),
-    ]).subscribe(([hardWorks, vaultData, rewards]) => {
-      this.log.debug('History of All Farm buybacks loaded ', hardWorks);
-      const chartBuilder = new ChartBuilder();
-      chartBuilder.initVariables(4);
+    ])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([hardWorks, vaultData, rewards]) => {
+        this.log.debug('History of All Farm buybacks loaded ', hardWorks);
+        const chartBuilder = new ChartBuilder();
+        chartBuilder.initVariables(4);
 
-      const cumulativeRewards = new TreeMap<number, number>();
-      let rewardsSum = 0;
-      rewards?.forEach(dto => {
-        if (dto.isWeeklyReward) {
-          rewardsSum += dto.reward;
-          cumulativeRewards.set(dto.block, rewardsSum);
-          chartBuilder.addInData(2, dto.blockDate, rewardsSum / 1000);
-        }
-      });
-
-      hardWorks?.forEach(dto => {
-        let bb = dto.farmBuybackSum;
-        if (dto.network === 'bsc') {
-          const farmPrice = this.priceData.getLastFarmPrice();
-          if (farmPrice && farmPrice !== 0) {
-            bb = bb / farmPrice;
-          } else {
-            bb = 0;
+        const cumulativeRewards = new TreeMap<number, number>();
+        let rewardsSum = 0;
+        rewards?.forEach(dto => {
+          if (dto.isWeeklyReward) {
+            rewardsSum += dto.reward;
+            cumulativeRewards.set(dto.block, rewardsSum);
+            chartBuilder.addInData(2, dto.blockDate, rewardsSum / 1000);
           }
-        }
+        });
 
-        chartBuilder.addInData(0, dto.blockDate, bb / 1000);
+        hardWorks?.forEach(dto => {
+          let bb = dto.farmBuybackSum;
+          if (dto.network === 'bsc') {
+            const farmPrice = this.priceData.getLastFarmPrice();
+            if (farmPrice && farmPrice !== 0) {
+              bb = bb / farmPrice;
+            } else {
+              bb = 0;
+            }
+          }
 
-        if (!cumulativeRewards.floorKey(dto.block)) {
-          return;
-        }
-        const rewardsBBRatio = bb / cumulativeRewards.floorEntry(dto.block)[1] * 100;
+          chartBuilder.addInData(0, dto.blockDate, bb / 1000);
 
-        chartBuilder.addInData(3, dto.blockDate, rewardsBBRatio);
-      });
+          if (!cumulativeRewards.floorKey(dto.block)) {
+            return;
+          }
+          const rewardsBBRatio = bb / cumulativeRewards.floorEntry(dto.block)[1] * 100;
+
+          chartBuilder.addInData(3, dto.blockDate, rewardsBBRatio);
+        });
 
       this.log.debug('History of PS TVL loaded ', vaultData);
       vaultData?.forEach(dto => chartBuilder.addInData(1, dto.calculateTime, dto.sharePrice / 1000));

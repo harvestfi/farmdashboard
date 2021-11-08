@@ -7,13 +7,15 @@ import {ContractsService} from '@data/services/contracts.service';
 import {Vault} from '@data/models/vault';
 import {RewardsService} from '@data/services/http/rewards.service';
 import { Paginated } from '@data/models/paginated';
+import { DestroyService } from '@data/services/destroy.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rewards-history-dialog',
   templateUrl: './rewards-history-dialog.component.html',
-  styleUrls: ['./rewards-history-dialog.component.scss']
+  styleUrls: ['./rewards-history-dialog.component.scss'],
+  providers: [DestroyService],
 })
-
 
 export class RewardsHistoryDialogComponent implements AfterViewInit {
   @Input() data;
@@ -23,11 +25,13 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
   startDate: Date;
   endDate: Date;
 
-  constructor(public vt: ViewTypeService,
-              private cdRef: ChangeDetectorRef,
-              private log: NGXLogger,
-              private contractsService: ContractsService,
-              private rewardsService: RewardsService,
+  constructor(
+    public vt: ViewTypeService,
+    private cdRef: ChangeDetectorRef,
+    private log: NGXLogger,
+    private contractsService: ContractsService,
+    private rewardsService: RewardsService,
+    private destroy$: DestroyService,
   ) {
   }
 
@@ -40,24 +44,25 @@ export class RewardsHistoryDialogComponent implements AfterViewInit {
     .map(_ => _.contract?.name);
   }
 
-
   private loadRewardsHistory(page: number = 0): void {
     this.ready = false;
-    this.rewardsService.getPaginatedHistoryRewards(10, page, -1, 'desc', this.vaultFilter).subscribe((response) => {
-      this.log.info('Rewards loaded', response);
-      if ('data' in response) {
-        response.data = response.data.filter(r => r.isWeeklyReward)
-        .map(RewardDto.fillBlockDateAdopted);
+    this.rewardsService.getPaginatedHistoryRewards(10, page, -1, 'desc', this.vaultFilter)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response) => {
+        this.log.info('Rewards loaded', response);
+        if ('data' in response) {
+          response.data = response.data.filter(r => r.isWeeklyReward)
+            .map(RewardDto.fillBlockDateAdopted);
 
-        this.rewards = response;
+          this.rewards = response;
 
-        this.ready = true;
-        this.cdRef.detectChanges();
-        return;
-      }
+          this.ready = true;
+          this.cdRef.detectChanges();
+          return;
+        }
 
-      this.rewards = Paginated.empty();
-    });
+        this.rewards = Paginated.empty();
+      });
   }
 
 

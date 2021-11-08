@@ -1,14 +1,16 @@
-import { AfterViewInit, Component, EventEmitter, HostListener, OnDestroy, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
 import { ViewTypeService } from '@data/services/view-type.service';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-draggable-modal',
   templateUrl: './draggable-modal.component.html',
   styleUrls: ['./draggable-modal.component.css'],
+  providers: [DestroyService],
 })
-export class DraggableModalComponent implements AfterViewInit, OnDestroy {
+export class DraggableModalComponent implements AfterViewInit {
   @Output() dragged = new EventEmitter<boolean>();
 
   @ViewChild('modal') private modal;
@@ -18,9 +20,11 @@ export class DraggableModalComponent implements AfterViewInit, OnDestroy {
   private positionFour = 0;
   private isMouseDown = false;
   private debounce: Subject<void> = new Subject<void>();
-  private ngUnsubscribe = new Subject<boolean>();
 
-  constructor(public vt: ViewTypeService) {
+  constructor(
+    public vt: ViewTypeService,
+    private destroy$: DestroyService,
+  ) {
   }
 
   ngAfterViewInit(): void {
@@ -32,14 +36,9 @@ export class DraggableModalComponent implements AfterViewInit, OnDestroy {
     this.debounce
       .pipe(
         debounceTime(100),
-        takeUntil(this.ngUnsubscribe),
+        takeUntil(this.destroy$),
       )
       .subscribe(() => this.dragged.emit(false));
-  }
-
-  ngOnDestroy(): void {
-    this.ngUnsubscribe.next(true);
-    this.ngUnsubscribe.complete();
   }
 
   mousedown(event): void {

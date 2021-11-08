@@ -9,29 +9,35 @@ import {ChartGeneralMethodsComponent} from '@modules/chart/chart-general-methods
 import {StaticValues} from '@data/static/static-values';
 import {forkJoin} from 'rxjs';
 import {Addresses} from '@data/static/addresses';
+import { DestroyService } from '@data/services/destroy.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ps-apy-history',
   templateUrl: './ps-apy-history.component.html',
-  styleUrls: ['./ps-apy-history.component.scss']
+  styleUrls: ['./ps-apy-history.component.scss'],
+  providers: [DestroyService],
 })
 export class PsApyHistoryComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
 
-    constructor(public vt: ViewTypeService,
-                public cdRef: ChangeDetectorRef,
-                private log: NGXLogger,
-                private harvestsService: HarvestsService,
-                private rewardsService: RewardsService,
+    constructor(
+      public vt: ViewTypeService,
+      public cdRef: ChangeDetectorRef,
+      protected destroy$: DestroyService,
+      private log: NGXLogger,
+      private harvestsService: HarvestsService,
+      private rewardsService: RewardsService,
     ) {
-        super(cdRef, vt);
+      super(cdRef, vt, destroy$);
     }
 
     load(): void {
-
         forkJoin([
             this.rewardsService.getHistoryRewards(Addresses.ADDRESSES.get('PS'), StaticValues.NETWORKS.get('eth')),
             this.harvestsService.getHarvestHistoryByVault(Addresses.ADDRESSES.get('PS'), StaticValues.NETWORKS.get('eth'))
-        ]).subscribe(([rewards, harvests]) => {
+        ])
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(([rewards, harvests]) => {
             const chartBuilder = new ChartBuilder();
             chartBuilder.initVariables(2);
 
