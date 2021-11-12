@@ -33,9 +33,15 @@
         <span [class]="vt.getThemeColor() + '-solidGreen'">Total: {{ (vaultsList$ | async)?.length }}</span>
       </div>
     </div>
-    <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
 
+    <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
   </div>
+
+  <mat-checkbox
+    class="checkbox"
+    [(ngModel)]="isShowInactive">
+    Show inactive values
+  </mat-checkbox>
 
   <!--  ******** HEADERS ************** -->
 
@@ -83,7 +89,8 @@
     [class]="vt.getThemeColor() + '-card'">
     <ng-container
       *ngIf="(vaultsList$ | async)
-      | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection:searchTerm
+      | strategyListFilter:networkFilter:platformFilter:assetFilter:currentSortingValue:sortDirection
+      :searchTerm:isShowInactive
       as filteredVaults">
       <div
         *ngFor="let row of filteredVaults"
@@ -136,9 +143,9 @@
         <div class="column">
           <app-popover-card class="pointer">
             <ng-template>
-              <p>TVL: {{vaultTvl(row.contract.address, row.contract.network) | number}}$</p>
+              <p>TVL: {{row.totalTVL | number}}$</p>
             </ng-template>
-            ${{prettifyNumber(vaultTvl(row.contract.address, row.contract.network))}}
+            ${{row.totalTVLPrettify}}
           </app-popover-card>
         </div>
 
@@ -149,7 +156,7 @@
 
         <!-- Total Earned -->
         <div class="column desktop-only">
-          ${{vaultTotalEarning(row.contract.address, row.contract.network) | number: '1.1-1'}}
+          ${{row.totalEarning | number: '1.1-1'}}
         </div>
 
         <!-- Created -->

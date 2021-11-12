@@ -13,9 +13,9 @@ export class VaultIconsPipe implements PipeTransform {
     transform(vault, networkList, error): string {
         let name;
         if (!error) {
-            if (vault instanceof Vault) {
+            if (vault?.contract && vault?.contract?.name.indexOf('V_') >= 0) {
                 name = vault?.contract?.name.replace('V_', '');
-            } else if (vault instanceof Pool) {
+            } else if (vault?.contract && vault?.contract?.name.indexOf('P_') >= 0) {
                 name = vault?.contract?.name.replace('P_', '');
             } else if (vault?.startsWith('0x')) {
                 name = this.contractService.getContractName(vault);

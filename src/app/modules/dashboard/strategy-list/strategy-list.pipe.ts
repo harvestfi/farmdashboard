@@ -26,21 +26,34 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
       asset: string,
       currentSortingValue: string,
       sortDirection: string,
-      searchTerm: string
+      searchTerm: string,
+      isShowInactive: boolean,
   ): Vault[] {
     if (!vaults) {
       return [];
     }
 
-    const newVaults = vaults.filter(vault => {
-      const networkMatchesFilter = (network ? vault.contract?.network === network : true);
-      const platformMatchesFilter = (platform ? vault.contract?.name.startsWith(platform) : true);
-      const assetMatchesFilter = (asset ? vault.contract?.name.includes(asset) : true);
-      const searchTermMatchesFilter = (
+    const newVaults = vaults
+      .filter(vault => {
+        const networkMatchesFilter = (network ? vault.contract?.network === network : true);
+        const platformMatchesFilter = (platform ? vault.contract?.name.startsWith(platform) : true);
+        const assetMatchesFilter = (asset ? vault.contract?.name.includes(asset) : true);
+        const searchTermMatchesFilter = (
           searchTerm.length ? vault.contract?.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) : true);
-      const hasAddress = vault.contract?.address;
-      return networkMatchesFilter && platformMatchesFilter && assetMatchesFilter && searchTermMatchesFilter && hasAddress;
-    });
+        const hasAddress = vault.contract?.address;
+        return networkMatchesFilter && platformMatchesFilter && assetMatchesFilter && searchTermMatchesFilter && hasAddress;
+      })
+      .map(vault => {
+        const totalTVL = this.vaultTvl(vault.contract.address, vault.contract.network);
+        const totalEarning = this.vaultTotalEarning(vault.contract.address, vault.contract.network);
+        return {
+          ...vault,
+          totalTVL,
+          totalTVLPrettify: this.prettifyNumber(totalTVL),
+          totalEarning,
+        };
+      })
+      .filter(vault => (vault.totalTVL === 0 && vault.totalEarning === 0 && isShowInactive) || vault.totalTVL > 0);
 
     newVaults.sort((a: any, b: any): number => {
       const left = sortDirection === 'desc' ? a : b;
@@ -55,14 +68,12 @@ export class StrategyListFilterPipe extends StrategyListCommonMethods implements
           return this.vaultFullApy(right.contract?.address, right.contract?.network)
               - this.vaultFullApy(left.contract?.address, left.contract?.network);
         case 'tvl':
-          return this.vaultTvl(right.contract?.address, right.contract?.network)
-              - this.vaultTvl(left.contract?.address, left.contract?.network);
+          return right.totalTVL - left.totalTVL;
         case 'users':
           return this.vaultUsers(right.contract?.address, right.contract?.network)
               - this.vaultUsers(left.contract?.address, left.contract?.network);
         case 'total_earned':
-          return this.vaultTotalEarning(right.contract?.address, right.contract?.network)
-              - this.vaultTotalEarning(left.contract?.address, left.contract?.network);
+          return right.totalEarning - left.totalEarning;
         case 'created':
           return left.contract?.createdDate < right.contract?.createdDate ? -1 : 1;
         default:

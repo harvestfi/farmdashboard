@@ -13,4 +13,7 @@ export class Vault implements IContract {
   strategy: Contract;
   underlying: Contract;
   symbol: string;
+  totalTVL?: number;
+  totalTVLPrettify?: string;
+  totalEarning?: number;
 }
