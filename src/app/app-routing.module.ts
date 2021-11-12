@@ -14,14 +14,14 @@ const routes: Routes = [
     path: 'charts',
     loadChildren: () => import('./modules/web3charts/web3charts.module').then(m => m.Web3ChartsModule),
   },
-  {path: '**', redirectTo: ''}
+  {path: '**', redirectTo: ''},
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {relativeLinkResolution: 'legacy'})
+    RouterModule.forRoot(routes, {relativeLinkResolution: 'legacy'}),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {
 }

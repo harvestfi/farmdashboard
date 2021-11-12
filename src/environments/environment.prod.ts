@@ -5,5 +5,5 @@
 // 4) access config via this.config.apiEndpoint
 
 export const environment = {
-  production: true
+  production: true,
 };

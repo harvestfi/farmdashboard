@@ -27,7 +27,7 @@ import { GraphQLModule } from '@modules/main-page/graphql.module';
       serverLoggingUrl: 'placeholder values - these are set at runtime using log.updateConfig()',
       level: 0,
       serverLogLevel: NgxLoggerLevel.OFF,
-      disableConsoleLogging: false
+      disableConsoleLogging: false,
     }),
     MatProgressBarModule,
     SidebarModule,
