@@ -137,14 +137,13 @@
     font-weight: bold;
   }
 
-
   .filters {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     gap: 16px;
-    margin: 12px 0 80px;
+    margin: 12px 0 12px;
     font-family: 'PT Sans', sans-serif;
     div {
       display: flex;
@@ -186,5 +185,13 @@
       transition: all 0.5s;
       font-size: 16px;
     }
+  }
+}
+
+.checkbox {
+  margin-bottom: 40px;
+
+  ::ng-deep .mat-checkbox-frame {
+    background-color: #b0bec5;
   }
 }

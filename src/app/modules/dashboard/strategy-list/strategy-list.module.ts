@@ -15,6 +15,7 @@ import {CustomModalModule} from '@shared/custom-modal/custom-modal.module';
 import {VaultTvlDialogModule} from '@modules/dialogs/charts/vault-tvl-dialog/vault-tvl-dialog.module';
 import {SideMenuToggleModule} from '@layout/main-top-navigation/side-menu-toggle/side-menu-toggle.module';
 import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
     VaultTvlDialogModule,
     SideMenuToggleModule,
     ThemeSwitchModule,
+    MatCheckboxModule,
   ],
   exports: [
     StrategyListComponent,

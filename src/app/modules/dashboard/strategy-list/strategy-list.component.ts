@@ -27,6 +27,7 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   public networkFilter = '';
   public platformFilter = '';
   public assetFilter = '';
+  public isShowInactive = false;
   public vaultsList$: Observable<Vault[]>;
   public apyWindowState: Record<string, boolean> = {};
   public sortDirection = 'desc';
