@@ -54,7 +54,7 @@ export class AppComponent implements AfterContentInit {
       // serverLoggingUrl: config.apiEndpoint + '/api/logs',
       level: this.config.debugLevel,
       serverLogLevel: NgxLoggerLevel.OFF,
-      disableConsoleLogging: false
+      disableConsoleLogging: false,
     });
   }
 
@@ -71,7 +71,7 @@ export class AppComponent implements AfterContentInit {
         filter(err => !this.errored && err instanceof Error),
         takeUntil(this.destroy$),
       )
-      .subscribe(err => {
+      .subscribe(() => {
         this.errored = true;
         this.dialog.open(ApplicationErrorDialogComponent);
       });
