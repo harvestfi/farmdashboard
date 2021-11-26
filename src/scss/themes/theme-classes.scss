@@ -85,7 +85,8 @@ $variables in $themes_colors {
         .uni-trades .transaction-type span,
         .harvest-trades .transaction-type span {
             &.BUY,
-            &.Deposit {
+            &.Deposit,
+            &.CONVERSION{
                 background: map-get($variables, 'middleGreen');
                 color: #FFFFFF;
             }

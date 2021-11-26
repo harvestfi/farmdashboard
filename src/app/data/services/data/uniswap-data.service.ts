@@ -9,7 +9,6 @@ import { Addresses } from '@data/static/addresses';
 import { PriceDataService } from './price-data.service';
 import { SnackBarService } from '@shared/snack-bar/snack-bar.service';
 import { BancorService } from '@data/services/http/bancor.service';
-import { BancorDto } from '@data/models/bancor-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,6 @@ import { BancorDto } from '@data/models/bancor-dto';
 export class UniswapDataService {
   farmTrades: UniswapDto[] = [];
   lastFarmUni: UniswapDto;
-  lastBancor: BancorDto;
   txIds = new Set<string>();
 
   constructor(private uniswapService: UniswapService,
@@ -37,17 +35,8 @@ export class UniswapDataService {
         }
     );
 
-    this.pricesService.subscribeToPrices().subscribe(() => {
-        setTimeout(() => {
-            const bancor =  BancorDto.fromJson("{\"id\":\"0xe5571a4a7de06bd9aa357713be03f3db1ae06da014ddbbcd63ba4c1173129\",\"logid\":68,\"block\":13586929,\"blockDate\":1637324493,\"amountFarm\":3.652603049302888,\"amountBnt\":131.10055312827768,\"priceBtn\":4.66788,\"priceFarm\":3.652603049302888,\"farmAsSource\":3.652603049302888,\"tokenAddress\":\"0xa0246c9032bc3a600820415ae600c6388619a14d\"}");
-            console.log(bancor);
-            this.handleFarmTradeUni(bancor);
-
-        }, 5000);
-        this.handlePriceToUni.bind(this);
-  });
-
-    ///this.bancorService.subscribeToBancor().subscribe(this.handlePriceToUni.bind(this));
+    this.pricesService.subscribeToPrices().subscribe(this.handlePriceToUni.bind(this));
+    this.bancorService.subscribeToBancor().subscribe(this.handleFarmTradeUni.bind(this));
   }
 
   private handleFarmTradeUni(uniDto: UniswapDto): void {
