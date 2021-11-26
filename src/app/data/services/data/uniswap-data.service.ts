@@ -19,8 +19,8 @@ export class UniswapDataService {
   txIds = new Set<string>();
 
   constructor(private uniswapService: UniswapService,
-			  private bancorService: BancorService,
               private pricesService: PricesService,
+              private bancorService: BancorService,
               private priceData: PriceDataService,
               private snack: SnackBarService,
               private log: NGXLogger) {
