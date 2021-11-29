@@ -9,6 +9,7 @@ import { Addresses } from '@data/static/addresses';
 import { PriceDataService } from './price-data.service';
 import { SnackBarService } from '@shared/snack-bar/snack-bar.service';
 import { BancorService } from '@data/services/http/bancor.service';
+import {BancorDto} from '@data/models/bancor-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ import { BancorService } from '@data/services/http/bancor.service';
 export class UniswapDataService {
   farmTrades: UniswapDto[] = [];
   lastFarmUni: UniswapDto;
+  lastFarmBancor: BancorDto;
   txIds = new Set<string>();
 
   constructor(private uniswapService: UniswapService,
@@ -36,7 +38,7 @@ export class UniswapDataService {
     );
 
     this.pricesService.subscribeToPrices().subscribe(this.handlePriceToUni.bind(this));
-    this.bancorService.subscribeToBancor().subscribe(this.handleFarmTradeUni.bind(this));
+    this.bancorService.subscribeToBancor().subscribe(this.handleFarmTradeBancor.bind(this));
   }
 
   private handleFarmTradeUni(uniDto: UniswapDto): void {
@@ -63,6 +65,30 @@ export class UniswapDataService {
     this.snack.openSnack(Object.assign(new UniswapDto(), uniDto)?.print());
   }
 
+    private handleFarmTradeBancor(bancorDto: BancorDto): void {
+        if (!bancorDto
+            || bancorDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')
+            || bancorDto?.type === 'REM'
+            || bancorDto?.type === 'ADD'
+        ) {
+            // this.log.warn('Not FARM bancor dto', bancorDto);
+            return;
+        }
+        if (this.isNotActualBancor(bancorDto)) {
+            this.log.warn('Not actual uni', bancorDto, this.lastFarmUni);
+            return;
+        }
+        if (!this.isBancorqTx(bancorDto)) {
+            this.log.warn('Not unique uni dto', bancorDto);
+            return;
+        }
+        BancorDto.round(bancorDto);
+        this.lastFarmBancor = bancorDto;
+        Utils.addInArrayAtTheStart(this.farmTrades, bancorDto);
+        // this.log.info('bancor', bancorDto);
+        this.snack.openSnack(Object.assign(new BancorDto(), bancorDto)?.print());
+    }
+
   private handlePriceToUni(priceDto: PricesDto): void {
     const price = priceDto.price * this.priceData.getUsdPrice(priceDto.otherTokenAddress, priceDto.network);
     const uniDto = priceDto.toUniswap();
@@ -84,4 +110,19 @@ export class UniswapDataService {
     }
     return true;
   }
+
+    private isNotActualBancor(dto: UniswapDto): boolean {
+        return !!this.lastFarmBancor && (!dto || this.lastFarmUni.blockDate > dto.blockDate);
+    }
+
+    private isBancorqTx(tx: BancorDto): boolean {
+        if (this.txIds.has(tx.id)) {
+            return false;
+        }
+        this.txIds.add(tx.id);
+        if (this.txIds.size > 100_000) {
+            this.txIds = new Set<string>();
+        }
+        return true;
+    }
 }
