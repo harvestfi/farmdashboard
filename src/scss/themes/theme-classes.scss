@@ -3,7 +3,6 @@
 
 @each $color,
 $variables in $themes_colors {
-
     .#{$color}-background, .#{$color}-card{
         color: map-get($variables, "font");
         h1,
@@ -110,8 +109,6 @@ $variables in $themes_colors {
 
     }
 
-
-
     .#{$color}-background {
         background: map-get($variables, "background");
     }
@@ -130,6 +127,10 @@ $variables in $themes_colors {
 
     .#{$color}-softGreen {
         background: map-get($variables, "softGreen");
+    }
+
+    .#{$color}-darkGreen {
+        background: map-get($variables, "darkGreen");
     }
 
     span.#{$color}-solidGreen {

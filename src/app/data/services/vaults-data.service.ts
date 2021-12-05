@@ -16,7 +16,7 @@ interface FilteredVault {
 
 export class VaultsDataService {
 
-    localApi = window.document.location.host === 'localhost:4200' ? 'http://localhost:8080' : '';
+    localApi = window.document.location.host === 'localhost:3000' ? 'http://localhost:8080' : '';
     constructor(
         @Inject(APP_CONFIG) public config: AppConfig,
         private http: HttpClient,

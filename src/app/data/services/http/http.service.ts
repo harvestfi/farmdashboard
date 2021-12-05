@@ -12,23 +12,27 @@ import {NGXLogger} from 'ngx-logger';
 import {RestResponse} from '@data/models/rest-response';
 import {Paginated} from '@data/models/paginated';
 import get = Reflect.get;
+import { Pool } from '@data/models/pool';
+import { environment } from '@environments/environment';
+import { Vault } from '@data/models/vault';
+import { iPSAddress } from '@data/constants/app.constant';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HttpService {
 
-  localApi = window.document.location.host === 'localhost:4200' ? 'http://localhost:8080' : '';
+  localApi = window.document.location.host === 'localhost:3000' ? 'http://localhost:8080' : '';
   constructor(
       @Inject(APP_CONFIG) public config: AppConfig,
       private http: HttpClient,
       private snackService: SnackBarService,
-      private log: NGXLogger
+      private log: NGXLogger,
   ) {
   }
 
   public httpGetWithNetwork<T>(
-      urlAtr: string
+      urlAtr: string,
   ): Observable<T> {
     if (urlAtr.indexOf('?') < 0) {
       urlAtr += '?';
@@ -56,7 +60,7 @@ export class HttpService {
             }
             return x;
           }),
-          map(x => x.flat())
+          map(x => x.flat()),
       );
     } else {
       const url = get(this.config.apiEndpoints, this.config.defaultNetwork)
@@ -76,13 +80,13 @@ export class HttpService {
 
     return request.pipe(
         // filter(x => !!x),
-        catchError(this.snackService.handleError<T>(urlAtr + ' error'))
+        catchError(this.snackService.handleError<T>(urlAtr + ' error')),
     );
   }
 
   public httpGet<T>(
       urlAtr: string,
-      network: Network = StaticValues.NETWORKS.get('eth')
+      network: Network = StaticValues.NETWORKS.get('eth'),
   ): Observable<T> {
     if (urlAtr.indexOf('?') < 0) {
       urlAtr += '?';
@@ -94,7 +98,7 @@ export class HttpService {
     this.log.debug('HTTP simple get for network ' + network.ethparserName, url);
     return this.http.get<T>(url).pipe(
         map(x => this.handleResponse(x, urlAtr)),
-        catchError(this.snackService.handleError<T>(url + ' error'))
+        catchError(this.snackService.handleError<T>(url + ' error')),
     );
   }
 
@@ -108,6 +112,50 @@ export class HttpService {
 
   getMaticPrices(): Observable<{ usd: number }> {
       return this.http.get<{ usd: number }>(`${this.localApi}/matic-info`);
+  }
+  
+  getEthereumPools(): Observable<Pool[]> {
+    const ethereumOutdatedPools = new Set<string>([]);
+    
+    return this.http.get<{ data: Pool[] }>(`${ environment.APP_ETH_PARSER_URL }/contracts/pools`)
+      .pipe(
+        map(({ data }) => {
+          return data.filter(pool => {
+            return !ethereumOutdatedPools.has(pool.contract.address.toLowerCase());
+          }) ?? [];
+        }),
+      );
+  }
+  
+  getEthereumVaults(): Observable<Vault[]> {
+    const ethereumOutdatedVaults = new Set<string>([
+      '0x59258f4e15a5fc74a7284055a8094f58108dbd4f',
+    ]);
+    
+    return this.http.get<{ data: Vault[] }>(`${ environment.APP_ETH_PARSER_URL }/contracts/vaults`)
+      .pipe(
+        map(({ data }) => {
+          data.push(iPSAddress);
+          
+          return data.filter(vault => {
+            return !ethereumOutdatedVaults.has(vault.contract.address.toLowerCase());
+          }) ?? [];
+        }),
+      );
+  }
+  
+  getPersonalGasSaved(address: string): Observable<null | number> {
+    return this.http.get<{ data: number }>(`${environment.APP_ETH_PARSER_URL}/total_saved_gas_fee_by_address?address=${address}`)
+      .pipe(
+        map(({ data }) => data),
+      );
+  }
+  
+  getAPY(): Observable<string | null> {
+    return this.http.get<{ eth: any[] }>(`https://api-ui.harvest.finance/pools?key=${environment.APP_HARVEST_KEY}`)
+      .pipe(
+        map(({ eth }) => eth[0].rewardAPY[0] ?? null),
+      );
   }
 
   private handleResponse(x: any, url: string): any {

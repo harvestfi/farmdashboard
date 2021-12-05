@@ -35,11 +35,11 @@ const routes: Routes = [
   },
   {
     path: 'charts/info-total',
-    component: VaultStatsTotalComponent
+    component: VaultStatsTotalComponent,
   },
   {
     path: 'info/:network/:address',
-    component: VaultStatsComponent
+    component: VaultStatsComponent,
   },
   {
     path: 'rewards-history',
@@ -61,7 +61,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class MainPageRoutingModule {
 }
