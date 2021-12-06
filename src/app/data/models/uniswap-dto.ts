@@ -1,4 +1,4 @@
-import { Utils } from '@data/static/utils';
+import { TransactionTypes } from '@data/static/transaction-types';
 
 export class UniswapDto {
   id: string;
@@ -43,7 +43,7 @@ export class UniswapDto {
 
   print(): string {
     // (moment(this.blockDateAdopted)).format('HH:mm:ss')
-    return Utils.prettyTransactionType(this.type)
+    return TransactionTypes[this.type]
         + ' ' + this.amount?.toFixed(2)
         + ' ' + this.coin
         + ' for ' + this.otherAmount?.toFixed(2)

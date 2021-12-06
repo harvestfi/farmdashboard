@@ -1,4 +1,5 @@
-import { Utils } from '@data/static/utils';
+import { TransactionTypes } from '@data/static/transaction-types';
+
 
 export class BancorDto {
     id: string;
@@ -43,7 +44,7 @@ export class BancorDto {
 
     print(): string {
         // (moment(this.blockDateAdopted)).format('HH:mm:ss')
-        return Utils.prettyTransactionType(this.type)
+        return TransactionTypes[this.type]
             + ' ' + this.amount?.toFixed(2)
             + ' ' + this.coin
             + ' for ' + this.otherAmount?.toFixed(2)

@@ -10,6 +10,7 @@ import { PriceDataService } from './price-data.service';
 import { SnackBarService } from '@shared/snack-bar/snack-bar.service';
 import { BancorService } from '@data/services/http/bancor.service';
 import { BancorDto } from '@data/models/bancor-dto';
+import { TransactionTypes } from '@data/static/transaction-types';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +45,8 @@ export class UniswapDataService {
   private handleFarmTradeUni(uniDto: UniswapDto): void {
     if (!uniDto
         || uniDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')
-        || uniDto?.type === 'REM'
-        || uniDto?.type === 'ADD'
+        || uniDto?.type === TransactionTypes.REM
+        || uniDto?.type === TransactionTypes.ADD
     ) {
       // this.log.warn('Not FARM uni dto', uniDto);
       return;
@@ -68,8 +69,8 @@ export class UniswapDataService {
     private handleFarmTradeBancor(bancorDto: BancorDto): void {
         if (!bancorDto
             || bancorDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')
-            || bancorDto?.type === 'REM'
-            || bancorDto?.type === 'ADD'
+            || bancorDto?.type === TransactionTypes.REM
+            || bancorDto?.type === TransactionTypes.ADD
         ) {
             // this.log.warn('Not FARM bancor dto', bancorDto);
             return;
