@@ -9,7 +9,7 @@ import { Addresses } from '@data/static/addresses';
 import { PriceDataService } from './price-data.service';
 import { SnackBarService } from '@shared/snack-bar/snack-bar.service';
 import { BancorService } from '@data/services/http/bancor.service';
-import {BancorDto} from '@data/models/bancor-dto';
+import { BancorDto } from '@data/models/bancor-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +44,8 @@ export class UniswapDataService {
   private handleFarmTradeUni(uniDto: UniswapDto): void {
     if (!uniDto
         || uniDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')
-        || uniDto?.type === 'REM'
-        || uniDto?.type === 'ADD'
+        || Utils.prettyTransactionType(uniDto?.type) === 'REM'
+        || Utils.prettyTransactionType(uniDto?.type) === 'ADD'
     ) {
       // this.log.warn('Not FARM uni dto', uniDto);
       return;
@@ -68,18 +68,18 @@ export class UniswapDataService {
     private handleFarmTradeBancor(bancorDto: BancorDto): void {
         if (!bancorDto
             || bancorDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')
-            || bancorDto?.type === 'REM'
-            || bancorDto?.type === 'ADD'
+            || Utils.prettyTransactionType(bancorDto?.type) === 'REM'
+            || Utils.prettyTransactionType(bancorDto?.type) === 'ADD'
         ) {
             // this.log.warn('Not FARM bancor dto', bancorDto);
             return;
         }
         if (this.isNotActualBancor(bancorDto)) {
-            this.log.warn('Not actual uni', bancorDto, this.lastFarmUni);
+            this.log.warn('Not actual bancor', bancorDto, this.lastFarmUni);
             return;
         }
         if (!this.isBancorqTx(bancorDto)) {
-            this.log.warn('Not unique uni dto', bancorDto);
+            this.log.warn('Not unique bancor dto', bancorDto);
             return;
         }
         BancorDto.round(bancorDto);

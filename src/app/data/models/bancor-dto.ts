@@ -1,3 +1,5 @@
+import { Utils } from '@data/static/utils';
+
 export class BancorDto {
     id: string;
     type: string;
@@ -41,25 +43,12 @@ export class BancorDto {
 
     print(): string {
         // (moment(this.blockDateAdopted)).format('HH:mm:ss')
-        return this.typeToString()
+        return Utils.prettyTransactionType(this.type)
             + ' ' + this.amount?.toFixed(2)
             + ' ' + this.coin
             + ' for ' + this.otherAmount?.toFixed(2)
             + ' ' + this.otherCoin
             + ' price ' + this.lastPrice?.toFixed(2)
             ;
-    }
-
-    typeToString(): string {
-        switch (this.type) {
-            case 'BUY':
-                return 'Buy';
-            case 'SELL':
-                return 'Sell';
-            case 'ADD':
-                return 'Add liquidity';
-            case 'REM':
-                return 'Remove liquidity';
-        }
     }
 }
