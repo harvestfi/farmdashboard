@@ -44,8 +44,8 @@ export class UniswapDataService {
   private handleFarmTradeUni(uniDto: UniswapDto): void {
     if (!uniDto
         || uniDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')
-        || Utils.prettyTransactionType(uniDto?.type) === 'REM'
-        || Utils.prettyTransactionType(uniDto?.type) === 'ADD'
+        || Utils.prettyTransactionType(uniDto?.type) === 'Rem'
+        || Utils.prettyTransactionType(uniDto?.type) === 'Add liquidity'
     ) {
       // this.log.warn('Not FARM uni dto', uniDto);
       return;
@@ -68,8 +68,8 @@ export class UniswapDataService {
     private handleFarmTradeBancor(bancorDto: BancorDto): void {
         if (!bancorDto
             || bancorDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')
-            || Utils.prettyTransactionType(bancorDto?.type) === 'REM'
-            || Utils.prettyTransactionType(bancorDto?.type) === 'ADD'
+            || Utils.prettyTransactionType(bancorDto?.type) === 'Rem'
+            || Utils.prettyTransactionType(bancorDto?.type) === 'Add liquidity'
         ) {
             // this.log.warn('Not FARM bancor dto', bancorDto);
             return;

@@ -211,7 +211,13 @@ export class Utils {
   }
 
   public static prettyTransactionType(type: string): string {
-      const TransactionType = {'BUY': 'But', 'SELL': 'Sell', 'ADD': 'Add liquidity', 'REM': 'Remove liquidity', 'CONVERSION': 'Conversion'};
+      const TransactionType = {
+                              'BUY': 'But',
+                              'SELL': 'Sell',
+                              'ADD': 'Add liquidity',
+                              'REM': 'Remove liquidity',
+                              'CONVERSION': 'Conversion',
+      };
       Object.freeze(TransactionType);
       return TransactionType[type];
   }
