@@ -1,5 +1,5 @@
-import {CrosshairMode} from 'lightweight-charts';
-import * as moment from 'moment';
+import { CrosshairMode } from 'lightweight-charts';
+import { format } from 'date-fns';
 
 export class LightweightChartsOptions {
   public static getOptions(): any {
@@ -25,7 +25,7 @@ export class LightweightChartsOptions {
         horzLine: {
           visible: true,
           labelVisible: true,
-        }
+        },
       },
       watermark: {
         color: 'rgba(255,255,255, 0.7)',
@@ -47,10 +47,10 @@ export class LightweightChartsOptions {
         tickMarkFormatter: (time, tickMarkType, locale) => {
           const d = new Date(0);
           d.setUTCSeconds(time);
-          return (moment(d)).format('DD-MMM HH:mm');
+          return format(d, 'dd-MMM HH:mm');
         },
-        rightOffset: 50
-      }
+        rightOffset: 50,
+      },
     };
   }
 }

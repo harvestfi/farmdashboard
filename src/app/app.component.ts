@@ -7,11 +7,14 @@ import {ApplicationErrorDialogComponent} from '@layout/application-error-dialog/
 import {ViewTypeService} from '@data/services/view-type.service';
 import {MatDialog} from '@angular/material/dialog';
 import {BusyNotifierService} from '@data/services/busy-notifier.service';
+import { DestroyService } from '@data/services/destroy.service';
+import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [DestroyService],
 })
 export class AppComponent implements AfterContentInit {
   buffering = true;
@@ -25,6 +28,7 @@ export class AppComponent implements AfterContentInit {
     private loadingService: BusyNotifierService,
     private cdref: ChangeDetectorRef,
     private log: NGXLogger,
+    private destroy$: DestroyService,
   ) {
     this.connectWebsocket();
     this.updateLogger();
@@ -50,20 +54,26 @@ export class AppComponent implements AfterContentInit {
       // serverLoggingUrl: config.apiEndpoint + '/api/logs',
       level: this.config.debugLevel,
       serverLogLevel: NgxLoggerLevel.OFF,
-      disableConsoleLogging: false
+      disableConsoleLogging: false,
     });
   }
 
   ngAfterContentInit(): void {
-    this.loadingService.busy.subscribe(buffering => {
-      this.buffering = buffering;
-      this.cdref.detectChanges();
-    });
-    this.loadingService.failures.subscribe(err => {
-      if (!this.errored && err instanceof Error) {
+    this.loadingService.busy
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(buffering => {
+        this.buffering = buffering;
+        this.cdref.detectChanges();
+      });
+
+    this.loadingService.failures
+      .pipe(
+        filter(err => !this.errored && err instanceof Error),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => {
         this.errored = true;
         this.dialog.open(ApplicationErrorDialogComponent);
-      }
-    });
+      });
   }
 }

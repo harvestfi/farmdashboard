@@ -4,7 +4,7 @@ import {PricesService} from '../http/prices.service';
 import {PricesDto} from '@data/models/prices-dto';
 import {StaticValues} from '@data/static/static-values';
 import {Title} from '@angular/platform-browser';
-import {Observable} from 'rxjs/internal/Observable';
+import {Observable} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
 import {Addresses} from '@data/static/addresses';
 
@@ -21,7 +21,8 @@ export class PriceDataService {
 
   private exclude = new Set<string>([
       '0xa8bb71facdd46445644c277f9499dd22f6f0a30c'.toLowerCase(), //beltBNB
-      '0xAA20E8Cb61299df2357561C2AC2e1172bC68bc25'.toLowerCase() // beltETH
+      '0xa8bb71facdd46445644c277f9499dd22f6f0a30c'.toLowerCase(), //beltBTC
+      '0x51bd63f240fb13870550423d208452ca87c44444'.toLowerCase() // beltETH
   ]);
 
   constructor(
@@ -145,6 +146,10 @@ export class PriceDataService {
       return 0;
     }
     return price;
+  }
+
+  public getMaticUsdPrice(): Observable<{ usd: number }> {
+    return this.pricesService.getMaticUSDPrice();
   }
 
   public getLastFarmPrice(): number {

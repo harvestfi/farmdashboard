@@ -24,9 +24,20 @@ export class Networks {
     rpcUrl: 'https://bsc-dataseed.binance.org/',
   };
 
+  private static NETWORK_MATIC: Network = {
+    blockExplorerUrl: 'https://explorer-mainnet.maticvigil.com',
+    chainId: 137,
+    ethparserName: 'matic',
+    currencySymbol: 'Polygon',
+    name: 'Polygon',
+    rpcUrl: 'https://rpc-mainnet.maticvigil.com/',
+  };
+
+
   public NETWORKS: Map<string, Network> = new Map<string, Network>([
     ['bsc', Networks.NETWORK_BSC],
-    ['eth', Networks.NETWORK_ETH]
+    ['eth', Networks.NETWORK_ETH],
+    ['matic', Networks.NETWORK_MATIC],
   ]);
 
   constructor(@Inject(APP_CONFIG)config) {

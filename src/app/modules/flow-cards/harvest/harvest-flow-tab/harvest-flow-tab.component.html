@@ -1,12 +1,9 @@
-<perfect-scrollbar [ngStyle]="{'maxHeight': maxHeight+'px'}" class="scroller">
-
   <div *ngFor="let dto of dtos | harvestFilter:minAmount:vaultFilter"
        class="row harvest2-row">
-    <app-harvest-trade [dto]='dto' [fullDate]='showFullDate'></app-harvest-trade>
+    <app-harvest-trade [dto]='dto' [fullDate]='showFullDate'
+    [vaultsIconsList]="vaultsIconsList"></app-harvest-trade>
   </div>
 
   <div *ngIf="!dtos.length" class="empty-vault">
     🏜️ Loading... 🏜️
   </div>
-
-</perfect-scrollbar>

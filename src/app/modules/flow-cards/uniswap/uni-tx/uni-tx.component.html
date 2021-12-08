@@ -1,27 +1,29 @@
 <div id="top-div-light">
 
   <div class="flow-card uni-card" [class]="vt.getThemeColor() + '-card'">
-    <app-popover-card
-        aria-hidden="false"
-        aria-label="?"
-        class="title-span">
-      <ng-template>
-        <h3>List of trades containing FARM.</h3>
-        <ul>
-          <li>Special trades will be marked with specific symbols (i.e. Buys from doHardWork and sells from dev funds)</li>
-          <li>Format: Buy/Sell | Date | Farm amount | USD Cost | Price</li>
-        </ul>
-      </ng-template>
-
-      <div class="title-row">
+    <div class="title-row">
+      <app-popover-card
+          aria-hidden="false"
+          aria-label="?"
+          class="title-span">
+        <ng-template>
+          <h3>List of trades containing FARM.</h3>
+          <ul>
+            <li>Special trades will be marked with specific symbols (i.e. Buys from doHardWork and sells from dev funds)</li>
+            <li>Format: Buy/Sell | Date | Farm amount | USD Cost | Price</li>
+          </ul>
+        </ng-template>
         <h4 class="title">Trades</h4>
+      </app-popover-card>
+      <div class="filters">
         <input [(ngModel)]="minAmount" class="filter-input" placeholder="More than..." type="number" min="0">
       </div>
+    </div>
 
-    </app-popover-card>
 
-    <div class="table-header" [class]="vt.getThemeColor()">
-      <div class="money-icon"><span role="img">💸</span></div>
+
+    <div class="table-header" [class]="vt.getThemeColor() + '-gray'">
+      <div class="money-icon">Status</div>
       <div class="date-header">Date</div>
       <div class="farm-header">FARM</div>
       <div class="usd-cost-header">USD Cost</div>
@@ -53,8 +55,10 @@
           <container-element class="pointer"
                              (click)='showTradeLinks(dto.id)' [ngSwitch]="checkImportantOwner(dto)">
       
-            <mat-icon *ngSwitchCase="'normal'" [ngStyle]="{'color': '#b5b4b4'}" aria-hidden="false" aria-label="Price"
-                      class="sign-icon">
+            <mat-icon *ngSwitchCase="'normal'"
+                      class="sign-icon"
+                      [class]="vt.getThemeColor() + '-middleGreen'"
+                      aria-hidden="false" aria-label="Price">
               open_in_new
             </mat-icon>
       
@@ -81,7 +85,10 @@
 
 
     <div class="button-container">
-      <button class="show-more" (click)="openUniHistory()">show older</button>
+      <button class="show-more"
+              [class]="vt.getThemeColor() + '-middleGreen'"
+              (click)="openUniHistory()"
+              >Show Older<img src="assets/icons/show_chevron_right.svg"></button>
     </div>
 
     <app-custom-modal #unitHistoryModal>

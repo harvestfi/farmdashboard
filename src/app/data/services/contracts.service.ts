@@ -1,15 +1,16 @@
-import {Inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {Vault} from '@data/models/vault';
-import {Token} from '@data/models/token';
-import {Pool} from '@data/models/pool';
-import {Lps} from '@data/models/lps';
-import {IContract} from '@data/models/icontract';
-import {APP_CONFIG, AppConfig} from '../../../app.config';
-import {HttpService} from './http/http.service';
-import {NGXLogger} from 'ngx-logger';
-import {Strategy} from '@data/models/strategy';
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { Vault } from '@data/models/vault';
+import { Token } from '@data/models/token';
+import { Pool } from '@data/models/pool';
+import { Lps } from '@data/models/lps';
+import { IContract } from '@data/models/icontract';
+import { APP_CONFIG, AppConfig } from '../../../app.config';
+import { HttpService } from './http/http.service';
+import { NGXLogger } from 'ngx-logger';
+import { Strategy } from '@data/models/strategy';
+import { Subject } from 'rxjs';
 
 /**
  * Usage:
@@ -20,24 +21,25 @@ import {Strategy} from '@data/models/strategy';
  * service.getContracts(Pair)   => Array<Pair>
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ContractsService {
 
   private cache = new Map<string, Map<string, IContract>>();
+  private cache$ = new Map<string, BehaviorSubject<Map<string, IContract>>>([]);
   private urlPrefix = 'contracts';
   private typePaths = new Map<IContract, string>(
-      [[Vault, 'vaults'],
-        [Pool, 'pools'],
-        [Strategy, 'strategies'],
-        [Token, 'tokens'],
-        [Lps, 'lps']]
+    [[Vault, 'vaults'],
+      [Pool, 'pools'],
+      [Strategy, 'strategies'],
+      [Token, 'tokens'],
+      [Lps, 'lps']],
   );
 
   constructor(
-      @Inject(APP_CONFIG) public config: AppConfig,
-      private httpService: HttpService,
-      private log: NGXLogger) {
+    @Inject(APP_CONFIG) public config: AppConfig,
+    private httpService: HttpService,
+    private log: NGXLogger) {
   }
 
   /**
@@ -51,15 +53,29 @@ export class ContractsService {
     }
     if (!this.cache.has(typeName)) {
       this.cache.set(typeName, new Map());
+      this.cache$.set(typeName, new BehaviorSubject<Map<string, IContract>>(new Map()));
+
       this.requestContracts<T>(type).subscribe(contracts => {
         this.log.debug('Loaded contracts ' + typeName, contracts);
         contracts.forEach(c => {
           this.cache.get(typeName).set((c as any).contract.address, c);
         });
+
+        this.cache$.get(typeName).next(this.cache.get(typeName));
       });
     }
     // @ts-ignore
     return this.cache.get(typeName);
+  }
+
+  getContracts$<T extends IContract>(type: new () => T): Observable<any[]> {
+    const typeName = this.typePaths.get(type);
+
+    return this.cache$.get(typeName)
+      .asObservable()
+      .pipe(
+        map(data => Array.from(data.values())),
+      );
   }
 
   getContractsArray<T extends IContract>(type: new () => T): T[] {
@@ -79,10 +95,10 @@ export class ContractsService {
   }
 
   private requestContracts<T extends IContract>(type: new () => T): Observable<T[]> {
-    return this.httpService.httpGetWithNetwork(`/${this.urlPrefix}/${this.typePaths.get(type)}`)
-    .pipe(
-        map((val: T[]) => val?.map(o => Object.assign(new type(), o)) as T[])
-    );
+    return this.httpService.httpGetWithNetwork(`/${ this.urlPrefix }/${ this.typePaths.get(type) }`)
+      .pipe(
+        map((val: T[]) => val?.map(o => Object.assign(new type(), o)) as T[]),
+      );
   }
 
 }

@@ -5,10 +5,10 @@ body {
   min-height: 100% !important;
 }
 
-html, body {
+html, body, .mat-h4, .mat-subheading-1, .mat-typography h4 {
   height: 100%;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: PT Sans, "Helvetica Neue", sans-serif;
 }
 
 .left-border-box {
@@ -34,7 +34,7 @@ html, body {
 }
 
 .mat-global-reverse {
-  background-color: #bce3e2;
+  background-color: #EAF6F6;
   color: black;
 }
 
@@ -200,11 +200,14 @@ table {
   cursor: pointer;
 }
 
+.modal-content {
+  border-radius: 25px!important;
+}
 ngb-popover-window.popover {
   // todo create a general style for value-card and this
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.2);
-
+  z-index: 1;
   .arrow {
     display: none;
   }

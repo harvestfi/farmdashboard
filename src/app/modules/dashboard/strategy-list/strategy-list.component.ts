@@ -1,53 +1,71 @@
-import {AfterViewInit, Component, Inject, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {ViewTypeService} from '@data/services/view-type.service';
-import {CustomModalComponent} from '@shared/custom-modal/custom-modal.component';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ViewTypeService } from '@data/services/view-type.service';
 import StrategyListCommonMethods from './strategy-list-common-methods.utility';
-import {ContractsService} from '@data/services/contracts.service';
-import {Vault} from '@data/models/vault';
-import {NGXLogger} from 'ngx-logger';
-import {HarvestDataService} from '@data/services/data/harvest-data.service';
-import {assets, Platform, PLATFORM_LIST} from './strategy-list.constants';
-import {HardworkDataService} from '@data/services/data/hardwork-data.service';
-import {RewardDataService} from '@data/services/data/reward-data.service';
-import {PriceDataService} from '@data/services/data/price-data.service';
-import {Token} from '@data/models/token';
-import {Pool} from '@data/models/pool';
+import { ContractsService } from '@data/services/contracts.service';
+import { Vault } from '@data/models/vault';
+import { NGXLogger } from 'ngx-logger';
+import { HarvestDataService } from '@data/services/data/harvest-data.service';
+import { assets, Platform, PLATFORM_LIST } from './strategy-list.constants';
+import { HardworkDataService } from '@data/services/data/hardwork-data.service';
+import { RewardDataService } from '@data/services/data/reward-data.service';
+import { PriceDataService } from '@data/services/data/price-data.service';
+import { Token } from '@data/models/token';
+import { Pool } from '@data/models/pool';
+import { VaultsDataService } from '@data/services/vaults-data.service';
+import { Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-strategy-list',
   templateUrl: './strategy-list.component.html',
-  styleUrls: ['./strategy-list.component.scss']
+  styleUrls: ['./strategy-list.component.scss'],
+  providers: [DestroyService],
 })
-export class StrategyListComponent extends StrategyListCommonMethods implements AfterViewInit, OnInit {
+export class StrategyListComponent extends StrategyListCommonMethods implements OnInit {
   public searchTerm = '';
   public networkFilter = '';
   public platformFilter = '';
   public assetFilter = '';
-  // public vaultsList: Contract[] = [];
+  public isShowInactive = false;
+  public vaultsList$: Observable<Vault[]>;
   public apyWindowState: Record<string, boolean> = {};
   public sortDirection = 'desc';
   public currentSortingValue = 'tvl';
-
-  @ViewChildren(CustomModalComponent) private tvlModals: QueryList<CustomModalComponent>;
+  public vaultsIconsList = [];
+  private isModalDragged = false;
 
   constructor(
-      public vt: ViewTypeService,
-      public harvestData: HarvestDataService,
-      private contractsService: ContractsService,
-      public hardworkData: HardworkDataService,
-      public rewardData: RewardDataService,
-      public priceData: PriceDataService,
-      @Inject(PLATFORM_LIST) public platformList: Array<Platform>,
-      private log: NGXLogger
+    public vt: ViewTypeService,
+    public harvestData: HarvestDataService,
+    private contractsService: ContractsService,
+    public hardworkData: HardworkDataService,
+    public rewardData: RewardDataService,
+    public priceData: PriceDataService,
+    @Inject(PLATFORM_LIST) public platformList: Array<Platform>,
+    private log: NGXLogger,
+    private vaultsDataService: VaultsDataService,
+    private destroy$: DestroyService,
   ) {
     super(harvestData, hardworkData, rewardData, priceData);
   }
 
-  ngAfterViewInit(): void {
-  }
-
   ngOnInit(): void {
     this.poolsList();
+    this.additionalVaultsList();
+    this.getVaultsList();
+
+    this.vaultsList$ = this.contractsService.getContracts$<Vault>(Vault);
+  }
+
+  additionalVaultsList(): void {
+    this.vaultsDataService.retrieveVaultsList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.vaultsIconsList = data;
+      }, err => {
+        console.log(err);
+      });
   }
 
   get assetList(): string[] {
@@ -56,8 +74,8 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     return Array.from(result.values()).sort((a, b) => a.localeCompare(b));
   }
 
-  get vaultsList(): Vault[] {
-    return this.contractsService.getContractsArray(Vault);
+  getVaultsList(): void {
+    this.contractsService.getContracts(Vault);
   }
 
   prettyNetwork(name: string): string {
@@ -77,6 +95,10 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   }
 
   toggleAPYWindow(address: string): void {
+    if (this.isModalDragged) {
+      return;
+    }
+
     if (!(address in this.apyWindowState)) {
       this.apyWindowState[address] = true;
       return;
@@ -84,19 +106,22 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     this.apyWindowState[address] = !this.apyWindowState[address];
   }
 
+  closeAPYWindow(address: string): void {
+    this.apyWindowState[address] = false;
+    this.isModalDragged = false;
+  }
+
   sortVaultsList(sortBy?: string): void {
     this.currentSortingValue = sortBy;
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
 
-  openTvlDialog(address: string): void {
-    this.tvlModals
-    .find(e => e.name === 'tvlModal_' + address)
-    ?.open();
-  }
-
   isWeeklyRewardActive(vault: Vault): boolean {
     const reward = this.rewardData.getReward(vault?.contract?.address, vault?.contract?.network);
     return !!reward && reward !== 0;
+  }
+
+  onModalDrag(isDragged: boolean): void {
+    this.isModalDragged = isDragged;
   }
 }

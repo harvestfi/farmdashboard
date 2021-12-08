@@ -1,5 +1,5 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import * as moment from 'moment';
+import { Pipe, PipeTransform } from '@angular/core';
+import { differenceInDays } from 'date-fns';
 
 @Pipe({
   name: 'daysAgo',
@@ -14,14 +14,12 @@ export class DaysAgoPipe implements PipeTransform {
       date = this.checkTimestamp(date);
     }
 
-    // @todo: to investigate if moment.js slows down performance, if yes, then remove it and refactor
-    const days: number = moment().diff(date, 'days');
-    return `${days} day${days % 1 === 0 ? 's' : ''} ago`;
+    const days: number = differenceInDays(new Date(), new Date(date));
+    return `${ days } day${ days % 1 === 0 ? 's' : '' } ago`;
   }
 
   /**
    * Checks if timestamp is in seconds and covert to milliseconds
-   * because moment.js accepts timestamp in milliseconds only
    */
   checkTimestamp(timestamp: number): number {
     const isInSeconds = timestamp < 4000000000;

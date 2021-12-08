@@ -14,6 +14,8 @@ import {HarvestsService} from '@data/services/http/harvests.service';
 import {Vault} from '@data/models/vault';
 import {ContractsService} from '@data/services/contracts.service';
 import {Addresses} from '@data/static/addresses';
+import { DestroyService } from '@data/services/destroy.service';
+import { filter, takeUntil } from 'rxjs/operators';
 
 class CheckedValue {
   name: string;
@@ -24,7 +26,8 @@ class CheckedValue {
 @Component({
   selector: 'app-history-page',
   templateUrl: './history-page.component.html',
-  styleUrls: ['./history-page.component.scss']
+  styleUrls: ['./history-page.component.scss'],
+  providers: [DestroyService],
 })
 export class HistoryPageComponent implements AfterViewInit, OnInit {
   @ViewChild('balance_chart') chartEl: ElementRef;
@@ -52,23 +55,28 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
   rewardSumUsd = 0;
   transferTypeIncluded: CheckedValue[] = [];
 
-  constructor(private http: HttpService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public cdRef: ChangeDetectorRef,
-              private log: NGXLogger,
-              public vt: ViewTypeService,
-              public harvestsService: HarvestsService,
-              private contractService: ContractsService
+  constructor(
+    private http: HttpService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public cdRef: ChangeDetectorRef,
+    private log: NGXLogger,
+    public vt: ViewTypeService,
+    public harvestsService: HarvestsService,
+    private contractService: ContractsService,
+    private destroy$: DestroyService,
   ) {
   }
 
   ngOnInit(): void {
-    this.vt.events$.subscribe(event => {
-      if (event === 'theme-changed') {
+    this.vt.events$
+      .pipe(
+        filter(event => event === 'theme-changed'),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => {
         this.chart.applyOptions(ChartsOptionsLight.getOptions(this.vt.getThemeColor()));
-      }
-    });
+      });
   }
 
   clear(): void {
@@ -94,31 +102,38 @@ export class HistoryPageComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.route.params.subscribe(params => {
-      this.clear();
-      this.address = params.address;
-      this.inputAddress = params.address;
-      this.harvestsService.getAddressHistoryHarvest(this.address).subscribe(harvests => {
-            this.log.info('Load harvest history', harvests);
-            harvests?.forEach(harvest => {
-              HarvestDto.enrich(harvest);
-              this.fullData.push(harvest);
-            });
-
-            this.http.getAddressHistoryTransfers(this.address).subscribe(transfers => {
-              this.log.info('Load transfers history', transfers);
-              transfers?.forEach(transfer => {
-                TransferDto.enrich(transfer);
-                this.fullData.push(transfer);
+    this.route.params
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        this.clear();
+        this.address = params.address;
+        this.inputAddress = params.address;
+        // TODO: replace nested subscribes with switchMap
+        this.harvestsService.getAddressHistoryHarvest(this.address)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(harvests => {
+              this.log.info('Load harvest history', harvests);
+              harvests?.forEach(harvest => {
+                HarvestDto.enrich(harvest);
+                this.fullData.push(harvest);
               });
-              this.sortValues();
-              this.parseValues();
-              this.createBalanceChart();
-            });
-          }
-      );
-      this.cdRef.detectChanges();
-    });
+
+              this.http.getAddressHistoryTransfers(this.address)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(transfers => {
+                  this.log.info('Load transfers history', transfers);
+                  transfers?.forEach(transfer => {
+                    TransferDto.enrich(transfer);
+                    this.fullData.push(transfer);
+                  });
+                  this.sortValues();
+                  this.parseValues();
+                  this.createBalanceChart();
+                });
+            },
+          );
+        this.cdRef.detectChanges();
+      });
   }
 
   @HostListener('window:resize', ['$event'])

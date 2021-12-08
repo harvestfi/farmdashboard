@@ -1,0 +1,179 @@
+@import "../../../../scss/themes/theme-mixins";
+
+$dark-background-color: #111111;
+
+.title-wrapper {
+  margin: 0 0 24px 10px;
+  font-family: 'PT Sans', sans-serif;
+  text-align: left;
+  font-size: 36px;
+  font-weight: 700;
+  display: flex;
+  height: 57px;
+  justify-content: space-between;
+  span {
+    margin: auto auto auto 0;
+  }
+}
+
+.dialog-card {
+  padding: 40px;
+  margin-left: 10px;
+  border-radius: 10px;
+  min-height: 728px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#load {
+  max-height: 90vh;
+}
+
+.tvl-img {
+  width: 15px;
+  height: 15px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  font-family: 'PT Sans', sans-serif;
+
+  select {
+    height: 46px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+    font-size: 16px;
+  }
+}
+
+.values {
+  display: grid;
+  position: relative;
+  //grid-template-columns: 23% 24.5% 15% 25% 7%;
+  grid-template-columns: 15% 20% 10% 20% 30%;
+  padding: 0;
+  font-weight: bold;
+  font-size: 0.9em;
+  border-bottom: 1px solid #F0F0F0;
+  align-items: center;
+}
+
+.values:last-child {
+  border-bottom: none;
+}
+
+.header-field {
+  /*text-align: center;*/
+  padding: 4px 14px 4px 0;
+  font-size: 14px;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: 400;
+}
+
+.header-field:last-child,
+.value-field:last-child{
+  text-align: end;
+}
+
+
+.value-field {
+  padding: 14px 14px 14px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  font-family: 'PT Sans', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.scroller {
+  overflow-y: auto;
+  max-height: 80vh;
+  margin: 0 0 auto 0;
+}
+
+.empty-list {
+  text-align: center;
+  padding: 2em 0;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  font-size: 18px;
+  font-family: 'PT Sans', sans-serif;
+}
+
+.select-strategy-2 {
+  height: 25px;
+  padding: 0.1em;
+  box-sizing: border-box;
+  border-radius: 0.25em;
+  outline: none;
+}
+
+.table-header {
+  grid-template-columns: 15% 20% 10% 20% 30%;
+  display: grid;
+  padding: 4px 0;
+  font-weight: bold;
+  font-size: 0.9em;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+
+  @include isDarkMode() {
+    background: $dark-background-color;
+  }
+
+  .money-icon {
+    text-align: center;
+  }
+}
+
+.sign-icon {
+  font-size: 1em;
+  height: auto;
+  vertical-align: middle;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.link-field {
+  text-align: center;
+}
+
+
+@media screen and (max-width: 900px) {
+  .title-col {
+    font-size: 1em;
+    margin: 5px;
+  }
+
+  ::ng-deep.mat-dialog-container {
+    border-radius: 1px;
+    padding: 5px !important;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .title-wrapper {
+    flex-direction: column;
+    height: auto;
+    font-size: 20px;
+    text-align: center;
+  }
+
+
+}

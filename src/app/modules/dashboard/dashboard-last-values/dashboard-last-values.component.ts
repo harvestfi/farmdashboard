@@ -9,16 +9,21 @@ import {HarvestDataService} from '@data/services/data/harvest-data.service';
 import {PriceDataService} from '@data/services/data/price-data.service';
 import {Addresses} from '@data/static/addresses';
 import {KatexOptions} from 'ng-katex';
+import { filter, takeUntil } from 'rxjs/operators';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-dashboard-last-values',
   templateUrl: './dashboard-last-values.component.html',
-  styleUrls: ['./dashboard-last-values.component.scss']
+  styleUrls: ['./dashboard-last-values.component.scss'],
+  providers: [DestroyService],
 })
 export class DashboardLastValuesComponent implements OnInit {
   katexOptions: KatexOptions = {
     displayMode: true,
   };
+  maticUsdPrice = 0;
+
   @ViewChild('FARMStakedModal') private FARMStakedModal: CustomModalComponent;
   @ViewChild('weeklyProfitModal') private weeklyProfitModal: CustomModalComponent;
   @ViewChild('tvlModal') private tvlModal: CustomModalComponent;
@@ -27,16 +32,19 @@ export class DashboardLastValuesComponent implements OnInit {
   @ViewChild('totalUsersModal') private totalUsersModal: CustomModalComponent;
   @ViewChild('gasPriceModal') private gasPriceModal: CustomModalComponent;
 
-  constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              public dialog: MatDialog,
-              public vt: ViewTypeService,
-              private hardworkData: HardworkDataService,
-              private harvestData: HarvestDataService,
-              private priceData: PriceDataService,
+  constructor(
+    @Inject(APP_CONFIG) private config: AppConfig,
+    public dialog: MatDialog,
+    public vt: ViewTypeService,
+    private hardworkData: HardworkDataService,
+    private harvestData: HarvestDataService,
+    private priceData: PriceDataService,
+    private destroy$: DestroyService,
   ) {
   }
 
   ngOnInit(): void {
+    this.getMaticUsdPrice();
   }
 
   // TODO split to classes
@@ -163,6 +171,19 @@ export class DashboardLastValuesComponent implements OnInit {
 
   get bnbUsdPrice(): number {
     return this.priceData.getUsdPrice(Addresses.ADDRESSES.get('WBNB'), 'bsc');
+  }
+
+  getMaticUsdPrice(): void {
+    this.priceData.getMaticUsdPrice()
+        .pipe(
+          filter(data => !!data),
+          takeUntil(this.destroy$),
+        )
+        .subscribe((data: {usd: number}) => {
+            this.maticUsdPrice = data.usd;
+        }, err => {
+            console.log(err);
+        });
   }
 
   // -------------- OPEN MODALS ---------------------

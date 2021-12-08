@@ -1,22 +1,45 @@
+.title {
+    font-family: 'PT Sans', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 47px;
+    margin: auto auto auto 0;
+    flex-direction: column;
+    display: flex;
+
+}
+
+.title-wrapper {
+    margin: 0 0 0 10px;
+    font-family: 'PT Sans', sans-serif;
+    text-align: left;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    span {
+        margin: auto 0;
+    }
+}
+
 .cover {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding-top: 27px;
+    padding: 10px 10px;
+    box-sizing: border-box;
     -webkit-box-align: center;
     align-items: center;
     flex: 1 1 0%;
     overflow: hidden auto;
     z-index: 1;
-    margin-bottom: 3rem;
-}
-
-.cover > * {
-    max-width: 1200px;
+    margin-top: 30px;
 }
 
 .container {
-    width: 95%;
+    width: 100%;
+    padding: 0 10px;
 }
 
 .grid-sheet {
@@ -24,6 +47,7 @@
     grid-auto-rows: auto;
     row-gap: 16px;
 }
+
 
 .charts-block {
     box-sizing: border-box;
@@ -36,16 +60,39 @@
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
+
+    .total {
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
+        font-family: 'PT Sans', sans-serif;
+        .title-part {
+            display: flex;
+            justify-content: space-between;
+        }
+        .label {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        .info {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .value {
+            font-family: 'PT Sans', sans-serif;
+            font-weight: 900;
+            font-size: 2.5rem;
+        }
+    }
 }
 
-.title {
-    font-family: "Inter var", sans-serif;
-    box-sizing: border-box;
-    margin: 0px;
-    min-width: 0px;
-    font-weight: 500;
-    font-size: 18px;
+.chart-block:nth-child(odd):not(:last-child) {
+    margin-right: 20px;
 }
+
 .cover.light .title {
     color: #404040;
 }
@@ -57,33 +104,24 @@
 .chart-block {
     width: 49%;
     z-index: 1;
+    font-family: 'PT Sans', sans-serif;
 }
 
-.last-data-container {
+.chart-block .left-part,
+.chart-block .right-part {
     width: 100%;
-    display: flex;
-    padding: 0;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    font-family: 'Inter var', sans-serif;
-}
-
-.last-data-container .left-part,
-.last-data-container .right-part {
-    width: 49%;
     z-index: 1;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
+    margin-top: 1rem;
 }
-.last-data-container .left-part .change-amount,
-.last-data-container .left-part .change-percent,
-.last-data-container .right-part .change-amount,
-.last-data-container .right-part .change-percent{
+.chart-block .left-part .change-amount,
+.chart-block .left-part .change-percent,
+.chart-block .right-part .change-amount,
+.chart-block .right-part .change-percent{
     width: 49%;
     border-radius: 16px;
     padding: 1rem;
@@ -93,73 +131,73 @@
     row-gap: 16px;
 }
 .cover.light {
-    .last-data-container .left-part .change-amount,
-    .last-data-container .left-part .change-percent,
-    .last-data-container .right-part .change-amount,
-    .last-data-container .right-part .change-percent {
+    .chart-block .left-part .change-amount,
+    .chart-block .left-part .change-percent,
+    .chart-block .right-part .change-amount,
+    .chart-block .right-part .change-percent {
         background-color: #fffce6;
     }
 
-    .last-data-container .left-part .change-amount .label,
-    .last-data-container .left-part .change-percent .label,
-    .last-data-container .right-part .change-amount .label,
-    .last-data-container .right-part .change-percent .label{
+    .chart-block .left-part .change-amount .label,
+    .chart-block .left-part .change-percent .label,
+    .chart-block .right-part .change-amount .label,
+    .chart-block .right-part .change-percent .label{
         color: #404040;
     }
 
-    .last-data-container .left-part .change-amount .value,
-    .last-data-container .left-part .change-percent .value,
-    .last-data-container .right-part .change-amount .value,
-    .last-data-container .right-part .change-percent .value {
+    .chart-block .left-part .change-amount .value,
+    .chart-block .left-part .change-percent .value,
+    .chart-block .right-part .change-amount .value,
+    .chart-block .right-part .change-percent .value {
         color: #404040;
     }
 
-    .last-data-container .left-part .change-amount .value .symbol,
-    .last-data-container .right-part .change-amount .value .symbol {
+    .chart-block .left-part .change-amount .value .symbol,
+    .chart-block .right-part .change-amount .value .symbol {
         color: #404040;
     }
 }
 
 .cover.dark {
-    .last-data-container .left-part .change-amount,
-    .last-data-container .left-part .change-percent,
-    .last-data-container .right-part .change-amount,
-    .last-data-container .right-part .change-percent {
+    .chart-block .left-part .change-amount,
+    .chart-block .left-part .change-percent,
+    .chart-block .right-part .change-amount,
+    .chart-block .right-part .change-percent {
         background-color: #404040;
     }
 
-    .last-data-container .left-part .change-amount .label,
-    .last-data-container .left-part .change-percent .label,
-    .last-data-container .right-part .change-amount .label,
-    .last-data-container .right-part .change-percent .label{
+    .chart-block .left-part .change-amount .label,
+    .chart-block .left-part .change-percent .label,
+    .chart-block .right-part .change-amount .label,
+    .chart-block .right-part .change-percent .label{
         color: rgb(195, 197, 203);
     }
 
-    .last-data-container .left-part .change-amount .value,
-    .last-data-container .left-part .change-percent .value,
-    .last-data-container .right-part .change-amount .value,
-    .last-data-container .right-part .change-percent .value {
+    .chart-block .left-part .change-amount .value,
+    .chart-block .left-part .change-percent .value,
+    .chart-block .right-part .change-amount .value,
+    .chart-block .right-part .change-percent .value {
         color: #ffffff;
     }
 
-    .last-data-container .left-part .change-amount .value .symbol,
-    .last-data-container .right-part .change-amount .value .symbol {
+    .chart-block .left-part .change-amount .value .symbol,
+    .chart-block .right-part .change-amount .value .symbol {
         color: #ffffff;
     }
 }
 
-.last-data-container .left-part .change-amount .label,
-.last-data-container .left-part .change-percent .label,
-.last-data-container .right-part .change-amount .label,
-.last-data-container .right-part .change-percent .label{
+.chart-block .left-part .change-amount .label,
+.chart-block .left-part .change-percent .label,
+.chart-block .right-part .change-amount .label,
+.chart-block .right-part .change-percent .label{
     font-weight: 500;
     font-size: 14px;
 }
 
-.last-data-container .left-part .change-amount .value,
-.last-data-container .left-part .change-percent .value,
-.last-data-container .right-part .change-amount .value,
-.last-data-container .right-part .change-percent .value {
+.chart-block .left-part .change-amount .value,
+.chart-block .left-part .change-percent .value,
+.chart-block .right-part .change-amount .value,
+.chart-block .right-part .change-percent .value {
     font-variant-numeric: tabular-nums;
     margin: 0;
     min-width: 0;
@@ -169,49 +207,49 @@
 
 
 @media (max-width: 1000px) {
-    .last-data-container .left-part .change-amount .value,
-    .last-data-container .left-part .change-percent .value,
-    .last-data-container .right-part .change-amount .value,
-    .last-data-container .right-part .change-percent .value {
+    .chart-block .left-part .change-amount .value,
+    .chart-block .left-part .change-percent .value,
+    .chart-block .right-part .change-amount .value,
+    .chart-block .right-part .change-percent .value {
         font-size: 24px;
     }
 }
 
 @media (max-width: 800px) {
-    .last-data-container .left-part .change-amount .value,
-    .last-data-container .left-part .change-percent .value,
-    .last-data-container .right-part .change-amount .value,
-    .last-data-container .right-part .change-percent .value {
+    .chart-block .left-part .change-amount .value,
+    .chart-block .left-part .change-percent .value,
+    .chart-block .right-part .change-amount .value,
+    .chart-block .right-part .change-percent .value {
         font-size: 20px;
     }
 }
 
 @media (max-width: 720px) {
     .charts-block,
-    .last-data-container {
+    .chart-block {
         flex-direction: column;
         row-gap: 1rem;
-        margin-bottom: 1.5rem;
+        //margin-bottom: 1.5rem;
     }
     .chart-block,
-    .last-data-container .left-part,
-    .last-data-container .right-part {
+    .chart-block .left-part,
+    .chart-block .right-part {
         width: 100%;
     }
 }
 
 @media (max-width: 400px) {
-    .last-data-container .left-part .change-amount .label,
-    .last-data-container .left-part .change-percent .label,
-    .last-data-container .right-part .change-amount .label,
-    .last-data-container .right-part .change-percent .label{
+    .chart-block .left-part .change-amount .label,
+    .chart-block .left-part .change-percent .label,
+    .chart-block .right-part .change-amount .label,
+    .chart-block .right-part .change-percent .label{
         font-size: 12px;
     }
 
-    .last-data-container .left-part .change-amount .value,
-    .last-data-container .left-part .change-percent .value,
-    .last-data-container .right-part .change-amount .value,
-    .last-data-container .right-part .change-percent .value {
+    .chart-block .left-part .change-amount .value,
+    .chart-block .left-part .change-percent .value,
+    .chart-block .right-part .change-amount .value,
+    .chart-block .right-part .change-percent .value {
         font-size: 18px;
     }
 }

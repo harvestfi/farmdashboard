@@ -8,6 +8,10 @@ export class AppConfig {
     ethRpcUrl: string;
     multipleSources: boolean;
     defaultNetwork: string;
+    theGraph: {
+        graphQlServerUrl: string;
+        graphQlAnalyticsUrl: string;
+    };
 }
 
 export const APP_CONFIG = new InjectionToken<AppConfig>('APP_CONFIG');

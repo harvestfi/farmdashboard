@@ -2,63 +2,52 @@
   top: 0;
   left: 0;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
+  position: absolute;
   width: 100%;
-  z-index: 9999;
+  max-width: 348px;
+  max-height: 1002px;
   cursor: pointer;
-}
-
-#menu-button-toggle {
-  cursor: pointer;
-  border: none;
-  font-size: 24px;
-  background: none;
-  margin-left: 5px;
-  outline: none;
 }
 
 #main-side-menu {
   width: 100%;
-  max-width: 275px;
-  position: fixed;
+  height: 100%;
+  max-width: 348px;
+  max-height: 1002px;
+  position: absolute;
   top: 0;
   left: 0;
-  z-index: 9999;
-  min-height: 100vh;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  height: 100%;
+  user-select: none;
 
   .main-side-menu-logo-container {
-    padding: 20px;
+    padding: 40px 40px 60px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
-    border-bottom: 1px solid #f1f1f1;
+    height: 64px;
     box-sizing: content-box;
 
     .branding-box {
       display: flex;
-      justify-content: flex-start;
       align-items: center;
-
+      justify-content: space-between;
     }
 
     .main-side-menu-logo {
-      height: 60px;
+      height: 64px;
       border-radius: 15px;
     }
 
     .main-side-menu-logo-text {
-      font-size: 20px;
-      margin: 0 10px;
-      font-size: 24px;
+      margin: 0 20px;
+      font-size: 30px;
       font-weight: bold;
+      color: #FFFFFF;
     }
 
   }
@@ -113,43 +102,130 @@
 
   .main-side-menu-items {
     all: unset;
-    padding: 20px;
+    padding: 0 40px;
     display: block;
     box-sizing: border-box;
     list-style: none;
 
     .main-side-menu-item {
-      margin: 40px 0;
-      font-size: 1.2em;
+      font-family: 'PT Sans', sans-serif;
+      margin: 20px 0;
+      font-size: 18px;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 400;
       transition: margin 0.5s;
+      display: flex;
+      color: #FFFFFF;
 
-      &:hover {
-        margin-left: 10px;
+      span {
+        margin: auto 0 auto 15px;
+        display: inline-block;
+        color: #FFFFFF;
+      }
+      .icon-wrapper {
+        margin: auto 0;
+        width: 44px;
+        height: 44px;
+        background: #5CADAA;
+        border-radius: 10px;
+        display: flex;
+        svg {
+          margin: auto;
+        }
+        svg > path {
+          fill: #FFFFFF;
+        }
       }
 
-      &::before {
+      &.active {
+        font-family: 'PT Sans Bold', sans-serif;
+        .icon-wrapper {
+          background: #FFFFFF;
+          svg > path {
+            fill: #5CADAA;
+          }
+        }
+      }
+
+      &:hover {
+        .icon-wrapper {
+          background: #FFFFFF;
+          svg > path {
+            fill: #5CADAA;
+          }
+        }
+      }
+
+      /*&::before {
         font-family: "Font Awesome 5 Free";
         content: attr(data-menu-icon);
         margin: 0 10px;
-      }
+      }*/
 
       &.nested {
         margin-left: 25px;
       }
     }
+    content {
+      display: flex;
+
+      .line-holder {
+        padding: 0 23px;
+      }
+      .line {
+        width: 1px;
+        height: 100%;
+        background: #9DDCD9;
+      }
+      .submenu {
+        width: 100%;
+      }
+      .main-side-menu-item {
+        font-family: 'PT Sans', sans-serif;
+        margin: 0;
+        border-radius: 8px;
+        padding: 7px 14px;
+        font-size: 16px;
+      }
+      .main-side-menu-item span {
+        margin: 0;
+      }
+      .main-side-menu-item.active {
+        background: #8CD3D1;
+      }
+    }
+
+
   }
 
-  .botton-social-icons {
+  .bottom-social-icons {
     display: flex;
-    justify-content: space-evenly;
-    margin-top: auto;
-    margin-bottom: 15px;
+    width: 222px;
+    padding: 20px 0 20px 42px;
+    margin: auto auto 45px 0;
 
-    .social-link i {
-      font-size: 34px;
-    }
+   .social-link {
+     margin-right: 26px;
+     display: flex;
+     svg {
+      margin: auto;
+     }
+     svg > path {
+       fill: #FFFFFF;
+     }
+   }
+   .social-link:hover {
+     svg > path {
+       fill: #EEBF65;
+     }
+   }
+
+  }
+
+  .bottom-wave {
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
   }
 
 
@@ -159,4 +235,21 @@
   }
 
 
+}
+
+
+@media (max-width: 1600px) {
+  #side-menu-backdrop {
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 9999;
+    position: fixed;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+  }
+  #main-side-menu {
+    z-index: 9999;
+    position: fixed;
+  }
 }

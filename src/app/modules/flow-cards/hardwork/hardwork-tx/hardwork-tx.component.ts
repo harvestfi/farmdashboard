@@ -8,23 +8,30 @@ import {ContractsService} from '@data/services/contracts.service';
 import {Vault} from '@data/models/vault';
 import {HardworkDataService} from '@data/services/data/hardwork-data.service';
 import { Utils } from '@data/static/utils';
+import {VaultsDataService} from '@data/services/vaults-data.service';
+import {takeUntil} from 'rxjs/operators';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-hardwork-tx',
   templateUrl: './hardwork-tx.component.html',
-  styleUrls: ['./hardwork-tx.component.scss']
+  styleUrls: ['./hardwork-tx.component.scss'],
+  providers: [DestroyService],
 })
 export class HardworkTxComponent implements AfterViewInit {
   @ViewChild('hardWorkHistoryListModal') private hardWorkHistoryListModal: CustomModalComponent;
   vaultFilter = 'all';
   minAmout = 0;
+  vaultsIconsList = [];
 
   constructor(
       public vt: ViewTypeService,
       private snack: SnackBarService,
       private log: NGXLogger,
       private contractsService: ContractsService,
-      private hardworksData: HardworkDataService
+      private hardworksData: HardworkDataService,
+      private vaultsDataService: VaultsDataService,
+      private destroy$: DestroyService,
   ) {
   }
 
@@ -35,6 +42,17 @@ export class HardworkTxComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+      this.additionalVaultsList();
+  }
+
+  additionalVaultsList(): void {
+      this.vaultsDataService.retrieveVaultsList()
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((data) => {
+              this.vaultsIconsList = data;
+          }, err => {
+              console.log(err);
+          });
   }
 
   get dtos(): HardWorkDto[] {
@@ -52,5 +70,4 @@ export class HardworkTxComponent implements AfterViewInit {
   getVaultName(vault: string): string {
     return Utils.prettyVaultName(vault);
   }
-
 }

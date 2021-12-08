@@ -1,0 +1,226 @@
+.title {
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'PT Sans', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 47px;
+    margin: auto auto auto 0;
+}
+.title-wrapper {
+    margin: 0 0 0 10px;
+    font-family: 'PT Sans', sans-serif;
+    text-align: left;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    height: 57px;
+    justify-content: space-between;
+    span {
+        margin: auto 0;
+    }
+}
+.cover {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    -webkit-box-align: center;
+    align-items: center;
+    flex: 1 1 0%;
+    overflow: hidden auto;
+    z-index: 1;
+    margin-top: 30px;
+}
+
+.container {
+   width: 100%;
+   padding: 0 10px;
+}
+
+.grid-sheet {
+    display: grid;
+    grid-auto-rows: auto;
+    row-gap: 20px;
+}
+
+.charts-block {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    width: 100%;
+    display: flex;
+    padding: 0px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.cover.light .title {
+    color: #404040;
+}
+
+.cover.dark .title {
+    color: #ffffff;
+}
+
+.chart-block {
+    width: 100%;
+    z-index: 1;
+    font-family: 'PT Sans', sans-serif;
+}
+.chart-block:nth-child(odd):not(:last-child) {
+    margin-right: 20px;
+}
+
+.chart-block .left-part,
+.chart-block .right-part {
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+.chart-block .left-part .change-amount,
+.chart-block .left-part .change-percent,
+.chart-block .right-part .change-amount,
+.chart-block .right-part .change-percent{
+    width: 49%;
+    border-radius: 16px;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+.cover.light {
+.chart-block .left-part .change-amount,
+.chart-block .left-part .change-percent,
+.chart-block .right-part .change-amount,
+.chart-block .right-part .change-percent {
+    background-color: #fffce6;
+}
+
+.chart-block .left-part .change-amount .label,
+.chart-block .left-part .change-percent .label,
+.chart-block .right-part .change-amount .label,
+.chart-block .right-part .change-percent .label{
+    color: #404040;
+}
+
+.chart-block .left-part .change-amount .value,
+.chart-block .left-part .change-percent .value,
+.chart-block .right-part .change-amount .value,
+.chart-block .right-part .change-percent .value {
+    color: #404040;
+}
+
+.chart-block .left-part .change-amount .value .symbol,
+.chart-block .right-part .change-amount .value .symbol {
+    color: #404040;
+}
+}
+
+.cover.dark {
+.chart-block .left-part .change-amount,
+.chart-block .left-part .change-percent,
+.chart-block .right-part .change-amount,
+.chart-block .right-part .change-percent {
+    background-color: #404040;
+}
+
+.chart-block .left-part .change-amount .label,
+.chart-block .left-part .change-percent .label,
+.chart-block .right-part .change-amount .label,
+.chart-block .right-part .change-percent .label{
+    color: rgb(195, 197, 203);
+}
+
+.chart-block .left-part .change-amount .value,
+.chart-block .left-part .change-percent .value,
+.chart-block .right-part .change-amount .value,
+.chart-block .right-part .change-percent .value {
+    color: #ffffff;
+}
+
+.chart-block .left-part .change-amount .value .symbol,
+.chart-block .right-part .change-amount .value .symbol {
+    color: #ffffff;
+}
+}
+
+.chart-block .left-part .change-amount .label,
+.chart-block .left-part .change-percent .label,
+.chart-block .right-part .change-amount .label,
+.chart-block .right-part .change-percent .label{
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.chart-block .left-part .change-amount .value,
+.chart-block .left-part .change-percent .value,
+.chart-block .right-part .change-amount .value,
+.chart-block .right-part .change-percent .value {
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+    min-width: 0;
+    font-weight: 600;
+    font-size: 32px;
+}
+
+
+@media (max-width: 1000px) {
+    .chart-block .left-part .change-amount .value,
+    .chart-block .left-part .change-percent .value,
+    .chart-block .right-part .change-amount .value,
+    .chart-block .right-part .change-percent .value {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 800px) {
+    .chart-block .left-part .change-amount .value,
+    .chart-block .left-part .change-percent .value,
+    .chart-block .right-part .change-amount .value,
+    .chart-block .right-part .change-percent .value {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 720px) {
+    .charts-block,
+    .chart-block {
+        flex-direction: column;
+        row-gap: 1rem;
+    }
+    .chart-block,
+    .chart-block .left-part,
+    .chart-block .right-part {
+        width: 100%;
+    }
+    .chart-block:nth-child(odd):not(:last-child) {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 400px) {
+    .chart-block .left-part .change-amount .label,
+    .chart-block .left-part .change-percent .label,
+    .chart-block .right-part .change-amount .label,
+    .chart-block .right-part .change-percent .label{
+        font-size: 12px;
+    }
+
+    .chart-block .left-part .change-amount .value,
+    .chart-block .left-part .change-percent .value,
+    .chart-block .right-part .change-amount .value,
+    .chart-block .right-part .change-percent .value {
+        font-size: 18px;
+    }
+}

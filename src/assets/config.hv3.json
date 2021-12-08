@@ -1,7 +1,7 @@
 {
   "debugLevel": 0,
   "wsReconnectInterval": 15,
-  "ethRpcUrl": "https://mainnet.infura.io/v3/947c289378954cf68220c31e65449507",
+  "ethRpcUrl": "https://mainnet.infura.io/v3/unknown",
   "wsEndpoints": {
     "eth": "https://ethparser-hv3.harvestfi.builders/stomp",
     "bsc": "https://ethparser-hv3.harvestfi.builders/stomp"
@@ -11,5 +11,8 @@
     "bsc": "https://ethparser-hv3.harvestfi.builders"
   },
   "multipleSources": true,
-  "defaultNetwork": "eth"
+  "defaultNetwork": "eth",
+  "theGraph": {
+    "graphQlServerUrl": "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
+  }
 }

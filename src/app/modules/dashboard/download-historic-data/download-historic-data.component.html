@@ -1,0 +1,46 @@
+<div class="title-wrapper"
+     [class]="vt.getThemeColor() + '-black'">
+    <app-side-menu-toggle></app-side-menu-toggle>
+            <span>
+               Download historic data in CSV about all existing vaults
+            </span>
+    <app-theme-switch></app-theme-switch>
+</div>
+<div class="download-historic-data-container" [class]="vt.getThemeColor() + '-card'">
+
+    <div class="dialog-card" mat-dialog-content>
+        <table (matSortChange)="sortData($event)" class="table-vaults" matSort>
+            <tr class="table-header" [class]="vt.getThemeColor() + '-gray'">
+                <th mat-sort-header="name" id="name">Name</th>
+                <th mat-sort-header="transactions"></th>
+                <th mat-sort-header="hardwork"></th>
+                <th mat-sort-header="tvl"></th>
+            </tr>
+            <tbody>
+                <tr class="table-row" *ngFor="let vault of sortedVaults">
+                    <td class="name">
+                        <app-vault-icon [vault]="vault"
+                                        [networks]="vaultsIconsList"></app-vault-icon>
+                        <span>{{vault.contract.name}}</span>
+                    </td>
+
+                    <td class="transactions">
+                        <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/harvest/{{vault.contract.name}}'
+                           [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'"
+                           target='_blank' class="download-link">Transactions</a>
+                    </td>
+                    <td class="hardwork">
+                        <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/hardwork/{{vault.contract.name}}'
+                           [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'"
+                           target='_blank' class="download-link">Hardwork</a>
+                    </td>
+                    <td class="tvl">
+                        <a href='{{getApiEndpoint(vault.contract.network)}}/csv/transactions/history/tvl/{{vault.contract.name}}'
+                           [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'"
+                           target='_blank' class="download-link">TVL</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

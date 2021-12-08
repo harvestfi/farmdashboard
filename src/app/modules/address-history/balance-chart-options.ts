@@ -1,5 +1,5 @@
-import {CrosshairMode} from 'lightweight-charts';
-import * as moment from 'moment';
+import { CrosshairMode } from 'lightweight-charts';
+import { format } from 'date-fns';
 
 export class BalanceChartOptions {
   public static getOptions(): any {
@@ -29,7 +29,7 @@ export class BalanceChartOptions {
         horzLine: {
           visible: true,
           labelVisible: true,
-        }
+        },
       },
       watermark: {
         color: 'rgba(255,255,255, 0.7)',
@@ -51,26 +51,26 @@ export class BalanceChartOptions {
         tickMarkFormatter: (time, tickMarkType, locale) => {
           const d = new Date(0);
           d.setUTCSeconds(time);
-          return (moment(d)).format('DD-MMM');
+          return format(d, 'dd-MMM');
         },
       },
       rightPriceScale: {
         autoScale: false,
         visible: true,
         borderVisible: false,
-        drawTicks: false
+        drawTicks: false,
       },
       handleScroll: {
         mouseWheel: false,
         pressedMouseMove: false,
         horzTouchDrag: false,
-        vertTouchDrag: false
+        vertTouchDrag: false,
       },
       handleScale: {
         mouseWheel: false,
         axisPressedMouseMove: false,
-        pinch: false
-      }
+        pinch: false,
+      },
     };
   }
 }

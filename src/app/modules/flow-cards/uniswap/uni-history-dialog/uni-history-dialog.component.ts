@@ -3,12 +3,15 @@ import {ViewTypeService} from '@data/services/view-type.service';
 import {UniswapDto} from '@data/models/uniswap-dto';
 import {UniswapService} from '@data/services/http/uniswap.service';
 import {Paginated} from '@data/models/paginated';
+import { DestroyService } from '@data/services/destroy.service';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
   selector: 'app-uni-history-dialog',
   templateUrl: './uni-history-dialog.component.html',
   styleUrls: ['./uni-history-dialog.component.scss'],
+  providers: [DestroyService],
 })
 export class UniHistoryDialogComponent implements AfterViewInit {
   dtos: UniswapDto[] = [];
@@ -27,6 +30,7 @@ export class UniHistoryDialogComponent implements AfterViewInit {
   constructor(
       private txHistory: UniswapService,
       public vt: ViewTypeService,
+      private destroy$: DestroyService,
   ) {
   }
 
@@ -37,13 +41,14 @@ export class UniHistoryDialogComponent implements AfterViewInit {
 
   getUniDataForPage(pageNumber): void {
     this.txHistory.getUniswapPaginatedTxHistoryData(pageNumber, 10, this.minAmount)
-    .subscribe(response => {
-      response.data = response.data.map((dto) => {
-        UniswapDto.round(dto);
-        return dto;
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
+        response.data = response.data.map((dto) => {
+          UniswapDto.round(dto);
+          return dto;
+        });
+        this.paginatedDtos = response;
       });
-      this.paginatedDtos = response;
-    });
   }
 
   nextPage($event): void {

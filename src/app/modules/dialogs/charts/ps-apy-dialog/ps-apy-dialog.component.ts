@@ -9,21 +9,26 @@ import {ChartGeneralMethodsComponent} from '@modules/chart/chart-general-methods
 import {StaticValues} from '@data/static/static-values';
 import {forkJoin} from 'rxjs';
 import {Addresses} from '@data/static/addresses';
+import { DestroyService } from '@data/services/destroy.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ps-apy-dialog',
   templateUrl: './ps-apy-dialog.component.html',
-  styleUrls: ['./ps-apy-dialog.component.css']
+  styleUrls: ['./ps-apy-dialog.component.css'],
+  providers: [DestroyService],
 })
 export class PsApyDialogComponent extends ChartGeneralMethodsComponent implements AfterViewInit {
 
-  constructor(public vt: ViewTypeService,
-              public cdRef: ChangeDetectorRef,
-              private log: NGXLogger,
-              private harvestsService: HarvestsService,
-              private rewardsService: RewardsService,
+  constructor(
+    public vt: ViewTypeService,
+    public cdRef: ChangeDetectorRef,
+    protected destroy$: DestroyService,
+    private log: NGXLogger,
+    private harvestsService: HarvestsService,
+    private rewardsService: RewardsService,
   ) {
-    super(cdRef, vt);
+    super(cdRef, vt, destroy$);
   }
 
   load(): void {
@@ -31,7 +36,9 @@ export class PsApyDialogComponent extends ChartGeneralMethodsComponent implement
     forkJoin([
       this.rewardsService.getHistoryRewards(Addresses.ADDRESSES.get('PS'), StaticValues.NETWORKS.get('eth')),
       this.harvestsService.getHarvestHistoryByVault(Addresses.ADDRESSES.get('PS'), StaticValues.NETWORKS.get('eth'))
-    ]).subscribe(([rewards, harvests]) => {
+    ])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([rewards, harvests]) => {
       const chartBuilder = new ChartBuilder();
       chartBuilder.initVariables(2);
 
@@ -55,7 +62,7 @@ export class PsApyDialogComponent extends ChartGeneralMethodsComponent implement
       });
 
       this.handleData(chartBuilder, [
-        ['Weekly APY %', 'right', '#0085ff'],
+        ['Weekly APY %', 'right', '#5CADAA'],
         ['TVL M$', '1', '#eeb000']
       ]);
     });

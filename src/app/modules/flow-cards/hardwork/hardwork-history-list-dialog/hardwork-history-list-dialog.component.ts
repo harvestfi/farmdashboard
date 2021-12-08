@@ -7,11 +7,15 @@ import {HardworksService} from '@data/services/http/hardworks.service';
 import {Paginated} from '@data/models/paginated';
 import {HardWorkDto} from '@data/models/hardwork-dto';
 import {StaticValues} from '@data/static/static-values';
+import {VaultsDataService} from '@data/services/vaults-data.service';
+import {takeUntil} from 'rxjs/operators';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-hardwork-history-list-dialog',
   templateUrl: './hardwork-history-list-dialog.component.html',
-  styleUrls: ['./hardwork-history-list-dialog.component.scss']
+  styleUrls: ['./hardwork-history-list-dialog.component.scss'],
+  providers: [DestroyService],
 })
 export class HardworkHistoryListDialogComponent implements AfterViewInit {
   dtos: Paginated<HardWorkDto>;
@@ -23,25 +27,44 @@ export class HardworkHistoryListDialogComponent implements AfterViewInit {
   networks: string[] = Array.from(StaticValues.NETWORKS.keys());
   networkIcons: Map<string, string> = StaticValues.NETWORK_ICON;
   network = 'eth';
+  vaultsIconsList = [];
 
   constructor(
       public vt: ViewTypeService,
       private log: NGXLogger,
       private contractsService: ContractsService,
       private hardworksService: HardworksService,
+      private vaultsDataService: VaultsDataService,
+      private destroy$: DestroyService,
   ) {
   }
 
   ngAfterViewInit(): void {
     this.getDtoDataForPage(0);
+    this.additionalVaultsList();
+  }
+
+  additionalVaultsList(): void {
+    this.vaultsDataService.retrieveVaultsList()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+            this.vaultsIconsList = data;
+        }, err => {
+            console.log(err);
+        });
   }
 
   getDtoDataForPage(pageNumber: number): void {
     this.hardworksService
-    .getPaginatedHardworkHistoryData(10, pageNumber,
-        this.vaultFilter?.contract?.address, this.minAmount, 'desc',
-        StaticValues.NETWORKS.get(this.network))
-    .subscribe(response => {
+      .getPaginatedHardworkHistoryData(
+        10,
+        pageNumber,
+        this.vaultFilter?.contract?.address, this.minAmount,
+        'desc',
+        StaticValues.NETWORKS.get(this.network),
+      )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
           this.log.info('Load hw pages', response);
           if ('data' in response) {
             return this.dtos = response;
@@ -51,11 +74,11 @@ export class HardworkHistoryListDialogComponent implements AfterViewInit {
             nextPage: -1,
             previousPage: -1,
             totalPages: 0,
-            data: []
+            data: [],
           };
-        }
-    )
-    .add(() => this.ready = true);
+        },
+      )
+      .add(() => this.ready = true);
   }
 
   get vaults(): Vault[] {

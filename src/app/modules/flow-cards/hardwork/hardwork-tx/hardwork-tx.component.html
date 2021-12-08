@@ -11,17 +11,26 @@
       <li>Format: Date | Vault | Income Earned</li>
     </ul>
   </ng-template>
-    <h4 class="title">doHardWorks</h4>
+    <h4 class="title">Do Hard Works</h4>
     </app-popover-card>
-    <select [(ngModel)]="vaultFilter" class="select-strategy-2 left-border-box">
-      <option [value]="'all'">All</option>
-      <option *ngFor="let name of vaultNames" [value]="name">{{name}}</option>
-    </select>
+    <div class="filters">
+      <select [(ngModel)]="vaultFilter"
+              class="select-strategy-2"
+              [class]="vt.getThemeColor() + '-softGreen'">
+        <option [value]="'all'">All</option>
+        <option *ngFor="let name of vaultNames"
+                [value]="name">{{name}}</option>
+      </select>
 
-    <input type="number" min="0" [(ngModel)]="minAmout" class="input-less-than left-border-box" placeholder="More than...">
+      <input type="number"
+             min="0"
+             class="input-less-than"
+             placeholder="More than..."
+             [(ngModel)]="minAmout">
+    </div>
   </div>
 
-  <div class="table-header" [class]="vt.getThemeColor()">
+  <div class="table-header" [class]="vt.getThemeColor() + '-gray'">
     <div class="list-date-header">Date</div>
     <div></div>
     <div class="list-vault-hader">Vault</div>
@@ -43,7 +52,9 @@
       </app-popover-card>
 
       <div class="vault-icon">
-        <app-vault-icon [vault]="getVaultModel(dto.vaultAddress)"></app-vault-icon>
+
+        <app-vault-icon [vault]="getVaultModel(dto.vaultAddress)"
+                        [networks]="vaultsIconsList"></app-vault-icon>
       </div>
 
       <div class="vault-name">{{getVaultName(dto.vault)}}</div>
@@ -63,7 +74,10 @@
   </div>
 
   <div class="button-container">
-    <button (click)="openHardWorkHistoryListDialog()" class="show-more">show older</button>
+    <button (click)="openHardWorkHistoryListDialog()"
+            class="show-more"
+            [class]="vt.getThemeColor() + '-middleGreen'"
+            >Show Older<img src="assets/icons/show_chevron_right.svg"></button>
   </div>
   <app-custom-modal #hardWorkHistoryListModal>
     <ng-template>

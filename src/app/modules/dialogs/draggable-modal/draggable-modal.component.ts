@@ -1,20 +1,30 @@
-import {AfterViewInit, Component, HostListener, ViewChild} from '@angular/core';
-import {ViewTypeService} from '@data/services/view-type.service';
+import { AfterViewInit, Component, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
+import { ViewTypeService } from '@data/services/view-type.service';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-draggable-modal',
   templateUrl: './draggable-modal.component.html',
   styleUrls: ['./draggable-modal.component.css'],
+  providers: [DestroyService],
 })
 export class DraggableModalComponent implements AfterViewInit {
+  @Output() dragged = new EventEmitter<boolean>();
+
   @ViewChild('modal') private modal;
   private positionOne = 0;
   private positionTwo = 0;
   private positionThree = 0;
   private positionFour = 0;
   private isMouseDown = false;
+  private debounce: Subject<void> = new Subject<void>();
 
-  constructor(public vt: ViewTypeService) {
+  constructor(
+    public vt: ViewTypeService,
+    private destroy$: DestroyService,
+  ) {
   }
 
   ngAfterViewInit(): void {
@@ -22,9 +32,18 @@ export class DraggableModalComponent implements AfterViewInit {
     style.top = '50%';
     style.left = '50%';
     style.transform = 'translate(-50%, -50%)';
+
+    this.debounce
+      .pipe(
+        debounceTime(100),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => this.dragged.emit(false));
   }
 
   mousedown(event): void {
+    this.dragged.emit(true);
+
     if (event.target === this.modal.nativeElement) {
       if (event.type === 'touchmove') {
         this.positionThree = event.touches[0].clientX;
@@ -39,6 +58,8 @@ export class DraggableModalComponent implements AfterViewInit {
 
   mouseup(): void {
     this.isMouseDown = false;
+
+    this.debounce.next();
   }
 
   @HostListener('document:mousemove', ['$event'])
@@ -59,7 +80,7 @@ export class DraggableModalComponent implements AfterViewInit {
     }
     if (this.isMouseDown) {
 
-      const {x: elementX, width} = this.modal.nativeElement.getBoundingClientRect();
+      const { x: elementX, width } = this.modal.nativeElement.getBoundingClientRect();
       const hasScrollBar = (elementX + width + 30) > window.innerWidth;
       if (hasScrollBar && event.movementX > -1) {
         this.isMouseDown = false;

@@ -10,17 +10,20 @@ $dark-background-color: #111111;
   grid-template-columns: 20% 20% 20% 20% 20%;
   display: grid;
   padding: 0.3em 0.5em;
-  font-weight: bold;
-  font-size: 0.9em;
-  background: darken(#fffce6, 5%);
+
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
   margin-bottom: 0.5em;
   text-align: center;
+  font-family: 'PT Sans', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
 
   @include isDarkMode() {
-    background: $dark-background-color;
+
   }
 
   .money-icon {
@@ -29,7 +32,7 @@ $dark-background-color: #111111;
 }
 
 .table-header.showMoreColumns {
-  grid-template-columns: 8% 11% 5% 10% 11% 11.5% 12% 6% 10% 8.5% 7%;
+  grid-template-columns: 5% 11% 6% 14% 10% 10% 12% 4% 10% 10% 7%;
   text-align: left;
 }
 

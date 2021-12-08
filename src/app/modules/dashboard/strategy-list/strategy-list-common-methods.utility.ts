@@ -37,7 +37,8 @@ abstract class StrategyListCommonMethods {
   }
 
   vaultApy(vaultAddress: string, network: string): number {
-    return Utils.aprToApyEveryDayReinvest(this.vaultApr(vaultAddress, network));
+    // return Utils.aprToApyEveryDayReinvest(this.vaultApr(vaultAddress, network));
+    return Math.max(this.hardworkData.getRoiBasedOnPPFS(vaultAddress, network), 0);
   }
 
   vaultApr(vaultAddress: string, network: string): number {
@@ -60,10 +61,6 @@ abstract class StrategyListCommonMethods {
 
   vaultUsers(vaultAddress: string, network: string): number {
     return this.harvestData.getVaultLastInfo(vaultAddress, network)?.ownerCount || 0;
-  }
-
-  prettyName(name: string): string {
-    return Utils.prettyVaultName(name);
   }
 }
 

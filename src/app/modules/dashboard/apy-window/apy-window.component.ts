@@ -1,21 +1,25 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Vault} from '@data/models/vault';
-import {Pool} from '@data/models/pool';
-import {CustomModalComponent} from '@shared/custom-modal/custom-modal.component';
-import {StaticValues} from '@data/static/static-values';
-import {Router} from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
+import { Vault } from '@data/models/vault';
+import { Pool } from '@data/models/pool';
+import { CustomModalComponent } from '@shared/custom-modal/custom-modal.component';
+import { StaticValues } from '@data/static/static-values';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-apy-window',
   templateUrl: './apy-window.component.html',
-  styleUrls: ['./apy-window.component.scss']
+  styleUrls: ['./apy-window.component.scss'],
 })
 export class ApyWindowComponent implements OnInit {
-  @Output() showModal = new EventEmitter<boolean>();
   @Input() vault: Vault;
   @Input() pool: Pool;
+
+  @Output() showModal = new EventEmitter<boolean>();
+  @Output() closeModal = new EventEmitter<void>();
+
   @ViewChild('incomeModal') private incomeModal: CustomModalComponent;
   @ViewChild('psApyModal') private psApyModal: CustomModalComponent;
+  @ViewChild('tvlApyModal') private tvlModal: CustomModalComponent;
 
   constructor(private router: Router) {
   }
@@ -23,12 +27,14 @@ export class ApyWindowComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  closeModal(): void {
-    this.showModal.emit(false);
+  onCloseModal(event: MouseEvent): void {
+    event.stopPropagation();
+
+    this.closeModal.emit();
   }
 
   openChartPage(): void {
-    this.router.navigateByUrl(`/info/${this.vault.contract.network}/${this.vault.contract.address}`);
+    this.router.navigateByUrl(`/info/${ this.vault.contract.network }/${ this.vault.contract.address }`);
   }
 
 
@@ -40,6 +46,10 @@ export class ApyWindowComponent implements OnInit {
       return;
     }
     this.incomeModal.open();
+  }
+
+  openTvlDialog(): void {
+    this.tvlModal.open();
   }
 
   private openPsApyDialog(): void {

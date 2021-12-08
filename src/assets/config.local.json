@@ -11,5 +11,8 @@
         "bsc": "http://localhost:4142"
     },
     "multipleSources": true,
-    "defaultNetwork": "eth"
+    "defaultNetwork": "eth",
+    "theGraph": {
+        "graphQlServerUrl": "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
+    }
 }

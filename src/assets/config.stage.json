@@ -3,13 +3,16 @@
     "wsReconnectInterval": 15,
     "ethRpcUrl": "https://mainnet.infura.io/v3/unknown",
     "wsEndpoints": {
-        "eth": "https://ethparser-stage.harvestfi.builders/stomp",
-        "bsc": "https://ethparser-stage.harvestfi.builders/stomp"
+        "eth": "https://ethparser-staging.herokuapp.com/stomp",
+        "bsc": "https://ethparser-staging.herokuapp.com/stomp"
     },
     "apiEndpoints": {
-        "eth": "https://ethparser-stage.harvestfi.builders",
-        "bsc": "https://ethparser-stage.harvestfi.builders"
+        "eth": "https://ethparser-staging.herokuapp.com",
+        "bsc": "https://ethparser-staging.herokuapp.com"
     },
     "multipleSources": true,
-    "defaultNetwork": "eth"
+    "defaultNetwork": "eth",
+    "theGraph": {
+        "graphQlServerUrl": "https://api.thegraph.com/subgraphs/name/graphprotocol/graph-network-mainnet"
+    }
 }

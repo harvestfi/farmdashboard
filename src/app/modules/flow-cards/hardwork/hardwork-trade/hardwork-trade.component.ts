@@ -14,6 +14,7 @@ export class HardworkTradeComponent implements OnInit {
   @Input() dto: HardWorkDto;
   @Input() fullDate = false;
   @Input() moreColumns = false;
+  @Input() vaultsIconsList;
   openModal = false;
   hash = '';
   name = '';

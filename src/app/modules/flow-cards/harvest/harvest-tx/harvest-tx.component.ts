@@ -10,6 +10,9 @@ import {ContractsService} from '@data/services/contracts.service';
 import {Vault} from '@data/models/vault';
 import {HarvestsService} from '@data/services/http/harvests.service';
 import {HarvestDataService} from '@data/services/data/harvest-data.service';
+import {takeUntil} from 'rxjs/operators';
+import {VaultsDataService} from '@data/services/vaults-data.service';
+import { DestroyService } from '@data/services/destroy.service';
 
 @Component({
   selector: 'app-harvest-tx',
@@ -20,21 +23,37 @@ export class HarvestTxComponent implements AfterViewInit {
   vaultFilter = 'all';
   minAmount = 0;
   openedModal: Record<string, boolean> = {};
+  vaultsIconsList = [];
   @ViewChild('harvestHistoryModal') private harvestHistoryModal: CustomModalComponent;
-  constructor(private ws: WebsocketService,
-              private httpService: HttpService,
-              private cdRef: ChangeDetectorRef,
-              public vt: ViewTypeService,
-              private snack: SnackBarService,
-              private log: NGXLogger,
-              private contractsService: ContractsService,
-              private harvestsService: HarvestsService,
-              private harvestData: HarvestDataService,
-              private contractService: ContractsService
+
+  constructor(
+    private ws: WebsocketService,
+    private httpService: HttpService,
+    private cdRef: ChangeDetectorRef,
+    public vt: ViewTypeService,
+    private snack: SnackBarService,
+    private log: NGXLogger,
+    private contractsService: ContractsService,
+    private harvestsService: HarvestsService,
+    private harvestData: HarvestDataService,
+    private contractService: ContractsService,
+    private vaultsDataService: VaultsDataService,
+    private destroy$: DestroyService,
   ) {
   }
 
   ngAfterViewInit(): void {
+    this.additionalVaultsList();
+  }
+
+  additionalVaultsList(): void {
+    this.vaultsDataService.retrieveVaultsList()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+            this.vaultsIconsList = data;
+        }, err => {
+            console.log(err);
+        });
   }
 
   get vaultNames(): string[] {

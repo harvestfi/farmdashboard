@@ -1,123 +1,148 @@
-<div class="cover" [class]="vt.getThemeColor()">
+<div class="title-wrapper"
+     [class]="vt.getThemeColor() + '-black'">
+    <app-side-menu-toggle></app-side-menu-toggle>
+    <div class="title">
+        <span>Network: {{ vaultNetwork }}</span>
+        <span>Vault: {{ vaultAddress }}</span>
+    </div>
+    <app-theme-switch></app-theme-switch>
+</div>
+<div class="cover">
     <div class="container">
         <div class="grid-sheet">
-            <div class="title">
-                Network: {{ vaultNetwork }}
-                <br>
-                Vault: {{ vaultAddress }}
-            </div>
+
             <div class="charts-block">
                 <div class="chart-block">
                     <app-echart [title]="title1"
-                                [chartName]="chartName1"
                                 [selectedValue]="tvlSelectedValue"
                                 [selectedDate]="tvlSelectedDate"
                                 [valueSymbol]="valueSymbol1"
                                 [options]="options1"
                                 [data]="vaultDataTVL"></app-echart>
+                    <div class="left-part">
+                        <div class="change-percent" [class]="vt.getThemeColor() + '-card'">
+                            <span  class="label">Change in % (24h)</span>
+                            <span class="value">
+                            <span *ngIf="minus1" style="color: red">{{'&#10549;'}}</span>
+                            <span *ngIf="!minus1" style="color: green">{{'&#10548;'}}</span>
+                            {{ changesTvlInPercent}} %
+                        </span>
+                        </div>
+                        <div class="change-amount" [class]="vt.getThemeColor() + '-card'">
+                            <span  class="label">Change in $ (24h)</span>
+                            <span class="value">
+                            <span  class="symbol">{{ minus1 ? '-' : '+' }}</span>
+                            ${{ changesTvlInAmount }}
+                        </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="chart-block">
                     <app-echart [title]="title2"
-                                [chartName]="chartName2"
                                 [selectedValue]="profitSelectedValue"
                                 [selectedDate]="profitSelectedDate"
                                 [valueSymbol]="valueSymbol2"
                                 [options]="options2"
                                 [data]="vaultDataProfit"></app-echart>
-                </div>
-            </div>
-            <div class="last-data-container">
-                <div class="left-part">
-                    <div class="change-percent">
-                        <span  class="label">Change in % (24h)</span>
-                        <span class="value">
-                            <span *ngIf="minus1" style="color: red">{{'&#10549;'}}</span>
-                            <span *ngIf="!minus1" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesTvlInPercent}} %
-                        </span>
-                    </div>
-                    <div class="change-amount">
-                        <span  class="label">Change in $ (24h)</span>
-                        <span class="value">
-                            <span  class="symbol">{{ minus1 ? '-' : '+' }}</span>
-                            ${{ changesTvlInAmount }}
-                        </span>
-                    </div>
-                </div>
-                <div class="right-part">
-                    <div class="change-percent">
-                        <span class="label">Change in % (24h)</span>
-                        <span class="value">
+                    <div class="right-part">
+                        <div class="change-percent" [class]="vt.getThemeColor() + '-card'">
+                            <span class="label">Change in % (24h)</span>
+                            <span class="value">
                             <span *ngIf="minus2" style="color: red">{{'&#10549;'}}</span>
                             <span *ngIf="!minus2" style="color: green">{{'&#10548;'}}</span>
                             {{ changesVolumeInPercent}} %
                         </span>
-                    </div>
-                    <div class="change-amount">
-                        <span class="label">Change in $ (24h)</span>
-                        <span class="value">
+                        </div>
+                        <div class="change-amount" [class]="vt.getThemeColor() + '-card'">
+                            <span class="label">Change in $ (24h)</span>
+                            <span class="value">
                             <span class="symbol">{{ minus2 ? '-' : '+' }}</span>
                             ${{ changesVolumeInAmount }}
                         </span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="title">
-                Total
+
             </div>
             <div class="charts-block">
                 <div class="chart-block">
                     <app-echart [title]="title3"
-                                [chartName]="chartName3"
-                                [selectedValue]="tvlTotalSelectedValue"
-                                [selectedDate]="tvlTotalSelectedDate"
+                                [selectedValue]="apySelectedValue"
+                                [selectedDate]="apySelectedDate"
                                 [valueSymbol]="valueSymbol3"
                                 [options]="options3"
-                                [data]="totalDataTVL"></app-echart>
+                                [data]="vaultDataAPY"></app-echart>
+                    <div class="left-part">
+                        <div class="change-percent" [class]="vt.getThemeColor() + '-card'">
+                            <span  class="label">Change (24h)</span>
+                            <span class="value">
+                            <span *ngIf="minus3" style="color: red">{{'&#10549;'}}</span>
+                            <span *ngIf="!minus3" style="color: green">{{'&#10548;'}}</span>
+                            <span *ngIf="valueSymbol3 !== '%'">{{ changesAPYInPercent }} %</span>
+                        </span>
+                        </div>
+                        <div class="change-amount" [class]="vt.getThemeColor() + '-card'">
+                            <span  class="label">Change in {{valueSymbol3}} (24h)</span>
+                            <span class="value">
+                            <span  class="symbol">{{ minus3 ? '-' : '+' }}</span>
+                            {{ changesAPYInAmount }} {{valueSymbol3}}
+                        </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="chart-block">
                     <app-echart [title]="title4"
-                                [chartName]="chartName4"
-                                [selectedValue]="profitTotalSelectedValue"
-                                [selectedDate]="profitTotalSelectedDate"
+                                [selectedValue]="usersSelectedValue"
+                                [selectedDate]="usersSelectedDate"
                                 [valueSymbol]="valueSymbol4"
                                 [options]="options4"
-                                [data]="totalDataProfit"></app-echart>
-                </div>
-            </div>
-            <div class="last-data-container">
-                <div class="left-part">
-                    <div class="change-percent">
-                        <span  class="label">Change in % (24h)</span>
-                        <span class="value">
-                            <span *ngIf="minus3" style="color: red">{{'&#10549;'}}</span>
-                            <span *ngIf="!minus3" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesTvlTotalInPercent}} %
-                        </span>
-                    </div>
-                    <div class="change-amount">
-                        <span  class="label">Change in $ (24h)</span>
-                        <span class="value">
-                            <span  class="symbol">{{ minus3 ? '-' : '+' }}</span>
-                            ${{ changesTvlTotalInAmount }}
-                        </span>
-                    </div>
-                </div>
-                <div class="right-part">
-                    <div class="change-percent">
-                        <span class="label">Change in % (1 month)</span>
-                        <span class="value">
+                                [data]="vaultDataUsers"></app-echart>
+                    <div class="right-part">
+                        <div class="change-percent" [class]="vt.getThemeColor() + '-card'">
+                            <span class="label">Change in % (24h)</span>
+                            <span class="value">
                             <span *ngIf="minus4" style="color: red">{{'&#10549;'}}</span>
                             <span *ngIf="!minus4" style="color: green">{{'&#10548;'}}</span>
-                            {{ changesProfitTotalInPercent }} %
+                            {{  changesUsersInPercent }} %
                         </span>
-                    </div>
-                    <div class="change-amount">
-                        <span class="label">Change in $ (1 month)</span>
-                        <span class="value">
+                        </div>
+                        <div class="change-amount" [class]="vt.getThemeColor() + '-card'">
+                            <span class="label">Change (24h)</span>
+                            <span class="value">
                             <span class="symbol">{{ minus4 ? '-' : '+' }}</span>
-                            ${{ changesProfitTotalInAmount}}
+                            {{  changesUsersInAmount }}
                         </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="charts-block" >
+                <div class="chart-block">
+                    <div class="total" [class]="vt.getThemeColor() + '-card'">
+                        <div class="title-part">
+                            <span class="label">Total Earned</span>
+                            <span class="info">USDT-UST</span>
+                        </div>
+                        <div>
+                            <span class="value">
+                                ${{ nFormatter(vaultEarned, 2) }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-block">
+                    <div class="total" [class]="vt.getThemeColor() + '-card'">
+                        <div class="title-part">
+                            <span class="label">Gas Saved</span>
+                            <span class="info">USDT-UST</span>
+                        </div>
+                        <div>
+                            <span class="value">
+                                {{ gasSaved }}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

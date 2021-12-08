@@ -1,0 +1,146 @@
+.chart-background {
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    min-height: 427px;
+    border-radius: 16px;
+    width: 100%;
+    height: 300px;
+    padding: 25px 16px 0 25px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.currentInfo {
+    position: absolute;
+    width: calc(100% - 80px);
+    display: flex;
+    font-family: 'Inter var', sans-serif;
+    box-sizing: border-box;
+    justify-content: space-between;
+    z-index: 1;
+    div {
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+    }
+}
+
+.chart-background.dark .currentInfo {
+    color: #ffffff;
+}
+.chart-background.light .currentInfo {
+    color: #404040;
+}
+
+
+.currentInfo .name {
+     display: flex;
+     justify-content: space-between;
+     font-size: 16px;
+ }
+
+.currentInfo .name .title {
+    font-weight: 900;
+    font-size: 1.5rem;
+}
+
+.controls {
+    z-index: 1;
+    user-select: none;
+    border: 1px solid #C9DBDB;
+    box-sizing: border-box;
+    border-radius: 10px;
+    width: 150px;
+    height: 57px;
+    padding: 6px;
+
+    .toggle {
+        font-family: 'PT Sans', sans-serif;
+        font-size: 16px;
+        height: 100%;
+        width: 100%;
+        border-radius: 20px;
+        position: relative;
+        transition: background 0.5s;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+
+        div {
+            display: flex;
+            width: 45px;
+        }
+        span {
+            color: #5CADAA;
+            width: 100%;
+            text-align: center;
+            margin: auto 0;
+            transition: color, 0.5s;
+        }
+
+        &::after {
+            border-radius: 8px;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 100%;
+            width: 45px;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s;
+            color: #FFFFFF;
+        }
+    }
+
+    .toggle.year {
+        &::after {
+            background: #5CADAA;
+            left: 90px;
+            content: "All";
+        }
+    }
+
+    .toggle.month{
+        &::after {
+            background: #5CADAA;
+            left: 0;
+            content: "1M";
+        }
+    }
+
+    .toggle.sixMonth{
+        &::after {
+            background: #5CADAA;
+            left: 45px;
+            content: "6M";
+        }
+    }
+}
+
+.currentInfo .value {
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+    min-width: 0;
+    font-weight: 600;
+    font-size: 32px;
+}
+
+.currentInfo .date {
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+    min-width: 0;
+    font-weight: 500;
+    font-size: 12px;
+    height: 14px;
+}
+
+@media (max-width: 1000px) {
+    .currentInfo {
+        position: absolute;
+        width: calc(100% - 50px);
+    }
+}

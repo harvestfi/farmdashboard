@@ -20,9 +20,9 @@ export class SnackBarComponent implements OnInit {
   chooseColor(data: string): string {
     data = data.toLowerCase();
     if (data.indexOf('buy') >= 0 || data.indexOf('add') >= 0 || data.indexOf('deposit') >= 0) {
-      return '#3e5f35';
+      return '#5CADAA';
     } else if (data.indexOf('sell') >= 0 || data.indexOf('remove') >= 0 || data.indexOf('withdraw') >= 0) {
-      return '#b34a4a';
+      return '#EEBF65';
     }
   }
 

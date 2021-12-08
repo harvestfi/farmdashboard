@@ -1,6 +1,8 @@
-<div class="main-top-navigation" [class]="vt.getThemeColor() + '-card'">
-  <app-main-side-menu></app-main-side-menu>
-  <div class="nav-title hide-on-phone">Harvest Live Dashboard</div>
+<div class="main-top-navigation" [class]="vt.getThemeColor() + '-transparent'">
+  <app-side-menu-toggle></app-side-menu-toggle>
+  <div class="nav-title hide-on-phone">
+    <span class="first-part">Harvest&nbsp;</span>
+    <span>Live Dashboard</span></div>
   <div class="sockets-status-container">
     <div *ngFor="let network of networks">
 
@@ -10,13 +12,21 @@
           <p>Behind by {{blockDiffs.get(network.name)||0}} blocks</p>
         </ng-template>
         <div class="network-status">
-          <img width="10" [src]="network.icon" class="icon"/>
+          <img [src]="network.icon" class="icon"/>
           <span class="status" [class]="ws.isNetworkConnected(network.name) ? 'online' : 'offline'">{{ws.isNetworkConnected(
               network.name) ? 'Online' : 'Offline'}}</span>
           <i *ngIf="blockDiffs.get(network.name) > 10"
               class="fas fa-exclamation-triangle" style="color: brown"></i>
+          <img class="info-ico" src="/assets/icons/info.svg">
         </div>
       </app-popover-card>
     </div>
+    <app-popover-card class="pointer theme-switch-wrapper">
+      <ng-template>
+        <p>Theme switch</p>
+      </ng-template>
+      <app-theme-switch></app-theme-switch>
+    </app-popover-card>
   </div>
+
 </div>

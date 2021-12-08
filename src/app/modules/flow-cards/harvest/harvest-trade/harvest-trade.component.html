@@ -21,7 +21,9 @@
 
 
   <div class="harvest-field harvest2-vault left-border-box">
-    <app-vault-icon [vault]="vaultModel"></app-vault-icon>
+    <app-vault-icon [vault]="vaultModel"
+                    [networks]="vaultsIconsList"
+    ></app-vault-icon>
   </div>
 
   <div class="harvest-field harvest2-tvl left-border-box">
@@ -35,8 +37,9 @@
       </app-link-window>
     </app-simple-modal>
     <mat-icon (click)="showTradeLinks()"
-              [ngStyle]="{'color': '#b5b4b4'}"
-              aria-hidden="false" aria-label="Price" class="sign-icon">
+              class="sign-icon"
+              [class]="vt.getThemeColor() + '-middleGreen'"
+              aria-hidden="false" aria-label="Price">
       open_in_new
     </mat-icon>
   </div>

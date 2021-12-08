@@ -8,9 +8,10 @@ $dark-background-color: #111111;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 20px;
+  padding: 37px 43px 30px;
   max-width: 600px;
   width: 90vw;
+  border-radius: 10px;
 
   @include responsive(small) {
     max-width: 100%;
@@ -18,29 +19,54 @@ $dark-background-color: #111111;
   }
 
   .paginator-area {
-    text-align: center;
+    display: flex;
+    justify-content: center;
   }
 
   .title-row {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
     vertical-align: middle;
     padding: 0.4em 0;
+    flex-direction: column;
+    .filters {
+      width: 50%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin: 0 0 29px 0;
+      font-family: 'PT Sans', sans-serif;
+
+      input {
+        height: 46px;
+        padding: 12px 18px;
+        cursor: pointer;
+        border: 1px solid #CFE2E2;
+        box-sizing: border-box;
+        border-radius: 10px;
+        width: 100%;
+        margin: 0;
+        -webkit-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        transition: all 0.5s;
+        font-size: 16px;
+      }
+    }
   }
 
   .title {
-    font-size: 1.5em;
-    font-weight: bolder;
-    text-align: center;
     width: 100%;
-    margin: 0;
+    font-family: 'PT Sans', sans-serif;
+    text-align: left;
+    font-size: 24px;
+    line-height: 31px;
+    font-weight: 700;
+    margin-bottom: 22px;
   }
 
   .filter-input {
@@ -66,22 +92,21 @@ $dark-background-color: #111111;
   }
 
   .table-header {
-    grid-template-columns: 8% 30% 20% 22% 10% 10%;
+    grid-template-columns: 10% 30% 20% 22% 10% 8%;
     display: grid;
     padding: 0.3em 0.5em;
-    font-weight: bold;
-    font-size: 0.9em;
-    background: darken(#fffce6, 5%);
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+    font-family: 'PT Sans', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
 
     @include isDarkMode() {
       background: $dark-background-color;
     }
 
     .money-icon {
-      text-align: center;
+
     }
   }
 

@@ -13,6 +13,9 @@ import {DraggableModalModule} from '@modules/dialogs/draggable-modal/draggable-m
 import {ApyWindowModule} from '../apy-window/apy-window.module';
 import {CustomModalModule} from '@shared/custom-modal/custom-modal.module';
 import {VaultTvlDialogModule} from '@modules/dialogs/charts/vault-tvl-dialog/vault-tvl-dialog.module';
+import {SideMenuToggleModule} from '@layout/main-top-navigation/side-menu-toggle/side-menu-toggle.module';
+import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -24,7 +27,10 @@ import {VaultTvlDialogModule} from '@modules/dialogs/charts/vault-tvl-dialog/vau
     DraggableModalModule,
     ApyWindowModule,
     CustomModalModule,
-    VaultTvlDialogModule
+    VaultTvlDialogModule,
+    SideMenuToggleModule,
+    ThemeSwitchModule,
+    MatCheckboxModule,
   ],
   exports: [
     StrategyListComponent,

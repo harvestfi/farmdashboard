@@ -18,6 +18,7 @@ import get = Reflect.get;
 })
 export class HttpService {
 
+  localApi = window.document.location.host === 'localhost:4200' ? 'http://localhost:8080' : '';
   constructor(
       @Inject(APP_CONFIG) public config: AppConfig,
       private http: HttpClient,
@@ -103,6 +104,10 @@ export class HttpService {
 
   getUserBalances(): Observable<Balance[]> {
     return this.httpGetWithNetwork('/user_balances');
+  }
+
+  getMaticPrices(): Observable<{ usd: number }> {
+      return this.http.get<{ usd: number }>(`${this.localApi}/matic-info`);
   }
 
   private handleResponse(x: any, url: string): any {
