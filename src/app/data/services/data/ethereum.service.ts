@@ -1,24 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import BigNumber from 'bignumber.js';
-import {
-  BigNumberOne,
-  BigNumberZero,
-  ERC20_ABI_GET_PRICE_PER_FULL_SHARE,
-  ETH_ORACLE_ABI_FOR_GETTING_PRICES,
-  ETH_WEB3,
-  ETHEREUM_CONTRACT_FOR_GETTING_PRICES,
-  ethereumPoolsWithEarnedMethodTaking2Arguments,
-  FARM_DECIMALS,
-  FARM_VAULT_ABI,
-  farmAddress,
-  FTOKEN_ABI,
-  POOL_WITH_EARNED_METHOD_WITH_2_ARGUMENTS,
-  PRICE_DECIMALS,
-  PS_VAULT_ABI,
-  PSAddress,
-  REWARDS_ABI,
-  vaultsWithoutReward,
-} from '@data/constants/app.constant';
 import { BlockchainService } from '@data/services/data/blockchain.service';
 import { Pool } from '@data/models/pool';
 import { Vault } from '@data/models/vault';
@@ -26,19 +7,47 @@ import { AssetsInfo, ETH, PartialAssetData } from '@data/models/assets-info';
 import { Utils } from '@data/static/utils';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
+import { FTOKEN_ABI } from '@data/static/abi/ftoken.abi';
+import { REWARDS_ABI } from '@data/static/abi/rewards.abi';
+import { ERC20_ABI } from '@data/static/abi/erc20.abi';
+import { ETH_ORACLE } from '@data/static/abi/eth-oracle.abi';
+import { FARM_VAULT_ABI } from '@data/static/abi/farm-vault.abi';
+import { PS_VAULT_ABI } from '@data/static/abi/ps-vault.abi';
+import { POOL_WITH_EARNED_METHOD_WITH_2_ARGUMENTS } from '@data/static/abi/pool-earned.abi';
+import { Addresses } from '@data/static/addresses';
+import { APP_CONFIG, AppConfig } from '../../../../app.config';
+
+const ETHEREUM_CONTRACT_FOR_GETTING_PRICES = '0x48dc32eca58106f06b41de514f29780ffa59c279';
+const PRICE_DECIMALS = 18;
+const FARM_DECIMALS = 18;
+const BIG_NUMBER_ZERO = new BigNumber(0);
+const BIG_NUMBER_ONE = new BigNumber(1);
+const ETH_POOLS_WITH_EARNED_TAKING_TWO_ARGUMENTS = new Set<string>([
+  '0x59a87ab7407371b933cad65001400342519a79bb',
+  '0xf4ead5142749316c8ca141959b510862fbba1807'.toLocaleLowerCase(),
+]);
+const farmAddress = Addresses.ADDRESSES.get('FARM');
+const PSAddress = Addresses.ADDRESSES.get('PS');
 
 @Injectable({
   providedIn: 'root',
 })
 export class EthereumService {
-  constructor(private blockchainService: BlockchainService) {
+  private vaultsWithoutReward = new Set<string>([]);
+  private ethWeb3: Web3;
+  
+  constructor(
+    @Inject(APP_CONFIG) public config: AppConfig,
+    private blockchainService: BlockchainService,
+  ) {
+    this.ethWeb3 = new Web3(this.config.web3EthApi);
   }
   
   public async getPrice(
     tokenAddress: string,
   ): Promise<BigNumber | null> {
-    const gettingPricesContract = new ETH_WEB3.eth.Contract(
-      ETH_ORACLE_ABI_FOR_GETTING_PRICES,
+    const gettingPricesContract = new this.ethWeb3.eth.Contract(
+      ETH_ORACLE,
       ETHEREUM_CONTRACT_FOR_GETTING_PRICES,
     );
     
@@ -67,7 +76,7 @@ export class EthereumService {
     let earned: string | null = '';
     
     if (
-      ethereumPoolsWithEarnedMethodTaking2Arguments.has(
+      ETH_POOLS_WITH_EARNED_TAKING_TWO_ARGUMENTS.has(
         poolAddress.toLocaleLowerCase(),
       )
     ) {
@@ -117,18 +126,18 @@ export class EthereumService {
     partialAssetData: PartialAssetData,
     relatedVault?: Vault,
   ): Promise<AssetsInfo> {
-    const lpTokenContract = new ETH_WEB3.eth.Contract(
+    const lpTokenContract = new this.ethWeb3.eth.Contract(
       FTOKEN_ABI,
       pool.lpToken?.address,
     );
     
-    const poolContract = new ETH_WEB3.eth.Contract(
+    const poolContract = new this.ethWeb3.eth.Contract(
       REWARDS_ABI,
       pool.contract.address,
     );
     // Pool where reward is iFarm
-    const iFarmRewardPool = new ETH_WEB3.eth.Contract(
-      ERC20_ABI_GET_PRICE_PER_FULL_SHARE,
+    const iFarmRewardPool = new this.ethWeb3.eth.Contract(
+      ERC20_ABI,
       pool.rewardToken?.address,
     );
     
@@ -153,7 +162,7 @@ export class EthereumService {
       this.getEarned(
         walletAddress,
         poolContract,
-        ETH_WEB3,
+        this.ethWeb3,
         pool.contract.address,
       ),
     ]);
@@ -208,7 +217,7 @@ export class EthereumService {
       
       poolBalance !== '0'
         ? poolContract.methods.totalSupply().call()
-        : BigNumberOne,
+        : BIG_NUMBER_ONE,
       
       relatedVault && poolBalance !== '0'
         ? lpTokenContract.methods.getPricePerFullShare().call()
@@ -280,7 +289,7 @@ export class EthereumService {
       name,
       network: ETH,
       prettyName,
-      earnFarm: !vaultsWithoutReward.has(id),
+      earnFarm: !this.vaultsWithoutReward.has(id),
       farmToClaim: rewardTokenAreInFARM,
       stakedBalance: prettyPoolBalance,
       percentOfPool,
@@ -334,7 +343,7 @@ export class EthereumService {
         ),
       };
       
-      const vaultContract = new ETH_WEB3.eth.Contract(
+      const vaultContract = new this.ethWeb3.eth.Contract(
         FTOKEN_ABI,
         vault.contract.address,
       );
@@ -350,7 +359,7 @@ export class EthereumService {
       }
       // Case 4: Vault it is iFarm.
       if (isIFarm) {
-        const farmContract = new ETH_WEB3.eth.Contract(
+        const farmContract = new this.ethWeb3.eth.Contract(
           FARM_VAULT_ABI,
           vault.underlying!.address,
         );
@@ -433,7 +442,7 @@ export class EthereumService {
           name: Utils.contractToName(vault.contract),
           prettyName: Utils.contractToName(vault.contract),
           earnFarm: true,
-          farmToClaim: BigNumberZero,
+          farmToClaim: BIG_NUMBER_ZERO,
           stakedBalance: prettyVaultBalance,
           percentOfPool,
           value,
@@ -446,12 +455,12 @@ export class EthereumService {
       
       // Case 5: Vault it is PS.
       if (isPS) {
-        const farmContract = new ETH_WEB3.eth.Contract(
+        const farmContract = new this.ethWeb3.eth.Contract(
           FARM_VAULT_ABI,
           farmAddress,
         );
         
-        const PSvaultContract = new ETH_WEB3.eth.Contract(
+        const PSvaultContract = new this.ethWeb3.eth.Contract(
           PS_VAULT_ABI,
           vault.contract.address,
         );
@@ -480,7 +489,7 @@ export class EthereumService {
             ? new BigNumber(vaultBalance)
               .dividedBy(new BigNumber(totalValue))
               .multipliedBy(100)
-            : BigNumberZero;
+            : BIG_NUMBER_ZERO;
         
         const prettyVaultBalance = vaultBalance
           ? new BigNumber(vaultBalance).dividedBy(10 ** vault.decimals!)
@@ -504,8 +513,8 @@ export class EthereumService {
           underlying: vault.underlying?.address,
           name: Utils.contractToName(vault.contract),
           prettyName: Utils.contractToName(vault.contract),
-          earnFarm: !vaultsWithoutReward.has(Utils.contractToName(vault.contract)),
-          farmToClaim: BigNumberZero,
+          earnFarm: !this.vaultsWithoutReward.has(Utils.contractToName(vault.contract)),
+          farmToClaim: BIG_NUMBER_ZERO,
           stakedBalance: prettyVaultBalance,
           percentOfPool,
           value,
@@ -533,10 +542,10 @@ export class EthereumService {
         network: ETH as typeof ETH,
         name: `${ vault.contract.name } (has not pool)`,
         prettyName: Utils.contractToName(vault.contract),
-        earnFarm: !vaultsWithoutReward.has(vault.contract.address),
-        farmToClaim: BigNumberZero,
-        stakedBalance: BigNumberZero,
-        percentOfPool: BigNumberZero,
+        earnFarm: !this.vaultsWithoutReward.has(vault.contract.address),
+        farmToClaim: BIG_NUMBER_ZERO,
+        stakedBalance: BIG_NUMBER_ZERO,
+        percentOfPool: BIG_NUMBER_ZERO,
         value: null,
         unstakedBalance: prettyVaultBalance,
         address: { vault: vault.contract.address },

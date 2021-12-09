@@ -12,6 +12,7 @@
         "bsc": "https://ethparser-staging.herokuapp.com",
         "matic": "https://ethparser-staging.herokuapp.com"
     },
+    "web3EthApi": "https://eth-mainnet.alchemyapi.io/v2/R27MZFRy__nSPdA9g9G-3yz6cIS6Lpm-",
     "multipleSources": true,
     "defaultNetwork": "eth",
     "theGraph": {

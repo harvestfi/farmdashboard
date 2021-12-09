@@ -6,11 +6,6 @@
 
 export const environment = {
   production: false,
-  APP_ETH_PARSER_URL: 'https://ethparser.herokuapp.com',
-  APP_HARVEST_KEY: '41e90ced-d559-4433-b390-af424fdc76d6',
-  ZAPPER_API_KEY: '96e0cc51-a62e-42ca-acee-910ea7d2a241',
-  APP_ETH_URL: 'https://eth-mainnet.alchemyapi.io/v2/R27MZFRy__nSPdA9g9G-3yz6cIS6Lpm-',
-  CURRENCY_VALUE: 'USD',
 };
 
 /*

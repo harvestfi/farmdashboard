@@ -1,4 +1,5 @@
 import {InjectionToken} from '@angular/core';
+import Web3 from 'web3';
 
 export class AppConfig {
     debugLevel: number;
@@ -6,6 +7,7 @@ export class AppConfig {
     wsEndpoints = {};
     wsReconnectInterval: number;
     ethRpcUrl: string;
+    web3EthApi: string;
     multipleSources: boolean;
     defaultNetwork: string;
     theGraph: {

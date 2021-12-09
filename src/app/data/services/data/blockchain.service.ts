@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Vault } from '@data/models/vault';
 import { Pool } from '@data/models/pool';
 import BigNumber from 'bignumber.js';
-import { BigNumberZero } from '@data/constants/app.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +25,7 @@ export class BlockchainService {
     }
     
     if (poolBalance === '0') {
-      return BigNumberZero;
+      return new BigNumber(0);
     }
 
     return priceAddress ? await getPrice(priceAddress) : null;

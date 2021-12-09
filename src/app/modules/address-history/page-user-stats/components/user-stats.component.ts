@@ -6,10 +6,10 @@ import { UserBalanceService } from '@data/services/data/user-balance.service';
 import { AssetsInfo } from '@data/models/assets-info';
 import BigNumber from 'bignumber.js';
 import { Utils } from '@data/static/utils';
-import { environment } from '@environments/environment.prod';
-import { exchangeRates } from '@data/constants/app.constant';
 import { ViewTypeService } from '@data/services/view-type.service';
-import { HttpService } from '@data/services/http/http.service';
+import { ContractsApiService } from '@data/services/http/contracts-api.service';
+
+const CURRENCY_VALUE = 'USD';
 
 @Component({
   templateUrl: './user-stats.component.html',
@@ -34,6 +34,11 @@ export class UserStatsComponent implements OnInit {
   sortDirection = -1;
   isPhoneSize = false;
   
+  private exchangeRates = {
+    values: { USD: 1 },
+    lastUpdatedAt: 0,
+  };
+  
   @HostListener('window:resize')
   handleScreenResize(): void {
     const newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -46,7 +51,7 @@ export class UserStatsComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef,
     private destroy$: DestroyService,
     private userBalanceService: UserBalanceService,
-    private httpService: HttpService,
+    private contractsApiService: ContractsApiService,
     public viewTypeService: ViewTypeService,
   ) {
   }
@@ -57,7 +62,7 @@ export class UserStatsComponent implements OnInit {
       .subscribe(({ address }) => {
         // 0x814055779f8d2f591277b76c724b7adc74fb82d9
         
-        const currentExchangeRate = exchangeRates.values[environment.CURRENCY_VALUE];
+        const currentExchangeRate = this.exchangeRates.values[CURRENCY_VALUE];
         
         this.userBalanceService.getAssets(address)
           .pipe(takeUntil(this.destroy$))
@@ -69,7 +74,7 @@ export class UserStatsComponent implements OnInit {
               return acc.plus(currentAssetValue);
             }, new BigNumber(0)).toNumber();
             
-            this.stakedBalance = Utils.prettyCurrency(total, environment.CURRENCY_VALUE, currentExchangeRate);
+            this.stakedBalance = Utils.prettyCurrency(total, CURRENCY_VALUE, currentExchangeRate);
             
             this.isLoadingAssets = false;
             
@@ -88,7 +93,7 @@ export class UserStatsComponent implements OnInit {
                 : '-';
               
               const prettyValue: string = asset.value
-                ? Utils.prettyCurrency(asset.value.toNumber(), environment.CURRENCY_VALUE, currentExchangeRate)
+                ? Utils.prettyCurrency(asset.value.toNumber(), CURRENCY_VALUE, currentExchangeRate)
                 : '-';
   
               const prettyStakedBalance: string = asset.stakedBalance
@@ -118,31 +123,29 @@ export class UserStatsComponent implements OnInit {
             this.onSort('prettyName');
             
             this.changeDetectorRef.detectChanges();
-            
-            console.log('----nonZeroAssets', this.stakedBalance, this.nonZeroAssets);
           });
         
         this.userBalanceService.getFarmPrice()
           .pipe(takeUntil(this.destroy$))
           .subscribe(farmPrice => {
-            this.farmPrice = Utils.prettyCurrency(farmPrice.toNumber(), environment.CURRENCY_VALUE, currentExchangeRate);
+            this.farmPrice = Utils.prettyCurrency(farmPrice.toNumber(), CURRENCY_VALUE, currentExchangeRate);
             
             this.isLoadingFarmPrice = false;
             
             this.changeDetectorRef.detectChanges();
           });
         
-        this.httpService.getPersonalGasSaved(address)
+        this.contractsApiService.getPersonalGasSaved(address)
           .pipe(takeUntil(this.destroy$))
           .subscribe(personalGasSaved => {
-            this.personalGasSaved = Utils.prettyCurrency(personalGasSaved, environment.CURRENCY_VALUE, currentExchangeRate);
+            this.personalGasSaved = Utils.prettyCurrency(personalGasSaved, CURRENCY_VALUE, currentExchangeRate);
             
             this.isLoadingPersonalGasSaved = false;
             
             this.changeDetectorRef.detectChanges();
           });
         
-        this.httpService.getAPY()
+        this.contractsApiService.getAPY()
           .pipe(takeUntil(this.destroy$))
           .subscribe(apy => {
             this.apy = apy && apy !== '0' ? `${ apy }%` : '-';
@@ -153,7 +156,7 @@ export class UserStatsComponent implements OnInit {
           });
       });
     
-    this.handleScreenResize()
+    this.handleScreenResize();
   }
   
   onSort(field: string): void {

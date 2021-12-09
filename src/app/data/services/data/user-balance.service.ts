@@ -4,9 +4,12 @@ import { AssetsInfo } from '@data/models/assets-info';
 import { EthereumService } from '@data/services/data/ethereum.service';
 import { BlockchainService } from '@data/services/data/blockchain.service';
 import { HttpService } from '@data/services/http/http.service';
-import { farmAddress } from '@data/constants/app.constant';
 import { map } from 'rxjs/operators';
 import BigNumber from 'bignumber.js';
+import { Addresses } from '@data/static/addresses';
+import { ContractsApiService } from '@data/services/http/contracts-api.service';
+
+const farmAddress = Addresses.ADDRESSES.get('FARM');
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +18,7 @@ export class UserBalanceService {
   constructor(
     private ethereumService: EthereumService,
     private blockchainService: BlockchainService,
-    private httpService: HttpService,
+    private ethereumApiService: ContractsApiService,
   ) {
   }
   
@@ -41,8 +44,8 @@ export class UserBalanceService {
   
   getAssets(address): Observable<Promise<AssetsInfo[]>> {
     return forkJoin({
-      pools: this.httpService.getEthereumPools(),
-      vaults: this.httpService.getEthereumVaults(),
+      pools: this.ethereumApiService.getEthereumPools(),
+      vaults: this.ethereumApiService.getEthereumVaults(),
       farmPrice: this.ethereumService.getPrice(farmAddress),
     })
       .pipe(
