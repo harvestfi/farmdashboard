@@ -12,7 +12,7 @@ import get = Reflect.get;
 @Injectable({
   providedIn: 'root',
 })
-export class ContractsApiService {
+export class EthereumApiService {
   private url: string;
   private localApi = window.document.location.host === 'localhost:4200' ? 'http://localhost:8080' : '';
   

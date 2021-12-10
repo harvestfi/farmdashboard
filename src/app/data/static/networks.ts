@@ -51,7 +51,7 @@ export class Networks {
       ethparserName: 'eth',
       name: 'Ethereum Mainnet',
       currencySymbol: 'ETH',
-      rpcUrl: 'https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken'
+      rpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/your_key',
     };
   }
 

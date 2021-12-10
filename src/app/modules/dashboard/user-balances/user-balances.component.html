@@ -18,19 +18,19 @@
   <div class="table-header"
        [class]="vt.getThemeColor() + '-gray'">
 
-    <div class="header-field">
+    <div class="header-field num">
       &nbsp;
     </div>
 
-    <div class="header-field">
+    <div class="header-field address">
       Owner
     </div>
 
-    <div class="header-field">
+    <div class="header-field value">
       Summary Balance
     </div>
 
-    <div class="header-field">
+    <div class="header-field links">
       Links
     </div>
 
@@ -40,19 +40,19 @@
 
     <div class="values" *ngFor="let balance of userBalances; let i = index">
 
-      <div class="value-field">
+      <div class="value-field num">
         #{{i + 1}}
       </div>
 
-      <div class="value-field">
+      <div class="value-field address">
         {{balance.owner}}
       </div>
 
-      <div class="value-field">
+      <div class="value-field value">
         {{balance.balance | number: '1.0-0'}}$
       </div>
 
-      <div class="value-field links">
+      <div class="value-field links g-flex g-flex--align-center">
         <a href='{{getNetworkScan()}}/address/{{balance.owner}}' target='_blank'
            [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'">NetworkScan</a>
 

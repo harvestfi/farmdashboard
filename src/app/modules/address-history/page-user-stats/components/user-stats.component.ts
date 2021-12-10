@@ -7,7 +7,8 @@ import { AssetsInfo } from '@data/models/assets-info';
 import BigNumber from 'bignumber.js';
 import { Utils } from '@data/static/utils';
 import { ViewTypeService } from '@data/services/view-type.service';
-import { ContractsApiService } from '@data/services/http/contracts-api.service';
+import { EthereumApiService } from '@data/services/http/ethereum-api.service';
+import { forkJoin } from 'rxjs';
 
 const CURRENCY_VALUE = 'USD';
 
@@ -51,7 +52,7 @@ export class UserStatsComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef,
     private destroy$: DestroyService,
     private userBalanceService: UserBalanceService,
-    private contractsApiService: ContractsApiService,
+    private contractsApiService: EthereumApiService,
     public viewTypeService: ViewTypeService,
   ) {
   }
@@ -60,54 +61,57 @@ export class UserStatsComponent implements OnInit {
     this.activatedRoute.params
       .pipe(takeUntil(this.destroy$))
       .subscribe(({ address }) => {
-        // 0x814055779f8d2f591277b76c724b7adc74fb82d9
-        
         const currentExchangeRate = this.exchangeRates.values[CURRENCY_VALUE];
         
-        this.userBalanceService.getAssets(address)
+        forkJoin([
+          this.userBalanceService.getEthAssets(address),
+          this.userBalanceService.getBscAssets(address),
+        ])
           .pipe(takeUntil(this.destroy$))
-          .subscribe(async (data: Promise<AssetsInfo[]>) => {
-            this.nonZeroAssets = await data;
-            
+          .subscribe(async (data: [Promise<AssetsInfo[]>, Promise<AssetsInfo[]>]) => {
+            const [eth, bsc] = await Promise.all(data);
+  
+            this.nonZeroAssets = [...eth, ...bsc];
+  
             const total = this.nonZeroAssets.reduce((acc: BigNumber, currentAsset: AssetsInfo) => {
               const currentAssetValue = currentAsset.value ?? new BigNumber(0);
               return acc.plus(currentAssetValue);
             }, new BigNumber(0)).toNumber();
-            
+    
             this.stakedBalance = Utils.prettyCurrency(total, CURRENCY_VALUE, currentExchangeRate);
-            
+    
             this.isLoadingAssets = false;
-            
+    
             this.nonZeroAssets = this.nonZeroAssets.map(asset => {
               const icon = `/assets/icons/vaults/${ asset.name
                 .replace(/^V_/, '')
                 .replace(/^P_[f]?/, '')
                 .replace(/_#V\d$/, '') }.png`;
-              
+      
               const prettyFarmToClaim = asset.farmToClaim
                 ? asset.farmToClaim.toFixed(4)
                 : '-';
-              
+      
               const prettyPercentOfPool = asset.percentOfPool
                 ? `${ asset.percentOfPool.toFixed(4) }%`
                 : '-';
-              
+      
               const prettyValue: string = asset.value
                 ? Utils.prettyCurrency(asset.value.toNumber(), CURRENCY_VALUE, currentExchangeRate)
                 : '-';
-  
+      
               const prettyStakedBalance: string = asset.stakedBalance
                 ? Utils.prettyNumber(asset.stakedBalance.toNumber())
                 : '-';
-  
+      
               const prettyUnderlyingBalance: string = asset.underlyingBalance
                 ? Utils.prettyNumber(asset.underlyingBalance.toNumber())
                 : '-';
-  
+      
               const prettyUnstakedBalance: string = asset.unstakedBalance
                 ? Utils.prettyNumber(asset.unstakedBalance.toNumber())
                 : '-';
-              
+      
               return {
                 ...asset,
                 icon,
@@ -119,9 +123,9 @@ export class UserStatsComponent implements OnInit {
                 prettyUnstakedBalance,
               };
             });
-            
+    
             this.onSort('prettyName');
-            
+    
             this.changeDetectorRef.detectChanges();
           });
         

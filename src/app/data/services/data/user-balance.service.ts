@@ -7,7 +7,9 @@ import { HttpService } from '@data/services/http/http.service';
 import { map } from 'rxjs/operators';
 import BigNumber from 'bignumber.js';
 import { Addresses } from '@data/static/addresses';
-import { ContractsApiService } from '@data/services/http/contracts-api.service';
+import { EthereumApiService } from '@data/services/http/ethereum-api.service';
+import { BscApiService } from '@data/services/http/bsc-api.service';
+import { BscService } from '@data/services/data/bsc.service';
 
 const farmAddress = Addresses.ADDRESSES.get('FARM');
 
@@ -16,9 +18,11 @@ const farmAddress = Addresses.ADDRESSES.get('FARM');
 })
 export class UserBalanceService {
   constructor(
-    private ethereumService: EthereumService,
     private blockchainService: BlockchainService,
-    private ethereumApiService: ContractsApiService,
+    private ethereumService: EthereumService,
+    private ethereumApiService: EthereumApiService,
+    private bscService: BscService,
+    private bscApiService: BscApiService,
   ) {
   }
   
@@ -42,7 +46,7 @@ export class UserBalanceService {
     return from(this.ethereumService.getPrice(farmAddress));
   }
   
-  getAssets(address): Observable<Promise<AssetsInfo[]>> {
+  getEthAssets(address): Observable<Promise<AssetsInfo[]>> {
     return forkJoin({
       pools: this.ethereumApiService.getEthereumPools(),
       vaults: this.ethereumApiService.getEthereumVaults(),
@@ -80,6 +84,49 @@ export class UserBalanceService {
             },
           );
   
+          return UserBalanceService.nonZeroAssets(assetsFromVaultsPromises, assetsFromPoolsWithoutVaultsPromises);
+        }),
+      );
+  }
+  
+  getBscAssets(address): Observable<Promise<AssetsInfo[]>> {
+    return forkJoin({
+      pools: this.bscApiService.getBscPools(),
+      vaults: this.bscApiService.getBscVaults(),
+      farmPrice: this.bscService.getPrice(farmAddress),
+    })
+      .pipe(
+        map(({ pools, vaults, farmPrice }) => {
+          const assetsFromVaultsPromises = this.bscService.getAssetsFromVaults(
+            vaults,
+            pools,
+            address,
+            farmPrice,
+          );
+  
+          const poolsWithoutVaults = pools.filter(pool => {
+            return !vaults.find(
+              vault => vault.contract.address === pool.lpToken?.address,
+            );
+          });
+  
+          const assetsFromPoolsWithoutVaultsPromises = poolsWithoutVaults.map(
+            pool => {
+              const partialAssetData = {
+                underlyingAddress: this.blockchainService.calcUnderlying(
+                  undefined,
+                  pool,
+                ),
+              };
+              return this.bscService.getAssetsFromPool(
+                pool,
+                farmAddress,
+                farmPrice,
+                partialAssetData,
+              );
+            },
+          );
+      
           return UserBalanceService.nonZeroAssets(assetsFromVaultsPromises, assetsFromPoolsWithoutVaultsPromises);
         }),
       );

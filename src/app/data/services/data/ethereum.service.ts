@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import BigNumber from 'bignumber.js';
 import { BlockchainService } from '@data/services/data/blockchain.service';
 import { Pool } from '@data/models/pool';
@@ -10,12 +10,12 @@ import { Contract } from 'web3-eth-contract';
 import { FTOKEN_ABI } from '@data/static/abi/ftoken.abi';
 import { REWARDS_ABI } from '@data/static/abi/rewards.abi';
 import { ERC20_ABI } from '@data/static/abi/erc20.abi';
-import { ETH_ORACLE } from '@data/static/abi/eth-oracle.abi';
+import { ETH_ORACLE_ABI } from '@data/static/abi/eth-oracle.abi';
 import { FARM_VAULT_ABI } from '@data/static/abi/farm-vault.abi';
 import { PS_VAULT_ABI } from '@data/static/abi/ps-vault.abi';
 import { POOL_WITH_EARNED_METHOD_WITH_2_ARGUMENTS } from '@data/static/abi/pool-earned.abi';
 import { Addresses } from '@data/static/addresses';
-import { APP_CONFIG, AppConfig } from '../../../../app.config';
+import { StaticValues } from '@data/static/static-values';
 
 const ETHEREUM_CONTRACT_FOR_GETTING_PRICES = '0x48dc32eca58106f06b41de514f29780ffa59c279';
 const PRICE_DECIMALS = 18;
@@ -37,17 +37,18 @@ export class EthereumService {
   private ethWeb3: Web3;
   
   constructor(
-    @Inject(APP_CONFIG) public config: AppConfig,
     private blockchainService: BlockchainService,
   ) {
-    this.ethWeb3 = new Web3(this.config.web3EthApi);
+    const ethUrl = StaticValues.NETWORKS.get('eth').rpcUrl;
+  
+    this.ethWeb3 = new Web3(ethUrl);
   }
   
   public async getPrice(
     tokenAddress: string,
   ): Promise<BigNumber | null> {
     const gettingPricesContract = new this.ethWeb3.eth.Contract(
-      ETH_ORACLE,
+      ETH_ORACLE_ABI,
       ETHEREUM_CONTRACT_FOR_GETTING_PRICES,
     );
     

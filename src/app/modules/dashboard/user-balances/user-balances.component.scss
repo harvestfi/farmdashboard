@@ -43,7 +43,8 @@ $dark-background-color: #111111;
 
 .values {
   display: grid;
-  grid-template-columns: 0.3fr 5fr 2fr 0.5fr;
+  align-items: center;
+  grid-template-columns: 0.2fr 1fr 1fr 0.2fr;
   border-bottom: 1px solid #F0F0F0;
   padding: 14px 10px 14px 0;
 }
@@ -51,11 +52,9 @@ $dark-background-color: #111111;
 .table-header {
   padding: 14px 10px 14px 0;
   display: grid;
-  grid-template-columns: 0.3fr 4fr 2fr 0.5fr;
-  font-weight: bold;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
+  grid-template-columns: 0.2fr 1fr 1fr 0.2fr;
+  font-weight: bold;
   text-align: center;
   font-size: 14px;
   font-family: 'PT Sans', sans-serif;
@@ -67,10 +66,6 @@ $dark-background-color: #111111;
   font-family: 'PT Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
-}
-
-.values {
-
 }
 
 .scroller {
@@ -86,6 +81,25 @@ $dark-background-color: #111111;
   font-size: 16px;
 }
 
+.num {
+  padding-right: 12px;
+  min-width: 65px;
+  text-align: right;
+}
+
+.address {
+  min-width: 380px;
+}
+
+.value {
+  padding: 0 12px;
+  text-align: center;
+}
+
+.links {
+  min-width: 300px;
+}
+
 .table-link-badge {
   padding: 4px 7px;
   text-decoration: none;
@@ -97,6 +111,7 @@ $dark-background-color: #111111;
   margin: 5px;
   transition: all .2s ease-out;
   font-family: 'PT Sans', sans-serif;
+  white-space: nowrap;
 }
 
 

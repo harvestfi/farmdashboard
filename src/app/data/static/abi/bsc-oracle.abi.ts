@@ -1,48 +1,10 @@
 import { AbiItem } from 'web3-utils';
 
-export const ETH_ORACLE_ABI: AbiItem[] = [
+export const BSC_ORACLE_ABI: AbiItem[] = [
   {
     inputs: [{ internalType: 'address', name: '_storage', type: 'address' }],
     stateMutability: 'nonpayable',
     type: 'constructor',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'newException',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'exceptionList',
-        type: 'uint256',
-      },
-    ],
-    name: 'CurveExceptionAdded',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'oldException',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'exceptionList',
-        type: 'uint256',
-      },
-    ],
-    name: 'CurveExceptionRemoved',
-    type: 'event',
   },
   {
     anonymous: false,
@@ -135,35 +97,6 @@ export const ETH_ORACLE_ABI: AbiItem[] = [
     type: 'event',
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'newRegistry',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'oldRegistry',
-        type: 'address',
-      },
-    ],
-    name: 'RegistryChanged',
-    type: 'event',
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'newException', type: 'address' },
-      { internalType: 'uint256', name: 'exceptionList', type: 'uint256' },
-    ],
-    name: 'addCurveException',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [{ internalType: 'address', name: 'newToken', type: 'address' }],
     name: 'addKeyToken',
     outputs: [],
@@ -173,13 +106,6 @@ export const ETH_ORACLE_ABI: AbiItem[] = [
   {
     inputs: [{ internalType: 'address', name: 'newToken', type: 'address' }],
     name: 'addPricingToken',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: 'newRegistry', type: 'address' }],
-    name: 'changeCurveRegistry',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -202,14 +128,7 @@ export const ETH_ORACLE_ABI: AbiItem[] = [
   },
   {
     inputs: [{ internalType: 'address', name: 'newFactory', type: 'address' }],
-    name: 'changeSushiFactory',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: 'newFactory', type: 'address' }],
-    name: 'changeUniFactory',
+    name: 'changePancakeFactory',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -236,40 +155,9 @@ export const ETH_ORACLE_ABI: AbiItem[] = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    name: 'curveExceptionList0',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    name: 'curveExceptionList1',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'curveRegistryAddress',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [],
     name: 'definedOutputToken',
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: 'token', type: 'address' }],
-    name: 'getCurveUnderlying',
-    outputs: [
-      { internalType: 'address[8]', name: '', type: 'address[8]' },
-      { internalType: 'uint256[8]', name: '', type: 'uint256[8]' },
-    ],
     stateMutability: 'view',
     type: 'function',
   },
@@ -281,8 +169,6 @@ export const ETH_ORACLE_ABI: AbiItem[] = [
     name: 'getLargestPool',
     outputs: [
       { internalType: 'address', name: '', type: 'address' },
-      { internalType: 'address', name: '', type: 'address' },
-      { internalType: 'bool', name: '', type: 'bool' },
       { internalType: 'bool', name: '', type: 'bool' },
     ],
     stateMutability: 'view',
@@ -300,18 +186,18 @@ export const ETH_ORACLE_ABI: AbiItem[] = [
   },
   {
     inputs: [{ internalType: 'address', name: 'token', type: 'address' }],
-    name: 'getPrice',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'getPancakeUnderlying',
+    outputs: [
+      { internalType: 'address[2]', name: '', type: 'address[2]' },
+      { internalType: 'uint256[2]', name: '', type: 'uint256[2]' },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [{ internalType: 'address', name: 'token', type: 'address' }],
-    name: 'getUniUnderlying',
-    outputs: [
-      { internalType: 'address[2]', name: '', type: 'address[2]' },
-      { internalType: 'uint256[2]', name: '', type: 'uint256[2]' },
-    ],
+    name: 'getPrice',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -326,7 +212,6 @@ export const ETH_ORACLE_ABI: AbiItem[] = [
     inputs: [{ internalType: 'address', name: 'token', type: 'address' }],
     name: 'isLPCheck',
     outputs: [
-      { internalType: 'bool', name: '', type: 'bool' },
       { internalType: 'bool', name: '', type: 'bool' },
       { internalType: 'bool', name: '', type: 'bool' },
     ],
@@ -349,6 +234,13 @@ export const ETH_ORACLE_ABI: AbiItem[] = [
   },
   {
     inputs: [],
+    name: 'pancakeFactoryAddress',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'precisionDecimals',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
@@ -359,13 +251,6 @@ export const ETH_ORACLE_ABI: AbiItem[] = [
     name: 'pricingTokens',
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: 'exception', type: 'address' }],
-    name: 'removeCurveException',
-    outputs: [],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -398,18 +283,4 @@ export const ETH_ORACLE_ABI: AbiItem[] = [
     stateMutability: 'view',
     type: 'function',
   },
-  {
-    inputs: [],
-    name: 'sushiswapFactoryAddress',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'uniswapFactoryAddress',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-];
+]
