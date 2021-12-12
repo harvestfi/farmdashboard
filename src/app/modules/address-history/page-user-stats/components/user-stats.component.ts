@@ -66,12 +66,13 @@ export class UserStatsComponent implements OnInit {
         forkJoin([
           this.userBalanceService.getEthAssets(address),
           this.userBalanceService.getBscAssets(address),
+          this.userBalanceService.getMaticAssets(address),
         ])
           .pipe(takeUntil(this.destroy$))
-          .subscribe(async (data: [Promise<AssetsInfo[]>, Promise<AssetsInfo[]>]) => {
-            const [eth, bsc] = await Promise.all(data);
+          .subscribe(async (data: [Promise<AssetsInfo[]>, Promise<AssetsInfo[]>, Promise<AssetsInfo[]>]) => {
+            const [eth, bsc, matic] = await Promise.all(data);
   
-            this.nonZeroAssets = [...eth, ...bsc];
+            this.nonZeroAssets = [...eth, ...bsc, ...matic];
   
             const total = this.nonZeroAssets.reduce((acc: BigNumber, currentAsset: AssetsInfo) => {
               const currentAssetValue = currentAsset.value ?? new BigNumber(0);

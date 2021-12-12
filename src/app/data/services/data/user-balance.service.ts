@@ -3,13 +3,14 @@ import { forkJoin, from, Observable } from 'rxjs';
 import { AssetsInfo } from '@data/models/assets-info';
 import { EthereumService } from '@data/services/data/ethereum.service';
 import { BlockchainService } from '@data/services/data/blockchain.service';
-import { HttpService } from '@data/services/http/http.service';
 import { map } from 'rxjs/operators';
 import BigNumber from 'bignumber.js';
 import { Addresses } from '@data/static/addresses';
 import { EthereumApiService } from '@data/services/http/ethereum-api.service';
 import { BscApiService } from '@data/services/http/bsc-api.service';
 import { BscService } from '@data/services/data/bsc.service';
+import { MaticApiService } from '@data/services/http/matic-api.service';
+import { MaticService } from '@data/services/data/matic.service';
 
 const farmAddress = Addresses.ADDRESSES.get('FARM');
 
@@ -23,6 +24,8 @@ export class UserBalanceService {
     private ethereumApiService: EthereumApiService,
     private bscService: BscService,
     private bscApiService: BscApiService,
+    private maticService: MaticService,
+    private maticApiService: MaticApiService,
   ) {
   }
   
@@ -127,6 +130,49 @@ export class UserBalanceService {
             },
           );
       
+          return UserBalanceService.nonZeroAssets(assetsFromVaultsPromises, assetsFromPoolsWithoutVaultsPromises);
+        }),
+      );
+  }
+  
+  getMaticAssets(address): Observable<Promise<AssetsInfo[]>> {
+    return forkJoin({
+      pools: this.maticApiService.getMaticPools(),
+      vaults: this.maticApiService.getMaticVaults(),
+      farmPrice: this.maticService.getPrice(farmAddress),
+    })
+      .pipe(
+        map(({ pools, vaults, farmPrice }) => {
+          const assetsFromVaultsPromises = this.bscService.getAssetsFromVaults(
+            vaults,
+            pools,
+            address,
+            farmPrice,
+          );
+          
+          const poolsWithoutVaults = pools.filter(pool => {
+            return !vaults.find(
+              vault => vault.contract.address === pool.lpToken?.address,
+            );
+          });
+          
+          const assetsFromPoolsWithoutVaultsPromises = poolsWithoutVaults.map(
+            pool => {
+              const partialAssetData = {
+                underlyingAddress: this.blockchainService.calcUnderlying(
+                  undefined,
+                  pool,
+                ),
+              };
+              return this.maticService.getAssetsFromPool(
+                pool,
+                farmAddress,
+                farmPrice,
+                partialAssetData,
+              );
+            },
+          );
+          
           return UserBalanceService.nonZeroAssets(assetsFromVaultsPromises, assetsFromPoolsWithoutVaultsPromises);
         }),
       );
