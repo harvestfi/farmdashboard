@@ -10,7 +10,7 @@
     "apiEndpoints": {
         "eth": "https://ethparser-api.herokuapp.com",
         "bsc": "https://ethparser-api.herokuapp.com",
-        "matic": "https://ethparser.herokuapp.com/stomp"
+        "matic": "https://ethparser-api.herokuapp.com"
     },
     "multipleSources": true,
     "defaultNetwork": "eth",
