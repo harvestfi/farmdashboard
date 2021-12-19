@@ -4,11 +4,13 @@
     "ethRpcUrl": "https://mainnet.infura.io/v3/unknown",
     "wsEndpoints": {
         "eth": "http://localhost:4142/stomp",
-        "bsc": "http://localhost:4142/stomp"
+        "bsc": "http://localhost:4142/stomp",
+        "matic": "http://localhost:4142/stomp"
     },
     "apiEndpoints": {
         "eth": "http://localhost:4142",
-        "bsc": "http://localhost:4142"
+        "bsc": "http://localhost:4142",
+        "matic": "http://localhost:4142"
     },
     "multipleSources": true,
     "defaultNetwork": "eth",

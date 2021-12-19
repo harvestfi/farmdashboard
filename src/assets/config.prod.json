@@ -4,11 +4,13 @@
     "ethRpcUrl": "https://mainnet.infura.io/v3/unknown",
     "wsEndpoints": {
         "eth": "https://ethparser.herokuapp.com/stomp",
-        "bsc": "https://ethparser.herokuapp.com/stomp"
+        "bsc": "https://ethparser.herokuapp.com/stomp",
+        "matic": "https://ethparser.herokuapp.com/stomp"
     },
     "apiEndpoints": {
         "eth": "https://ethparser-api.herokuapp.com",
-        "bsc": "https://ethparser-api.herokuapp.com"
+        "bsc": "https://ethparser-api.herokuapp.com",
+        "matic": "https://ethparser.herokuapp.com/stomp"
     },
     "multipleSources": true,
     "defaultNetwork": "eth",
