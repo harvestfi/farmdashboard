@@ -5,14 +5,35 @@
   </app-side-menu-toggle>
 
   <span>
-    User stats
+    User stats for
   </span>
 
   <app-theme-switch>
   </app-theme-switch>
 </div>
 
-<div class="content">
+<div class="g-flex g-flex--align-center">
+  <input
+    class="address-input"
+    type="text"
+    placeholder="Enter address"
+    [formControl]="addressControl">
+
+  <button
+    class="btn-reload"
+    mat-raised-button
+    color="primary"
+    aria-label="Reload"
+    [disabled]="addressControl.invalid || isLoadingAssets || isLoadingFarmPrice"
+    (click)="onReload()">
+    <mat-icon>autorenew</mat-icon>
+    Reload
+  </button>
+</div>
+
+<div
+  *ngIf="address"
+  class="content">
   <mat-card
     class="card"
     [class]="viewTypeService.getThemeColor() + '-card'">
@@ -94,11 +115,13 @@
   </mat-card>
 </div>
 
-<mat-spinner
-  *ngIf="isLoadingAssets; else assetsTpl"
-  class="loader"
-  [diameter]="40">
-</mat-spinner>
+<ng-container *ngIf="address">
+  <mat-spinner
+    *ngIf="isLoadingAssets; else assetsTpl"
+    class="loader"
+    [diameter]="40">
+  </mat-spinner>
+</ng-container>
 
 <ng-template #assetsTpl>
   <mat-accordion class="accordion" multi>

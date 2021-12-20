@@ -57,6 +57,10 @@ const routes: Routes = [
      path: 'vaults-list',
      component: StrategyListComponent,
   },
+  {
+    path: 'user-stats',
+    loadChildren: () => import('@modules/address-history/page-user-stats/page-user-stats.module').then(m => m.PageUserStatsModule),
+  },
 ];
 
 @NgModule({

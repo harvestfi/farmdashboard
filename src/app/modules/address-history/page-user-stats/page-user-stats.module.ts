@@ -11,6 +11,8 @@ import { ThemeSwitchModule } from '@layout/theme-switch/theme-switch.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -24,6 +26,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatExpansionModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    MatButtonModule,
   ],
   exports: [
     UserStatsComponent,

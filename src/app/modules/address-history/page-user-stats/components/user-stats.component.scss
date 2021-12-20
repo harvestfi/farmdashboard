@@ -157,6 +157,40 @@
   }
 }
 
+.btn-reload {
+  margin-left: 12px;
+  background-color: map-get($themes_colors, "light", "middleGreen");
+
+  &:disabled {
+    background-color: map-get($themes_colors, "light", "middleGreen");
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  ::ng-deep.mat-button-wrapper {
+    color: #ffffff;
+  }
+}
+
+.address-input {
+  width: 500px;
+  margin-left: 12px;
+  font-size: 20px;
+  border: 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%),
+  0px 1px 1px 0px rgb(0 0 0 / 14%),
+  0px 1px 3px 0px rgb(0 0 0 / 12%);
+
+  @include responsive(phone) {
+    width: auto;
+    margin-right: 12px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
 // dark mode theme
 :host-context(.dark-background) {
   .expansion-panel {
