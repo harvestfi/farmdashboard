@@ -28,8 +28,8 @@ export class Networks {
     blockExplorerUrl: 'https://explorer-mainnet.maticvigil.com',
     chainId: 137,
     ethparserName: 'matic',
-    currencySymbol: 'Polygon',
-    name: 'Polygon',
+    currencySymbol: 'Matic',
+    name: 'Matic',
     rpcUrl: 'https://rpc-mainnet.maticvigil.com/',
   };
 

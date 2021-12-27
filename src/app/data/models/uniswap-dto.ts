@@ -1,3 +1,5 @@
+import { TransactionTypes } from '@data/static/transaction-types';
+
 export class UniswapDto {
   id: string;
   type: string;
@@ -41,7 +43,7 @@ export class UniswapDto {
 
   print(): string {
     // (moment(this.blockDateAdopted)).format('HH:mm:ss')
-    return this.typeToString()
+    return TransactionTypes[this.type]
         + ' ' + this.amount?.toFixed(2)
         + ' ' + this.coin
         + ' for ' + this.otherAmount?.toFixed(2)
@@ -50,16 +52,4 @@ export class UniswapDto {
         ;
   }
 
-  typeToString(): string {
-    switch (this.type) {
-      case 'BUY':
-        return 'Buy';
-      case 'SELL':
-        return 'Sell';
-      case 'ADD':
-        return 'Add liquidity';
-      case 'REM':
-        return 'Remove liquidity';
-    }
-  }
 }

@@ -1,13 +1,16 @@
-import {Injectable} from '@angular/core';
-import {UniswapService} from '../http/uniswap.service';
-import {NGXLogger} from 'ngx-logger';
-import {UniswapDto} from '@data/models/uniswap-dto';
-import {Utils} from '@data/static/utils';
-import {PricesService} from '../http/prices.service';
-import {PricesDto} from '@data/models/prices-dto';
-import {Addresses} from '@data/static/addresses';
-import {PriceDataService} from './price-data.service';
-import {SnackBarService} from '@shared/snack-bar/snack-bar.service';
+import { Injectable } from '@angular/core';
+import { UniswapService } from '../http/uniswap.service';
+import { NGXLogger } from 'ngx-logger';
+import { UniswapDto } from '@data/models/uniswap-dto';
+import { Utils } from '@data/static/utils';
+import { PricesService } from '../http/prices.service';
+import { PricesDto } from '@data/models/prices-dto';
+import { Addresses } from '@data/static/addresses';
+import { PriceDataService } from './price-data.service';
+import { SnackBarService } from '@shared/snack-bar/snack-bar.service';
+import { BancorService } from '@data/services/http/bancor.service';
+import { BancorDto } from '@data/models/bancor-dto';
+import { TransactionTypes } from '@data/static/transaction-types';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +18,12 @@ import {SnackBarService} from '@shared/snack-bar/snack-bar.service';
 export class UniswapDataService {
   farmTrades: UniswapDto[] = [];
   lastFarmUni: UniswapDto;
+  lastFarmBancor: BancorDto;
   txIds = new Set<string>();
 
   constructor(private uniswapService: UniswapService,
               private pricesService: PricesService,
+              private bancorService: BancorService,
               private priceData: PriceDataService,
               private snack: SnackBarService,
               private log: NGXLogger) {
@@ -34,13 +39,14 @@ export class UniswapDataService {
     );
 
     this.pricesService.subscribeToPrices().subscribe(this.handlePriceToUni.bind(this));
+    this.bancorService.subscribeToBancor().subscribe(this.handleFarmTradeBancor.bind(this));
   }
 
   private handleFarmTradeUni(uniDto: UniswapDto): void {
     if (!uniDto
         || uniDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')
-        || uniDto?.type === 'REM'
-        || uniDto?.type === 'ADD'
+        || uniDto?.type === TransactionTypes.REM
+        || uniDto?.type === TransactionTypes.ADD
     ) {
       // this.log.warn('Not FARM uni dto', uniDto);
       return;
@@ -59,6 +65,30 @@ export class UniswapDataService {
     // this.log.info('uni', uniDto);
     this.snack.openSnack(Object.assign(new UniswapDto(), uniDto)?.print());
   }
+
+    private handleFarmTradeBancor(bancorDto: BancorDto): void {
+        if (!bancorDto
+            || bancorDto?.coinAddress !== Addresses.ADDRESSES.get('FARM')
+            || bancorDto?.type === TransactionTypes.REM
+            || bancorDto?.type === TransactionTypes.ADD
+        ) {
+            // this.log.warn('Not FARM bancor dto', bancorDto);
+            return;
+        }
+        if (this.isNotActualBancor(bancorDto)) {
+            this.log.warn('Not actual bancor', bancorDto, this.lastFarmUni);
+            return;
+        }
+        if (!this.isBancorqTx(bancorDto)) {
+            this.log.warn('Not unique bancor dto', bancorDto);
+            return;
+        }
+        BancorDto.round(bancorDto);
+        this.lastFarmBancor = bancorDto;
+        Utils.addInArrayAtTheStart(this.farmTrades, bancorDto);
+        // this.log.info('bancor', bancorDto);
+        this.snack.openSnack(Object.assign(new BancorDto(), bancorDto)?.print());
+    }
 
   private handlePriceToUni(priceDto: PricesDto): void {
     const price = priceDto.price * this.priceData.getUsdPrice(priceDto.otherTokenAddress, priceDto.network);
@@ -81,4 +111,19 @@ export class UniswapDataService {
     }
     return true;
   }
+
+    private isNotActualBancor(dto: UniswapDto): boolean {
+        return !!this.lastFarmBancor && (!dto || this.lastFarmUni.blockDate > dto.blockDate);
+    }
+
+    private isBancorqTx(tx: BancorDto): boolean {
+        if (this.txIds.has(tx.id)) {
+            return false;
+        }
+        this.txIds.add(tx.id);
+        if (this.txIds.size > 100_000) {
+            this.txIds = new Set<string>();
+        }
+        return true;
+    }
 }
