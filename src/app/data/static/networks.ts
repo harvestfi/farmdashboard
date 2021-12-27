@@ -1,9 +1,10 @@
 import {Network} from '@data/models/network';
 import {APP_CONFIG} from '../../../app.config';
 import {Inject, Injectable} from '@angular/core';
+import { environment } from '@environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Networks {
   private static NETWORK_ETH: Network = {
@@ -51,7 +52,7 @@ export class Networks {
       ethparserName: 'eth',
       name: 'Ethereum Mainnet',
       currencySymbol: 'ETH',
-      rpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/your_key',
+      rpcUrl: `https://eth-mainnet.alchemyapi.io/v2/${environment.ALCHEMYAPI_API_KEY}`,
     };
   }
 
