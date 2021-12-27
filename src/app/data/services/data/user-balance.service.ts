@@ -11,6 +11,7 @@ import { BscApiService } from '@data/services/http/bsc-api.service';
 import { BscService } from '@data/services/data/bsc.service';
 import { MaticApiService } from '@data/services/http/matic-api.service';
 import { MaticService } from '@data/services/data/matic.service';
+import { HttpService } from '@data/services/http/http.service';
 
 const farmAddress = Addresses.ADDRESSES.get('FARM');
 
@@ -26,6 +27,7 @@ export class UserBalanceService {
     private bscApiService: BscApiService,
     private maticService: MaticService,
     private maticApiService: MaticApiService,
+    private httpService: HttpService,
   ) {
   }
   
@@ -47,6 +49,23 @@ export class UserBalanceService {
   
   getFarmPrice(): Observable<BigNumber | null> {
     return from(this.ethereumService.getPrice(farmAddress));
+  }
+  
+  getTotalProfit(
+    address: string,
+    start: number = 0,
+    end: number = 0,
+  ): Observable<string | null> {
+    // TODO: add date pickers for start and end in component
+    if (start === 0) {
+      start = Math.round((new Date('01/01/2020').getTime()) / 1000);
+    }
+  
+    if (end === 0) {
+      end = Math.round((new Date().getTime()) / 1000);
+    }
+    
+    return this.httpService.httpGet(`/api/profit/total?address=${ address }&start=${ start }&end=${ end }`);
   }
   
   getEthAssets(address): Observable<Promise<AssetsInfo[]>> {
@@ -86,7 +105,7 @@ export class UserBalanceService {
               );
             },
           );
-  
+          
           return UserBalanceService.nonZeroAssets(assetsFromVaultsPromises, assetsFromPoolsWithoutVaultsPromises);
         }),
       );
@@ -106,13 +125,13 @@ export class UserBalanceService {
             address,
             farmPrice,
           );
-  
+          
           const poolsWithoutVaults = pools.filter(pool => {
             return !vaults.find(
               vault => vault.contract.address === pool.lpToken?.address,
             );
           });
-  
+          
           const assetsFromPoolsWithoutVaultsPromises = poolsWithoutVaults.map(
             pool => {
               const partialAssetData = {
@@ -129,7 +148,7 @@ export class UserBalanceService {
               );
             },
           );
-      
+          
           return UserBalanceService.nonZeroAssets(assetsFromVaultsPromises, assetsFromPoolsWithoutVaultsPromises);
         }),
       );

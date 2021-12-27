@@ -78,14 +78,14 @@
     class="card"
     [class]="viewTypeService.getThemeColor() + '-card'">
     <mat-card-subtitle [class]="viewTypeService.getThemeColor() + '-gray'">
-      FARM price
+      Total profit
     </mat-card-subtitle>
 
     <mat-card-title>
-      {{ farmPrice }}
+      {{ totalProfit }}
     </mat-card-title>
 
-    <mat-card-footer *ngIf="isLoadingFarmPrice">
+    <mat-card-footer *ngIf="isLoadingTotalProfit">
       <mat-progress-bar
         class="progress-bar"
         [class]="viewTypeService.getThemeColor() + '-lightGreen'"
