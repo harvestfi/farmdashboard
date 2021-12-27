@@ -14,7 +14,8 @@
       "http": ["./node_modules/stream-http"],
       "https": ["./node_modules/https-browserify"],
       "os": ["./node_modules/os-browserify"],
-      "process": ["./node_modules/process/browser"]
+      "process": ["./node_modules/process/browser"],
+      "@environments/*": ["src/environments/*"],
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

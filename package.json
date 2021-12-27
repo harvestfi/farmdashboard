@@ -4,8 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "local": "ng serve --port 4200",
+    "local": "npm run config:dev && ng serve --port 4200",
     "build": "ng build",
+    "config:dev": "ts-node ./scripts/setenv.ts --configuration=dev",
+    "config:prod": "ts-node ./scripts/setenv.ts --configuration=prod",
+    "build:dev": "npm run config:dev && ng build --configuration development",
+    "build:prod": "npm run config:prod && ng build --configuration production",
     "test": "ng test",
     "lint": "eslint src/**/*.ts",
     "lint-fix": "eslint --fix src/**/*.ts",
@@ -13,7 +17,7 @@
     "bsc": "ng build --configuration production && DEPLOYMENT_ENV=bsc heroku local -p 5000",
     "stage": "ng build --configuration production && DEPLOYMENT_ENV=stage heroku local -p 5000",
     "prod": "ng build --configuration production && DEPLOYMENT_ENV=prod heroku local -p 5000",
-    "heroku-postbuild": "ng build --configuration production"
+    "heroku-postbuild": "npm run build:prod"
   },
   "private": true,
   "dependencies": {
@@ -90,7 +94,6 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "lite-server": "^2.6.1",
     "protractor": "~7",
-    "ts-node": "~8.3.0",
     "eslint-plugin-jsdoc": "30.7.6",
     "eslint-plugin-prefer-arrow": "1.2.2",
     "@angular-eslint/builder": "0.8.0-beta.7",
@@ -101,7 +104,10 @@
     "@typescript-eslint/parser": "5.3.1",
     "eslint": "8.2.0",
     "eslint-config-airbnb-base": "15.0.0",
-    "eslint-plugin-import": "2.25.3"
+    "eslint-plugin-import": "2.25.3",
+    "yargs": "17.3.0",
+    "dotenv": "10.0.0",
+    "ts-node": "10.4.0"
   },
   "engines": {
     "node": "12.20.1",
