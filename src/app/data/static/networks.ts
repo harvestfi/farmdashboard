@@ -52,6 +52,7 @@ export class Networks {
       ethparserName: 'eth',
       name: 'Ethereum Mainnet',
       currencySymbol: 'ETH',
+      // @ts-ignore
       rpcUrl: `https://eth-mainnet.alchemyapi.io/v2/${environment.ALCHEMYAPI_API_KEY}`,
     };
   }

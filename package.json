@@ -5,7 +5,6 @@
     "ng": "ng",
     "start": "node server.js",
     "local": "npm run config:dev && ng serve --port 4200",
-    "build": "ng build",
     "config:dev": "ts-node ./scripts/setenv.ts --configuration=dev",
     "config:prod": "ts-node ./scripts/setenv.ts --configuration=prod",
     "build:dev": "npm run config:dev && ng build --configuration development",
