@@ -25,11 +25,13 @@ const CURRENCY_VALUE = 'USD';
 export class UserStatsComponent implements OnInit {
   stakedBalance = '';
   farmPrice = '';
+  totalProfit = '';
   personalGasSaved = '';
   apy = '';
   nonZeroAssets: AssetsInfo[] = [];
   isLoadingAssets = false;
   isLoadingFarmPrice = false;
+  isLoadingTotalProfit = false;
   isLoadingPersonalGasSaved = true;
   isLoadingApy = true;
   sortField = null;
@@ -119,6 +121,7 @@ export class UserStatsComponent implements OnInit {
   private updateData(address: string): void {
     this.isLoadingFarmPrice = true;
     this.isLoadingAssets = true;
+    this.isLoadingTotalProfit = true;
   
     this.changeDetectorRef.detectChanges();
     
@@ -196,6 +199,16 @@ export class UserStatsComponent implements OnInit {
         
         this.isLoadingFarmPrice = false;
         
+        this.changeDetectorRef.detectChanges();
+      });
+    
+    this.userBalanceService.getTotalProfit(this.address)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(totalProfit => {
+        this.totalProfit = totalProfit ? Utils.prettyNumber(+totalProfit) : '-';
+  
+        this.isLoadingTotalProfit = false;
+  
         this.changeDetectorRef.detectChanges();
       });
     
