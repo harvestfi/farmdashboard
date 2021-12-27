@@ -1,0 +1,235 @@
+<div
+  class="title-wrapper g-flex g-flex--space-between"
+  [class]="viewTypeService.getThemeColor() + '-black'">
+  <app-side-menu-toggle>
+  </app-side-menu-toggle>
+
+  <span>
+    User stats for
+  </span>
+
+  <app-theme-switch>
+  </app-theme-switch>
+</div>
+
+<div class="g-flex g-flex--align-center">
+  <input
+    class="address-input"
+    type="text"
+    placeholder="Enter address"
+    [formControl]="addressControl">
+
+  <button
+    class="btn-reload"
+    mat-raised-button
+    color="primary"
+    aria-label="Reload"
+    [disabled]="addressControl.invalid || isLoadingAssets || isLoadingFarmPrice"
+    (click)="onReload()">
+    <mat-icon>autorenew</mat-icon>
+    Reload
+  </button>
+</div>
+
+<div
+  *ngIf="address"
+  class="content">
+  <mat-card
+    class="card"
+    [class]="viewTypeService.getThemeColor() + '-card'">
+    <mat-card-subtitle [class]="viewTypeService.getThemeColor() + '-gray'">
+      Staked Balance
+    </mat-card-subtitle>
+
+    <mat-card-title>
+      {{ stakedBalance }}
+    </mat-card-title>
+
+    <mat-card-footer *ngIf="isLoadingAssets">
+      <mat-progress-bar
+        class="progress-bar"
+        [class]="viewTypeService.getThemeColor() + '-lightGreen'"
+        mode="indeterminate">
+      </mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
+
+  <mat-card
+    class="card"
+    [class]="viewTypeService.getThemeColor() + '-card'">
+    <mat-card-subtitle [class]="viewTypeService.getThemeColor() + '-gray'">
+      Personal Saved Gas
+    </mat-card-subtitle>
+
+    <mat-card-title>
+      {{ personalGasSaved }}
+    </mat-card-title>
+
+    <mat-card-footer *ngIf="isLoadingFarmPrice">
+      <mat-progress-bar
+        class="progress-bar"
+        [class]="viewTypeService.getThemeColor() + '-lightGreen'"
+        mode="indeterminate">
+      </mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
+
+  <mat-card
+    class="card"
+    [class]="viewTypeService.getThemeColor() + '-card'">
+    <mat-card-subtitle [class]="viewTypeService.getThemeColor() + '-gray'">
+      FARM price
+    </mat-card-subtitle>
+
+    <mat-card-title>
+      {{ farmPrice }}
+    </mat-card-title>
+
+    <mat-card-footer *ngIf="isLoadingFarmPrice">
+      <mat-progress-bar
+        class="progress-bar"
+        [class]="viewTypeService.getThemeColor() + '-lightGreen'"
+        mode="indeterminate">
+      </mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
+
+  <mat-card
+    class="card"
+    [class]="viewTypeService.getThemeColor() + '-card'">
+    <mat-card-subtitle [class]="viewTypeService.getThemeColor() + '-gray'">
+      Profit Share APY
+    </mat-card-subtitle>
+
+    <mat-card-title>
+      {{ apy }}
+    </mat-card-title>
+
+    <mat-card-footer *ngIf="isLoadingApy">
+      <mat-progress-bar
+        class="progress-bar"
+        [class]="viewTypeService.getThemeColor() + '-lightGreen'"
+        mode="indeterminate">
+      </mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
+</div>
+
+<ng-container *ngIf="address">
+  <mat-spinner
+    *ngIf="isLoadingAssets; else assetsTpl"
+    class="loader"
+    [diameter]="40">
+  </mat-spinner>
+</ng-container>
+
+<ng-template #assetsTpl>
+  <mat-accordion class="accordion" multi>
+    <mat-expansion-panel
+      *ngIf="!isPhoneSize"
+      class="expansion-panel expansion-panel__title"
+      [class]="viewTypeService.getThemeColor() + '-card'"
+      disabled>
+      <mat-expansion-panel-header>
+        <mat-panel-title
+          class="g-flex--align-center"
+          [class]="viewTypeService.getThemeColor() + '-card'"
+          (click)="onSort('prettyName')">
+          Rewards Pool
+          <ng-container *ngTemplateOutlet="sortingTpl; context: { field: 'prettyName' }">
+          </ng-container>
+        </mat-panel-title>
+
+        <mat-panel-description class="panel-description g-flex g-flex--align-center g-flex--space-between">
+          <div
+            class="value-title g-flex g-flex--align-center g-flex--justify-end"
+            (click)="onSort('farmToClaim')">
+            FARM to Claim
+            <ng-container *ngTemplateOutlet="sortingTpl; context: { field: 'farmToClaim' }">
+            </ng-container>
+          </div>
+
+          <div
+            class="value-title g-flex g-flex--align-center g-flex--justify-end"
+            (click)="onSort('percentOfPool')">
+            % of Pool
+            <ng-container *ngTemplateOutlet="sortingTpl; context: { field: 'percentOfPool' }">
+            </ng-container>
+          </div>
+
+          <div
+            class="value-title g-flex g-flex--align-center g-flex--justify-end"
+            (click)="onSort('value')">
+            Value
+            <ng-container *ngTemplateOutlet="sortingTpl; context: { field: 'value' }">
+            </ng-container>
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+
+    <ng-container *ngFor="let asset of nonZeroAssets">
+      <mat-expansion-panel
+        class="expansion-panel"
+        [class]="viewTypeService.getThemeColor() + '-card'">
+        <mat-expansion-panel-header>
+          <mat-panel-title
+            class="g-flex--align-center"
+            [class]="viewTypeService.getThemeColor() + '-card'">
+            <img
+              class="icon"
+              [src]="asset.icon"
+              alt="''">
+            {{ asset.prettyName }}
+          </mat-panel-title>
+
+          <mat-panel-description
+            class="panel-description g-flex g-flex--align-center g-flex--space-between"
+            [class]="viewTypeService.getThemeColor() + '-card'">
+            <div class="value">
+              <span *ngIf="isPhoneSize" class="value-title-phone">FARM to Claim:</span> {{ asset.prettyFarmToClaim }}
+            </div>
+
+            <div class="value">
+              <span *ngIf="isPhoneSize" class="value-title-phone">% of Pool:</span> {{ asset.prettyPercentOfPool }}
+            </div>
+
+            <div class="value">
+              <span *ngIf="isPhoneSize" class="value-title-phone">Value:</span> {{ asset.prettyValue }}
+            </div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="g-flex-column">
+          <div>
+            Staked Asset: <span class="value">{{ asset.prettyStakedBalance }}</span>
+          </div>
+
+          <div>
+            Underlying balance: <span class="value">{{ asset.prettyUnderlyingBalance }}</span>
+          </div>
+
+          <div>
+            Unstaked: <span class="value">{{ asset.prettyUnstakedBalance }}</span>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </ng-container>
+  </mat-accordion>
+</ng-template>
+
+<ng-template
+  #sortingTpl
+  let-field="field">
+  <ng-container *ngIf="sortField === field">
+    <mat-icon *ngIf="sortDirection === 1; else sortDescTpl">
+      keyboard_arrow_up
+    </mat-icon>
+
+    <ng-template #sortDescTpl>
+      <mat-icon>
+        keyboard_arrow_down
+      </mat-icon>
+    </ng-template>
+  </ng-container>
+</ng-template>

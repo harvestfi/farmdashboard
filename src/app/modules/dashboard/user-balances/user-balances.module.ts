@@ -3,12 +3,14 @@ import {UserBalancesComponent} from '@modules/dashboard/user-balances/user-balan
 import {CommonModule} from '@angular/common';
 import {ThemeSwitchModule} from '@layout/theme-switch/theme-switch.module';
 import {SideMenuToggleModule} from '@layout/main-top-navigation/side-menu-toggle/side-menu-toggle.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
-   CommonModule,
-   ThemeSwitchModule,
-   SideMenuToggleModule,
+    CommonModule,
+    ThemeSwitchModule,
+    SideMenuToggleModule,
+    RouterModule,
   ],
   exports: [
    UserBalancesComponent

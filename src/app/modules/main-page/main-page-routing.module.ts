@@ -35,11 +35,11 @@ const routes: Routes = [
   },
   {
     path: 'charts/info-total',
-    component: VaultStatsTotalComponent
+    component: VaultStatsTotalComponent,
   },
   {
     path: 'info/:network/:address',
-    component: VaultStatsComponent
+    component: VaultStatsComponent,
   },
   {
     path: 'rewards-history',
@@ -57,11 +57,15 @@ const routes: Routes = [
      path: 'vaults-list',
      component: StrategyListComponent,
   },
+  {
+    path: 'user-stats',
+    loadChildren: () => import('@modules/address-history/page-user-stats/page-user-stats.module').then(m => m.PageUserStatsModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class MainPageRoutingModule {
 }

@@ -1,0 +1,203 @@
+@import "themes/theme-classes";
+@import "utilities/responsive_utilities";
+
+:host {
+  font-family: 'PT Sans', sans-serif;
+}
+
+.content {
+  display: grid;
+  grid-template-areas:
+    "farm btc btc weekly-profit ps-income tvl"
+    "eth  eth eth weekly-profit ps-income tvl"
+    "farm-buybacks farm-staked farm-staked  saved-gas total-users active-pools";
+
+  @include responsive(medium) {
+    grid-template-areas:
+      "farm btc"
+      "eth eth"
+      "weekly-profit ps-income"
+      "tvl farm-staked"
+      "saved-gas farm-buybacks"
+      "total-users active-pools";
+    grid-template-columns: 50% 50%;
+  }
+}
+
+.title-wrapper {
+  margin: 0 0 24px 10px;
+  text-align: left;
+  font-size: 36px;
+  font-weight: 700;
+
+  span {
+    margin: auto auto auto 0;
+  }
+}
+
+.card,
+.accordion {
+  margin: 10px;
+}
+
+.card {
+  ::ng-deep {
+    .mat-card-title {
+      @include responsive(small) {
+        font-size: 20px;
+      }
+
+      @include responsive(phone) {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+.expansion-panel {
+  ::ng-deep {
+    .mat-expansion-panel-header-title {
+      flex-grow: 0;
+      width: 250px;
+      white-space: pre-line;
+      word-break: break-all;
+    }
+
+    .mat-expansion-indicator::after {
+      color: map-get($themes_colors, "light", "font");
+    }
+
+    .panel-description,
+    .mat-content {
+      @include responsive(phone) {
+        flex-direction: column;
+      }
+    }
+
+    .panel-description {
+      @include responsive(phone) {
+        margin-top: 12px;
+      }
+    }
+
+    .mat-expansion-panel-header {
+      @include responsive(phone) {
+        height: 110px;
+      }
+    }
+  }
+
+  &__title {
+    ::ng-deep {
+      .mat-content {
+        font-size: 14px;
+        color: map-get($themes_colors, "light", "gray");
+      }
+    }
+  }
+}
+
+.value,
+.value-title {
+  width: 33%;
+  text-align: right;
+  font-weight: normal;
+
+  @include responsive(phone) {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+.value-title-phone {
+  font-size: 14px;
+  font-weight: normal;
+  color: map-get($themes_colors, "light", "gray") !important;
+  margin-right: 6px;
+}
+
+.value {
+  font-weight: 700;
+  padding-right: 12px;
+
+  @include responsive(phone) {
+    padding: 0;
+  }
+}
+
+.value-title {
+  padding-right: 24px;
+}
+
+.icon {
+  height: 22px;
+  margin-right: 5px;
+}
+
+.progress-bar {
+  ::ng-deep {
+    .mat-progress-bar-buffer {
+      background: map-get($themes_colors, "light", "solidGreen");
+    }
+
+    .mat-progress-bar-fill::after {
+      background-color: map-get($themes_colors, "light", "softGreen");
+    }
+  }
+}
+
+.loader {
+  margin-top: 24px;
+  align-self: flex-start;
+
+  ::ng-deep {
+    circle {
+      stroke: map-get($themes_colors, "light", "softGreen");
+    }
+  }
+}
+
+.btn-reload {
+  margin-left: 12px;
+  background-color: map-get($themes_colors, "light", "middleGreen");
+
+  &:disabled {
+    background-color: map-get($themes_colors, "light", "middleGreen");
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  ::ng-deep.mat-button-wrapper {
+    color: #ffffff;
+  }
+}
+
+.address-input {
+  width: 500px;
+  margin-left: 12px;
+  font-size: 20px;
+  border: 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%),
+  0px 1px 1px 0px rgb(0 0 0 / 14%),
+  0px 1px 3px 0px rgb(0 0 0 / 12%);
+
+  @include responsive(phone) {
+    width: auto;
+    margin-right: 12px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+// dark mode theme
+:host-context(.dark-background) {
+  .expansion-panel {
+    ::ng-deep {
+      .mat-expansion-indicator::after {
+        color: map-get($themes_colors, "dark", "font");
+      }
+    }
+  }
+}

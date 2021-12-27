@@ -131,6 +131,7 @@
         display: flex;
         svg {
           margin: auto;
+          fill: #FFFFFF;
         }
         svg > path {
           fill: #FFFFFF;
@@ -141,6 +142,11 @@
         font-family: 'PT Sans Bold', sans-serif;
         .icon-wrapper {
           background: #FFFFFF;
+
+          svg {
+            fill: #5CADAA;
+          }
+
           svg > path {
             fill: #5CADAA;
           }
@@ -150,6 +156,11 @@
       &:hover {
         .icon-wrapper {
           background: #FFFFFF;
+
+          svg {
+            fill: #5CADAA;
+          }
+
           svg > path {
             fill: #5CADAA;
           }

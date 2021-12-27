@@ -106,7 +106,7 @@ module.exports = {
             ],
           },
         ],
-        '@typescript-eslint/no-non-null-assertion': 'error',
+        '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/no-inferrable-types': [
           'error',
@@ -119,7 +119,7 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'error',
         // need to correct work @typescript-eslint/no-empty-function with: constructor(private service: SomeService){}
         'no-empty-function': 'off',
-        '@typescript-eslint/no-empty-function': 'error'
+        '@typescript-eslint/no-empty-function': 'error',
       },
     },
     {
@@ -127,9 +127,9 @@ module.exports = {
       parser: '@angular-eslint/template-parser',
       plugins: ['@angular-eslint/template'],
       rules: {
-        '@angular-eslint/template/banana-in-a-box': 'error',
+        '@angular-eslint/template/banana-in-box': 'error',
         '@angular-eslint/template/no-negated-async': 'error',
       },
     },
   ],
-}
+};

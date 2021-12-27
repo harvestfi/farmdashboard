@@ -7,7 +7,7 @@ export class Vault implements IContract {
   underlyingUnit: number;
   updatedBlock: number;
   contract: Contract;
-  controller: Contract;
+  controller?: Contract;
   decimals: number;
   governance: Contract;
   strategy: Contract;

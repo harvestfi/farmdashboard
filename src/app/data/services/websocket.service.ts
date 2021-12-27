@@ -15,7 +15,7 @@ export enum SocketClientState {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WebsocketService implements OnDestroy {
   private clients = new Map<string, Client>();
@@ -25,7 +25,7 @@ export class WebsocketService implements OnDestroy {
   private consumers = new Set<WsConsumer>();
   private subscriptions = new Set<string>();
   private wasConnected = new Map<string, boolean>(
-      Array.from(StaticValues.NETWORKS.keys()).map(name => [name, false])
+      Array.from(StaticValues.NETWORKS.keys()).map(name => [name, false]),
   );
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
@@ -72,7 +72,7 @@ export class WebsocketService implements OnDestroy {
           }
         });
       }
-    }, (e) => {
+    }, e => {
       this.log.error('WebSocket error ' + network.ethparserName, e);
       this.consumers.forEach(c => c.setSubscribed(false));
       this.recTimeout = setTimeout(() => {
@@ -103,7 +103,7 @@ export class WebsocketService implements OnDestroy {
                 observer.next(handler(message));
               });
               return () => client.unsubscribe(subscription.id);
-            })
+            }),
         ));
   }
 
@@ -119,14 +119,14 @@ export class WebsocketService implements OnDestroy {
     }
     throw new Error(
         `isNetworkConnected() expected a valid network but received '${network}'
-      instead. Please make sure that '${network}' is part of the clients map`
+      instead. Please make sure that '${network}' is part of the clients map`,
     );
   }
 
   private connect(): Observable<Client> {
     return new Observable<Client>(observer => {
       this.state.pipe(
-          filter(state => state === SocketClientState.CONNECTED)
+          filter(state => state === SocketClientState.CONNECTED),
       ).subscribe(() =>
           Array.from(this.clients.values()).forEach(client => observer.next(client)));
     });

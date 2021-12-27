@@ -1,8 +1,9 @@
 import {TransferDto} from '@data/models/transfer-dto';
 import {Addresses} from './addresses';
+import { Contract } from '@data/models/contract';
+import { vaultNames } from '@data/static/vault-names';
 
 export class Utils {
-
   public static aprToApyEveryDayReinvest(apr: number): number {
     if (!apr || apr === 0.0) {
       return 0.0;
@@ -208,5 +209,33 @@ export class Utils {
     } else {
       return 'https://etherscan.io';
     }
+  }
+  
+  public static contractToName(contract?: Contract): string {
+    if (!contract) return 'no name';
+    return vaultNames[contract.address] || contract.name || 'no name';
+  }
+  
+  public static prettyCurrency = (
+    balance: number,
+    currency: string,
+    exchangeRate: number,
+  ) => {
+    return Utils.currencyFormatter(currency).format(balance * exchangeRate);
+  };
+  
+  public static prettyNumber(number: number) {
+    return Utils.numberFormatter().format(number);
+  }
+  
+  private static currencyFormatter(currency: string) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency,
+    });
+  }
+  
+  private static numberFormatter() {
+    return new Intl.NumberFormat('en-US', { maximumFractionDigits: 6 });
   }
 }

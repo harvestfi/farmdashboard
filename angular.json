@@ -34,8 +34,16 @@
               "@stomp/stompjs",
               "stomp",
               "@ethersproject",
-              "date-fns"
+              "date-fns",
+              "web3",
+              "ts-treemap"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/scss/",
+                "node_modules"
+              ]
+            },
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
