@@ -24,6 +24,7 @@ import {RewardsHistoryModule} from '@modules/dashboard/rewards-history/rewards-h
 import {DownloadsHistoricDataModule} from '@modules/dashboard/download-historic-data/downloads-historic-data.module';
 import {UserBalancesModule} from '@modules/dashboard/user-balances/user-balances.module';
 import {SideMenuToggleModule} from '@layout/main-top-navigation/side-menu-toggle/side-menu-toggle.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import {SideMenuToggleModule} from '@layout/main-top-navigation/side-menu-toggle
     ThemeSwitchModule,
     UserBalancesModule,
     SideMenuToggleModule,
+    RouterModule,
   ],
   exports: [
     MainTopNavigationComponent,

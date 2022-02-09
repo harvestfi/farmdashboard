@@ -1,16 +1,19 @@
-import {RouterModule, Routes} from '@angular/router';
-import {NgModule} from '@angular/core';
-import {MainPageComponent} from './main-page.component';
-import {PsApyHistoryComponent} from '@modules/dashboard/ps-apy-history/ps-apy-history.component';
-import {WeeklyProfitHistoryComponent} from '@modules/dashboard/weekly-profit-history/weekly-profit-history.component';
-import {FarmBuybacksComponent} from '@modules/dashboard/farm-buybacks/farm-buybacks.component';
-import {SavedGasFeesComponent} from '@modules/dashboard/saved-gas-fees/saved-gas-fees.component';
-import {RewardsHistoryComponent} from '@modules/dashboard/rewards-history/rewards-history.component';
-import {DownloadHistoricDataComponent} from '@modules/dashboard/download-historic-data/download-historic-data.component';
-import {UserBalancesComponent} from '@modules/dashboard/user-balances/user-balances.component';
-import {VaultStatsTotalComponent} from '@modules/dashboard/vault-stats-total/vault-stats-total.component';
-import {StrategyListComponent} from '@modules/dashboard/strategy-list/strategy-list.component';
-import {VaultStatsComponent} from '@modules/dashboard/vault-stats/vault-stats.component';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { MainPageComponent } from './main-page.component';
+import { PsApyHistoryComponent } from '../dashboard/ps-apy-history/ps-apy-history.component';
+import { WeeklyProfitHistoryComponent } from '../dashboard/weekly-profit-history/weekly-profit-history.component';
+import { FarmBuybacksComponent } from '../dashboard/farm-buybacks/farm-buybacks.component';
+import { SavedGasFeesComponent } from '../dashboard/saved-gas-fees/saved-gas-fees.component';
+import { RewardsHistoryComponent } from '../dashboard/rewards-history/rewards-history.component';
+import {
+  DownloadHistoricDataComponent,
+} from '../dashboard/download-historic-data/download-historic-data.component';
+import { UserBalancesComponent } from '../dashboard/user-balances/user-balances.component';
+import { VaultStatsTotalComponent } from '../dashboard/vault-stats-total/vault-stats-total.component';
+import { StrategyListComponent } from '../dashboard/strategy-list/strategy-list.component';
+import { VaultStatsComponent } from '../dashboard/vault-stats/vault-stats.component';
+import { ROUTES } from '../../constants/routes.constant';
 
 const routes: Routes = [
   {
@@ -18,48 +21,49 @@ const routes: Routes = [
     component: MainPageComponent,
   },
   {
-    path: 'charts/ps-apy-history',
+    path: ROUTES.CHARTS_PS_APY_HISTORY,
     component: PsApyHistoryComponent,
   },
   {
-    path: 'charts/weekly-profit-history',
+    path: ROUTES.CHARTS_WEEKLY_PROFIT_HISTORY,
     component: WeeklyProfitHistoryComponent,
   },
   {
-    path: 'charts/farm-buybacks',
+    path: ROUTES.CHARTS_FARM_BUYBACKS,
     component: FarmBuybacksComponent,
   },
   {
-    path: 'charts/saved-gas-fees',
+    path: ROUTES.CHARTS_SAVED_GAS_FEES,
     component: SavedGasFeesComponent,
   },
   {
-    path: 'charts/info-total',
+    path: ROUTES.CHARTS_INFO_TOTAL,
     component: VaultStatsTotalComponent,
   },
   {
-    path: 'info/:network/:address',
+    path: `${ROUTES.INFO}/:network/:address`,
     component: VaultStatsComponent,
   },
   {
-    path: 'rewards-history',
+    path: ROUTES.REWARDS_HISTORY,
     component: RewardsHistoryComponent,
   },
   {
-     path: 'downloads',
-     component: DownloadHistoricDataComponent,
+    path: ROUTES.DOWNLOADS,
+    component: DownloadHistoricDataComponent,
   },
   {
-     path: 'user-balances',
-     component: UserBalancesComponent,
+    path: ROUTES.USER_BALANCES,
+    component: UserBalancesComponent,
   },
   {
-     path: 'vaults-list',
-     component: StrategyListComponent,
+    path: ROUTES.VAULTS_LIST,
+    component: StrategyListComponent,
   },
   {
-    path: 'user-stats',
-    loadChildren: () => import('@modules/address-history/page-user-stats/page-user-stats.module').then(m => m.PageUserStatsModule),
+    path: ROUTES.USER_STATS,
+    loadChildren: () => import('@modules/address-history/page-user-stats/page-user-stats.module')
+      .then(m => m.PageUserStatsModule),
   },
 ];
 

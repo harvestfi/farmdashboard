@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
-import {interceptorProviders} from './interceptors';
-import {HttpClientModule} from '@angular/common/http';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { interceptorProviders } from './interceptors';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [

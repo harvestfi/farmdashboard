@@ -1,256 +1,243 @@
-#side-menu-backdrop {
+@import "themes/theme-classes";
+
+.side-menu-backdrop {
+  position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
-  position: absolute;
+  height: 100%;
   width: 100%;
-  max-width: 348px;
-  max-height: 1002px;
   cursor: pointer;
 }
 
-#main-side-menu {
-  width: 100%;
+.main-side-menu {
   height: 100%;
-  max-width: 348px;
-  max-height: 1002px;
   position: absolute;
   top: 0;
   left: 0;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
   user-select: none;
 
-  .main-side-menu-logo-container {
+  &__logo {
+    height: 64px;
+    border-radius: 15px;
+  }
+
+  &__logo-text {
+    margin: 0 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #FFFFFF;
+  }
+
+  &__branding-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo-container {
     padding: 40px 40px 60px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 64px;
     box-sizing: content-box;
+  }
+}
 
-    .branding-box {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+.icon-wrapper {
+  margin: auto 0;
+  width: 44px;
+  height: 44px;
+  background: map-get($themes_colors, "light", "middleGreen");
+  border-radius: 10px;
+  display: flex;
 
-    .main-side-menu-logo {
-      height: 64px;
-      border-radius: 15px;
-    }
-
-    .main-side-menu-logo-text {
-      margin: 0 20px;
-      font-size: 30px;
-      font-weight: bold;
-      color: #FFFFFF;
-    }
-
+  &__icon {
+    background: #ffffff;
   }
 
-
-  .main-side-menu-logo-container .dark-mode-toggle-container {
-
-
-    .dark-mode-toggle-label {
-      height: 35px;
-      width: 70px;
-      background: url("/assets/darkmode-toggle-background.jpg") 0% 4%;
-      display: block;
-      border-radius: 20px;
-      position: relative;
-      transition: background 0.5s;
-      cursor: pointer;
-
-      &::after {
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 0;
-        content: "☀️";
-        height: 33px;
-        width: 33px;
-        background: white;
-        border-radius: 50%;
-        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
-        transition: all 0.5s;
-      }
-
-    }
-
-    #dark-mode-toggle-checkbox {
-      display: none;
-
-      &:checked ~ .dark-mode-toggle-label {
-        background: url("/assets/darkmode-toggle-background.jpg") 100% 93%;
-
-        &::after {
-          left: 50%;
-          content: "🌙"
-
-        }
-      }
-    }
+  &__icon-HOME {
+    width: 15px;
+    height: 17px;
+    mask: url(/assets/icons/menu/home.svg) no-repeat center;
   }
 
-  .main-side-menu-items {
-    all: unset;
-    padding: 0 40px;
-    display: block;
-    box-sizing: border-box;
-    list-style: none;
-
-    .main-side-menu-item {
-      font-family: 'PT Sans', sans-serif;
-      margin: 20px 0;
-      font-size: 18px;
-      cursor: pointer;
-      font-weight: 400;
-      transition: margin 0.5s;
-      display: flex;
-      color: #FFFFFF;
-
-      span {
-        margin: auto 0 auto 15px;
-        display: inline-block;
-        color: #FFFFFF;
-      }
-      .icon-wrapper {
-        margin: auto 0;
-        width: 44px;
-        height: 44px;
-        background: #5CADAA;
-        border-radius: 10px;
-        display: flex;
-        svg {
-          margin: auto;
-          fill: #FFFFFF;
-        }
-        svg > path {
-          fill: #FFFFFF;
-        }
-      }
-
-      &.active {
-        font-family: 'PT Sans Bold', sans-serif;
-        .icon-wrapper {
-          background: #FFFFFF;
-
-          svg {
-            fill: #5CADAA;
-          }
-
-          svg > path {
-            fill: #5CADAA;
-          }
-        }
-      }
-
-      &:hover {
-        .icon-wrapper {
-          background: #FFFFFF;
-
-          svg {
-            fill: #5CADAA;
-          }
-
-          svg > path {
-            fill: #5CADAA;
-          }
-        }
-      }
-
-      /*&::before {
-        font-family: "Font Awesome 5 Free";
-        content: attr(data-menu-icon);
-        margin: 0 10px;
-      }*/
-
-      &.nested {
-        margin-left: 25px;
-      }
-    }
-    content {
-      display: flex;
-
-      .line-holder {
-        padding: 0 23px;
-      }
-      .line {
-        width: 1px;
-        height: 100%;
-        background: #9DDCD9;
-      }
-      .submenu {
-        width: 100%;
-      }
-      .main-side-menu-item {
-        font-family: 'PT Sans', sans-serif;
-        margin: 0;
-        border-radius: 8px;
-        padding: 7px 14px;
-        font-size: 16px;
-      }
-      .main-side-menu-item span {
-        margin: 0;
-      }
-      .main-side-menu-item.active {
-        background: #8CD3D1;
-      }
-    }
-
-
+  &__icon-CHARTS {
+    width: 18px;
+    height: 16px;
+    mask: url(/assets/icons/menu/charts.svg) no-repeat center;
   }
 
-  .bottom-social-icons {
-    display: flex;
-    width: 222px;
-    padding: 20px 0 20px 42px;
-    margin: auto auto 45px 0;
-
-   .social-link {
-     margin-right: 26px;
-     display: flex;
-     svg {
-      margin: auto;
-     }
-     svg > path {
-       fill: #FFFFFF;
-     }
-   }
-   .social-link:hover {
-     svg > path {
-       fill: #EEBF65;
-     }
-   }
-
+  &__icon-REWARDS_HISTORY {
+    width: 20px;
+    height: 18px;
+    mask: url(/assets/icons/menu/rewards.svg) no-repeat center;
   }
 
-  .bottom-wave {
-    position: absolute;
-    bottom: 0;
-    z-index: -1;
+  &__icon-DOWNLOADS {
+    width: 16px;
+    height: 18px;
+    mask: url(/assets/icons/menu/download.svg) no-repeat center;
   }
 
+  &__icon-USER_BALANCES {
+    width: 20px;
+    height: 18px;
+    mask: url(/assets/icons/menu/balance.svg) no-repeat center;
+  }
 
-  .scoreboard-switch-container {
-    text-align: center;
+  &__icon-VAULTS_LIST {
+    width: 18px;
+    height: 14px;
+    mask: url(/assets/icons/menu/vault.svg) no-repeat center;
+  }
+
+  &__icon-USER_STATS {
+    width: 28px;
+    height: 24px;
+    mask: url(/assets/icons/menu/stats.svg) no-repeat center;
+  }
+}
+
+.side-menu {
+  all: unset;
+  padding: 0 40px;
+  display: block;
+  box-sizing: border-box;
+  list-style: none;
+
+  &__item-title {
+    margin-left: 15px;
+  }
+
+  &__item {
+    font-family: 'PT Sans', sans-serif;
     margin: 20px 0;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: 400;
+    transition: margin 0.5s;
+    display: flex;
+    color: #FFFFFF;
+
+    &.active {
+      font-family: 'PT Sans Bold', sans-serif;
+
+      .icon-wrapper {
+        background: #ffffff;
+
+        &__icon {
+          background: map-get($themes_colors, "light", "middleGreen");
+        }
+      }
+    }
+
+    &:hover {
+      .icon-wrapper {
+        background: #ffffff;
+
+        &__icon {
+          background: map-get($themes_colors, "light", "middleGreen");
+        }
+      }
+    }
+
+    &.nested {
+      margin-left: 25px;
+    }
+  }
+
+  content {
+    display: flex;
+
+    .line-holder {
+      padding: 0 23px;
+    }
+
+    .line {
+      width: 1px;
+      height: 100%;
+      background: #9DDCD9;
+    }
+
+    .submenu {
+      width: 100%;
+    }
+
+    .side-menu__item {
+      font-family: 'PT Sans', sans-serif;
+      margin: 0;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 16px;
+    }
+
+    .side-menu__item span {
+      margin: 0;
+    }
+
+    .side-menu__item.active {
+      background: #8CD3D1;
+    }
   }
 
 
 }
 
+.bottom-social-icons {
+  margin-bottom: 45px;
+  padding: 20px 40px;
+
+  .social-link {
+    margin-right: 26px;
+    display: flex;
+
+    &__icon {
+      background: #ffffff;
+    }
+
+    &__twitter {
+      width: 24px;
+      height: 20px;
+      mask: url(/assets/icons/socials/twitter.svg) no-repeat center;
+    }
+
+    &__github {
+      width: 24px;
+      height: 24px;
+      mask: url(/assets/icons/socials/github.svg) no-repeat center;
+    }
+
+    &__discord {
+      width: 24px;
+      height: 20px;
+      mask: url(/assets/icons/socials/discord.svg) no-repeat center;
+    }
+
+    &__medium {
+      width: 24px;
+      height: 20px;
+      mask: url(/assets/icons/socials/medium.svg) no-repeat center;
+    }
+
+    &:hover {
+      &__icon {
+        background: #eebf65;
+      }
+    }
+  }
+}
+
+.bottom-wave {
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
+}
+
 
 @media (max-width: 1600px) {
-  #side-menu-backdrop {
+  .side-menu-backdrop {
     max-width: 100%;
     max-height: 100%;
     z-index: 9999;
@@ -259,7 +246,8 @@
     background: rgba(0, 0, 0, 0.5);
     position: fixed;
   }
-  #main-side-menu {
+
+  .main-side-menu {
     z-index: 9999;
     position: fixed;
   }

@@ -1,3 +1,7 @@
+:host {
+  height: 100%;
+}
+
 .progress-bar {
   width: 100%;
   z-index: 9999;
@@ -6,11 +10,9 @@
 
 .main-row {
   min-height: 90vh;
-  display: flex;
-  justify-content: center;
   padding-left: 380px;
   padding-right: 40px;
-  margin-top: 63px;
+  margin-top: 32px;
 }
 
 .middle {
@@ -26,8 +28,6 @@ footer {
 @media (max-width: 1600px) {
   .main-row {
     min-height: 90vh;
-    display: flex;
-    justify-content: center;
     padding-left: 0;
     padding-right: 0;
   }

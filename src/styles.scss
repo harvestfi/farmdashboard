@@ -7,7 +7,9 @@
 @import '~katex/dist/katex.css';
 // Fonts
 @import 'assets/fonts/fonts.css';
-@import "./scss/grid";
+
+@import "generic";
+@import "grid";
 
 
 
