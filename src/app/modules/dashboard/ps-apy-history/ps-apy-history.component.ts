@@ -56,8 +56,9 @@ export class PsApyHistoryComponent extends ChartGeneralMethodsComponent implemen
                 }
 
                 chartBuilder.addInData(0, reward.blockDate, reward.weeklyApy);
-                chartBuilder.addInData(1, reward.blockDate, harvest.lastUsdTvl / 1000000);
 
+                // TODO: TVL temporarily removed - need to check data calculation
+                // chartBuilder.addInData(1, reward.blockDate, harvest.lastUsdTvl / 1000000);
             });
 
             this.handleData(chartBuilder, [
