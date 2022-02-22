@@ -1,5 +1,5 @@
-import {LpStat} from './lp-stat';
-import {Utils} from '../static/utils';
+import { LpStat } from './lp-stat';
+import { Utils } from '../static/utils';
 
 export class HarvestDto {
   id: string;
@@ -29,19 +29,19 @@ export class HarvestDto {
   profit: number;
   profitUsd: number;
   totalAmount: number;
-
+  
   lpStatDto: LpStat;
   blockDateAdopted: Date;
   acquired: Date;
   underlyingName: string;
-
+  
   public static fromJson(data: string): HarvestDto {
     const tx: HarvestDto = Object.assign(new HarvestDto(), JSON.parse(data));
     tx.acquired = new Date();
     HarvestDto.enrich(tx);
     return tx;
   }
-
+  
   public static enrich(tx: HarvestDto): void {
     if (tx.acquired == null) {
       tx.acquired = new Date();
@@ -51,7 +51,7 @@ export class HarvestDto {
     }
     HarvestDto.fillBlockDateAdopted(tx);
   }
-
+  
   public static fillBlockDateAdopted(tx: HarvestDto): void {
     if (tx.blockDateAdopted == null) {
       const d = new Date(0);
@@ -59,18 +59,18 @@ export class HarvestDto {
       tx.blockDateAdopted = d;
     }
   }
-
+  
   print(): string {
     // (moment(this.blockDateAdopted)).format('DD-MMM HH:mm:ss')
     return this.methodName
-        + ' ' + this.usdAmount?.toFixed(2)
-        + '$ ' + this.vault
-        + ' TVL is ' + this.lastUsdTvl?.toFixed(2) + '$'
-        ;
+      + ' ' + this.usdAmount?.toFixed(2)
+      + '$ ' + this.vault
+      + ' TVL is ' + this.lastUsdTvl?.toFixed(2) + '$'
+      ;
   }
-
+  
   public get prettyName(): string {
     return Utils.prettyVaultName(this.vault);
   }
-
+  
 }

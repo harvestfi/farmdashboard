@@ -1,0 +1,15 @@
+export enum ROUTES {
+  HOME = '/',
+  CHARTS = 'charts',
+  CHARTS_PS_APY_HISTORY = 'charts/ps-apy-history',
+  CHARTS_WEEKLY_PROFIT_HISTORY = 'charts/weekly-profit-history',
+  CHARTS_FARM_BUYBACKS = 'charts/farm-buybacks',
+  CHARTS_SAVED_GAS_FEES = 'charts/saved-gas-fees',
+  CHARTS_INFO_TOTAL = 'charts/info-total',
+  REWARDS_HISTORY = 'rewards-history',
+  DOWNLOADS = 'downloads',
+  USER_BALANCES = 'user-balances',
+  VAULTS_LIST = 'vaults-list',
+  USER_STATS = 'user-stats',
+  INFO = 'info',
+}

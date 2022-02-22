@@ -1,8 +1,17 @@
 <div class="collapsable-area">
-  <div (click)="toggleCollapseArea()" class="handle-area">
-    <ng-content select="header"></ng-content>
+  <div
+    class="handle-area"
+    (click)="toggleCollapseArea()">
+    <ng-content select="header">
+    </ng-content>
   </div>
-  <div class="content-area-wrapper" [class]="isOpen ||  chartRoute ? 'open' : ''">
-    <ng-content class="content-area" select="content"></ng-content>
+
+  <div
+    class="content-area-wrapper"
+    [class]="isOpen ||  chartRoute ? 'open' : ''">
+    <ng-content
+      select="content"
+      class="content-area">
+    </ng-content>
   </div>
 </div>

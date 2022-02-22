@@ -35,19 +35,19 @@ export class HardWorkDto {
   profitSharingRate: number;
   buyBackRate: number;
   autoStake: number;
-
+  
   blockDateAdopted: Date;
-
+  
   public static fromJson(data: string): HardWorkDto {
     const tx: HardWorkDto = Object.assign(new HardWorkDto(), JSON.parse(data));
     HardWorkDto.enrich(tx);
     return tx;
   }
-
+  
   public static enrich(tx: HardWorkDto): void {
     HardWorkDto.fillBlockDateAdopted(tx);
   }
-
+  
   public static fillBlockDateAdopted(tx: HardWorkDto): void {
     if (tx && tx?.blockDateAdopted == null) {
       const d = new Date(0);

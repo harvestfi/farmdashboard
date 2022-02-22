@@ -1,12 +1,19 @@
-import {AfterContentInit, ChangeDetectorRef, Component, Inject} from '@angular/core';
-import {WebsocketService} from '@data/services/websocket.service';
-import {APP_CONFIG, AppConfig} from '../app.config';
-import {NGXLogger, NgxLoggerLevel} from 'ngx-logger';
-import {StaticValues} from '@data/static/static-values';
-import {ApplicationErrorDialogComponent} from '@layout/application-error-dialog/application-error-dialog.component';
-import {ViewTypeService} from '@data/services/view-type.service';
-import {MatDialog} from '@angular/material/dialog';
-import {BusyNotifierService} from '@data/services/busy-notifier.service';
+import {
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Inject,
+} from '@angular/core';
+import { WebsocketService } from '@data/services/websocket.service';
+import { APP_CONFIG, AppConfig } from '../app.config';
+import { NGXLogger, NgxLoggerLevel } from 'ngx-logger';
+import { StaticValues } from '@data/static/static-values';
+import { ApplicationErrorDialogComponent } from '@layout/application-error-dialog/application-error-dialog.component';
+import { ViewTypeService } from '@data/services/view-type.service';
+import { MatDialog } from '@angular/material/dialog';
+import { BusyNotifierService } from '@data/services/busy-notifier.service';
 import { DestroyService } from '@data/services/destroy.service';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -15,8 +22,16 @@ import { filter, takeUntil } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   providers: [DestroyService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'g-flex-column g-scroll-y',
+  },
 })
 export class AppComponent implements AfterContentInit {
+  @HostBinding('class') get appTheme(): string {
+    return this.vt.getThemeColor() + '-background';
+  }
+  
   buffering = true;
   private errored = false;
 
@@ -26,7 +41,7 @@ export class AppComponent implements AfterContentInit {
     public vt: ViewTypeService,
     public dialog: MatDialog,
     private loadingService: BusyNotifierService,
-    private cdref: ChangeDetectorRef,
+    private changeDetectorRef: ChangeDetectorRef,
     private log: NGXLogger,
     private destroy$: DestroyService,
   ) {
@@ -63,7 +78,7 @@ export class AppComponent implements AfterContentInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(buffering => {
         this.buffering = buffering;
-        this.cdref.detectChanges();
+        this.changeDetectorRef.detectChanges();
       });
 
     this.loadingService.failures

@@ -1,11 +1,10 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ViewTypeService } from '@data/services/view-type.service';
-import { UserSettings } from '@core/user-settings';
-import { CustomModalComponent } from '@shared/custom-modal/custom-modal.component';
 import { SideMenuService } from '@data/services/side-menu.service';
 import { Router } from '@angular/router';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ROUTES } from '../../constants/routes.constant';
+import { MENU_ITEMS } from '../../constants/menu.constant';
 
 @Component({
   selector: 'app-main-side-menu',
@@ -28,83 +27,40 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
     ]),
   ],
 })
-export class MainSideMenuComponent {
+export class MainSideMenuComponent implements OnInit {
   @ViewChild('collapsibleArea', { static: true }) collapsibleArea;
-  @ViewChild('allStatsDialog') private allStatsDialog: CustomModalComponent;
-  @ViewChild('tvlDialog') private tvlDialog: CustomModalComponent;
-  @ViewChild('incomeDialog') private incomeDialog: CustomModalComponent;
-  @ViewChild('psApyDialog') private psApyDialog: CustomModalComponent;
-  @ViewChild('weeklyProfitDialog') private weeklyProfitDialog: CustomModalComponent;
-  @ViewChild('weeklyRewardsDialog') private weeklyRewardsDialog: CustomModalComponent;
-  @ViewChild('farmBuybackDialog') private farmBuybackDialog: CustomModalComponent;
-  @ViewChild('savedFeesDialog') private savedFeesDialog: CustomModalComponent;
-  @ViewChild('userBalancesDialog') private userBalancesDialog: CustomModalComponent;
-  @ViewChild('downloadHistoricDataDialog') private downloadHistoricDataDialog: CustomModalComponent;
   
-  constructor(public viewTypeService: ViewTypeService,
-              private sideMenuService: SideMenuService,
-              public router: Router,
-              private modalService: NgbModal) {
+  ROUTES = ROUTES;
+  MENU_ITEMS = MENU_ITEMS;
+  menuItems = [];
+  
+  constructor(
+    public viewTypeService: ViewTypeService,
+    private sideMenuService: SideMenuService,
+    public router: Router,
+  ) {
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    
     if (width > 1600) {
       this.sideMenuService.setSideMenuState(true);
     }
   }
   
+  ngOnInit() {
+    this.menuItems = Object.keys(MENU_ITEMS);
+  }
+  
   @HostListener('window:resize', ['$event'])
-  handleScreenResize($event: any): void {
+  handleScreenResize(): void {
     const newWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    
     if (newWidth > 1600) {
       this.sideMenuService.setSideMenuState(true);
     }
   }
   
-  get homeRoute(): boolean {
-    return this.router.isActive('/', true);
-  }
-  
-  get chartRoute(): boolean {
-    return this.router.isActive('charts', false);
-  }
-  
-  get chartApyHistoryRoute(): boolean {
-    return this.router.isActive('charts/ps-apy-history', true);
-  }
-  
-  get chartWeeklyProfitHistoryRoute(): boolean {
-    return this.router.isActive('charts/weekly-profit-history', true);
-  }
-  
-  get chartFarmBuyBacksRoute(): boolean {
-    return this.router.isActive('charts/farm-buybacks', true);
-  }
-  
-  get chartSavedGasFeesRoute(): boolean {
-    return this.router.isActive('charts/saved-gas-fees', true);
-  }
-  
-  get rewardsHistoryRoute(): boolean {
-    return this.router.isActive('rewards-history', true);
-  }
-  
-  get downloadsRoute(): boolean {
-    return this.router.isActive('downloads', true);
-  }
-  
-  get userBalancesRoute(): boolean {
-    return this.router.isActive('user-balances', true);
-  }
-  
-  get totalChartsRoute(): boolean {
-    return this.router.isActive('charts/info-total', true);
-  }
-  
-  get vaultsListRoute(): boolean {
-    return this.router.isActive('vaults-list', true);
-  }
-  
-  get userStatsRoute(): boolean {
-    return this.router.isActive('user-stats', true);
+  isRouteActive(routeLink: string): boolean {
+    return this.router.isActive(routeLink, true);
   }
   
   get sideMenuState(): any {
@@ -113,132 +69,19 @@ export class MainSideMenuComponent {
   
   toggleMenu(): void {
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    
     if (width <= 1600) {
       this.sideMenuService.setSideMenuState(!this.sideMenuState);
     }
   }
   
-  openAllStatsDialog(): void {
-    this.allStatsDialog.open();
+  openRoute(routeLink: string, isCollapseArea: boolean = false): void {
     this.toggleMenu();
-  }
-  
-  openTvlDialog(): void {
-    this.tvlDialog.open();
-    this.toggleMenu();
-  }
-  
-  openIncomeDialog(): void {
-    this.incomeDialog.open();
-    this.toggleMenu();
-  }
-  
-  openPsApyDialog(): void {
-    this.psApyDialog.open();
-    this.toggleMenu();
-  }
-  
-  openMain(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('');
-    this.collapsibleArea.closeCollapseArea();
-  }
-  
-  openPsApyHistory(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('charts/ps-apy-history');
-    this.collapsibleArea.closeCollapseArea();
-  }
-  
-  openWeeklyProfitHistory(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('charts/weekly-profit-history');
-  }
-  
-  openFarmBuyBacks(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('charts/farm-buybacks');
-  }
-  
-  openSavedGasFees(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('charts/saved-gas-fees');
-  }
-  
-  openRewardsHistory(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('rewards-history');
-    this.collapsibleArea.closeCollapseArea();
-  }
-  
-  openDownloads(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('downloads');
-    this.collapsibleArea.closeCollapseArea();
-  }
-  
-  openUserBalances(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('user-balances');
-    this.collapsibleArea.closeCollapseArea();
-  }
-  
-  openVaultsList(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('vaults-list');
-    this.collapsibleArea.closeCollapseArea();
-  }
-  
-  openUserStats(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('user-stats');
-    this.collapsibleArea.closeCollapseArea();
-  }
-  
-  openTotalVault(): void {
-    this.modalService.dismissAll();
-    this.toggleMenu();
-    this.router.navigateByUrl('charts/info-total');
-  }
-  
-  openWeeklyProfitDialog(): void {
-    this.weeklyProfitDialog.open();
-    this.toggleMenu();
-  }
-  
-  openWeeklyRewardsDialog(): void {
-    this.weeklyRewardsDialog.open();
-    this.toggleMenu();
-  }
-  
-  openFarmBuybacksDialog(): void {
-    this.farmBuybackDialog.open();
-    this.toggleMenu();
-  }
-  
-  openSavedFeesDialog(): void {
-    this.savedFeesDialog.open();
-    this.toggleMenu();
-  }
-  
-  
-  openUserBalancesDialog(): void {
-    this.userBalancesDialog.open();
-    this.toggleMenu();
-  }
-  
-  openDownloadHistoricDataDialog(): void {
-    this.downloadHistoricDataDialog.open();
-    this.toggleMenu();
+    
+    this.router.navigateByUrl(routeLink);
+    
+    if (isCollapseArea) {
+      this.collapsibleArea.closeCollapseArea();
+    }
   }
 }
