@@ -1,52 +1,33 @@
-@import "../../../../scss/themes/theme-mixins";
+@import "themes/theme-mixins";
 
 $dark-background-color: #111111;
 
 .title-wrapper {
+  height: 57px;
   margin: 0 0 0 10px;
   font-family: 'PT Sans', sans-serif;
   text-align: left;
   font-size: 36px;
   font-weight: 700;
-  display: flex;
-  height: 57px;
-  justify-content: space-between;
-  span {
+
+  &__lael {
     margin: auto auto auto 0;
   }
 }
 
-.container {
-  padding: 35px 40px 35px 40px;
-  border-radius: 10px;
-  margin-left: 10px;
-  min-height: 718px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-
-}
-
-.title {
-  font-size: 1.5em;
-  padding: 10px;
-  font-weight: bolder;
-  text-align: center;
-}
-
 .disclaimer {
+  margin: 0 0 30px 10px;
   text-align: left;
   font-weight: 400;
   font-size: 16px;
-  margin: 0 0 30px 10px;
 }
 
-.values {
-  display: grid;
-  align-items: center;
-  grid-template-columns: 0.2fr 1fr 1fr 0.2fr;
-  border-bottom: 1px solid #F0F0F0;
-  padding: 14px 10px 14px 0;
+.container {
+  min-height: 718px;
+  margin-left: 10px;
+  padding: 35px 40px 35px 40px;
+  border-radius: 10px;
+  position: relative;
 }
 
 .table-header {
@@ -59,13 +40,11 @@ $dark-background-color: #111111;
   font-size: 14px;
   font-family: 'PT Sans', sans-serif;
 
-}
-
-.header-field {
-  text-align: left;
-  font-family: 'PT Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
+  &__field {
+    text-align: left;
+    font-family: 'PT Sans', sans-serif;
+    font-weight: 400;
+  }
 }
 
 .scroller {
@@ -74,44 +53,52 @@ $dark-background-color: #111111;
   padding-right: 10px;
 }
 
+.values {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 0.2fr 1fr 1fr 0.2fr;
+  border-bottom: 1px solid #F0F0F0;
+  padding: 14px 10px 14px 0;
 
-.value-field {
-  font-family: 'PT Sans', sans-serif;
-  font-weight: bold;
-  font-size: 16px;
+  &__field {
+    font-family: 'PT Sans', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 0 12px;
+  }
 }
 
-.num {
+.field-num {
   padding-right: 12px;
   min-width: 65px;
   text-align: right;
 }
 
-.address {
+.field-address {
   min-width: 380px;
 }
 
-.value {
+.field-value {
+  min-width: 200px;
   padding: 0 12px;
-  text-align: center;
 }
 
-.links {
+.field-links {
   min-width: 300px;
 }
 
 .table-link-badge {
+  position: relative;
+  margin: 5px;
   padding: 4px 7px;
   text-decoration: none;
   border-radius: 6px;
   color: #FFFFFF;
-  position: relative;
   font-weight: bold;
   font-size: 12px;
-  margin: 5px;
-  transition: all .2s ease-out;
   font-family: 'PT Sans', sans-serif;
   white-space: nowrap;
+  transition: all .2s ease-out;
 }
 
 
