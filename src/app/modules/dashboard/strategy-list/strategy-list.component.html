@@ -1,40 +1,81 @@
-<div class="title-wrapper"
-     [class]="vt.getThemeColor() + '-black'">
-  <app-side-menu-toggle></app-side-menu-toggle>
-  <span>Vaults list</span>
-  <app-theme-switch></app-theme-switch>
+<div
+  class="title-wrapper g-flex g-flex--align-center g-flex--space-between"
+  [class]="vt.getThemeColor() + '-black'">
+  <app-side-menu-toggle>
+  </app-side-menu-toggle>
+
+  <span class="title-wrapper__label">
+    Vaults list
+  </span>
+
+  <app-theme-switch>
+  </app-theme-switch>
 </div>
 
-<div class="custom-table" [class]="vt.getThemeColor() + '-card'">
-  <div class="filters">
-    <div>
-      <select [(ngModel)]="networkFilter" name="" id="networkFilter"
-              [class]="vt.getThemeColor() + '-softGreen'">
-        <option value="">Network</option>
-        <option value="eth">Ethereum</option>
-        <option value="bsc">Binance</option>
-        <option value="matic">Matic</option>
+<div
+  class="custom-table"
+  [class]="vt.getThemeColor() + '-card'">
+  <div class="filters g-flex g-flex--align-center g-flex--space-between">
+    <div class="filters__selectors g-flex g-flex--align-center g-flex--space-between">
+      <select
+        class="filters__select"
+        [(ngModel)]="networkFilter"
+        [class]="vt.getThemeColor() + '-softGreen'">
+        <option value="">
+          Network
+        </option>
+
+        <option
+          *ngFor="let network of NETWORKS"
+          [value]="network.value">
+          {{ network.label }}
+        </option>
       </select>
 
-      <select [(ngModel)]="platformFilter" name="" id="platformFilter"
-              [class]="vt.getThemeColor() + '-softGreen'">
-        <option value="">Platform</option>
-        <option *ngFor="let platform of platformList" [value]="platform.prefix">{{platform.name}}</option>
+      <select
+        class="filters__select"
+        [(ngModel)]="platformFilter"
+        [class]="vt.getThemeColor() + '-softGreen'">
+        <option value="">
+          Platform
+        </option>
+
+        <option
+          *ngFor="let platform of platformList"
+          [value]="platform.prefix">
+          {{ platform.name }}
+        </option>
       </select>
 
-      <select [(ngModel)]="assetFilter" name="" id="assetFilter"
-              [class]="vt.getThemeColor() + '-softGreen'">
-        <option value="">Asset</option>
-        <option *ngFor="let asset of assetList" [value]="asset">{{asset}}</option>
+      <select
+        class="filters__select"
+        [(ngModel)]="assetFilter"
+        [class]="vt.getThemeColor() + '-softGreen'">
+        <option value="">
+          Asset
+        </option>
 
+        <option
+          *ngFor="let asset of assetList"
+          [value]="asset">
+          {{ asset }}
+        </option>
       </select>
 
-      <div class="quantity">
-        <span [class]="vt.getThemeColor() + '-solidGreen'">Total: {{ (vaultsList$ | async)?.length }}</span>
+      <div
+        class="filters__quantity"
+        [class]="vt.getThemeColor() + '-solidGreen'">
+        Total: {{ (vaultsList$ | async)?.length }}
       </div>
     </div>
 
-    <input [(ngModel)]="searchTerm" placeholder="Search" type="search" name="vaults-search" id="vaults-search">
+    <input
+      class="filters__search"
+      [(ngModel)]="searchTerm"
+      placeholder="Search"
+      type="search"
+      name="vaults-search"
+      id="vaults-search">
   </div>
 
   <mat-checkbox
@@ -45,41 +86,34 @@
 
   <!--  ******** HEADERS ************** -->
 
-  <div class="header" [class]="vt.getThemeColor() + '-gray'">
-    <div class="header-column desktop-only">
-      Network <i class="fas fa-sort"></i>
-    </div>
+  <div
+    class="header"
+    [class]="vt.getThemeColor() + '-gray'">
+    <ng-container *ngFor="let header of TABLE_HEADERS">
+      <app-popover-card
+        *ngIf="header.tooltip; else simpleHeaderTpl"
+        class="header-column"
+        [class.desktop-only]="header.isDesktopColumn"
+        (click)="sortVaultsList(header.value)">
+        <ng-template>
+          <span [innerHTML]="header.tooltip">
+          </span>
+        </ng-template>
 
-    <div (click)="sortVaultsList('name')" class="header-column">
-      Name <i class="fas fa-sort"></i>
-    </div>
+        {{ header.label }}
+        <i class="fas fa-sort"></i>
+      </app-popover-card>
 
-    <app-popover-card (click)="sortVaultsList('apy')" class="header-column">
-      <ng-template>
-        <p>APY with daily restake period</p>
-        <i class="fa fa-bolt" style="color: goldenrod"></i> - weekly FARM reward active
+      <ng-template #simpleHeaderTpl>
+        <div
+          class="header-column"
+          [class.desktop-only]="header.isDesktopColumn"
+          (click)="sortVaultsList(header.value)">
+          {{ header.label }}
+          <i class="fas fa-sort"></i>
+        </div>
       </ng-template>
-      APY <i class="fas fa-sort"></i>
-    </app-popover-card>
-
-    <app-popover-card (click)="sortVaultsList('tvl')" class="header-column">
-      <ng-template>
-        Total Value Locked
-      </ng-template>
-      TVL <i class="fas fa-sort"></i>
-    </app-popover-card>
-
-    <div (click)="sortVaultsList('users')" class="header-column desktop-only">
-      Users <i class="fas fa-sort"></i>
-    </div>
-
-    <div (click)="sortVaultsList('total_earned')" class="header-column desktop-only">
-      Total Earned <i class="fas fa-sort"></i>
-    </div>
-
-    <div (click)="sortVaultsList('created')" class="header-column desktop-only">
-      Created <i class="fas fa-sort"></i>
-    </div>
+    </ng-container>
   </div>
 
   <!--  ******** VALUES ************** -->

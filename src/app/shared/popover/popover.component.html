@@ -1,11 +1,20 @@
-<div [ngbPopover]="popover" placement="bottom"
-     triggers="manual" #p1="ngbPopover" (mouseenter)="maybeOpen(p1)" (mouseleave)="timeDelayClose(p1)"
-     [popoverClass]="vt.getThemeColor() + '-card popover-custom'"
-     container="body">
+<div
+  [ngbPopover]="popover"
+  placement="bottom"
+  triggers="manual"
+  #p1="ngbPopover"
+  (mouseenter)="maybeOpen(p1)"
+  (mouseleave)="timeDelayClose(p1)"
+  [popoverClass]="vt.getThemeColor() + '-card popover-custom'"
+  container="body">
   <ng-template #popover>
-    <div (mouseenter)="maintainOpen(p1)" (mouseleave)="leavePopover(p1)">
+    <div
+      (mouseenter)="maintainOpen(p1)"
+      (mouseleave)="leavePopover(p1)">
       <ng-container [ngTemplateOutlet]="template"></ng-container>
     </div>
   </ng-template>
-  <ng-content></ng-content>
+
+  <ng-content>
+  </ng-content>
 </div>

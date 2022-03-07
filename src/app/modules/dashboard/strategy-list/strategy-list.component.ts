@@ -5,7 +5,7 @@ import { ContractsService } from '@data/services/contracts.service';
 import { Vault } from '@data/models/vault';
 import { NGXLogger } from 'ngx-logger';
 import { HarvestDataService } from '@data/services/data/harvest-data.service';
-import { assets, Platform, PLATFORM_LIST } from './strategy-list.constants';
+import { assets, NETWORKS, Platform, PLATFORM_LIST, TABLE_HEADERS } from './strategy-list.constants';
 import { HardworkDataService } from '@data/services/data/hardwork-data.service';
 import { RewardDataService } from '@data/services/data/reward-data.service';
 import { PriceDataService } from '@data/services/data/price-data.service';
@@ -33,8 +33,11 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   public sortDirection = 'desc';
   public currentSortingValue = 'tvl';
   public vaultsIconsList = [];
+  public NETWORKS = NETWORKS;
+  public TABLE_HEADERS = TABLE_HEADERS;
+  
   private isModalDragged = false;
-
+  
   constructor(
     public vt: ViewTypeService,
     public harvestData: HarvestDataService,
@@ -49,35 +52,35 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
   ) {
     super(harvestData, hardworkData, rewardData, priceData);
   }
-
+  
   ngOnInit(): void {
     this.poolsList();
     this.additionalVaultsList();
     this.getVaultsList();
-
+    
     this.vaultsList$ = this.contractsService.getContracts$<Vault>(Vault);
   }
-
+  
   additionalVaultsList(): void {
     this.vaultsDataService.retrieveVaultsList()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
+      .subscribe(data => {
         this.vaultsIconsList = data;
       }, err => {
         console.log(err);
       });
   }
-
+  
   get assetList(): string[] {
     const result = assets;
     this.contractsService.getContractsArray(Token)?.forEach(t => result.add(t.contract.name));
     return Array.from(result.values()).sort((a, b) => a.localeCompare(b));
   }
-
+  
   getVaultsList(): void {
     this.contractsService.getContracts(Vault);
   }
-
+  
   prettyNetwork(name: string): string {
     if (name === 'eth') {
       return 'Ethereum';
@@ -86,41 +89,45 @@ export class StrategyListComponent extends StrategyListCommonMethods implements 
     }
     return name;
   }
-
+  
   poolsList(): Map<string, Pool> {
     return Array.from(this.contractsService.getContracts(Pool).values()).reduce((m, pool) => {
       m.set(pool.lpToken.address, pool);
       return m;
     }, new Map<string, Pool>());
   }
-
+  
   toggleAPYWindow(address: string): void {
     if (this.isModalDragged) {
       return;
     }
-
+    
     if (!(address in this.apyWindowState)) {
       this.apyWindowState[address] = true;
       return;
     }
     this.apyWindowState[address] = !this.apyWindowState[address];
   }
-
+  
   closeAPYWindow(address: string): void {
     this.apyWindowState[address] = false;
     this.isModalDragged = false;
   }
-
+  
   sortVaultsList(sortBy?: string): void {
+    if (!sortBy) {
+      return;
+    }
+    
     this.currentSortingValue = sortBy;
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
-
+  
   isWeeklyRewardActive(vault: Vault): boolean {
     const reward = this.rewardData.getReward(vault?.contract?.address, vault?.contract?.network);
     return !!reward && reward !== 0;
   }
-
+  
   onModalDrag(isDragged: boolean): void {
     this.isModalDragged = isDragged;
   }
