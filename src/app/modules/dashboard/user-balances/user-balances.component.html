@@ -1,76 +1,95 @@
-<div class="title-wrapper"
-     [class]="vt.getThemeColor() + '-black'">
-  <app-side-menu-toggle></app-side-menu-toggle>
-  <span>
-                User Balances
-            </span>
-  <app-theme-switch></app-theme-switch>
+<div
+  class="title-wrapper g-flex g-flex--align-center g-flex--space-between"
+  [class]="vt.getThemeColor() + '-black'">
+  <app-side-menu-toggle>
+  </app-side-menu-toggle>
+
+  <span class="title-wrapper__label">
+    User Balances
+  </span>
+
+  <app-theme-switch>
+  </app-theme-switch>
 </div>
-<div class="disclaimer"
-     [class]="vt.getThemeColor() + '-gray'">
+
+<div
+  class="disclaimer"
+  [class]="vt.getThemeColor() + '-gray'">
   Currently, balances for contracts can't be reached.
   Badger holders and transactions via Argent don't appear on this list.
 </div>
 
-<div class="container" [class]="vt.getThemeColor() + '-card'">
-
-
-  <div class="table-header"
-       [class]="vt.getThemeColor() + '-gray'">
-
-    <div class="header-field num">
+<div
+  class="container g-flex-column"
+  [class]="vt.getThemeColor() + '-card'">
+  <div
+    class="table-header"
+    [class]="vt.getThemeColor() + '-gray'">
+    <div class="table-header__field field-num">
       &nbsp;
     </div>
 
-    <div class="header-field address">
+    <div class="table-header__field field-address">
       Owner
     </div>
 
-    <div class="header-field value">
+    <div class="table-header__field field-value">
       Summary Balance
     </div>
 
-    <div class="header-field links">
+    <div class="table-header__field field-links">
       Links
     </div>
-
   </div>
 
   <div class="scroller">
-
-    <div class="values" *ngFor="let balance of userBalances; let i = index">
-
-      <div class="value-field num">
+    <div
+      *ngFor="let balance of userBalances; let i = index"
+      class="values">
+      <div class="values__field field-num">
         #{{i + 1}}
       </div>
 
-      <div class="value-field address">
+      <div class="values__field field-address">
         {{balance.owner}}
       </div>
 
-      <div class="value-field value">
+      <div class="values__field field-value">
         {{balance.balance | number: '1.0-0'}}$
       </div>
 
-      <div class="value-field links g-flex g-flex--align-center">
-        <a href='{{getNetworkScan()}}/address/{{balance.owner}}' target='_blank'
-           [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'">NetworkScan</a>
-
-        <a href='https://app.zerion.io/{{balance.owner}}/overview' target='_blank'
-           [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'">Zerion</a>
-
-        <a href='/history/{{balance.owner}}' target='_blank'
-           [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'">History</a>
+      <div class="values__field field-links g-flex g-flex--align-center">
+        <a
+          class="table-link-badge"
+          [class]="vt.getThemeColor() + '-middleGreen'"
+          href='{{ethNetworkScan}}/address/{{balance.owner}}'
+          target='_blank'>
+          NetworkScan
+        </a>
 
         <a
-          [routerLink]="['..', 'user-stats', balance.owner]"
-          [class]="'table-link-badge ' + vt.getThemeColor() + '-middleGreen'">
+          class="table-link-badge"
+          [class]="vt.getThemeColor() + '-middleGreen'"
+          href='https://app.zerion.io/{{balance.owner}}/overview'
+          target='_blank'>
+          Zerion
+        </a>
+
+        <a
+          class="table-link-badge"
+          [class]="vt.getThemeColor() + '-middleGreen'"
+          href='/history/{{balance.owner}}'
+          target='_blank'>
+          History
+        </a>
+
+        <a
+          class="table-link-badge"
+          [class]="vt.getThemeColor() + '-middleGreen'"
+          [routerLink]="['..', 'user-stats', balance.owner]">
           User stats
         </a>
       </div>
-
     </div>
-
   </div>
-
 </div>
