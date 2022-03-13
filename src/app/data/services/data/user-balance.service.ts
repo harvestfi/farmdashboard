@@ -12,6 +12,7 @@ import { BscService } from '@data/services/data/bsc.service';
 import { MaticApiService } from '@data/services/http/matic-api.service';
 import { MaticService } from '@data/services/data/matic.service';
 import { HttpService } from '@data/services/http/http.service';
+import { Profit } from "@data/models/profit";
 
 const farmAddress = Addresses.ADDRESSES.get('FARM');
 
@@ -53,19 +54,33 @@ export class UserBalanceService {
   
   getTotalProfit(
     address: string,
-    start: number = 0,
-    end: number = 0,
-  ): Observable<string | null> {
+    vault?: string,
+    blockFrom?: number,
+    blockTo?: number,
+  ): Observable<Profit | null> {
     // TODO: add date pickers for start and end in component
-    if (start === 0) {
-      start = Math.round((new Date('01/01/2020').getTime()) / 1000);
-    }
-  
-    if (end === 0) {
-      end = Math.round((new Date().getTime()) / 1000);
-    }
-    
-    return this.httpService.httpGet(`/api/profit/total?address=${ address }&start=${ start }&end=${ end }`);
+    // if (start === 0) {
+    //   start = Math.round((new Date('01/01/2020').getTime()) / 1000);
+    // }
+    //
+    // if (end === 0) {
+    //   end = Math.round((new Date().getTime()) / 1000);
+    // }
+      let url = `/api/profit?address=${ address }&start=eth`;
+
+      if (vault) {
+          url += `&vaultAddress=${ vault }`;
+      }
+
+      if (blockFrom) {
+          url += `&blockFrom=${ blockFrom }`;
+      }
+
+      if (blockTo) {
+          url += `&blockTo=${ blockTo }`;
+      }
+
+      return this.httpService.httpGet(url);
   }
   
   getEthAssets(address): Observable<Promise<AssetsInfo[]>> {

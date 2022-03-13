@@ -38,11 +38,17 @@ export class UserStatsComponent implements OnInit {
   sortDirection = -1;
   isPhoneSize = false;
   address: string;
+  vault: string;
+  blockFrom: number;
+  blockTo: number;
   addressControl: FormControl = new FormControl(null, [
     Validators.required,
     Validators.pattern(/^0x[a-fA-F0-9]{35,45}$/),
   ]);
-  
+  vaultControl: FormControl = new FormControl(null, []);
+  blockFromControl: FormControl = new FormControl(null, []);
+  blockToControl: FormControl = new FormControl(null, []);
+
   private exchangeRates = {
     values: { USD: 1 },
     lastUpdatedAt: 0,
@@ -110,6 +116,9 @@ export class UserStatsComponent implements OnInit {
   
   onReload() {
     this.address = this.addressControl.value;
+    this.vault = this.vaultControl.value;
+    this.blockFrom = this.blockFromControl.value;
+    this.blockTo = this.blockToControl.value;
     
     this.changeDetectorRef.detectChanges();
     
@@ -202,10 +211,10 @@ export class UserStatsComponent implements OnInit {
         this.changeDetectorRef.detectChanges();
       });
     
-    this.userBalanceService.getTotalProfit(this.address)
+    this.userBalanceService.getTotalProfit(this.address, this.vault, this.blockFrom, this.blockTo)
       .pipe(takeUntil(this.destroy$))
       .subscribe(totalProfit => {
-        this.totalProfit = totalProfit ? Utils.prettyNumber(+totalProfit) : '-';
+        this.totalProfit = totalProfit.result ? Utils.prettyNumber(+totalProfit.result) : '-';
   
         this.isLoadingTotalProfit = false;
   
