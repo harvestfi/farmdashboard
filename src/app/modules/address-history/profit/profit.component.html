@@ -1,0 +1,48 @@
+<div
+        class="title-wrapper g-flex g-flex--space-between"
+        [class]="viewTypeService.getThemeColor() + '-black'">
+    <app-side-menu-toggle>
+    </app-side-menu-toggle>
+
+    <span>
+        Total profit
+    </span>
+
+    <app-theme-switch>
+    </app-theme-switch>
+</div>
+
+<div class="profit-page">
+    <div class="profit-page-card g-flex g-flex--align-center">
+        <input placeholder="Enter address"
+               type="text"
+               [formControl]="addressControl"
+               class="profit-page-input-address">
+        <button
+                class="btn"
+                mat-raised-button
+                color="primary"
+                (click)="search()">Search</button>
+    </div>
+    <div class="profit-page-card">
+        <div class="subtitle-wrapper g-flex g-flex--align-center">
+            <div class="subtitle-wrapper__profit">Profit: </div>
+            <div>{{toProfit(profit?.totalProfit)}}$</div>
+        </div>
+
+        <div class="text-wrapper">
+            <div *ngFor="let item of profit?.items">
+                <div
+                        *ngIf="item.profit != 0"
+                        class="profit-page-vault g-flex g-flex--align-center">
+                    <div class="item-name">
+                        {{item.name}}:
+                    </div>
+                    <div class="item-profit">
+                        {{toProfit(item.profit)}}$
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

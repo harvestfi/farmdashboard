@@ -13,6 +13,7 @@ import { MaticApiService } from '@data/services/http/matic-api.service';
 import { MaticService } from '@data/services/data/matic.service';
 import { HttpService } from '@data/services/http/http.service';
 import { Profit } from "@data/models/profit";
+import {ProfitList} from "@data/models/profit-list";
 
 const farmAddress = Addresses.ADDRESSES.get('FARM');
 
@@ -52,12 +53,7 @@ export class UserBalanceService {
     return from(this.ethereumService.getPrice(farmAddress));
   }
   
-  getTotalProfit(
-    address: string,
-    vault?: string,
-    blockFrom?: number,
-    blockTo?: number,
-  ): Observable<Profit | null> {
+  getTotalProfit(address: string): Observable<Profit | null> {
     // TODO: add date pickers for start and end in component
     // if (start === 0) {
     //   start = Math.round((new Date('01/01/2020').getTime()) / 1000);
@@ -66,19 +62,12 @@ export class UserBalanceService {
     // if (end === 0) {
     //   end = Math.round((new Date().getTime()) / 1000);
     // }
-      let url = `/api/profit?address=${ address }&start=eth`;
+      const url = `/api/profit?address=${ address }`;
+      return this.httpService.httpGet(url);
+  }
 
-      if (vault) {
-          url += `&vaultAddress=${ vault }`;
-      }
-
-      if (blockFrom) {
-          url += `&blockFrom=${ blockFrom }`;
-      }
-
-      if (blockTo) {
-          url += `&blockTo=${ blockTo }`;
-      }
+  getTotalProfitByVaults(address: string): Observable<ProfitList | null> {
+      const url = `/api/profit/${ address }`;
 
       return this.httpService.httpGet(url);
   }

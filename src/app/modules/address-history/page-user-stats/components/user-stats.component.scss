@@ -193,19 +193,6 @@
 .address-input {
   width: 500px;
 }
-
-.vault-input {
-  max-width: 60%;
-}
-
-.block-from-input {
-  max-width: 10%;
-}
-
-.block-to-input {
-  max-width: 10%;
-}
-
 // dark mode theme
 :host-context(.dark-background) {
   .expansion-panel {

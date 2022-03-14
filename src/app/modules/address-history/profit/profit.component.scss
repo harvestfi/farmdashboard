@@ -1,0 +1,68 @@
+@import "utilities/responsive_utilities";
+@import "themes/theme-classes";
+
+.title-wrapper {
+  margin: 0 0 24px 10px;
+  text-align: left;
+  font-size: 36px;
+  font-weight: 700;
+  span {
+    margin: auto auto auto 0;
+  }
+}
+
+.subtitle-wrapper {
+  margin: 0 0 24px 10px;
+  text-align: left;
+  font-size: 26px;
+  font-weight: 700;
+
+  &__profit{
+    margin-right: 10px;
+  }
+}
+
+.text-wrapper {
+  margin: 0 0 24px 10px;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 560;
+}
+
+
+.profit-page-card {
+  margin-bottom: 20px;
+}
+
+.profit-page-input-address {
+  width: 80%;
+  margin-left: 12px;
+  font-size: 20px;
+  border: 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+.btn {
+  margin-left: 12px;
+  background-color: map-get($themes_colors, "light", "middleGreen");
+
+  &:disabled {
+    background-color: map-get($themes_colors, "light", "middleGreen");
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  ::ng-deep.mat-button-wrapper {
+    color: #ffffff;
+  }
+}
+
+.item-name {
+  min-width: 40%;
+}
+
+.item-profit {
+  font-weight: 650;
+}
