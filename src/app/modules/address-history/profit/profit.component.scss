@@ -35,7 +35,7 @@
 }
 
 .profit-page-input-address {
-  width: 80%;
+  width: 50%;
   margin-left: 12px;
   font-size: 20px;
   border: 0;
@@ -65,4 +65,88 @@
 
 .item-profit {
   font-weight: 650;
+  min-width: 30%;
+}
+
+.item-address {
+  color: blue
+}
+
+.network-toggle {
+  display: flex;
+  margin: 10px 10px;
+
+  .icon-wrapper {
+    display: inline-flex;
+    background: #5CADAA;
+    border: none;
+    border-radius: 10px;
+    min-width: 38px;
+    height: 38px;
+    img {
+      margin: auto;
+    }
+  }
+  span {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'PT Sans', sans-serif;
+    color: #567B7A;;
+  }
+  .network-input {
+    display: none;
+
+    &:checked ~ .network-label {
+      background: #FFFFFF;
+      .icon-wrapper {
+        background: #FFFFFF;
+      }
+      &.dark {
+        background: #5CADAA;
+        span {
+          color: #FFFFFF;
+        }
+      }
+
+      &.light {
+        background: #5CADAA;
+        span {
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+
+  .network-label {
+    background: #FFFFFF;
+    min-width: 97px;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 14px;
+    margin: 0 10px 0 0;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    .networi-icon {
+      width: 15px;
+      height: 15px;
+      object-fit: contain;
+    }
+  }
+
+  .network-label.dark {
+    background: #1A2525;
+    span {
+      color: #FFFFFF;
+    }
+  }
+
+  .network-label.light {
+    background: #FFFFFF;
+    span {
+      color: #567B7A;
+    }
+  }
 }

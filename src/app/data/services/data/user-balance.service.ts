@@ -14,6 +14,7 @@ import { MaticService } from '@data/services/data/matic.service';
 import { HttpService } from '@data/services/http/http.service';
 import { Profit } from "@data/models/profit";
 import {ProfitList} from "@data/models/profit-list";
+import {Network} from "@data/models/network";
 
 const farmAddress = Addresses.ADDRESSES.get('FARM');
 
@@ -66,10 +67,9 @@ export class UserBalanceService {
       return this.httpService.httpGet(url);
   }
 
-  getTotalProfitByVaults(address: string): Observable<ProfitList | null> {
+  getTotalProfitByVaults(address: string, network: Network): Observable<ProfitList> {
       const url = `/api/profit/${ address }`;
-
-      return this.httpService.httpGet(url);
+      return this.httpService.httpGet(url, network);
   }
   
   getEthAssets(address): Observable<Promise<AssetsInfo[]>> {

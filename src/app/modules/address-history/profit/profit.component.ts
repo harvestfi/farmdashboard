@@ -4,6 +4,9 @@ import {FormControl, Validators} from "@angular/forms";
 import {ProfitList} from "@data/models/profit-list";
 import {ViewTypeService} from "@data/services/view-type.service";
 import {Utils} from "@data/static/utils";
+import {StaticValues} from "@data/static/static-values";
+import {takeUntil} from "rxjs/operators";
+import {DestroyService} from "@data/services/destroy.service";
 
 @Component({
   selector: 'app-profit',
@@ -13,6 +16,9 @@ import {Utils} from "@data/static/utils";
 export class ProfitComponent implements OnInit {
 
   profit: ProfitList;
+  networks: string[] = Array.from(StaticValues.NETWORKS.keys());
+  networkIcons: Map<string, string> = StaticValues.NETWORK_ICON;
+  network = 'eth';
 
   addressControl =  new FormControl('0x91ebfee4f90adb3c64d5f171cd8d1efece9cfad8', [
     Validators.required,
@@ -22,7 +28,7 @@ export class ProfitComponent implements OnInit {
   constructor(
       public userBalanceService: UserBalanceService,
       public viewTypeService: ViewTypeService,
-
+      public destroy$: DestroyService,
       ) { }
 
   ngOnInit(): void {
@@ -34,9 +40,11 @@ export class ProfitComponent implements OnInit {
     if (address == undefined) {
       return;
     }
-    this.userBalanceService.getTotalProfitByVaults(address).subscribe(i => {
-      this.profit = i;
-    });
+    this.userBalanceService.getTotalProfitByVaults(address, StaticValues.NETWORKS.get(this.network))
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(i => {
+          this.profit = i;
+        });
   }
 
   toProfit(value: string | undefined): string {
@@ -45,5 +53,17 @@ export class ProfitComponent implements OnInit {
     }
 
     return Utils.prettyNumber(Number(value));
+  }
+
+  getExplorer(address: string): string {
+    switch (this.network) {
+      case 'matic':
+        return 'https://polygonscan.com/address/' + address;
+      case 'bsc':
+        return 'https://www.bscscan.com/address/' + address;
+      case 'eth' :
+      default:
+        return 'https://etherscan.io/address/' + address;
+    }
   }
 }
