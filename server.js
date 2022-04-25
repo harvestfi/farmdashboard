@@ -14,32 +14,40 @@ app.use(cors());
 app.use(express.static(__dirname + '/dist/farmdashboard-front'));
 
 app.get('/harvestFinance/vaults', function(req, res) {
-    https.get('https://api-ui.harvest.finance/vaults?key=41e90ced-d559-4433-b390-af424fdc76d6', (resp) => {
-        let data = '';
-        resp.on('data', (chunk) => {
-            data += chunk;
+    try {
+        https.get('https://api-ui.harvest.finance/vaults?key=41e90ced-d559-4433-b390-af424fdc76d6', (resp) => {
+            let data = '';
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+            resp.on('end', () => {
+                return res.send(JSON.parse(data))
+            });
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
         });
-        resp.on('end', () => {
-            return res.send(JSON.parse(data))
-        });
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
+    } catch (e) {
+        console.log('Error: ' + e);
+    }
 
 });
 
 app.get('/matic-info', function(req, res) {
-    https.get('https://api.coingecko.com/api/v3/simple/price?include_last_updated_at=true&ids=matic-network&vs_currencies=usd', (resp) => {
-        let data = '';
-        resp.on('data', (chunk) => {
-            data += chunk;
+    try {
+        https.get('https://api.coingecko.com/api/v3/simple/price?include_last_updated_at=true&ids=matic-network&vs_currencies=usd', (resp) => {
+            let data = '';
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+            resp.on('end', () => {
+                return res.send(JSON.parse(data)["matic-network"]);
+            });
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
         });
-        resp.on('end', () => {
-            return res.send(JSON.parse(data)["matic-network"]);
-        });
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    });
+    } catch (e) {
+        console.log('Error: ' + e);
+    }
 
 });
 
