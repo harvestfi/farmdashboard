@@ -20,7 +20,13 @@ app.get('/harvestFinance/vaults', function(req, res) {
             data += chunk;
         });
         resp.on('end', () => {
-            return res.send(JSON.parse(data))
+            console.log('data: ' + data);
+            try {
+                return res.send(JSON.parse(data));
+            } catch (e) {
+                console.log('Error: ' + e);
+                return res.send("{}");
+            }
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
@@ -35,7 +41,12 @@ app.get('/matic-info', function(req, res) {
             data += chunk;
         });
         resp.on('end', () => {
-            return res.send(JSON.parse(data)["matic-network"]);
+            try {
+                return res.send(JSON.parse(data)["matic-network"]);
+            } catch (e) {
+                console.log('Error: ' + e);
+                return res.send("{}");
+            }
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
