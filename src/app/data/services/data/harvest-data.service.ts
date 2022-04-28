@@ -10,6 +10,7 @@ import {ContractsService} from '../contracts.service';
 import {Vault} from '@data/models/vault';
 import {Token} from '@data/models/token';
 import {Addresses} from '@data/static/addresses';
+import {HarvestVaultInfo} from "@data/models/harvest-vault-info";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,7 @@ export class HarvestDataService {
       Array.from(StaticValues.NETWORKS.keys()).map(name => [name, null])
   );
   private handledIds = new Set<string>();
+  private harvestVaultsInfo: HarvestVaultInfo[] = [];
 
   constructor(
       private harvestsService: HarvestsService,
@@ -58,7 +60,11 @@ export class HarvestDataService {
           }
       );
     });
-
+    this.harvestsService.getHarvestVaultInfo().subscribe(vaults => {
+        this.log.debug('Vaults info loaded', vaults);
+        this.harvestVaultsInfo = vaults;
+      }
+    );
     this.harvestsService.subscribeToHarvests().subscribe(this.handleHarvest.bind(this));
   }
 
@@ -160,6 +166,10 @@ export class HarvestDataService {
 
   getDtos(): HarvestDto[] {
     return this.dtos;
+  }
+
+  getVaultsInfo(): HarvestVaultInfo[] {
+    return this.harvestVaultsInfo;
   }
 
   // TODO create normal price resolving!

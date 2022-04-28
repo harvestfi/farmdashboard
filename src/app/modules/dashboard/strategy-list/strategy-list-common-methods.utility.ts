@@ -29,12 +29,24 @@ abstract class StrategyListCommonMethods {
       return this.vaultRewardApy(address, network);
     }
     const lastHw = this.hardworkData.getLastHardWork(address, network);
+    const vaults = this.harvestData.getVaultsInfo();
+    let result = 0;
+
     if (lastHw?.autoStake === 1 || lastHw?.autoStake === 1) {
-      return this.vaultRewardApy(address, network);
+      result = this.vaultRewardApy(address, network);
+    } else {
+      result = this.vaultApy(address, network) + this.vaultRewardApy(address, network);
     }
-    return this.vaultApy(address, network) + this.vaultRewardApy(address, network);
+
+    if (result == 0) {
+      const vault = vaults.find(i => i.network == network && i.vaultAddress == address);
+      if (vault != undefined && vault?.apy != undefined) {
+        result = vault?.apy;
+      }
+    }
+    return result;
   }
-  
+
   vaultApy(vaultAddress: string, network: string): number {
     // return Utils.aprToApyEveryDayReinvest(this.vaultApr(vaultAddress, network));
     return Math.max(this.hardworkData.getRoiBasedOnPPFS(vaultAddress, network), 0);
@@ -49,7 +61,14 @@ abstract class StrategyListCommonMethods {
   }
   
   vaultTvl(vaultAddress: string, network: string): number {
-    const tvl = this.harvestData.getVaultTvl(vaultAddress, network, this.priceData);
+    let tvl = this.harvestData.getVaultTvl(vaultAddress, network, this.priceData);
+    if (tvl == undefined || tvl == 0) {
+      const vaults = this.harvestData.getVaultsInfo();
+      const vault = vaults.find(i => i.network == network && i.vaultAddress == vaultAddress);
+      if (vault != undefined) {
+        tvl = vault?.tvl;
+      }
+    }
     return (tvl) || 0;
   }
   
