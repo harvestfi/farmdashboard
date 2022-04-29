@@ -7,6 +7,7 @@ import {WebsocketService} from '../websocket.service';
 import {SnackBarService} from '@shared/snack-bar/snack-bar.service';
 import {Network} from '@data/models/network';
 import {Paginated} from '@data/models/paginated';
+import {HarvestVaultInfo} from "@data/models/harvest-vault-info";
 
 @Injectable({
   providedIn: 'root'
@@ -95,4 +96,7 @@ export class HarvestsService implements WsConsumer {
     return this.httpService.httpGet(apiUrl);
   }
 
+  getHarvestVaultInfo(): Observable<HarvestVaultInfo[]> {
+    return this.httpService.httpGet('/harvest/vaults');
+  }
 }

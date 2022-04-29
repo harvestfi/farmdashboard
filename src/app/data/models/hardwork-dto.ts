@@ -35,7 +35,6 @@ export class HardWorkDto {
   profitSharingRate: number;
   buyBackRate: number;
   autoStake: number;
-  
   blockDateAdopted: Date;
   
   public static fromJson(data: string): HardWorkDto {

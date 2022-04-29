@@ -1,6 +1,4 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {Pool} from '@data/models/pool';
-import {Vault} from '@data/models/vault';
 import {ContractsService} from '@data/services/contracts.service';
 
 
@@ -17,10 +15,12 @@ export class VaultIconsPipe implements PipeTransform {
                 name = vault?.contract?.name.replace('V_', '');
             } else if (vault?.contract && vault?.contract?.name.indexOf('P_') >= 0) {
                 name = vault?.contract?.name.replace('P_', '');
-            } else if (vault?.startsWith('0x')) {
+            } else if (vault?.contract && vault?.contract?.name.startsWith('fUniV3')) {
+                name = 'UNISWAP_V3';
+            } else if (vault?.contract?.name.startsWith('0x')) {
                 name = this.contractService.getContractName(vault);
-            } else {
-                name = vault;
+            }  else {
+                name = vault?.contract?.name;
             }
         }
 
