@@ -172,8 +172,7 @@
   }
 }
 
-.address-input {
-  width: 500px;
+.input-field {
   margin-left: 12px;
   font-size: 20px;
   border: 0;
@@ -191,6 +190,9 @@
   }
 }
 
+.address-input {
+  width: 500px;
+}
 // dark mode theme
 :host-context(.dark-background) {
   .expansion-panel {

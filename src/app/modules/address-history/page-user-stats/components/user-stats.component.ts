@@ -42,7 +42,7 @@ export class UserStatsComponent implements OnInit {
     Validators.required,
     Validators.pattern(/^0x[a-fA-F0-9]{35,45}$/),
   ]);
-  
+
   private exchangeRates = {
     values: { USD: 1 },
     lastUpdatedAt: 0,
@@ -205,7 +205,7 @@ export class UserStatsComponent implements OnInit {
     this.userBalanceService.getTotalProfit(this.address)
       .pipe(takeUntil(this.destroy$))
       .subscribe(totalProfit => {
-        this.totalProfit = totalProfit ? Utils.prettyNumber(+totalProfit) : '-';
+        this.totalProfit = totalProfit.result ? Utils.prettyNumber(+totalProfit.result) : '-';
   
         this.isLoadingTotalProfit = false;
   

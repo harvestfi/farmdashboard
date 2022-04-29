@@ -11,4 +11,5 @@ export enum MENU_ITEMS {
   USER_BALANCES = 'Users Balances',
   VAULTS_LIST = 'Vaults list',
   USER_STATS = 'User Stats',
+  PROFIT = 'Calculate profit',
 }

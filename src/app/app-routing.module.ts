@@ -18,6 +18,10 @@ const routes: Routes = [
     path: 'user-stats',
     loadChildren: () => import('@modules/address-history/page-user-stats/page-user-stats.module').then(m => m.PageUserStatsModule),
   },
+  {
+    path: 'profit',
+    loadChildren: () => import('@modules/address-history/profit/profit.module').then(m => m.ProfitModule),
+  },
   {path: '**', redirectTo: ''},
 ];
 

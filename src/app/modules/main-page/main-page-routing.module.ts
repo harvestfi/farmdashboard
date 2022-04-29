@@ -65,6 +65,11 @@ const routes: Routes = [
     loadChildren: () => import('@modules/address-history/page-user-stats/page-user-stats.module')
       .then(m => m.PageUserStatsModule),
   },
+  {
+    path: ROUTES.PROFIT,
+    loadChildren: () => import('@modules/address-history/profit/profit.module')
+        .then(m => m.ProfitModule),
+  },
 ];
 
 @NgModule({

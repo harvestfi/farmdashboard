@@ -11,5 +11,6 @@ export enum ROUTES {
   USER_BALANCES = 'user-balances',
   VAULTS_LIST = 'vaults-list',
   USER_STATS = 'user-stats',
+  PROFIT = 'profit',
   INFO = 'info',
 }
